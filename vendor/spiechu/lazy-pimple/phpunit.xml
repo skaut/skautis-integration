@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit 
+    colors="true"
+    backupGlobals="false"
+    bootstrap="test/bootstrap.php"
+>
+    <testsuites>
+        <testsuite name="Lazy Pimple Test Suite">
+            <directory>test/</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist>
+            <directory suffix=".php">src/</directory>
+        </whitelist>
+    </filter>
+</phpunit>

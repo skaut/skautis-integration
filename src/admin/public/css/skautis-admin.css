@@ -1,0 +1,21 @@
+#toplevel_page_skautis-integration .wp-menu-image img {
+	padding-top: 5px !important;
+}
+
+.skautisUserManagementTable {
+	border-collapse: collapse;
+}
+
+.skautisUserManagementTable tbody > :nth-child(odd) {
+	background-color: #f9f9f9;
+}
+
+.skautisUserManagementTable th,
+.skautisUserManagementTable td {
+	padding: 5px 8px;
+}
+
+#TB_ajaxContent .content {
+	display: inline-block;
+	padding: 0 55px 55px 0;
+}

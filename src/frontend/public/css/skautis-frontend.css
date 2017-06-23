@@ -1,0 +1,11 @@
+.pic-lilie {
+	padding-left: 59px !important;
+	background-image: url('../img/lilie.png') !important;
+	background-position: 13px center !important;
+	background-repeat: no-repeat !important;
+	background-size: 32px auto !important;
+}
+
+.login .pic-lilie {
+	padding-left: 40px !important;
+}
