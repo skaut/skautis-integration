@@ -1,1 +1,1 @@
-# skautis-connection
+# Issues are welcome :-)
