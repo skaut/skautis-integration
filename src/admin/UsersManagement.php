@@ -30,14 +30,6 @@ class UsersManagement {
 				$this,
 				'setupUsersManagementPage'
 			], 10 );
-
-			if ( ! $this->skautisGateway->isInitialized() ) {
-				if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-					throw new \Exception( 'SkautIS connection not established yet.' );
-				}
-
-				return;
-			}
 		}
 	}
 

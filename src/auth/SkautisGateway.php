@@ -50,7 +50,7 @@ class SkautisGateway {
 	}
 
 	public function getSkautisInstance() {
-		if ( ! $this->isInitialized() ) {
+		if ( ! $this->isInitialized() && defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 			throw new \Exception( __( 'Pro správnou funkčnost zadejte v nastavení pluginu SkautIS přidělené APP ID', 'skautis-integration' ) );
 		}
 

@@ -32,8 +32,10 @@ final class Admin {
 			add_action( 'admin_enqueue_scripts', [ $this, 'enqueueScripts' ] );
 		}
 
-		if ( $this->skautisGateway->getSkautisInstance()->getUser()->isLoggedIn() ) {
-			add_action( 'admin_bar_menu', [ $this, 'addLogoutLinkToAdminBar' ], 20 );
+		if ( $this->skautisGateway->isInitialized() ) {
+			if ( $this->skautisGateway->getSkautisInstance()->getUser()->isLoggedIn() ) {
+				add_action( 'admin_bar_menu', [ $this, 'addLogoutLinkToAdminBar' ], 20 );
+			}
 		}
 	}
 
