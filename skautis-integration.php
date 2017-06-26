@@ -98,9 +98,7 @@ class SkautisIntegration {
 	}
 
 	public static function uninstall() {
-		if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
-			exit;
-		}
+		return true;
 	}
 
 	public function checkVersionAndPossiblyDeactivatePlugin() {
