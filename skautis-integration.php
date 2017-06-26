@@ -8,7 +8,7 @@
  * Plugin Name:       skautIS integrace
  * Plugin URI:        https://davidodehnal.cz/
  * Description:       Integrace WordPressu se skautISem
- * Version:           0.1
+ * Version:           1.0
  * Author:            David Odehnal
  * Author URI:        https://davidodehnal.cz/
  * Text Domain:       skautis-integration
