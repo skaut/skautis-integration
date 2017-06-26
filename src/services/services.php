@@ -85,7 +85,7 @@ class Services {
 		};
 
 		self::$services['admin'] = function ( \Pimple\Container $container ) {
-			return new Admin( $container['admin_settings'], $container['admin_users'], $container['admin_usersManagement'], $container['wpLoginLogout'], $container['skautisGateway'] );
+			return new Admin( $container['admin_settings'], $container['admin_users'], $container['rules_manager'], $container['admin_usersManagement'], $container['wpLoginLogout'], $container['skautisGateway'] );
 		};
 
 		self::$services['admin_settings'] = function ( \Pimple\Container $container ) {

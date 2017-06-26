@@ -10,14 +10,16 @@ final class Admin {
 
 	private $settings;
 	private $users;
+	private $rulesManager;
 	private $wpLoginLogout;
 	private $skautisGateway;
 	private $usersManagement;
 	private $adminDirUrl = '';
 
-	public function __construct( Settings $settings, Users $users, UsersManagement $usersManagement, WpLoginLogout $wpLoginLogout, SkautisGateway $skautisGateway ) {
+	public function __construct( Settings $settings, Users $users, RulesManager $rulesManager, UsersManagement $usersManagement, WpLoginLogout $wpLoginLogout, SkautisGateway $skautisGateway ) {
 		$this->settings        = $settings;
 		$this->users           = $users;
+		$this->rulesManager    = $rulesManager;
 		$this->usersManagement = $usersManagement;
 		$this->wpLoginLogout   = $wpLoginLogout;
 		$this->skautisGateway  = $skautisGateway;

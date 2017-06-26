@@ -15,59 +15,109 @@
  * Domain Path:       /languages
  */
 
+namespace SkautisIntegration;
+
+use SkautisIntegration\Services\Services;
+use SkautisIntegration\Utils\Helpers;
+
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
 define( 'SKAUTISINTEGRATION_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
+define( 'SKAUTISINTEGRATION_PATH', plugin_dir_path( __FILE__ ) );
+define( 'SKAUTISINTEGRATION_NAME', 'skautis-integration' );
+define( 'SKAUTISINTEGRATION_VERSION', '1.0' );
 
-register_activation_hook( __FILE__, function () {
-	if ( ! get_option( 'skautis_rewrite_rules_need_to_flush' ) ) {
-		add_option( 'skautis_rewrite_rules_need_to_flush', true );
+require SKAUTISINTEGRATION_PATH . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
+
+class SkautisIntegration {
+
+	public function __construct() {
+		$this->initHooks();
+
+		// if incompatible version of WP or deactivating plugin right now => don´t init
+		if ( ! $this->isCompatibleVersionOfWp() ||
+		     ( isset( $_GET['action'], $_GET['plugin'] ) &&
+		       'deactivate' == $_GET['action'] &&
+		       SKAUTISINTEGRATION_PLUGIN_BASENAME == $_GET['plugin'] )
+		) {
+			return;
+		}
+		$this->init();
 	}
 
-	if ( ! get_option( 'skautis_integration_login_page_url' ) ) {
-		update_option( 'skautis_integration_login_page_url', 'skautis/prihlaseni' );
+	private function initHooks() {
+		add_action( 'admin_init', [ $this, 'checkVersionAndPossiblyDeactivatePlugin' ] );
+
+		register_activation_hook( __FILE__, [ $this, 'activation' ] );
+		register_deactivation_hook( __FILE__, [ $this, 'deactivation' ] );
+		register_uninstall_hook( __FILE__, [ __CLASS__, 'uninstall' ] );
 	}
 
-	require_once plugin_dir_path( __FILE__ ) . 'src/rules/RulesInit.php';
-	\SkautisIntegration\Rules\RulesInit::registerCapabilitiesToRole( 'administrator' );
+	private function init() {
+		Services::getServicesContainer()['general'];
+		if ( is_admin() ) {
+			( Services::getServicesContainer()['admin'] );
+		} else {
+			( Services::getServicesContainer()['frontend'] );
+		}
+		Services::getServicesContainer()['modulesManager'];
+	}
 
-} );
+	public function activation() {
+		if ( ! $this->isCompatibleVersionOfWp() ) {
+			deactivate_plugins( SKAUTISINTEGRATION_PLUGIN_BASENAME );
+			wp_die( __( 'Plugin skautIS integrace vyžaduje verzi WordPress 4.8 nebo vyšší!', 'skautis-integration' ) );
+		}
 
-register_deactivation_hook( __FILE__, function () {
-	delete_option( 'skautis_rewrite_rules_need_to_flush' );
-	flush_rewrite_rules();
+		if ( ! get_option( 'skautis_rewrite_rules_need_to_flush' ) ) {
+			add_option( 'skautis_rewrite_rules_need_to_flush', true );
+		}
 
-	require_once plugin_dir_path( __FILE__ ) . 'src/rules/RulesInit.php';
-	\SkautisIntegration\Rules\RulesInit::unregisterCapabilitiesFromRole( 'administrator' );
-} );
+		if ( ! get_option( 'skautis_integration_login_page_url' ) ) {
+			update_option( 'skautis_integration_login_page_url', 'skautis/prihlaseni' );
+		}
 
-register_uninstall_hook( __FILE__, 'skautisIntegrationUninstall' );
+		Rules\RulesInit::registerCapabilitiesToRole( 'administrator' );
+	}
 
-function skautisIntegrationUninstall() {
-	if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
-		exit;
+	public function deactivation() {
+		delete_option( 'skautis_rewrite_rules_need_to_flush' );
+		flush_rewrite_rules();
+
+		Rules\RulesInit::unregisterCapabilitiesFromRole( 'administrator' );
+	}
+
+	public static function uninstall() {
+		if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
+			exit;
+		}
+	}
+
+	private function isCompatibleVersionOfWp() {
+		if ( isset( $GLOBALS['wp_version'] ) && version_compare( $GLOBALS['wp_version'], '4.8', '>=' ) ) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public function checkVersionAndPossiblyDeactivatePlugin() {
+		if ( ! $this->isCompatibleVersionOfWp() ) {
+			if ( is_plugin_active( SKAUTISINTEGRATION_PLUGIN_BASENAME ) ) {
+
+				deactivate_plugins( SKAUTISINTEGRATION_PLUGIN_BASENAME );
+
+				Helpers::showAdminNotice( esc_html__( 'Plugin skautIS integrace vyžaduje verzi WordPress 4.8 nebo vyšší!', 'skautis-integration' ), 'warning' );
+
+				if ( isset( $_GET['activate'] ) ) {
+					unset( $_GET['activate'] );
+				}
+			}
+		}
 	}
 }
 
-function runSkautisIntegration() {
-
-	// if deactivating plugin right now => do nothing
-	if ( isset( $_GET['action'], $_GET['plugin'] ) && 'deactivate' == $_GET['action'] && plugin_basename( __FILE__ ) == $_GET['plugin'] ) {
-		return;
-	}
-
-	// load translates
-	add_action( 'plugins_loaded', function () {
-		load_plugin_textdomain(
-			'skautis-integration',
-			false,
-			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
-		);
-	} );
-
-	require_once plugin_dir_path( __FILE__ ) . 'init.php';
-}
-
-runSkautisIntegration();
+global $skautisIntegration;
+$skautisIntegration = new SkautisIntegration();

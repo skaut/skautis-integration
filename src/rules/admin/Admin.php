@@ -45,7 +45,7 @@ final class Admin {
 		if ( $postType == RulesInit::RULES_TYPE_SLUG ) {
 			add_meta_box(
 				SKAUTISINTEGRATION_NAME . '_rules_metabox',
-				'skautIS pravidla',
+				__('skautIS pravidla', 'skautis-integration'),
 				[ $this, 'RulesFieldContent' ],
 				RulesInit::RULES_TYPE_SLUG
 			);
