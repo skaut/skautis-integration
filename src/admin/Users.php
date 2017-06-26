@@ -26,7 +26,7 @@ final class Users {
 	}
 
 	public function addColumnHeaderToUsersTable( array $columns = [] ) {
-		$columns[ SKAUTISINTEGRATION_NAME ] = __( 'SkautIS', 'skautis-integration' );
+		$columns[ SKAUTISINTEGRATION_NAME ] = __( 'skautIS', 'skautis-integration' );
 
 		return $columns;
 	}
@@ -52,14 +52,14 @@ final class Users {
 
 	public function skautisUserIdField( \WP_User $user ) {
 		?>
-		<h3><?php _e( "SkautIS", "blank" ); ?></h3>
+		<h3><?php _e( "skautIS", "blank" ); ?></h3>
 		<?php
 		echo $this->connectWpAccount->getConnectAndDisconnectButton( $user->ID );
 		do_action( SKAUTISINTEGRATION_NAME . '_userScreen_userIds_before' );
 		?>
 		<table class="form-table">
 			<tr>
-				<th><label for="skautisUserId_prod"><?php _e( "SkautIS user ID", SKAUTISINTEGRATION_NAME ); ?></label>
+				<th><label for="skautisUserId_prod"><?php _e( "skautIS user ID", SKAUTISINTEGRATION_NAME ); ?></label>
 				</th>
 				<td>
 					<input type="text" name="skautisUserId_prod" id="skautisUserId_prod" class="regular-text" <?php
@@ -72,7 +72,7 @@ final class Users {
 			</tr>
 			<tr>
 				<th><label
-						for="skautisUserId_test"><?php _e( "SkautIS user ID (testovací)", SKAUTISINTEGRATION_NAME ); ?></label>
+						for="skautisUserId_test"><?php _e( "skautIS user ID (testovací)", SKAUTISINTEGRATION_NAME ); ?></label>
 				</th>
 				<td>
 					<input type="text" name="skautisUserId_test" id="skautisUserId_test" class="regular-text" <?php

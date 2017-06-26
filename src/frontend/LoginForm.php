@@ -36,7 +36,7 @@ final class LoginForm {
 		?>
 		<p style="margin-bottom: 0.3em;">
 			<a class="button button-primary button-hero pic-lilie" style="float: none; width: 100%; text-align: center;""
-			   href="<?php echo $this->wpLoginLogout->getLoginUrl(); ?>"><?php _e( 'Přihlásit se přes SkautIS', 'skautis-integration' ); ?></a>
+			   href="<?php echo $this->wpLoginLogout->getLoginUrl(); ?>"><?php _e( 'Přihlásit se přes skautIS', 'skautis-integration' ); ?></a>
 			<br/>
 		</p><br/>
 		<?php
@@ -46,7 +46,7 @@ final class LoginForm {
 		return '
 		<p style="margin-bottom: 0.3em;">
 			<a class="button button-primary button-hero pic-lilie" style="float: none; width: 100%; text-align: center;"
-			   href="' . $this->wpLoginLogout->getLoginUrl() . '">' . __( 'Přihlásit se přes SkautIS', 'skautis-integration' ) . '</a>
+			   href="' . $this->wpLoginLogout->getLoginUrl() . '">' . __( 'Přihlásit se přes skautIS', 'skautis-integration' ) . '</a>
 			   <br/>
 		</p><br/>
 		';

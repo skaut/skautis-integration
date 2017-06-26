@@ -36,14 +36,14 @@ final class Settings {
 		$envType = get_option( 'skautis_integration_appid_type' );
 		if ( $envType === SkautisGateway::PROD_ENV ) {
 			if ( ! get_option( 'skautis_integration_appid_production' ) ) {
-				Helpers::showAdminNotice( sprintf( __( 'Zadejte v <a href="%1$s">nastavení</a> pluginu APP ID produkční verze SkautISu', 'skautis-integration' ), admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME ) ), 'warning', 'toplevel_page_' . SKAUTISINTEGRATION_NAME );
+				Helpers::showAdminNotice( sprintf( __( 'Zadejte v <a href="%1$s">nastavení</a> pluginu APP ID produkční verze skautISu', 'skautis-integration' ), admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME ) ), 'warning', 'toplevel_page_' . SKAUTISINTEGRATION_NAME );
 			}
 		} else if ( $envType === SkautisGateway::TEST_ENV ) {
 			if ( ! get_option( 'skautis_integration_appid_test' ) ) {
-				Helpers::showAdminNotice( sprintf( __( 'Zadejte v <a href="%1$s">nastavení</a> pluginu APP ID testovací verze SkautISu', 'skautis-integration' ), admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME ) ), 'warning', 'toplevel_page_' . SKAUTISINTEGRATION_NAME );
+				Helpers::showAdminNotice( sprintf( __( 'Zadejte v <a href="%1$s">nastavení</a> pluginu APP ID testovací verze skautISu', 'skautis-integration' ), admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME ) ), 'warning', 'toplevel_page_' . SKAUTISINTEGRATION_NAME );
 			}
 		} else {
-			Helpers::showAdminNotice( sprintf( __( 'Vyberte v <a href="%1$s">nastavení</a> pluginu typ prostředí SkautISu', 'skautis-integration' ), admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME ) ), 'warning', 'toplevel_page_' . SKAUTISINTEGRATION_NAME );
+			Helpers::showAdminNotice( sprintf( __( 'Vyberte v <a href="%1$s">nastavení</a> pluginu typ prostředí skautISu', 'skautis-integration' ), admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME ) ), 'warning', 'toplevel_page_' . SKAUTISINTEGRATION_NAME );
 		}
 	}
 
@@ -101,7 +101,7 @@ final class Settings {
 		settings_errors();
 		?>
 		<div class="wrap">
-			<h1><?php _e( 'Nastavení propojení se SkautISem', 'skautis-integration' ); ?></h1>
+			<h1><?php _e( 'Nastavení propojení se skautISem', 'skautis-integration' ); ?></h1>
 			<form method="POST" action="<?php echo admin_url( 'options.php' ); ?>">
 				<?php settings_fields( SKAUTISINTEGRATION_NAME );
 				do_settings_sections( SKAUTISINTEGRATION_NAME );
@@ -224,7 +224,7 @@ final class Settings {
 
 		add_settings_field(
 			SKAUTISINTEGRATION_NAME . '_allowUsersDisconnectFromSkautis',
-			__( 'Umožnit uživatelům zrušit propojení účtu se SkautISem', 'skautis-integration' ),
+			__( 'Umožnit uživatelům zrušit propojení účtu se skautISem', 'skautis-integration' ),
 			[ $this, 'fieldAllowUsersDisconnectFromSkautis' ],
 			SKAUTISINTEGRATION_NAME . '_login',
 			SKAUTISINTEGRATION_NAME . '_login'
@@ -233,7 +233,7 @@ final class Settings {
 		if ( Services::getServicesContainer()['modulesManager']->isModuleActivated( Register::getId() ) ) {
 			add_settings_field(
 				SKAUTISINTEGRATION_NAME . '_checkUserPrivilegesIfLoginBySkautis',
-				__( 'Při přihlašování uživatele přes SkautIS ověřit, zda stále splňuje podmínky pro registraci', 'skautis-integration' ),
+				__( 'Při přihlašování uživatele přes skautIS ověřit, zda stále splňuje podmínky pro registraci', 'skautis-integration' ),
 				[ $this, 'fieldcheckUserPrivilegesIfLoginBySkautis' ],
 				SKAUTISINTEGRATION_NAME . '_login',
 				SKAUTISINTEGRATION_NAME . '_login'
@@ -293,16 +293,16 @@ if ( ! isUserLoggedInSkautis() ) {
 ?>
 	<div class="wp-core-ui" style="text-align: center;">
 	<a class="button button-primary button-hero pic-lilie" href="<?php echo getSkautisRegisterUrl(); ?>">
-		Přihlásit se přes SkautIS
+		Přihlásit se přes skautIS
 	</a>
 	</div>
 <?php
 } else {
 ?>
 	<div style="text-align: center;">
-		<strong>Jste přihlášeni ve SkautISu</strong><br/>
+		<strong>Jste přihlášeni ve skautISu</strong><br/>
 		<a class="button" href="<?php echo getSkautisLogoutUrl(); ?>">
-			Odhlásit se ze SkautISu
+			Odhlásit se ze skautISu
 		</a>
 	</div>
 <?php

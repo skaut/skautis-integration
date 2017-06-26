@@ -45,7 +45,7 @@ final class Admin {
 		if ( $postType == RulesInit::RULES_TYPE_SLUG ) {
 			add_meta_box(
 				SKAUTISINTEGRATION_NAME . '_rules_metabox',
-				'SkautIS pravidla',
+				'skautIS pravidla',
 				[ $this, 'RulesFieldContent' ],
 				RulesInit::RULES_TYPE_SLUG
 			);
@@ -70,7 +70,7 @@ final class Admin {
 	}
 
 	public function addRulesFieldToRevisions( $fields ) {
-		$fields[ SKAUTISINTEGRATION_NAME . '_rules_data' ] = __( 'SkautIS Pravidla', 'skautis-integration' );
+		$fields[ SKAUTISINTEGRATION_NAME . '_rules_data' ] = __( 'skautIS Pravidla', 'skautis-integration' );
 
 		return $fields;
 	}
@@ -106,8 +106,8 @@ final class Admin {
 					<label class="screen-reader-text"
 					       for="post_author_override"><?php _e( 'Pravidla', 'skautis-integration' ); ?></label>
 					<?php
-					if ( ! $this->skautisGateway->getSkautisInstance()->getUser()->isLoggedIn( true ) ) {
-						$result = '<h4><a href="' . $this->wpLoginLogout->getLoginUrl() . '">' . __( 'Pro správu pravidel je nutné se přihlásit do SkautISu', 'skautis-integration' ) . '</a></h4>';
+					if ( !$this->skautisGateway->isInitialized() || ! $this->skautisGateway->getSkautisInstance()->getUser()->isLoggedIn( true ) ) {
+						$result = '<h4><a href="' . $this->wpLoginLogout->getLoginUrl() . '">' . __( 'Pro správu pravidel je nutné se přihlásit do skautISu', 'skautis-integration' ) . '</a></h4>';
 						echo $result;
 					} else {
 						echo '<div id="query_builder"></div>';
@@ -196,7 +196,7 @@ final class Admin {
 	}
 
 	public function initRulesBuilder() {
-		if ( ! $this->skautisGateway->getSkautisInstance()->getUser()->isLoggedIn( true ) ) {
+		if ( ! $this->skautisGateway->isInitialized() || ! $this->skautisGateway->getSkautisInstance()->getUser()->isLoggedIn( true ) ) {
 			return;
 		}
 		?>

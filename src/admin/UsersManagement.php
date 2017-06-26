@@ -55,7 +55,7 @@ class UsersManagement {
 		';
 
 		if ( ! $this->skautisLogin->isUserLoggedInSkautis() ) {
-			$result .= '<a href="' . $this->wpLoginLogout->getLoginUrl() . '">' . __( 'Pro zobrazení obsahu je nutné se přihlásit do SkautISu', 'skautis-integration' ) . '</a>';
+			$result .= '<a href="' . $this->wpLoginLogout->getLoginUrl() . '">' . __( 'Pro zobrazení obsahu je nutné se přihlásit do skautISu', 'skautis-integration' ) . '</a>';
 			$result .= '
 		</div>
 			';
@@ -116,7 +116,7 @@ class UsersManagement {
 		<div id="connectUserToSkautisModal" class="hidden" style="max-width:400px;">
 			<div class="content">
 				<h3><?php _e( 'Propojení uživatele', 'skautis-integration' ); ?> <span
-						id="connectUserToSkautisModal_username"></span> <?php _e( 'se SkautISem', 'skautis-integration' ); ?>
+						id="connectUserToSkautisModal_username"></span> <?php _e( 'se skautISem', 'skautis-integration' ); ?>
 				</h3>
 				<h4><?php _e( 'Vyberte uživatele již registrovaného ve WordPressu', 'skautis-integration' ); ?>:</h4>
 				<select id="connectUserToSkautisModal_select">
@@ -147,7 +147,7 @@ class UsersManagement {
 				<a id="connectUserToSkautisModal_connectLink" class="button button-primary"
 				   href="<?php echo $this->connectAndDisconnectWpAccount->getConnectWpUserToSkautisUrl(); ?>"><?php _e( 'Potvrdit', 'skautis-integration' ); ?></a>
 				<div>
-					<em><?php _e( 'Je možné vybrat pouze ty uživatele, kteří ještě nemají propojený účet se SkautISem.', 'skautis-integration' ); ?></em>
+					<em><?php _e( 'Je možné vybrat pouze ty uživatele, kteří ještě nemají propojený účet se skautISem.', 'skautis-integration' ); ?></em>
 				</div>
 			</div>
 		</div>

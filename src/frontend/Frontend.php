@@ -29,8 +29,10 @@ final class Frontend {
 
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueueStyles' ] );
 		add_action( 'login_enqueue_scripts', [ $this, 'enqueueLoginStyles' ] );
-		if ( $this->skautisGateway->getSkautisInstance()->getUser()->isLoggedIn() ) {
-			add_action( 'admin_bar_menu', [ $this, 'addLogoutLinkToAdminBar' ], 20 );
+		if ( $this->skautisGateway->isInitialized() ) {
+			if ( $this->skautisGateway->getSkautisInstance()->getUser()->isLoggedIn() ) {
+				add_action( 'admin_bar_menu', [ $this, 'addLogoutLinkToAdminBar' ], 20 );
+			}
 		}
 	}
 
@@ -104,7 +106,7 @@ final class Frontend {
 		$wpAdminBar->add_menu( array(
 			'parent' => $parent,
 			'id'     => SKAUTISINTEGRATION_NAME . '_adminBar_logout',
-			'title'  => esc_html__( 'Odhlásit se (i ze SkautISu)', 'skautis-integration' ),
+			'title'  => esc_html__( 'Odhlásit se (i ze skautISu)', 'skautis-integration' ),
 			'href'   => $this->wpLoginLogout->getLogoutUrl(),
 		) );
 	}

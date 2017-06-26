@@ -15,7 +15,11 @@ final class SkautisLogin {
 	}
 
 	public function isUserLoggedInSkautis() {
-		return $this->skautisGateway->getSkautisInstance()->getUser()->isLoggedIn() && $this->skautisGateway->getSkautisInstance()->getUser()->isLoggedIn( true );
+		if ( $this->skautisGateway->isInitialized() ) {
+			return $this->skautisGateway->getSkautisInstance()->getUser()->isLoggedIn() && $this->skautisGateway->getSkautisInstance()->getUser()->isLoggedIn( true );
+		}
+
+		return false;
 	}
 
 	public function setLoginDataToLocalSkautisInstance( array $data = [] ) {
@@ -26,7 +30,7 @@ final class SkautisLogin {
 
 			if ( ! $this->isUserLoggedInSkautis() ) {
 				if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-					throw new \Exception( __( 'Přihlášení přes SkautIS se nezdařilo', 'skautis-integration' ) );
+					throw new \Exception( __( 'Přihlášení přes skautIS se nezdařilo', 'skautis-integration' ) );
 				}
 
 				return false;

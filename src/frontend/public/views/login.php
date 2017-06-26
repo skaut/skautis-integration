@@ -5,16 +5,16 @@ if ( ! isUserLoggedInSkautis() ) {
 	?>
 	<div class="wp-core-ui" style="text-align: center;">
 		<a class="button button-primary button-hero pic-lilie" href="<?php echo getSkautisRegisterUrl(); ?>">
-			Přihlásit se přes SkautIS
+			Přihlásit se přes skautIS
 		</a>
 	</div>
 	<?php
 } else {
 	?>
 	<div style="text-align: center;">
-		<strong>Jste přihlášeni ve SkautISu</strong><br/>
+		<strong>Jste přihlášeni ve skautISu</strong><br/>
 		<a class="button" href="<?php echo getSkautisLogoutUrl(); ?>">
-			Odhlásit se ze SkautISu
+			Odhlásit se ze skautISu
 		</a>
 	</div>
 	<?php

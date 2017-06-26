@@ -24,7 +24,7 @@ class Role implements IRule {
 	}
 
 	public function getLabel() {
-		return __( 'Role (ve SkautISu)', 'skautis-integration' );
+		return __( 'Role (ve skautISu)', 'skautis-integration' );
 	}
 
 	public function getType() {

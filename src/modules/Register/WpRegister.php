@@ -45,7 +45,7 @@ final class WpRegister {
 
 			Helpers::validateNonceFromUrl( $_GET['ReturnUrl'], SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis' );
 
-			// check for SkautIS User ID collision with existing users
+			// check for skautIS User ID collision with existing users
 			$usersWpQuery = new \WP_User_Query( [
 				'number'     => 1,
 				'meta_query' => [

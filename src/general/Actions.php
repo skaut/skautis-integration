@@ -92,7 +92,7 @@ final class Actions {
 		if ( isset( $actions[ $action ] ) ) {
 			return call_user_func( $actions[ $action ] );
 		} else {
-			throw new \Exception( 'SkautIS Auth action "' . esc_html( $action ) . '" is not defined' );
+			throw new \Exception( 'skautIS Auth action "' . esc_html( $action ) . '" is not defined' );
 		}
 
 	}

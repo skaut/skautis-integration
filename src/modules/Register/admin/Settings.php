@@ -66,7 +66,7 @@ final class Settings {
 
 		add_settings_field(
 			SKAUTISINTEGRATION_NAME . '_modules_register_defaultwpRole',
-			__( 'Výchozí role po registraci uživatele přes SkautIS', 'skautis-integration' ),
+			__( 'Výchozí role po registraci uživatele přes skautIS', 'skautis-integration' ),
 			[ $this, 'fieldWpRole' ],
 			SKAUTISINTEGRATION_NAME . '_modules_register',
 			SKAUTISINTEGRATION_NAME . '_modules_register'
@@ -139,7 +139,7 @@ final class Settings {
 			<em><?php _e( 'Nastavením omezíte registraci uživatelů pouze při splnění následujících pravidel.', 'skautis-integration' ); ?></em>
 		</div>
 		<div id="skautis_integration_modules_register_rulesNotSetHelp">
-			<em><?php _e( 'Ponecháte-li prázdné - budou se moci přes SkautIS registrovat všichni uživatelé. Jejich výchozí role pak bude: ', 'skautis-integration' ); ?>
+			<em><?php _e( 'Ponecháte-li prázdné - budou se moci přes skautIS registrovat všichni uživatelé. Jejich výchozí role pak bude: ', 'skautis-integration' ); ?>
 				<strong><?php echo translate_user_role( ucfirst( get_option( SKAUTISINTEGRATION_NAME . '_modules_register_defaultwpRole' ) ) ); ?></strong></em>
 		</div>
 		<div><em><?php _e( 'Pravidla můžete přidávat v sekci', 'skautis-integration' ); ?>

@@ -36,7 +36,7 @@ final class ConnectAndDisconnectWpAccount {
 
 				return '
 				<a href="' . $url . '"
-				   class="button">' . __( 'Propojit tento účet se SkautISem', 'skautis-integration' ) . '</a>
+				   class="button">' . __( 'Propojit tento účet se skautISem', 'skautis-integration' ) . '</a>
 				';
 			}
 		}
@@ -49,7 +49,7 @@ final class ConnectAndDisconnectWpAccount {
 
 			return '
 			<a href="' . $url . '"
-			   class="button">' . __( 'Zrušit propojení účtu se SkautISem', 'skautis-integration' ) . '</a>
+			   class="button">' . __( 'Zrušit propojení účtu se skautISem', 'skautis-integration' ) . '</a>
 			';
 		}
 
