@@ -65,6 +65,14 @@ class SkautisIntegration {
 		Services::getServicesContainer()['modulesManager'];
 	}
 
+	private function isCompatibleVersionOfWp() {
+		if ( isset( $GLOBALS['wp_version'] ) && version_compare( $GLOBALS['wp_version'], '4.8', '>=' ) ) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public function activation() {
 		if ( ! $this->isCompatibleVersionOfWp() ) {
 			deactivate_plugins( SKAUTISINTEGRATION_PLUGIN_BASENAME );
@@ -93,14 +101,6 @@ class SkautisIntegration {
 		if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 			exit;
 		}
-	}
-
-	private function isCompatibleVersionOfWp() {
-		if ( isset( $GLOBALS['wp_version'] ) && version_compare( $GLOBALS['wp_version'], '4.8', '>=' ) ) {
-			return true;
-		}
-
-		return false;
 	}
 
 	public function checkVersionAndPossiblyDeactivatePlugin() {
