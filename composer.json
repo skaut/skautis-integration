@@ -1,7 +1,7 @@
 {
   "name": "skautis/WordPressIntegration",
   "type": "library",
-  "description": "WordPress integration with SkautIS",
+  "description": "WordPress integration with skautIS",
   "license": "proprietary",
   "authors": [
     {

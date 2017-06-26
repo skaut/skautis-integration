@@ -5,9 +5,9 @@
  * @package           skautis-integration
  *
  * @wordpress-plugin
- * Plugin Name:       SkautIS integrace
+ * Plugin Name:       skautIS integrace
  * Plugin URI:        https://davidodehnal.cz/
- * Description:       Integrace WordPressu se SkautISem
+ * Description:       Integrace WordPressu se skautISem
  * Version:           0.1
  * Author:            David Odehnal
  * Author URI:        https://davidodehnal.cz/
