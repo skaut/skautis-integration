@@ -33,11 +33,13 @@ final class Admin {
 		add_action( 'edit_form_after_title', [ $this, 'addRulesUi' ] );
 
 		add_action( 'admin_enqueue_scripts', function () {
-			if ( get_post_type() == RulesInit::RULES_TYPE_SLUG ) {
-				add_action( 'admin_enqueue_scripts', [ $this, 'enqueueStyles' ] );
-				add_action( 'admin_enqueue_scripts', [ $this, 'enqueueScripts' ] );
-				add_action( 'admin_footer', [ $this, 'initRulesBuilder' ] );
+			if ( get_current_screen()->id != RulesInit::RULES_TYPE_SLUG || get_post_type() != RulesInit::RULES_TYPE_SLUG ) {
+				return;
 			}
+
+			add_action( 'admin_enqueue_scripts', [ $this, 'enqueueStyles' ] );
+			add_action( 'admin_enqueue_scripts', [ $this, 'enqueueScripts' ] );
+			add_action( 'admin_footer', [ $this, 'initRulesBuilder' ] );
 		}, 5 );
 	}
 
@@ -45,7 +47,7 @@ final class Admin {
 		if ( $postType == RulesInit::RULES_TYPE_SLUG ) {
 			add_meta_box(
 				SKAUTISINTEGRATION_NAME . '_rules_metabox',
-				__('skautIS pravidla', 'skautis-integration'),
+				__( 'skautIS pravidla', 'skautis-integration' ),
 				[ $this, 'RulesFieldContent' ],
 				RulesInit::RULES_TYPE_SLUG
 			);
@@ -106,7 +108,7 @@ final class Admin {
 					<label class="screen-reader-text"
 					       for="post_author_override"><?php _e( 'Pravidla', 'skautis-integration' ); ?></label>
 					<?php
-					if ( !$this->skautisGateway->isInitialized() || ! $this->skautisGateway->getSkautisInstance()->getUser()->isLoggedIn( true ) ) {
+					if ( ! $this->skautisGateway->isInitialized() || ! $this->skautisGateway->getSkautisInstance()->getUser()->isLoggedIn( true ) ) {
 						$result = '<h4><a href="' . $this->wpLoginLogout->getLoginUrl() . '">' . __( 'Pro správu pravidel je nutné se přihlásit do skautISu', 'skautis-integration' ) . '</a></h4>';
 						echo $result;
 					} else {
@@ -201,7 +203,7 @@ final class Admin {
 		}
 		?>
 		<script>
-            sortObj = function (obj, type) {
+            function sortObj(obj, type) {
                 var temp_array = [];
                 for (var key in obj) {
                     if (obj.hasOwnProperty(key)) {
@@ -217,7 +219,7 @@ final class Admin {
                     temp_obj[temp_array[i]] = obj[temp_array[i]];
                 }
                 return temp_obj;
-            };
+            }
 
             window.skautisQueryBuilderFilters = [];
 
