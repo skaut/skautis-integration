@@ -2,11 +2,7 @@ Seznam toho, jaké služby je potřeba povolit ve skautISu.
 
 Verze 1.0
 <br>
-<b>UM_User_DETAIL</b> - Načíst detail uživatele
-<br>
 <b>OU_Person_DETAIL</b> - Načíst detail osoby
-<br>
-<b>UM_Role_ALL</b> - Načíst seznam rolí
 <br>
 <b>OU_Unit_ALL</b> - Načíst seznam jednotek
 <br>
@@ -21,3 +17,7 @@ Verze 1.0
 <b>UM_UserRole_ALL_User</b> - Načíst seznam rolí přiřazených uživateli
 <br>
 <b>UM_User_ALL</b> - Načíst seznam uživatelů
+<br>
+<b>UM_User_DETAIL</b> - Načíst detail uživatele
+<br>
+<b>UM_Role_ALL</b> - Načíst seznam rolí
