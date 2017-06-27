@@ -27,6 +27,9 @@ https://napoveda.skaut.cz/skautis/skautis-integration
 
 
 == Changelog ==
-
 = 1.0 =
-* 
+* podpora přihlášení přes skautIS
+* podpora registrace přes skautIS
+* nastavování pravidel
+* propojování již registrovaných uživatelů
+* nastavování propojování pravidel a rolí ve WordPressu
