@@ -117,7 +117,7 @@ final class Settings {
 			'skautis_integration_setting',
 			__( 'APP ID', 'skautis-integration' ),
 			function () {
-				echo '';
+				echo sprintf( __( 'Návod pro nastavení pluginu a získání APP ID najdete v <a href="%s" target="_blank">nápovědě</a>.', 'skautis-integration' ), 'https://napoveda.skaut.cz/skautis/skautis-integration' );
 			},
 			SKAUTISINTEGRATION_NAME
 		);
