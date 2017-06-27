@@ -47,7 +47,7 @@ final class Frontend {
 		if ( $queryValue && ! empty( $queryValue ) ) {
 			if ( file_exists( get_stylesheet_directory() . '/skautis/login.php' ) ) {
 				return get_stylesheet_directory() . '/skautis/login.php';
-			} elseif ( file_exists( get_template_directory() . '/skautis/login.php' ) ) {
+			} else if ( file_exists( get_template_directory() . '/skautis/login.php' ) ) {
 				return get_template_directory() . '/skautis/login.php';
 			} else {
 				$this->pluginLoginView = true;

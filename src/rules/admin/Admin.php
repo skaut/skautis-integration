@@ -108,7 +108,9 @@ final class Admin {
 					<label class="screen-reader-text"
 					       for="post_author_override"><?php _e( 'Pravidla', 'skautis-integration' ); ?></label>
 					<?php
-					if ( ! $this->skautisGateway->isInitialized() || ! $this->skautisGateway->getSkautisInstance()->getUser()->isLoggedIn( true ) ) {
+					if ( ! $this->skautisGateway->isInitialized() ) {
+						printf( __( 'Vyberte v <a href="%1$s">nastavení</a> pluginu typ prostředí skautISu', 'skautis-integration' ), admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME ) );
+					} else if ( ! $this->skautisGateway->getSkautisInstance()->getUser()->isLoggedIn( true ) ) {
 						$result = '<h4><a href="' . $this->wpLoginLogout->getLoginUrl() . '">' . __( 'Pro správu pravidel je nutné se přihlásit do skautISu', 'skautis-integration' ) . '</a></h4>';
 						echo $result;
 					} else {

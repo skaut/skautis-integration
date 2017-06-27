@@ -55,10 +55,20 @@ class UsersManagement {
 		';
 
 		if ( ! $this->skautisLogin->isUserLoggedInSkautis() ) {
-			$result .= '<a href="' . $this->wpLoginLogout->getLoginUrl() . '">' . __( 'Pro zobrazení obsahu je nutné se přihlásit do skautISu', 'skautis-integration' ) . '</a>';
-			$result .= '
+
+			if ( $this->skautisGateway->isInitialized() ) {
+				$result .= '<a href="' . $this->wpLoginLogout->getLoginUrl() . '">' . __( 'Pro zobrazení obsahu je nutné se přihlásit do skautISu', 'skautis-integration' ) . '</a>';
+				$result .= '
 		</div>
 			';
+			} else {
+				$result .= sprintf( __( 'Vyberte v <a href="%1$s">nastavení</a> pluginu typ prostředí skautISu', 'skautis-integration' ), admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME ) );
+				$result .= '
+		</div>
+			';
+			}
+
+
 			echo $result;
 
 			return;
