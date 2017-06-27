@@ -10,6 +10,8 @@ use SkautisIntegration\Modules\Register\Register;
 
 final class Settings {
 
+	const HELP_PAGE_URL = 'https://napoveda.skaut.cz/skautis/skautis-integration';
+
 	private $modulesManager;
 	private $adminDirUrl = '';
 
@@ -23,6 +25,10 @@ final class Settings {
 		add_filter( 'plugin_action_links_' . SKAUTISINTEGRATION_PLUGIN_BASENAME, [
 			$this,
 			'addSettingsLinkToPluginsTable'
+		] );
+		add_filter( 'plugin_action_links_' . SKAUTISINTEGRATION_PLUGIN_BASENAME, [
+			$this,
+			'addHelpLinkToPluginsTable'
 		] );
 
 		add_action( is_multisite() ? 'network_admin_menu' : 'admin_menu', [ $this, 'setupSettingPage' ], 5 );
@@ -50,6 +56,14 @@ final class Settings {
 	public function addSettingsLinkToPluginsTable( array $links = [] ) {
 		$mylinks = [
 			'<a href="' . admin_url( 'admin.php?page=skautis-integration' ) . '">' . __( 'Settings' ) . '</a>',
+		];
+
+		return array_merge( $links, $mylinks );
+	}
+
+	public function addHelpLinkToPluginsTable( array $links = [] ) {
+		$mylinks = [
+			'<a href="' . self::HELP_PAGE_URL . '" target="_blank">' . __( 'Help' ) . '</a>',
 		];
 
 		return array_merge( $links, $mylinks );
@@ -117,7 +131,7 @@ final class Settings {
 			'skautis_integration_setting',
 			__( 'APP ID', 'skautis-integration' ),
 			function () {
-				echo sprintf( __( 'Návod pro nastavení pluginu a získání APP ID najdete v <a href="%s" target="_blank">nápovědě</a>.', 'skautis-integration' ), 'https://napoveda.skaut.cz/skautis/skautis-integration' );
+				echo sprintf( __( 'Návod pro nastavení pluginu a získání APP ID najdete v <a href="%s" target="_blank">nápovědě</a>.', 'skautis-integration' ), self::HELP_PAGE_URL );
 			},
 			SKAUTISINTEGRATION_NAME
 		);
