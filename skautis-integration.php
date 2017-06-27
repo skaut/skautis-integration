@@ -1,18 +1,12 @@
 <?php
 /**
- * @link              https://davidodehnal.cz/
- * @since             0.1
- * @package           skautis-integration
- *
- * @wordpress-plugin
  * Plugin Name:       skautIS integrace
- * Plugin URI:        https://davidodehnal.cz/
+ * Plugin URI:        https://github.com/skaut/skautis-integration
  * Description:       Integrace WordPressu se skautISem
  * Version:           1.0
  * Author:            David Odehnal
  * Author URI:        https://davidodehnal.cz/
  * Text Domain:       skautis-integration
- * Domain Path:       /languages
  */
 
 namespace SkautisIntegration;
@@ -20,8 +14,8 @@ namespace SkautisIntegration;
 use SkautisIntegration\Services\Services;
 use SkautisIntegration\Utils\Helpers;
 
-if ( ! defined( 'WPINC' ) ) {
-	die;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
 }
 
 define( 'SKAUTISINTEGRATION_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );

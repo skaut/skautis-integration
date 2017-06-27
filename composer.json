@@ -19,7 +19,6 @@
   "require": {
     "php": "^5.6 || ^7.0",
     "pimple/pimple": "~3.0",
-    "spiechu/lazy-pimple": "~0.3",
     "skautis/skautis": "~2.1"
   },
   "minimum-stability": "stable",

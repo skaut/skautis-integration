@@ -29,19 +29,8 @@ class Services {
 	}
 
 	private static function registerServices() {
-		self::$services['lazy_loading_value_holder_factory_factory'] = function ( \Pimple\Container $container ) {
-			return ( new \Spiechu\LazyPimple\Factory\LazyLoadingValueHolderFactoryFactory() )
-				->getFactory();
-		};
-
-		self::$services['lazy_service_factory'] = function ( \Pimple\Container $container ) {
-			return new \Spiechu\LazyPimple\Factory\LazyServiceFactory( $container['lazy_loading_value_holder_factory_factory'] );
-		};
-
 		self::$services['skautisGateway'] = function ( \Pimple\Container $container ) {
-			return $container['lazy_service_factory']->getLazyServiceDefinition( SkautisGateway::class, function () {
-				return new SkautisGateway();
-			} );
+			return new SkautisGateway();
 		};
 
 		self::$services['skautisLogin'] = function ( \Pimple\Container $container ) {

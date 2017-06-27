@@ -26,7 +26,7 @@ class UsersManagement {
 
 	private function initHooks() {
 		if ( is_admin() ) {
-			add_action( is_multisite() ? 'network_admin_menu' : 'admin_menu', [
+			add_action( 'admin_menu', [
 				$this,
 				'setupUsersManagementPage'
 			], 10 );

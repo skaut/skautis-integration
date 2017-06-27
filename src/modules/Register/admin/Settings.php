@@ -20,7 +20,7 @@ final class Settings {
 			return;
 		}
 
-		add_action( is_multisite() ? 'network_admin_menu' : 'admin_menu', [ $this, 'setupSettingPage' ], 25 );
+		add_action( 'admin_menu', [ $this, 'setupSettingPage' ], 25 );
 		add_action( 'admin_init', [ $this, 'setupSettingFields' ] );
 	}
 

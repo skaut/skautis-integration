@@ -31,7 +31,7 @@ final class Settings {
 			'addHelpLinkToPluginsTable'
 		] );
 
-		add_action( is_multisite() ? 'network_admin_menu' : 'admin_menu', [ $this, 'setupSettingPage' ], 5 );
+		add_action( 'admin_menu', [ $this, 'setupSettingPage' ], 5 );
 		add_action( 'admin_init', [ $this, 'setupSettingFields' ] );
 		add_action( 'admin_init', [ $this, 'setupLoginFields' ] );
 
