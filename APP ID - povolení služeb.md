@@ -1,4 +1,4 @@
-Seznam toho, jaké služby je potřeba povolit ve skautISu
+Seznam toho, jaké služby je potřeba povolit ve skautISu.
 
 Verze 1.0
 <br>
