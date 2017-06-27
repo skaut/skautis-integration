@@ -140,7 +140,7 @@ final class Admin {
 
 		wp_enqueue_style(
 			SKAUTISINTEGRATION_NAME . '_query-builder-main',
-			$this->adminDirUrl . 'QueryBuilder/css/query-builder.default.min.css',
+			'https://unpkg.com/jQuery-QueryBuilder@2.4.3/dist/css/query-builder.default.min.css',
 			[],
 			'2.4.3',
 			'all'
@@ -156,6 +156,22 @@ final class Admin {
 	}
 
 	public function enqueueScripts() {
+		wp_enqueue_script(
+			SKAUTISINTEGRATION_NAME . '_rules_role',
+			$this->adminDirUrl . 'js/skautis-rules-role.js',
+			[],
+			SKAUTISINTEGRATION_VERSION,
+			false
+		);
+
+		wp_enqueue_script(
+			SKAUTISINTEGRATION_NAME . '_rules_membership',
+			$this->adminDirUrl . 'js/skautis-rules-membership.js',
+			[],
+			SKAUTISINTEGRATION_VERSION,
+			false
+		);
+
 		wp_enqueue_script(
 			'interact',
 			'https://cdnjs.cloudflare.com/ajax/libs/interact.js/1.2.8/interact.min.js',
@@ -174,7 +190,7 @@ final class Admin {
 
 		wp_enqueue_script(
 			SKAUTISINTEGRATION_NAME . '_query-builder',
-			$this->adminDirUrl . 'QueryBuilder/js/query-builder.standalone.min.js',
+			'https://unpkg.com/jQuery-QueryBuilder@2.4.3/dist/js/query-builder.standalone.min.js',
 			[ 'jquery' ],
 			'2.4.3',
 			false
@@ -189,7 +205,7 @@ final class Admin {
 		);
 
 		wp_enqueue_script(
-			SKAUTISINTEGRATION_NAME . '_modules_register_admin',
+			SKAUTISINTEGRATION_NAME . '_rules',
 			$this->adminDirUrl . 'js/skautis-rules-admin.js',
 			[ SKAUTISINTEGRATION_NAME . '_query-builder' ],
 			SKAUTISINTEGRATION_VERSION,
@@ -203,48 +219,50 @@ final class Admin {
 		}
 		?>
 		<script>
-            function sortObj(obj, type) {
-                var temp_array = [];
-                for (var key in obj) {
-                    if (obj.hasOwnProperty(key)) {
-                        temp_array.push(key);
-                    }
-                }
-                temp_array.sort(function (a, b) {
-                    return obj[a].localeCompare(obj[b]);
-                });
-
-                var temp_obj = {};
-                for (var i = 0; i < temp_array.length; i++) {
-                    temp_obj[temp_array[i]] = obj[temp_array[i]];
-                }
-                return temp_obj;
-            }
-
             window.skautisQueryBuilderFilters = [];
 
             var data = {};
 			<?php
 			foreach ( (array) $this->rulesManager->getRules() as $rule ) {
-				$data = json_encode( [
-					'id'          => $rule->getId(),
-					'label'       => $rule->getLabel(),
-					'type'        => $rule->getType(),
-					'input'       => $rule->getInput(),
-					'multiple'    => $rule->getMultiple(),
-					'values'      => $rule->getValues(),
-					'operators'   => $rule->getOperators(),
-					'validation'  => $rule->getValidation(),
-					'placeholder' => $rule->getPlaceholder(),
-					'description' => $rule->getDescription()
-				] );
-				echo '
-					data = ' . $data . ';
+			$data = json_encode( [
+				'id'          => $rule->getId(),
+				'label'       => $rule->getLabel(),
+				'type'        => $rule->getType(),
+				'input'       => $rule->getInput(),
+				'multiple'    => $rule->getMultiple(),
+				'values'      => $rule->getValues(),
+				'operators'   => $rule->getOperators(),
+				'placeholder' => $rule->getPlaceholder(),
+				'description' => $rule->getDescription()
+			] );
+			?>
+            data = <?php echo $data; ?>;
 
-					data.values = sortObj(data.values, "value");
+            if (typeof data.values !== "undefined") {
+                data.values = Object.keys(data.values).map(function (key) {
+                    return {[key]: data.values[key]};
+                });
+                data.values = data.values.sort(function (a, b) {
+                    return a[Object.keys(a)[0]].localeCompare(b[Object.keys(b)[0]]);
+                });
+            }
 
-					window.skautisQueryBuilderFilters.push(data);
-					';
+            if (data.input === "roleInput") {
+                var role = new Role(data.values);
+                data.input = role.input.bind(role);
+                data.validation = role.validation.call(role);
+                data.valueGetter = role.valueGetter.bind(role);
+                data.valueSetter = role.valueSetter.bind(role);
+            } else if (data.input === "membershipInput") {
+                var membership = new Membership(data.values);
+                data.input = membership.input.bind(membership);
+                data.validation = membership.validation.call(membership);
+                data.valueGetter = membership.valueGetter.bind(membership);
+                data.valueSetter = membership.valueSetter.bind(membership);
+            }
+
+            window.skautisQueryBuilderFilters.push(data);
+			<?php
 			}
 			?>
 		</script>

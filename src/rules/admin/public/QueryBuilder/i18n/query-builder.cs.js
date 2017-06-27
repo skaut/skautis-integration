@@ -72,7 +72,14 @@
             "boolean_not_valid": "Musí být zadán logický výraz",
             "operator_not_multiple": "Operátor \"{1}\" nepodporuje více hodnot"
         },
-        "invert": "invertní"
+        "invert": "invertní",
+        "custom": {
+            "select_placeholder": "Vyberte...",
+            "units": {
+                "unitNumber": "číslo jednotky (např. 411.12)",
+                "inUnitWithNumber": "v jednotce, jejíž evidenční číslo"
+            }
+        }
     };
 
     QueryBuilder.defaults({lang_code: 'cs'});

@@ -42,7 +42,7 @@
         $queryBuilder.on('change', function () {
             $(this).find('select[multiple]:not(.select2-hidden-accessible)').each(function () {
                 $(this).select2({
-                    placeholder: 'Vyberte...'
+                    placeholder: jQuery.fn.queryBuilder.regional.cs.custom.select_placeholder
                 });
             });
         });

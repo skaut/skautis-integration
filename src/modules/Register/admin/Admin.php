@@ -32,6 +32,14 @@ final class Admin {
 				'4.0.3',
 				'all'
 			);
+
+			wp_enqueue_style(
+				SKAUTISINTEGRATION_NAME . '_modules_register',
+				$this->adminDirUrl . 'css/skautis-modules-register-admin.css',
+				[],
+				SKAUTISINTEGRATION_VERSION,
+				'all'
+			);
 		}
 	}
 

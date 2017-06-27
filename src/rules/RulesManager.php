@@ -20,9 +20,9 @@ final class RulesManager {
 
 	private function initRules() {
 		return apply_filters( SKAUTISINTEGRATION_NAME . '_rules', [
-			Rule\Unit::$id => new Rule\Unit( $this->skautisGateway ),
-			Rule\Role::$id => new Rule\Role( $this->skautisGateway ),
-			Rule\All::$id  => new Rule\All( $this->skautisGateway )
+			Rule\Role::$id       => new Rule\Role( $this->skautisGateway ),
+			Rule\Membership::$id => new Rule\Membership( $this->skautisGateway ),
+			Rule\All::$id        => new Rule\All( $this->skautisGateway )
 		] );
 	}
 

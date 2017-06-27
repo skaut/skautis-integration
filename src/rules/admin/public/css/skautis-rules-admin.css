@@ -133,6 +133,21 @@
 	opacity: 1;
 }
 
-.query-builder .rule-value-container .form-control {
+.query-builder .form-control {
 	min-width: 200px;
+	margin-top: 5px !important;
+	margin-bottom: 5px !important;
+}
+
+.query-builder select.multi-rules {
+	min-width: auto !important;
+	margin: 5px 0 5px 8px;
+}
+
+.query-builder .input-container.multi-rules {
+	display: inline-block;
+	vertical-align: middle;
+	margin-left: 9px;
+	border-left: 1px solid #DDD !important;
+	padding-left: 5px !important;
 }

@@ -43,10 +43,6 @@ class All implements IRule {
 		return self::$operators;
 	}
 
-	public function getValidation() {
-		return null;
-	}
-
 	public function getPlaceholder() {
 		return null;
 	}

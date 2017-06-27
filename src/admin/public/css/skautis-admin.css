@@ -19,3 +19,9 @@
 	display: inline-block;
 	padding: 0 55px 55px 0;
 }
+
+.skautis_page_skautis-integration_modules .form-table th,
+.skautis_page_skautis-integration_modules .form-table td {
+	padding-top: 0.6em;
+	padding-bottom: 0.6em;
+}

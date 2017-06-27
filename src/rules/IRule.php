@@ -17,8 +17,6 @@ interface IRule {
 
 	public function getOperators();
 
-	public function getValidation();
-
 	public function getPlaceholder();
 
 	public function getDescription();

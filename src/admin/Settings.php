@@ -154,21 +154,18 @@ final class Settings {
 			SKAUTISINTEGRATION_NAME . '_modules',
 			__( 'Dostupné moduly', 'skautis-integration' ),
 			function () {
-				?>
-				<table class="form-table">
-					<tbody>
-					<tr>
-						<th scope="row"><?php _e( 'Přihlašování', 'skautis-integration' ); ?></th>
-						<td>
-							<label for="module_Login">
-								<input type="checkbox" id="module_Login" checked="checked" disabled="disabled"/>
-							</label>
-						</td>
-					</tr>
-					</tbody>
-				</table>
-				<?php
+				echo '';
 			},
+			SKAUTISINTEGRATION_NAME . '_modules'
+		);
+
+		add_settings_field(
+			'skautis_integration_login',
+			__( 'Přihlašování', 'skautis-integration' ),
+			function () {
+				echo '<label for="skautis_integration_login"><input type="checkbox" id="skautis_integration_login" checked="checked" disabled="disabled"/></label>';
+			},
+			SKAUTISINTEGRATION_NAME . '_modules',
 			SKAUTISINTEGRATION_NAME . '_modules'
 		);
 
@@ -191,6 +188,7 @@ final class Settings {
 				SKAUTISINTEGRATION_NAME . '_modules'
 			);
 		}
+
 		register_setting( SKAUTISINTEGRATION_NAME . '_modules', 'skautis_integration_activated_modules' );
 	}
 
