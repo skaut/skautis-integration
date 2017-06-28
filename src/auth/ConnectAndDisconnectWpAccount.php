@@ -22,7 +22,7 @@ final class ConnectAndDisconnectWpAccount {
 
 			update_user_meta( $wpUserId, 'skautisUserId_' . $this->skautisGateway->getEnv(), absint( $skautisUserId ) );
 
-			wp_safe_redirect( $_GET['ReturnUrl'] );
+			wp_safe_redirect( esc_url_raw( $_GET['ReturnUrl'] ) );
 			exit;
 		}
 	}
@@ -35,7 +35,7 @@ final class ConnectAndDisconnectWpAccount {
 				$url       = add_query_arg( 'ReturnUrl', urlencode( $returnUrl ), get_home_url( null, 'skautis/auth/' . Actions::CONNECT_ACTION ) );
 
 				return '
-				<a href="' . $url . '"
+				<a href="' . esc_url( $url ) . '"
 				   class="button">' . __( 'Propojit tento účet se skautISem', 'skautis-integration' ) . '</a>
 				';
 			}
@@ -48,7 +48,7 @@ final class ConnectAndDisconnectWpAccount {
 			$url       = add_query_arg( 'ReturnUrl', urlencode( $returnUrl ), get_home_url( null, 'skautis/auth/' . Actions::DISCONNECT_ACTION ) );
 
 			return '
-			<a href="' . $url . '"
+			<a href="' . esc_url( $url ) . '"
 			   class="button">' . __( 'Zrušit propojení účtu se skautISem', 'skautis-integration' ) . '</a>
 			';
 		}
@@ -65,7 +65,7 @@ final class ConnectAndDisconnectWpAccount {
 				} else {
 					$returnUrl = Helpers::getCurrentUrl();
 				}
-				wp_redirect( $this->skautisGateway->getSkautisInstance()->getLoginUrl( $returnUrl ), 302 );
+				wp_redirect( esc_url_raw( $this->skautisGateway->getSkautisInstance()->getLoginUrl( $returnUrl ) ), 302 );
 				exit;
 			}
 		}
@@ -113,7 +113,7 @@ final class ConnectAndDisconnectWpAccount {
 		$returnUrl = add_query_arg( SKAUTISINTEGRATION_NAME . '_connectWpAccountWithSkautis', wp_create_nonce( SKAUTISINTEGRATION_NAME . '_connectWpAccountWithSkautis' ), $returnUrl );
 		$url       = add_query_arg( 'ReturnUrl', urlencode( $returnUrl ), get_home_url( null, 'skautis/auth/' . Actions::CONNECT_WP_USER_TO_SKAUTIS_ACTION ) );
 
-		return $url;
+		return esc_url( $url );
 	}
 
 	public function disconnect() {
@@ -131,7 +131,7 @@ final class ConnectAndDisconnectWpAccount {
 						return;
 					}
 					if ( is_array( $result ) && isset( $result[1] ) && $result[1] > 0 ) {
-						$userId = $result[1];
+						$userId = absint( $result[1] );
 						if ( Helpers::userIsSkautisManager() ) {
 							delete_user_meta( $userId, 'skautisUserId_' . $this->skautisGateway->getEnv() );
 						}
@@ -141,7 +141,7 @@ final class ConnectAndDisconnectWpAccount {
 		}
 
 		if ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
-			wp_safe_redirect( $_GET['ReturnUrl'], 302 );
+			wp_safe_redirect( esc_url_raw( $_GET['ReturnUrl'] ), 302 );
 			exit;
 		} else {
 			wp_safe_redirect( get_home_url() );

@@ -82,7 +82,11 @@ final class RulesManager {
 
 		foreach ( (array) $rules as $rule ) {
 
-			$rulesGroups = json_decode( get_post_meta( $rule['rule'], SKAUTISINTEGRATION_NAME . '_rules_data', true ) );
+			if ( isset( $rule['rule'] ) ) {
+				$rulesGroups = json_decode( get_post_meta( $rule['rule'], SKAUTISINTEGRATION_NAME . '_rules_data', true ) );
+			} else {
+				return $result;
+			}
 
 			if ( isset( $rulesGroups->condition ) && isset( $rulesGroups->rules ) && ! empty( $rulesGroups->rules ) ) {
 				$result = $this->parseRulesGroups( $rulesGroups->condition, $rulesGroups->rules );

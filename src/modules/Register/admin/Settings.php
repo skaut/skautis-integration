@@ -88,9 +88,20 @@ final class Settings {
 			SKAUTISINTEGRATION_NAME . '_modules_register'
 		);
 
-		register_setting( SKAUTISINTEGRATION_NAME . '_modules_register', SKAUTISINTEGRATION_NAME . '_modules_register_defaultwpRole' );
-		register_setting( SKAUTISINTEGRATION_NAME . '_modules_register', SKAUTISINTEGRATION_NAME . '_modules_register_emailNotificationsAfterNewUserRegister' );
-		register_setting( SKAUTISINTEGRATION_NAME . '_modules_register', SKAUTISINTEGRATION_NAME . '_modules_register_rules' );
+		register_setting( SKAUTISINTEGRATION_NAME . '_modules_register', SKAUTISINTEGRATION_NAME . '_modules_register_defaultwpRole', [
+			'type'              => 'string',
+			'show_in_rest'      => false,
+			'sanitize_callback' => 'sanitize_text_field'
+		] );
+		register_setting( SKAUTISINTEGRATION_NAME . '_modules_register', SKAUTISINTEGRATION_NAME . '_modules_register_emailNotificationsAfterNewUserRegister', [
+			'type'              => 'string',
+			'show_in_rest'      => false,
+			'sanitize_callback' => 'sanitize_text_field'
+		] );
+		register_setting( SKAUTISINTEGRATION_NAME . '_modules_register', SKAUTISINTEGRATION_NAME . '_modules_register_rules', [
+			'type'         => 'string',
+			'show_in_rest' => false
+		] );
 	}
 
 	public function fieldWpRole() {
@@ -101,33 +112,33 @@ final class Settings {
 	}
 
 	public function fieldNewUserNotifications() {
-		$options = get_option( SKAUTISINTEGRATION_NAME . '_modules_register_emailNotificationsAfterNewUserRegister' );
+		$notificationOption = get_option( SKAUTISINTEGRATION_NAME . '_modules_register_emailNotificationsAfterNewUserRegister' );
 		?>
 		<label>
 			<input type="radio"
 			       name="<?php echo SKAUTISINTEGRATION_NAME; ?>_modules_register_emailNotificationsAfterNewUserRegister"
-			       value="none"<?php checked( 'none' == $options ); ?> />
+			       value="none"<?php checked( 'none' === $notificationOption ); ?> />
 			<span><?php _e( 'Nikomu', 'skautis-integration' ); ?></span>
 		</label>
 		<br/>
 		<label>
 			<input type="radio"
 			       name="<?php echo SKAUTISINTEGRATION_NAME; ?>_modules_register_emailNotificationsAfterNewUserRegister"
-			       value="admin"<?php checked( 'admin' == $options ); ?> />
+			       value="admin"<?php checked( 'admin' === $notificationOption ); ?> />
 			<span><?php _e( 'Administrátorovi (info o registraci nového uživatele)', 'skautis-integration' ); ?></span>
 		</label>
 		<br/>
 		<label>
 			<input type="radio"
 			       name="<?php echo SKAUTISINTEGRATION_NAME; ?>_modules_register_emailNotificationsAfterNewUserRegister"
-			       value="user"<?php checked( 'user' == $options ); ?> />
+			       value="user"<?php checked( 'user' === $notificationOption ); ?> />
 			<span><?php _e( 'Uživateli (přístupové údaje)', 'skautis-integration' ); ?></span>
 		</label>
 		<br/>
 		<label>
 			<input type="radio"
 			       name="<?php echo SKAUTISINTEGRATION_NAME; ?>_modules_register_emailNotificationsAfterNewUserRegister"
-			       value="both"<?php checked( 'both' == $options ); ?> />
+			       value="both"<?php checked( 'both' === $notificationOption ); ?> />
 			<span><?php _e( 'Administrátorovi i uživateli', 'skautis-integration' ); ?></span>
 		</label>
 		<?php
@@ -140,7 +151,7 @@ final class Settings {
 		</div>
 		<div id="skautis_integration_modules_register_rulesNotSetHelp">
 			<em><?php _e( 'Ponecháte-li prázdné - budou se moci přes skautIS registrovat všichni uživatelé. Jejich výchozí role pak bude: ', 'skautis-integration' ); ?>
-				<strong><?php echo translate_user_role( ucfirst( get_option( SKAUTISINTEGRATION_NAME . '_modules_register_defaultwpRole' ) ) ); ?></strong></em>
+				<strong><?php echo translate_user_role( ucfirst( esc_html( get_option( SKAUTISINTEGRATION_NAME . '_modules_register_defaultwpRole' ) ) ) ); ?></strong></em>
 		</div>
 		<div><em><?php _e( 'Pravidla můžete přidávat v sekci', 'skautis-integration' ); ?>
 				<a href="<?php echo admin_url( 'edit.php?post_type=' . RulesInit::RULES_TYPE_SLUG ); ?>"><?php _e( 'Správa pravidel', 'skautis-integration' ); ?></a>.</em>

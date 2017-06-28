@@ -111,11 +111,11 @@ class UsersManagement {
 				$returnUrl             = add_query_arg( 'user-edit_php', '', $returnUrl );
 				$returnUrl             = add_query_arg( 'user_id', $usersData[ $user->ID ]['id'], $returnUrl );
 				$connectDisconnectLink = add_query_arg( 'ReturnUrl', urlencode( $returnUrl ), $homeUrl );
-				$connectDisconnectLink = '<a href="' . $connectDisconnectLink . '" class="button">' . __( 'Odpojit', 'skautis-integration' ) . '</a>';
+				$connectDisconnectLink = '<a href="' . esc_url( $connectDisconnectLink ) . '" class="button">' . __( 'Odpojit', 'skautis-integration' ) . '</a>';
 			} else {
 				$connectDisconnectLink = '<a href="#TB_inline?width=450&height=300&inlineId=connectUserToSkautisModal" class="button thickbox">' . __( 'Propojit', 'skautis-integration' ) . '</a>';
 			}
-			$result .= '<tr style="' . $trBg . '"><td class="username">' . $user->DisplayName . '</td><td>&nbsp;&nbsp;(<span class="nickname">' . $user->UserName . '</span>)</td><td>&nbsp;&nbsp;<span class="skautisUserId">' . $user->ID . '</span></td><td>' . $connected . '</td><td>' . $connectDisconnectLink . '</td></tr>';
+			$result .= '<tr style="' . $trBg . '"><td class="username">' . esc_html( $user->DisplayName ) . '</td><td>&nbsp;&nbsp;(<span class="nickname">' . esc_html( $user->UserName ) . '</span>)</td><td>&nbsp;&nbsp;<span class="skautisUserId">' . absint( $user->ID ) . '</span></td><td>' . $connected . '</td><td>' . $connectDisconnectLink . '</td></tr>';
 		}
 		$result .= '</tbody></table>';
 
@@ -149,7 +149,7 @@ class UsersManagement {
 					] );
 					foreach ( $notConnectedWpUsers->get_results() as $user ) {
 						echo '
-						<option value="' . $user->ID . '">' . $user->data->display_name . '</option>
+						<option value="' . absint( $user->ID ) . '">' . esc_html( $user->data->display_name ) . '</option>
 						';
 					}
 					?>

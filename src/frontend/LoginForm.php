@@ -36,7 +36,8 @@ final class LoginForm {
 		?>
 		<p style="margin-bottom: 0.3em;">
 			<a class="button button-primary button-hero pic-lilie" style="float: none; width: 100%; text-align: center;""
-			   href="<?php echo $this->wpLoginLogout->getLoginUrl(); ?>"><?php _e( 'Přihlásit se přes skautIS', 'skautis-integration' ); ?></a>
+			href="<?php echo $this->wpLoginLogout->getLoginUrl(); ?>
+			"><?php _e( 'Přihlásit se přes skautIS', 'skautis-integration' ); ?></a>
 			<br/>
 		</p><br/>
 		<?php

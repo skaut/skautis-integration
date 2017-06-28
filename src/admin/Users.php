@@ -92,11 +92,11 @@ final class Users {
 		$saved = false;
 		if ( Helpers::userIsSkautisManager() ) {
 			if ( isset( $_POST['skautisUserId_prod'] ) ) {
-				update_user_meta( $userId, 'skautisUserId_prod', $_POST['skautisUserId_prod'] );
+				update_user_meta( $userId, 'skautisUserId_prod', absint( $_POST['skautisUserId_prod'] ) );
 				$saved = true;
 			}
 			if ( isset( $_POST['skautisUserId_test'] ) ) {
-				update_user_meta( $userId, 'skautisUserId_test', $_POST['skautisUserId_test'] );
+				update_user_meta( $userId, 'skautisUserId_test', absint( $_POST['skautisUserId_test'] ) );
 				$saved = true;
 			}
 		}

@@ -58,16 +58,8 @@ class SkautisGateway {
 	}
 
 	public function logout() {
-		$curl = curl_init();
-		curl_setopt( $curl, CURLOPT_URL, $this->getSkautisInstance()->getLogoutUrl() );
-		curl_setopt( $curl, CURLOPT_POST, false );
-		curl_setopt( $curl, CURLOPT_RETURNTRANSFER, true );
-		curl_setopt( $curl, CURLOPT_HEADER, false );
-		curl_setopt( $curl, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT'] );
-		curl_setopt( $curl, CURLOPT_SSL_VERIFYPEER, false );
-		curl_setopt( $curl, CURLOPT_FOLLOWLOCATION, 0 );
-		$result = curl_exec( $curl );
-		curl_close( $curl );
+		$this->skautis->setLoginData( [] );
+		wp_remote_get( esc_url_raw( $this->getSkautisInstance()->getLogoutUrl() ) );
 	}
 
 }

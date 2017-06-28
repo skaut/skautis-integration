@@ -99,6 +99,39 @@ final class WpRegister {
 		return false;
 	}
 
+	public function checkIfUserIsAlreadyRegisteredAndGetHisUserId() {
+		$userDetail = $this->skautisGateway->getSkautisInstance()->UserManagement->UserDetail();
+
+		if ( ! $userDetail || ! isset( $userDetail->ID ) || ! $userDetail->ID > 0 ) {
+			return false;
+		}
+
+		if ( ! isset( $_GET['ReturnUrl'] ) || ! $_GET['ReturnUrl'] ) {
+			return false;
+		}
+
+		Helpers::validateNonceFromUrl( $_GET['ReturnUrl'], SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis' );
+
+		// check for skautIS User ID collision with existing users
+		$usersWpQuery = new \WP_User_Query( [
+			'number'     => 1,
+			'meta_query' => [
+				[
+					'key'     => 'skautisUserId_' . $this->skautisGateway->getEnv(),
+					'value'   => absint( $userDetail->ID ),
+					'compare' => '='
+				]
+			]
+		] );
+		$users        = $usersWpQuery->get_results();
+
+		if ( ! empty( $users ) ) {
+			return $users[0]->ID;
+		}
+
+		return false;
+	}
+
 	public function getRegisterUrl() {
 		if ( isset( $_GET['redirect_to'] ) && $_GET['redirect_to'] ) {
 			$returnUrl = $_GET['redirect_to'];
@@ -114,7 +147,7 @@ final class WpRegister {
 		$returnUrl = add_query_arg( SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis', wp_create_nonce( SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis' ), $returnUrl );
 		$url       = add_query_arg( 'ReturnUrl', urlencode( $returnUrl ), get_home_url( null, 'skautis/auth/' . Register::REGISTER_ACTION ) );
 
-		return $url;
+		return esc_url( $url );
 	}
 
 	public function registerToWp( $wpRole ) {
