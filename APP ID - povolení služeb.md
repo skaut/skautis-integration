@@ -10,6 +10,8 @@ Verze 1.0
 <br>
 <b>OU_Unit_DETAIL</b> - Načíst detail jednotky
 <br>
+<b>OU_MembershipType_ALL</b> - Načíst seznam typů členství 
+<br>
 <b>UM_Login_UPDATE</b> - Přihlášení na jinou jednotku a roli
 <br>
 <b>UM_Role_DETAIL</b> - Načíst detail role
