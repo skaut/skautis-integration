@@ -11,17 +11,17 @@ Implemantace přihlašování, registrace a dalších služeb z informačního s
 == Description ==
 Implemantace přihlašování, registrace a dalších služeb z informačního systému skautIS do WordPressu.
 
-Plugin po aktivaci bude vyžadovat APP ID. Návod jak ho zístat najdete tady: https://napoveda.skaut.cz/skautis/skautis-integration
+Plugin po aktivaci bude vyžadovat APP ID. Návod jak ho zístat najdete v [nápovědě](https://napoveda.skaut.cz/skautis/skautis-integration)
 
 == Installation ==
 1. Stáhnout si plugin a aktivovat
 2. V levém menu se objeví položka skautIS
-3. Musíte si zažádat o APP ID návod je tady: https://napoveda.skaut.cz/skautis/skautis-integration
+3. Musíte si zažádat o APP ID návod je v [nápovědě](https://napoveda.skaut.cz/skautis/skautis-integration)
 4. Zadáte APP ID a plugin se plně aktivuje
 
 == Frequently Asked Questions ==
 **Jak plugin správně nastavit?**
-https://napoveda.skaut.cz/skautis/skautis-integration
+[Nápověda](https://napoveda.skaut.cz/skautis/skautis-integration)
 
 == Screenshots ==
 
