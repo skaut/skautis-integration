@@ -62,7 +62,7 @@ class Services {
 		};
 
 		self::$services['general_actions'] = function ( \Pimple\Container $container ) {
-			return new Actions( $container['skautisLogin'], $container['wpLoginLogout'], $container['connectAndDisconnectWpAccount'] );
+			return new Actions( $container['skautisLogin'], $container['wpLoginLogout'], $container['connectAndDisconnectWpAccount'], $container['skautisGateway'] );
 		};
 
 		self::$services['frontend'] = function ( \Pimple\Container $container ) {

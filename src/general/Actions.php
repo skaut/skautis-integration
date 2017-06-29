@@ -3,6 +3,7 @@
 namespace SkautisIntegration\General;
 
 use SkautisIntegration\Auth\ConnectAndDisconnectWpAccount;
+use SkautisIntegration\Auth\SkautisGateway;
 use SkautisIntegration\Auth\SkautisLogin;
 use SkautisIntegration\Auth\WpLoginLogout;
 use SkautisIntegration\Utils\Helpers;
@@ -15,12 +16,14 @@ final class Actions {
 	const CONNECT_WP_USER_TO_SKAUTIS_ACTION = 'connect/users';
 	const DISCONNECT_ACTION                 = 'disconnect';
 
+	private $skautisGateway;
 	private $skautisLogin;
 	private $wpLoginLogout;
 	private $connectWpAccount;
 	private $frontendDirUrl = '';
 
-	public function __construct( SkautisLogin $skautisLogin, WpLoginLogout $wpLoginLogout, ConnectAndDisconnectWpAccount $connectWpAccount ) {
+	public function __construct( SkautisLogin $skautisLogin, WpLoginLogout $wpLoginLogout, ConnectAndDisconnectWpAccount $connectWpAccount, SkautisGateway $skautisGateway ) {
+		$this->skautisGateway   = $skautisGateway;
 		$this->skautisLogin     = $skautisLogin;
 		$this->wpLoginLogout    = $wpLoginLogout;
 		$this->connectWpAccount = $connectWpAccount;
@@ -77,6 +80,19 @@ final class Actions {
 		if ( ! $wpQuery->get( 'skautis_auth' ) ) {
 			return $wpQuery;
 		}
+
+		if ( ! $this->skautisGateway->isInitialized() ) {
+			if ( ( get_option( 'skautis_integration_appid_type' ) === 'prod' && ! get_option( 'skautis_integration_appid_prod' ) ) ||
+			     ( get_option( 'skautis_integration_appid_type' ) === 'test' && ! get_option( 'skautis_integration_appid_test' ) ) ) {
+				if ( Helpers::userIsSkautisManager() ) {
+					wp_die( sprintf( __( 'Pro správné fungování pluginu skautIS integrace, je potřeba <a href="%s">nastavit APP ID</a>', 'skautis-integration' ), admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME ) ), __( 'Chyba v konfiguraci pluginu', 'skautis-integration' ) );
+				} else {
+					wp_safe_redirect( get_home_url(), 302 );
+					exit;
+				}
+			}
+		}
+
 		$action = $wpQuery->get( 'skautis_auth' );
 
 		$actions = [

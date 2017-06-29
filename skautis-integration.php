@@ -81,6 +81,10 @@ class SkautisIntegration {
 			update_option( 'skautis_integration_login_page_url', 'skautis/prihlaseni' );
 		}
 
+		if ( ! get_option( 'skautis_integration_appid_type' ) ) {
+			update_option( 'skautis_integration_appid_type', 'prod' );
+		}
+
 		Rules\RulesInit::registerCapabilitiesToRole( 'administrator' );
 	}
 
@@ -92,6 +96,16 @@ class SkautisIntegration {
 	}
 
 	public static function uninstall() {
+		global $wpdb;
+		$options = $wpdb->get_results( "SELECT option_name FROM $wpdb->options WHERE option_name LIKE 'skautis_integration_%' OR option_name LIKE 'skautis-integration_%'" );
+		foreach ( $options as $option ) {
+			delete_option( $option->option_name );
+		}
+
+		Rules\RulesInit::unregisterCapabilitiesFromRole( 'administrator' );
+
+		flush_rewrite_rules();
+
 		return true;
 	}
 
