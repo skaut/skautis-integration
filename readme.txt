@@ -1,5 +1,5 @@
-=== skautIS integration ===
-Contributors: davidulus, skaut
+=== skautIS integrace ===
+Contributors: davidulus, skaut, kalich5
 Tags: skaut, multisite, plugin, shortcode, skautIS, registrace
 Requires at least: 4.8
 Tested up to: 4.8
