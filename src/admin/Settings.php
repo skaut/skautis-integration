@@ -265,7 +265,7 @@ final class Settings {
 
 		add_settings_field(
 			SKAUTISINTEGRATION_NAME . '_allowUsersDisconnectFromSkautis',
-			__( 'Umožnit uživatelům zrušit propojení účtu se skautISem', 'skautis-integration' ),
+			__( 'Zrušení spojení se skautISem', 'skautis-integration' ) . '<br/><em style="font-weight: normal;">'.__('Umožní uživatelům zrušit propojení svého účtu se skautISem.', 'skautis-integration').'</em>',
 			[ $this, 'fieldAllowUsersDisconnectFromSkautis' ],
 			SKAUTISINTEGRATION_NAME . '_login',
 			SKAUTISINTEGRATION_NAME . '_login'
@@ -274,7 +274,7 @@ final class Settings {
 		if ( Services::getServicesContainer()['modulesManager']->isModuleActivated( Register::getId() ) ) {
 			add_settings_field(
 				SKAUTISINTEGRATION_NAME . '_checkUserPrivilegesIfLoginBySkautis',
-				__( 'Při přihlašování uživatele přes skautIS ověřit, zda stále splňuje podmínky pro registraci', 'skautis-integration' ),
+				__( 'Ověřování podmínek registrace', 'skautis-integration' ) . '<br/><em style="font-weight: normal;">'.__('Při přihlašování uživatele přes skautIS ověřit, zda stále splňuje podmínky pro registraci.', 'skautis-integration').'</em>',
 				[ $this, 'fieldcheckUserPrivilegesIfLoginBySkautis' ],
 				SKAUTISINTEGRATION_NAME . '_login',
 				SKAUTISINTEGRATION_NAME . '_login'
@@ -377,26 +377,26 @@ if ( ! isUserLoggedInSkautis() ) {
 
 	public function fieldAllowUsersDisconnectFromSkautis() {
 		?>
-		<em><?php _e( 'Nastavení nebude mít dopad na uživatele v roli administrátora.', 'skautis-integration' ); ?></em>
-		<br/>
 		<input name="<?php echo SKAUTISINTEGRATION_NAME; ?>_allowUsersDisconnectFromSkautis"
 		       id="skautis_integration_allowUsersDisconnectFromSkautis" type="checkbox"
 		       <?php checked( get_option( SKAUTISINTEGRATION_NAME . '_allowUsersDisconnectFromSkautis' ) == '1' ); ?>value="1"/>
+		<br/>
+		<em><?php _e( 'Nastavení nebude mít dopad na uživatele s úrovní administrátora.', 'skautis-integration' ); ?></em>
 		<?php
 	}
 
 	public function fieldcheckUserPrivilegesIfLoginBySkautis() {
 		?>
-		<em><?php _e( 'Nastavení nebude mít dopad na uživatele v roli administrátora.', 'skautis-integration' ); ?></em>
-		<br/>
 		<input name="<?php echo SKAUTISINTEGRATION_NAME; ?>_checkUserPrivilegesIfLoginBySkautis"
 		       id="skautis_integration_checkUserPrivilegesIfLoginBySkautis" type="checkbox"
 		       <?php checked( get_option( SKAUTISINTEGRATION_NAME . '_checkUserPrivilegesIfLoginBySkautis' ) == '1' ); ?>value="1"/>
+		<br/>
+		<em><?php _e( 'Nastavení nebude mít dopad na uživatele s úrovní administrátora.', 'skautis-integration' ); ?></em>
 		<?php
 	}
 
 	public function printModulesPage() {
-		if ( ! current_user_can( 'manage_options' ) ) {
+		if ( ! Helpers::userIsSkautisManager() ) {
 			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
 		}
 		settings_errors();
