@@ -9,6 +9,10 @@ License: GPLv3 or laterLicense URI: http://www.gnu.org/licenses/gpl-3.0.html
 Implemantace přihlašování, registrace a dalších služeb z informačního systému skautIS do WordPressu.
 
 == Description ==
+
+<h2> Minimální požadavky</h2>
+
+
 Implemantace přihlašování, registrace a dalších služeb z informačního systému skautIS do WordPressu.
 
 Plugin po aktivaci bude vyžadovat APP ID. Návod jak ho zístat najdete v [nápovědě](https://napoveda.skaut.cz/skautis/skautis-integration)
