@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "1879be322f9f5fb94a6fbceff706c1f7",
+    "content-hash": "2c776eb3295bab6569419e14e1a85cd6",
     "packages": [
         {
             "name": "pimple/pimple",
@@ -118,7 +118,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^5.6 || ^7.0"
+        "php": "^7.0"
     },
     "platform-dev": []
 }

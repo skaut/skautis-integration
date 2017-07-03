@@ -17,7 +17,7 @@
     "no-dev": "true"
   },
   "require": {
-    "php": "^5.6 || ^7.0",
+    "php": "^7.0",
     "pimple/pimple": "~3.0",
     "skautis/skautis": "~2.1"
   },
