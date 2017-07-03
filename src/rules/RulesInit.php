@@ -1,5 +1,7 @@
 <?php
 
+declare( strict_types=1 );
+
 namespace SkautisIntegration\Rules;
 
 use SkautisIntegration\Utils\Helpers;
@@ -94,7 +96,7 @@ final class RulesInit {
 		register_post_type( self::RULES_TYPE_SLUG, $args );
 	}
 
-	public function defaultContent( $content ) {
+	public function defaultContent( string $content ): string {
 		global $post_type;
 		if ( $post_type == self::RULES_TYPE_SLUG ) {
 			$content = '';
@@ -103,7 +105,7 @@ final class RulesInit {
 		return $content;
 	}
 
-	public function titlePlaceholder( $title ) {
+	public function titlePlaceholder( string $title ): string {
 		global $post_type;
 		if ( $post_type == self::RULES_TYPE_SLUG ) {
 			$title = __( 'Zadejte název sady pravidel', 'skautis-integration' );
@@ -112,7 +114,7 @@ final class RulesInit {
 		return $title;
 	}
 
-	public function updatedMessages( $messages ) {
+	public function updatedMessages( array $messages = [] ): array {
 		$post                              = get_post();
 		$messages[ self::RULES_TYPE_SLUG ] = [
 			0  => '', // Unused. Messages start at index 1.
@@ -135,7 +137,7 @@ final class RulesInit {
 		return $messages;
 	}
 
-	public function getAllRules() {
+	public function getAllRules(): array {
 		$rulesWpQuery = new \WP_Query( [
 			'post_type'     => self::RULES_TYPE_SLUG,
 			'nopaging'      => true,

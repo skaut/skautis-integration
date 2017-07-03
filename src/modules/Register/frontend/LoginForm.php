@@ -1,5 +1,7 @@
 <?php
 
+declare( strict_types=1 );
+
 namespace SkautisIntegration\Modules\Register\Frontend;
 
 use SkautisIntegration\Modules\Register\WpRegister;
@@ -33,7 +35,7 @@ final class LoginForm {
 		<?php
 	}
 
-	public function loginLinkInLoginFormReturn( $html ) {
+	public function loginLinkInLoginFormReturn( string $html ): string {
 		return '
 		<p style="margin-bottom: 0.3em;">
 			<a class="button button-primary button-hero pic-lilie" style="float: none; width: 100%; text-align: center;"

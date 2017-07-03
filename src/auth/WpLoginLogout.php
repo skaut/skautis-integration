@@ -1,5 +1,7 @@
 <?php
 
+declare( strict_types=1 );
+
 namespace SkautisIntegration\Auth;
 
 use SkautisIntegration\General\Actions;
@@ -15,7 +17,7 @@ final class WpLoginLogout {
 		$this->skautisGateway = $skautisGateway;
 	}
 
-	private function loginWpUserBySkautisUserId( $skautisUserId ) {
+	private function loginWpUserBySkautisUserId( int $skautisUserId ) {
 
 		if ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
 
@@ -72,7 +74,7 @@ final class WpLoginLogout {
 
 	}
 
-	public function getLoginUrl( $returnUrl = '' ) {
+	public function getLoginUrl( string $returnUrl = '' ): string {
 		if ( ! $returnUrl ) {
 			if ( isset( $_GET['redirect_to'] ) && $_GET['redirect_to'] ) {
 				$returnUrl = $_GET['redirect_to'];
@@ -95,7 +97,7 @@ final class WpLoginLogout {
 		return esc_url( $url );
 	}
 
-	public function getLogoutUrl( $returnUrl = '' ) {
+	public function getLogoutUrl( string $returnUrl = '' ): string {
 		if ( ! $returnUrl ) {
 			if ( isset( $_GET['redirect_to'] ) && $_GET['redirect_to'] ) {
 				$returnUrl = $_GET['redirect_to'];

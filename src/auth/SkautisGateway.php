@@ -1,5 +1,7 @@
 <?php
 
+declare( strict_types=1 );
+
 namespace SkautisIntegration\Auth;
 
 use SkautisIntegration\Utils\Helpers;
@@ -45,15 +47,15 @@ class SkautisGateway {
 
 	}
 
-	public function getEnv() {
+	public function getEnv(): string {
 		return $this->env;
 	}
 
-	public function getSkautisInstance() {
+	public function getSkautisInstance(): Skautis {
 		return $this->skautis;
 	}
 
-	public function isInitialized() {
+	public function isInitialized(): bool {
 		return $this->skautisInitialized;
 	}
 

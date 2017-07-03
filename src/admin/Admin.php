@@ -1,5 +1,7 @@
 <?php
 
+declare( strict_types=1 );
+
 namespace SkautisIntegration\Admin;
 
 use SkautisIntegration\Auth\SkautisGateway;

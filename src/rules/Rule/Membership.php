@@ -1,5 +1,7 @@
 <?php
 
+declare( strict_types=1 );
+
 namespace SkautisIntegration\Rules\Rule;
 
 use SkautisIntegration\Rules\IRule;
@@ -19,39 +21,39 @@ class Membership implements IRule {
 		$this->skautisGateway = $skautisGateway;
 	}
 
-	public function getId() {
+	public function getId(): string {
 		return self::$id;
 	}
 
-	public function getLabel() {
+	public function getLabel(): string {
 		return __( 'Typ členství', 'skautis-integration' );
 	}
 
-	public function getType() {
+	public function getType(): string {
 		return self::$type;
 	}
 
-	public function getInput() {
+	public function getInput(): string {
 		return self::$input;
 	}
 
-	public function getMultiple() {
+	public function getMultiple(): bool {
 		return self::$multiple;
 	}
 
-	public function getOperators() {
+	public function getOperators(): array {
 		return self::$operators;
 	}
 
-	public function getPlaceholder() {
-		return null;
+	public function getPlaceholder(): string {
+		return '';
 	}
 
-	public function getDescription() {
-		return null;
+	public function getDescription(): string {
+		return '';
 	}
 
-	public function getValues() {
+	public function getValues(): array {
 		$result      = [];
 		$memberships = $this->skautisGateway->getSkautisInstance()->OrganizationUnit->MembershipTypeAll();
 
@@ -62,14 +64,14 @@ class Membership implements IRule {
 		return $result;
 	}
 
-	protected function clearUnitId( $unitId ) {
+	protected function clearUnitId( string $unitId ): string {
 		return trim( str_replace( [
 			'.',
 			'-'
 		], '', $unitId ) );
 	}
 
-	protected function getUserMembershipsWithUnitIds() {
+	protected function getUserMembershipsWithUnitIds(): array {
 		static $userMemberships = null;
 
 		if ( $userMemberships === null ) {
@@ -81,7 +83,7 @@ class Membership implements IRule {
 			] );
 
 			if ( ! isset( $userMemberships->MembershipAllOutput ) ) {
-				return false;
+				return [];
 			}
 
 			if ( is_object( $userMemberships->MembershipAllOutput ) && isset( $userMemberships->MembershipAllOutput->ID_MembershipType ) ) {
@@ -94,14 +96,14 @@ class Membership implements IRule {
 			}
 
 			if ( ! is_array( $userMemberships->MembershipAllOutput ) ) {
-				return false;
+				return [];
 			}
 
 			// user has more valid memberships
 			$result = [];
 			foreach ( $userMemberships->MembershipAllOutput as $userMembership ) {
 				if ( ! is_object( $userMembership ) ) {
-					return false;
+					return [];
 				}
 
 				if ( $unitDetail = $this->skautisGateway->getSkautisInstance()->OrganizationUnit->UnitDetail( [
@@ -119,7 +121,7 @@ class Membership implements IRule {
 		return $userMemberships;
 	}
 
-	public function isRulePassed( $rolesOperator, $data ) {
+	public function isRulePassed( string $rolesOperator, $data ): bool {
 		// parse and prepare data from rules UI
 		$output = [];
 		preg_match_all( "/[^~]+/", $data, $output );

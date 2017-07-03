@@ -1,5 +1,7 @@
 <?php
 
+declare( strict_types=1 );
+
 namespace SkautisIntegration\Rules;
 
 class Revisions {
@@ -9,7 +11,7 @@ class Revisions {
 	}
 
 	protected function initHooks() {
-		add_action( 'save_post', [ $this, 'savePost' ], 10, 2 );
+		add_action( 'save_post', [ $this, 'savePost' ], 10 );
 		add_action( 'wp_restore_post_revision', [ $this, 'restoreRevision' ], 10, 2 );
 		add_filter( 'wp_save_post_revision_post_has_changed', [ $this, 'postHasChanged' ], 10, 3 );
 
@@ -17,7 +19,7 @@ class Revisions {
 		add_filter( '_wp_post_revision_field_custom_fields', [ $this, 'field' ], 10, 3 );
 	}
 
-	public function filterMeta( $meta ) {
+	public function filterMeta( $meta ): array {
 		$metaFiltered = [];
 		foreach ( $meta as $key => $value ) {
 			if ( $key{0} != "_" ) {
@@ -28,14 +30,14 @@ class Revisions {
 		return $metaFiltered;
 	}
 
-	public function getMeta( $postId ) {
+	public function getMeta( int $postId ): array {
 		$meta = get_metadata( 'post', $postId );
 		$meta = $this->filterMeta( $meta );
 
 		return $meta;
 	}
 
-	public function insertMeta( $postId, $meta ) {
+	public function insertMeta( int $postId, $meta ) {
 		foreach ( $meta as $metaKey => $metaValue ) {
 			if ( is_array( $metaValue ) ) {
 				foreach ( $metaValue as $singleMetaValue ) {
@@ -47,7 +49,7 @@ class Revisions {
 		}
 	}
 
-	public function deleteMeta( $postId ) {
+	public function deleteMeta( int $postId ) {
 		$meta = $this->getMeta( $postId );
 
 		foreach ( $meta as $metaKey => $metaValue ) {
@@ -68,13 +70,13 @@ class Revisions {
 		return $return;
 	}
 
-	public function fields( $fields ) {
+	public function fields( array $fields = [] ): array {
 		$fields['custom_fields'] = __( 'Další pole', 'skautis-integration' );
 
 		return $fields;
 	}
 
-	public function restoreRevision( $postId, $revisionId ) {
+	public function restoreRevision( int $postId, int $revisionId ) {
 		$meta = $this->getMeta( $revisionId );
 		$this->deleteMeta( $postId );
 		$this->insertMeta( $postId, $meta );
@@ -88,9 +90,9 @@ class Revisions {
 		}
 	}
 
-	public function savePost( $postId, $post ) {
-		if ( $parentId = wp_is_post_revision( $postId ) ) {
-			$meta = $this->getMeta( get_post( $parentId )->ID );
+	public function savePost( int $postId ) {
+		if ( wp_is_post_revision( $postId ) ) {
+			$meta = $this->getMeta( $postId );
 			if ( $meta === false ) {
 				return;
 			}
@@ -99,9 +101,9 @@ class Revisions {
 		}
 	}
 
-	public function postHasChanged( $postHasChanged, $lastRevision, $post ) {
+	public function postHasChanged( bool $postHasChanged, \WP_Post $lastRevision, \WP_Post $post ): bool {
 		if ( ! $postHasChanged ) {
-			$meta    = $this->getMeta( get_post( $lastRevision )->ID );
+			$meta    = $this->getMeta( $lastRevision->ID );
 			$metaNew = $this->getMeta( $post->ID );
 
 			if ( $meta === $metaNew ) {

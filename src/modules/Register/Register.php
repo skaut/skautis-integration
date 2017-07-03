@@ -1,5 +1,7 @@
 <?php
 
+declare( strict_types=1 );
+
 namespace SkautisIntegration\Modules\Register;
 
 use SkautisIntegration\Auth\SkautisGateway;
@@ -10,10 +12,9 @@ use SkautisIntegration\Modules\IModule;
 use SkautisIntegration\Modules\Register\Admin\Admin;
 use SkautisIntegration\Modules\Register\Frontend\Frontend;
 use SkautisIntegration\Modules\Register\Frontend\LoginForm;
-use SkautisIntegration\Services\Services;
 use SkautisIntegration\Utils\Helpers;
 
-class Register implements IModule {
+final class Register implements IModule {
 
 	const REGISTER_ACTION = 'register';
 
@@ -61,7 +62,7 @@ class Register implements IModule {
 		exit;
 	}
 
-	public function addActionsToRouter( array $actions = [] ) {
+	public function addActionsToRouter( array $actions = [] ): array {
 		$actions[ self::REGISTER_ACTION ] = [ $this, 'register' ];
 
 		return $actions;
@@ -75,27 +76,27 @@ class Register implements IModule {
 		}
 	}
 
-	public static function getId() {
+	public static function getId(): string {
 		return self::$id;
 	}
 
-	public static function getLabel() {
+	public static function getLabel(): string {
 		return __( 'Registrace', 'skautis-integration' );
 	}
 
-	public static function getPath() {
+	public static function getPath(): string {
 		return plugin_dir_path( __FILE__ );
 	}
 
-	public static function getUrl() {
+	public static function getUrl(): string {
 		return plugin_dir_url( __FILE__ );
 	}
 
-	public function getWpRegister() {
+	public function getWpRegister(): WpRegister {
 		return $this->wpRegister;
 	}
 
-	public function getRulesManager() {
+	public function getRulesManager(): RulesManager {
 		return $this->rulesManager;
 	}
 
@@ -119,7 +120,8 @@ class Register implements IModule {
 				$this->loginUserAfterRegistration();
 			}
 		} else {
-			if ( $wpUserId = $this->wpRegister->checkIfUserIsAlreadyRegisteredAndGetHisUserId() ) {
+			$wpUserId = $this->wpRegister->checkIfUserIsAlreadyRegisteredAndGetHisUserId();
+			if ( $wpUserId > 0 ) {
 				if ( get_option( SKAUTISINTEGRATION_NAME . '_checkUserPrivilegesIfLoginBySkautis' ) ) {
 					if ( user_can( $wpUserId, Helpers::getSkautisManagerCapability() ) ) {
 						$this->loginUserAfterRegistration();

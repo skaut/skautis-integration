@@ -1,5 +1,7 @@
 <?php
 
+declare( strict_types=1 );
+
 namespace SkautisIntegration\Rules\Rule;
 
 use SkautisIntegration\Rules\IRule;
@@ -19,39 +21,39 @@ class All implements IRule {
 		$this->skautisGateway = $skautisGateway;
 	}
 
-	public function getId() {
+	public function getId(): string {
 		return self::$id;
 	}
 
-	public function getLabel() {
+	public function getLabel(): string {
 		return __( 'Všichni bez omezení', 'skautis-integration' );
 	}
 
-	public function getType() {
+	public function getType(): string {
 		return self::$type;
 	}
 
-	public function getInput() {
+	public function getInput(): string {
 		return self::$input;
 	}
 
-	public function getMultiple() {
+	public function getMultiple(): bool {
 		return self::$multiple;
 	}
 
-	public function getOperators() {
+	public function getOperators(): array {
 		return self::$operators;
 	}
 
-	public function getPlaceholder() {
-		return null;
+	public function getPlaceholder(): string {
+		return '';
 	}
 
-	public function getDescription() {
-		return null;
+	public function getDescription(): string {
+		return '';
 	}
 
-	public function getValues() {
+	public function getValues(): array {
 		$result = [
 			1 => __( 'Ano' )
 		];
@@ -59,8 +61,8 @@ class All implements IRule {
 		return $result;
 	}
 
-	public function isRulePassed( $operator, $values ) {
-		if ( ! empty( $values[0] ) && $values[0] == 1 && $this->skautisGateway->getSkautisInstance()->UserManagement->UserDetail()->ID > 0 ) {
+	public function isRulePassed( string $operator, $data ): bool {
+		if ( ! empty( $data[0] ) && $data[0] == 1 && $this->skautisGateway->getSkautisInstance()->UserManagement->UserDetail()->ID > 0 ) {
 			return true;
 		}
 

@@ -1,5 +1,7 @@
 <?php
 
+declare( strict_types=1 );
+
 namespace SkautisIntegration\Rules;
 
 class Columns {
@@ -20,19 +22,19 @@ class Columns {
 		], 10, 2 );
 	}
 
-	public function lastModifiedAdminColumn( $columns ) {
+	public function lastModifiedAdminColumn( array $columns = [] ): array {
 		$columns['modified_last'] = __( 'Naposledy upraveno', 'skautis-integration' );
 
 		return $columns;
 	}
 
-	public function sortableLastModifiedColumn( $columns ) {
+	public function sortableLastModifiedColumn( array $columns = [] ): array {
 		$columns['modified_last'] = 'modified';
 
 		return $columns;
 	}
 
-	public function lastModifiedAdminColumnContent( $columnName, $postId ) {
+	public function lastModifiedAdminColumnContent( string $columnName, int $postId ) {
 		if ( 'modified_last' != $columnName ) {
 			return;
 		}

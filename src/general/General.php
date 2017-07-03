@@ -1,5 +1,7 @@
 <?php
 
+declare( strict_types=1 );
+
 namespace SkautisIntegration\General;
 
 use SkautisIntegration\Rules\RulesInit;
@@ -12,11 +14,6 @@ final class General {
 	public function __construct( Actions $actions, RulesInit $rulesInit ) {
 		$this->actions   = $actions;
 		$this->rulesInit = $rulesInit;
-		$this->initHooks();
-	}
-
-	private function initHooks() {
-
 	}
 
 }

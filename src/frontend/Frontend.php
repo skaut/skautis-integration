@@ -1,5 +1,7 @@
 <?php
 
+declare( strict_types=1 );
+
 namespace SkautisIntegration\Frontend;
 
 use SkautisIntegration\Auth\SkautisGateway;
@@ -36,13 +38,13 @@ final class Frontend {
 		}
 	}
 
-	public function registerQueryVars( array $vars = [] ) {
+	public function registerQueryVars( array $vars = [] ): array {
 		$vars[] = 'skautis_login';
 
 		return $vars;
 	}
 
-	public function registerTemplates( string $path = '' ) {
+	public function registerTemplates( string $path = '' ): string {
 		$queryValue = get_query_var( 'skautis_login' );
 		if ( $queryValue && ! empty( $queryValue ) ) {
 			if ( file_exists( get_stylesheet_directory() . '/skautis/login.php' ) ) {

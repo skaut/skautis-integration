@@ -1,5 +1,7 @@
 <?php
 
+declare( strict_types=1 );
+
 namespace SkautisIntegration\General;
 
 use SkautisIntegration\Auth\ConnectAndDisconnectWpAccount;
@@ -49,7 +51,7 @@ final class Actions {
 		}
 	}
 
-	public function registerAuthQueryVars( array $vars = [] ) {
+	public function registerAuthQueryVars( array $vars = [] ): array {
 		$vars[] = 'skautis_auth';
 
 		return $vars;

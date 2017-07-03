@@ -1,5 +1,7 @@
 <?php
 
+declare( strict_types=1 );
+
 namespace SkautisIntegration\Rules\Rule;
 
 use SkautisIntegration\Rules\IRule;
@@ -19,57 +21,57 @@ class Role implements IRule {
 		$this->skautisGateway = $skautisGateway;
 	}
 
-	public function getId() {
+	public function getId(): string {
 		return self::$id;
 	}
 
-	public function getLabel() {
+	public function getLabel(): string {
 		return __( 'Role', 'skautis-integration' );
 	}
 
-	public function getType() {
+	public function getType(): string {
 		return self::$type;
 	}
 
-	public function getInput() {
+	public function getInput(): string {
 		return self::$input;
 	}
 
-	public function getMultiple() {
+	public function getMultiple(): bool {
 		return self::$multiple;
 	}
 
-	public function getOperators() {
+	public function getOperators(): array {
 		return self::$operators;
 	}
 
-	public function getPlaceholder() {
-		return null;
+	public function getPlaceholder(): string {
+		return '';
 	}
 
-	public function getDescription() {
-		return null;
+	public function getDescription(): string {
+		return '';
 	}
 
-	public function getValues() {
-		$result = [];
+	public function getValues(): array {
+		$values = [];
 		$roles  = $this->skautisGateway->getSkautisInstance()->UserManagement->RoleAll();
 
 		foreach ( $roles as $role ) {
-			$result[ $role->ID ] = $role->DisplayName;
+			$values[ $role->ID ] = $role->DisplayName;
 		}
 
-		return $result;
+		return $values;
 	}
 
-	protected function clearUnitId( $unitId ) {
+	protected function clearUnitId( string $unitId ): string {
 		return trim( str_replace( [
 			'.',
 			'-'
 		], '', $unitId ) );
 	}
 
-	protected function getUserRolesWithUnitIds() {
+	protected function getUserRolesWithUnitIds(): array {
 		static $userRoles = null;
 
 		if ( $userRoles === null ) {
@@ -99,7 +101,7 @@ class Role implements IRule {
 		return $userRoles;
 	}
 
-	public function isRulePassed( $rolesOperator, $data ) {
+	public function isRulePassed( string $rolesOperator, $data ): bool {
 		// parse and prepare data from rules UI
 		$output = [];
 		preg_match_all( "/[^~]+/", $data, $output );

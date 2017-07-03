@@ -1,5 +1,7 @@
 <?php
 
+declare( strict_types=1 );
+
 namespace SkautisIntegration\Rules;
 
 use SkautisIntegration\Auth\SkautisGateway;
@@ -43,7 +45,7 @@ final class Admin {
 		}, 5 );
 	}
 
-	public function addMetaboxForRulesField( $postType ) {
+	public function addMetaboxForRulesField( string $postType ) {
 		if ( $postType == RulesInit::RULES_TYPE_SLUG ) {
 			add_meta_box(
 				SKAUTISINTEGRATION_NAME . '_rules_metabox',
@@ -54,7 +56,7 @@ final class Admin {
 		}
 	}
 
-	public function saveRulesCustomField( $postId ) {
+	public function saveRulesCustomField( int $postId ) {
 		if ( array_key_exists( SKAUTISINTEGRATION_NAME . '_rules_data', $_POST ) ) {
 			update_post_meta(
 				$postId,
@@ -71,17 +73,17 @@ final class Admin {
 		<?php
 	}
 
-	public function addRulesFieldToRevisions( $fields ) {
+	public function addRulesFieldToRevisions( array $fields ): array {
 		$fields[ SKAUTISINTEGRATION_NAME . '_rules_data' ] = __( 'skautIS Pravidla', 'skautis-integration' );
 
 		return $fields;
 	}
 
-	public function getRulesFieldValue( $value, $field_name, \WP_Post $post ) {
+	public function getRulesFieldValue( $value, $fieldName, \WP_Post $post ) {
 		return get_metadata( 'post', $post->ID, SKAUTISINTEGRATION_NAME . '_rules_data', true );
 	}
 
-	public function restoreRevisionForRulesField( $postId, $revisionId ) {
+	public function restoreRevisionForRulesField( int $postId, int $revisionId ) {
 		$post     = get_post( $postId );
 		$revision = get_post( $revisionId );
 		if ( $post->post_type == RulesInit::RULES_TYPE_SLUG ) {
