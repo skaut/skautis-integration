@@ -266,7 +266,7 @@ final class Settings {
 
 		add_settings_field(
 			SKAUTISINTEGRATION_NAME . '_allowUsersDisconnectFromSkautis',
-			__( 'Zrušení spojení se skautISem', 'skautis-integration' ) . '<br/><em style="font-weight: normal;">' . __( 'Umožní uživatelům zrušit propojení svého účtu se skautISem.', 'skautis-integration' ) . '</em>',
+			__( 'Zrušení spojení se skautISem', 'skautis-integration' ),
 			[ $this, 'fieldAllowUsersDisconnectFromSkautis' ],
 			SKAUTISINTEGRATION_NAME . '_login',
 			SKAUTISINTEGRATION_NAME . '_login'
@@ -275,7 +275,7 @@ final class Settings {
 		if ( Services::getServicesContainer()['modulesManager']->isModuleActivated( Register::getId() ) ) {
 			add_settings_field(
 				SKAUTISINTEGRATION_NAME . '_checkUserPrivilegesIfLoginBySkautis',
-				__( 'Ověřování podmínek registrace', 'skautis-integration' ) . '<br/><em style="font-weight: normal;">' . __( 'Při přihlašování uživatele přes skautIS ověřit, zda stále splňuje podmínky pro registraci.', 'skautis-integration' ) . '</em>',
+				__( 'Ověřování podmínek registrace', 'skautis-integration' ),
 				[ $this, 'fieldcheckUserPrivilegesIfLoginBySkautis' ],
 				SKAUTISINTEGRATION_NAME . '_login',
 				SKAUTISINTEGRATION_NAME . '_login'
@@ -381,7 +381,8 @@ if ( ! isUserLoggedInSkautis() ) {
 		<input name="<?php echo SKAUTISINTEGRATION_NAME; ?>_allowUsersDisconnectFromSkautis"
 		       id="skautis_integration_allowUsersDisconnectFromSkautis" type="checkbox"
 		       <?php checked( get_option( SKAUTISINTEGRATION_NAME . '_allowUsersDisconnectFromSkautis' ) == '1' ); ?>value="1"/>
-		<br/>
+		<div
+			style="margin: 0.4em 0;"><?php _e( 'Umožní uživatelům zrušit propojení svého účtu se skautISem.', 'skautis-integration' ); ?></div>
 		<em><?php _e( 'Nastavení nebude mít dopad na uživatele s úrovní administrátora.', 'skautis-integration' ); ?></em>
 		<?php
 	}
@@ -391,7 +392,8 @@ if ( ! isUserLoggedInSkautis() ) {
 		<input name="<?php echo SKAUTISINTEGRATION_NAME; ?>_checkUserPrivilegesIfLoginBySkautis"
 		       id="skautis_integration_checkUserPrivilegesIfLoginBySkautis" type="checkbox"
 		       <?php checked( get_option( SKAUTISINTEGRATION_NAME . '_checkUserPrivilegesIfLoginBySkautis' ) == '1' ); ?>value="1"/>
-		<br/>
+		<div
+			style="margin: 0.4em 0;"><?php _e( 'Při přihlašování uživatele přes skautIS ověřit, zda stále splňuje podmínky pro registraci.', 'skautis-integration' ); ?></div>
 		<em><?php _e( 'Nastavení nebude mít dopad na uživatele s úrovní administrátora.', 'skautis-integration' ); ?></em>
 		<?php
 	}
