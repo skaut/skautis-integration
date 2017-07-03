@@ -121,7 +121,7 @@ class Register implements IModule {
 		} else {
 			if ( $wpUserId = $this->wpRegister->checkIfUserIsAlreadyRegisteredAndGetHisUserId() ) {
 				if ( get_option( SKAUTISINTEGRATION_NAME . '_checkUserPrivilegesIfLoginBySkautis' ) ) {
-					if ( user_can( $wpUserId, 'manage_options' ) ) {
+					if ( user_can( $wpUserId, Helpers::getSkautisManagerCapability() ) ) {
 						$this->loginUserAfterRegistration();
 					}
 				} else {

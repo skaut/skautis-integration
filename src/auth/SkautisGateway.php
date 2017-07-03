@@ -10,11 +10,11 @@ class SkautisGateway {
 	const PROD_ENV = 'prod';
 	const TEST_ENV = 'test';
 
-	private $appId = '';
-	private $skautis;
-	private $skautisInitialized = false;
-	private $testMode = WP_DEBUG;
-	private $env = '';
+	protected $appId = '';
+	protected $skautis;
+	protected $skautisInitialized = false;
+	protected $testMode = WP_DEBUG;
+	protected $env = '';
 
 	public function __construct() {
 		if ( ! headers_sent() ) {

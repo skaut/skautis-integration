@@ -38,7 +38,7 @@ class UsersManagement {
 			SKAUTISINTEGRATION_NAME,
 			__( 'Správa uživatelů', 'skautis-integration' ),
 			__( 'Správa uživatelů', 'skautis-integration' ),
-			'manage_options',
+			Helpers::getSkautisManagerCapability(),
 			SKAUTISINTEGRATION_NAME . '_usersManagement',
 			[ $this, 'printChildUsers' ]
 		);

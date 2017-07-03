@@ -33,16 +33,18 @@ class Helpers {
 		} );
 	}
 
-	public static function userIsSkautisManager() {
-		$capability = '';
+	public static function getSkautisManagerCapability() {
+		static $capability = '';
 
-		$capability = apply_filters( SKAUTISINTEGRATION_NAME . '_manager_capability', $capability );
-
-		if ( $capability ) {
-			return current_user_can( $capability );
+		if ( $capability === '' ) {
+			$capability = apply_filters( SKAUTISINTEGRATION_NAME . '_manager_capability', 'manage_options' );
 		}
 
-		return current_user_can( 'manage_options' );
+		return $capability;
+	}
+
+	public static function userIsSkautisManager() {
+		return current_user_can( self::getSkautisManagerCapability() );
 	}
 
 	public static function getCurrentUrl() {

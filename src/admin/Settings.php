@@ -73,7 +73,7 @@ final class Settings {
 		add_menu_page(
 			__( 'Obecné', 'skautis-integration' ),
 			__( 'SkautIS', 'skautis-integration' ),
-			'manage_options',
+			Helpers::getSkautisManagerCapability(),
 			SKAUTISINTEGRATION_NAME,
 			[ $this, 'printSettingPage' ],
 			$this->adminDirUrl . 'img/lilie.png'
@@ -83,7 +83,7 @@ final class Settings {
 			SKAUTISINTEGRATION_NAME,
 			__( 'Obecné', 'skautis-integration' ),
 			__( 'Obecné', 'skautis-integration' ),
-			'manage_options',
+			Helpers::getSkautisManagerCapability(),
 			SKAUTISINTEGRATION_NAME,
 			[ $this, 'printSettingPage' ]
 		);
@@ -92,7 +92,7 @@ final class Settings {
 			SKAUTISINTEGRATION_NAME,
 			__( 'Přihlašování', 'skautis-integration' ),
 			__( 'Přihlašování', 'skautis-integration' ),
-			'manage_options',
+			Helpers::getSkautisManagerCapability(),
 			SKAUTISINTEGRATION_NAME . '_login',
 			[ $this, 'printLoginPage' ]
 		);
@@ -101,14 +101,14 @@ final class Settings {
 			SKAUTISINTEGRATION_NAME,
 			__( 'Moduly', 'skautis-integration' ),
 			__( 'Moduly', 'skautis-integration' ),
-			'manage_options',
+			Helpers::getSkautisManagerCapability(),
 			SKAUTISINTEGRATION_NAME . '_modules',
 			[ $this, 'printModulesPage' ]
 		);
 	}
 
 	public function printSettingPage() {
-		if ( ! current_user_can( 'manage_options' ) ) {
+		if ( ! current_user_can( Helpers::getSkautisManagerCapability() ) ) {
 			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
 		}
 
@@ -223,7 +223,7 @@ final class Settings {
 	}
 
 	public function printLoginPage() {
-		if ( ! current_user_can( 'manage_options' ) ) {
+		if ( ! current_user_can( Helpers::getSkautisManagerCapability() ) ) {
 			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
 		}
 

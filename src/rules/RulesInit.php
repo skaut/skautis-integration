@@ -2,43 +2,14 @@
 
 namespace SkautisIntegration\Rules;
 
-final class RulesInit {
+use SkautisIntegration\Utils\Helpers;
 
-	const RULES_MANAGER_CAPABILITIES = [
-		'edit_post'              => 'edit_' . self::RULES_TYPE_SINGULAR,
-		'read_post'              => 'read_' . self::RULES_TYPE_SINGULAR,
-		'delete_post'            => 'delete_' . self::RULES_TYPE_SINGULAR,
-		'edit_posts'             => 'edit_' . self::RULES_TYPE_SINGULAR . 's',
-		'edit_others_posts'      => 'edit_others_' . self::RULES_TYPE_SINGULAR . 's',
-		'publish_posts'          => 'publish_' . self::RULES_TYPE_SINGULAR . 's',
-		'read_private_posts'     => 'read_private_' . self::RULES_TYPE_SINGULAR . 's',
-		'delete_posts'           => 'delete_' . self::RULES_TYPE_SINGULAR . 's',
-		'delete_private_posts'   => 'delete_private_' . self::RULES_TYPE_SINGULAR . 's',
-		'delete_published_posts' => 'delete_published_' . self::RULES_TYPE_SINGULAR . 's',
-		'delete_others_posts'    => 'delete_others_' . self::RULES_TYPE_SINGULAR . 's',
-		'edit_private_posts'     => 'edit_private_' . self::RULES_TYPE_SINGULAR . 's',
-		'edit_published_posts'   => 'edit_published_' . self::RULES_TYPE_SINGULAR . 's',
-		'create_posts'           => 'create_' . self::RULES_TYPE_SINGULAR . 's'
-	];
+final class RulesInit {
 
 	const RULES_TYPE_SINGULAR = 'skautis_rule';
 	const RULES_TYPE_SLUG     = 'skautis_rules';
 
 	private $revisions;
-
-	public static function registerCapabilitiesToRole( $role = 'administrator' ) {
-		$role = get_role( $role );
-		foreach ( self::RULES_MANAGER_CAPABILITIES as $capability ) {
-			$role->add_cap( $capability );
-		}
-	}
-
-	public static function unregisterCapabilitiesFromRole( $role = 'administrator' ) {
-		$role = get_role( $role );
-		foreach ( self::RULES_MANAGER_CAPABILITIES as $capability ) {
-			$role->remove_cap( $capability );
-		}
-	}
 
 	public function __construct( Revisions $revisions ) {
 		$this->revisions = $revisions;
@@ -56,7 +27,7 @@ final class RulesInit {
 	}
 
 	public function registerPostType() {
-		$labels = [
+		$labels       = [
 			'name'                  => _x( 'Správa pravidel', 'Post Type General Name', 'skautis-integration' ),
 			'singular_name'         => _x( 'Sada pravidel', 'Post Type Singular Name', 'skautis-integration' ),
 			'menu_name'             => __( 'Správa pravidel', 'skautis-integration' ),
@@ -85,7 +56,23 @@ final class RulesInit {
 			'items_list_navigation' => __( 'Navigace v seznamu sadu pravidel', 'skautis-integration' ),
 			'filter_items_list'     => __( 'Filtrovat sady pravidel', 'skautis-integration' )
 		];
-		$args   = [
+		$capabilities = [
+			'edit_post'              => Helpers::getSkautisManagerCapability(),
+			'read_post'              => Helpers::getSkautisManagerCapability(),
+			'delete_post'            => Helpers::getSkautisManagerCapability(),
+			'edit_posts'             => Helpers::getSkautisManagerCapability(),
+			'edit_others_posts'      => Helpers::getSkautisManagerCapability(),
+			'publish_posts'          => Helpers::getSkautisManagerCapability(),
+			'read_private_posts'     => Helpers::getSkautisManagerCapability(),
+			'delete_posts'           => Helpers::getSkautisManagerCapability(),
+			'delete_private_posts'   => Helpers::getSkautisManagerCapability(),
+			'delete_published_posts' => Helpers::getSkautisManagerCapability(),
+			'delete_others_posts'    => Helpers::getSkautisManagerCapability(),
+			'edit_private_posts'     => Helpers::getSkautisManagerCapability(),
+			'edit_published_posts'   => Helpers::getSkautisManagerCapability(),
+			'create_posts'           => Helpers::getSkautisManagerCapability()
+		];
+		$args         = [
 			'label'               => __( 'Sada pravidel', 'skautis-integration' ),
 			'labels'              => $labels,
 			'supports'            => [ 'title', 'editor', 'author', 'revisions', ],
@@ -101,7 +88,7 @@ final class RulesInit {
 			'exclude_from_search' => true,
 			'publicly_queryable'  => false,
 			'rewrite'             => false,
-			'capabilities'        => self::RULES_MANAGER_CAPABILITIES,
+			'capabilities'        => $capabilities,
 			'show_in_rest'        => false
 		];
 		register_post_type( self::RULES_TYPE_SLUG, $args );

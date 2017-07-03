@@ -41,7 +41,7 @@ final class WpLoginLogout {
 				$wpUser = $users[0];
 
 				if ( Services::getServicesContainer()['modulesManager']->isModuleActivated( Register::getId() ) &&
-				     ! user_can( $wpUser->ID, 'manage_options' ) &&
+				     ! user_can( $wpUser->ID, Helpers::getSkautisManagerCapability() ) &&
 				     get_option( SKAUTISINTEGRATION_NAME . '_checkUserPrivilegesIfLoginBySkautis' ) ) {
 					if ( ! Services::getServicesContainer()[ Register::getId() ]->getRulesManager()->checkIfUserPassedRulesAndGetHisRole() ) {
 						wp_die( sprintf( __( 'Je nám líto, ale již nemáte oprávnění k přístupu. <a href="%s">Zkuste se znovu zaregistrovat</a>', 'skautis-integration' ), ( Services::getServicesContainer()[ Register::getId() ] )->getWpRegister()->getRegisterUrl() ), __( 'Neautorizovaný přístup', 'skautis-integration' ) );

@@ -29,7 +29,7 @@ final class Settings {
 			SKAUTISINTEGRATION_NAME,
 			__( 'Registrace', 'skautis-integration' ),
 			__( 'Registrace', 'skautis-integration' ),
-			'manage_options',
+			Helpers::getSkautisManagerCapability(),
 			SKAUTISINTEGRATION_NAME . '_modules_register',
 			[ $this, 'printSettingPage' ]
 		);

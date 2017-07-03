@@ -84,15 +84,11 @@ class SkautisIntegration {
 		if ( ! get_option( 'skautis_integration_appid_type' ) ) {
 			update_option( 'skautis_integration_appid_type', 'prod' );
 		}
-
-		Rules\RulesInit::registerCapabilitiesToRole( 'administrator' );
 	}
 
 	public function deactivation() {
 		delete_option( 'skautis_rewrite_rules_need_to_flush' );
 		flush_rewrite_rules();
-
-		Rules\RulesInit::unregisterCapabilitiesFromRole( 'administrator' );
 	}
 
 	public static function uninstall() {
@@ -102,7 +98,7 @@ class SkautisIntegration {
 			delete_option( $option->option_name );
 		}
 
-		Rules\RulesInit::unregisterCapabilitiesFromRole( 'administrator' );
+		delete_option( 'skautis_rewrite_rules_need_to_flush' );
 
 		flush_rewrite_rules();
 
