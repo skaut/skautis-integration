@@ -1,5 +1,7 @@
 <?php
 
+declare( strict_types=1 );
+
 namespace SkautisIntegration\Admin;
 
 use SkautisIntegration\Auth\SkautisGateway;
@@ -53,7 +55,7 @@ final class Settings {
 		}
 	}
 
-	public function addSettingsLinkToPluginsTable( array $links = [] ) {
+	public function addSettingsLinkToPluginsTable( array $links = [] ): array {
 		$mylinks = [
 			'<a href="' . admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME ) . '">' . __( 'Settings' ) . '</a>',
 		];
@@ -61,7 +63,7 @@ final class Settings {
 		return array_merge( $links, $mylinks );
 	}
 
-	public function addHelpLinkToPluginsTable( array $links = [] ) {
+	public function addHelpLinkToPluginsTable( array $links = [] ): array {
 		$mylinks = [
 			'<a href="' . self::HELP_PAGE_URL . '" target="_blank">' . __( 'Help' ) . '</a>',
 		];
@@ -199,7 +201,7 @@ final class Settings {
 
 		foreach ( (array) $this->modulesManager->getAllModules() as $moduleId => $moduleLabel ) {
 			add_settings_field(
-				'skautis_integration_' . $moduleId,
+				SKAUTISINTEGRATION_NAME . '_modules_' . $moduleId,
 				$moduleLabel,
 				function () use ( $moduleId, $moduleLabel, $activatedModules ) {
 					$checked = '';
@@ -216,9 +218,8 @@ final class Settings {
 		}
 
 		register_setting( SKAUTISINTEGRATION_NAME . '_modules', 'skautis_integration_activated_modules', [
-			'type'              => 'string',
-			'show_in_rest'      => false,
-			'sanitize_callback' => 'sanitize_text_field'
+			'type'         => 'string',
+			'show_in_rest' => false
 		] );
 	}
 
@@ -265,7 +266,7 @@ final class Settings {
 
 		add_settings_field(
 			SKAUTISINTEGRATION_NAME . '_allowUsersDisconnectFromSkautis',
-			__( 'Zrušení spojení se skautISem', 'skautis-integration' ) . '<br/><em style="font-weight: normal;">'.__('Umožní uživatelům zrušit propojení svého účtu se skautISem.', 'skautis-integration').'</em>',
+			__( 'Zrušení spojení se skautISem', 'skautis-integration' ) . '<br/><em style="font-weight: normal;">' . __( 'Umožní uživatelům zrušit propojení svého účtu se skautISem.', 'skautis-integration' ) . '</em>',
 			[ $this, 'fieldAllowUsersDisconnectFromSkautis' ],
 			SKAUTISINTEGRATION_NAME . '_login',
 			SKAUTISINTEGRATION_NAME . '_login'
@@ -274,7 +275,7 @@ final class Settings {
 		if ( Services::getServicesContainer()['modulesManager']->isModuleActivated( Register::getId() ) ) {
 			add_settings_field(
 				SKAUTISINTEGRATION_NAME . '_checkUserPrivilegesIfLoginBySkautis',
-				__( 'Ověřování podmínek registrace', 'skautis-integration' ) . '<br/><em style="font-weight: normal;">'.__('Při přihlašování uživatele přes skautIS ověřit, zda stále splňuje podmínky pro registraci.', 'skautis-integration').'</em>',
+				__( 'Ověřování podmínek registrace', 'skautis-integration' ) . '<br/><em style="font-weight: normal;">' . __( 'Při přihlašování uživatele přes skautIS ověřit, zda stále splňuje podmínky pro registraci.', 'skautis-integration' ) . '</em>',
 				[ $this, 'fieldcheckUserPrivilegesIfLoginBySkautis' ],
 				SKAUTISINTEGRATION_NAME . '_login',
 				SKAUTISINTEGRATION_NAME . '_login'

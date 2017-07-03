@@ -1,25 +1,27 @@
 <?php
 
+declare( strict_types=1 );
+
 namespace SkautisIntegration\Rules;
 
 interface IRule {
-	public function getId();
+	public function getId(): string;
 
-	public function getLabel();
+	public function getLabel(): string;
 
-	public function getType();
+	public function getType(): string;
 
-	public function getInput();
+	public function getInput(): string;
 
-	public function getMultiple();
+	public function getMultiple(): bool;
 
-	public function getValues();
+	public function getOperators(): array;
 
-	public function getOperators();
+	public function getPlaceholder(): string;
 
-	public function getPlaceholder();
+	public function getDescription(): string;
 
-	public function getDescription();
+	public function getValues(): array;
 
-	public function isRulePassed( $operator, $value );
+	public function isRulePassed( string $operator, $data ): bool;
 }

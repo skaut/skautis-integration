@@ -1,7 +1,10 @@
 <?php
 
+declare( strict_types=1 );
+
 namespace SkautisIntegration\Modules\Register;
 
+use Skautis\Skautis;
 use SkautisIntegration\Auth\SkautisGateway;
 use SkautisIntegration\Utils\Helpers;
 
@@ -13,7 +16,7 @@ final class WpRegister {
 		$this->skautisGateway = $skautisGateway;
 	}
 
-	private function resolveNotificationsAndRegisterUserToWp( $userLogin, $userEmail ) {
+	private function resolveNotificationsAndRegisterUserToWp( string $userLogin, string $userEmail ): int {
 		remove_action( 'register_new_user', 'wp_send_new_user_notifications' );
 		add_action( 'register_new_user', function ( $userId ) {
 			if ( ! $notify = get_option( SKAUTISINTEGRATION_NAME . '_modules_register_emailNotificationsAfterNewUserRegister' ) ) {
@@ -34,13 +37,16 @@ final class WpRegister {
 		add_action( 'register_new_user', 'wp_send_new_user_notifications' );
 
 		if ( is_wp_error( $userId ) ) {
-			return false;
+			if ( isset( $userId->errors ) && ( isset( $userId->errors['username_exists'] ) || isset( $userId->errors['email_exists'] ) ) ) {
+				wp_die( esc_html( sprintf( __( 'Vás email %s je již na webu registrován, ale není propojen se skautIS účtem.', 'skautis-integration' ), $userEmail ) ), __( 'Chyba při registraci', 'skautis-integration' ) );
+			}
+			wp_die( esc_html( sprintf( __( 'Při registraci nastala neočekávaná chyba: %s', 'skautis-integration' ), $userId->get_error_message() ) ), __( 'Chyba při registraci', 'skautis-integration' ) );
 		}
 
 		return $userId;
 	}
 
-	private function processWpUserRegistration( $skautisUser, $wpRole ) {
+	private function processWpUserRegistration( $skautisUser, string $wpRole ): bool {
 		if ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
 
 			Helpers::validateNonceFromUrl( $_GET['ReturnUrl'], SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis' );
@@ -69,6 +75,10 @@ final class WpRegister {
 
 			$userId = $this->resolveNotificationsAndRegisterUserToWp( $userDetail->Email, $userDetail->Email );
 
+			if ( $userId === 0 ) {
+				return false;
+			}
+
 			if ( ! add_user_meta( $userId, 'skautisUserId_' . $this->skautisGateway->getEnv(), absint( $skautisUser->ID ) ) ) {
 				return false;
 			}
@@ -88,7 +98,7 @@ final class WpRegister {
 				'last_name'    => $lastName,
 				'nickname'     => $nickName,
 				'display_name' => $displayName,
-				'role'         => (string) $wpRole
+				'role'         => $wpRole
 			] ) ) ) {
 				return false;
 			}
@@ -99,15 +109,15 @@ final class WpRegister {
 		return false;
 	}
 
-	public function checkIfUserIsAlreadyRegisteredAndGetHisUserId() {
+	public function checkIfUserIsAlreadyRegisteredAndGetHisUserId(): int {
 		$userDetail = $this->skautisGateway->getSkautisInstance()->UserManagement->UserDetail();
 
 		if ( ! $userDetail || ! isset( $userDetail->ID ) || ! $userDetail->ID > 0 ) {
-			return false;
+			return 0;
 		}
 
 		if ( ! isset( $_GET['ReturnUrl'] ) || ! $_GET['ReturnUrl'] ) {
-			return false;
+			return 0;
 		}
 
 		Helpers::validateNonceFromUrl( $_GET['ReturnUrl'], SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis' );
@@ -129,10 +139,10 @@ final class WpRegister {
 			return $users[0]->ID;
 		}
 
-		return false;
+		return 0;
 	}
 
-	public function getRegisterUrl() {
+	public function getRegisterUrl(): string {
 		if ( isset( $_GET['redirect_to'] ) && $_GET['redirect_to'] ) {
 			$returnUrl = $_GET['redirect_to'];
 		} else if ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
@@ -150,7 +160,7 @@ final class WpRegister {
 		return esc_url( $url );
 	}
 
-	public function registerToWp( $wpRole ) {
+	public function registerToWp( string $wpRole ): bool {
 		$userDetail = $this->skautisGateway->getSkautisInstance()->UserManagement->UserDetail();
 
 		if ( $userDetail && isset( $userDetail->ID ) && $userDetail->ID > 0 ) {

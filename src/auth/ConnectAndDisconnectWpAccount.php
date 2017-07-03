@@ -1,5 +1,7 @@
 <?php
 
+declare( strict_types=1 );
+
 namespace SkautisIntegration\Auth;
 
 use SkautisIntegration\General\Actions;
@@ -15,7 +17,7 @@ final class ConnectAndDisconnectWpAccount {
 		$this->skautisLogin   = $skautisLogin;
 	}
 
-	private function setSkautisUserIdToWpAccount( $wpUserId, $skautisUserId ) {
+	private function setSkautisUserIdToWpAccount( int $wpUserId, int $skautisUserId ) {
 		if ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
 
 			Helpers::validateNonceFromUrl( $_GET['ReturnUrl'], SKAUTISINTEGRATION_NAME . '_connectWpAccountWithSkautis' );
@@ -27,7 +29,7 @@ final class ConnectAndDisconnectWpAccount {
 		}
 	}
 
-	public function getConnectAndDisconnectButton( $wpUserId ) {
+	public function getConnectAndDisconnectButton( int $wpUserId ): string {
 		$skautisUserId = get_the_author_meta( 'skautisUserId_' . $this->skautisGateway->getEnv(), $wpUserId );
 		if ( get_current_screen()->id == 'profile' ) {
 			if ( ! $skautisUserId ) {
@@ -90,7 +92,7 @@ final class ConnectAndDisconnectWpAccount {
 		$wpUserId   = 0;
 		if ( preg_match( "~wpUserId=([^\&,\s,\/,\#,\%,\?]*)~", $decodedUrl, $result ) ) {
 			if ( is_array( $result ) && isset( $result[1] ) && $result[1] ) {
-				$wpUserId = $result[1];
+				$wpUserId = absint( $result[1] );
 			}
 		}
 
@@ -98,17 +100,17 @@ final class ConnectAndDisconnectWpAccount {
 		$skautisUserId = 0;
 		if ( preg_match( "~skautisUserId=([^\&,\s,\/,\#,\%,\?]*)~", $decodedUrl, $result ) ) {
 			if ( is_array( $result ) && isset( $result[1] ) && $result[1] ) {
-				$skautisUserId = $result[1];
+				$skautisUserId = absint( $result[1] );
 			}
 		}
 
-		if ( $wpUserId && $skautisUserId ) {
+		if ( $wpUserId > 0 && $skautisUserId > 0 ) {
 			$this->setSkautisUserIdToWpAccount( $wpUserId, $skautisUserId );
 		}
 
 	}
 
-	public function getConnectWpUserToSkautisUrl() {
+	public function getConnectWpUserToSkautisUrl(): string {
 		$returnUrl = Helpers::getCurrentUrl();
 		$returnUrl = add_query_arg( SKAUTISINTEGRATION_NAME . '_connectWpAccountWithSkautis', wp_create_nonce( SKAUTISINTEGRATION_NAME . '_connectWpAccountWithSkautis' ), $returnUrl );
 		$url       = add_query_arg( 'ReturnUrl', urlencode( $returnUrl ), get_home_url( null, 'skautis/auth/' . Actions::CONNECT_WP_USER_TO_SKAUTIS_ACTION ) );

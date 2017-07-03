@@ -1,5 +1,7 @@
 <?php
 
+declare( strict_types=1 );
+
 namespace SkautisIntegration\Admin;
 
 use SkautisIntegration\Auth\ConnectAndDisconnectWpAccount;
@@ -25,13 +27,13 @@ final class Users {
 		add_action( 'edit_user_profile_update', [ $this, 'manageSkautisUserIdField' ] );
 	}
 
-	public function addColumnHeaderToUsersTable( array $columns = [] ) {
+	public function addColumnHeaderToUsersTable( array $columns = [] ): array {
 		$columns[ SKAUTISINTEGRATION_NAME ] = __( 'skautIS', 'skautis-integration' );
 
 		return $columns;
 	}
 
-	public function addColumnToUsersTable( $value, $columnName, $userId ) {
+	public function addColumnToUsersTable( $value, string $columnName, int $userId ) {
 		if ( $columnName == SKAUTISINTEGRATION_NAME ) {
 			$envType = get_option( 'skautis_integration_appid_type' );
 			if ( $envType === SkautisGateway::PROD_ENV ) {
@@ -88,7 +90,7 @@ final class Users {
 		do_action( SKAUTISINTEGRATION_NAME . '_userScreen_userIds_after' );
 	}
 
-	public function manageSkautisUserIdField( $userId ) {
+	public function manageSkautisUserIdField( int $userId ): bool {
 		$saved = false;
 		if ( Helpers::userIsSkautisManager() ) {
 			if ( isset( $_POST['skautisUserId_prod'] ) ) {

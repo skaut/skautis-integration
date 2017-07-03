@@ -1,5 +1,7 @@
 <?php
 
+declare( strict_types=1 );
+
 namespace SkautisIntegration\Rules;
 
 use SkautisIntegration\Auth\SkautisGateway;
@@ -18,7 +20,7 @@ final class RulesManager {
 		( new Admin( $this, $wpLoginLogout, $skautisGateway ) );
 	}
 
-	private function initRules() {
+	private function initRules(): array {
 		return apply_filters( SKAUTISINTEGRATION_NAME . '_rules', [
 			Rule\Role::$id       => new Rule\Role( $this->skautisGateway ),
 			Rule\Membership::$id => new Rule\Membership( $this->skautisGateway ),
@@ -26,7 +28,7 @@ final class RulesManager {
 		] );
 	}
 
-	private function processRule( $rule ) {
+	private function processRule( $rule ): bool {
 		if ( ! isset( $rule->field ) ) {
 			if ( isset( $rule->condition ) && isset( $rule->rules ) ) {
 				return $this->parseRulesGroups( $rule->condition, $rule->rules );
@@ -46,7 +48,7 @@ final class RulesManager {
 		return false;
 	}
 
-	private function parseRulesGroups( $condition, $rules ) {
+	private function parseRulesGroups( string $condition, array $rules ): bool {
 		$result = 0;
 
 		if ( $condition == 'AND' ) {
@@ -66,18 +68,22 @@ final class RulesManager {
 			}
 		}
 
-		return $result;
+		if ( $result > 0 ) {
+			return true;
+		}
+
+		return false;
 	}
 
-	public function getRules() {
+	public function getRules(): array {
 		return $this->rules;
 	}
 
-	public function checkIfUserPassedRulesAndGetHisRole() {
-		$result = 0;
+	public function checkIfUserPassedRulesAndGetHisRole(): string {
+		$result = '';
 
 		if ( ! $rules = get_option( SKAUTISINTEGRATION_NAME . '_modules_register_rules' ) ) {
-			return get_option( SKAUTISINTEGRATION_NAME . '_modules_register_defaultwpRole' );
+			return (string) get_option( SKAUTISINTEGRATION_NAME . '_modules_register_defaultwpRole' );
 		}
 
 		foreach ( (array) $rules as $rule ) {
@@ -85,22 +91,22 @@ final class RulesManager {
 			if ( isset( $rule['rule'] ) ) {
 				$rulesGroups = json_decode( get_post_meta( $rule['rule'], SKAUTISINTEGRATION_NAME . '_rules_data', true ) );
 			} else {
-				return $result;
+				return '';
 			}
 
 			if ( isset( $rulesGroups->condition ) && isset( $rulesGroups->rules ) && ! empty( $rulesGroups->rules ) ) {
 				$result = $this->parseRulesGroups( $rulesGroups->condition, $rulesGroups->rules );
 			}
 
-			if ( $result ) {
+			if ( $result === true ) {
 				return $rule['role'];
 			}
 		}
 
-		return $result;
+		return '';
 	}
 
-	public function getAllRules() {
+	public function getAllRules(): array {
 		$rulesWpQuery = new \WP_Query( [
 			'post_type'     => RulesInit::RULES_TYPE_SLUG,
 			'nopaging'      => true,

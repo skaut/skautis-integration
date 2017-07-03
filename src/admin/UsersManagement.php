@@ -1,5 +1,7 @@
 <?php
 
+declare( strict_types=1 );
+
 namespace SkautisIntegration\Admin;
 
 use SkautisIntegration\Auth\SkautisGateway;
@@ -24,7 +26,7 @@ class UsersManagement {
 		$this->initHooks();
 	}
 
-	private function initHooks() {
+	protected function initHooks() {
 		if ( is_admin() ) {
 			add_action( 'admin_menu', [
 				$this,
