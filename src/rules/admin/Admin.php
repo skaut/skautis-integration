@@ -265,6 +265,12 @@ final class Admin {
                 data.valueSetter = membership.valueSetter.bind(membership);
             }
 
+			<?php
+
+			do_action( SKAUTISINTEGRATION_NAME . '_rules_admin_jsConditions', $data );
+
+			?>
+
             window.skautisQueryBuilderFilters.push(data);
 			<?php
 			}
