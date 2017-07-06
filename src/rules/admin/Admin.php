@@ -177,6 +177,14 @@ final class Admin {
 		);
 
 		wp_enqueue_script(
+			SKAUTISINTEGRATION_NAME . '_rules_func',
+			$this->adminDirUrl . 'js/skautis-rules-func.js',
+			[],
+			SKAUTISINTEGRATION_VERSION,
+			false
+		);
+
+		wp_enqueue_script(
 			'interact',
 			'https://cdnjs.cloudflare.com/ajax/libs/interact.js/1.2.8/interact.min.js',
 			[],
@@ -263,6 +271,12 @@ final class Admin {
                 data.validation = membership.validation.call(membership);
                 data.valueGetter = membership.valueGetter.bind(membership);
                 data.valueSetter = membership.valueSetter.bind(membership);
+            } else if (data.input === "funcInput") {
+                var func = new Func(data.values);
+                data.input = func.input.bind(func);
+                data.validation = func.validation.call(func);
+                data.valueGetter = func.valueGetter.bind(func);
+                data.valueSetter = func.valueSetter.bind(func);
             }
 
 			<?php

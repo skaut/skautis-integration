@@ -8,4 +8,5 @@ $baseDir = dirname($vendorDir);
 return array(
     'Skautis\\' => array($vendorDir . '/skautis/skautis/src'),
     'SkautisIntegration\\' => array($baseDir . '/src'),
+    'Psr\\Container\\' => array($vendorDir . '/psr/container/src'),
 );

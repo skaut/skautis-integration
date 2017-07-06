@@ -16,6 +16,10 @@ class ComposerStaticInit31d6c3ead3590a20f90fd963ca2c3625
             'Skautis\\' => 8,
             'SkautisIntegration\\' => 19,
         ),
+        'P' => 
+        array (
+            'Psr\\Container\\' => 14,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -26,6 +30,10 @@ class ComposerStaticInit31d6c3ead3590a20f90fd963ca2c3625
         'SkautisIntegration\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
+        ),
+        'Psr\\Container\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/container/src',
         ),
     );
 
@@ -41,6 +49,10 @@ class ComposerStaticInit31d6c3ead3590a20f90fd963ca2c3625
 
     public static $classMap = array (
         'Pimple\\Container' => __DIR__ . '/..' . '/pimple/pimple/src/Pimple/Container.php',
+        'Pimple\\Exception\\ExpectedInvokableException' => __DIR__ . '/..' . '/pimple/pimple/src/Pimple/Exception/ExpectedInvokableException.php',
+        'Pimple\\Exception\\FrozenServiceException' => __DIR__ . '/..' . '/pimple/pimple/src/Pimple/Exception/FrozenServiceException.php',
+        'Pimple\\Exception\\InvalidServiceIdentifierException' => __DIR__ . '/..' . '/pimple/pimple/src/Pimple/Exception/InvalidServiceIdentifierException.php',
+        'Pimple\\Exception\\UnknownIdentifierException' => __DIR__ . '/..' . '/pimple/pimple/src/Pimple/Exception/UnknownIdentifierException.php',
         'Pimple\\ServiceProviderInterface' => __DIR__ . '/..' . '/pimple/pimple/src/Pimple/ServiceProviderInterface.php',
         'Pimple\\Tests\\Fixtures\\Invokable' => __DIR__ . '/..' . '/pimple/pimple/src/Pimple/Tests/Fixtures/Invokable.php',
         'Pimple\\Tests\\Fixtures\\NonInvokable' => __DIR__ . '/..' . '/pimple/pimple/src/Pimple/Tests/Fixtures/NonInvokable.php',
@@ -48,6 +60,9 @@ class ComposerStaticInit31d6c3ead3590a20f90fd963ca2c3625
         'Pimple\\Tests\\Fixtures\\Service' => __DIR__ . '/..' . '/pimple/pimple/src/Pimple/Tests/Fixtures/Service.php',
         'Pimple\\Tests\\PimpleServiceProviderInterfaceTest' => __DIR__ . '/..' . '/pimple/pimple/src/Pimple/Tests/PimpleServiceProviderInterfaceTest.php',
         'Pimple\\Tests\\PimpleTest' => __DIR__ . '/..' . '/pimple/pimple/src/Pimple/Tests/PimpleTest.php',
+        'Psr\\Container\\ContainerExceptionInterface' => __DIR__ . '/..' . '/psr/container/src/ContainerExceptionInterface.php',
+        'Psr\\Container\\ContainerInterface' => __DIR__ . '/..' . '/psr/container/src/ContainerInterface.php',
+        'Psr\\Container\\NotFoundExceptionInterface' => __DIR__ . '/..' . '/psr/container/src/NotFoundExceptionInterface.php',
         'SkautisIntegration\\Admin\\Admin' => __DIR__ . '/../..' . '/src/admin/Admin.php',
         'SkautisIntegration\\Admin\\Settings' => __DIR__ . '/../..' . '/src/admin/Settings.php',
         'SkautisIntegration\\Admin\\Users' => __DIR__ . '/../..' . '/src/admin/Users.php',
@@ -73,6 +88,7 @@ class ComposerStaticInit31d6c3ead3590a20f90fd963ca2c3625
         'SkautisIntegration\\Rules\\IRule' => __DIR__ . '/../..' . '/src/rules/IRule.php',
         'SkautisIntegration\\Rules\\Revisions' => __DIR__ . '/../..' . '/src/rules/Revisions.php',
         'SkautisIntegration\\Rules\\Rule\\All' => __DIR__ . '/../..' . '/src/rules/Rule/All.php',
+        'SkautisIntegration\\Rules\\Rule\\Func' => __DIR__ . '/../..' . '/src/rules/Rule/Func.php',
         'SkautisIntegration\\Rules\\Rule\\Membership' => __DIR__ . '/../..' . '/src/rules/Rule/Membership.php',
         'SkautisIntegration\\Rules\\Rule\\Role' => __DIR__ . '/../..' . '/src/rules/Rule/Role.php',
         'SkautisIntegration\\Rules\\RulesInit' => __DIR__ . '/../..' . '/src/rules/RulesInit.php',

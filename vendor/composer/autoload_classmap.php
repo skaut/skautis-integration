@@ -7,6 +7,10 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Pimple\\Container' => $vendorDir . '/pimple/pimple/src/Pimple/Container.php',
+    'Pimple\\Exception\\ExpectedInvokableException' => $vendorDir . '/pimple/pimple/src/Pimple/Exception/ExpectedInvokableException.php',
+    'Pimple\\Exception\\FrozenServiceException' => $vendorDir . '/pimple/pimple/src/Pimple/Exception/FrozenServiceException.php',
+    'Pimple\\Exception\\InvalidServiceIdentifierException' => $vendorDir . '/pimple/pimple/src/Pimple/Exception/InvalidServiceIdentifierException.php',
+    'Pimple\\Exception\\UnknownIdentifierException' => $vendorDir . '/pimple/pimple/src/Pimple/Exception/UnknownIdentifierException.php',
     'Pimple\\ServiceProviderInterface' => $vendorDir . '/pimple/pimple/src/Pimple/ServiceProviderInterface.php',
     'Pimple\\Tests\\Fixtures\\Invokable' => $vendorDir . '/pimple/pimple/src/Pimple/Tests/Fixtures/Invokable.php',
     'Pimple\\Tests\\Fixtures\\NonInvokable' => $vendorDir . '/pimple/pimple/src/Pimple/Tests/Fixtures/NonInvokable.php',
@@ -14,6 +18,9 @@ return array(
     'Pimple\\Tests\\Fixtures\\Service' => $vendorDir . '/pimple/pimple/src/Pimple/Tests/Fixtures/Service.php',
     'Pimple\\Tests\\PimpleServiceProviderInterfaceTest' => $vendorDir . '/pimple/pimple/src/Pimple/Tests/PimpleServiceProviderInterfaceTest.php',
     'Pimple\\Tests\\PimpleTest' => $vendorDir . '/pimple/pimple/src/Pimple/Tests/PimpleTest.php',
+    'Psr\\Container\\ContainerExceptionInterface' => $vendorDir . '/psr/container/src/ContainerExceptionInterface.php',
+    'Psr\\Container\\ContainerInterface' => $vendorDir . '/psr/container/src/ContainerInterface.php',
+    'Psr\\Container\\NotFoundExceptionInterface' => $vendorDir . '/psr/container/src/NotFoundExceptionInterface.php',
     'SkautisIntegration\\Admin\\Admin' => $baseDir . '/src/admin/Admin.php',
     'SkautisIntegration\\Admin\\Settings' => $baseDir . '/src/admin/Settings.php',
     'SkautisIntegration\\Admin\\Users' => $baseDir . '/src/admin/Users.php',
@@ -39,6 +46,7 @@ return array(
     'SkautisIntegration\\Rules\\IRule' => $baseDir . '/src/rules/IRule.php',
     'SkautisIntegration\\Rules\\Revisions' => $baseDir . '/src/rules/Revisions.php',
     'SkautisIntegration\\Rules\\Rule\\All' => $baseDir . '/src/rules/Rule/All.php',
+    'SkautisIntegration\\Rules\\Rule\\Func' => $baseDir . '/src/rules/Rule/Func.php',
     'SkautisIntegration\\Rules\\Rule\\Membership' => $baseDir . '/src/rules/Rule/Membership.php',
     'SkautisIntegration\\Rules\\Rule\\Role' => $baseDir . '/src/rules/Rule/Role.php',
     'SkautisIntegration\\Rules\\RulesInit' => $baseDir . '/src/rules/RulesInit.php',
