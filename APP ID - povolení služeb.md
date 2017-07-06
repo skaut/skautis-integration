@@ -1,4 +1,5 @@
 Seznam toho, jaké služby je potřeba povolit ve skautISu.
+
 U každé další verze bude napsané, jen to co potřebuje navíc oproti předchozí verzi.
 
 Verze 1.0
