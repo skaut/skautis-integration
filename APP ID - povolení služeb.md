@@ -1,4 +1,5 @@
 Seznam toho, jaké služby je potřeba povolit ve skautISu.
+U každé další verze bude napsané, jen to co potřebuje navíc oproti předchozí verzi.
 
 Verze 1.0
 <br>
@@ -23,3 +24,9 @@ Verze 1.0
 <b>UM_User_DETAIL</b> - Načíst detail uživatele
 <br>
 <b>UM_Role_ALL</b> - Načíst seznam rolí
+
+Verze 1.1
+<br>
+<b>OU_Function_Type_All</b> - Načíst seznam typů funkcí
+<br>
+<b>OU_Function_All_Person</b> - Načíst seznam funkcí osoby
