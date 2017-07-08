@@ -18,6 +18,9 @@ Implemantace přihlašování, registrace a dalších služeb z informačního s
 
 Plugin po aktivaci bude vyžadovat APP ID. Návod jak ho zístat najdete v [nápovědě](https://napoveda.skaut.cz/skautis/skautis-integration)
 
+**Jsme na GitHubu**
+[https://github.com/skaut/skautis-integration/](https://github.com/skaut/skautis-integration/)
+
 == Installation ==
 1. Stáhnout si plugin a aktivovat
 2. V levém menu se objeví položka skautIS
