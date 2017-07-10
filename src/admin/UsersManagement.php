@@ -164,7 +164,7 @@ class UsersManagement {
 ';
 
 		$result .= '<table class="skautisUserManagementTable"><thead style="font-weight: bold;"><tr>';
-		$result .= '<th>' . __( 'Jméno a příjmení', 'skautis-integration' ) . '</th><th>' . __( 'Přezdívka', 'skautis-integration' ) . '</th><th>' . __( 'ID uživatele', 'skautis-integration' ) . '<th>' . __( 'Propojení', 'skautis-integration' ) . '</th><th></th>';
+		$result .= '<th>' . __( 'Jméno a příjmení', 'skautis-integration' ) . '</th><th>' . __( 'Přezdívka', 'skautis-integration' ) . '</th><th>' . __( 'ID uživatele', 'skautis-integration' ) . '</th><th>' . __( 'Propojený uživatel', 'skautis-integration' ) . '</th><th>' . __( 'Propojení', 'skautis-integration' ) . '</th>';
 		$result .= '</tr></thead ><tbody>';
 
 		$connectedWpUsers = new \WP_User_Query( [
