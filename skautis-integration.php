@@ -107,7 +107,11 @@ class SkautisIntegration {
 
 	public static function uninstall() {
 		global $wpdb;
-		$options = $wpdb->get_results( "SELECT option_name FROM $wpdb->options WHERE option_name LIKE 'skautis_integration_%' OR option_name LIKE 'skautis-integration_%'" );
+		$options = $wpdb->get_results( $wpdb->prepare( "
+SELECT `option_name`
+FROM $wpdb->options
+WHERE `option_name` LIKE %s OR `option_name` LIKE %s
+", [ 'skautis_integration_%', SKAUTISINTEGRATION_NAME . '_%' ] ) );
 		foreach ( $options as $option ) {
 			delete_option( $option->option_name );
 		}
