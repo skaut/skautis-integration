@@ -2,7 +2,7 @@
 Contributors: davidulus, skaut, kalich5
 Tags: skaut, multisite, plugin, shortcode, skautIS, registrace
 Requires at least: 4.8
-Tested up to: 4.8
+Tested up to: 4.9
 Strable tag: 1.1
 License: GPLv3 or laterLicense URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -39,7 +39,7 @@ Plugin po aktivaci bude vyžadovat APP ID. Návod jak ho zístat najdete v [náp
 * vyžadováno PHP 7.0 a vyšší
 * pravidlo: funkce
 * vidotelnost stránek/příspěvků/custon type
-* 
+* lepší nastavování na stránce "Správa uživatelů"
 
 = 1.0 =
 * podpora přihlášení přes skautIS
