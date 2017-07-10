@@ -31,3 +31,5 @@ Verze 1.1
 <b>OU_Function_Type_All</b> - Načíst seznam typů funkcí
 <br>
 <b>OU_Function_All_Person</b> - Načíst seznam funkcí osoby
+<br>
+<b>UM_Login_Update </b> - Přihlášení uživatele na jinou roli
