@@ -1,6 +1,17 @@
 (function ($) {
     'use strict';
 
+    $('#skautisRoleChanger').select2().on('change', function () {
+        $(this).closest('form').submit();
+    });
+
+    $('.skautisUserManagementTable').dataTable({
+        responsive: true,
+        language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.10.15/i18n/Czech.json'
+        }
+    });
+
     var $modal = $('#TB_ajaxContent');
     $('.thickbox').on('click', function () {
         resizeModal();
