@@ -30,11 +30,7 @@ final class Admin {
 	}
 
 	private function initHooks() {
-		add_action( 'admin_enqueue_scripts', [ $this, 'enqueueStyles' ] );
-
-		if ( ! empty( $_GET['page'] ) && $_GET['page'] == 'skautis-integration_usersManagement' ) {
-			add_action( 'admin_enqueue_scripts', [ $this, 'enqueueScripts' ] );
-		}
+		add_action( 'admin_enqueue_scripts', [ $this, 'enqueueScriptsAndStyles' ] );
 
 		if ( $this->skautisGateway->isInitialized() ) {
 			if ( $this->skautisGateway->getSkautisInstance()->getUser()->isLoggedIn() ) {
@@ -43,7 +39,7 @@ final class Admin {
 		}
 	}
 
-	public function enqueueStyles() {
+	public function enqueueScriptsAndStyles() {
 		wp_enqueue_style(
 			'select2',
 			'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css',
@@ -51,22 +47,6 @@ final class Admin {
 			'4.0.3',
 			'all'
 		);
-
-		wp_enqueue_style(
-			SKAUTISINTEGRATION_NAME,
-			$this->adminDirUrl . 'css/skautis-admin.css',
-			[],
-			SKAUTISINTEGRATION_VERSION,
-			'all'
-		);
-	}
-
-	public function enqueueScripts() {
-		wp_enqueue_script( 'thickbox' );
-		wp_enqueue_style( 'thickbox' );
-		if ( is_network_admin() ) {
-			add_action( 'admin_head', '_thickbox_path_admin_subfolder' );
-		}
 
 		wp_enqueue_script(
 			'select2',
@@ -76,12 +56,12 @@ final class Admin {
 			true
 		);
 
-		wp_enqueue_script(
+		wp_enqueue_style(
 			SKAUTISINTEGRATION_NAME,
-			$this->adminDirUrl . 'js/skautis-admin.js',
-			[ 'jquery' ],
+			$this->adminDirUrl . 'css/skautis-admin.css',
+			[],
 			SKAUTISINTEGRATION_VERSION,
-			true
+			'all'
 		);
 	}
 

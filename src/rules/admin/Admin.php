@@ -149,14 +149,6 @@ final class Admin {
 			'2.4.3',
 			'all'
 		);
-
-		wp_enqueue_style(
-			'select2',
-			'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css',
-			[],
-			'4.0.3',
-			'all'
-		);
 	}
 
 	public function enqueueScripts() {
@@ -190,14 +182,6 @@ final class Admin {
 			[],
 			'1.2.8',
 			false
-		);
-
-		wp_enqueue_script(
-			'select2',
-			'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js',
-			[ 'jquery' ],
-			'4.0.3',
-			true
 		);
 
 		wp_enqueue_script(

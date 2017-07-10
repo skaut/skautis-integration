@@ -17,22 +17,77 @@ class UsersManagement {
 	protected $wpLoginLogout;
 	protected $skautisLogin;
 	protected $connectAndDisconnectWpAccount;
+	protected $adminDirUrl = '';
 
 	public function __construct( SkautisGateway $skautisGateway, WpLoginLogout $wpLoginLogout, SkautisLogin $skautisLogin, ConnectAndDisconnectWpAccount $connectAndDisconnectWpAccount ) {
 		$this->skautisGateway                = $skautisGateway;
 		$this->wpLoginLogout                 = $wpLoginLogout;
 		$this->skautisLogin                  = $skautisLogin;
 		$this->connectAndDisconnectWpAccount = $connectAndDisconnectWpAccount;
+		$this->adminDirUrl                   = plugin_dir_url( __FILE__ ) . 'public/';
+		$this->checkIfUserChangeSkautisRole();
 		$this->initHooks();
 	}
 
 	protected function initHooks() {
-		if ( is_admin() ) {
-			add_action( 'admin_menu', [
-				$this,
-				'setupUsersManagementPage'
-			], 10 );
+		add_action( 'admin_menu', [
+			$this,
+			'setupUsersManagementPage'
+		], 10 );
+
+		if ( ! empty( $_GET['page'] ) && $_GET['page'] == SKAUTISINTEGRATION_NAME . '_usersManagement' ) {
+			add_action( 'admin_enqueue_scripts', [ $this, 'enqueueScriptsAndStyles' ] );
 		}
+	}
+
+	public function checkIfUserChangeSkautisRole() {
+		add_action( 'init', function () {
+			if ( isset( $_POST['changeSkautisUserRole'], $_POST['_wpnonce'], $_POST['_wp_http_referer'] ) ) {
+				if ( check_admin_referer( SKAUTISINTEGRATION_NAME . '_usersManagement_changeSkautisUserRole', '_wpnonce' ) ) {
+					$this->skautisLogin->changeUserRoleInSkautis( absint( $_POST['changeSkautisUserRole'] ) );
+				}
+			}
+		} );
+	}
+
+	public function enqueueScriptsAndStyles() {
+		wp_enqueue_script( 'thickbox' );
+		wp_enqueue_style( 'thickbox' );
+		if ( is_network_admin() ) {
+			add_action( 'admin_head', '_thickbox_path_admin_subfolder' );
+		}
+
+		wp_enqueue_style(
+			'datatables',
+			'https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css',
+			[],
+			'1.10.15',
+			'all'
+		);
+
+		wp_enqueue_script(
+			'datatables',
+			'https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js',
+			[ 'jquery' ],
+			'1.10.15',
+			true
+		);
+
+		wp_enqueue_style(
+			SKAUTISINTEGRATION_NAME,
+			$this->adminDirUrl . 'css/skautis-admin-users-management.css',
+			[],
+			SKAUTISINTEGRATION_VERSION,
+			'all'
+		);
+
+		wp_enqueue_script(
+			SKAUTISINTEGRATION_NAME,
+			$this->adminDirUrl . 'js/skautis-admin-users-management.js',
+			[ 'jquery', 'select2' ],
+			SKAUTISINTEGRATION_VERSION,
+			true
+		);
 	}
 
 	public function setupUsersManagementPage() {
@@ -75,6 +130,38 @@ class UsersManagement {
 
 			return;
 		}
+
+		$currentUserRoles = $this->skautisGateway->getSkautisInstance()->UserManagement->UserRoleAll( [
+			'ID_Login' => $this->skautisGateway->getSkautisInstance()->getUser()->getLoginId(),
+			'ID_User'  => $this->skautisGateway->getSkautisInstance()->UserManagement->UserDetail()->ID
+		] );
+		$currentUserRole  = $this->skautisGateway->getSkautisInstance()->getUser()->getRoleId();
+
+		$result .= '
+<form method="post" action="' . esc_attr( Helpers::getCurrentUrl() ) . '" novalidate="novalidate">
+' . wp_nonce_field( SKAUTISINTEGRATION_NAME . '_usersManagement_changeSkautisUserRole', '_wpnonce', true, false ) . '
+<table class="form-table">
+<tbody>
+<tr>
+<th scope="row" style="width: 13ex;">
+<label for="skautisRoleChanger">' . __( 'Moje role', 'skautis-integration' ) . '</label>
+</th>
+<td>
+<select id="skautisRoleChanger" name="changeSkautisUserRole">';
+		foreach ( (array) $currentUserRoles as $role ) {
+			$result .= '<option value="' . esc_attr( $role->ID ) . '" ' . selected( $role->ID, $currentUserRole, false ) . '>' . esc_html( $role->DisplayName ) . '</option>';
+		}
+		$result .= '
+</select>
+<br/>
+<em>' . __( 'Vybraná role ovlivní, kteří uživatelé se zobrazí v tabulce níže.', 'skautis-integration' ) . '</em>
+</td>
+</tr>
+</tbody>
+</table>
+</form>
+<br/>
+';
 
 		$result .= '<table class="skautisUserManagementTable"><thead style="font-weight: bold;"><tr>';
 		$result .= '<th>' . __( 'Jméno a příjmení', 'skautis-integration' ) . '</th><th>' . __( 'Přezdívka', 'skautis-integration' ) . '</th><th>' . __( 'ID uživatele', 'skautis-integration' ) . '<th>' . __( 'Propojení', 'skautis-integration' ) . '</th><th></th>';

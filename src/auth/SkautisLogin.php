@@ -68,4 +68,23 @@ final class SkautisLogin {
 		}
 	}
 
+	public function changeUserRoleInSkautis( int $roleId ) {
+		if ( $roleId > 0 ) {
+			$result = $this->skautisGateway->getSkautisInstance()->UserManagement->LoginUpdate( [
+				'ID'          => $this->skautisGateway->getSkautisInstance()->getUser()->getLoginId(),
+				'ID_UserRole' => $roleId
+			] );
+
+			if ( ! $result || ! isset( $result->ID_Unit ) ) {
+				return;
+			}
+
+			$this->skautisGateway->getSkautisInstance()->getUser()->updateLoginData(
+				$this->skautisGateway->getSkautisInstance()->getUser()->getLoginId(),
+				$roleId,
+				$result->ID_Unit
+			);
+		}
+	}
+
 }

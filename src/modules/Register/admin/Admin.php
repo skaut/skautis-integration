@@ -28,14 +28,6 @@ final class Admin {
 	public function enqueueStyles() {
 		if ( get_current_screen()->id == 'skautis_page_skautis-integration_modules_register' ) {
 			wp_enqueue_style(
-				'select2',
-				'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css',
-				[],
-				'4.0.3',
-				'all'
-			);
-
-			wp_enqueue_style(
 				SKAUTISINTEGRATION_NAME . '_modules_register',
 				$this->adminDirUrl . 'css/skautis-modules-register-admin.css',
 				[],
@@ -48,14 +40,6 @@ final class Admin {
 	public function enqueueScripts() {
 		if ( get_current_screen()->id == 'skautis_page_skautis-integration_modules_register' ) {
 			wp_enqueue_script( 'jquery-ui-sortable' );
-
-			wp_enqueue_script(
-				'select2',
-				'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js',
-				[ 'jquery' ],
-				'4.0.3',
-				true
-			);
 
 			wp_enqueue_script(
 				'jquery-repeater',
