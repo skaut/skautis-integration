@@ -59,7 +59,7 @@ class UsersManagement {
 
 		wp_enqueue_style(
 			'datatables',
-			'https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css',
+			'https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.15/css/jquery.dataTables.min.css',
 			[],
 			'1.10.15',
 			'all'
@@ -67,7 +67,7 @@ class UsersManagement {
 
 		wp_enqueue_script(
 			'datatables',
-			'https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js',
+			'https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.15/js/jquery.dataTables.min.js',
 			[ 'jquery' ],
 			'1.10.15',
 			true

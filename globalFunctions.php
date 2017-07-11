@@ -32,3 +32,9 @@ if ( ! function_exists( "isUserLoggedInSkautis" ) ) {
 		return ( Services::getServicesContainer()['skautisLogin'] )->isUserLoggedInSkautis();
 	}
 }
+
+if ( ! function_exists( "userPassedRules" ) ) {
+	function userPassedRules( array $rulesIds ): bool {
+		return ( Services::getServicesContainer()['rules_manager'] )->checkIfUserPassedRules( $rulesIds );
+	}
+}
