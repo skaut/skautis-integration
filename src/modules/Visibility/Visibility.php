@@ -4,6 +4,7 @@ declare( strict_types=1 );
 
 namespace SkautisIntegration\Modules\Visibility;
 
+use SkautisIntegration\Auth\WpLoginLogout;
 use SkautisIntegration\Modules\IModule;
 use SkautisIntegration\Rules\RulesManager;
 use SkautisIntegration\Auth\SkautisLogin;
@@ -16,17 +17,19 @@ final class Visibility implements IModule {
 
 	private $rulesManager;
 	private $skautisLogin;
+	private $wpLoginLogout;
 
 	public static $id = 'module_Visibility';
 
-	public function __construct( RulesManager $rulesManager, SkautisLogin $skautisLogin ) {
-		$this->rulesManager = $rulesManager;
-		$this->skautisLogin = $skautisLogin;
-		$postTypes          = (array) get_option( SKAUTISINTEGRATION_NAME . '_modules_visibility_postTypes', [] );
+	public function __construct( RulesManager $rulesManager, SkautisLogin $skautisLogin, WpLoginLogout $wpLoginLogout ) {
+		$this->rulesManager  = $rulesManager;
+		$this->skautisLogin  = $skautisLogin;
+		$this->wpLoginLogout = $wpLoginLogout;
+		$postTypes           = (array) get_option( SKAUTISINTEGRATION_NAME . '_modules_visibility_postTypes', [] );
 		if ( is_admin() ) {
 			( new Admin( $postTypes, $this->rulesManager ) );
 		} else {
-			( new Frontend( $postTypes, $this->rulesManager, $skautisLogin ) );
+			( new Frontend( $postTypes, $this->rulesManager, $this->skautisLogin, $this->wpLoginLogout ) );
 		}
 	}
 

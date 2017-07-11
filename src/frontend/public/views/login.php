@@ -12,7 +12,8 @@ if ( ! isUserLoggedInSkautis() ) {
 } else {
 	?>
 	<div style="text-align: center;">
-		<strong>Jste přihlášeni ve skautISu</strong><br/>
+		<strong>Jste přihlášeni ve skautISu</strong>
+		<br/>
 		<a class="button" href="<?php echo getSkautisLogoutUrl(); ?>">
 			Odhlásit se ze skautISu
 		</a>

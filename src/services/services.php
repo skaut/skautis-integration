@@ -97,8 +97,8 @@ class Services {
 		// Modules
 		self::$services['modulesManager'] = function ( Container $container ) {
 			return new ModulesManager( $container, [ // for hard modules activation/deactivation look to modules/ModulesManager WP filters
-			                                         Register::getId()   => Register::getLabel(),
-			                                         Visibility::getId() => Visibility::getLabel()
+				Register::getId()   => Register::getLabel(),
+				Visibility::getId() => Visibility::getLabel()
 			] );
 		};
 
@@ -107,7 +107,7 @@ class Services {
 		};
 
 		self::$services[ Visibility::getId() ] = function ( Container $container ) {
-			return new Visibility( $container['rules_manager'], $container['skautisLogin'] );
+			return new Visibility( $container['rules_manager'], $container['skautisLogin'], $container['wpLoginLogout'] );
 		};
 	}
 

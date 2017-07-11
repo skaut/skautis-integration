@@ -6,6 +6,7 @@ namespace SkautisIntegration\Rules;
 
 use SkautisIntegration\Auth\SkautisGateway;
 use SkautisIntegration\Auth\WpLoginLogout;
+use SkautisIntegration\Utils\Helpers;
 
 final class Admin {
 
@@ -113,7 +114,7 @@ final class Admin {
 					if ( ! $this->skautisGateway->isInitialized() ) {
 						printf( __( 'Vyberte v <a href="%1$s">nastavení</a> pluginu typ prostředí skautISu', 'skautis-integration' ), admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME ) );
 					} else if ( ! $this->skautisGateway->getSkautisInstance()->getUser()->isLoggedIn( true ) ) {
-						$result = '<h4><a href="' . $this->wpLoginLogout->getLoginUrl() . '">' . __( 'Pro správu pravidel je nutné se přihlásit do skautISu', 'skautis-integration' ) . '</a></h4>';
+						$result = '<h4><a href="' . $this->wpLoginLogout->getLoginUrl( add_query_arg( 'noWpLogin', true, Helpers::getCurrentUrl() ) ) . '">' . __( 'Pro správu pravidel je nutné se přihlásit do skautISu', 'skautis-integration' ) . '</a></h4>';
 						echo $result;
 					} else {
 						echo '<div id="query_builder"></div>';
@@ -215,53 +216,53 @@ final class Admin {
 		}
 		?>
 		<script>
-            window.skautisQueryBuilderFilters = [];
+			window.skautisQueryBuilderFilters = [];
 
-            var data = {};
+			var data = {};
 			<?php
 			foreach ( (array) $this->rulesManager->getRules() as $rule ) {
 			$data = json_encode( [
-				'id'          => $rule->getId(),
-				'label'       => $rule->getLabel(),
-				'type'        => $rule->getType(),
-				'input'       => $rule->getInput(),
-				'multiple'    => $rule->getMultiple(),
-				'values'      => $rule->getValues(),
-				'operators'   => $rule->getOperators(),
-				'placeholder' => $rule->getPlaceholder(),
-				'description' => $rule->getDescription()
-			] );
+				                     'id'          => $rule->getId(),
+				                     'label'       => $rule->getLabel(),
+				                     'type'        => $rule->getType(),
+				                     'input'       => $rule->getInput(),
+				                     'multiple'    => $rule->getMultiple(),
+				                     'values'      => $rule->getValues(),
+				                     'operators'   => $rule->getOperators(),
+				                     'placeholder' => $rule->getPlaceholder(),
+				                     'description' => $rule->getDescription()
+			                     ] );
 			?>
-            data = <?php echo $data; ?>;
+			data = <?php echo $data; ?>;
 
-            if (typeof data.values !== "undefined") {
-                data.values = Object.keys(data.values).map(function (key) {
-                    return {[key]: data.values[key]};
-                });
-                data.values = data.values.sort(function (a, b) {
-                    return a[Object.keys(a)[0]].localeCompare(b[Object.keys(b)[0]]);
-                });
-            }
+			if (typeof data.values !== "undefined") {
+				data.values = Object.keys(data.values).map(function (key) {
+					return {[key]: data.values[key]};
+				});
+				data.values = data.values.sort(function (a, b) {
+					return a[Object.keys(a)[0]].localeCompare(b[Object.keys(b)[0]]);
+				});
+			}
 
-            if (data.input === "roleInput") {
-                var role = new Role(data.values);
-                data.input = role.input.bind(role);
-                data.validation = role.validation.call(role);
-                data.valueGetter = role.valueGetter.bind(role);
-                data.valueSetter = role.valueSetter.bind(role);
-            } else if (data.input === "membershipInput") {
-                var membership = new Membership(data.values);
-                data.input = membership.input.bind(membership);
-                data.validation = membership.validation.call(membership);
-                data.valueGetter = membership.valueGetter.bind(membership);
-                data.valueSetter = membership.valueSetter.bind(membership);
-            } else if (data.input === "funcInput") {
-                var func = new Func(data.values);
-                data.input = func.input.bind(func);
-                data.validation = func.validation.call(func);
-                data.valueGetter = func.valueGetter.bind(func);
-                data.valueSetter = func.valueSetter.bind(func);
-            }
+			if (data.input === "roleInput") {
+				var role = new Role(data.values);
+				data.input = role.input.bind(role);
+				data.validation = role.validation.call(role);
+				data.valueGetter = role.valueGetter.bind(role);
+				data.valueSetter = role.valueSetter.bind(role);
+			} else if (data.input === "membershipInput") {
+				var membership = new Membership(data.values);
+				data.input = membership.input.bind(membership);
+				data.validation = membership.validation.call(membership);
+				data.valueGetter = membership.valueGetter.bind(membership);
+				data.valueSetter = membership.valueSetter.bind(membership);
+			} else if (data.input === "funcInput") {
+				var func = new Func(data.values);
+				data.input = func.input.bind(func);
+				data.validation = func.validation.call(func);
+				data.valueGetter = func.valueGetter.bind(func);
+				data.valueSetter = func.valueSetter.bind(func);
+			}
 
 			<?php
 
@@ -269,7 +270,7 @@ final class Admin {
 
 			?>
 
-            window.skautisQueryBuilderFilters.push(data);
+			window.skautisQueryBuilderFilters.push(data);
 			<?php
 			}
 			?>

@@ -109,10 +109,10 @@ final class RulesManager {
 
 	public function getAllRules(): array {
 		$rulesWpQuery = new \WP_Query( [
-			'post_type'     => RulesInit::RULES_TYPE_SLUG,
-			'nopaging'      => true,
-			'no_found_rows' => true
-		] );
+			                               'post_type'     => RulesInit::RULES_TYPE_SLUG,
+			                               'nopaging'      => true,
+			                               'no_found_rows' => true
+		                               ] );
 
 		if ( $rulesWpQuery->have_posts() ) {
 			return $rulesWpQuery->posts;
@@ -133,7 +133,9 @@ final class RulesManager {
 				$result = $this->parseRulesGroups( $rulesGroups->condition, $rulesGroups->rules );
 			}
 
-			return $result;
+			if ( $result === true ) {
+				return $result;
+			}
 		}
 
 		return false;

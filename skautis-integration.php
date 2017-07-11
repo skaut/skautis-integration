@@ -20,6 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 define( 'SKAUTISINTEGRATION_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 define( 'SKAUTISINTEGRATION_PATH', plugin_dir_path( __FILE__ ) );
+define( 'SKAUTISINTEGRATION_URL', plugin_dir_url( __FILE__ ) );
 define( 'SKAUTISINTEGRATION_NAME', 'skautis-integration' );
 define( 'SKAUTISINTEGRATION_VERSION', '1.0' );
 

@@ -57,23 +57,38 @@ final class SkautisLogin {
 			exit;
 		}
 
-		$this->wpLoginLogout->loginToWp();
+		if ( ! isset( $_GET['ReturnUrl'] ) || strpos( $_GET['ReturnUrl'], 'noWpLogin' ) === false ) {
+			$this->wpLoginLogout->loginToWp();
+		} else if ( isset( $_GET['ReturnUrl'] ) ) {
+			wp_safe_redirect( esc_url_raw( $_GET['ReturnUrl'] ), 302 );
+			exit;
+		}
 	}
 
 	public function loginConfirm() {
 		if ( $this->setLoginDataToLocalSkautisInstance( $_POST ) ) {
-			$this->wpLoginLogout->loginToWp();
+			if ( ! isset( $_GET['ReturnUrl'] ) || strpos( $_GET['ReturnUrl'], 'noWpLogin' ) === false ) {
+				$this->wpLoginLogout->loginToWp();
+			} else if ( isset( $_GET['ReturnUrl'] ) ) {
+				wp_safe_redirect( esc_url_raw( $_GET['ReturnUrl'] ), 302 );
+				exit;
+			}
 		} else if ( $this->isUserLoggedInSkautis() ) {
-			$this->wpLoginLogout->loginToWp();
+			if ( ! isset( $_GET['ReturnUrl'] ) || strpos( $_GET['ReturnUrl'], 'noWpLogin' ) === false ) {
+				$this->wpLoginLogout->loginToWp();
+			} else if ( isset( $_GET['ReturnUrl'] ) ) {
+				wp_safe_redirect( esc_url_raw( $_GET['ReturnUrl'] ), 302 );
+				exit;
+			}
 		}
 	}
 
 	public function changeUserRoleInSkautis( int $roleId ) {
 		if ( $roleId > 0 ) {
 			$result = $this->skautisGateway->getSkautisInstance()->UserManagement->LoginUpdate( [
-				'ID'          => $this->skautisGateway->getSkautisInstance()->getUser()->getLoginId(),
-				'ID_UserRole' => $roleId
-			] );
+				                                                                                    'ID'          => $this->skautisGateway->getSkautisInstance()->getUser()->getLoginId(),
+				                                                                                    'ID_UserRole' => $roleId
+			                                                                                    ] );
 
 			if ( ! $result || ! isset( $result->ID_Unit ) ) {
 				return;

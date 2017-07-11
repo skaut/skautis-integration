@@ -30,10 +30,6 @@ final class LoginForm {
 		wp_enqueue_style( SKAUTISINTEGRATION_NAME, $this->frontendDirUrl . 'css/skautis-frontend.css', [], SKAUTISINTEGRATION_VERSION, 'all' );
 	}
 
-	public function enqueueScripts() {
-		wp_enqueue_script( SKAUTISINTEGRATION_NAME, $this->frontendDirUrl . 'js/skautis-frontend.js', [ 'jquery' ], SKAUTISINTEGRATION_VERSION, false );
-	}
-
 	public function loginLinkInLoginForm() {
 		?>
 		<p style="margin-bottom: 0.3em;">
@@ -41,7 +37,8 @@ final class LoginForm {
 			href="<?php echo $this->wpLoginLogout->getLoginUrl(); ?>
 			"><?php _e( 'Log in with skautIS', 'skautis-integration' ); ?></a>
 			<br/>
-		</p><br/>
+		</p>
+		<br/>
 		<?php
 	}
 
@@ -51,7 +48,8 @@ final class LoginForm {
 			<a class="button button-primary button-hero pic-lilie" style="float: none; width: 100%; text-align: center;"
 			   href="' . $this->wpLoginLogout->getLoginUrl() . '">' . __( 'Log in with skautIS', 'skautis-integration' ) . '</a>
 			   <br/>
-		</p><br/>
+		</p>
+		<br/>
 		';
 	}
 

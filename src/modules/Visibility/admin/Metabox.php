@@ -49,12 +49,25 @@ final class Metabox {
 				$_POST[ SKAUTISINTEGRATION_NAME . '_rules_includeChildren' ]
 			);
 		}
+
+		if ( array_key_exists( SKAUTISINTEGRATION_NAME . '_rules_visibilityMode', $_POST ) ) {
+			update_post_meta(
+				$postId,
+				SKAUTISINTEGRATION_NAME . '_rules_visibilityMode',
+				$_POST[ SKAUTISINTEGRATION_NAME . '_rules_visibilityMode' ]
+			);
+		}
 	}
 
 	public function rulesRepeater( \WP_Post $post ) {
 		$includeChildren = get_post_meta( $post->ID, SKAUTISINTEGRATION_NAME . '_rules_includeChildren', true );
 		if ( $includeChildren !== '0' && $includeChildren !== '1' ) {
 			$includeChildren = get_option( SKAUTISINTEGRATION_NAME . '_modules_visibility_includeChildren', 0 );
+		}
+
+		$visibilityMode = get_post_meta( $post->ID, SKAUTISINTEGRATION_NAME . '_rules_visibilityMode', true );
+		if ( $visibilityMode !== 'content' && $visibilityMode !== 'full' ) {
+			$visibilityMode = get_option( SKAUTISINTEGRATION_NAME . '_modules_visibility_visibilityMode', 0 );
 		}
 		?>
 		<p><?php _e( 'Obsah bude pro uživatele viditelný pouze při splnění alespoň jednoho z následujících pravidel.', 'skautis-integration' ); ?></p>
@@ -84,6 +97,13 @@ final class Metabox {
 				<input type="checkbox" name="<?php echo SKAUTISINTEGRATION_NAME; ?>_rules_includeChildren"
 				       value="1" <?php checked( 1, $includeChildren ); ?> /><span><?php _e( 'Použít vybraná pravidla i na podřízené příspěvky', 'skautis-integration' ); ?>
 					.</span></label>
+		</p>
+		<p>
+			<label><input type="radio" name="<?php echo SKAUTISINTEGRATION_NAME; ?>_rules_visibilityMode"
+			              value="full" <?php checked( 'full', $visibilityMode ); ?> /><span><?php _e( 'Skrýt celý příspěvek', 'skautis-integration' ); ?></span></label>
+			<br/>
+			<label><input type="radio" name="<?php echo SKAUTISINTEGRATION_NAME; ?>_rules_visibilityMode"
+			              value="content" <?php checked( 'content', $visibilityMode ); ?> /><span><?php _e( 'Skrýt pouze obsah příspěvku', 'skautis-integration' ); ?></span></label>
 		</p>
 		<?php
 	}
