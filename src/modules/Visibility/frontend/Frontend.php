@@ -46,7 +46,7 @@ final class Frontend {
 	}
 
 	private function getUnauthorizedMessage() {
-		return 'Nemáte oprávnění k přístupu k tomuto obsahu ';
+		return __( 'Nemáte oprávnění k přístupu k tomuto obsahu', 'skautis-integration' );
 	}
 
 	private function getPostsHierarchyTreeWithRules( int $postId, $postType ) {
