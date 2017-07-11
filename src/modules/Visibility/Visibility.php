@@ -5,25 +5,28 @@ declare( strict_types=1 );
 namespace SkautisIntegration\Modules\Visibility;
 
 use SkautisIntegration\Modules\IModule;
+use SkautisIntegration\Rules\RulesManager;
+use SkautisIntegration\Auth\SkautisLogin;
 use SkautisIntegration\Modules\Visibility\Admin\Admin;
 use SkautisIntegration\Modules\Visibility\Frontend\Frontend;
-use SkautisIntegration\Rules\RulesManager;
 
 final class Visibility implements IModule {
 
 	const REGISTER_ACTION = 'visibility';
 
 	private $rulesManager;
+	private $skautisLogin;
 
 	public static $id = 'module_Visibility';
 
-	public function __construct( RulesManager $rulesManager ) {
+	public function __construct( RulesManager $rulesManager, SkautisLogin $skautisLogin ) {
 		$this->rulesManager = $rulesManager;
+		$this->skautisLogin = $skautisLogin;
 		$postTypes          = get_option( SKAUTISINTEGRATION_NAME . '_modules_visibility_postTypes' );
 		if ( is_admin() ) {
 			( new Admin( $postTypes, $this->rulesManager ) );
 		} else {
-			( new Frontend( $postTypes, $this->rulesManager ) );
+			( new Frontend( $postTypes, $this->rulesManager, $skautisLogin ) );
 		}
 	}
 

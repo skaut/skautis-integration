@@ -107,7 +107,7 @@ class Services {
 		};
 
 		self::$services[ Visibility::getId() ] = function ( Container $container ) {
-			return new Visibility( $container['rules_manager'] );
+			return new Visibility( $container['rules_manager'], $container['skautisLogin'] );
 		};
 	}
 
