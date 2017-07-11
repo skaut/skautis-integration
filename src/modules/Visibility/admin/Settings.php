@@ -69,7 +69,33 @@ final class Settings {
 			SKAUTISINTEGRATION_NAME . '_modules_visibility'
 		);
 
+		add_settings_field(
+			SKAUTISINTEGRATION_NAME . '_modules_visibility_visibilityMode',
+			__( 'Způsob skrytí', 'skautis-integration' ),
+			[ $this, 'fieldVisibilityMode' ],
+			SKAUTISINTEGRATION_NAME . '_modules_visibility',
+			SKAUTISINTEGRATION_NAME . '_modules_visibility'
+		);
+
+		add_settings_field(
+			SKAUTISINTEGRATION_NAME . '_modules_visibility_includeChildren',
+			__( 'Podřízené příspěvky', 'skautis-integration' ),
+			[ $this, 'fieldIncludeChildren' ],
+			SKAUTISINTEGRATION_NAME . '_modules_visibility',
+			SKAUTISINTEGRATION_NAME . '_modules_visibility'
+		);
+
 		register_setting( SKAUTISINTEGRATION_NAME . '_modules_visibility', SKAUTISINTEGRATION_NAME . '_modules_visibility_postTypes', [
+			'type'         => 'string',
+			'show_in_rest' => false
+		] );
+
+		register_setting( SKAUTISINTEGRATION_NAME . '_modules_visibility', SKAUTISINTEGRATION_NAME . '_modules_visibility_visibilityMode', [
+			'type'         => 'string',
+			'show_in_rest' => false
+		] );
+
+		register_setting( SKAUTISINTEGRATION_NAME . '_modules_visibility', SKAUTISINTEGRATION_NAME . '_modules_visibility_includeChildren', [
 			'type'         => 'string',
 			'show_in_rest' => false
 		] );
@@ -93,5 +119,32 @@ final class Settings {
 		</div>
 		<?php
 	}
+
+	public function fieldVisibilityMode() {
+		$visibilityMode = get_option( SKAUTISINTEGRATION_NAME . '_modules_visibility_visibilityMode', 'full' );
+		?>
+		<label><input type="radio" name="<?php echo SKAUTISINTEGRATION_NAME; ?>_modules_visibility_visibilityMode"
+		              value="full" <?php checked( 'full', $visibilityMode ); ?> /><span><?php _e( 'Skrýt celý příspěvek', 'skautis-integration' ); ?></span></label>
+		<br/>
+		<label><input type="radio" name="<?php echo SKAUTISINTEGRATION_NAME; ?>_modules_visibility_visibilityMode"
+		              value="content" <?php checked( 'content', $visibilityMode ); ?> /><span><?php _e( 'Skrýt pouze obsah příspěvku', 'skautis-integration' ); ?></span></label>
+		<p>
+			<em><?php _e( 'Nastavení můžete změnit u jednotlivých příspěvků dle potřeby.', 'skautis-integration' ); ?></em>
+		</p>
+		<?php
+	}
+
+	public function fieldIncludeChildren() {
+		$includeChildren = get_option( SKAUTISINTEGRATION_NAME . '_modules_visibility_includeChildren', 0 );
+		?>
+		<label><input type="checkbox" name="<?php echo SKAUTISINTEGRATION_NAME; ?>_modules_visibility_includeChildren"
+		              value="1" <?php checked( 1, $includeChildren ); ?> /><span><?php _e( 'Použít vybraná pravidla i na podřízené příspěvky', 'skautis-integration' ); ?></span></label>
+		<br/>
+		<p>
+			<em><?php _e( 'Nastavení můžete změnit u jednotlivých příspěvků dle potřeby.', 'skautis-integration' ); ?></em>
+		</p>
+		<?php
+	}
+
 
 }

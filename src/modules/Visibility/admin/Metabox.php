@@ -41,9 +41,21 @@ final class Metabox {
 				$_POST[ SKAUTISINTEGRATION_NAME . '_rules' ]
 			);
 		}
+
+		if ( array_key_exists( SKAUTISINTEGRATION_NAME . '_rules_includeChildren', $_POST ) ) {
+			update_post_meta(
+				$postId,
+				SKAUTISINTEGRATION_NAME . '_rules_includeChildren',
+				$_POST[ SKAUTISINTEGRATION_NAME . '_rules_includeChildren' ]
+			);
+		}
 	}
 
 	public function rulesRepeater( \WP_Post $post ) {
+		$includeChildren = get_post_meta( $post->ID, SKAUTISINTEGRATION_NAME . '_rules_includeChildren', true );
+		if ( $includeChildren !== '0' && $includeChildren !== '1' ) {
+			$includeChildren = get_option( SKAUTISINTEGRATION_NAME . '_modules_visibility_includeChildren', 0 );
+		}
 		?>
 		<p><?php _e( 'Obsah bude pro uživatele viditelný pouze při splnění alespoň jednoho z následujících pravidel.', 'skautis-integration' ); ?></p>
 		<p><?php _e( 'Ponecháte-li prázdné - obsah bude viditelný pro všechny uživatele.', 'skautis-integration' ); ?></p>
@@ -65,6 +77,14 @@ final class Metabox {
 			</div>
 			<input data-repeater-create type="button" value="<?php _e( 'Přidat', 'skautis-integration' ); ?>"/>
 		</div>
+		<p>
+			<label>
+				<input type="hidden" name="<?php echo SKAUTISINTEGRATION_NAME; ?>_rules_includeChildren"
+				       value="0"/>
+				<input type="checkbox" name="<?php echo SKAUTISINTEGRATION_NAME; ?>_rules_includeChildren"
+				       value="1" <?php checked( 1, $includeChildren ); ?> /><span><?php _e( 'Použít vybraná pravidla i na podřízené příspěvky', 'skautis-integration' ); ?>
+					.</span></label>
+		</p>
 		<?php
 	}
 
