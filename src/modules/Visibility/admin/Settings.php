@@ -81,15 +81,11 @@ final class Settings {
 		                                      ], 'objects' );
 		$postTypes          = (array) get_option( SKAUTISINTEGRATION_NAME . '_modules_visibility_postTypes', [] );
 		?>
-		<select multiple="true" name="<?php echo SKAUTISINTEGRATION_NAME; ?>_modules_visibility_postTypes[]"
-		        class="select2"
-		        id="<?php echo SKAUTISINTEGRATION_NAME; ?>_modules_visibility_postTypes">
-			<?php
-			foreach ( $availablePostTypes as $postType ) {
-				echo '<option value="' . $postType->name . '" ' . selected( true, in_array( $postType->name, $postTypes ), false ) . '>' . $postType->label . '</option>';
-			}
-			?>
-		</select>
+		<?php
+		foreach ( $availablePostTypes as $postType ) {
+			echo '<label><input type="checkbox" name="' . SKAUTISINTEGRATION_NAME . '_modules_visibility_postTypes[]" value="' . $postType->name . '" ' . checked( true, in_array( $postType->name, $postTypes ), false ) . '/><span>' . $postType->label . '</span></label><br/>';
+		}
+		?>
 		<div>
 			<em><?php _e( 'U vybraných typů obsahu bude možné zadávat pravidla pro viditelnost obsahu.', 'skautis-integration' ); ?></em><br/>
 			<em><?php _e( 'Pokud není uživatel přihlášen ve skautISu nebo nesplní daná pravidla - bude pro něj obsah zcela skrytý.', 'skautis-integration' ); ?></em><br/>
