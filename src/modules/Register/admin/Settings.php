@@ -172,8 +172,7 @@ final class Settings {
 					<label for="<?php echo SKAUTISINTEGRATION_NAME; ?>_modules_register_rule">
 						<?php _e( 'Při splnění pravidla:', 'skautis-integration' ); ?>
 					</label>
-					<select name="rule" class="rule select2"
-					        id="<?php echo SKAUTISINTEGRATION_NAME; ?>_modules_register_rule">
+					<select name="rule" class="rule select2">
 						<?php
 						foreach ( (array) $this->rulesManager->getAllRules() as $rule ) {
 							echo '<option value="' . $rule->ID . '">' . $rule->post_title . '</option>';

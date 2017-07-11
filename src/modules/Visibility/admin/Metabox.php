@@ -51,10 +51,7 @@ final class Metabox {
 			<div data-repeater-list="<?php echo SKAUTISINTEGRATION_NAME; ?>_rules">
 				<div data-repeater-item>
 
-					<span class="dashicons dashicons-move handle" style="vertical-align: middle;"></span>
-
-					<select name="<?php echo SKAUTISINTEGRATION_NAME; ?>_rules" class="rule select2"
-					        id="<?php echo SKAUTISINTEGRATION_NAME; ?>_rules">
+					<select name="<?php echo SKAUTISINTEGRATION_NAME; ?>_rules" class="rule select2">
 						<?php
 						foreach ( (array) $this->rulesManager->getAllRules() as $rule ) {
 							echo '<option value="' . $rule->ID . '">' . $rule->post_title . '</option>';

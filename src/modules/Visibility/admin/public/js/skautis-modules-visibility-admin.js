@@ -11,25 +11,20 @@
 			},
 			show: function () {
 				$(this).slideDown(150);
-				reinitSelect2();
+				updateAvailableOptions();
 			},
 			hide: function (deleteElement) {
 				$(this).slideUp(150, deleteElement);
+				setTimeout(function () {
+					updateAvailableOptions();
+				}, 250);
 			},
-			ready: function (setIndexes) {
-				$repeater.on('skautis_modules_visibility_SortableDrop', setIndexes);
+			ready: function () {
 				reinitSelect2();
 			},
 			isFirstItemUndeletable: true
 		});
 		$repeater.setList(window.rulesData);
-
-		$('[data-repeater-list]').sortable({
-			handle: '.handle',
-			update: function () {
-				$repeater.trigger('skautis_modules_visibility_SortableDrop');
-			}
-		});
 
 	} else {
 		reinitSelect2();
@@ -38,7 +33,36 @@
 	function reinitSelect2() {
 		jQuery('select.select2').select2({
 			placeholder: 'Vyberte pravidlo...'
-		});
+		}).on('change.skautis_modules_visibility_admin', updateAvailableOptions);
+	}
+
+	function updateAvailableOptions() {
+		var usedOptions = [],
+			$selectRules = {};
+
+		setTimeout(function () {
+
+			$selectRules = jQuery('select.rule');
+
+			$selectRules.each(function () {
+				usedOptions.push(jQuery(this).val());
+			});
+
+			$selectRules.find('option').removeAttr('disabled');
+
+			for (var key in usedOptions) {
+				if (usedOptions.hasOwnProperty(key)) {
+					$selectRules.find('option[value="' + usedOptions[key] + '"]').attr('disabled', 'disabled');
+				}
+			}
+
+			$selectRules.each(function () {
+				jQuery(this).find('option:selected').removeAttr('disabled');
+			});
+
+			reinitSelect2();
+
+		}, 0);
 	}
 
 })(jQuery);
