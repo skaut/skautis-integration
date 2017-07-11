@@ -63,7 +63,7 @@ final class Settings {
 
 		add_settings_field(
 			SKAUTISINTEGRATION_NAME . '_modules_visibility_postTypes',
-			__( 'Vyberte typy obsahu', 'skautis-integration' ),
+			__( 'Typy obsahu', 'skautis-integration' ),
 			[ $this, 'fieldPostTypes' ],
 			SKAUTISINTEGRATION_NAME . '_modules_visibility',
 			SKAUTISINTEGRATION_NAME . '_modules_visibility'
@@ -77,9 +77,9 @@ final class Settings {
 
 	public function fieldPostTypes() {
 		$availablePostTypes = get_post_types( [
-			'public' => true
-		], 'objects' );
-		$postTypes          = (array) get_option( SKAUTISINTEGRATION_NAME . '_modules_visibility_postTypes' );
+			                                      'public' => true
+		                                      ], 'objects' );
+		$postTypes          = (array) get_option( SKAUTISINTEGRATION_NAME . '_modules_visibility_postTypes', [] );
 		?>
 		<select multiple="true" name="<?php echo SKAUTISINTEGRATION_NAME; ?>_modules_visibility_postTypes[]"
 		        class="select2"
@@ -90,6 +90,11 @@ final class Settings {
 			}
 			?>
 		</select>
+		<div>
+			<em><?php _e( 'U vybraných typů obsahu bude možné zadávat pravidla pro viditelnost obsahu.', 'skautis-integration' ); ?></em><br/>
+			<em><?php _e( 'Pokud není uživatel přihlášen ve skautISu nebo nesplní daná pravidla - bude pro něj obsah zcela skrytý.', 'skautis-integration' ); ?></em><br/>
+			<em><?php _e( 'Uživatelé přihlášení do WordPressu s právy pro úpravu daného obsahu jej uvidí vždy, bez ohledu na jejich přihlášení do skautISu či splnění daných pravidel.', 'skautis-integration' ); ?></em>
+		</div>
 		<?php
 	}
 

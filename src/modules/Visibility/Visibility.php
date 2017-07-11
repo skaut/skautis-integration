@@ -22,7 +22,7 @@ final class Visibility implements IModule {
 	public function __construct( RulesManager $rulesManager, SkautisLogin $skautisLogin ) {
 		$this->rulesManager = $rulesManager;
 		$this->skautisLogin = $skautisLogin;
-		$postTypes          = get_option( SKAUTISINTEGRATION_NAME . '_modules_visibility_postTypes' );
+		$postTypes          = (array) get_option( SKAUTISINTEGRATION_NAME . '_modules_visibility_postTypes', [] );
 		if ( is_admin() ) {
 			( new Admin( $postTypes, $this->rulesManager ) );
 		} else {

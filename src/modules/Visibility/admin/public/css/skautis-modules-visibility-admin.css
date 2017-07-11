@@ -1,3 +1,11 @@
 #repeater .handle {
 	cursor: Move;
 }
+
+div[data-repeater-item] {
+	margin-bottom: 0.4em;
+}
+
+input[data-repeater-create] {
+	margin-top: 0.5em;
+}

@@ -26,7 +26,7 @@ final class Metabox {
 		foreach ( $this->postTypes as $postType ) {
 			add_meta_box(
 				SKAUTISINTEGRATION_NAME . '_modules_visibility_rules_metabox',
-				__( 'Vyberte pravidla', 'skautis-integration' ),
+				__( 'SkautIS pravidla', 'skautis-integration' ),
 				[ $this, 'rulesRepeater' ],
 				$postType
 			);
@@ -45,6 +45,8 @@ final class Metabox {
 
 	public function rulesRepeater( \WP_Post $post ) {
 		?>
+		<p><?php _e( 'Obsah bude pro uživatele viditelný pouze při splnění alespoň jednoho z následujících pravidel.', 'skautis-integration' ); ?></p>
+		<p><?php _e( 'Ponecháte-li prázdné - obsah bude viditelný pro všechny uživatele.', 'skautis-integration' ); ?></p>
 		<div id="repeater_post">
 			<div data-repeater-list="<?php echo SKAUTISINTEGRATION_NAME; ?>_rules">
 				<div data-repeater-item>

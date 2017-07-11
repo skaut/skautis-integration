@@ -25,20 +25,39 @@ final class Frontend {
 	}
 
 	public function filterPosts( array $posts = [], \WP_Query $wpQuery ): array {
+		if ( empty( $posts ) ) {
+			return $posts;
+		}
+
+		$userIsLoggedInSkautis = $this->skautisLogin->isUserLoggedInSkautis();
+
+		$postsWereFiltered = false;
+
 		foreach ( $wpQuery->posts as $key => $post ) {
 			$postType = get_post_type( $post );
+
 			if ( in_array( $postType, $this->postTypes ) ) {
-				if ( ! current_user_can( 'edit_' . $postType, $post->ID ) ) {
-					if ( ! $this->skautisLogin->isUserLoggedInSkautis() ||
-					     ! $this->rulesManager->checkIfUserPassedRules( (array) get_post_meta( $post->ID, SKAUTISINTEGRATION_NAME . '_rules', true ) ) ) {
-						unset( $posts[ $key ] );
-						unset( $wpQuery->posts[ $key ] );
-						if ( $wpQuery->found_posts > 0 ) {
-							$wpQuery->found_posts --;
+				$rules = (array) get_post_meta( $post->ID, SKAUTISINTEGRATION_NAME . '_rules', true );
+				if ( ! empty( $rules ) && isset( $rules[0][ SKAUTISINTEGRATION_NAME . '_rules' ] ) ) {
+					if ( ! current_user_can( 'edit_' . $postType . 's' ) ) {
+						if ( ! $userIsLoggedInSkautis ||
+						     ! $this->rulesManager->checkIfUserPassedRules( $rules ) ) {
+							unset( $posts[ $key ] );
+							unset( $wpQuery->posts[ $key ] );
+							if ( $wpQuery->found_posts > 0 ) {
+								$wpQuery->found_posts --;
+							}
+							$postsWereFiltered = true;
 						}
 					}
 				}
 			}
+
+		}
+
+		if ( $postsWereFiltered ) {
+			$wpQuery->posts = array_values( $wpQuery->posts );
+			$posts          = array_values( $posts );
 		}
 
 		return $posts;
