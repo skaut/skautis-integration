@@ -30,6 +30,9 @@ final class Frontend {
 					if ( ! $this->rulesManager->checkIfUserPassedRules( (array) get_post_meta( $post->ID, SKAUTISINTEGRATION_NAME . '_rules', true ) ) ) {
 						unset( $posts[ $key ] );
 						unset( $wpQuery->posts[ $key ] );
+						if ( $wpQuery->found_posts > 0 ) {
+							$wpQuery->found_posts --;
+						}
 					}
 				}
 			}
