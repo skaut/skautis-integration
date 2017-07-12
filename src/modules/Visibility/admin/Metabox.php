@@ -34,32 +34,36 @@ final class Metabox {
 	}
 
 	public function saveRulesCustomField( int $postId ) {
-		if ( array_key_exists( SKAUTISINTEGRATION_NAME . '_rules', $_POST ) ) {
+		if ( array_key_exists( SKAUTISINTEGRATION_NAME . '_rules_visibilityMode', $_POST ) ) {
+
+			$rules = $_POST[ SKAUTISINTEGRATION_NAME . '_rules' ] ? $_POST[ SKAUTISINTEGRATION_NAME . '_rules' ] : [];
 			update_post_meta(
 				$postId,
 				SKAUTISINTEGRATION_NAME . '_rules',
-				$_POST[ SKAUTISINTEGRATION_NAME . '_rules' ]
+				$rules
 			);
-		}
 
-		if ( array_key_exists( SKAUTISINTEGRATION_NAME . '_rules_includeChildren', $_POST ) ) {
+			$includeChildren = $_POST[ SKAUTISINTEGRATION_NAME . '_rules_includeChildren' ] ? $_POST[ SKAUTISINTEGRATION_NAME . '_rules_includeChildren' ] : 0;
 			update_post_meta(
 				$postId,
 				SKAUTISINTEGRATION_NAME . '_rules_includeChildren',
-				$_POST[ SKAUTISINTEGRATION_NAME . '_rules_includeChildren' ]
+				$includeChildren
 			);
-		}
 
-		if ( array_key_exists( SKAUTISINTEGRATION_NAME . '_rules_visibilityMode', $_POST ) ) {
+			$visibilityMode = $_POST[ SKAUTISINTEGRATION_NAME . '_rules_visibilityMode' ];
 			update_post_meta(
 				$postId,
 				SKAUTISINTEGRATION_NAME . '_rules_visibilityMode',
-				$_POST[ SKAUTISINTEGRATION_NAME . '_rules_visibilityMode' ]
+				$visibilityMode
 			);
+
 		}
 	}
 
-	public function rulesRepeater( \WP_Post $post ) {
+	public
+	function rulesRepeater(
+		\WP_Post $post
+	) {
 		$postTypeObject  = get_post_type_object( $post->post_type );
 		$includeChildren = get_post_meta( $post->ID, SKAUTISINTEGRATION_NAME . '_rules_includeChildren', true );
 		if ( $includeChildren !== '0' && $includeChildren !== '1' ) {
@@ -106,7 +110,7 @@ final class Metabox {
 		</p>
 		<p>
 			<label><input type="radio" name="<?php echo SKAUTISINTEGRATION_NAME; ?>_rules_visibilityMode"
-			              value="full" <?php checked( 'full', $visibilityMode ); ?> /><span><?php printf( __( 'Skrýt celý %s', 'skautis-integration' ), lcfirst( $postTypeObject->labels->singular_name ) ); ?></span></label>
+			              value="full" <?php checked( 'full', $visibilityMode ); ?> /><span><?php _e( 'Úplně skrýt', 'skautis-integration' ); ?></span></label>
 			<br/>
 			<label><input type="radio" name="<?php echo SKAUTISINTEGRATION_NAME; ?>_rules_visibilityMode"
 			              value="content" <?php checked( 'content', $visibilityMode ); ?> /><span><?php _e( 'Skrýt pouze obsah', 'skautis-integration' ); ?></span></label>
