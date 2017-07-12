@@ -46,7 +46,7 @@ final class Frontend {
 	}
 
 	private function getUnauthorizedMessage() {
-		return __( 'Do you not have permission to access this content', 'skautis-integration' );
+		return __( 'You do not have permission to access this content', 'skautis-integration' );
 	}
 
 	private function getPostsHierarchyTreeWithRules( int $postId, $postType ) {
