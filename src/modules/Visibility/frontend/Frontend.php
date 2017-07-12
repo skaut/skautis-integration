@@ -42,11 +42,11 @@ final class Frontend {
 	}
 
 	private function getLoginRequiredMessage() {
-		return __( 'Pro zobrazení obsahu je nutné se přihlásit do skautISu', 'skautis-integration' );
+		return __( 'To view this content you must be logged in skautISu', 'skautis-integration' );
 	}
 
 	private function getUnauthorizedMessage() {
-		return __( 'Nemáte oprávnění k přístupu k tomuto obsahu', 'skautis-integration' );
+		return __( 'Do you not have permission to access this content', 'skautis-integration' );
 	}
 
 	private function getPostsHierarchyTreeWithRules( int $postId, $postType ) {
