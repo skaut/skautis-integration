@@ -60,6 +60,7 @@ final class SkautisLogin {
 		if ( ! isset( $_GET['ReturnUrl'] ) || strpos( $_GET['ReturnUrl'], 'noWpLogin' ) === false ) {
 			$this->wpLoginLogout->loginToWp();
 		} else if ( isset( $_GET['ReturnUrl'] ) ) {
+			$this->wpLoginLogout->tryToLoginToWp();
 			wp_safe_redirect( esc_url_raw( $_GET['ReturnUrl'] ), 302 );
 			exit;
 		}
@@ -70,6 +71,7 @@ final class SkautisLogin {
 			if ( ! isset( $_GET['ReturnUrl'] ) || strpos( $_GET['ReturnUrl'], 'noWpLogin' ) === false ) {
 				$this->wpLoginLogout->loginToWp();
 			} else if ( isset( $_GET['ReturnUrl'] ) ) {
+				$this->wpLoginLogout->tryToLoginToWp();
 				wp_safe_redirect( esc_url_raw( $_GET['ReturnUrl'] ), 302 );
 				exit;
 			}
@@ -77,6 +79,7 @@ final class SkautisLogin {
 			if ( ! isset( $_GET['ReturnUrl'] ) || strpos( $_GET['ReturnUrl'], 'noWpLogin' ) === false ) {
 				$this->wpLoginLogout->loginToWp();
 			} else if ( isset( $_GET['ReturnUrl'] ) ) {
+				$this->wpLoginLogout->tryToLoginToWp();
 				wp_safe_redirect( esc_url_raw( $_GET['ReturnUrl'] ), 302 );
 				exit;
 			}
