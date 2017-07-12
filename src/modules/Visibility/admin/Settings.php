@@ -79,7 +79,7 @@ final class Settings {
 
 		add_settings_field(
 			SKAUTISINTEGRATION_NAME . '_modules_visibility_includeChildren',
-			__( 'Podřízené příspěvky', 'skautis-integration' ),
+			__( 'Podřízený obsah', 'skautis-integration' ),
 			[ $this, 'fieldIncludeChildren' ],
 			SKAUTISINTEGRATION_NAME . '_modules_visibility',
 			SKAUTISINTEGRATION_NAME . '_modules_visibility'
@@ -114,7 +114,7 @@ final class Settings {
 		?>
 		<div>
 			<em><?php _e( 'U vybraných typů obsahu bude možné zadávat pravidla pro viditelnost obsahu.', 'skautis-integration' ); ?></em><br/>
-			<em><?php _e( 'Pokud není uživatel přihlášen ve skautISu nebo nesplní daná pravidla - bude pro něj obsah zcela skrytý.', 'skautis-integration' ); ?></em><br/>
+			<em><?php _e( 'Pokud není uživatel přihlášen ve skautISu nebo nesplní daná pravidla - bude pro něj obsah skrytý.', 'skautis-integration' ); ?></em><br/>
 			<em><?php _e( 'Uživatelé přihlášení do WordPressu s právy pro úpravu daného obsahu jej uvidí vždy, bez ohledu na jejich přihlášení do skautISu či splnění daných pravidel.', 'skautis-integration' ); ?></em>
 		</div>
 		<?php
@@ -124,12 +124,12 @@ final class Settings {
 		$visibilityMode = get_option( SKAUTISINTEGRATION_NAME . '_modules_visibility_visibilityMode', 'full' );
 		?>
 		<label><input type="radio" name="<?php echo SKAUTISINTEGRATION_NAME; ?>_modules_visibility_visibilityMode"
-		              value="full" <?php checked( 'full', $visibilityMode ); ?> /><span><?php _e( 'Skrýt celý příspěvek', 'skautis-integration' ); ?></span></label>
+		              value="full" <?php checked( 'full', $visibilityMode ); ?> /><span><?php _e( 'Skrýt celý příspěvek / stránku / ...', 'skautis-integration' ); ?></span></label>
 		<br/>
 		<label><input type="radio" name="<?php echo SKAUTISINTEGRATION_NAME; ?>_modules_visibility_visibilityMode"
-		              value="content" <?php checked( 'content', $visibilityMode ); ?> /><span><?php _e( 'Skrýt pouze obsah příspěvku', 'skautis-integration' ); ?></span></label>
+		              value="content" <?php checked( 'content', $visibilityMode ); ?> /><span><?php _e( 'Skrýt pouze obsah', 'skautis-integration' ); ?></span></label>
 		<p>
-			<em><?php _e( 'Nastavení můžete změnit u jednotlivých příspěvků dle potřeby.', 'skautis-integration' ); ?></em>
+			<em><?php _e( 'Nastavení můžete změnit u jednotlivých typů obsahu dle potřeby.', 'skautis-integration' ); ?></em>
 		</p>
 		<?php
 	}
@@ -138,10 +138,10 @@ final class Settings {
 		$includeChildren = get_option( SKAUTISINTEGRATION_NAME . '_modules_visibility_includeChildren', 0 );
 		?>
 		<label><input type="checkbox" name="<?php echo SKAUTISINTEGRATION_NAME; ?>_modules_visibility_includeChildren"
-		              value="1" <?php checked( 1, $includeChildren ); ?> /><span><?php _e( 'Použít vybraná pravidla i na podřízené příspěvky', 'skautis-integration' ); ?></span></label>
+		              value="1" <?php checked( 1, $includeChildren ); ?> /><span><?php _e( 'Použít vybraná pravidla i na podřízený obsah', 'skautis-integration' ); ?></span></label>
 		<br/>
 		<p>
-			<em><?php _e( 'Nastavení můžete změnit u jednotlivých příspěvků dle potřeby.', 'skautis-integration' ); ?></em>
+			<em><?php _e( 'Nastavení můžete změnit u jednotlivých typů obsahu dle potřeby.', 'skautis-integration' ); ?></em>
 		</p>
 		<?php
 	}

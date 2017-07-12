@@ -76,6 +76,30 @@ final class Frontend {
 		return [];
 	}
 
+	private function hideContentExcerptComments( int $postId, string $newContent = '', string $newExcerpt = '' ) {
+		add_filter( 'the_content', function ( string $content = '' ) use ( $postId, $newContent ) {
+			if ( get_the_ID() === $postId ) {
+				return $newContent;
+			}
+
+			return $content;
+		} );
+
+		add_filter( 'the_excerpt', function ( string $excerpt = '' ) use ( $postId, $newExcerpt ) {
+			if ( get_the_ID() === $postId ) {
+				return $newExcerpt;
+			}
+
+			return $excerpt;
+		} );
+
+		add_action( 'pre_get_comments', function ( \WP_Comment_Query $wpCommentQuery ) use ( $postId ) {
+			if ( $wpCommentQuery->query_vars['post_id'] === $postId ) {
+				$wpCommentQuery->query_vars['post__not_in'][] = $postId;
+			}
+		} );
+	}
+
 	private function proccessRulesAndHidePosts( bool $userIsLoggedInSkautis, array $rules = [], array &$posts, int $postKey, \WP_Query $wpQuery, string $postType, &$postsWereFiltered = false ) {
 		if ( ! empty( $rules ) && isset( $rules[0][ SKAUTISINTEGRATION_NAME . '_rules' ] ) ) {
 			if ( ! $userIsLoggedInSkautis ||
@@ -93,15 +117,9 @@ final class Frontend {
 	private function processRulesAndHideContent( bool $userIsLoggedInSkautis, array $rules = [], array &$posts, int $postKey, \WP_Query $wpQuery ) {
 		if ( ! empty( $rules ) && isset( $rules[0][ SKAUTISINTEGRATION_NAME . '_rules' ] ) ) {
 			if ( ! $userIsLoggedInSkautis ) {
-				$posts[ $postKey ]->post_content = $this->getLoginForm();
-				$posts[ $postKey ]->post_excerpt = $this->getLoginRequiredMessage();
-				$wpQuery->posts['post_content']  = $this->getLoginForm();
-				$wpQuery->posts['post_excerpt']  = $this->getLoginRequiredMessage();
+				$this->hideContentExcerptComments( $posts[ $postKey ]->ID, $this->getLoginForm(), $this->getLoginRequiredMessage() );
 			} else if ( ! $this->rulesManager->checkIfUserPassedRules( $rules ) ) {
-				$posts[ $postKey ]->post_content = $this->getUnauthorizedMessage();
-				$posts[ $postKey ]->post_excerpt = $this->getUnauthorizedMessage();
-				$wpQuery->posts['post_content']  = $this->getUnauthorizedMessage();
-				$wpQuery->posts['post_excerpt']  = $this->getUnauthorizedMessage();
+				$this->hideContentExcerptComments( $posts[ $postKey ]->ID, $this->getUnauthorizedMessage(), $this->getUnauthorizedMessage() );
 			}
 		}
 	}

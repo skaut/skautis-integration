@@ -60,6 +60,7 @@ final class Metabox {
 	}
 
 	public function rulesRepeater( \WP_Post $post ) {
+		$postTypeObject  = get_post_type_object( $post->post_type );
 		$includeChildren = get_post_meta( $post->ID, SKAUTISINTEGRATION_NAME . '_rules_includeChildren', true );
 		if ( $includeChildren !== '0' && $includeChildren !== '1' ) {
 			$includeChildren = get_option( SKAUTISINTEGRATION_NAME . '_modules_visibility_includeChildren', 0 );
@@ -95,15 +96,20 @@ final class Metabox {
 				<input type="hidden" name="<?php echo SKAUTISINTEGRATION_NAME; ?>_rules_includeChildren"
 				       value="0"/>
 				<input type="checkbox" name="<?php echo SKAUTISINTEGRATION_NAME; ?>_rules_includeChildren"
-				       value="1" <?php checked( 1, $includeChildren ); ?> /><span><?php _e( 'Použít vybraná pravidla i na podřízené příspěvky', 'skautis-integration' ); ?>
-					.</span></label>
+				       value="1" <?php checked( 1, $includeChildren ); ?> /><span><?php
+					if ( $postTypeObject->hierarchical ) {
+						printf( __( 'Použít vybraná pravidla i na podřízené %s', 'skautis-integration' ), lcfirst( $postTypeObject->labels->name ) );
+					} else {
+						_e( 'Použít vybraná pravidla i na podřízený obsah (média - obrázky, videa, přílohy, ...)', 'skautis-integration' );
+					}
+					?>.</span></label>
 		</p>
 		<p>
 			<label><input type="radio" name="<?php echo SKAUTISINTEGRATION_NAME; ?>_rules_visibilityMode"
-			              value="full" <?php checked( 'full', $visibilityMode ); ?> /><span><?php _e( 'Skrýt celý příspěvek', 'skautis-integration' ); ?></span></label>
+			              value="full" <?php checked( 'full', $visibilityMode ); ?> /><span><?php printf( __( 'Skrýt celý %s', 'skautis-integration' ), lcfirst( $postTypeObject->labels->singular_name ) ); ?></span></label>
 			<br/>
 			<label><input type="radio" name="<?php echo SKAUTISINTEGRATION_NAME; ?>_rules_visibilityMode"
-			              value="content" <?php checked( 'content', $visibilityMode ); ?> /><span><?php _e( 'Skrýt pouze obsah příspěvku', 'skautis-integration' ); ?></span></label>
+			              value="content" <?php checked( 'content', $visibilityMode ); ?> /><span><?php _e( 'Skrýt pouze obsah', 'skautis-integration' ); ?></span></label>
 		</p>
 		<?php
 	}
