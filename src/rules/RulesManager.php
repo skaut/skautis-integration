@@ -125,7 +125,9 @@ final class RulesManager {
 		$result = false;
 
 		foreach ( $rulesIds as $ruleId ) {
-			$ruleId = reset( $ruleId );
+			if ( is_array( $ruleId ) ) {
+				$ruleId = reset( $ruleId );
+			}
 
 			$rulesGroups = json_decode( (string) get_post_meta( $ruleId, SKAUTISINTEGRATION_NAME . '_rules_data', true ) );
 
