@@ -100,7 +100,7 @@ final class Metabox {
 					if ( $postTypeObject->hierarchical ) {
 						printf( __( 'Použít vybraná pravidla i na podřízené %s', 'skautis-integration' ), lcfirst( $postTypeObject->labels->name ) );
 					} else {
-						_e( 'Použít vybraná pravidla i na podřízený obsah (média - obrázky, videa, přílohy, ...)', 'skautis-integration' );
+						_e( 'Použít vybraná pravidla i na podřízený obsah (média - obrázky, videa, přílohy,...)', 'skautis-integration' );
 					}
 					?>.</span></label>
 		</p>
