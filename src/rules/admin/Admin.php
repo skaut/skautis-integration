@@ -234,15 +234,6 @@ final class Admin {
 			?>
             data = <?php echo $data; ?>;
 
-            if (typeof data.values !== "undefined") {
-                data.values = Object.keys(data.values).map(function (key) {
-                    return {[key]: data.values[key]};
-                });
-                data.values = data.values.sort(function (a, b) {
-                    return a[Object.keys(a)[0]].localeCompare(b[Object.keys(b)[0]]);
-                });
-            }
-
             if (data.input === "roleInput") {
                 var role = new Role(data.values);
                 data.input = role.input.bind(role);

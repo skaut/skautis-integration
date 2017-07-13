@@ -42,7 +42,16 @@
         $queryBuilder.on('change', function () {
             $(this).find('select[multiple]:not(.select2-hidden-accessible)').each(function () {
                 $(this).select2({
-                    placeholder: jQuery.fn.queryBuilder.regional.cs.custom.select_placeholder
+                    placeholder: jQuery.fn.queryBuilder.regional.cs.custom.select_placeholder,
+                    sorter: function (data) {
+                        return data.sort(function (a, b) {
+                            if (typeof a.text.localeCompare === 'function') {
+                                return a.text.localeCompare(b.text);
+                            } else {
+                                return a.text > b.text;
+                            }
+                        });
+                    }
                 });
             });
         });

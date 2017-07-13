@@ -15,7 +15,7 @@ Role.prototype.input = function (rule, name) {
 
     for (var key in _this.roles) {
         if (_this.roles.hasOwnProperty(key)) {
-            html += '<option value="' + Object.keys(_this.roles[key])[0] + '">' + _this.roles[key][Object.keys(_this.roles[key])[0]] + '</option>';
+            html += '<option value="' + key + '">' + _this.roles[key] + '</option>';
         }
     }
 

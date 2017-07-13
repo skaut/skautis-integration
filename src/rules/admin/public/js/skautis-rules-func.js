@@ -15,7 +15,7 @@ Func.prototype.input = function (rule, name) {
 
     for (var key in _this.funcs) {
         if (_this.funcs.hasOwnProperty(key)) {
-            html += '<option value="' + Object.keys(_this.funcs[key])[0] + '">' + _this.funcs[key][Object.keys(_this.funcs[key])[0]] + '</option>';
+            html += '<option value="' + key + '">' + _this.funcs[key] + '</option>';
         }
     }
 

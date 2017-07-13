@@ -15,7 +15,7 @@ Membership.prototype.input = function (rule, name) {
 
     for (var key in _this.memberships) {
         if (_this.memberships.hasOwnProperty(key)) {
-            html += '<option value="' + Object.keys(_this.memberships[key])[0] + '">' + _this.memberships[key][Object.keys(_this.memberships[key])[0]] + '</option>';
+            html += '<option value="' + key + '">' + _this.memberships[key] + '</option>';
         }
     }
 
