@@ -24,9 +24,9 @@
 							}
 						}
 						if (editor.selection.getContent()) {
-							editor.insertContent('[skautis rules="' + result.join(',') + '"]' + editor.selection.getContent() + '[/skautis]');
+							editor.insertContent('[skautis rules="' + result.join(',') + '"]<div>' + editor.selection.getContent() + '</div>[/skautis]');
 						} else {
-							editor.insertContent('[skautis rules="' + result.join(',') + '"]Skrytý obsah[/skautis]');
+							editor.insertContent('[skautis rules="' + result.join(',') + '"]<div>Skrytý obsah</div>[/skautis]');
 						}
 					}
 				});
