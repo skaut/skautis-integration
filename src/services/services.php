@@ -19,6 +19,7 @@ use SkautisIntegration\Admin\Settings;
 use SkautisIntegration\Admin\Users;
 use SkautisIntegration\Modules\ModulesManager;
 use SkautisIntegration\Modules\Register\Register;
+use SkautisIntegration\Modules\Shortcodes\Shortcodes;
 use SkautisIntegration\Modules\Visibility\Visibility;
 use SkautisIntegration\Rules\Revisions;
 use SkautisIntegration\Rules\RulesInit;
@@ -97,8 +98,9 @@ class Services {
 		// Modules
 		self::$services['modulesManager'] = function ( Container $container ) {
 			return new ModulesManager( $container, [ // for hard modules activation/deactivation look to modules/ModulesManager WP filters
-			                                         Register::getId()   => Register::getLabel(),
-			                                         Visibility::getId() => Visibility::getLabel()
+				Register::getId()   => Register::getLabel(),
+				Visibility::getId() => Visibility::getLabel(),
+				Shortcodes::getId() => Shortcodes::getLabel()
 			] );
 		};
 
@@ -107,7 +109,11 @@ class Services {
 		};
 
 		self::$services[ Visibility::getId() ] = function ( Container $container ) {
-			return new Visibility( $container['rules_manager'], $container['skautisLogin'] );
+			return new Visibility( $container['rules_manager'], $container['skautisLogin'], $container['wpLoginLogout'] );
+		};
+
+		self::$services[ Shortcodes::getId() ] = function ( Container $container ) {
+			return new Shortcodes( $container['rules_manager'], $container['skautisLogin'] );
 		};
 	}
 

@@ -17,22 +17,22 @@ final class WpLoginLogout {
 		$this->skautisGateway = $skautisGateway;
 	}
 
-	private function loginWpUserBySkautisUserId( int $skautisUserId ) {
+	private function loginWpUserBySkautisUserId( int $skautisUserId, $try = false ) {
 
 		if ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
 
 			Helpers::validateNonceFromUrl( $_GET['ReturnUrl'], SKAUTISINTEGRATION_NAME . '_loginToWpBySkautis' );
 
 			$usersWpQuery = new \WP_User_Query( [
-				'number'     => 1,
-				'meta_query' => [
-					[
-						'key'     => 'skautisUserId_' . $this->skautisGateway->getEnv(),
-						'value'   => absint( $skautisUserId ),
-						'compare' => '='
-					]
-				]
-			] );
+				                                    'number'     => 1,
+				                                    'meta_query' => [
+					                                    [
+						                                    'key'     => 'skautisUserId_' . $this->skautisGateway->getEnv(),
+						                                    'value'   => absint( $skautisUserId ),
+						                                    'compare' => '='
+					                                    ]
+				                                    ]
+			                                    ] );
 			$users        = $usersWpQuery->get_results();
 
 			if ( ! empty( $users )
@@ -42,11 +42,13 @@ final class WpLoginLogout {
 			) {
 				$wpUser = $users[0];
 
-				if ( Services::getServicesContainer()['modulesManager']->isModuleActivated( Register::getId() ) &&
-				     ! user_can( $wpUser->ID, Helpers::getSkautisManagerCapability() ) &&
-				     get_option( SKAUTISINTEGRATION_NAME . '_checkUserPrivilegesIfLoginBySkautis' ) ) {
-					if ( ! Services::getServicesContainer()[ Register::getId() ]->getRulesManager()->checkIfUserPassedRulesAndGetHisRole() ) {
-						wp_die( sprintf( __( 'Je nám líto, ale již nemáte oprávnění k přístupu. <a href="%s">Zkuste se znovu zaregistrovat</a>', 'skautis-integration' ), ( Services::getServicesContainer()[ Register::getId() ] )->getWpRegister()->getRegisterUrl() ), __( 'Neautorizovaný přístup', 'skautis-integration' ) );
+				if ( ! $try ) {
+					if ( Services::getServicesContainer()['modulesManager']->isModuleActivated( Register::getId() ) &&
+					     ! user_can( $wpUser->ID, Helpers::getSkautisManagerCapability() ) &&
+					     get_option( SKAUTISINTEGRATION_NAME . '_checkUserPrivilegesIfLoginBySkautis' ) ) {
+						if ( ! Services::getServicesContainer()[ Register::getId() ]->getRulesManager()->checkIfUserPassedRulesAndGetHisRole() ) {
+							wp_die( sprintf( __( 'Je nám líto, ale již nemáte oprávnění k přístupu. <a href="%s">Zkuste se znovu zaregistrovat</a>', 'skautis-integration' ), ( Services::getServicesContainer()[ Register::getId() ] )->getWpRegister()->getRegisterUrl() ), __( 'Neautorizovaný přístup', 'skautis-integration' ) );
+						}
 					}
 				}
 
@@ -65,12 +67,16 @@ final class WpLoginLogout {
 			}
 		}
 
-		if ( Services::getServicesContainer()['modulesManager']->isModuleActivated( Register::getId() ) ) {
-			wp_die( sprintf( __( 'Nemáte oprávnění k přístupu. <a href="%s">Zkuste se nejdříve zaregistrovat</a>', 'skautis-integration' ), ( Services::getServicesContainer()[ Register::getId() ] )->getWpRegister()->getRegisterUrl() ), __( 'Neautorizovaný přístup', 'skautis-integration' ) );
-		} else {
-			$this->skautisGateway->logout();
-			wp_die( __( 'Nemáte oprávnění k přístupu', 'skautis-integration' ), __( 'Neautorizovaný přístup', 'skautis-integration' ) );
+		if ( ! $try ) {
+			if ( Services::getServicesContainer()['modulesManager']->isModuleActivated( Register::getId() ) ) {
+				wp_die( sprintf( __( 'Nemáte oprávnění k přístupu. <a href="%s">Zkuste se nejdříve zaregistrovat</a>', 'skautis-integration' ), ( Services::getServicesContainer()[ Register::getId() ] )->getWpRegister()->getRegisterUrl() ), __( 'Neautorizovaný přístup', 'skautis-integration' ) );
+			} else {
+				$this->skautisGateway->logout();
+				wp_die( __( 'Nemáte oprávnění k přístupu', 'skautis-integration' ), __( 'Neautorizovaný přístup', 'skautis-integration' ) );
+			}
 		}
+
+		return false;
 
 	}
 
@@ -125,6 +131,14 @@ final class WpLoginLogout {
 
 		if ( $userDetail && isset( $userDetail->ID ) && $userDetail->ID > 0 ) {
 			$this->loginWpUserBySkautisUserId( $userDetail->ID );
+		}
+	}
+
+	public function tryToLoginToWp() {
+		$userDetail = $this->skautisGateway->getSkautisInstance()->UserManagement->UserDetail();
+
+		if ( $userDetail && isset( $userDetail->ID ) && $userDetail->ID > 0 ) {
+			$this->loginWpUserBySkautisUserId( $userDetail->ID, true );
 		}
 	}
 

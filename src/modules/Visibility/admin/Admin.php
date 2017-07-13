@@ -30,14 +30,9 @@ final class Admin {
 	}
 
 	public function enqueueScriptsAndStyles() {
-		if ( get_current_screen()->id == SKAUTISINTEGRATION_NAME . '_modules_visibility' ) {
-			wp_enqueue_script(
-				SKAUTISINTEGRATION_NAME . '_modules_visibility',
-				$this->adminDirUrl . 'js/skautis-modules-visibility-admin.js',
-				[ 'jquery', 'jquery-repeater', 'select2' ],
-				SKAUTISINTEGRATION_VERSION,
-				true
-			);
+		if ( in_array( get_current_screen()->id, $this->postTypes ) ||
+		     get_current_screen()->id == 'skautis_page_' . SKAUTISINTEGRATION_NAME . '_modules_visibility' ) {
+			wp_enqueue_script( 'jquery-ui-sortable' );
 
 			wp_enqueue_style(
 				SKAUTISINTEGRATION_NAME . '_modules_visibility',
@@ -46,10 +41,6 @@ final class Admin {
 				SKAUTISINTEGRATION_VERSION,
 				'all'
 			);
-		}
-
-		if ( in_array( get_current_screen()->id, $this->postTypes ) ) {
-			wp_enqueue_script( 'jquery-ui-sortable' );
 
 			wp_enqueue_script(
 				'jquery-repeater',
@@ -80,7 +71,7 @@ final class Admin {
 			$data = json_encode( $rules );
 			?>
 			<script>
-                window.rulesOptions = <?php echo $data; ?>;
+				window.rulesOptions = <?php echo $data; ?>;
 			</script>
 			<?php
 		}
@@ -91,7 +82,7 @@ final class Admin {
 			$data = json_encode( get_post_meta( get_the_ID(), SKAUTISINTEGRATION_NAME . '_rules', true ) );
 			?>
 			<script>
-                window.rulesData = <?php echo $data; ?>;
+				window.rulesData = <?php echo $data; ?>;
 			</script>
 			<?php
 		}

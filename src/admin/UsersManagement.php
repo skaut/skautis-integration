@@ -114,7 +114,7 @@ class UsersManagement {
 		if ( ! $this->skautisLogin->isUserLoggedInSkautis() ) {
 
 			if ( $this->skautisGateway->isInitialized() ) {
-				$result .= '<a href="' . $this->wpLoginLogout->getLoginUrl() . '">' . __( 'Pro zobrazení obsahu je nutné se přihlásit do skautISu', 'skautis-integration' ) . '</a>';
+				$result .= '<a href="' . $this->wpLoginLogout->getLoginUrl( add_query_arg( 'noWpLogin', true, Helpers::getCurrentUrl() ) ) . '">' . __( 'Pro zobrazení obsahu je nutné se přihlásit do skautISu', 'skautis-integration' ) . '</a>';
 				$result .= '
 		</div>
 			';
@@ -132,9 +132,9 @@ class UsersManagement {
 		}
 
 		$currentUserRoles = $this->skautisGateway->getSkautisInstance()->UserManagement->UserRoleAll( [
-			'ID_Login' => $this->skautisGateway->getSkautisInstance()->getUser()->getLoginId(),
-			'ID_User'  => $this->skautisGateway->getSkautisInstance()->UserManagement->UserDetail()->ID
-		] );
+			                                                                                              'ID_Login' => $this->skautisGateway->getSkautisInstance()->getUser()->getLoginId(),
+			                                                                                              'ID_User'  => $this->skautisGateway->getSkautisInstance()->UserManagement->UserDetail()->ID
+		                                                                                              ] );
 		$currentUserRole  = $this->skautisGateway->getSkautisInstance()->getUser()->getRoleId();
 
 		$result .= '
@@ -168,16 +168,16 @@ class UsersManagement {
 		$result .= '</tr></thead ><tbody>';
 
 		$connectedWpUsers = new \WP_User_Query( [
-			'meta_query'  => [
-				[
-					'key'     => 'skautisUserId_' . $this->skautisGateway->getEnv(),
-					'type'    => 'numeric',
-					'value'   => 0,
-					'compare' => '>'
-				]
-			],
-			'count_total' => false
-		] );
+			                                        'meta_query'  => [
+				                                        [
+					                                        'key'     => 'skautisUserId_' . $this->skautisGateway->getEnv(),
+					                                        'type'    => 'numeric',
+					                                        'value'   => 0,
+					                                        'compare' => '>'
+				                                        ]
+			                                        ],
+			                                        'count_total' => false
+		                                        ] );
 		$usersData        = [];
 		foreach ( $users = $connectedWpUsers->get_results() as &$user ) {
 			$usersData[ get_user_meta( $user->ID, 'skautisUserId_' . $this->skautisGateway->getEnv(), true ) ] = [
@@ -222,20 +222,20 @@ class UsersManagement {
 					<option><?php _e( 'Vyberte uživatele...', 'skautis-integration' ); ?></option>
 					<?php
 					$notConnectedWpUsers = new \WP_User_Query( [
-						'meta_query'  => [
-							'relation' => 'OR',
-							[
-								'key'     => 'skautisUserId_' . $this->skautisGateway->getEnv(),
-								'compare' => 'NOT EXISTS'
-							],
-							[
-								'key'     => 'skautisUserId_' . $this->skautisGateway->getEnv(),
-								'value'   => '',
-								'compare' => '='
-							]
-						],
-						'count_total' => false
-					] );
+						                                           'meta_query'  => [
+							                                           'relation' => 'OR',
+							                                           [
+								                                           'key'     => 'skautisUserId_' . $this->skautisGateway->getEnv(),
+								                                           'compare' => 'NOT EXISTS'
+							                                           ],
+							                                           [
+								                                           'key'     => 'skautisUserId_' . $this->skautisGateway->getEnv(),
+								                                           'value'   => '',
+								                                           'compare' => '='
+							                                           ]
+						                                           ],
+						                                           'count_total' => false
+					                                           ] );
 					foreach ( $notConnectedWpUsers->get_results() as $user ) {
 						echo '
 						<option value="' . absint( $user->ID ) . '">' . esc_html( $user->data->display_name ) . '</option>

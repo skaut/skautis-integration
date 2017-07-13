@@ -31,7 +31,8 @@ final class LoginForm {
 			<a class="button button-primary button-hero pic-lilie" style="float: none; width: 100%; text-align: center;"
 			   href="<?php echo $this->wpRegister->getRegisterUrl(); ?>"><?php _e( 'Log in with skautIS', 'skautis-integration' ); ?></a>
 			<br/>
-		</p><br/>
+		</p>
+		<br/>
 		<?php
 	}
 
@@ -41,7 +42,8 @@ final class LoginForm {
 			<a class="button button-primary button-hero pic-lilie" style="float: none; width: 100%; text-align: center;"
 			   href="' . $this->wpRegister->getRegisterUrl() . '">' . __( 'Log in with skautIS', 'skautis-integration' ) . '</a>
 			   <br/>
-		</p><br/>
+		</p>
+		<br/>
 		';
 	}
 
