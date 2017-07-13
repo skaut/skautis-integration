@@ -47,6 +47,10 @@ final class SkautisLogin {
 	}
 
 	public function login() {
+		if ( isset( $_GET['ReturnUrl'] ) && strpos( $_GET['ReturnUrl'], 'logoutFromSkautis' ) !== false ) {
+			$this->skautisGateway->logout();
+		}
+
 		if ( ! $this->isUserLoggedInSkautis() ) {
 			if ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
 				$returnUrl = $_GET['ReturnUrl'];
@@ -57,12 +61,12 @@ final class SkautisLogin {
 			exit;
 		}
 
-		if ( ! isset( $_GET['ReturnUrl'] ) || strpos( $_GET['ReturnUrl'], 'noWpLogin' ) === false ) {
-			$this->wpLoginLogout->loginToWp();
-		} else if ( isset( $_GET['ReturnUrl'] ) ) {
+		if ( isset( $_GET['ReturnUrl'] ) && strpos( $_GET['ReturnUrl'], 'noWpLogin' ) !== false ) {
 			$this->wpLoginLogout->tryToLoginToWp();
 			wp_safe_redirect( esc_url_raw( $_GET['ReturnUrl'] ), 302 );
 			exit;
+		} else {
+			$this->wpLoginLogout->loginToWp();
 		}
 	}
 
@@ -89,9 +93,9 @@ final class SkautisLogin {
 	public function changeUserRoleInSkautis( int $roleId ) {
 		if ( $roleId > 0 ) {
 			$result = $this->skautisGateway->getSkautisInstance()->UserManagement->LoginUpdate( [
-				                                                                                    'ID'          => $this->skautisGateway->getSkautisInstance()->getUser()->getLoginId(),
-				                                                                                    'ID_UserRole' => $roleId
-			                                                                                    ] );
+				'ID'          => $this->skautisGateway->getSkautisInstance()->getUser()->getLoginId(),
+				'ID_UserRole' => $roleId
+			] );
 
 			if ( ! $result || ! isset( $result->ID_Unit ) ) {
 				return;

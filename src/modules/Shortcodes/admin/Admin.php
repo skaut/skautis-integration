@@ -9,10 +9,12 @@ use SkautisIntegration\Rules\RulesManager;
 final class Admin {
 
 	private $rulesManager;
+	private $settings;
 	private $adminDirUrl = '';
 
 	public function __construct( RulesManager $rulesManager ) {
 		$this->rulesManager = $rulesManager;
+		//$this->settings     = new Settings();
 		$this->adminDirUrl  = plugin_dir_url( __FILE__ ) . 'public/';
 		$this->initHooks();
 	}
@@ -43,7 +45,7 @@ final class Admin {
 	public function initAvailableRules() {
 		?>
 		<script>
-			window.rules = [];
+            window.rules = [];
 
 			<?php
 			foreach ( (array) $this->rulesManager->getAllRules() as $rule ) {

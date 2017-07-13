@@ -98,9 +98,9 @@ class Services {
 		// Modules
 		self::$services['modulesManager'] = function ( Container $container ) {
 			return new ModulesManager( $container, [ // for hard modules activation/deactivation look to modules/ModulesManager WP filters
-				Register::getId()   => Register::getLabel(),
-				Visibility::getId() => Visibility::getLabel(),
-				Shortcodes::getId() => Shortcodes::getLabel()
+			                                         Register::getId()   => Register::getLabel(),
+			                                         Visibility::getId() => Visibility::getLabel(),
+			                                         Shortcodes::getId() => Shortcodes::getLabel()
 			] );
 		};
 
@@ -113,7 +113,7 @@ class Services {
 		};
 
 		self::$services[ Shortcodes::getId() ] = function ( Container $container ) {
-			return new Shortcodes( $container['rules_manager'], $container['skautisLogin'] );
+			return new Shortcodes( $container['rules_manager'], $container['skautisLogin'], $container['wpLoginLogout'] );
 		};
 	}
 

@@ -9,6 +9,7 @@ use SkautisIntegration\Modules\IModule;
 use SkautisIntegration\Modules\Shortcodes\Admin\Admin;
 use SkautisIntegration\Modules\Shortcodes\Frontend\Frontend;
 use SkautisIntegration\Rules\RulesManager;
+use SkautisIntegration\Auth\WpLoginLogout;
 
 final class Shortcodes implements IModule {
 
@@ -16,16 +17,18 @@ final class Shortcodes implements IModule {
 
 	private $rulesManager;
 	private $skautisLogin;
+	private $wpLoginLogout;
 
 	public static $id = 'module_Shortcodes';
 
-	public function __construct( RulesManager $rulesManager, SkautisLogin $skautisLogin ) {
-		$this->rulesManager = $rulesManager;
-		$this->skautisLogin = $skautisLogin;
+	public function __construct( RulesManager $rulesManager, SkautisLogin $skautisLogin, WpLoginLogout $wpLoginLogout ) {
+		$this->rulesManager  = $rulesManager;
+		$this->skautisLogin  = $skautisLogin;
+		$this->wpLoginLogout = $wpLoginLogout;
 		if ( is_admin() ) {
 			( new Admin( $this->rulesManager ) );
 		} else {
-			( new Frontend( $this->skautisLogin, $this->rulesManager ) );
+			( new Frontend( $this->skautisLogin, $this->rulesManager, $this->wpLoginLogout ) );
 		}
 	}
 

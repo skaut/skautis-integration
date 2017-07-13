@@ -29,27 +29,32 @@ final class Frontend {
 		add_action( 'posts_results', [ $this, 'filterPosts' ], 10, 2 );
 	}
 
-	private function getLoginForm() {
+	private function getLoginForm( bool $forceLogoutFromSkautis = false ): string {
+		$loginUrlArgs = add_query_arg( 'noWpLogin', true, Helpers::getCurrentUrl() );
+		if ( $forceLogoutFromSkautis ) {
+			$loginUrlArgs = add_query_arg( 'logoutFromSkautis', true, $loginUrlArgs );
+		}
+
 		return '
 		<div class="wp-core-ui">
 			<p style="margin-bottom: 0.3em;">
 				<a class="button button-primary button-hero pic-lilie"
-				   href="' . $this->wpLoginLogout->getLoginUrl( add_query_arg( 'noWpLogin', true, Helpers::getCurrentUrl() ) ) . '">' . __( 'Log in with skautIS', 'skautis-integration' ) . '</a>
+				   href="' . $this->wpLoginLogout->getLoginUrl( $loginUrlArgs ) . '">' . __( 'Log in with skautIS', 'skautis-integration' ) . '</a>
 			</p>
 		</div>
 		<br/>
 		';
 	}
 
-	private function getLoginRequiredMessage() {
-		return __( 'To view this content you must be logged in skautISu', 'skautis-integration' );
+	private function getLoginRequiredMessage(): string {
+		return '<p>' . __( 'To view this content you must be logged in skautIS', 'skautis-integration' ) . '</p>';
 	}
 
-	private function getUnauthorizedMessage() {
-		return __( 'You do not have permission to access this content', 'skautis-integration' );
+	private function getUnauthorizedMessage(): string {
+		return '<p>' . __( 'You do not have permission to access this content', 'skautis-integration' ) . '</p>';
 	}
 
-	private function getPostsHierarchyTreeWithRules( int $postId, $postType ) {
+	private function getPostsHierarchyTreeWithRules( int $postId, $postType ): array {
 		$ancestors = get_ancestors( $postId, $postType, 'post_type' );
 		$ancestors = array_map( function ( $ancestorPostId ) {
 			return [
@@ -95,6 +100,11 @@ final class Frontend {
 
 		add_action( 'pre_get_comments', function ( \WP_Comment_Query $wpCommentQuery ) use ( $postId ) {
 			if ( $wpCommentQuery->query_vars['post_id'] === $postId ) {
+				if ( ! isset( $wpCommentQuery->query_vars['post__not_in'] ) || empty( $wpCommentQuery->query_vars['post__not_in'] ) ) {
+					$wpCommentQuery->query_vars['post__not_in'] = [];
+				} else if ( ! is_array( $wpCommentQuery->query_vars['post__not_in'] ) ) {
+					$wpCommentQuery->query_vars['post__not_in'] = [ $wpCommentQuery->query_vars['post__not_in'] ];
+				}
 				$wpCommentQuery->query_vars['post__not_in'][] = $postId;
 			}
 		} );
@@ -114,12 +124,12 @@ final class Frontend {
 		}
 	}
 
-	private function processRulesAndHideContent( bool $userIsLoggedInSkautis, array $rules = [], array &$posts, int $postKey, \WP_Query $wpQuery ) {
+	private function processRulesAndHideContent( bool $userIsLoggedInSkautis, array $rules = [], int $postId ) {
 		if ( ! empty( $rules ) && isset( $rules[0][ SKAUTISINTEGRATION_NAME . '_rules' ] ) ) {
 			if ( ! $userIsLoggedInSkautis ) {
-				$this->hideContentExcerptComments( $posts[ $postKey ]->ID, $this->getLoginForm(), $this->getLoginRequiredMessage() );
+				$this->hideContentExcerptComments( $postId, $this->getLoginForm(), $this->getLoginRequiredMessage() );
 			} else if ( ! $this->rulesManager->checkIfUserPassedRules( $rules ) ) {
-				$this->hideContentExcerptComments( $posts[ $postKey ]->ID, $this->getUnauthorizedMessage(), $this->getUnauthorizedMessage() );
+				$this->hideContentExcerptComments( $postId, $this->getUnauthorizedMessage() . $this->getLoginForm( true ), $this->getUnauthorizedMessage() );
 			}
 		}
 	}
@@ -160,7 +170,7 @@ final class Frontend {
 					}
 
 					if ( $visibilityMode === 'content' ) {
-						$this->processRulesAndHideContent( $userIsLoggedInSkautis, $rules, $posts, $key, $wpQuery );
+						$this->processRulesAndHideContent( $userIsLoggedInSkautis, $rules, $post->ID );
 					} else {
 						$this->proccessRulesAndHidePosts( $userIsLoggedInSkautis, $rules, $posts, $key, $wpQuery, $postType, $postsWereFiltered );
 					}
