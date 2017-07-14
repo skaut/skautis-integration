@@ -14,10 +14,12 @@ final class Settings {
 
 	const HELP_PAGE_URL = 'https://napoveda.skaut.cz/skautis/skautis-integration';
 
+	private $skautisGateway;
 	private $modulesManager;
 	private $adminDirUrl = '';
 
-	public function __construct( ModulesManager $modulesManager ) {
+	public function __construct( SkautisGateway $skautisGateway, ModulesManager $modulesManager ) {
+		$this->skautisGateway = $skautisGateway;
 		$this->modulesManager = $modulesManager;
 		$this->adminDirUrl    = plugin_dir_url( __FILE__ ) . 'public/';
 		$this->initHooks();
@@ -112,6 +114,23 @@ final class Settings {
 	public function printSettingPage() {
 		if ( ! current_user_can( Helpers::getSkautisManagerCapability() ) ) {
 			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+		}
+
+		if ( ! empty( $_GET['settings-updated'] ) ) {
+			if ( ! $this->skautisGateway->testActiveAppId() ) {
+				?>
+				<div class="notice notice-error is-dismissible">
+					<p>
+						<strong><?php _e( 'Zadané APP ID není pro tento web platné.', 'skautis-integration' ); ?></strong>
+					</p>
+					<button type="button" class="notice-dismiss">
+						<span class="screen-reader-text"><?php _e( 'Close' ); ?></span>
+					</button>
+					<button type="button" class="notice-dismiss"><span
+							class="screen-reader-text"><?php _e( 'Hide' ); ?></span></button>
+				</div>
+				<?php
+			}
 		}
 
 		settings_errors();

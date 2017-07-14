@@ -84,6 +84,7 @@ class ComposerStaticInit31d6c3ead3590a20f90fd963ca2c3625
         'SkautisIntegration\\Modules\\Register\\Register' => __DIR__ . '/../..' . '/src/modules/Register/Register.php',
         'SkautisIntegration\\Modules\\Register\\WpRegister' => __DIR__ . '/../..' . '/src/modules/Register/WpRegister.php',
         'SkautisIntegration\\Modules\\Shortcodes\\Admin\\Admin' => __DIR__ . '/../..' . '/src/modules/Shortcodes/admin/Admin.php',
+        'SkautisIntegration\\Modules\\Shortcodes\\Admin\\Settings' => __DIR__ . '/../..' . '/src/modules/Shortcodes/admin/Settings.php',
         'SkautisIntegration\\Modules\\Shortcodes\\Frontend\\Frontend' => __DIR__ . '/../..' . '/src/modules/Shortcodes/frontend/Frontend.php',
         'SkautisIntegration\\Modules\\Shortcodes\\Shortcodes' => __DIR__ . '/../..' . '/src/modules/Shortcodes/Shortcodes.php',
         'SkautisIntegration\\Modules\\Visibility\\Admin\\Admin' => __DIR__ . '/../..' . '/src/modules/Visibility/admin/Admin.php',

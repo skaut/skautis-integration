@@ -14,7 +14,7 @@ final class Admin {
 
 	public function __construct( RulesManager $rulesManager ) {
 		$this->rulesManager = $rulesManager;
-		//$this->settings     = new Settings();
+		$this->settings     = new Settings();
 		$this->adminDirUrl  = plugin_dir_url( __FILE__ ) . 'public/';
 		$this->initHooks();
 	}
@@ -45,11 +45,20 @@ final class Admin {
 	public function initAvailableRules() {
 		?>
 		<script>
-            window.rules = [];
+            window.rulesOptions = [];
+            window.visibilityOptions = [];
 
 			<?php
+			if ( get_option( SKAUTISINTEGRATION_NAME . '_modules_shortcodes_visibilityMode', 'hide' ) === 'hide' ) {
+				echo 'window.visibilityOptions.push({text: "hideContent", value: "hide"});';
+				echo 'window.visibilityOptions.push({text: "showLogin", value: "showLogin"});';
+			} else {
+				echo 'window.visibilityOptions.push({text: "showLogin", value: "showLogin"});';
+				echo 'window.visibilityOptions.push({text: "hideContent", value: "hide"});';
+			}
+
 			foreach ( (array) $this->rulesManager->getAllRules() as $rule ) {
-				echo 'window.rules.push({text: "' . esc_js( $rule->post_title ) . '", value: "' . esc_js( $rule->ID ) . '"});';
+				echo 'window.rulesOptions.push({text: "' . esc_js( $rule->post_title ) . '", value: "' . esc_js( $rule->ID ) . '"});';
 			}
 			?>
 		</script>

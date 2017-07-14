@@ -84,7 +84,7 @@ class Services {
 		};
 
 		self::$services['admin_settings'] = function ( Container $container ) {
-			return new Settings( $container['modulesManager'] );
+			return new Settings( $container['skautisGateway'], $container['modulesManager'] );
 		};
 
 		self::$services['admin_users'] = function ( Container $container ) {
