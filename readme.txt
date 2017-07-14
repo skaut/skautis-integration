@@ -3,10 +3,10 @@ Contributors: davidulus, skaut, kalich5
 Tags: skaut, multisite, plugin, shortcode, skautIS, registrace
 Requires at least: 4.8
 Tested up to: 4.9
-Strable tag: 1.0.1-beta
+Stable tag: 1.0.1-beta
 License: GPLv3 or laterLicense URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Implemantace přihlašování, registrace a dalších služeb z informačního systému skautIS do WordPressu.
+Implementace přihlašování, registrace a dalších služeb z informačního systému skautIS do WordPressu.
 
 == Description ==
 
@@ -14,7 +14,7 @@ Implemantace přihlašování, registrace a dalších služeb z informačního s
 - WordPress 4.8 a vyšší
 - PHP 7.0 a vyšší
 
-Implemantace přihlašování, registrace a dalších služeb z informačního systému skautIS do WordPressu.
+Implementace přihlašování, registrace a dalších služeb z informačního systému skautIS do WordPressu.
 
 Plugin po aktivaci bude vyžadovat APP ID. Návod jak ho zístat najdete v [nápovědě](https://napoveda.skaut.cz/skautis/skautis-integration)
 
@@ -37,10 +37,10 @@ Plugin po aktivaci bude vyžadovat APP ID. Návod jak ho zístat najdete v [náp
 == Changelog ==
 = 1.1 =
 * vyžadováno PHP 7.0 a vyšší
-* pravidlo: funkce
-* vidotelnost stránek/příspěvků/custon type
-* Shortcode pro vymezení obsahu
-* lepší nastavování na stránce "Správa uživatelů"
+* nové pravidlo: funkce
+* viditelnost stránek/příspěvků/custom type
+* shortcode pro vymezení obsahu
+* lepší rozhraní na stránce "Správa uživatelů"
 
 = 1.0 =
 * podpora přihlášení přes skautIS
