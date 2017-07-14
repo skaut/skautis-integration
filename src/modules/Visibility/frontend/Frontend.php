@@ -127,7 +127,7 @@ final class Frontend {
 	private function processRulesAndHideContent( bool $userIsLoggedInSkautis, array $rules = [], int $postId ) {
 		if ( ! empty( $rules ) && isset( $rules[0][ SKAUTISINTEGRATION_NAME . '_rules' ] ) ) {
 			if ( ! $userIsLoggedInSkautis ) {
-				$this->hideContentExcerptComments( $postId, $this->getLoginForm(), $this->getLoginRequiredMessage() );
+				$this->hideContentExcerptComments( $postId, $this->getLoginRequiredMessage() . $this->getLoginForm(), $this->getLoginRequiredMessage() );
 			} else if ( ! $this->rulesManager->checkIfUserPassedRules( $rules ) ) {
 				$this->hideContentExcerptComments( $postId, $this->getUnauthorizedMessage() . $this->getLoginForm( true ), $this->getUnauthorizedMessage() );
 			}

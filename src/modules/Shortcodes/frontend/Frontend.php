@@ -54,6 +54,10 @@ final class Frontend {
 	public function processShortcode( array $atts = [], string $content = '' ): string {
 		if ( isset( $atts['rules'] ) && isset( $atts['content'] ) ) {
 
+			if ( current_user_can( 'edit_' . get_post_type() . 's' ) ) {
+				return $content;
+			}
+
 			if ( ! $this->skautisLogin->isUserLoggedInSkautis() ) {
 				if ( $atts['content'] == 'showLogin' ) {
 					return $this->getLoginRequiredMessage() . $this->getLoginForm();
