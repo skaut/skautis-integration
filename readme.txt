@@ -39,7 +39,7 @@ Plugin po aktivaci bude vyžadovat APP ID. Návod jak ho zístat najdete v [náp
 * vyžadováno PHP 7.0 a vyšší
 * pravidlo: funkce
 * vidotelnost stránek/příspěvků/custon type
-* Shordcode pro vymezení obsahu
+* Shortcode pro vymezení obsahu
 * lepší nastavování na stránce "Správa uživatelů"
 
 = 1.0 =
