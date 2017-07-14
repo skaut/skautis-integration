@@ -42,7 +42,6 @@ return array(
     'SkautisIntegration\\Modules\\Register\\Register' => $baseDir . '/src/modules/Register/Register.php',
     'SkautisIntegration\\Modules\\Register\\WpRegister' => $baseDir . '/src/modules/Register/WpRegister.php',
     'SkautisIntegration\\Modules\\Shortcodes\\Admin\\Admin' => $baseDir . '/src/modules/Shortcodes/admin/Admin.php',
-    'SkautisIntegration\\Modules\\Shortcodes\\Admin\\Settings' => $baseDir . '/src/modules/Shortcodes/admin/Settings.php',
     'SkautisIntegration\\Modules\\Shortcodes\\Frontend\\Frontend' => $baseDir . '/src/modules/Shortcodes/frontend/Frontend.php',
     'SkautisIntegration\\Modules\\Shortcodes\\Shortcodes' => $baseDir . '/src/modules/Shortcodes/Shortcodes.php',
     'SkautisIntegration\\Modules\\Visibility\\Admin\\Admin' => $baseDir . '/src/modules/Visibility/admin/Admin.php',
