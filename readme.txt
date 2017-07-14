@@ -35,6 +35,9 @@ Plugin po aktivaci bude vyžadovat APP ID, bez toho nebude plugin vůbec fungova
 
 
 == Changelog ==
+= 1.1.1 =
+* dopnění překladů, frontend je nyní AJ a CZ
+
 = 1.1 =
 * vyžadováno PHP 7.0 a vyšší
 * nové pravidlo: funkce
