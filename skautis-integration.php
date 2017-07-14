@@ -3,7 +3,7 @@
  * Plugin Name:       skautIS integration
  * Plugin URI:        https://github.com/skaut/skautis-integration
  * Description:       Integrace WordPressu se skautISem
- * Version:           1.1
+ * Version:           1.1.1
  * Author:            David Odehnal
  * Author URI:        https://davidodehnal.cz/
  * Text Domain:       skautis-integration
@@ -22,7 +22,7 @@ define( 'SKAUTISINTEGRATION_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 define( 'SKAUTISINTEGRATION_PATH', plugin_dir_path( __FILE__ ) );
 define( 'SKAUTISINTEGRATION_URL', plugin_dir_url( __FILE__ ) );
 define( 'SKAUTISINTEGRATION_NAME', 'skautis-integration' );
-define( 'SKAUTISINTEGRATION_VERSION', '1.1' );
+define( 'SKAUTISINTEGRATION_VERSION', '1.1.1' );
 
 require SKAUTISINTEGRATION_PATH . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
