@@ -3,7 +3,7 @@ Contributors: davidulus, skaut, kalich5
 Tags: skaut, multisite, plugin, shortcode, skautIS, registrace
 Requires at least: 4.8
 Tested up to: 4.9
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 License: GPLv3 or laterLicense URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 Implementace přihlašování, registrace a dalších služeb z informačního systému skautIS do WordPressu.
@@ -35,6 +35,9 @@ Plugin po aktivaci bude vyžadovat APP ID, bez toho nebude plugin vůbec fungova
 
 
 == Changelog ==
+= 1.1.2 =
+* opravy textů v pluginu
+
 = 1.1.1 =
 * dopnění překladů, frontend je nyní AJ a CZ
 
