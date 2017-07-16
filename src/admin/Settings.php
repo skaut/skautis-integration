@@ -276,14 +276,6 @@ final class Settings {
 		);
 
 		add_settings_field(
-			SKAUTISINTEGRATION_NAME . '_login_page_url',
-			__( 'Adresa stránky s přihlašováním', 'skautis-integration' ),
-			[ $this, 'fieldLoginPageUrl' ],
-			SKAUTISINTEGRATION_NAME . '_login',
-			SKAUTISINTEGRATION_NAME . '_login'
-		);
-
-		add_settings_field(
 			SKAUTISINTEGRATION_NAME . '_allowUsersDisconnectFromSkautis',
 			__( 'Zrušení spojení se skautISem', 'skautis-integration' ),
 			[ $this, 'fieldAllowUsersDisconnectFromSkautis' ],
@@ -300,6 +292,14 @@ final class Settings {
 				SKAUTISINTEGRATION_NAME . '_login'
 			);
 		}
+
+		add_settings_field(
+			SKAUTISINTEGRATION_NAME . '_login_page_url',
+			__( 'Adresa stránky s přihlašováním', 'skautis-integration' ),
+			[ $this, 'fieldLoginPageUrl' ],
+			SKAUTISINTEGRATION_NAME . '_login',
+			SKAUTISINTEGRATION_NAME . '_login'
+		);
 
 		register_setting( SKAUTISINTEGRATION_NAME . '_login', SKAUTISINTEGRATION_NAME . '_login_page_url', [
 			'type'              => 'string',

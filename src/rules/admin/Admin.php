@@ -104,16 +104,16 @@ final class Admin {
 				<button type="button" class="handlediv" aria-expanded="true"><span
 						class="screen-reader-text"><?php _e( 'Zobrazit / skrýt panel: Pravidla', 'skautis-integration' ); ?></span><span
 						class="toggle-indicator" aria-hidden="true"></span></button>
-				<h2 class="hndle ui-sortable-handle"><span><?php _e( 'Pravidla', 'skautis-integration' ); ?></span>
+				<h2 class="hndle ui-sortable-handle"><span><?php _e( 'Zadejte podmínky pro splnění pravidla', 'skautis-integration' ); ?></span>
 				</h2>
 				<div class="inside" style="padding: 0.75em 1.5em 1.25em 1.5em;">
 					<label class="screen-reader-text"
-					       for="post_author_override"><?php _e( 'Pravidla', 'skautis-integration' ); ?></label>
+					       for="post_author_override"><?php _e( 'Zadejte podmínky pro splnění pravidla', 'skautis-integration' ); ?></label>
 					<?php
 					if ( ! $this->skautisGateway->isInitialized() ) {
 						printf( __( 'Vyberte v <a href="%1$s">nastavení</a> pluginu typ prostředí skautISu', 'skautis-integration' ), admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME ) );
 					} else if ( ! $this->skautisGateway->getSkautisInstance()->getUser()->isLoggedIn( true ) ) {
-						$result = '<h4><a href="' . $this->wpLoginLogout->getLoginUrl() . '">' . __( 'Pro správu pravidel je nutné se přihlásit do skautISu', 'skautis-integration' ) . '</a></h4>';
+						$result = '<h4><a href="' . $this->wpLoginLogout->getLoginUrl() . '">' . __( 'Pro správu podmínek je nutné se přihlásit do skautISu', 'skautis-integration' ) . '</a></h4>';
 						echo $result;
 					} else {
 						echo '<div id="query_builder"></div>';

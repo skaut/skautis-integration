@@ -31,32 +31,32 @@ final class RulesInit {
 	public function registerPostType() {
 		$labels       = [
 			'name'                  => _x( 'Správa pravidel', 'Post Type General Name', 'skautis-integration' ),
-			'singular_name'         => _x( 'Sada pravidel', 'Post Type Singular Name', 'skautis-integration' ),
+			'singular_name'         => _x( 'Pravidlo', 'Post Type Singular Name', 'skautis-integration' ),
 			'menu_name'             => __( 'Správa pravidel', 'skautis-integration' ),
 			'name_admin_bar'        => __( 'Správa pravidel', 'skautis-integration' ),
-			'archives'              => __( 'Archiv sad pravidel', 'skautis-integration' ),
+			'archives'              => __( 'Archiv pravidel', 'skautis-integration' ),
 			'attributes'            => __( 'Atributy', 'skautis-integration' ),
-			'parent_item_colon'     => __( 'Nadřazená sada pravidel', 'skautis-integration' ),
+			'parent_item_colon'     => __( 'Nadřazené pravidlo', 'skautis-integration' ),
 			'all_items'             => __( 'Správa pravidel', 'skautis-integration' ),
-			'add_new_item'          => __( 'Přidat novou sadu pravidel', 'skautis-integration' ),
-			'add_new'               => __( 'Přidat sadu pravidel', 'skautis-integration' ),
-			'new_item'              => __( 'Nová sada pravidel', 'skautis-integration' ),
-			'edit_item'             => __( 'Upravit sadu pravidel', 'skautis-integration' ),
-			'update_item'           => __( 'Aktualizovat sadu pravidel', 'skautis-integration' ),
-			'view_item'             => __( 'Zobrazit sadu pravidel', 'skautis-integration' ),
-			'view_items'            => __( 'Zobrazit sady pravidel', 'skautis-integration' ),
-			'search_items'          => __( 'Hledat v sadách pravidel', 'skautis-integration' ),
-			'not_found'             => __( 'Žádné sady pravidel', 'skautis-integration' ),
+			'add_new_item'          => __( 'Přidat nové pravidlo', 'skautis-integration' ),
+			'add_new'               => __( 'Přidat pravidlo', 'skautis-integration' ),
+			'new_item'              => __( 'Nové pravidlo', 'skautis-integration' ),
+			'edit_item'             => __( 'Upravit pravidlo', 'skautis-integration' ),
+			'update_item'           => __( 'Aktualizovat pravidlo', 'skautis-integration' ),
+			'view_item'             => __( 'Zobrazit pravidlo', 'skautis-integration' ),
+			'view_items'            => __( 'Zobrazit pravidla', 'skautis-integration' ),
+			'search_items'          => __( 'Hledat v pravidlech', 'skautis-integration' ),
+			'not_found'             => __( 'Žádná pravidla', 'skautis-integration' ),
 			'not_found_in_trash'    => __( 'Koš je prázdný', 'skautis-integration' ),
 			'featured_image'        => __( 'Náhledový obrázek', 'skautis-integration' ),
 			'set_featured_image'    => __( 'Zadat náhledový obrázek', 'skautis-integration' ),
 			'remove_featured_image' => __( 'Odstranit náhledový obrázek', 'skautis-integration' ),
 			'use_featured_image'    => __( 'Použít jako náhledový obrázek', 'skautis-integration' ),
-			'insert_into_item'      => __( 'Vložit do sady pravidel', 'skautis-integration' ),
-			'uploaded_to_this_item' => __( 'Přiřazeno k této sadě pravidel', 'skautis-integration' ),
-			'items_list'            => __( 'Seznam sad pravidel', 'skautis-integration' ),
-			'items_list_navigation' => __( 'Navigace v seznamu sadu pravidel', 'skautis-integration' ),
-			'filter_items_list'     => __( 'Filtrovat sady pravidel', 'skautis-integration' )
+			'insert_into_item'      => __( 'Vložit do pravidla', 'skautis-integration' ),
+			'uploaded_to_this_item' => __( 'Přiřazeno k tomuto pravidlu', 'skautis-integration' ),
+			'items_list'            => __( 'Seznam pravidel', 'skautis-integration' ),
+			'items_list_navigation' => __( 'Navigace v seznamu pravidel', 'skautis-integration' ),
+			'filter_items_list'     => __( 'Filtrovat pravidla', 'skautis-integration' )
 		];
 		$capabilities = [
 			'edit_post'              => Helpers::getSkautisManagerCapability(),
@@ -75,7 +75,7 @@ final class RulesInit {
 			'create_posts'           => Helpers::getSkautisManagerCapability()
 		];
 		$args         = [
-			'label'               => __( 'Sada pravidel', 'skautis-integration' ),
+			'label'               => __( 'Pravidla', 'skautis-integration' ),
 			'labels'              => $labels,
 			'supports'            => [ 'title', 'editor', 'author', 'revisions', ],
 			'hierarchical'        => false,
@@ -108,7 +108,7 @@ final class RulesInit {
 	public function titlePlaceholder( string $title ): string {
 		global $post_type;
 		if ( $post_type == self::RULES_TYPE_SLUG ) {
-			$title = __( 'Zadejte název sady pravidel', 'skautis-integration' );
+			$title = __( 'Zadejte název pravidla', 'skautis-integration' );
 		}
 
 		return $title;
@@ -122,16 +122,16 @@ final class RulesInit {
 			2  => __( 'Hotovo', 'skautis-integration' ), // Custom field updated.
 			3  => __( 'Hotovo', 'skautis-integration' ), // Custom field deleted.
 			4  => __( 'Hotovo', 'skautis-integration' ), // My Post Type updated.
-			5  => isset( $_GET['revision'] ) ? sprintf( __( 'Sada pravidel byla obnovena na starší verzi z %s' ), wp_post_revision_title( absint( $_GET['revision'] ), false ) ) : false,
+			5  => isset( $_GET['revision'] ) ? sprintf( __( 'Pravidlo bylo obnoveno na starší verzi z %s' ), wp_post_revision_title( absint( $_GET['revision'] ), false ) ) : false,
 			6  => __( 'Hotovo', 'skautis-integration' ), // My Post Type published.
-			7  => __( 'Sada pravidel byla uložena', 'skautis-integration' ), // My Post Type saved.
+			7  => __( 'Pravidlo bylo uloženo', 'skautis-integration' ), // My Post Type saved.
 			8  => __( 'Hotovo', 'skautis-integration' ), // My Post Type submitted.
 			9  => sprintf(
-				__( 'Sada pravidel naplánována na: <strong>%1$s</strong>.' ),
+				__( 'Pravidlo naplánováno na: <strong>%1$s</strong>.' ),
 				// translators: Publish box date format, see http://php.net/date
 				date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) )
 			),
-			10 => __( 'Koncept sady pravidel aktualizován', 'skautis-integration' ) // My Post Type draft updated.
+			10 => __( 'Koncept pravidla aktualizován', 'skautis-integration' ) // My Post Type draft updated.
 		];
 
 		return $messages;

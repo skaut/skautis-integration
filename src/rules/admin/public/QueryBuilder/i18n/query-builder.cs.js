@@ -6,7 +6,7 @@
  */
 
 (function (root, factory) {
-    if (typeof define == 'function' && define.amd) {
+    if (typeof define === 'function' && define.amd) {
         define(['jquery', 'query-builder'], factory);
     }
     else {
@@ -20,9 +20,9 @@
     QueryBuilder.regional['cs'] = {
         "__locale": "Čeština (cs)",
         "__author": "David Odehnal",
-        "add_rule": "Přidat pravidlo",
+        "add_rule": "Přidat podmínku",
         "add_group": "Přidat skupinu",
-        "delete_rule": "Odstranit pravidlo",
+        "delete_rule": "Odstranit podmínku",
         "delete_group": "Odstranit skupinu",
         "conditions": {
             "AND": "A zároveň",
@@ -51,7 +51,7 @@
         },
         "errors": {
             "no_filter": "není vybrán žádný filtr",
-            "empty_group": "skupina pravidel je prázdná",
+            "empty_group": "skupina podmínek je prázdná",
             "radio_empty": "Není zadána hodnota",
             "checkbox_empty": "Není zadána hodnota",
             "select_empty": "Není zadána hodnota",
