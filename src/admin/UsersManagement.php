@@ -40,11 +40,86 @@ class UsersManagement {
 		}
 	}
 
-	public function checkIfUserChangeSkautisRole() {
+	protected function getUsers( array $currentUserRoles, int $currentUserRole ) {
+		$users     = [];
+		$eventType = '';
+		$eventId   = 0;
+
+		// different procedure for roles associated with events
+		foreach ( $currentUserRoles as $role ) {
+			if ( $role->ID === $currentUserRole && isset( $role->Key ) ) {
+				$words = preg_split( "~(?=[A-Z])~", $role->Key );
+				if ( ! empty( $words ) && isset( $words[1], $words[2] ) && $words[1] === 'Event' ) {
+					$eventType = $words[2];
+
+					$userDetail        = $this->skautisGateway->getSkautisInstance()->UserManagement->UserDetail();
+					$currentUserEvents = $this->skautisGateway->getSkautisInstance()->Events->EventAllPerson( [
+						'ID_Person' => $userDetail->ID_Person
+					] );
+
+					foreach ( $currentUserEvents as $event ) {
+						if ( $event->ID_Group === $role->ID_Group ) {
+							$eventUrl = $this->skautisGateway->getSkautisInstance()->Events->EventDetail( [
+								'ID' => $event->ID
+							] );
+							if ( isset( $eventUrl->UrlDetail ) ) {
+								preg_match( "~ID=(\d+)$~", $eventUrl->UrlDetail, $regResult );
+								if ( $regResult && isset( $regResult[1] ) ) {
+									$eventId = $regResult[1];
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		// different procedure for roles associated with events
+		if ( $eventType && $eventId ) {
+			$methodName   = 'Participant' . $eventType . 'All';
+			$participants = $this->skautisGateway->getSkautisInstance()->Events->$methodName( [
+				'ID_Event' . $eventType => $eventId
+			] );
+
+			if ( is_array( $participants ) ) {
+
+				$users = array_map( function ( $user ) {
+					$newUser = new \stdClass();
+
+					$userAtts = preg_match( "/([^\s]+)\s([^\s]+)(\s\((.*)\))?/", $user->Person, $regResult );
+
+					if ( $regResult && isset( $regResult[1], $regResult[2] ) ) {
+						$newUser->ID          = $user->ID;
+						$newUser->DisplayName = $regResult[2] . ' ' . $regResult[1];
+
+						$newUser->UserName = '';
+						if ( isset( $regResult[4] ) && $regResult[4] ) {
+							$newUser->UserName = $regResult[4];
+						}
+					}
+
+
+					return $newUser;
+				}, $participants );
+
+			}
+
+		}
+
+		if ( empty( $users ) ) {
+			$users = $this->skautisGateway->getSkautisInstance()->UserManagement->userAll();
+		}
+
+		return $users;
+	}
+
+	protected function checkIfUserChangeSkautisRole() {
 		add_action( 'init', function () {
 			if ( isset( $_POST['changeSkautisUserRole'], $_POST['_wpnonce'], $_POST['_wp_http_referer'] ) ) {
 				if ( check_admin_referer( SKAUTISINTEGRATION_NAME . '_usersManagement_changeSkautisUserRole', '_wpnonce' ) ) {
-					$this->skautisLogin->changeUserRoleInSkautis( absint( $_POST['changeSkautisUserRole'] ) );
+					if ( $this->skautisLogin->isUserLoggedInSkautis() ) {
+						$this->skautisLogin->changeUserRoleInSkautis( absint( $_POST['changeSkautisUserRole'] ) );
+					}
 				}
 			}
 		} );
@@ -132,9 +207,9 @@ class UsersManagement {
 		}
 
 		$currentUserRoles = $this->skautisGateway->getSkautisInstance()->UserManagement->UserRoleAll( [
-			                                                                                              'ID_Login' => $this->skautisGateway->getSkautisInstance()->getUser()->getLoginId(),
-			                                                                                              'ID_User'  => $this->skautisGateway->getSkautisInstance()->UserManagement->UserDetail()->ID
-		                                                                                              ] );
+			'ID_Login' => $this->skautisGateway->getSkautisInstance()->getUser()->getLoginId(),
+			'ID_User'  => $this->skautisGateway->getSkautisInstance()->UserManagement->UserDetail()->ID
+		] );
 		$currentUserRole  = $this->skautisGateway->getSkautisInstance()->getUser()->getRoleId();
 
 		$result .= '
@@ -168,16 +243,16 @@ class UsersManagement {
 		$result .= '</tr></thead ><tbody>';
 
 		$connectedWpUsers = new \WP_User_Query( [
-			                                        'meta_query'  => [
-				                                        [
-					                                        'key'     => 'skautisUserId_' . $this->skautisGateway->getEnv(),
-					                                        'type'    => 'numeric',
-					                                        'value'   => 0,
-					                                        'compare' => '>'
-				                                        ]
-			                                        ],
-			                                        'count_total' => false
-		                                        ] );
+			'meta_query'  => [
+				[
+					'key'     => 'skautisUserId_' . $this->skautisGateway->getEnv(),
+					'type'    => 'numeric',
+					'value'   => 0,
+					'compare' => '>'
+				]
+			],
+			'count_total' => false
+		] );
 		$usersData        = [];
 		foreach ( $users = $connectedWpUsers->get_results() as &$user ) {
 			$usersData[ get_user_meta( $user->ID, 'skautisUserId_' . $this->skautisGateway->getEnv(), true ) ] = [
@@ -186,7 +261,9 @@ class UsersManagement {
 			];
 		}
 
-		foreach ( $this->skautisGateway->getSkautisInstance()->UserManagement->userAll() as $user ) {
+		$users = $this->getUsers( $currentUserRoles, $currentUserRole );
+
+		foreach ( $users as $user ) {
 			$connected             = '';
 			$trBg                  = '';
 			$connectDisconnectLink = '';
@@ -204,7 +281,7 @@ class UsersManagement {
 			} else {
 				$connectDisconnectLink = '<a href="#TB_inline?width=450&height=300&inlineId=connectUserToSkautisModal" class="button thickbox">' . __( 'Propojit', 'skautis-integration' ) . '</a>';
 			}
-			$result .= '<tr style="' . $trBg . '"><td class="username">' . esc_html( $user->DisplayName ) . '</td><td>&nbsp;&nbsp;(<span class="nickname">' . esc_html( $user->UserName ) . '</span>)</td><td>&nbsp;&nbsp;<span class="skautisUserId">' . absint( $user->ID ) . '</span></td><td>' . $connected . '</td><td>' . $connectDisconnectLink . '</td></tr>';
+			$result .= '<tr style="' . $trBg . '"><td class="username">' . esc_html( $user->DisplayName ) . '</td><td>&nbsp;&nbsp;<span class="nickname">' . esc_html( $user->UserName ) . '</span></td><td>&nbsp;&nbsp;<span class="skautisUserId">' . absint( $user->ID ) . '</span></td><td>' . $connected . '</td><td>' . $connectDisconnectLink . '</td></tr>';
 		}
 		$result .= '</tbody></table>';
 
@@ -222,20 +299,20 @@ class UsersManagement {
 					<option><?php _e( 'Vyberte uživatele...', 'skautis-integration' ); ?></option>
 					<?php
 					$notConnectedWpUsers = new \WP_User_Query( [
-						                                           'meta_query'  => [
-							                                           'relation' => 'OR',
-							                                           [
-								                                           'key'     => 'skautisUserId_' . $this->skautisGateway->getEnv(),
-								                                           'compare' => 'NOT EXISTS'
-							                                           ],
-							                                           [
-								                                           'key'     => 'skautisUserId_' . $this->skautisGateway->getEnv(),
-								                                           'value'   => '',
-								                                           'compare' => '='
-							                                           ]
-						                                           ],
-						                                           'count_total' => false
-					                                           ] );
+						'meta_query'  => [
+							'relation' => 'OR',
+							[
+								'key'     => 'skautisUserId_' . $this->skautisGateway->getEnv(),
+								'compare' => 'NOT EXISTS'
+							],
+							[
+								'key'     => 'skautisUserId_' . $this->skautisGateway->getEnv(),
+								'value'   => '',
+								'compare' => '='
+							]
+						],
+						'count_total' => false
+					] );
 					foreach ( $notConnectedWpUsers->get_results() as $user ) {
 						echo '
 						<option value="' . absint( $user->ID ) . '">' . esc_html( $user->data->display_name ) . '</option>

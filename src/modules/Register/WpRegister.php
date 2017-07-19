@@ -19,7 +19,8 @@ final class WpRegister {
 	private function resolveNotificationsAndRegisterUserToWp( string $userLogin, string $userEmail ): int {
 		remove_action( 'register_new_user', 'wp_send_new_user_notifications' );
 		add_action( 'register_new_user', function ( $userId ) {
-			if ( ! $notify = get_option( SKAUTISINTEGRATION_NAME . '_modules_register_emailNotificationsAfterNewUserRegister' ) ) {
+			$notify = apply_filters( SKAUTISINTEGRATION_NAME . '_modules_register_newUserNotifications', get_option( SKAUTISINTEGRATION_NAME . '_modules_register_emailNotificationsAfterNewUserRegister' ) );
+			if ( ! $notify ) {
 				$notify = 'none';
 			}
 			if ( $notify != 'none' ) {
