@@ -1,10 +1,6 @@
 (function ($) {
     'use strict';
 
-    $('#skautisRoleChanger').select2().on('change', function () {
-        $(this).closest('form').submit();
-    });
-
     $('.skautisUserManagementTable').dataTable({
         responsive: true,
         language: {
@@ -18,10 +14,9 @@
 
     var $modal = $('#TB_ajaxContent');
     $('.thickbox').on('click', function () {
-        resizeModal();
         var $this = $(this);
-        var userName = $this.parents('tr').find('.username').html(),
-            nickName = $this.parents('tr').find('.nickname').html();
+        var userName = $this.parents('tr').find('.firstName').html() + ' ' + $this.parents('tr').find('.lastName').html(),
+            nickName = $this.parents('tr').find('.nickName').html();
         if (nickName) {
             userName += ' (' + nickName + ')';
         }
@@ -29,29 +24,56 @@
         $('#connectUserToSkautisModal_username').html(userName);
 
         var $connectUserToSkautisModal_connectLink = $('#connectUserToSkautisModal_connectLink');
-        $connectUserToSkautisModal_connectLink.attr('href', $connectUserToSkautisModal_connectLink.attr('href') + '%3FskautisUserId=' + $this.parents('tr').find('.skautisUserId').html())
-    });
+        $connectUserToSkautisModal_connectLink.attr('href', updateQueryStringInUrl('skautisUserId', $this.parents('tr').find('.skautisUserId').html(), $connectUserToSkautisModal_connectLink.attr('href')));
 
-    $(window).on('resize', resizeModal);
+        var $connectUserToSkautisModal_registerLink = $('#connectUserToSkautisModal_registerLink');
+        var newHref = updateQueryStringInUrl('skautisUserId', $this.parents('tr').find('.skautisUserId').html(), $connectUserToSkautisModal_registerLink.attr('href'));
+        $connectUserToSkautisModal_registerLink.attr('href', newHref);
+    });
 
     $('#connectUserToSkautisModal_select').on('change', function () {
         var $this = $(this),
             $connectUserToSkautisModal_connectLink = $('#connectUserToSkautisModal_connectLink');
-        $connectUserToSkautisModal_connectLink.attr('href', $connectUserToSkautisModal_connectLink.attr('href') + '%3FwpUserId=' + $this.val());
+        if ($.isNumeric($this.val())) {
+            $connectUserToSkautisModal_connectLink.attr('href', updateQueryStringInUrl('wpUserId', $this.val(), $connectUserToSkautisModal_connectLink.attr('href')));
+        } else {
+            $connectUserToSkautisModal_connectLink.attr('href', updateQueryStringInUrl('wpUserId', '', $connectUserToSkautisModal_connectLink.attr('href')));
+        }
     });
 
-    function resizeModal() {
-        setTimeout(function () {
-            var $tbAjaxContent = jQuery('#TB_ajaxContent').find('.content'),
-                $tbWindow = jQuery("#TB_window");
-            var width = $tbAjaxContent.outerWidth(),
-                height = $tbAjaxContent.outerHeight();
-
-            $tbWindow.css("width", width);
-            $tbWindow.css("height", height);
-            $tbWindow.css("margin-left", -(parseInt((width) / 2)));
-            $tbWindow.css("margin-top", -(parseInt((height) / 2)));
-        }, 10);
-    }
+    $('#connectUserToSkautisModal_defaultRole').on('change', function () {
+        var $this = $(this),
+            $connectUserToSkautisModal_registerLink = $('#connectUserToSkautisModal_registerLink');
+        $connectUserToSkautisModal_registerLink.attr('href', updateQueryStringInUrl('wpRole', $this.val(), $connectUserToSkautisModal_registerLink.attr('href')));
+    }).trigger('change');
 
 })(jQuery);
+
+function updateQueryStringInUrl(key, value, url) {
+    var re = new RegExp("([?&])" + key + "=.*?(&|#|$)(.*)", "gi"),
+        hash;
+
+    if (re.test(url)) {
+        if (typeof value !== 'undefined' && value !== null)
+            return url.replace(re, '$1' + key + "=" + value + '$2$3');
+        else {
+            hash = url.split('#');
+            url = hash[0].replace(re, '$1$3').replace(/(&|\?)$/, '');
+            if (typeof hash[1] !== 'undefined' && hash[1] !== null)
+                url += '#' + hash[1];
+            return url;
+        }
+    }
+    else {
+        if (typeof value !== 'undefined' && value !== null) {
+            var separator = url.indexOf('?') !== -1 ? '&' : '?';
+            hash = url.split('#');
+            url = hash[0] + separator + key + '=' + value;
+            if (typeof hash[1] !== 'undefined' && hash[1] !== null)
+                url += '#' + hash[1];
+            return url;
+        }
+        else
+            return url;
+    }
+}

@@ -4,16 +4,18 @@ declare( strict_types=1 );
 
 namespace SkautisIntegration\Modules\Register;
 
-use Skautis\Skautis;
 use SkautisIntegration\Auth\SkautisGateway;
+use SkautisIntegration\Repository\Users as UsersRepository;
 use SkautisIntegration\Utils\Helpers;
 
 final class WpRegister {
 
 	private $skautisGateway;
+	private $usersRepository;
 
-	public function __construct( SkautisGateway $skautisGateway ) {
-		$this->skautisGateway = $skautisGateway;
+	public function __construct( SkautisGateway $skautisGateway, UsersRepository $usersRepository ) {
+		$this->skautisGateway  = $skautisGateway;
+		$this->usersRepository = $usersRepository;
 	}
 
 	private function resolveNotificationsAndRegisterUserToWp( string $userLogin, string $userEmail ): int {
@@ -47,7 +49,25 @@ final class WpRegister {
 		return $userId;
 	}
 
-	private function processWpUserRegistration( $skautisUser, string $wpRole ): bool {
+	private function prepareUserData( $skautisUser ): array {
+		$skautisUserDetail = $this->skautisGateway->getSkautisInstance()->OrganizationUnit->PersonDetail( [
+			'ID_Login' => $this->skautisGateway->getSkautisInstance()->getUser()->getLoginId(),
+			'ID'       => $skautisUser->ID_Person
+		] );
+
+		$user = [
+			'id'        => $skautisUser->ID,
+			'personId'  => $skautisUser->ID_Person,
+			'email'     => $skautisUserDetail->Email,
+			'firstName' => $skautisUserDetail->FirstName,
+			'lastName'  => $skautisUserDetail->LastName,
+			'nickName'  => $skautisUserDetail->NickName
+		];
+
+		return $user;
+	}
+
+	private function processWpUserRegistration( array $user, string $wpRole ): bool {
 		if ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
 
 			Helpers::validateNonceFromUrl( $_GET['ReturnUrl'], SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis' );
@@ -58,7 +78,7 @@ final class WpRegister {
 				'meta_query' => [
 					[
 						'key'     => 'skautisUserId_' . $this->skautisGateway->getEnv(),
-						'value'   => absint( $skautisUser->ID ),
+						'value'   => absint( $user['id'] ),
 						'compare' => '='
 					]
 				]
@@ -69,24 +89,19 @@ final class WpRegister {
 				return true;
 			}
 
-			$userDetail = $this->skautisGateway->getSkautisInstance()->OrganizationUnit->PersonDetail( [
-				'ID_Login' => $this->skautisGateway->getSkautisInstance()->getUser()->getLoginId(),
-				'ID'       => $skautisUser->ID_Person
-			] );
-
-			$userId = $this->resolveNotificationsAndRegisterUserToWp( $userDetail->Email, $userDetail->Email );
+			$userId = $this->resolveNotificationsAndRegisterUserToWp( $user['email'], $user['email'] );
 
 			if ( $userId === 0 ) {
 				return false;
 			}
 
-			if ( ! add_user_meta( $userId, 'skautisUserId_' . $this->skautisGateway->getEnv(), absint( $skautisUser->ID ) ) ) {
+			if ( ! add_user_meta( $userId, 'skautisUserId_' . $this->skautisGateway->getEnv(), absint( $user['id'] ) ) ) {
 				return false;
 			}
 
-			$firstName = $userDetail->FirstName;
-			$lastName  = $userDetail->LastName;
-			if ( $nickName = $userDetail->NickName ) {
+			$firstName = $user['firstName'];
+			$lastName  = $user['lastName'];
+			if ( $nickName = $user['nickName'] ) {
 				$displayName = $nickName;
 			} else {
 				$nickName    = '';
@@ -165,10 +180,38 @@ final class WpRegister {
 		$userDetail = $this->skautisGateway->getSkautisInstance()->UserManagement->UserDetail();
 
 		if ( $userDetail && isset( $userDetail->ID ) && $userDetail->ID > 0 ) {
-			return $this->processWpUserRegistration( $userDetail, $wpRole );
+
+			$user = $this->prepareUserData( $userDetail );
+
+			return $this->processWpUserRegistration( $user, $wpRole );
 		}
 
 		return false;
+	}
+
+	public function getManuallyRegisterWpUserUrl(): string {
+		if ( isset( $_GET['redirect_to'] ) && $_GET['redirect_to'] ) {
+			$returnUrl = $_GET['redirect_to'];
+		} else if ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
+			$returnUrl = $_GET['ReturnUrl'];
+		} else {
+			$returnUrl = Helpers::getCurrentUrl();
+		}
+
+		$returnUrl = add_query_arg( SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis', wp_create_nonce( SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis' ), $returnUrl );
+		$url       = add_query_arg( 'ReturnUrl', urlencode( $returnUrl ), get_home_url( null, 'skautis/auth/' . Register::MANUALLY_REGISTER_WP_USER_ACTION ) );
+
+		return esc_url( $url );
+	}
+
+	public function registerToWpManually( string $wpRole, int $skautisUserId ): bool {
+		$userDetail = $this->usersRepository->getUserDetail( $skautisUserId );
+
+		add_filter( SKAUTISINTEGRATION_NAME . '_modules_register_newUserNotifications', function ( $notify ) {
+			return 'none';
+		}, 15 );
+
+		return $this->processWpUserRegistration( $userDetail, $wpRole );
 	}
 
 }

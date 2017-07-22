@@ -84,25 +84,14 @@ final class ConnectAndDisconnectWpAccount {
 			return;
 		}
 
-		if ( strpos( $_GET['ReturnUrl'], 'wpUserId' ) === false || strpos( $_GET['ReturnUrl'], 'skautisUserId' ) === false ) {
+		if ( ! isset( $_GET['wpUserId'], $_GET['skautisUserId'] ) ) {
 			return;
 		}
 
-		$decodedUrl = urldecode( $_GET['ReturnUrl'] );
-		$wpUserId   = 0;
-		if ( preg_match( "~wpUserId=([^\&,\s,\/,\#,\%,\?]*)~", $decodedUrl, $result ) ) {
-			if ( is_array( $result ) && isset( $result[1] ) && $result[1] ) {
-				$wpUserId = absint( $result[1] );
-			}
-		}
+		$wpUserId      = absint( $_GET['wpUserId'] );
+		$skautisUserId = absint( $_GET['skautisUserId'] );
 
-		$result        = [];
-		$skautisUserId = 0;
-		if ( preg_match( "~skautisUserId=([^\&,\s,\/,\#,\%,\?]*)~", $decodedUrl, $result ) ) {
-			if ( is_array( $result ) && isset( $result[1] ) && $result[1] ) {
-				$skautisUserId = absint( $result[1] );
-			}
-		}
+		$result = [];
 
 		if ( $wpUserId > 0 && $skautisUserId > 0 ) {
 			$this->setSkautisUserIdToWpAccount( $wpUserId, $skautisUserId );

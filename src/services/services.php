@@ -17,6 +17,7 @@ use SkautisIntegration\Frontend\LoginForm;
 use SkautisIntegration\Admin\Admin;
 use SkautisIntegration\Admin\Settings;
 use SkautisIntegration\Admin\Users;
+use SkautisIntegration\Repository\Users as UsersRepository;
 use SkautisIntegration\Modules\ModulesManager;
 use SkautisIntegration\Modules\Register\Register;
 use SkautisIntegration\Modules\Shortcodes\Shortcodes;
@@ -24,6 +25,7 @@ use SkautisIntegration\Modules\Visibility\Visibility;
 use SkautisIntegration\Rules\Revisions;
 use SkautisIntegration\Rules\RulesInit;
 use SkautisIntegration\Rules\RulesManager;
+use SkautisIntegration\Utils\RoleChanger;
 
 class Services {
 
@@ -92,7 +94,16 @@ class Services {
 		};
 
 		self::$services['admin_usersManagement'] = function ( Container $container ) {
-			return new UsersManagement( $container['skautisGateway'], $container['wpLoginLogout'], $container['skautisLogin'], $container['connectAndDisconnectWpAccount'] );
+			return new UsersManagement( $container['skautisGateway'], $container['wpLoginLogout'], $container['skautisLogin'], $container['connectAndDisconnectWpAccount'], $container['repository_users'], $container['utils_roleChanger'] );
+		};
+
+		self::$services['utils_roleChanger'] = function ( Container $container ) {
+			return new RoleChanger( $container['skautisGateway'], $container['skautisLogin'] );
+		};
+
+		// Repositories
+		self::$services['repository_users'] = function ( Container $container ) {
+			return new UsersRepository( $container['skautisGateway'] );
 		};
 
 		// Modules
@@ -105,7 +116,7 @@ class Services {
 		};
 
 		self::$services[ Register::getId() ] = function ( Container $container ) {
-			return new Register( $container['skautisGateway'], $container['skautisLogin'], $container['wpLoginLogout'], $container['rules_manager'] );
+			return new Register( $container['skautisGateway'], $container['skautisLogin'], $container['wpLoginLogout'], $container['rules_manager'], $container['repository_users'] );
 		};
 
 		self::$services[ Visibility::getId() ] = function ( Container $container ) {

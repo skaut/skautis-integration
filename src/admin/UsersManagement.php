@@ -8,8 +8,12 @@ use SkautisIntegration\Auth\SkautisGateway;
 use SkautisIntegration\Auth\WpLoginLogout;
 use SkautisIntegration\Auth\SkautisLogin;
 use SkautisIntegration\Auth\ConnectAndDisconnectWpAccount;
+use SkautisIntegration\Repository\Users as UsersRepository;
 use SkautisIntegration\General\Actions;
+use SkautisIntegration\Services\Services;
+use SkautisIntegration\Modules\Register\Register;
 use SkautisIntegration\Utils\Helpers;
+use SkautisIntegration\Utils\RoleChanger;
 
 class UsersManagement {
 
@@ -17,13 +21,17 @@ class UsersManagement {
 	protected $wpLoginLogout;
 	protected $skautisLogin;
 	protected $connectAndDisconnectWpAccount;
+	protected $usersRepository;
+	protected $roleChanger;
 	protected $adminDirUrl = '';
 
-	public function __construct( SkautisGateway $skautisGateway, WpLoginLogout $wpLoginLogout, SkautisLogin $skautisLogin, ConnectAndDisconnectWpAccount $connectAndDisconnectWpAccount ) {
+	public function __construct( SkautisGateway $skautisGateway, WpLoginLogout $wpLoginLogout, SkautisLogin $skautisLogin, ConnectAndDisconnectWpAccount $connectAndDisconnectWpAccount, UsersRepository $usersRepository, RoleChanger $roleChanger ) {
 		$this->skautisGateway                = $skautisGateway;
 		$this->wpLoginLogout                 = $wpLoginLogout;
 		$this->skautisLogin                  = $skautisLogin;
 		$this->connectAndDisconnectWpAccount = $connectAndDisconnectWpAccount;
+		$this->usersRepository               = $usersRepository;
+		$this->roleChanger                   = $roleChanger;
 		$this->adminDirUrl                   = plugin_dir_url( __FILE__ ) . 'public/';
 		$this->checkIfUserChangeSkautisRole();
 		$this->initHooks();
@@ -40,83 +48,10 @@ class UsersManagement {
 		}
 	}
 
-	protected function getUsers( array $currentUserRoles, int $currentUserRole ) {
-		$users     = [];
-		$eventType = '';
-		$eventId   = 0;
-
-		// different procedure for roles associated with events
-		foreach ( $currentUserRoles as $role ) {
-			if ( $role->ID === $currentUserRole && isset( $role->Key ) ) {
-				$words = preg_split( "~(?=[A-Z])~", $role->Key );
-				if ( ! empty( $words ) && isset( $words[1], $words[2] ) && $words[1] === 'Event' ) {
-					$eventType = $words[2];
-
-					$userDetail        = $this->skautisGateway->getSkautisInstance()->UserManagement->UserDetail();
-					$currentUserEvents = $this->skautisGateway->getSkautisInstance()->Events->EventAllPerson( [
-						'ID_Person' => $userDetail->ID_Person
-					] );
-
-					foreach ( $currentUserEvents as $event ) {
-						if ( $event->ID_Group === $role->ID_Group ) {
-							$eventUrl = $this->skautisGateway->getSkautisInstance()->Events->EventDetail( [
-								'ID' => $event->ID
-							] );
-							if ( isset( $eventUrl->UrlDetail ) ) {
-								preg_match( "~ID=(\d+)$~", $eventUrl->UrlDetail, $regResult );
-								if ( $regResult && isset( $regResult[1] ) ) {
-									$eventId = $regResult[1];
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-
-		// different procedure for roles associated with events
-		if ( $eventType && $eventId ) {
-			$methodName   = 'Participant' . $eventType . 'All';
-			$participants = $this->skautisGateway->getSkautisInstance()->Events->$methodName( [
-				'ID_Event' . $eventType => $eventId
-			] );
-
-			if ( is_array( $participants ) ) {
-
-				$users = array_map( function ( $user ) {
-					$newUser = new \stdClass();
-
-					$userAtts = preg_match( "/([^\s]+)\s([^\s]+)(\s\((.*)\))?/", $user->Person, $regResult );
-
-					if ( $regResult && isset( $regResult[1], $regResult[2] ) ) {
-						$newUser->ID          = $user->ID;
-						$newUser->DisplayName = $regResult[2] . ' ' . $regResult[1];
-
-						$newUser->UserName = '';
-						if ( isset( $regResult[4] ) && $regResult[4] ) {
-							$newUser->UserName = $regResult[4];
-						}
-					}
-
-
-					return $newUser;
-				}, $participants );
-
-			}
-
-		}
-
-		if ( empty( $users ) ) {
-			$users = $this->skautisGateway->getSkautisInstance()->UserManagement->userAll();
-		}
-
-		return $users;
-	}
-
 	protected function checkIfUserChangeSkautisRole() {
 		add_action( 'init', function () {
 			if ( isset( $_POST['changeSkautisUserRole'], $_POST['_wpnonce'], $_POST['_wp_http_referer'] ) ) {
-				if ( check_admin_referer( SKAUTISINTEGRATION_NAME . '_usersManagement_changeSkautisUserRole', '_wpnonce' ) ) {
+				if ( check_admin_referer( SKAUTISINTEGRATION_NAME . '_changeSkautisUserRole', '_wpnonce' ) ) {
 					if ( $this->skautisLogin->isUserLoggedInSkautis() ) {
 						$this->skautisLogin->changeUserRoleInSkautis( absint( $_POST['changeSkautisUserRole'] ) );
 					}
@@ -206,62 +141,15 @@ class UsersManagement {
 			return;
 		}
 
-		$currentUserRoles = $this->skautisGateway->getSkautisInstance()->UserManagement->UserRoleAll( [
-			'ID_Login' => $this->skautisGateway->getSkautisInstance()->getUser()->getLoginId(),
-			'ID_User'  => $this->skautisGateway->getSkautisInstance()->UserManagement->UserDetail()->ID
-		] );
-		$currentUserRole  = $this->skautisGateway->getSkautisInstance()->getUser()->getRoleId();
-
-		$result .= '
-<form method="post" action="' . esc_attr( Helpers::getCurrentUrl() ) . '" novalidate="novalidate">
-' . wp_nonce_field( SKAUTISINTEGRATION_NAME . '_usersManagement_changeSkautisUserRole', '_wpnonce', true, false ) . '
-<table class="form-table">
-<tbody>
-<tr>
-<th scope="row" style="width: 13ex;">
-<label for="skautisRoleChanger">' . __( 'Moje role', 'skautis-integration' ) . '</label>
-</th>
-<td>
-<select id="skautisRoleChanger" name="changeSkautisUserRole">';
-		foreach ( (array) $currentUserRoles as $role ) {
-			$result .= '<option value="' . esc_attr( $role->ID ) . '" ' . selected( $role->ID, $currentUserRole, false ) . '>' . esc_html( $role->DisplayName ) . '</option>';
-		}
-		$result .= '
-</select>
-<br/>
-<em>' . __( 'Vybraná role ovlivní, kteří uživatelé se zobrazí v tabulce níže.', 'skautis-integration' ) . '</em>
-</td>
-</tr>
-</tbody>
-</table>
-</form>
-<br/>
-';
+		$result .= $this->roleChanger->getChangeRolesForm();
 
 		$result .= '<table class="skautisUserManagementTable"><thead style="font-weight: bold;"><tr>';
 		$result .= '<th>' . __( 'Jméno a příjmení', 'skautis-integration' ) . '</th><th>' . __( 'Přezdívka', 'skautis-integration' ) . '</th><th>' . __( 'ID uživatele', 'skautis-integration' ) . '</th><th>' . __( 'Propojený uživatel', 'skautis-integration' ) . '</th><th>' . __( 'Propojení', 'skautis-integration' ) . '</th>';
 		$result .= '</tr></thead ><tbody>';
 
-		$connectedWpUsers = new \WP_User_Query( [
-			'meta_query'  => [
-				[
-					'key'     => 'skautisUserId_' . $this->skautisGateway->getEnv(),
-					'type'    => 'numeric',
-					'value'   => 0,
-					'compare' => '>'
-				]
-			],
-			'count_total' => false
-		] );
-		$usersData        = [];
-		foreach ( $users = $connectedWpUsers->get_results() as &$user ) {
-			$usersData[ get_user_meta( $user->ID, 'skautisUserId_' . $this->skautisGateway->getEnv(), true ) ] = [
-				'id'   => $user->ID,
-				'name' => $user->display_name
-			];
-		}
+		$usersData = $this->usersRepository->getConnectedWpUsers();
 
-		$users = $this->getUsers( $currentUserRoles, $currentUserRole );
+		$users = $this->usersRepository->getUsers()['users'];
 
 		foreach ( $users as $user ) {
 			$connected             = '';
@@ -269,19 +157,23 @@ class UsersManagement {
 			$connectDisconnectLink = '';
 			$homeUrl               = get_home_url( null, 'skautis/auth/' . Actions::DISCONNECT_ACTION );
 			$nonce                 = wp_create_nonce( SKAUTISINTEGRATION_NAME . '_disconnectWpAccountFromSkautis' );
-			if ( isset( $usersData[ $user->ID ] ) ) {
-				$userEditLink          = get_edit_user_link( $usersData[ $user->ID ]['id'] );
+			if ( isset( $usersData[ $user->id ] ) ) {
+				$userEditLink          = get_edit_user_link( $usersData[ $user->id ]['id'] );
 				$trBg                  = 'background-color: #d1ffd1;';
-				$connected             = '<a href="' . $userEditLink . '">' . $usersData[ $user->ID ]['name'] . '</a>';
+				$connected             = '<a href="' . $userEditLink . '">' . $usersData[ $user->id ]['name'] . '</a>';
 				$returnUrl             = add_query_arg( SKAUTISINTEGRATION_NAME . '_disconnectWpAccountFromSkautis', $nonce, Helpers::getCurrentUrl() );
 				$returnUrl             = add_query_arg( 'user-edit_php', '', $returnUrl );
-				$returnUrl             = add_query_arg( 'user_id', $usersData[ $user->ID ]['id'], $returnUrl );
+				$returnUrl             = add_query_arg( 'user_id', $usersData[ $user->id ]['id'], $returnUrl );
 				$connectDisconnectLink = add_query_arg( 'ReturnUrl', urlencode( $returnUrl ), $homeUrl );
 				$connectDisconnectLink = '<a href="' . esc_url( $connectDisconnectLink ) . '" class="button">' . __( 'Odpojit', 'skautis-integration' ) . '</a>';
 			} else {
-				$connectDisconnectLink = '<a href="#TB_inline?width=450&height=300&inlineId=connectUserToSkautisModal" class="button thickbox">' . __( 'Propojit', 'skautis-integration' ) . '</a>';
+				$connectDisconnectLink = '<a href="#TB_inline?width=450&height=380&inlineId=connectUserToSkautisModal" class="button thickbox">' . __( 'Propojit', 'skautis-integration' ) . '</a>';
 			}
-			$result .= '<tr style="' . $trBg . '"><td class="username">' . esc_html( $user->DisplayName ) . '</td><td>&nbsp;&nbsp;<span class="nickname">' . esc_html( $user->UserName ) . '</span></td><td>&nbsp;&nbsp;<span class="skautisUserId">' . absint( $user->ID ) . '</span></td><td>' . $connected . '</td><td>' . $connectDisconnectLink . '</td></tr>';
+			$result .= '<tr style="' . $trBg . '">
+<td class="username">
+	<span class="firstName">' . esc_html( $user->firstName ) . '</span> <span class="lastName">' . esc_html( $user->lastName ) . '</span>
+</td>
+<td>&nbsp;&nbsp;<span class="nickName">' . esc_html( $user->nickName ) . '</span></td><td>&nbsp;&nbsp;<span class="skautisUserId">' . esc_html( $user->id ) . '</span></td><td>' . $connected . '</td><td>' . $connectDisconnectLink . '</td></tr>';
 		}
 		$result .= '</tbody></table>';
 
@@ -289,7 +181,7 @@ class UsersManagement {
 
 		?>
 		</div>
-		<div id="connectUserToSkautisModal" class="hidden" style="max-width:400px;">
+		<div id="connectUserToSkautisModal" class="hidden">
 			<div class="content">
 				<h3><?php _e( 'Propojení uživatele', 'skautis-integration' ); ?> <span
 						id="connectUserToSkautisModal_username"></span> <?php _e( 'se skautISem', 'skautis-integration' ); ?>
@@ -298,22 +190,7 @@ class UsersManagement {
 				<select id="connectUserToSkautisModal_select">
 					<option><?php _e( 'Vyberte uživatele...', 'skautis-integration' ); ?></option>
 					<?php
-					$notConnectedWpUsers = new \WP_User_Query( [
-						'meta_query'  => [
-							'relation' => 'OR',
-							[
-								'key'     => 'skautisUserId_' . $this->skautisGateway->getEnv(),
-								'compare' => 'NOT EXISTS'
-							],
-							[
-								'key'     => 'skautisUserId_' . $this->skautisGateway->getEnv(),
-								'value'   => '',
-								'compare' => '='
-							]
-						],
-						'count_total' => false
-					] );
-					foreach ( $notConnectedWpUsers->get_results() as $user ) {
+					foreach ( $this->usersRepository->getConnectableWpUsers() as $user ) {
 						echo '
 						<option value="' . absint( $user->ID ) . '">' . esc_html( $user->data->display_name ) . '</option>
 						';
@@ -325,6 +202,27 @@ class UsersManagement {
 				<div>
 					<em><?php _e( 'Je možné vybrat pouze ty uživatele, kteří ještě nemají propojený účet se skautISem.', 'skautis-integration' ); ?></em>
 				</div>
+				<?php
+				if ( Services::getServicesContainer()['modulesManager']->isModuleActivated( Register::getId() ) ) {
+					?>
+					<hr/>
+					<h3><?php _e( 'Vytvořit nový účet', 'skautis-integration' ); ?></h3>
+					<p>
+						<?php _e( 'Vytvoří nového uživatele ve WordPressu se jménem, příjmením, přezdívkou a emailem ze skautISu. Účet bude automaticky propojen se skautISem.', 'skautis-integration' ); ?>
+					</p>
+					<label>
+						<span><?php _e( 'Vyberte roli nového uživatele', 'skautis-integration' ); ?></span>
+						<select name="role" id="connectUserToSkautisModal_defaultRole">
+							<?php wp_dropdown_roles( get_option( SKAUTISINTEGRATION_NAME . '_modules_register_defaultwpRole' ) ); ?>
+						</select>
+					</label>
+					<p>
+						<a id="connectUserToSkautisModal_registerLink" class="button button-secondary"
+						   href="<?php echo Services::getServicesContainer()[ Register::getId() ]->getWpRegister()->getManuallyRegisterWpUserUrl(); ?>"><?php _e( 'Vytvořit nový účet', 'skautis-integration' ); ?></a>
+					</p>
+					<?php
+				}
+				?>
 			</div>
 		</div>
 		<?php
