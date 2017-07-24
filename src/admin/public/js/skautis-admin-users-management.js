@@ -11,7 +11,7 @@
         initComplete: function () {
             var searchString = getQueryStringFromUrl('skautisSearchUsers', window.location.href);
 
-            if ($dataTable.data().length >= 50) {
+            if ($dataTable.data().length >= 500) {
                 var $input = $('.dataTables_filter input').unbind(),
                     self = this.api(),
                     $searchButton = $('<button>')
