@@ -53,7 +53,7 @@ final class Admin {
 			'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js',
 			[ 'jquery' ],
 			'4.0.3',
-			true
+			false
 		);
 
 		wp_enqueue_style(
