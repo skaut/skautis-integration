@@ -1,4 +1,4 @@
-Seznam toho, jaké služby je potřeba povolit ve skautISu.
+Seznam toho, jaké služby je potřeba povolit ve skautISu. https://test-is.skaut.cz/JunakWebservice/
 
 U každé další verze bude napsané, jen to co potřebuje navíc oproti předchozí verzi.
 
@@ -31,3 +31,7 @@ Verze 1.1
 <b>OU_Function_Type_All</b> - Načíst seznam typů funkcí
 <br>
 <b>OU_Function_All_Person</b> - Načíst seznam funkcí osoby
+
+Verze 1.2
+<b>E_Function_Type_All</b> - Načíst seznam typů funkcí
+<br>
