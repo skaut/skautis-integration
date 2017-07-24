@@ -141,8 +141,17 @@ class Users {
 
 		}
 
+		// standard get all users procedure
 		if ( empty( $users ) ) {
-			$skautisUsers = $this->skautisGateway->getSkautisInstance()->UserManagement->userAll();
+
+			$displayName = '';
+			if ( isset( $_GET['skautisSearchUsers'] ) ) {
+				$displayName = sanitize_text_field( $_GET['skautisSearchUsers'] );
+			}
+
+			$skautisUsers = $this->skautisGateway->getSkautisInstance()->UserManagement->userAll( [
+				'DisplayName' => $displayName
+			] );
 
 			if ( is_array( $skautisUsers ) ) {
 				$users = array_map( function ( $skautisUser ) {

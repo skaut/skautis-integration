@@ -1,12 +1,53 @@
 (function ($) {
     'use strict';
 
-    $('.skautisUserManagementTable').dataTable({
+    var $dataTable = $('.skautisUserManagementTable').DataTable({
         responsive: true,
         language: {
-            url: 'https://cdn.datatables.net/plug-ins/1.10.15/i18n/Czech.json'
+            url: 'https://cdn.datatables.net/plug-ins/1.10.15/i18n/Czech.json',
+            search: "Hledat",
+            clear: "Zrušit"
+        },
+        initComplete: function () {
+            var searchString = getQueryStringFromUrl('skautisSearchUsers', window.location.href);
+
+            if ($dataTable.data().length >= 50) {
+                var $input = $('.dataTables_filter input').unbind(),
+                    self = this.api(),
+                    $searchButton = $('<button>')
+                        .text($dataTable.i18n('search'))
+                        .addClass('button button-secondary')
+                        .click(function () {
+                            window.location.href = updateQueryStringInUrl('skautisSearchUsers', $input.val(), window.location.href);
+                        });
+                $input.on('keyup', function (e) {
+                    if (!e) {
+                        e = window.event;
+                    }
+                    e.preventDefault();
+                    if (e.keyCode === 13) {
+                        $searchButton.trigger('click');
+                    }
+                });
+                $('.dataTables_filter').append($searchButton);
+            }
+
+            if (searchString) {
+                var $clearButton = $('<button>')
+                    .text($dataTable.i18n('clear'))
+                    .addClass('button button-secondary')
+                    .click(function () {
+                        $('.dataTables_filter input').val('');
+                        window.location.href = updateQueryStringInUrl('skautisSearchUsers', '', window.location.href);
+                    });
+                $('.dataTables_filter').append($clearButton);
+
+                $('.dataTables_filter input').val(searchString);
+            }
         }
-    }).on('init.dt', function () {
+    });
+
+    $dataTable.on('init.dt', function () {
         $(this).find('th').each(function () {
             $(this).html('<span>' + $(this).html() + '</span>');
         });
@@ -76,4 +117,11 @@ function updateQueryStringInUrl(key, value, url) {
         else
             return url;
     }
+}
+
+function getQueryStringFromUrl(key, url) {
+    key = key.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + key + "=([^&#]*)"),
+        results = regex.exec(url);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
