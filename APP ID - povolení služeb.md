@@ -6,7 +6,7 @@ Verze 1.0
 <br>
 <b>OrganizationUnit-> PersonDetail</b> - Načíst detail osoby
 <br>
-<b>UserManagement-> UnitAll</b> - Načíst seznam jednotek
+<b>OrganizationUnit-> UnitAll</b> - Načíst seznam jednotek
 <br>
 <b>OrganizationUnit-> MembershipAllPerson</b> - Načíst seznam členství osoby
 <br>
