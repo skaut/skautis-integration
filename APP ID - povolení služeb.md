@@ -33,5 +33,13 @@ Verze 1.1
 <b>OU_Function_All_Person</b> - Načíst seznam funkcí osoby
 
 Verze 1.2
-<b>E_Function_Type_All</b> - Načíst seznam typů funkcí
 <br>
+<b>Events -> EventAllPerson</b> - Načíst seznam akcí osoby
+<br>
+<b>Events -> EventDetail</b> - Načíst detail akce 
+<br>
+<b>Events -> ParticipantGeneralAll</b> - Načíst seznam účastníků obecné akce
+<br>
+<b>Events -> ParticipantCampAll</b> - Načíst seznam účastníků tábora 
+<br>
+<b>Events -> ParticipantEducationAll</b> - Načíst seznam účastníků vzdělávací akce
