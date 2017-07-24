@@ -78,6 +78,11 @@
             "units": {
                 "unitNumber": "číslo jednotky (např. 411.12)",
                 "inUnitWithNumber": "v jednotce, jejíž evidenční číslo"
+            },
+            "events": {
+                "event": "u akce",
+                "placeholder": "Vyberte akci...",
+                "userNotHavePermission": "Nemáte oprávnění k této akci"
             }
         }
     };

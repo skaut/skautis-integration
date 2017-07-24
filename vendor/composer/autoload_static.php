@@ -104,6 +104,7 @@ class ComposerStaticInit31d6c3ead3590a20f90fd963ca2c3625
         'SkautisIntegration\\Rules\\IRule' => __DIR__ . '/../..' . '/src/rules/IRule.php',
         'SkautisIntegration\\Rules\\Revisions' => __DIR__ . '/../..' . '/src/rules/Revisions.php',
         'SkautisIntegration\\Rules\\Rule\\All' => __DIR__ . '/../..' . '/src/rules/Rule/All.php',
+        'SkautisIntegration\\Rules\\Rule\\Event' => __DIR__ . '/../..' . '/src/rules/Rule/Event.php',
         'SkautisIntegration\\Rules\\Rule\\Func' => __DIR__ . '/../..' . '/src/rules/Rule/Func.php',
         'SkautisIntegration\\Rules\\Rule\\Membership' => __DIR__ . '/../..' . '/src/rules/Rule/Membership.php',
         'SkautisIntegration\\Rules\\Rule\\Role' => __DIR__ . '/../..' . '/src/rules/Rule/Role.php',

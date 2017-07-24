@@ -25,6 +25,7 @@ final class RulesManager {
 			Rule\Role::$id       => new Rule\Role( $this->skautisGateway ),
 			Rule\Membership::$id => new Rule\Membership( $this->skautisGateway ),
 			Rule\Func::$id       => new Rule\Func( $this->skautisGateway ),
+			Rule\Event::$id      => new Rule\Event( $this->skautisGateway ),
 			Rule\All::$id        => new Rule\All( $this->skautisGateway )
 		] );
 	}
@@ -109,10 +110,10 @@ final class RulesManager {
 
 	public function getAllRules(): array {
 		$rulesWpQuery = new \WP_Query( [
-			                               'post_type'     => RulesInit::RULES_TYPE_SLUG,
-			                               'nopaging'      => true,
-			                               'no_found_rows' => true
-		                               ] );
+			'post_type'     => RulesInit::RULES_TYPE_SLUG,
+			'nopaging'      => true,
+			'no_found_rows' => true
+		] );
 
 		if ( $rulesWpQuery->have_posts() ) {
 			return $rulesWpQuery->posts;
