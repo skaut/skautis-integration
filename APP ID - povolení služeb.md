@@ -6,17 +6,17 @@ Verze 1.0
 <br>
 <b>OrganizationUnit-> PersonDetail</b> - Načíst detail osoby
 <br>
-<b>OU_Unit_ALL</b> - Načíst seznam jednotek
+<b>UserManagement-> UnitAll</b> - Načíst seznam jednotek
 <br>
-<b>OrganizationUnit->MembershipAllPerson</b> - Načíst seznam členství osoby
+<b>OrganizationUnit-> MembershipAllPerson</b> - Načíst seznam členství osoby
 <br>
 <b>OrganizationUnit-> UnitDetail</b> - Načíst detail jednotky
 <br>
 <b>OrganizationUnit-> MembershipTypeAll</b> - Načíst seznam typů členství 
 <br>
-<b>UM_Login_UPDATE</b> - Přihlášení na jinou jednotku a roli
+<b>UserManagement-> LoginUpdate</b> - Přihlášení uživatele na jinou roli
 <br>
-<b>UM_Role_DETAIL</b> - Načíst detail role
+<b>UserManagement-> RoleDetail</b> - Načíst detail role
 <br>
 <b>UserManagement-> UserRoleAll</b> - Načíst seznam rolí přiřazených uživateli
 <br>
@@ -24,13 +24,13 @@ Verze 1.0
 <br>
 <b>UserManagement-> UserDetail</b> - Načíst detail uživatele
 <br>
-<b>UM_Role_ALL</b> - Načíst seznam rolí
+<b>UserManagement-> RoleAll</b> - Načíst seznam rolí
 
 Verze 1.1
 <br>
-<b>OU_Function_Type_All</b> - Načíst seznam typů funkcí
+<b>OrganizationUnit-> FunctionTypeAll</b> - Načíst seznam typů funkcí
 <br>
-<b>OU_Function_All_Person</b> - Načíst seznam funkcí osoby
+<b>OrganizationUnit-> FunctionAllPerson</b> - Načíst seznam funkcí osoby
 
 Verze 1.2
 <br>
