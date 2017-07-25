@@ -108,39 +108,49 @@ class Users {
 
 		// different procedure for roles associated with events
 		if ( $eventType && $eventId ) {
-			if ( in_array( $eventType, [ 'General', 'Camp', 'Education' ] ) ) {
-
+			if ( $eventType === 'Congress' ) {
+				$participants = $this->skautisGateway->getSkautisInstance()->Events->ParticipantAllPerson( [
+					'ID_Event' . $eventType => $eventId
+				] );
+				if ( ! is_array( $participants ) || count( $participants ) === 0 ) {
+					$participants = $this->skautisGateway->getSkautisInstance()->Events->ParticipantAllUstredi( [
+						'ID_Event' . $eventType => $eventId
+					] );
+				}
+			} else {
 				$methodName   = 'Participant' . $eventType . 'All';
 				$participants = $this->skautisGateway->getSkautisInstance()->Events->$methodName( [
 					'ID_Event' . $eventType => $eventId
 				] );
+			}
 
-				if ( is_array( $participants ) ) {
-					$users = array_map( function ( $participant ) {
-						$user = new \stdClass();
+			if ( is_array( $participants ) ) {
+				$users = array_map( function ( $participant ) {
+					$user = new \stdClass();
 
-						preg_match( "/([^\s]+)\s([^\s]+)(\s\((.*)\))?/", $participant->Person, $regResult );
+					$user->id        = $participant->ID;
+					$user->personId  = $participant->ID_Person;
+					$user->firstName = $participant->Person;
+					$user->lastName  = '';
+					$user->nickName  = '';
 
-						if ( $regResult && isset( $regResult[1], $regResult[2] ) ) {
-							$user->id        = $participant->ID;
-							$user->personId  = $participant->ID_Person;
-							$user->firstName = $regResult[2];
-							$user->lastName  = $regResult[1];
-							$user->nickName  = '';
-							if ( isset( $regResult[4] ) && $regResult[4] ) {
-								$user->nickName = $regResult[4];
-							}
+					preg_match( "~([^\s]+)\s([^\s]+)(\s\((.*)\))~", $participant->Person, $regResult );
+
+					if ( $regResult && isset( $regResult[1], $regResult[2] ) ) {
+						$user->firstName = $regResult[2];
+						$user->lastName  = $regResult[1];
+						if ( isset( $regResult[4] ) && $regResult[4] ) {
+							$user->nickName = $regResult[4];
 						}
+					}
 
-						$emails = preg_split( "/(?=\,)/x", $participant->PersonEmail );
-						if ( ! empty( $emails ) && isset( $emails[0] ) ) {
-							$user->email = $emails[0];
-						}
+					$emails = preg_split( "/(?=\,)/x", $participant->PersonEmail );
+					if ( ! empty( $emails ) && isset( $emails[0] ) ) {
+						$user->email = $emails[0];
+					}
 
-						return $user;
-					}, $participants );
-				}
-
+					return $user;
+				}, $participants );
 			}
 		}
 
@@ -164,12 +174,17 @@ class Users {
 					$user->personId  = $skautisUser->ID_Person;
 					$user->firstName = $skautisUser->DisplayName;
 					$user->lastName  = '';
-					preg_match( "/([^\s]+)\s([^\s]+)/", $skautisUser->DisplayName, $regResult );
+					$user->nickName  = '';
+
+					preg_match( "~([^\s]+)\s([^\s]+)(\s\((.*)\))~", $skautisUser->DisplayName, $regResult );
+
 					if ( $regResult && isset( $regResult[1], $regResult[2] ) ) {
 						$user->firstName = $regResult[2];
 						$user->lastName  = $regResult[1];
 					}
-					$user->nickName = $skautisUser->UserName;
+					if ( isset( $regResult[4] ) && $regResult[4] ) {
+						$user->nickName = $regResult[4];
+					}
 
 					$user->email = '';
 
