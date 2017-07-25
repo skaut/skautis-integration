@@ -35,6 +35,11 @@ Plugin po aktivaci bude vyžadovat APP ID, bez toho nebude plugin vůbec fungova
 
 
 == Changelog ==
+= 1.x =
+* možnost vytvářet nové uživatele
+* nové pravidlo: účastník akce
+* lepší vyhledávání na stránce "Správa uživatelů"
+
 = 1.1.2 =
 * opravy textů v pluginu
 
