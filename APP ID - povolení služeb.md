@@ -43,3 +43,5 @@ Verze 1.2
 <b>Events -> ParticipantCampAll</b> - Načíst seznam účastníků tábora 
 <br>
 <b>Events -> ParticipantEducationAll</b> - Načíst seznam účastníků vzdělávací akce
+<br>
+<b>Events -> ParticipantAllPerson</b> - Načíst seznam osob, které zúčastní sněmu 
