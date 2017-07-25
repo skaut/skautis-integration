@@ -144,7 +144,7 @@ class Users {
 						}
 					}
 
-					$emails = preg_split( "/(?=\,)/x", $participant->PersonEmail );
+					$emails = preg_split( "~(?=\,)~x", $participant->PersonEmail );
 					if ( ! empty( $emails ) && isset( $emails[0] ) ) {
 						$user->email = $emails[0];
 					}

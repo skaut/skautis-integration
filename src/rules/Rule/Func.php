@@ -110,7 +110,7 @@ class Func implements IRule {
 	public function isRulePassed( string $funcsOperator, $data ): bool {
 		// parse and prepare data from rules UI
 		$output = [];
-		preg_match_all( "/[^~]+/", $data, $output );
+		preg_match_all( "|[^~]+|", $data, $output );
 		if ( isset( $output[0], $output[0][0], $output[0][1], $output[0][2] ) ) {
 			list( $funcs, $unitOperator, $unitId ) = $output[0];
 			$funcs  = explode( ',', $funcs );
