@@ -108,7 +108,7 @@ class Users {
 
 		// different procedure for roles associated with events
 		if ( $eventType && $eventId ) {
-			if ( in_array( $eventType, [ 'general', 'camp', 'education' ] ) ) {
+			if ( in_array( $eventType, [ 'General', 'Camp', 'Education' ] ) ) {
 
 				$methodName   = 'Participant' . $eventType . 'All';
 				$participants = $this->skautisGateway->getSkautisInstance()->Events->$methodName( [
