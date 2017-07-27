@@ -109,14 +109,15 @@ class Users {
 		// different procedure for roles associated with events
 		if ( $eventType && $eventId ) {
 			if ( $eventType === 'Congress' ) {
-				$participants = $this->skautisGateway->getSkautisInstance()->Events->ParticipantAllPerson( [
+				/*$participants = $this->skautisGateway->getSkautisInstance()->Events->ParticipantAllPerson( [
 					'ID_Event' . $eventType => $eventId
 				] );
 				if ( ! is_array( $participants ) || count( $participants ) === 0 ) {
 					$participants = $this->skautisGateway->getSkautisInstance()->Events->ParticipantAllUstredi( [
 						'ID_Event' . $eventType => $eventId
 					] );
-				}
+				}*/
+				$participants = null;
 			} else {
 				$methodName   = 'Participant' . $eventType . 'All';
 				$participants = $this->skautisGateway->getSkautisInstance()->Events->$methodName( [
