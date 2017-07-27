@@ -35,9 +35,6 @@ Plugin po aktivaci bude vyžadovat APP ID, bez toho nebude plugin vůbec fungova
 
 
 == Changelog ==
-= 1.x =
-* nové pravidlo: účastník akce
-
 = 1.1.3 =
 * možnost vytvářet manuálně nové uživatele
 * lepší vyhledávání na stránce "Správa uživatelů" (řeší omezení limitu 500 uživatelů naráz ze skautISu)
