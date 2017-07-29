@@ -211,7 +211,7 @@ class UsersManagement {
 						<?php _e( 'Vytvoří nového uživatele ve WordPressu se jménem, příjmením, přezdívkou a emailem ze skautISu. Účet bude automaticky propojen se skautISem.', 'skautis-integration' ); ?>
 					</p>
 					<label>
-						<span><?php _e( 'Vyberte roli nového uživatele', 'skautis-integration' ); ?></span>
+						<span><?php _e( 'Vyberte úroveň nového uživatele', 'skautis-integration' ); ?></span>
 						<select name="role" id="connectUserToSkautisModal_defaultRole">
 							<?php wp_dropdown_roles( get_option( SKAUTISINTEGRATION_NAME . '_modules_register_defaultwpRole' ) ); ?>
 						</select>
