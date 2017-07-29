@@ -161,7 +161,7 @@ final class Register implements IModule {
 			wp_safe_redirect( esc_url_raw( $_GET['ReturnUrl'] ), 302 );
 			exit;
 		} else {
-			wp_die( __( 'Uživatele se nepodařilo zaregistrovat', 'skautis-integration' ), __( 'Cbyba při registraci uživatele', 'skautis-integration' ) );
+			wp_die( __( 'Uživatele se nepodařilo zaregistrovat', 'skautis-integration' ), __( 'Chyba při registraci uživatele', 'skautis-integration' ) );
 		}
 	}
 
