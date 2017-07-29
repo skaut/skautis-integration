@@ -217,7 +217,7 @@ class UsersManagement {
 						</select>
 					</label>
 					<p>
-						<a id="connectUserToSkautisModal_registerLink" class="button button-secondary"
+						<a id="connectUserToSkautisModal_registerLink" class="button button-primary"
 						   href="<?php echo Services::getServicesContainer()[ Register::getId() ]->getWpRegister()->getManuallyRegisterWpUserUrl(); ?>"><?php _e( 'Vytvořit nový účet', 'skautis-integration' ); ?></a>
 					</p>
 					<?php
