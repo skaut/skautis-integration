@@ -191,8 +191,12 @@ class UsersManagement {
 					<option><?php _e( 'Vyberte uživatele...', 'skautis-integration' ); ?></option>
 					<?php
 					foreach ( $this->usersRepository->getConnectableWpUsers() as $user ) {
+						$userName = $user->data->display_name;
+						if ( ! $userName ) {
+							$userName = $user->data->user_login;
+						}
 						echo '
-						<option value="' . absint( $user->ID ) . '">' . esc_html( $user->data->display_name ) . '</option>
+						<option value="' . absint( $user->ID ) . '">' . esc_html( $userName ) . '</option>
 						';
 					}
 					?>

@@ -38,7 +38,7 @@ final class Frontend {
 		return '
 		<div class="wp-core-ui">
 			<p style="margin-bottom: 0.3em;">
-				<a class="button button-primary button-hero pic-lilie"
+				<a class="button button-primary button-hero button-skautis"
 				   href="' . $this->wpLoginLogout->getLoginUrl( $loginUrlArgs ) . '">' . __( 'Log in with skautIS', 'skautis-integration' ) . '</a>
 			</p>
 		</div>

@@ -371,7 +371,7 @@ final class Settings {
 if ( ! isUserLoggedInSkautis() ) {
 ?>
 	<div class="wp-core-ui" style="text-align: center;">
-	<a class="button button-primary button-hero pic-lilie" href="<?php echo getSkautisRegisterUrl(); ?>">
+	<a class="button button-primary button-hero button-skautis" href="<?php echo getSkautisRegisterUrl(); ?>">
 		Přihlásit se přes skautIS
 	</a>
 	</div>

@@ -1,4 +1,4 @@
-.pic-lilie {
+.button-skautis {
 	padding-left: 59px !important;
 	background-image: url('../img/lilie.png') !important;
 	background-position: 13px center !important;
@@ -6,6 +6,6 @@
 	background-size: 32px auto !important;
 }
 
-.login .pic-lilie {
+.login .button-skautis {
 	padding-left: 40px !important;
 }

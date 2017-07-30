@@ -28,7 +28,7 @@ final class LoginForm {
 	public function loginLinkInLoginForm() {
 		?>
 		<p style="margin-bottom: 0.3em;">
-			<a class="button button-primary button-hero pic-lilie" style="float: none; width: 100%; text-align: center;"
+			<a class="button button-primary button-hero button-skautis" style="float: none; width: 100%; text-align: center;"
 			   href="<?php echo $this->wpRegister->getRegisterUrl(); ?>"><?php _e( 'Log in with skautIS', 'skautis-integration' ); ?></a>
 			<br/>
 		</p>
@@ -39,7 +39,7 @@ final class LoginForm {
 	public function loginLinkInLoginFormReturn( string $html ): string {
 		return '
 		<p style="margin-bottom: 0.3em;">
-			<a class="button button-primary button-hero pic-lilie" style="float: none; width: 100%; text-align: center;"
+			<a class="button button-primary button-hero button-skautis" style="float: none; width: 100%; text-align: center;"
 			   href="' . $this->wpRegister->getRegisterUrl() . '">' . __( 'Log in with skautIS', 'skautis-integration' ) . '</a>
 			   <br/>
 		</p>

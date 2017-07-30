@@ -4,7 +4,7 @@
 if ( ! isUserLoggedInSkautis() ) {
 	?>
 	<div class="wp-core-ui" style="text-align: center;">
-		<a class="button button-primary button-hero pic-lilie" href="<?php echo getSkautisRegisterUrl(); ?>">
+		<a class="button button-primary button-hero button-skautis" href="<?php echo getSkautisRegisterUrl(); ?>">
 			<?php _e( 'Log in with skautIS', 'skautis-integration' ); ?>
 		</a>
 	</div>

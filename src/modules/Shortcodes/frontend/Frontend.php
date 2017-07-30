@@ -23,6 +23,7 @@ final class Frontend {
 	}
 
 	private function initHooks() {
+		add_action( 'wp_enqueue_scripts', [ $this, 'enqueueStyles' ] );
 		add_shortcode( 'skautis', [ $this, 'processShortcode' ] );
 	}
 
@@ -35,7 +36,7 @@ final class Frontend {
 		return '
 		<div class="wp-core-ui">
 			<p style="margin-bottom: 0.3em;">
-				<a class="button button-primary button-hero pic-lilie"
+				<a class="button button-primary button-hero button-skautis"
 				   href="' . $this->wpLoginLogout->getLoginUrl( $loginUrlArgs ) . '">' . __( 'Log in with skautIS', 'skautis-integration' ) . '</a>
 			</p>
 		</div>
@@ -49,6 +50,11 @@ final class Frontend {
 
 	private function getUnauthorizedMessage(): string {
 		return '<p>' . __( 'You do not have permission to access this content', 'skautis-integration' ) . '</p>';
+	}
+
+	public function enqueueStyles() {
+		wp_enqueue_style( 'buttons' );
+		wp_enqueue_style( SKAUTISINTEGRATION_NAME, SKAUTISINTEGRATION_URL . 'src/frontend/public/css/skautis-frontend.css', [], SKAUTISINTEGRATION_VERSION, 'all' );
 	}
 
 	public function processShortcode( array $atts = [], string $content = '' ): string {
