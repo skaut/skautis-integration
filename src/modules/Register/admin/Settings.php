@@ -75,7 +75,7 @@ final class Settings {
 		);
 
 		add_settings_field(
-			SKAUTISINTEGRATION_NAME . '_modules_register_emailNotificationsAfterNewUserRegister',
+			SKAUTISINTEGRATION_NAME . '_modules_register_notifications',
 			__( 'Po úspěšné registraci uživatele poslat emaily:', 'skautis-integration' ),
 			[ $this, 'fieldNewUserNotifications' ],
 			SKAUTISINTEGRATION_NAME . '_modules_register',
@@ -95,7 +95,7 @@ final class Settings {
 			'show_in_rest'      => false,
 			'sanitize_callback' => 'sanitize_text_field'
 		] );
-		register_setting( SKAUTISINTEGRATION_NAME . '_modules_register', SKAUTISINTEGRATION_NAME . '_modules_register_emailNotificationsAfterNewUserRegister', [
+		register_setting( SKAUTISINTEGRATION_NAME . '_modules_register', SKAUTISINTEGRATION_NAME . '_modules_register_notifications', [
 			'type'              => 'string',
 			'show_in_rest'      => false,
 			'sanitize_callback' => 'sanitize_text_field'
@@ -114,32 +114,32 @@ final class Settings {
 	}
 
 	public function fieldNewUserNotifications() {
-		$notificationOption = get_option( SKAUTISINTEGRATION_NAME . '_modules_register_emailNotificationsAfterNewUserRegister' );
+		$notificationOption = get_option( SKAUTISINTEGRATION_NAME . '_modules_register_notifications', 'none' );
 		?>
 		<label>
 			<input type="radio"
-			       name="<?php echo SKAUTISINTEGRATION_NAME; ?>_modules_register_emailNotificationsAfterNewUserRegister"
+			       name="<?php echo SKAUTISINTEGRATION_NAME; ?>_modules_register_notifications"
 			       value="none"<?php checked( 'none' === $notificationOption ); ?> />
 			<span><?php _e( 'Nikomu', 'skautis-integration' ); ?></span>
 		</label>
 		<br/>
 		<label>
 			<input type="radio"
-			       name="<?php echo SKAUTISINTEGRATION_NAME; ?>_modules_register_emailNotificationsAfterNewUserRegister"
+			       name="<?php echo SKAUTISINTEGRATION_NAME; ?>_modules_register_notifications"
 			       value="admin"<?php checked( 'admin' === $notificationOption ); ?> />
 			<span><?php _e( 'Administrátorovi (info o registraci nového uživatele)', 'skautis-integration' ); ?></span>
 		</label>
 		<br/>
 		<label>
 			<input type="radio"
-			       name="<?php echo SKAUTISINTEGRATION_NAME; ?>_modules_register_emailNotificationsAfterNewUserRegister"
+			       name="<?php echo SKAUTISINTEGRATION_NAME; ?>_modules_register_notifications"
 			       value="user"<?php checked( 'user' === $notificationOption ); ?> />
 			<span><?php _e( 'Uživateli (přístupové údaje)', 'skautis-integration' ); ?></span>
 		</label>
 		<br/>
 		<label>
 			<input type="radio"
-			       name="<?php echo SKAUTISINTEGRATION_NAME; ?>_modules_register_emailNotificationsAfterNewUserRegister"
+			       name="<?php echo SKAUTISINTEGRATION_NAME; ?>_modules_register_notifications"
 			       value="both"<?php checked( 'both' === $notificationOption ); ?> />
 			<span><?php _e( 'Administrátorovi i uživateli', 'skautis-integration' ); ?></span>
 		</label>

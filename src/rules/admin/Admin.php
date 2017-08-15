@@ -145,9 +145,9 @@ final class Admin {
 
 		wp_enqueue_style(
 			SKAUTISINTEGRATION_NAME . '_query-builder-main',
-			'https://unpkg.com/jQuery-QueryBuilder@2.4.3/dist/css/query-builder.default.min.css',
+			'https://cdn.jsdelivr.net/npm/jQuery-QueryBuilder@2.4.4/dist/css/query-builder.default.min.css',
 			[],
-			'2.4.3',
+			false,
 			'all'
 		);
 	}
@@ -187,9 +187,9 @@ final class Admin {
 
 		wp_enqueue_script(
 			SKAUTISINTEGRATION_NAME . '_query-builder',
-			'https://unpkg.com/jQuery-QueryBuilder@2.4.3/dist/js/query-builder.standalone.min.js',
+			'https://cdn.jsdelivr.net/npm/jQuery-QueryBuilder@2.4.4/dist/js/query-builder.standalone.min.js',
 			[ 'jquery' ],
-			'2.4.3',
+			false,
 			false
 		);
 

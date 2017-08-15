@@ -150,6 +150,8 @@ class Users {
 						$user->email = $emails[0];
 					}
 
+					$user->UserName = $user->email;
+
 					return $user;
 				}, $participants );
 			}
@@ -172,6 +174,7 @@ class Users {
 					$user = new \stdClass();
 
 					$user->id        = $skautisUser->ID;
+					$user->UserName  = $skautisUser->UserName;
 					$user->personId  = $skautisUser->ID_Person;
 					$user->firstName = $skautisUser->DisplayName;
 					$user->lastName  = '';
@@ -210,6 +213,7 @@ class Users {
 				if ( $user->id === $skautisUserId ) {
 					$userDetail = [
 						'id'        => $skautisUserId,
+						'UserName'  => $user->UserName,
 						'personId'  => $user->personId,
 						'email'     => $user->email,
 						'firstName' => $user->firstName,
@@ -227,6 +231,7 @@ class Users {
 
 					$userDetail = [
 						'id'        => $skautisUserId,
+						'UserName'  => $user->UserName,
 						'personId'  => $user->personId,
 						'email'     => $personDetail->Email,
 						'firstName' => $user->firstName,

@@ -30,7 +30,7 @@ final class ConnectAndDisconnectWpAccount {
 	}
 
 	public function getConnectAndDisconnectButton( int $wpUserId ): string {
-		$skautisUserId = get_the_author_meta( 'skautisUserId_' . $this->skautisGateway->getEnv(), $wpUserId );
+		$skautisUserId = get_user_meta( $wpUserId, 'skautisUserId_' . $this->skautisGateway->getEnv(), true );
 		if ( get_current_screen()->id == 'profile' ) {
 			if ( ! $skautisUserId ) {
 				$returnUrl = add_query_arg( SKAUTISINTEGRATION_NAME . '_connectWpAccountWithSkautis', wp_create_nonce( SKAUTISINTEGRATION_NAME . '_connectWpAccountWithSkautis' ), Helpers::getCurrentUrl() );

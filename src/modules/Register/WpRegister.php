@@ -21,10 +21,7 @@ final class WpRegister {
 	private function resolveNotificationsAndRegisterUserToWp( string $userLogin, string $userEmail ): int {
 		remove_action( 'register_new_user', 'wp_send_new_user_notifications' );
 		add_action( 'register_new_user', function ( $userId ) {
-			$notify = apply_filters( SKAUTISINTEGRATION_NAME . '_modules_register_newUserNotifications', get_option( SKAUTISINTEGRATION_NAME . '_modules_register_emailNotificationsAfterNewUserRegister' ) );
-			if ( ! $notify ) {
-				$notify = 'none';
-			}
+			$notify = apply_filters( SKAUTISINTEGRATION_NAME . '_modules_register_newUserNotifications', get_option( SKAUTISINTEGRATION_NAME . '_modules_register_notifications', 'none' ) );
 			if ( $notify != 'none' ) {
 				global $wp_locale_switcher;
 				if ( ! $wp_locale_switcher ) {
@@ -35,7 +32,9 @@ final class WpRegister {
 			}
 		} );
 
+		add_filter( 'sanitize_user', [ $this, 'sanitizeUsername' ], 10, 3 );
 		$userId = register_new_user( $userLogin, $userEmail );
+		remove_filter( 'sanitize_user', [ $this, 'sanitizeUsername' ], 10 );
 
 		add_action( 'register_new_user', 'wp_send_new_user_notifications' );
 
@@ -57,6 +56,7 @@ final class WpRegister {
 
 		$user = [
 			'id'        => $skautisUser->ID,
+			'UserName'  => $skautisUser->UserName,
 			'personId'  => $skautisUser->ID_Person,
 			'email'     => $skautisUserDetail->Email,
 			'firstName' => $skautisUserDetail->FirstName,
@@ -89,7 +89,9 @@ final class WpRegister {
 				return true;
 			}
 
-			$userId = $this->resolveNotificationsAndRegisterUserToWp( $user['email'], $user['email'] );
+			$username = mb_strcut( $user['UserName'], 0, 60 );
+
+			$userId = $this->resolveNotificationsAndRegisterUserToWp( $username, $user['email'] );
 
 			if ( $userId === 0 ) {
 				return false;
@@ -212,6 +214,30 @@ final class WpRegister {
 		}, 15 );
 
 		return $this->processWpUserRegistration( $userDetail, $wpRole );
+	}
+
+	public function sanitizeUsername( string $username, string $rawUsername, bool $strict ): string {
+		$username = wp_strip_all_tags( $rawUsername );
+
+		//$username = remove_accents ($username);
+
+		// Kill octets
+		$username = preg_replace( '|%([a-fA-F0-9][a-fA-F0-9])|', '', $username );
+
+		//Kill entities
+		$username = preg_replace( '/&.+?;/', '', $username );
+
+		// If strict, reduce to ASCII, Latin and Cyrillic characters for max portability.
+		if ( $strict ) {
+			$username = preg_replace( '|[^a-z\p{Latin}\p{Cyrillic}0-9 _.\-@]|iu', '', $username );
+		}
+
+		$username = trim( $username );
+
+		// Consolidate contiguous whitespace
+		$username = preg_replace( '|\s+|', ' ', $username );
+
+		return $username;
 	}
 
 }
