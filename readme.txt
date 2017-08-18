@@ -41,8 +41,8 @@ Plugin po aktivaci bude vyžadovat APP ID, bez toho nebude plugin vůbec fungova
 = 1.1.4 =
 * oprava vytváření uživatelského jména při registraci
 * oprava propojování účtů
-* oprava načítání queri editoru
-* oprava ukládání nastavení na PHP 7.x
+* oprava načítání query editoru
+* oprava ukládání nastavení na PHP 7.0.x
 
 = 1.1.3 =
 * možnost vytvářet manuálně nové uživatele
