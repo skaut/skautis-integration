@@ -104,10 +104,6 @@ class Membership implements IRule {
 					continue;
 				}
 
-				if ( strval( $userDetail->ID_Person ) == '99230' ) {
-					error_log( 'Jerry: ' . print_r( $userMembership, true ) );
-				}
-
 				if ( isset( $userMembership->ValidTo ) && gettype( $userMembership->ValidTo ) !== 'NULL' ) {
 					continue;
 				}
