@@ -134,12 +134,6 @@ final class WpRegister {
 			return 0;
 		}
 
-		if ( ! isset( $_GET['ReturnUrl'] ) || ! $_GET['ReturnUrl'] ) {
-			return 0;
-		}
-
-		Helpers::validateNonceFromUrl( $_GET['ReturnUrl'], SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis' );
-
 		// check for skautIS User ID collision with existing users
 		$usersWpQuery = new \WP_User_Query( [
 			'number'     => 1,

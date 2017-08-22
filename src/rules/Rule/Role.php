@@ -77,19 +77,27 @@ class Role implements IRule {
 		if ( $userRoles === null ) {
 			$userRoles = $this->skautisGateway->getSkautisInstance()->UserManagement->UserRoleAll( [
 				'ID_Login' => $this->skautisGateway->getSkautisInstance()->getUser()->getLoginId(),
-				'ID_User'  => $this->skautisGateway->getSkautisInstance()->UserManagement->UserDetail()->ID
+				'ID_User'  => $this->skautisGateway->getSkautisInstance()->UserManagement->UserDetail()->ID,
+				'IsActive' => true
 			] );
 
 			$result = [];
 			foreach ( $userRoles as $userRole ) {
 
-				if ( $unitDetail = $this->skautisGateway->getSkautisInstance()->OrganizationUnit->UnitDetail( [
-					'ID' => $userRole->ID_Unit
-				] ) ) {
-					if ( ! isset( $result[ $userRole->ID_Role ] ) ) {
-						$result[ $userRole->ID_Role ] = [];
+				try {
+					$unitDetail = $this->skautisGateway->getSkautisInstance()->OrganizationUnit->UnitDetail( [
+						'ID' => $userRole->ID_Unit
+					] );
+
+					if ( $unitDetail ) {
+						if ( ! isset( $result[ $userRole->ID_Role ] ) ) {
+							$result[ $userRole->ID_Role ] = [];
+						}
+						$result[ $userRole->ID_Role ][] = $unitDetail->RegistrationNumber;
 					}
-					$result[ $userRole->ID_Role ][] = $unitDetail->RegistrationNumber;
+				} catch ( \Exception $e ) {
+					error_log( $e->getMessage() );
+					continue;
 				}
 
 			}

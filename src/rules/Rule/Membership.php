@@ -78,8 +78,9 @@ class Membership implements IRule {
 
 			$userDetail      = $this->skautisGateway->getSkautisInstance()->UserManagement->UserDetail();
 			$userMemberships = $this->skautisGateway->getSkautisInstance()->OrganizationUnit->MembershipAllPerson( [
-				'ID_Person' => $userDetail->ID_Person,
-				'isValid'   => true
+				'ID_Person'   => $userDetail->ID_Person,
+				'ShowHistory' => false,
+				'isValid'     => true
 			] );
 
 			if ( ! isset( $userMemberships->MembershipAllOutput ) ) {
@@ -87,11 +88,8 @@ class Membership implements IRule {
 			}
 
 			if ( is_object( $userMemberships->MembershipAllOutput ) && isset( $userMemberships->MembershipAllOutput->ID_MembershipType ) ) {
-				$dataObject                           = new \stdClass();
-				$dataObject->ID_MembershipType        = $userMemberships->MembershipAllOutput->ID_MembershipType;
-				$dataObject->ID_Unit                  = $userMemberships->MembershipAllOutput->ID_Unit;
 				$userMemberships->MembershipAllOutput = [
-					$dataObject
+					$userMemberships->MembershipAllOutput
 				];
 			}
 
@@ -103,7 +101,15 @@ class Membership implements IRule {
 			$result = [];
 			foreach ( $userMemberships->MembershipAllOutput as $userMembership ) {
 				if ( ! is_object( $userMembership ) ) {
-					return [];
+					continue;
+				}
+
+				if ( strval( $userDetail->ID_Person ) == '99230' ) {
+					error_log( 'Jerry: ' . print_r( $userMembership, true ) );
+				}
+
+				if ( isset( $userMembership->ValidTo ) && gettype( $userMembership->ValidTo ) !== 'NULL' ) {
+					continue;
 				}
 
 				if ( $unitDetail = $this->skautisGateway->getSkautisInstance()->OrganizationUnit->UnitDetail( [
