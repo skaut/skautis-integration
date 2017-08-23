@@ -21,8 +21,6 @@ final class WpLoginLogout {
 
 		if ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
 
-			Helpers::validateNonceFromUrl( $_GET['ReturnUrl'], SKAUTISINTEGRATION_NAME . '_loginToWpBySkautis' );
-
 			$usersWpQuery = new \WP_User_Query( [
 				                                    'number'     => 1,
 				                                    'meta_query' => [
@@ -97,7 +95,6 @@ final class WpLoginLogout {
 			$returnUrl = admin_url();
 		}
 
-		$returnUrl = add_query_arg( SKAUTISINTEGRATION_NAME . '_loginToWpBySkautis', wp_create_nonce( SKAUTISINTEGRATION_NAME . '_loginToWpBySkautis' ), $returnUrl );
 		$url       = add_query_arg( 'ReturnUrl', urlencode( $returnUrl ), get_home_url( null, 'skautis/auth/' . Actions::LOGIN_ACTION ) );
 
 		return esc_url( $url );

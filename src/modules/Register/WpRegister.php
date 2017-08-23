@@ -164,7 +164,6 @@ final class WpRegister {
 		}
 
 		$returnUrl = remove_query_arg( 'loggedout', urldecode( $returnUrl ) );
-		$returnUrl = remove_query_arg( SKAUTISINTEGRATION_NAME . '_loginToWpBySkautis', urldecode( $returnUrl ) );
 
 		$returnUrl = add_query_arg( SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis', wp_create_nonce( SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis' ), $returnUrl );
 		$url       = add_query_arg( 'ReturnUrl', urlencode( $returnUrl ), get_home_url( null, 'skautis/auth/' . Register::REGISTER_ACTION ) );
