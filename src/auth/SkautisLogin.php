@@ -47,23 +47,27 @@ final class SkautisLogin {
 	}
 
 	public function login() {
-		if ( isset( $_GET['ReturnUrl'] ) && strpos( $_GET['ReturnUrl'], 'logoutFromSkautis' ) !== false ) {
+		if ( isset( $_GET['redirect_to'] ) && $_GET['redirect_to'] ) {
+			$returnUrl = $_GET['redirect_to'];
+		} else if ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
+			$returnUrl = $_GET['ReturnUrl'];
+		} else {
+			$returnUrl = Helpers::getCurrentUrl();
+		}
+
+		if ( strpos( $returnUrl, 'logoutFromSkautis' ) !== false ) {
 			$this->skautisGateway->logout();
+			$returnUrl = remove_query_arg( 'logoutFromSkautis', $returnUrl );
 		}
 
 		if ( ! $this->isUserLoggedInSkautis() ) {
-			if ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
-				$returnUrl = $_GET['ReturnUrl'];
-			} else {
-				$returnUrl = Helpers::getCurrentUrl();
-			}
 			wp_redirect( esc_url_raw( $this->skautisGateway->getSkautisInstance()->getLoginUrl( $returnUrl ) ), 302 );
 			exit;
 		}
 
-		if ( isset( $_GET['ReturnUrl'] ) && strpos( $_GET['ReturnUrl'], 'noWpLogin' ) !== false ) {
+		if ( strpos( $returnUrl, 'noWpLogin' ) !== false ) {
 			$this->wpLoginLogout->tryToLoginToWp();
-			wp_safe_redirect( esc_url_raw( $_GET['ReturnUrl'] ), 302 );
+			wp_safe_redirect( esc_url_raw( $returnUrl ), 302 );
 			exit;
 		} else {
 			$this->wpLoginLogout->loginToWp();

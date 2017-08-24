@@ -24,7 +24,7 @@ final class ConnectAndDisconnectWpAccount {
 
 			update_user_meta( $wpUserId, 'skautisUserId_' . $this->skautisGateway->getEnv(), absint( $skautisUserId ) );
 
-			wp_safe_redirect( esc_url_raw( $_GET['ReturnUrl'] ) );
+			wp_safe_redirect( esc_url_raw( $_GET['ReturnUrl'] ), 302 );
 			exit;
 		}
 	}
@@ -135,7 +135,7 @@ final class ConnectAndDisconnectWpAccount {
 			wp_safe_redirect( esc_url_raw( $_GET['ReturnUrl'] ), 302 );
 			exit;
 		} else {
-			wp_safe_redirect( get_home_url() );
+			wp_safe_redirect( get_home_url(), 302 );
 			exit;
 		}
 

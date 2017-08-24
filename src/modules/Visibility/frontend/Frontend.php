@@ -157,9 +157,13 @@ final class Frontend {
 					$visibilityMode = '';
 
 					if ( $post->post_parent > 0 ) {
-						$topParentPost  = $this->getRulesFromTopParentPostByChildPostId( $post->ID, $postType );
-						$rules          = $topParentPost['rules'];
-						$visibilityMode = $topParentPost['visibilityMode'];
+						$topParentPost = $this->getRulesFromTopParentPostByChildPostId( $post->ID, $postType );
+						if ( $topParentPost && isset( $topParentPost['rules'], $topParentPost['visibilityMode'] ) ) {
+							$rules          = $topParentPost['rules'];
+							$visibilityMode = $topParentPost['visibilityMode'];
+						} else {
+							error_log( 'Not set rules and visibilityMode: PostID: ' . $post->ID . '| ' . print_r( $topParentPost, true ) );
+						}
 					}
 
 					if ( empty( $rules ) || ! isset( $rules[0][ SKAUTISINTEGRATION_NAME . '_rules' ] ) ) {
@@ -169,10 +173,12 @@ final class Frontend {
 						$visibilityMode = get_post_meta( $post->ID, SKAUTISINTEGRATION_NAME . '_rules_visibilityMode', true );
 					}
 
-					if ( $visibilityMode === 'content' ) {
-						$this->processRulesAndHideContent( $userIsLoggedInSkautis, $rules, $post->ID );
-					} else {
-						$this->proccessRulesAndHidePosts( $userIsLoggedInSkautis, $rules, $posts, $key, $wpQuery, $postType, $postsWereFiltered );
+					if ( $rules ) {
+						if ( $visibilityMode === 'content' ) {
+							$this->processRulesAndHideContent( $userIsLoggedInSkautis, $rules, $post->ID );
+						} else {
+							$this->proccessRulesAndHidePosts( $userIsLoggedInSkautis, $rules, $posts, $key, $wpQuery, $postType, $postsWereFiltered );
+						}
 					}
 				}
 			}

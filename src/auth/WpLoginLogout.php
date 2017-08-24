@@ -22,15 +22,15 @@ final class WpLoginLogout {
 		if ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
 
 			$usersWpQuery = new \WP_User_Query( [
-				                                    'number'     => 1,
-				                                    'meta_query' => [
-					                                    [
-						                                    'key'     => 'skautisUserId_' . $this->skautisGateway->getEnv(),
-						                                    'value'   => absint( $skautisUserId ),
-						                                    'compare' => '='
-					                                    ]
-				                                    ]
-			                                    ] );
+				'number'     => 1,
+				'meta_query' => [
+					[
+						'key'     => 'skautisUserId_' . $this->skautisGateway->getEnv(),
+						'value'   => absint( $skautisUserId ),
+						'compare' => '='
+					]
+				]
+			] );
 			$users        = $usersWpQuery->get_results();
 
 			if ( ! empty( $users )
@@ -50,8 +50,10 @@ final class WpLoginLogout {
 					}
 				}
 
+				$returnUrl = $_GET['ReturnUrl'];
+
 				if ( is_user_logged_in() && get_current_user_id() === $wpUser->ID ) {
-					wp_safe_redirect( esc_url_raw( $_GET['ReturnUrl'] ), 302 );
+					wp_safe_redirect( esc_url_raw( $returnUrl ), 302 );
 					exit;
 				}
 
@@ -60,7 +62,7 @@ final class WpLoginLogout {
 				wp_set_current_user( $wpUser->ID, $wpUser->data->user_login );
 				wp_set_auth_cookie( $wpUser->ID, true );
 
-				wp_safe_redirect( esc_url_raw( $_GET['ReturnUrl'] ), 302 );
+				wp_safe_redirect( esc_url_raw( $returnUrl ), 302 );
 				exit;
 			}
 		}
@@ -95,7 +97,7 @@ final class WpLoginLogout {
 			$returnUrl = admin_url();
 		}
 
-		$url       = add_query_arg( 'ReturnUrl', urlencode( $returnUrl ), get_home_url( null, 'skautis/auth/' . Actions::LOGIN_ACTION ) );
+		$url = add_query_arg( 'ReturnUrl', urlencode( $returnUrl ), get_home_url( null, 'skautis/auth/' . Actions::LOGIN_ACTION ) );
 
 		return esc_url( $url );
 	}
