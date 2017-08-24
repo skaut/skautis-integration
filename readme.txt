@@ -35,9 +35,6 @@ Plugin po aktivaci bude vyžadovat APP ID, bez toho nebude plugin vůbec fungova
 
 
 == Changelog ==
-= 1.x =
-* nové pravidlo: účastník akce
-
 = 1.1.4 =
 * změna vytváření uživatelského jména při registraci - místo emailu uživatele se nyní nastaví jeho login do skautISu
 * oprava propojování účtů
