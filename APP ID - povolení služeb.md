@@ -32,7 +32,7 @@ Verze 1.1
 <br>
 <b>OrganizationUnit -> FunctionAllPerson</b> - Načíst seznam funkcí osoby
 
-Verze 1.1.3
+Verze 1.1.4
 <br>
 <b>Events -> EventAllPerson</b> - Načíst seznam akcí osoby
 <br>
