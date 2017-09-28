@@ -1,4 +1,4 @@
-WordPress plugin pro možnost přihlašování a registrace do WordPressu přes SkautIS
+WordPress plugin pro možnost přihlašování a registrace do WordPressu přes skautIS
 
 Kdo si chcete plugin stáhnout je na https://cs.wordpress.org/plugins/skautis-integration/
 
