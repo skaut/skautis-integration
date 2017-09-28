@@ -41,7 +41,7 @@ Plugin po aktivaci bude vyžadovat APP ID, bez toho nebude plugin vůbec fungova
 * nové pravidlo: účastník akce
 
 = 1.1.5 =
-* Opraveno zobrazování stránky se právou uživatelů při zvolení špatné role
+* Opraveno zobrazování stránky se správou uživatelů při zvolení špatné role
 
 = 1.1.4 =
 * změna vytváření uživatelského jména při registraci - místo emailu uživatele se nyní nastaví jeho login do skautISu
