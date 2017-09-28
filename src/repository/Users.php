@@ -145,9 +145,13 @@ class Users {
 						}
 					}
 
-					$emails = preg_split( "~(?=\,)~x", $participant->PersonEmail );
-					if ( ! empty( $emails ) && isset( $emails[0] ) ) {
-						$user->email = $emails[0];
+					if ( isset( $participant->PersonEmail ) && ! empty( $participant->PersonEmail ) ) {
+						$emails = preg_split( "~(?=\,)~x", $participant->PersonEmail );
+						if ( ! empty( $emails ) && isset( $emails[0] ) ) {
+							$user->email = $emails[0];
+						}
+					} else {
+						$user->email = '';
 					}
 
 					$user->UserName = $user->email;
