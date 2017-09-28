@@ -31,18 +31,10 @@ final class LoginForm {
 	}
 
 	public function loginLinkInLoginForm() {
-		?>
-		<p style="margin-bottom: 0.3em;">
-			<a class="button button-primary button-hero button-skautis" style="float: none; width: 100%; text-align: center;""
-			href="<?php echo $this->wpLoginLogout->getLoginUrl(); ?>
-			"><?php _e( 'Log in with skautIS', 'skautis-integration' ); ?></a>
-			<br/>
-		</p>
-		<br/>
-		<?php
+		echo $this->loginLinkInLoginFormReturn();
 	}
 
-	public function loginLinkInLoginFormReturn( string $html ): string {
+	public function loginLinkInLoginFormReturn(): string {
 		return '
 		<p style="margin-bottom: 0.3em;">
 			<a class="button button-primary button-hero button-skautis" style="float: none; width: 100%; text-align: center;"

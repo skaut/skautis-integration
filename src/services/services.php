@@ -31,12 +31,12 @@ class Services {
 
 	protected static $services = null;
 
-	private static function init() {
+	protected static function init() {
 		self::$services = new Container();
 		self::registerServices();
 	}
 
-	private static function registerServices() {
+	protected static function registerServices() {
 		self::$services['skautisGateway'] = function ( Container $container ) {
 			return new SkautisGateway();
 		};
