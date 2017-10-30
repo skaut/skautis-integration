@@ -89,6 +89,10 @@ final class WpRegister {
 				return true;
 			}
 
+			if ( ! isset( $user['UserName'] ) || mb_strlen( $user['UserName'] ) == 0 ) {
+				return false;
+			}
+
 			$username = mb_strcut( $user['UserName'], 0, 60 );
 
 			$userId = $this->resolveNotificationsAndRegisterUserToWp( $username, $user['email'] );
@@ -157,7 +161,7 @@ final class WpRegister {
 	public function getRegisterUrl(): string {
 		if ( isset( $_GET['redirect_to'] ) && $_GET['redirect_to'] ) {
 			$returnUrl = $_GET['redirect_to'];
-		} else if ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
+		} elseif ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
 			$returnUrl = $_GET['ReturnUrl'];
 		} else {
 			$returnUrl = Helpers::getCurrentUrl();
@@ -187,7 +191,7 @@ final class WpRegister {
 	public function getManuallyRegisterWpUserUrl(): string {
 		if ( isset( $_GET['redirect_to'] ) && $_GET['redirect_to'] ) {
 			$returnUrl = $_GET['redirect_to'];
-		} else if ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
+		} elseif ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
 			$returnUrl = $_GET['ReturnUrl'];
 		} else {
 			$returnUrl = Helpers::getCurrentUrl();
