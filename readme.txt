@@ -38,6 +38,9 @@ Plugin po aktivaci bude vyžadovat APP ID, bez toho nebude plugin vůbec fungova
 
 == Changelog ==
 
+-= 1.x =
+ -* nové pravidlo: účastník akce
+
 = 1.1.6 =
 * Opraveno vytváření uživatelů
 
