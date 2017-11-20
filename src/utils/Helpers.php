@@ -53,15 +53,19 @@ class Helpers {
 		}
 	}
 
-	public static function getNonceFromUrl( string $url, string $nonceName ): string {
+	public static function getVariableFromUrl( string $url, string $variableName ): string {
 		$result = [];
-		if ( preg_match( "~" . $nonceName . "=([^\&,\s,\/,\#,\%,\?]*)~", $url, $result ) ) {
+		if ( preg_match( "~" . $variableName . "=([^\&,\s,\/,\#,\%,\?]*)~", $url, $result ) ) {
 			if ( is_array( $result ) && isset( $result[1] ) && $result[1] ) {
-				return $result[1];
+				return sanitize_text_field( $result[1] );
 			}
 		}
 
 		return '';
+	}
+
+	public static function getNonceFromUrl( string $url, string $nonceName ): string {
+		return self::getVariableFromUrl( $url, $nonceName );
 	}
 
 }

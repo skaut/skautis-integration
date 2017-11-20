@@ -5,6 +5,7 @@ declare( strict_types=1 );
 namespace SkautisIntegration\Repository;
 
 use SkautisIntegration\Auth\SkautisGateway;
+use SkautisIntegration\Utils\Helpers;
 
 class Users {
 
@@ -12,6 +13,18 @@ class Users {
 
 	public function __construct( SkautisGateway $skautisGateway ) {
 		$this->skautisGateway = $skautisGateway;
+	}
+
+	protected function getSearchUserString(): string {
+		$searchUserString = '';
+
+		if ( isset( $_GET['skautisSearchUsers'] ) && $_GET['skautisSearchUsers'] ) {
+			$searchUserString = sanitize_text_field( $_GET['skautisSearchUsers'] );
+		} elseif ( isset( $_GET['ReturnUrl'] ) ) {
+			$searchUserString = Helpers::getVariableFromUrl( $_GET['ReturnUrl'], 'skautisSearchUsers' );
+		}
+
+		return $searchUserString;
 	}
 
 	public function getConnectedWpUsers(): array {
@@ -164,13 +177,10 @@ class Users {
 		// standard get all users procedure
 		if ( empty( $users ) ) {
 
-			$displayName = '';
-			if ( isset( $_GET['skautisSearchUsers'] ) ) {
-				$displayName = sanitize_text_field( $_GET['skautisSearchUsers'] );
-			}
+			$searchUserString = $this->getSearchUserString();
 
 			$skautisUsers = $this->skautisGateway->getSkautisInstance()->UserManagement->userAll( [
-				'DisplayName' => $displayName
+				'DisplayName' => $searchUserString
 			] );
 
 			if ( is_array( $skautisUsers ) ) {
@@ -244,6 +254,10 @@ class Users {
 					];
 				}
 			}
+		}
+
+		if ( empty( $userDetail ) ) {
+			throw new \Exception( __( 'Nepodařilo se získat informace o uživateli ze skautISu', 'skautis-integration' ) );
 		}
 
 		return $userDetail;
