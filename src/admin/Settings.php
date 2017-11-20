@@ -48,7 +48,7 @@ final class Settings {
 			if ( ! get_option( 'skautis_integration_appid_prod' ) ) {
 				Helpers::showAdminNotice( sprintf( __( 'Zadejte v <a href="%1$s">nastavení</a> pluginu APP ID produkční verze skautISu', 'skautis-integration' ), admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME ) ), 'warning', 'toplevel_page_' . SKAUTISINTEGRATION_NAME );
 			}
-		} else if ( $envType === SkautisGateway::TEST_ENV ) {
+		} elseif ( $envType === SkautisGateway::TEST_ENV ) {
 			if ( ! get_option( 'skautis_integration_appid_test' ) ) {
 				Helpers::showAdminNotice( sprintf( __( 'Zadejte v <a href="%1$s">nastavení</a> pluginu APP ID testovací verze skautISu', 'skautis-integration' ), admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME ) ), 'warning', 'toplevel_page_' . SKAUTISINTEGRATION_NAME );
 			}

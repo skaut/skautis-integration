@@ -115,7 +115,7 @@ final class ConnectAndDisconnectWpAccount {
 
 				if ( strpos( $_GET['ReturnUrl'], 'profile.php' ) !== false ) {
 					delete_user_meta( get_current_user_id(), 'skautisUserId_' . $this->skautisGateway->getEnv() );
-				} else if ( ( strpos( $_GET['ReturnUrl'], 'user-edit_php' ) !== false ||
+				} elseif ( ( strpos( $_GET['ReturnUrl'], 'user-edit_php' ) !== false ||
 				              strpos( $_GET['ReturnUrl'], 'user-edit.php' ) !== false ) &&
 				            strpos( $_GET['ReturnUrl'], 'user_id=' ) !== false ) {
 					if ( ! preg_match( "~user_id=(\d+)~", $_GET['ReturnUrl'], $result ) ) {

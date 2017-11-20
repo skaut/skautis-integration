@@ -49,7 +49,7 @@ final class Frontend {
 		if ( $queryValue && ! empty( $queryValue ) ) {
 			if ( file_exists( get_stylesheet_directory() . '/skautis/login.php' ) ) {
 				return get_stylesheet_directory() . '/skautis/login.php';
-			} else if ( file_exists( get_template_directory() . '/skautis/login.php' ) ) {
+			} elseif ( file_exists( get_template_directory() . '/skautis/login.php' ) ) {
 				return get_template_directory() . '/skautis/login.php';
 			} else {
 				$this->pluginLoginView = true;
@@ -99,7 +99,7 @@ final class Frontend {
 			} else {
 				return;
 			}
-		} else if ( get_option( 'show_avatars' ) ) {
+		} elseif ( get_option( 'show_avatars' ) ) {
 			$parent = 'my-account-with-avatar';
 		} else {
 			$parent = 'my-account';

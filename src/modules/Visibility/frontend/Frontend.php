@@ -102,7 +102,7 @@ final class Frontend {
 			if ( $wpCommentQuery->query_vars['post_id'] === $postId ) {
 				if ( ! isset( $wpCommentQuery->query_vars['post__not_in'] ) || empty( $wpCommentQuery->query_vars['post__not_in'] ) ) {
 					$wpCommentQuery->query_vars['post__not_in'] = [];
-				} else if ( ! is_array( $wpCommentQuery->query_vars['post__not_in'] ) ) {
+				} elseif ( ! is_array( $wpCommentQuery->query_vars['post__not_in'] ) ) {
 					$wpCommentQuery->query_vars['post__not_in'] = [ $wpCommentQuery->query_vars['post__not_in'] ];
 				}
 				$wpCommentQuery->query_vars['post__not_in'][] = $postId;
@@ -128,7 +128,7 @@ final class Frontend {
 		if ( ! empty( $rules ) && isset( $rules[0][ SKAUTISINTEGRATION_NAME . '_rules' ] ) ) {
 			if ( ! $userIsLoggedInSkautis ) {
 				$this->hideContentExcerptComments( $postId, $this->getLoginRequiredMessage() . $this->getLoginForm(), $this->getLoginRequiredMessage() );
-			} else if ( ! $this->rulesManager->checkIfUserPassedRules( $rules ) ) {
+			} elseif ( ! $this->rulesManager->checkIfUserPassedRules( $rules ) ) {
 				$this->hideContentExcerptComments( $postId, $this->getUnauthorizedMessage() . $this->getLoginForm( true ), $this->getUnauthorizedMessage() );
 			}
 		}

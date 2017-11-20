@@ -56,7 +56,7 @@ final class Register implements IModule {
 	private function loginUserAfterRegistration() {
 		if ( isset( $_GET['redirect_to'] ) && $_GET['redirect_to'] ) {
 			$returnUrl = $_GET['redirect_to'];
-		} else if ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
+		} elseif ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
 			$returnUrl = $_GET['ReturnUrl'];
 		} else {
 			$returnUrl = Helpers::getCurrentUrl();
@@ -76,7 +76,7 @@ final class Register implements IModule {
 	public function registerConfirm( array $data = [] ) {
 		if ( $this->skautisLogin->setLoginDataToLocalSkautisInstance( $data ) ) {
 			$this->registerUser();
-		} else if ( $this->skautisLogin->isUserLoggedInSkautis() ) {
+		} elseif ( $this->skautisLogin->isUserLoggedInSkautis() ) {
 			$this->registerUser();
 		}
 	}

@@ -113,7 +113,7 @@ final class Admin {
 					<?php
 					if ( ! $this->skautisGateway->isInitialized() ) {
 						printf( __( 'Vyberte v <a href="%1$s">nastavení</a> pluginu typ prostředí skautISu', 'skautis-integration' ), admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME ) );
-					} else if ( ! $this->skautisGateway->getSkautisInstance()->getUser()->isLoggedIn( true ) ) {
+					} elseif ( ! $this->skautisGateway->getSkautisInstance()->getUser()->isLoggedIn( true ) ) {
 						$result = '<h4><a href="' . $this->wpLoginLogout->getLoginUrl( add_query_arg( 'noWpLogin', true, Helpers::getCurrentUrl() ) ) . '">' . __( 'Pro správu podmínek je nutné se přihlásit do skautISu', 'skautis-integration' ) . '</a></h4>';
 						echo $result;
 					} else {

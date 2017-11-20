@@ -30,7 +30,7 @@ class SkautisGateway {
 			$this->appId    = get_option( 'skautis_integration_appid_prod' );
 			$this->env      = $envType;
 			$this->testMode = false;
-		} else if ( $envType === self::TEST_ENV ) {
+		} elseif ( $envType === self::TEST_ENV ) {
 			$this->appId    = get_option( 'skautis_integration_appid_test' );
 			$this->env      = $envType;
 			$this->testMode = true;
@@ -76,6 +76,10 @@ class SkautisGateway {
 		}
 
 		return false;
+	}
+
+	public function isMaintenance(): bool {
+		return $this->skautis->isMaintenance();
 	}
 
 }

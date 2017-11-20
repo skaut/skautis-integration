@@ -84,7 +84,7 @@ final class WpLoginLogout {
 		if ( ! $returnUrl ) {
 			if ( isset( $_GET['redirect_to'] ) && $_GET['redirect_to'] ) {
 				$returnUrl = $_GET['redirect_to'];
-			} else if ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
+			} elseif ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
 				$returnUrl = $_GET['ReturnUrl'];
 			} else {
 				$returnUrl = Helpers::getCurrentUrl();
@@ -106,7 +106,7 @@ final class WpLoginLogout {
 		if ( ! $returnUrl ) {
 			if ( isset( $_GET['redirect_to'] ) && $_GET['redirect_to'] ) {
 				$returnUrl = $_GET['redirect_to'];
-			} else if ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
+			} elseif ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
 				$returnUrl = $_GET['ReturnUrl'];
 			} else {
 				$returnUrl = Helpers::getCurrentUrl();
@@ -149,7 +149,7 @@ final class WpLoginLogout {
 
 		if ( isset( $_GET['redirect_to'] ) && $_GET['redirect_to'] ) {
 			$returnUrl = $_GET['redirect_to'];
-		} else if ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
+		} elseif ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
 			$returnUrl = $_GET['ReturnUrl'];
 		} else {
 			$returnUrl = Helpers::getCurrentUrl();
