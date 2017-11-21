@@ -206,10 +206,6 @@ final class WpRegister {
 	public function registerToWpManually( string $wpRole, int $skautisUserId ): bool {
 		$userDetail = $this->usersRepository->getUserDetail( $skautisUserId );
 
-		add_filter( SKAUTISINTEGRATION_NAME . '_modules_register_newUserNotifications', function ( $notify ) {
-			return 'none';
-		}, 15 );
-
 		return $this->processWpUserRegistration( $userDetail, $wpRole );
 	}
 
