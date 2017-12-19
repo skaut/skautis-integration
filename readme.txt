@@ -38,6 +38,9 @@ Plugin po aktivaci bude vyžadovat APP ID, bez toho nebude plugin vůbec fungova
 
 == Changelog ==
 
+= 1.1.8 =
+* Oprava logování přihlášení/odhlášení pro pluginy, které hlídají co se na webu děje. (př.: Simple History)
+
 = 1.1.7 =
 * Změna rozesílání emailů, nyní se odesílají vždy podle globálního nastavení
 
