@@ -61,6 +61,8 @@ final class WpLoginLogout {
 				wp_clear_auth_cookie();
 				wp_set_current_user( $wpUser->ID, $wpUser->data->user_login );
 				wp_set_auth_cookie( $wpUser->ID, true );
+				
+				do_action( 'wp_login', $wpUser->user_login, $wpUser );
 
 				wp_safe_redirect( esc_url_raw( $returnUrl ), 302 );
 				exit;
