@@ -119,6 +119,19 @@ class Membership implements IRule {
 			}
 			$userMemberships = $result;
 		}
+		
+		if (!is_array($userMemberships)) {
+      if (is_a($userMemberships, '\stdClass')) {
+        $userMemberships = [];
+        if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+          throw new \Exception( __( 'Osoba nemá členství v žádné jednotce.', 'skautis-integration' ) );
+        }
+      } else {
+        if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+          throw new \Exception( __( 'Nastala neočekávaná chyba. Osoba pravděpodobně nemá členství v žádné jednotce.', 'skautis-integration' ) );
+        }
+      }
+		}
 
 		return $userMemberships;
 	}
