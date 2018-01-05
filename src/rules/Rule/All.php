@@ -50,7 +50,7 @@ class All implements IRule {
 	}
 
 	public function getDescription(): string {
-		return __('Při použití tohoto pravidla se budou moci všichni uživatelé s účtem ve skautISu registrovat. Nemá tedy smysl tuto podmínku kombinovat s dalšími podmínkami (role, typ členství, ...). Doporučujeme použít tuto podmínku jako jedinou v celém pravidle a žádné další zde nemít.', 'skautis-integration');
+		return __('Při použití tohoto pravidla se budou moci všichni uživatelé s účtem ve skautISu, propojeným se svojí osobou, registrovat. Nemá tedy smysl tuto podmínku kombinovat s dalšími podmínkami (role, typ členství, ...). Doporučujeme použít tuto podmínku jako jedinou v celém pravidle a žádné další zde nemít.', 'skautis-integration');
 	}
 
 	public function getValues(): array {
