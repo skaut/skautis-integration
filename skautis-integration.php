@@ -3,7 +3,7 @@
  * Plugin Name:       skautIS integration
  * Plugin URI:        https://github.com/skaut/skautis-integration
  * Description:       Integrace WordPressu se skautISem
- * Version:           1.1.8
+ * Version:           1.1.9
  * Author:            David Odehnal
  * Author URI:        https://davidodehnal.cz/
  * Text Domain:       skautis-integration
