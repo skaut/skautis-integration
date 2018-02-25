@@ -39,6 +39,8 @@ Plugin po aktivaci bude vyžadovat APP ID, bez toho nebude plugin vůbec fungova
 == Changelog ==
 
 = 1.1.10 =
+* Novinka - na podřízené stránky se nyní použijí pravidla z celého hierarchického stromu nadřízených stránek, nejen z nejvýše nadřazené stránky
+* Výpis pravidel z nadřazených stránek
 * Drobné opravy
 
 = 1.1.9 =
