@@ -91,8 +91,6 @@ final class ConnectAndDisconnectWpAccount {
 		$wpUserId      = absint( $_GET['wpUserId'] );
 		$skautisUserId = absint( $_GET['skautisUserId'] );
 
-		$result = [];
-
 		if ( $wpUserId > 0 && $skautisUserId > 0 ) {
 			$this->setSkautisUserIdToWpAccount( $wpUserId, $skautisUserId );
 		}

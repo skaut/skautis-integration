@@ -22,7 +22,7 @@ final class Metabox {
 		add_action( 'save_post', [ $this, 'saveRulesCustomField' ] );
 	}
 
-	public function addMetaboxForRulesField( string $postType ) {
+	public function addMetaboxForRulesField() {
 		foreach ( $this->postTypes as $postType ) {
 			add_meta_box(
 				SKAUTISINTEGRATION_NAME . '_modules_visibility_rules_metabox',
@@ -34,16 +34,24 @@ final class Metabox {
 	}
 
 	public function saveRulesCustomField( int $postId ) {
-		if ( array_key_exists( SKAUTISINTEGRATION_NAME . '_rules_visibilityMode', $_POST ) ) {
+		if ( isset( $_POST[ SKAUTISINTEGRATION_NAME . '_rules_visibilityMode' ] ) ) {
 
-			$rules = $_POST[ SKAUTISINTEGRATION_NAME . '_rules' ] ? $_POST[ SKAUTISINTEGRATION_NAME . '_rules' ] : [];
+			if ( isset( $_POST[ SKAUTISINTEGRATION_NAME . '_rules' ] ) ) {
+				$rules = $_POST[ SKAUTISINTEGRATION_NAME . '_rules' ];
+			} else {
+				$rules = [];
+			}
 			update_post_meta(
 				$postId,
 				SKAUTISINTEGRATION_NAME . '_rules',
 				$rules
 			);
 
-			$includeChildren = $_POST[ SKAUTISINTEGRATION_NAME . '_rules_includeChildren' ] ? $_POST[ SKAUTISINTEGRATION_NAME . '_rules_includeChildren' ] : 0;
+			if ( isset( $_POST[ SKAUTISINTEGRATION_NAME . '_rules_includeChildren' ] ) ) {
+				$includeChildren = $_POST[ SKAUTISINTEGRATION_NAME . '_rules_includeChildren' ];
+			} else {
+				$includeChildren = 0;
+			}
 			update_post_meta(
 				$postId,
 				SKAUTISINTEGRATION_NAME . '_rules_includeChildren',
@@ -60,10 +68,7 @@ final class Metabox {
 		}
 	}
 
-	public
-	function rulesRepeater(
-		\WP_Post $post
-	) {
+	public function rulesRepeater( \WP_Post $post ) {
 		$postTypeObject  = get_post_type_object( $post->post_type );
 		$includeChildren = get_post_meta( $post->ID, SKAUTISINTEGRATION_NAME . '_rules_includeChildren', true );
 		if ( $includeChildren !== '0' && $includeChildren !== '1' ) {

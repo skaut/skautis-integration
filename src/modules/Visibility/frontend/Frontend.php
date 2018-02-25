@@ -161,8 +161,6 @@ final class Frontend {
 						if ( $topParentPost && isset( $topParentPost['rules'], $topParentPost['visibilityMode'] ) ) {
 							$rules          = $topParentPost['rules'];
 							$visibilityMode = $topParentPost['visibilityMode'];
-						} else {
-							error_log( 'Not set rules and visibilityMode: PostID: ' . $post->ID . '| ' . print_r( $topParentPost, true ) );
 						}
 					}
 
