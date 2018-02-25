@@ -18,6 +18,7 @@ final class Visibility implements IModule {
 	private $rulesManager;
 	private $skautisLogin;
 	private $wpLoginLogout;
+	private $frontend;
 
 	public static $id = 'module_Visibility';
 
@@ -26,10 +27,11 @@ final class Visibility implements IModule {
 		$this->skautisLogin  = $skautisLogin;
 		$this->wpLoginLogout = $wpLoginLogout;
 		$postTypes           = (array) get_option( SKAUTISINTEGRATION_NAME . '_modules_visibility_postTypes', [] );
+		$this->frontend      = new Frontend( $postTypes, $this->rulesManager, $this->skautisLogin, $this->wpLoginLogout );
 		if ( is_admin() ) {
-			( new Admin( $postTypes, $this->rulesManager ) );
+			( new Admin( $postTypes, $this->rulesManager, $this->frontend ) );
 		} else {
-			( new Frontend( $postTypes, $this->rulesManager, $this->skautisLogin, $this->wpLoginLogout ) );
+			$this->frontend->initHooks();
 		}
 	}
 

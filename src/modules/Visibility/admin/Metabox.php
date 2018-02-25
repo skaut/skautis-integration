@@ -5,15 +5,18 @@ declare( strict_types=1 );
 namespace SkautisIntegration\Modules\Visibility\Admin;
 
 use SkautisIntegration\Rules\RulesManager;
+use SkautisIntegration\Modules\Visibility\Frontend\Frontend;
 
 final class Metabox {
 
 	private $postTypes;
 	private $rulesManager;
+	private $frontend;
 
-	public function __construct( array $postTypes, RulesManager $rulesManager ) {
+	public function __construct( array $postTypes, RulesManager $rulesManager, Frontend $frontend ) {
 		$this->postTypes    = $postTypes;
 		$this->rulesManager = $rulesManager;
+		$this->frontend     = $frontend;
 		$this->initHooks();
 	}
 
@@ -80,6 +83,39 @@ final class Metabox {
 			$visibilityMode = get_option( SKAUTISINTEGRATION_NAME . '_modules_visibility_visibilityMode', 0 );
 		}
 		?>
+
+		<?php
+		if ( $post->post_parent > 0 ) {
+			$parentRules = $this->frontend->getParentPostsWithRules( absint( $post->ID ), $post->post_type );
+			if ( ! empty( $parentRules ) ) {
+				?>
+				<h4><?php _e( 'Pravidla převzatá z nadřazených stránek', 'skautis-integration' ); ?>:</h4>
+				<ul class="skautis-admin-list">
+					<?php
+					foreach ( $parentRules as $parentRule ) {
+						?>
+						<li>
+							<strong><?php echo esc_html( $parentRule['parentPostTitle'] ); ?></strong>
+							<ul>
+								<?php
+								foreach ( $parentRule['rules'] as $rule ) {
+									?>
+									<li><?php echo esc_html( $rule ); ?></li>
+									<?php
+								}
+								?>
+							</ul>
+						</li>
+						<?php
+					}
+					?>
+				</ul>
+				<hr/>
+				<?php
+			}
+		}
+		?>
+
 		<p><?php _e( 'Obsah bude pro uživatele viditelný pouze při splnění alespoň jednoho z následujících pravidel.', 'skautis-integration' ); ?></p>
 		<p><?php _e( 'Ponecháte-li prázdné - obsah bude viditelný pro všechny uživatele.', 'skautis-integration' ); ?></p>
 		<div id="repeater_post">

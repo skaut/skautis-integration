@@ -21,10 +21,9 @@ final class Frontend {
 		$this->rulesManager  = $rulesManager;
 		$this->skautisLogin  = $skautisLogin;
 		$this->wpLoginLogout = $wpLoginLogout;
-		$this->initHooks();
 	}
 
-	private function initHooks() {
+	public function initHooks() {
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueueStyles' ] );
 		add_action( 'posts_results', [ $this, 'filterPosts' ], 10, 2 );
 	}
@@ -68,17 +67,20 @@ final class Frontend {
 		return array_reverse( $ancestors );
 	}
 
-	private function getRulesFromTopParentPostByChildPostId( int $childPostId, $postType ): array {
+	private function getRulesFromParentPostsWithImpactByChildPostId( int $childPostId, $postType ): array {
 		$ancestors = $this->getPostsHierarchyTreeWithRules( $childPostId, $postType );
-		foreach ( $ancestors as $ancestor ) {
+
+		$ancestors = array_filter( $ancestors, function ( $ancestor ) {
 			if ( ! empty( $ancestor['rules'] ) && isset( $ancestor['rules'][0][ SKAUTISINTEGRATION_NAME . '_rules' ] ) ) {
 				if ( $ancestor['includeChildren'] === '1' ) {
-					return $ancestor;
+					return true;
 				}
 			}
-		}
 
-		return [];
+			return false;
+		} );
+
+		return array_values( $ancestors );
 	}
 
 	private function hideContentExcerptComments( int $postId, string $newContent = '', string $newExcerpt = '' ) {
@@ -139,6 +141,25 @@ final class Frontend {
 		wp_enqueue_style( SKAUTISINTEGRATION_NAME, SKAUTISINTEGRATION_URL . 'src/frontend/public/css/skautis-frontend.css', [], SKAUTISINTEGRATION_VERSION, 'all' );
 	}
 
+	public function getParentPostsWithRules( int $childPostId, string $childPostType ): array {
+		$result = [];
+
+		$parentPostsWithRules = $this->getRulesFromParentPostsWithImpactByChildPostId( $childPostId, $childPostType );
+
+		foreach ( $parentPostsWithRules as $parentPostWithRules ) {
+			$result[ $parentPostWithRules['id'] ] = [
+				'parentPostTitle' => get_the_title( $parentPostWithRules['id'] ),
+				'rules'           => []
+			];
+
+			foreach ( $parentPostWithRules['rules'] as $rule ) {
+				$result[ $parentPostWithRules['id'] ]['rules'][] = get_the_title( $rule['skautis-integration_rules'] );
+			}
+		}
+
+		return $result;
+	}
+
 	public function filterPosts( array $posts = [], \WP_Query $wpQuery ): array {
 		if ( empty( $posts ) ) {
 			return $posts;
@@ -149,33 +170,36 @@ final class Frontend {
 		$postsWereFiltered = false;
 
 		foreach ( $wpQuery->posts as $key => $post ) {
-			$postType = get_post_type( $post );
+			if ( ! is_a( $post, 'WP_Post' ) ) {
+				$wpPost = get_post( $post );
+			} else {
+				$wpPost = $post;
+			}
 
-			if ( in_array( $postType, $this->postTypes ) ) {
-				if ( ! current_user_can( 'edit_' . $postType . 's' ) ) {
-					$rules          = [];
-					$visibilityMode = '';
+			if ( in_array( $wpPost->post_type, $this->postTypes ) ) {
+				if ( ! current_user_can( 'edit_' . $wpPost->post_type . 's' ) ) {
+					$rulesGroups = [];
 
-					if ( $post->post_parent > 0 ) {
-						$topParentPost = $this->getRulesFromTopParentPostByChildPostId( $post->ID, $postType );
-						if ( $topParentPost && isset( $topParentPost['rules'], $topParentPost['visibilityMode'] ) ) {
-							$rules          = $topParentPost['rules'];
-							$visibilityMode = $topParentPost['visibilityMode'];
-						}
+					if ( $wpPost->post_parent > 0 ) {
+						$rulesGroups = $this->getRulesFromParentPostsWithImpactByChildPostId( $wpPost->ID, $wpPost->post_type );
 					}
 
-					if ( empty( $rules ) || ! isset( $rules[0][ SKAUTISINTEGRATION_NAME . '_rules' ] ) ) {
-						$rules = (array) get_post_meta( $post->ID, SKAUTISINTEGRATION_NAME . '_rules', true );
-					}
-					if ( empty( $visibilityMode ) ) {
-						$visibilityMode = get_post_meta( $post->ID, SKAUTISINTEGRATION_NAME . '_rules_visibilityMode', true );
+					$currentPostRules = (array) get_post_meta( $wpPost->ID, SKAUTISINTEGRATION_NAME . '_rules', true );
+					if ( ! empty( $currentPostRules ) ) {
+						$currentPostRule = [
+							'id'              => $wpPost->ID,
+							'rules'           => $currentPostRules,
+							'includeChildren' => get_post_meta( $wpPost->ID, SKAUTISINTEGRATION_NAME . '_rules_includeChildren', true ),
+							'visibilityMode'  => get_post_meta( $wpPost->ID, SKAUTISINTEGRATION_NAME . '_rules_visibilityMode', true )
+						];
+						$rulesGroups[]   = $currentPostRule;
 					}
 
-					if ( $rules ) {
-						if ( $visibilityMode === 'content' ) {
-							$this->processRulesAndHideContent( $userIsLoggedInSkautis, $rules, $post->ID );
+					foreach ( $rulesGroups as $rulesGroup ) {
+						if ( $rulesGroup['visibilityMode'] === 'content' ) {
+							$this->processRulesAndHideContent( $userIsLoggedInSkautis, $rulesGroup['rules'], $wpPost->ID );
 						} else {
-							$this->proccessRulesAndHidePosts( $userIsLoggedInSkautis, $rules, $posts, $key, $wpQuery, $postType, $postsWereFiltered );
+							$this->proccessRulesAndHidePosts( $userIsLoggedInSkautis, $rulesGroup['rules'], $posts, $key, $wpQuery, $wpPost->post_type, $postsWereFiltered );
 						}
 					}
 				}

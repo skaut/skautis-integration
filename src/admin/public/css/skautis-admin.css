@@ -7,3 +7,14 @@
 	padding-top: 0.6em;
 	padding-bottom: 0.6em;
 }
+
+.skautis-admin-list {
+	list-style-type: disc;
+	list-style-position: inside;
+}
+
+.skautis-admin-list ul {
+	list-style-type: circle;
+	list-style-position: inside;
+	margin-left: 15px;
+}

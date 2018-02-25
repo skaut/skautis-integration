@@ -122,6 +122,7 @@ final class RulesManager {
 	}
 
 	public function checkIfUserPassedRules( array $rulesIds ): bool {
+		static $rulesGroups = null;
 		$result = false;
 
 		foreach ( $rulesIds as $ruleId ) {
@@ -129,7 +130,9 @@ final class RulesManager {
 				$ruleId = reset( $ruleId );
 			}
 
-			$rulesGroups = json_decode( (string) get_post_meta( $ruleId, SKAUTISINTEGRATION_NAME . '_rules_data', true ) );
+			if ( $rulesGroups === null ) {
+				$rulesGroups = json_decode( (string) get_post_meta( $ruleId, SKAUTISINTEGRATION_NAME . '_rules_data', true ) );
+			}
 
 			if ( isset( $rulesGroups->condition ) && isset( $rulesGroups->rules ) && ! empty( $rulesGroups->rules ) ) {
 				$result = $this->parseRulesGroups( $rulesGroups->condition, $rulesGroups->rules );

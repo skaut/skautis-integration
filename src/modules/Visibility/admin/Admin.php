@@ -5,20 +5,23 @@ declare( strict_types=1 );
 namespace SkautisIntegration\Modules\Visibility\Admin;
 
 use SkautisIntegration\Rules\RulesManager;
+use SkautisIntegration\Modules\Visibility\Frontend\Frontend;
 
 final class Admin {
 
 	private $postTypes;
 	private $rulesManager;
+	private $frontend;
 	private $settings;
 	private $metabox;
 	private $adminDirUrl = '';
 
-	public function __construct( array $postTypes = [], RulesManager $rulesManager ) {
+	public function __construct( array $postTypes = [], RulesManager $rulesManager, Frontend $frontend ) {
 		$this->postTypes    = $postTypes;
 		$this->rulesManager = $rulesManager;
+		$this->frontend     = $frontend;
 		$this->settings     = new Settings();
-		$this->metabox      = new Metabox( $this->postTypes, $this->rulesManager );
+		$this->metabox      = new Metabox( $this->postTypes, $this->rulesManager, $frontend );
 		$this->adminDirUrl  = plugin_dir_url( __FILE__ ) . 'public/';
 		$this->initHooks();
 	}
@@ -71,7 +74,7 @@ final class Admin {
 			$data = json_encode( $rules );
 			?>
 			<script>
-				window.rulesOptions = <?php echo $data; ?>;
+                window.rulesOptions = <?php echo $data; ?>;
 			</script>
 			<?php
 		}
@@ -82,7 +85,7 @@ final class Admin {
 			$data = json_encode( get_post_meta( get_the_ID(), SKAUTISINTEGRATION_NAME . '_rules', true ) );
 			?>
 			<script>
-				window.rulesData = <?php echo $data; ?>;
+                window.rulesData = <?php echo $data; ?>;
 			</script>
 			<?php
 		}
