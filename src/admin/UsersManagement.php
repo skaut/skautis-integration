@@ -118,7 +118,8 @@ class UsersManagement {
 
 		$result = '
 		<div class="wrap">
-			<h1>' . __( 'Podřízení členové', 'skautis-integration' ) . '</h1>
+			<h1>' . __( 'Správa uživatelů', 'skautis-integration' ) . '</h1>
+			<p>' . __( 'Zde si můžete propojit členy ze skautISu s uživateli ve WordPressu nebo je rovnou zaregistrovat (vyžaduje aktivovaný modul Registrace).', 'skautis-integration' ) . '</p>
 		';
 
 		if ( ! $this->skautisLogin->isUserLoggedInSkautis() ) {
