@@ -85,6 +85,14 @@ class UsersManagement {
 
 		wp_enqueue_style(
 			SKAUTISINTEGRATION_NAME,
+			$this->adminDirUrl . 'css/skautis-admin.css',
+			[],
+			SKAUTISINTEGRATION_VERSION,
+			'all'
+		);
+
+		wp_enqueue_style(
+			SKAUTISINTEGRATION_NAME,
 			$this->adminDirUrl . 'css/skautis-admin-users-management.css',
 			[],
 			SKAUTISINTEGRATION_VERSION,
