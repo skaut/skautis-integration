@@ -22,10 +22,11 @@ final class RulesManager {
 
 	private function initRules(): array {
 		return apply_filters( SKAUTISINTEGRATION_NAME . '_rules', [
-			Rule\Role::$id       => new Rule\Role( $this->skautisGateway ),
-			Rule\Membership::$id => new Rule\Membership( $this->skautisGateway ),
-			Rule\Func::$id       => new Rule\Func( $this->skautisGateway ),
-			Rule\All::$id        => new Rule\All( $this->skautisGateway )
+			Rule\Role::$id          => new Rule\Role( $this->skautisGateway ),
+			Rule\Membership::$id    => new Rule\Membership( $this->skautisGateway ),
+			Rule\Func::$id          => new Rule\Func( $this->skautisGateway ),
+			Rule\Qualification::$id => new Rule\Qualification( $this->skautisGateway ),
+			Rule\All::$id           => new Rule\All( $this->skautisGateway )
 		] );
 	}
 

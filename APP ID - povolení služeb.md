@@ -44,4 +44,10 @@ Verze 1.1.4
 <br>
 <b>Events -> ParticipantEducationAll</b> - Načíst seznam účastníků vzdělávací akce
 <br>
-<b>Events -> ParticipantAllPerson</b> - Načíst seznam osob, které zúčastní sněmu 
+<b>Events -> ParticipantAllPerson</b> - Načíst seznam osob, které zúčastní sněmu
+
+Verze 1.1.12
+<br>
+<b>OrganizationUnit -> QualificationTypeAll</b> - Načíst seznam typů kvalifikace
+<br>
+<b>OrganizationUnit -> QualificationAll</b> - Načíst seznam kvalifikací osoby

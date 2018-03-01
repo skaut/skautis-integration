@@ -3,6 +3,7 @@ function Membership(memberships) {
     this.unitOperators = [];
     this.unitOperators['equal'] = 'equal';
     this.unitOperators['begins_with'] = 'begins_with';
+    this.unitOperators['any'] = 'any';
 }
 
 Membership.prototype.input = function (rule, name) {
@@ -10,6 +11,7 @@ Membership.prototype.input = function (rule, name) {
 
     _this.unitOperators['equal'] = jQuery.fn.queryBuilder.regional.cs.operators.equal;
     _this.unitOperators['begins_with'] = jQuery.fn.queryBuilder.regional.cs.operators.begins_with;
+    _this.unitOperators['any'] = jQuery.fn.queryBuilder.regional.cs.operators.any;
 
     var html = '<select class="form-control select2" name="' + name + '_1" multiple="multiple">';
 
@@ -20,7 +22,7 @@ Membership.prototype.input = function (rule, name) {
     }
 
     html += '</select><div style="margin-top: 0.6em;">' + jQuery.fn.queryBuilder.regional.cs.custom.units.inUnitWithNumber;
-    html += '<select class="multi-rules form-control" name="' + name + '_2">';
+    html += '<select class="multi-rules form-control skautis-rule-unitnumber-select" name="' + name + '_2">';
 
     for (key in _this.unitOperators) {
         if (_this.unitOperators.hasOwnProperty(key)) {
@@ -29,7 +31,7 @@ Membership.prototype.input = function (rule, name) {
     }
 
     html += '</select><div class="multi-rules input-container">';
-    html += '<input class="form-control" type="text" name="' + name + '_3" value="" placeholder="' + jQuery.fn.queryBuilder.regional.cs.custom.units.unitNumber + '" />';
+    html += '<input class="form-control skautis-rule-unitnumber-input" type="text" name="' + name + '_3" value="" placeholder="' + jQuery.fn.queryBuilder.regional.cs.custom.units.unitNumber + '" />';
     html += '</div></div>';
     return html;
 };

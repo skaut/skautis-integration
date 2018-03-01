@@ -31,6 +31,7 @@ final class Admin {
 
 	private function initHooks() {
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueueScriptsAndStyles' ] );
+		add_action( 'admin_print_scripts', [ $this, 'printInlineJs' ] );
 
 		if ( $this->skautisGateway->isInitialized() ) {
 			if ( $this->skautisGateway->getSkautisInstance()->getUser()->isLoggedIn() ) {
@@ -65,6 +66,16 @@ final class Admin {
 		);
 	}
 
+	public function printInlineJs() {
+		?>
+		<script type="text/javascript">
+            //<![CDATA[
+            window.skautis = window.skautis || {};
+            //]]>
+		</script>
+		<?php
+	}
+
 	public function addLogoutLinkToAdminBar( \WP_Admin_Bar $wpAdminBar ) {
 		if ( ! function_exists( 'is_admin_bar_showing' ) ) {
 			return;
@@ -85,12 +96,12 @@ final class Admin {
 			$parent = 'my-account';
 		}
 
-		$wpAdminBar->add_menu( array(
+		$wpAdminBar->add_menu( [
 			'parent' => $parent,
 			'id'     => SKAUTISINTEGRATION_NAME . '_adminBar_logout',
 			'title'  => esc_html__( 'Log Out (too from skautIS)', 'skautis-integration' ),
 			'href'   => $this->wpLoginLogout->getLogoutUrl(),
-		) );
+		] );
 	}
 
 }

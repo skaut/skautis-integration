@@ -64,6 +64,7 @@ return array(
     'SkautisIntegration\\Rules\\Rule\\All' => $baseDir . '/src/rules/Rule/All.php',
     'SkautisIntegration\\Rules\\Rule\\Func' => $baseDir . '/src/rules/Rule/Func.php',
     'SkautisIntegration\\Rules\\Rule\\Membership' => $baseDir . '/src/rules/Rule/Membership.php',
+    'SkautisIntegration\\Rules\\Rule\\Qualification' => $baseDir . '/src/rules/Rule/Qualification.php',
     'SkautisIntegration\\Rules\\Rule\\Role' => $baseDir . '/src/rules/Rule/Role.php',
     'SkautisIntegration\\Rules\\RulesInit' => $baseDir . '/src/rules/RulesInit.php',
     'SkautisIntegration\\Rules\\RulesManager' => $baseDir . '/src/rules/RulesManager.php',

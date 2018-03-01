@@ -106,6 +106,10 @@ class Role implements IRule {
 
 		}
 
+		if ( ! is_array( $userRoles ) ) {
+			return [];
+		}
+
 		return $userRoles;
 	}
 
@@ -124,21 +128,24 @@ class Role implements IRule {
 		// logic for determine in / not_in range
 		$inNotinNegation = 2;
 		switch ( $rolesOperator ) {
-			case 'in': {
-				$inNotinNegation = 0;
-				break;
-			}
-			case 'not_in': {
-				$inNotinNegation = 1;
-				break;
-			}
-			default: {
-				$inNotinNegation = 2;
-				if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-					throw new \Exception( 'Roles operator: "' . $rolesOperator . '" is not declared.' );
+			case 'in':
+				{
+					$inNotinNegation = 0;
+					break;
 				}
-				break;
-			}
+			case 'not_in':
+				{
+					$inNotinNegation = 1;
+					break;
+				}
+			default:
+				{
+					$inNotinNegation = 2;
+					if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+						throw new \Exception( 'Roles operator: "' . $rolesOperator . '" is not declared.' );
+					}
+					break;
+				}
 		}
 
 		$userRoles = $this->getUserRolesWithUnitIds();
@@ -151,20 +158,28 @@ class Role implements IRule {
 					$userRoleUnitId = $this->clearUnitId( $userRoleUnitId );
 
 					switch ( $unitOperator ) {
-						case 'equal': {
-							$userPass += ( $userRoleUnitId === $unitId );
-							break;
-						}
-						case 'begins_with': {
-							$userPass += ( substr( $userRoleUnitId, 0, strlen( $unitId ) ) === $unitId );
-							break;
-						}
-						default: {
-							if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-								throw new \Exception( 'Unit operator: "' . $unitOperator . '" is not declared.' );
+						case 'equal':
+							{
+								$userPass += ( $userRoleUnitId === $unitId );
+								break;
 							}
-							break;
-						}
+						case 'begins_with':
+							{
+								$userPass += ( substr( $userRoleUnitId, 0, strlen( $unitId ) ) === $unitId );
+								break;
+							}
+						case 'any':
+							{
+								$userPass += 1;
+								break;
+							}
+						default:
+							{
+								if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+									throw new \Exception( 'Unit operator: "' . $unitOperator . '" is not declared.' );
+								}
+								return false;
+							}
 					}
 
 				}

@@ -71,5 +71,28 @@
             return !$queryBuilder.find('.has-error').length;
 
         });
+
+        $queryBuilder.on('change.skautis_rules_ui_helper', function () {
+            $queryBuilder.off('change.skautis_rules_ui_helper');
+            setTimeout(function () {
+                $queryBuilder.on('change.skautis_rule_unitnumber_select', '.skautis-rule-unitnumber-select', function () {
+                    var $input = jQuery(this).parent().find('.skautis-rule-unitnumber-input');
+                    if (jQuery(this).val() === 'any') {
+                        $input.fadeOut();
+                        if ($input.val() === '') {
+                            $input.val('0').trigger('change');
+                        }
+                    } else {
+                        $input.fadeIn();
+                    }
+                });
+            }, 100);
+        });
+
+        $queryBuilder.find('.skautis-rule-unitnumber-select').each(function () {
+            if (jQuery(this).val() === 'any') {
+                jQuery(this).parent().find('.skautis-rule-unitnumber-input').hide();
+            }
+        });
     }
 })(jQuery);

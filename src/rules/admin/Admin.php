@@ -105,7 +105,8 @@ final class Admin {
 				<button type="button" class="handlediv" aria-expanded="true"><span
 						class="screen-reader-text"><?php _e( 'Zobrazit / skrýt panel: Pravidla', 'skautis-integration' ); ?></span><span
 						class="toggle-indicator" aria-hidden="true"></span></button>
-				<h2 class="hndle ui-sortable-handle"><span><?php _e( 'Zadejte podmínky pro splnění pravidla', 'skautis-integration' ); ?></span>
+				<h2 class="hndle ui-sortable-handle">
+					<span><?php _e( 'Zadejte podmínky pro splnění pravidla', 'skautis-integration' ); ?></span>
 				</h2>
 				<div class="inside" style="padding: 0.75em 1.5em 1.25em 1.5em;">
 					<label class="screen-reader-text"
@@ -172,6 +173,14 @@ final class Admin {
 		wp_enqueue_script(
 			SKAUTISINTEGRATION_NAME . '_rules_func',
 			$this->adminDirUrl . 'js/skautis-rules-func.js',
+			[],
+			SKAUTISINTEGRATION_VERSION,
+			false
+		);
+
+		wp_enqueue_script(
+			SKAUTISINTEGRATION_NAME . '_rules_qualification',
+			$this->adminDirUrl . 'js/skautis-rules-qualification.js',
 			[],
 			SKAUTISINTEGRATION_VERSION,
 			false
@@ -253,6 +262,12 @@ final class Admin {
                 data.validation = func.validation.call(func);
                 data.valueGetter = func.valueGetter.bind(func);
                 data.valueSetter = func.valueSetter.bind(func);
+            } else if (data.input === "qualificationInput") {
+                var qualification = new Qualification(data.values);
+                data.input = qualification.input.bind(qualification);
+                data.validation = qualification.validation.call(qualification);
+                data.valueGetter = qualification.valueGetter.bind(qualification);
+                data.valueSetter = qualification.valueSetter.bind(qualification);
             }
 
 			<?php

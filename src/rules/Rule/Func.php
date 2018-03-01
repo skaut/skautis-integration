@@ -166,12 +166,17 @@ class Func implements IRule {
 								$userPass += ( substr( $userFuncUnitId, 0, strlen( $unitId ) ) === $unitId );
 								break;
 							}
+						case 'any':
+							{
+								$userPass += 1;
+								break;
+							}
 						default:
 							{
 								if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 									throw new \Exception( 'Unit operator: "' . $unitOperator . '" is not declared.' );
 								}
-								break;
+								return false;
 							}
 					}
 

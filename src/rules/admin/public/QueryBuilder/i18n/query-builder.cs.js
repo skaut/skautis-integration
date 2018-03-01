@@ -47,7 +47,8 @@
             "is_empty": "je prázdné",
             "is_not_empty": "není prázdné",
             "is_null": "je vyplněno",
-            "is_not_null": "není vyplněno"
+            "is_not_null": "není vyplněno",
+            "any":"je jakékoliv"
         },
         "errors": {
             "no_filter": "není vybrán žádný filtr",
