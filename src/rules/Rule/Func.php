@@ -83,7 +83,7 @@ class Func implements IRule {
 
 			$result = [];
 
-			if ( !property_exists($userFuncs, 'FunctionAllOutput') || ! isset( $userFuncs->FunctionAllOutput ) || ! isset( $userFuncs->FunctionAllOutput[0] ) ) {
+			if ( ! property_exists( $userFuncs, 'FunctionAllOutput' ) || ! isset( $userFuncs->FunctionAllOutput ) || ! isset( $userFuncs->FunctionAllOutput[0] ) ) {
 				return $result;
 			}
 
@@ -104,6 +104,10 @@ class Func implements IRule {
 
 		}
 
+		if ( ! is_array( $userFuncs ) ) {
+			return [];
+		}
+
 		return $userFuncs;
 	}
 
@@ -122,21 +126,24 @@ class Func implements IRule {
 		// logic for determine in / not_in range
 		$inNotinNegation = 2;
 		switch ( $funcsOperator ) {
-			case 'in': {
-				$inNotinNegation = 0;
-				break;
-			}
-			case 'not_in': {
-				$inNotinNegation = 1;
-				break;
-			}
-			default: {
-				$inNotinNegation = 2;
-				if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-					throw new \Exception( 'Function operator: "' . $funcsOperator . '" is not declared.' );
+			case 'in':
+				{
+					$inNotinNegation = 0;
+					break;
 				}
-				break;
-			}
+			case 'not_in':
+				{
+					$inNotinNegation = 1;
+					break;
+				}
+			default:
+				{
+					$inNotinNegation = 2;
+					if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+						throw new \Exception( 'Function operator: "' . $funcsOperator . '" is not declared.' );
+					}
+					break;
+				}
 		}
 
 		$userFuncs = $this->getUserFuncsWithUnitIds();
@@ -149,20 +156,23 @@ class Func implements IRule {
 					$userFuncUnitId = $this->clearUnitId( $userFuncUnitId );
 
 					switch ( $unitOperator ) {
-						case 'equal': {
-							$userPass += ( $userFuncUnitId === $unitId );
-							break;
-						}
-						case 'begins_with': {
-							$userPass += ( substr( $userFuncUnitId, 0, strlen( $unitId ) ) === $unitId );
-							break;
-						}
-						default: {
-							if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-								throw new \Exception( 'Unit operator: "' . $unitOperator . '" is not declared.' );
+						case 'equal':
+							{
+								$userPass += ( $userFuncUnitId === $unitId );
+								break;
 							}
-							break;
-						}
+						case 'begins_with':
+							{
+								$userPass += ( substr( $userFuncUnitId, 0, strlen( $unitId ) ) === $unitId );
+								break;
+							}
+						default:
+							{
+								if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+									throw new \Exception( 'Unit operator: "' . $unitOperator . '" is not declared.' );
+								}
+								break;
+							}
 					}
 
 				}

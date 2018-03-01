@@ -31,10 +31,6 @@ final class SkautisLogin {
 			$this->skautisGateway->getSkautisInstance()->setLoginData( $data );
 
 			if ( ! $this->isUserLoggedInSkautis() ) {
-				if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-					throw new \Exception( __( 'Přihlášení přes skautIS se nezdařilo', 'skautis-integration' ) );
-				}
-
 				return false;
 			}
 
