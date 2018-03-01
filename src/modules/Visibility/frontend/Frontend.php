@@ -153,7 +153,7 @@ final class Frontend {
 			];
 
 			foreach ( $parentPostWithRules['rules'] as $rule ) {
-				$result[ $parentPostWithRules['id'] ]['rules'][] = get_the_title( $rule['skautis-integration_rules'] );
+				$result[ $parentPostWithRules['id'] ]['rules'][$rule['skautis-integration_rules']] = get_the_title( $rule['skautis-integration_rules'] );
 			}
 		}
 

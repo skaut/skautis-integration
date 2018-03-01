@@ -1,68 +1,74 @@
 (function ($) {
-	'use strict';
+    'use strict';
 
-	var $repeater = $('#repeater_post');
+    var $repeater = $('#repeater_post');
 
-	if ($repeater.length) {
-		$repeater.repeater({
-			initEmpty: true,
-			defaultValues: {
-				'role': $('select[name="skautis-integration_rules"]').first().find('option:selected').val()
-			},
-			show: function () {
-				$(this).slideDown(150);
-				updateAvailableOptions();
-			},
-			hide: function (deleteElement) {
-				$(this).slideUp(150, deleteElement);
-				setTimeout(function () {
-					updateAvailableOptions();
-				}, 250);
-			},
-			ready: function () {
-				reinitSelect2();
-			},
-			isFirstItemUndeletable: true
-		});
-		$repeater.setList(window.rulesData);
+    if ($repeater.length) {
+        $repeater.repeater({
+            initEmpty: true,
+            defaultValues: {
+                'role': $('select[name="skautis-integration_rules"]').first().find('option:selected').val()
+            },
+            show: function () {
+                $(this).slideDown(150);
+                updateAvailableOptions();
+            },
+            hide: function (deleteElement) {
+                $(this).slideUp(150, deleteElement);
+                setTimeout(function () {
+                    updateAvailableOptions();
+                }, 250);
+            },
+            ready: function () {
+                reinitSelect2();
+            },
+            isFirstItemUndeletable: true
+        });
+        $repeater.setList(window.rulesData);
 
-	} else {
-		reinitSelect2();
-	}
+    } else {
+        reinitSelect2();
+    }
 
-	function reinitSelect2() {
-		jQuery('select.select2').select2({
-			placeholder: 'Vyberte pravidlo...'
-		}).on('change.skautis_modules_visibility_admin', updateAvailableOptions);
-	}
+    function reinitSelect2() {
+        jQuery('select.select2').select2({
+            placeholder: 'Vyberte pravidlo...'
+        }).on('change.skautis_modules_visibility_admin', updateAvailableOptions);
+    }
 
-	function updateAvailableOptions() {
-		var usedOptions = [],
-			$selectRules = {};
+    function updateAvailableOptions() {
+        var usedOptions = [],
+            $selectRules = {},
+            $rulesUsedInParents = {};
 
-		setTimeout(function () {
+        setTimeout(function () {
 
-			$selectRules = jQuery('select.rule');
+            $selectRules = jQuery('select.rule');
 
-			$selectRules.each(function () {
-				usedOptions.push(jQuery(this).val());
-			});
+            $selectRules.each(function () {
+                usedOptions.push(jQuery(this).val());
+            });
 
-			$selectRules.find('option').removeAttr('disabled');
+            $selectRules.find('option').removeAttr('disabled');
 
-			for (var key in usedOptions) {
-				if (usedOptions.hasOwnProperty(key)) {
-					$selectRules.find('option[value="' + usedOptions[key] + '"]').attr('disabled', 'disabled');
-				}
-			}
+            $rulesUsedInParents = jQuery('#skautis_modules_visibility_parentRules').find('li[data-rule]');
+            $rulesUsedInParents.each(function () {
+                usedOptions.push(jQuery(this).data('rule'));
+            });
 
-			$selectRules.each(function () {
-				jQuery(this).find('option:selected').removeAttr('disabled');
-			});
+            for (var key in usedOptions) {
+                if (usedOptions.hasOwnProperty(key)) {
+                    $selectRules.find('option[value="' + usedOptions[key] + '"]').attr('disabled', 'disabled');
+                }
+            }
 
-			reinitSelect2();
+            $selectRules.each(function () {
+                jQuery(this).find('option:selected').removeAttr('disabled');
+            });
 
-		}, 0);
-	}
+            reinitSelect2();
+
+        }, 0);
+    }
 
 })(jQuery);

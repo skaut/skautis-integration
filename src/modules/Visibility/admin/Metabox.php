@@ -90,7 +90,7 @@ final class Metabox {
 			if ( ! empty( $parentRules ) ) {
 				?>
 				<h4><?php _e( 'Pravidla převzatá z nadřazených stránek', 'skautis-integration' ); ?>:</h4>
-				<ul class="skautis-admin-list">
+				<ul id="skautis_modules_visibility_parentRules" class="skautis-admin-list">
 					<?php
 					foreach ( $parentRules as $parentRule ) {
 						?>
@@ -98,9 +98,9 @@ final class Metabox {
 							<strong><?php echo esc_html( $parentRule['parentPostTitle'] ); ?></strong>
 							<ul>
 								<?php
-								foreach ( $parentRule['rules'] as $rule ) {
+								foreach ( $parentRule['rules'] as $ruleId => $rule ) {
 									?>
-									<li><?php echo esc_html( $rule ); ?></li>
+									<li data-rule="<?php echo esc_attr( $ruleId ); ?>"><?php echo esc_html( $rule ); ?></li>
 									<?php
 								}
 								?>
