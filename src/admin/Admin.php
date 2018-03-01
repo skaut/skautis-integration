@@ -42,17 +42,17 @@ final class Admin {
 	public function enqueueScriptsAndStyles() {
 		wp_enqueue_style(
 			'select2',
-			'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css',
+			'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css',
 			[],
-			'4.0.3',
+			'4.0.5',
 			'all'
 		);
 
 		wp_enqueue_script(
 			'select2',
-			'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js',
+			'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js',
 			[ 'jquery' ],
-			'4.0.3',
+			'4.0.5',
 			false
 		);
 

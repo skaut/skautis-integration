@@ -69,17 +69,17 @@ class UsersManagement {
 
 		wp_enqueue_style(
 			'datatables',
-			'https://cdn.datatables.net/v/dt/dt-1.10.15/r-2.1.1/datatables.min.css',
+			'https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.16/css/jquery.dataTables.min.css',
 			[],
-			'1.10.15',
+			'1.10.16',
 			'all'
 		);
 
 		wp_enqueue_script(
 			'datatables',
-			'https://cdn.datatables.net/v/dt/dt-1.10.15/r-2.1.1/datatables.min.js',
+			'https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.16/js/jquery.dataTables.min.js',
 			[ 'jquery' ],
-			'1.10.15',
+			'1.10.16',
 			true
 		);
 
