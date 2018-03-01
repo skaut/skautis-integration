@@ -3,8 +3,10 @@
 
     var $dataTable = $('.skautisUserManagementTable').DataTable({
         responsive: true,
+        pageLength: 25,
+        stateSave: true,
         language: {
-            url: 'https://cdn.datatables.net/plug-ins/1.10.15/i18n/Czech.json',
+            url: 'https://cdn.datatables.net/plug-ins/1.10.16/i18n/Czech.json',
             search: "Hledat",
             clear: "Zrušit"
         },

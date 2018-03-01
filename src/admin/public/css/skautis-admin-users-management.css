@@ -31,11 +31,11 @@
 	-webkit-transform: translateY(-50%);
 	-ms-transform: translateY(-50%);
 	transform: translateY(-50%);
-	background: url(https://cdn.datatables.net/1.10.15/images/sort_asc.png) center center no-repeat;
+	background: url(https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.16/images/sort_asc.png) center center no-repeat;
 }
 
 .skautisUserManagementTable th.sorting_desc span:after {
-	background-image: url(https://cdn.datatables.net/1.10.15/images/sort_desc.png);
+	background-image: url(https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.16/images/sort_desc.png);
 }
 
 #TB_ajaxContent .content {
