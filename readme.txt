@@ -40,7 +40,7 @@ Plugin po aktivaci bude vyžadovat APP ID, bez toho nebude plugin vůbec fungova
 
 = 1.1.12 =
 * Nové pravidlo: kvalifikace
-* Pravidla: u členství, rolí a funkcí lze nyní zvolit možnost "jakákoliv organizační jednotka"
+* Pravidla: u členství, rolí a funkcí lze nyní zvolit možnost "jakékoliv" u evidenčního čísla jednotky
 * Správa uživatelů - vyšší výchozí počet záznamů na stránku, ukládání stavu tabulky = po znovunačtení stránky se tabulka zobrazí v původním stavu
 * Modul Viditelnost - pravidla převzatá z nadřazených stránek se u podřízených stránek označí ve výběru jako vybraná (disabled)
 * Aktualizace JS knihoven
