@@ -17,7 +17,9 @@ final class RulesManager {
 		$this->skautisGateway = $skautisGateway;
 		$this->wpLoginLogout  = $wpLoginLogout;
 		$this->rules          = $this->initRules();
-		( new Admin( $this, $wpLoginLogout, $skautisGateway ) );
+		if ( is_admin() ) {
+			( new Admin( $this, $wpLoginLogout, $skautisGateway ) );
+		}
 	}
 
 	private function initRules(): array {

@@ -26,24 +26,15 @@ final class Admin {
 	}
 
 	private function initHooks() {
-		if ( ! is_admin() ) {
-			return;
-		}
-
 		add_action( 'add_meta_boxes', [ $this, 'addMetaboxForRulesField' ] );
 		add_action( 'save_post', [ $this, 'saveRulesCustomField' ] );
 
 		add_action( 'edit_form_after_title', [ $this, 'addRulesUi' ] );
 
-		add_action( 'admin_enqueue_scripts', function () {
-			if ( get_current_screen()->id != RulesInit::RULES_TYPE_SLUG || get_post_type() != RulesInit::RULES_TYPE_SLUG ) {
-				return;
-			}
+		add_action( 'admin_enqueue_scripts', [ $this, 'enqueueStyles' ] );
+		add_action( 'admin_enqueue_scripts', [ $this, 'enqueueScripts' ] );
 
-			add_action( 'admin_enqueue_scripts', [ $this, 'enqueueStyles' ] );
-			add_action( 'admin_enqueue_scripts', [ $this, 'enqueueScripts' ] );
-			add_action( 'admin_footer', [ $this, 'initRulesBuilder' ] );
-		}, 5 );
+		add_action( 'admin_footer', [ $this, 'initRulesBuilder' ], 100 );
 	}
 
 	public function addMetaboxForRulesField( string $postType ) {
@@ -96,7 +87,7 @@ final class Admin {
 	}
 
 	public function addRulesUi( \WP_Post $post ) {
-		if ( $post->post_type != RulesInit::RULES_TYPE_SLUG ) {
+		if ( get_current_screen()->id != RulesInit::RULES_TYPE_SLUG || get_post_type() != RulesInit::RULES_TYPE_SLUG ) {
 			return;
 		}
 		?>
@@ -128,6 +119,10 @@ final class Admin {
 	}
 
 	public function enqueueStyles() {
+		if ( get_current_screen()->id != RulesInit::RULES_TYPE_SLUG || get_post_type() != RulesInit::RULES_TYPE_SLUG ) {
+			return;
+		}
+
 		wp_enqueue_style(
 			'font-awesome',
 			'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css',
@@ -154,6 +149,10 @@ final class Admin {
 	}
 
 	public function enqueueScripts() {
+		if ( get_current_screen()->id != RulesInit::RULES_TYPE_SLUG || get_post_type() != RulesInit::RULES_TYPE_SLUG ) {
+			return;
+		}
+
 		wp_enqueue_script(
 			SKAUTISINTEGRATION_NAME . '_rules_role',
 			$this->adminDirUrl . 'js/skautis-rules-role.js',
@@ -199,7 +198,7 @@ final class Admin {
 			'https://cdn.jsdelivr.net/npm/jQuery-QueryBuilder@2.4.5/dist/js/query-builder.standalone.min.js',
 			[ 'jquery' ],
 			false,
-			false
+			true
 		);
 
 		wp_enqueue_script(
@@ -220,9 +219,14 @@ final class Admin {
 	}
 
 	public function initRulesBuilder() {
+		if ( get_current_screen()->id != RulesInit::RULES_TYPE_SLUG || get_post_type() != RulesInit::RULES_TYPE_SLUG ) {
+			return;
+		}
+
 		if ( ! $this->skautisGateway->isInitialized() || ! $this->skautisGateway->getSkautisInstance()->getUser()->isLoggedIn( true ) ) {
 			return;
 		}
+
 		?>
 		<script>
             window.skautisQueryBuilderFilters = [];
