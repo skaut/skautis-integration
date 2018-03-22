@@ -83,7 +83,7 @@ class Func implements IRule {
 
 			$result = [];
 
-			if ( ! property_exists( $userFuncs, 'FunctionAllOutput' ) || empty( $userFuncs->FunctionAllOutput ) || empty( $userFuncs->FunctionAllOutput[0] ) ) {
+			if ( ! $userFuncs || ! property_exists( $userFuncs, 'FunctionAllOutput' ) || empty( $userFuncs->FunctionAllOutput ) || ! is_array( $userFuncs->FunctionAllOutput ) || empty( $userFuncs->FunctionAllOutput[0] ) ) {
 				return $result;
 			}
 
