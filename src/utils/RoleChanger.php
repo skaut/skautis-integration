@@ -35,9 +35,10 @@ class RoleChanger {
 
 		$currentUserRoles = $this->skautisGateway->getSkautisInstance()->UserManagement->UserRoleAll( [
 			'ID_Login' => $this->skautisGateway->getSkautisInstance()->getUser()->getLoginId(),
-			'ID_User'  => $this->skautisGateway->getSkautisInstance()->UserManagement->UserDetail()->ID
+			'ID_User'  => $this->skautisGateway->getSkautisInstance()->UserManagement->UserDetail()->ID,
+			'IsActive' => true
 		] );
-		$currentUserRole  = $this->skautisGateway->getSkautisInstance()->getUser()->getRoleId();
+		$currentUserRole = $this->skautisGateway->getSkautisInstance()->getUser()->getRoleId();
 
 		$result .= '
 <form method="post" action="' . esc_attr( Helpers::getCurrentUrl() ) . '" novalidate="novalidate">
