@@ -38,6 +38,9 @@ Plugin po aktivaci bude vyžadovat APP ID, bez toho nebude plugin vůbec fungova
 
 == Changelog ==
 
+= 1.1.14 =
+* Ve výběru rolí na stránce "Správa uživatelů" se nyní zobrazují jen aktivní role podle skautISu
+
 = 1.1.13 =
 * Oprava zpracování funkcí při přihlášení/registraci
 
