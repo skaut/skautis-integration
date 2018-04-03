@@ -77,8 +77,8 @@ class Func implements IRule {
 		if ( $userFuncs === null ) {
 			$userDetail = $this->skautisGateway->getSkautisInstance()->UserManagement->UserDetail();
 			$userFuncs  = $this->skautisGateway->getSkautisInstance()->OrganizationUnit->FunctionAllPerson( [
-				'ID_Person' => $userDetail->ID_Person,
-				'isValid'   => true
+				'ID_Person' => $userDetail->ID_Person/*,
+				'isValid'   => true*/
 			] );
 
 			$result = [];
