@@ -3,7 +3,7 @@
  * Plugin Name:       skautIS integration
  * Plugin URI:        https://github.com/skaut/skautis-integration
  * Description:       Integrace WordPressu se skautISem
- * Version:           1.1.14
+ * Version:           1.1.15
  * Author:            David Odehnal
  * Author URI:        https://davidodehnal.cz/
  * Text Domain:       skautis-integration
@@ -22,7 +22,7 @@ define( 'SKAUTISINTEGRATION_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 define( 'SKAUTISINTEGRATION_PATH', plugin_dir_path( __FILE__ ) );
 define( 'SKAUTISINTEGRATION_URL', plugin_dir_url( __FILE__ ) );
 define( 'SKAUTISINTEGRATION_NAME', 'skautis-integration' );
-define( 'SKAUTISINTEGRATION_VERSION', '1.1.14' );
+define( 'SKAUTISINTEGRATION_VERSION', '1.1.15' );
 
 class SkautisIntegration {
 
@@ -63,7 +63,7 @@ class SkautisIntegration {
 	}
 
 	protected function isCompatibleVersionOfWp() {
-		if ( isset( $GLOBALS['wp_version'] ) && version_compare( $GLOBALS['wp_version'], '4.8', '>=' ) ) {
+		if ( isset( $GLOBALS['wp_version'] ) && version_compare( $GLOBALS['wp_version'], '4.9.6', '>=' ) ) {
 			return true;
 		}
 
@@ -81,7 +81,7 @@ class SkautisIntegration {
 	public function activation() {
 		if ( ! $this->isCompatibleVersionOfWp() ) {
 			deactivate_plugins( SKAUTISINTEGRATION_PLUGIN_BASENAME );
-			wp_die( __( 'Plugin skautIS integrace vyžaduje verzi WordPress 4.8 nebo vyšší!', 'skautis-integration' ) );
+			wp_die( __( 'Plugin skautIS integrace vyžaduje verzi WordPress 4.9.6 nebo vyšší!', 'skautis-integration' ) );
 		}
 
 		if ( ! $this->isCompatibleVersionOfPhp() ) {
