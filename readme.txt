@@ -4,7 +4,7 @@ Tags: skaut, multisite, plugin, shortcode, skautIS, registrace
 Requires at least: 4.9.6
 Tested up to: 5.0
 Requires PHP: 7.0
-Stable tag: 1.1.14
+Stable tag: 1.1.15
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -37,6 +37,9 @@ Plugin po aktivaci bude vyžadovat APP ID, bez toho nebude plugin vůbec fungova
 
 
 == Changelog ==
+
+= 1.1.15
+* Nejnižší požadovaná verze změněna na 4.9.6
 
 = 1.1.14 =
 * Ve výběru rolí na stránce "Správa uživatelů" se nyní zobrazují jen aktivní role podle skautISu
