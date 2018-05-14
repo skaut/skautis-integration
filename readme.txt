@@ -1,7 +1,7 @@
 === skautIS integrace ===
 Contributors: davidulus, skaut, kalich5
 Tags: skaut, multisite, plugin, shortcode, skautIS, registrace
-Requires at least: 4.8
+Requires at least: 4.9.6
 Tested up to: 5.0
 Requires PHP: 7.0
 Stable tag: 1.1.14
@@ -13,7 +13,7 @@ Implementace přihlašování, registrace a dalších služeb z informačního s
 == Description ==
 
 <h2> Minimální požadavky</h2>
-- WordPress 4.8 a vyšší
+- WordPress 4.9.6 a vyšší
 - PHP 7.0 a vyšší
 
 Implementace přihlašování, registrace a dalších služeb z informačního systému skautIS do WordPressu.
