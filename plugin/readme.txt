@@ -38,7 +38,7 @@ Plugin po aktivaci bude vyžadovat APP ID, bez toho nebude plugin vůbec fungova
 
 == Changelog ==
 
-= 1.1.15
+= 1.1.15 =
 * Nejnižší požadovaná verze změněna na 4.9.6
 
 = 1.1.14 =
