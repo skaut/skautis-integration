@@ -9,14 +9,14 @@
       "email": "info@davidodehnal.cz"
     }
   ],
-	"config": {
-		"optimize-autoloader": true,
-		"classmap-authoritative": true,
-		"notify-on-install": false,
-		"platform": {
-			"php": "7.1"
-		}
-	},
+  "config": {
+    "optimize-autoloader": true,
+    "classmap-authoritative": true,
+    "notify-on-install": false,
+    "platform": {
+      "php": "7.1"
+    }
+  },
   "require": {
     "php": "^7.0",
     "pimple/pimple": "~3.0",
