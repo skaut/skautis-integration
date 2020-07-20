@@ -1,7 +1,7 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
     "content-hash": "33164a777c369c475c1e6125addaa8fd",
@@ -107,16 +107,16 @@
         },
         {
             "name": "skautis/skautis",
-            "version": "v2.1.0",
+            "version": "v2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/skaut/Skautis.git",
-                "reference": "090fddb9d7d6da2467f52be9f6ff4db16724c1c5"
+                "reference": "e770502c4478bf6255b94cadfe83e9b5cb2ce0c2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/skaut/Skautis/zipball/090fddb9d7d6da2467f52be9f6ff4db16724c1c5",
-                "reference": "090fddb9d7d6da2467f52be9f6ff4db16724c1c5",
+                "url": "https://api.github.com/repos/skaut/Skautis/zipball/e770502c4478bf6255b94cadfe83e9b5cb2ce0c2",
+                "reference": "e770502c4478bf6255b94cadfe83e9b5cb2ce0c2",
                 "shasum": ""
             },
             "require": {
@@ -124,9 +124,9 @@
                 "php": ">=5.6"
             },
             "require-dev": {
-                "fabpot/php-cs-fixer": "@stable",
-                "mockery/mockery": "0.9.*",
-                "phpunit/phpunit": "4.5.*"
+                "friendsofphp/php-cs-fixer": "^2.15",
+                "mockery/mockery": "^1.2",
+                "phpunit/phpunit": "^5.7"
             },
             "suggest": {
                 "skautis/nette": "Integrace Skautis do Nette",
@@ -161,7 +161,7 @@
                 "soap",
                 "wsdl"
             ],
-            "time": "2017-03-07T09:02:13+00:00"
+            "time": "2019-09-12T12:19:19+00:00"
         }
     ],
     "packages-dev": [],
@@ -176,5 +176,6 @@
     "platform-dev": [],
     "platform-overrides": {
         "php": "7.1"
-    }
+    },
+    "plugin-api-version": "1.1.0"
 }
