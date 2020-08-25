@@ -4,11 +4,15 @@ updates:
   directory: "/"
   schedule:
     interval: daily
-    time: "01:00"
-  open-pull-requests-limit: 10
+  assignees:
+    - marekdedic
+    - davidulus
+    - kalich5
 - package-ecosystem: github-actions
   directory: "/"
   schedule:
     interval: daily
-    time: "01:00"
-  open-pull-requests-limit: 10
+  assignees:
+    - marekdedic
+    - davidulus
+    - kalich5
