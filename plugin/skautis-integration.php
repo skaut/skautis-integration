@@ -4,8 +4,8 @@
  * Plugin URI:        https://github.com/skaut/skautis-integration
  * Description:       Integrace WordPressu se skautISem
  * Version:           1.1.16
- * Author:            David Odehnal
- * Author URI:        https://davidodehnal.cz/
+ * Author:            Junák - český skaut
+ * Author URI:        https://github.com/skaut
  * Text Domain:       skautis-integration
  */
 
