@@ -22,7 +22,7 @@ class Revisions {
 	public function filterMeta( $meta ): array {
 		$metaFiltered = [];
 		foreach ( $meta as $key => $value ) {
-			if ( $key{0} != "_" ) {
+			if ( $key[0] != "_" ) {
 				$metaFiltered[ $key ] = $value;
 			}
 		}
