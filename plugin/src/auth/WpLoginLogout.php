@@ -50,10 +50,10 @@ final class WpLoginLogout {
 					}
 				}
 
-				$returnUrl = $_GET['ReturnUrl'];
+				$returnUrl = esc_url_raw( $_GET['ReturnUrl'] );
 
 				if ( is_user_logged_in() && get_current_user_id() === $wpUser->ID ) {
-					wp_safe_redirect( esc_url_raw( $returnUrl ), 302 );
+					wp_safe_redirect( $returnUrl, 302 );
 					exit;
 				}
 
@@ -64,7 +64,7 @@ final class WpLoginLogout {
 
 				do_action( 'wp_login', $wpUser->user_login, $wpUser );
 
-				wp_safe_redirect( esc_url_raw( $returnUrl ), 302 );
+				wp_safe_redirect( $returnUrl, 302 );
 				exit;
 			}
 		}

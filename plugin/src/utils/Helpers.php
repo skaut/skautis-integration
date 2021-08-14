@@ -55,6 +55,7 @@ class Helpers {
 
 	public static function getVariableFromUrl( string $url, string $variableName ): string {
 		$result = [];
+		$url    = esc_url_raw( $url );
 		if ( preg_match( "~" . $variableName . "=([^\&,\s,\/,\#,\%,\?]*)~", $url, $result ) ) {
 			if ( is_array( $result ) && isset( $result[1] ) && $result[1] ) {
 				return sanitize_text_field( $result[1] );

@@ -38,7 +38,7 @@ final class LoginForm {
 		return '
 		<p style="margin-bottom: 0.3em;">
 			<a class="button button-primary button-hero button-skautis" style="float: none; width: 100%; text-align: center;"
-			   href="' . $this->wpLoginLogout->getLoginUrl() . '">' . __( 'Log in with skautIS', 'skautis-integration' ) . '</a>
+			   href="' . esc_attr( $this->wpLoginLogout->getLoginUrl() ) . '">' . __( 'Log in with skautIS', 'skautis-integration' ) . '</a>
 			   <br/>
 		</p>
 		<br/>
