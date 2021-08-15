@@ -4,7 +4,7 @@ Tags: skaut, multisite, plugin, shortcode, skautIS, registrace
 Requires at least: 5.0
 Tested up to: 5.7
 Requires PHP: 7.0
-Stable tag: 1.1.16
+Stable tag: 1.1.17
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -37,8 +37,10 @@ Plugin po aktivaci bude vyžadovat APP ID, bez toho nebude plugin vůbec fungova
 
 
 == Changelog ==
+= 1.1.17 =
+* oprava chyb
 
-= 1.1.165 =
+= 1.1.16 =
 * oprave kompatibility s PHP 8.x
 
 = 1.1.15 =
