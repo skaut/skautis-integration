@@ -16,7 +16,7 @@ final class Admin {
 	private $metabox;
 	private $adminDirUrl = '';
 
-	public function __construct( array $postTypes = array(), RulesManager $rulesManager, Frontend $frontend ) {
+	public function __construct( array $postTypes, RulesManager $rulesManager, Frontend $frontend ) {
 		$this->postTypes    = $postTypes;
 		$this->rulesManager = $rulesManager;
 		$this->frontend     = $frontend;

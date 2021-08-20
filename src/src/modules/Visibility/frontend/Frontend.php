@@ -16,7 +16,7 @@ final class Frontend {
 	private $skautisLogin;
 	private $wpLoginLogout;
 
-	public function __construct( array $postTypes = array(), RulesManager $rulesManager, SkautisLogin $skautisLogin, WpLoginLogout $wpLoginLogout ) {
+	public function __construct( array $postTypes, RulesManager $rulesManager, SkautisLogin $skautisLogin, WpLoginLogout $wpLoginLogout ) {
 		$this->postTypes     = $postTypes;
 		$this->rulesManager  = $rulesManager;
 		$this->skautisLogin  = $skautisLogin;
@@ -127,7 +127,7 @@ final class Frontend {
 		);
 	}
 
-	private function proccessRulesAndHidePosts( bool $userIsLoggedInSkautis, array $rules = array(), array &$posts, int $postKey, \WP_Query $wpQuery, string $postType, &$postsWereFiltered = false ) {
+	private function proccessRulesAndHidePosts( bool $userIsLoggedInSkautis, array $rule, array &$posts, int $postKey, \WP_Query $wpQuery, string $postType, &$postsWereFiltered = false ) {
 		if ( ! empty( $rules ) && isset( $rules[0][ SKAUTISINTEGRATION_NAME . '_rules' ] ) ) {
 			if ( ! $userIsLoggedInSkautis ||
 				 ! $this->rulesManager->checkIfUserPassedRules( $rules ) ) {
@@ -141,7 +141,7 @@ final class Frontend {
 		}
 	}
 
-	private function processRulesAndHideContent( bool $userIsLoggedInSkautis, array $rules = array(), int $postId ) {
+	private function processRulesAndHideContent( bool $userIsLoggedInSkautis, array $rules, int $postId ) {
 		if ( ! empty( $rules ) && isset( $rules[0][ SKAUTISINTEGRATION_NAME . '_rules' ] ) ) {
 			if ( ! $userIsLoggedInSkautis ) {
 				$this->hideContentExcerptComments( $postId, $this->getLoginRequiredMessage() . $this->getLoginForm(), $this->getLoginRequiredMessage() );
@@ -175,7 +175,7 @@ final class Frontend {
 		return $result;
 	}
 
-	public function filterPosts( array $posts = array(), \WP_Query $wpQuery ): array {
+	public function filterPosts( array $posts, \WP_Query $wpQuery ): array {
 		if ( empty( $posts ) ) {
 			return $posts;
 		}
