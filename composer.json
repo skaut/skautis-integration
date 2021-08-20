@@ -1,14 +1,30 @@
 {
-  "name": "skautis/WordPressIntegration",
-  "type": "library",
-  "description": "WordPress integration with skautIS",
+  "name": "skaut/wordpress-skautis-integration",
+  "description": "A WordPress plugin for integration with SkautIS",
+  "type": "wordpress-plugin",
+    "keywords": [
+        "WordPress",
+        "WordPress plugin",
+        "skaut",
+        "SkautIS"
+    ],
+  "homepage": "https://wordpress.org/plugins/skautis-integration",
+  "readme": "README.md",
   "license": "proprietary",
   "authors": [
     {
       "name": "David Odehnal",
       "email": "info@davidodehnal.cz"
+    },
+    {
+        "name": "Marek Dědič",
+        "email": "developer@dedic.eu"
     }
   ],
+  "support": {
+    "issues": "https://github.com/skaut/skautis-integration/issues",
+    "source": "https://github.com/skaut/skautis-integration"
+  },
   "config": {
     "optimize-autoloader": true,
     "classmap-authoritative": true,
@@ -22,7 +38,6 @@
     "pimple/pimple": "~3.0",
     "skautis/skautis": "~2.1"
   },
-  "minimum-stability": "stable",
   "autoload": {
     "psr-4": {
       "SkautisIntegration\\": "src/"
