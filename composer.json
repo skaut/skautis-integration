@@ -1,5 +1,5 @@
 {
-  "name": "skaut/wordpress-skautis-integration",
+  "name": "skaut/skautis-integration",
   "description": "A WordPress plugin for integration with SkautIS",
   "type": "wordpress-plugin",
     "keywords": [
@@ -43,7 +43,14 @@
       "SkautisIntegration\\": "src/"
     },
     "files": [
-      "globalFunctions.php"
+      "plugin/globalFunctions.php"
     ]
+  },
+  "require-dev": {
+    "squizlabs/php_codesniffer": "^3.6",
+    "phan/phan": "^2.7",
+    "phpmd/phpmd": "^2.10",
+    "phpcompatibility/phpcompatibility-wp": "^2.1",
+    "wp-coding-standards/wpcs": "^2.3"
   }
 }
