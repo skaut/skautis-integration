@@ -27,7 +27,7 @@
   },
   "require": {
     "php": "^7.0",
-    "pimple/pimple": "~3.0",
+    "pimple/pimple": "^3.2.3 <3.3.0",
     "skautis/skautis": "~2.1"
   },
   "require-dev": {
