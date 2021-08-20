@@ -38,26 +38,33 @@ class UsersManagement {
 	}
 
 	protected function initHooks() {
-		add_action( 'admin_menu', [
-			$this,
-			'setupUsersManagementPage'
-		], 10 );
+		add_action(
+			'admin_menu',
+			array(
+				$this,
+				'setupUsersManagementPage',
+			),
+			10
+		);
 
 		if ( ! empty( $_GET['page'] ) && $_GET['page'] == SKAUTISINTEGRATION_NAME . '_usersManagement' ) {
-			add_action( 'admin_enqueue_scripts', [ $this, 'enqueueScriptsAndStyles' ] );
+			add_action( 'admin_enqueue_scripts', array( $this, 'enqueueScriptsAndStyles' ) );
 		}
 	}
 
 	protected function checkIfUserChangeSkautisRole() {
-		add_action( 'init', function () {
-			if ( isset( $_POST['changeSkautisUserRole'], $_POST['_wpnonce'], $_POST['_wp_http_referer'] ) ) {
-				if ( check_admin_referer( SKAUTISINTEGRATION_NAME . '_changeSkautisUserRole', '_wpnonce' ) ) {
-					if ( $this->skautisLogin->isUserLoggedInSkautis() ) {
-						$this->skautisLogin->changeUserRoleInSkautis( absint( $_POST['changeSkautisUserRole'] ) );
+		add_action(
+			'init',
+			function () {
+				if ( isset( $_POST['changeSkautisUserRole'], $_POST['_wpnonce'], $_POST['_wp_http_referer'] ) ) {
+					if ( check_admin_referer( SKAUTISINTEGRATION_NAME . '_changeSkautisUserRole', '_wpnonce' ) ) {
+						if ( $this->skautisLogin->isUserLoggedInSkautis() ) {
+							$this->skautisLogin->changeUserRoleInSkautis( absint( $_POST['changeSkautisUserRole'] ) );
+						}
 					}
 				}
 			}
-		} );
+		);
 	}
 
 	public function enqueueScriptsAndStyles() {
@@ -70,7 +77,7 @@ class UsersManagement {
 		wp_enqueue_style(
 			'datatables',
 			'https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.16/css/jquery.dataTables.min.css',
-			[],
+			array(),
 			'1.10.16',
 			'all'
 		);
@@ -78,7 +85,7 @@ class UsersManagement {
 		wp_enqueue_script(
 			'datatables',
 			'https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.16/js/jquery.dataTables.min.js',
-			[ 'jquery' ],
+			array( 'jquery' ),
 			'1.10.16',
 			true
 		);
@@ -86,7 +93,7 @@ class UsersManagement {
 		wp_enqueue_style(
 			SKAUTISINTEGRATION_NAME,
 			$this->adminDirUrl . 'css/skautis-admin.css',
-			[],
+			array(),
 			SKAUTISINTEGRATION_VERSION,
 			'all'
 		);
@@ -94,7 +101,7 @@ class UsersManagement {
 		wp_enqueue_style(
 			SKAUTISINTEGRATION_NAME,
 			$this->adminDirUrl . 'css/skautis-admin-users-management.css',
-			[],
+			array(),
 			SKAUTISINTEGRATION_VERSION,
 			'all'
 		);
@@ -102,7 +109,7 @@ class UsersManagement {
 		wp_enqueue_script(
 			SKAUTISINTEGRATION_NAME,
 			$this->adminDirUrl . 'js/skautis-admin-users-management.js',
-			[ 'jquery', 'select2' ],
+			array( 'jquery', 'select2' ),
 			SKAUTISINTEGRATION_VERSION,
 			true
 		);
@@ -115,7 +122,7 @@ class UsersManagement {
 			__( 'Správa uživatelů', 'skautis-integration' ),
 			Helpers::getSkautisManagerCapability(),
 			SKAUTISINTEGRATION_NAME . '_usersManagement',
-			[ $this, 'printChildUsers' ]
+			array( $this, 'printChildUsers' )
 		);
 	}
 
@@ -131,7 +138,6 @@ class UsersManagement {
 		';
 
 		if ( ! $this->skautisLogin->isUserLoggedInSkautis() ) {
-
 			if ( $this->skautisGateway->isInitialized() ) {
 				$result .= '<a href="' . $this->wpLoginLogout->getLoginUrl( add_query_arg( 'noWpLogin', true, Helpers::getCurrentUrl() ) ) . '">' . __( 'Pro zobrazení obsahu je nutné se přihlásit do skautISu', 'skautis-integration' ) . '</a>';
 				$result .= '
@@ -143,7 +149,6 @@ class UsersManagement {
 		</div>
 			';
 			}
-
 
 			echo $result;
 

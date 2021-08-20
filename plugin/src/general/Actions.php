@@ -34,14 +34,14 @@ final class Actions {
 	}
 
 	private function initHooks() {
-		add_action( 'init', [ $this, 'registerAuthRewriteRules' ] );
-		add_action( 'query_vars', [ $this, 'registerAuthQueryVars' ] );
+		add_action( 'init', array( $this, 'registerAuthRewriteRules' ) );
+		add_action( 'query_vars', array( $this, 'registerAuthQueryVars' ) );
 
-		add_action( 'init', [ $this, 'flushRewriteRulesIfNecessary' ] );
+		add_action( 'init', array( $this, 'flushRewriteRulesIfNecessary' ) );
 
-		add_action( 'pre_get_posts', [ $this, 'authActionsRouter' ] );
+		add_action( 'pre_get_posts', array( $this, 'authActionsRouter' ) );
 
-		add_action( 'plugins_loaded', [ $this, 'authInProcess' ] );
+		add_action( 'plugins_loaded', array( $this, 'authInProcess' ) );
 	}
 
 	public function registerAuthRewriteRules() {
@@ -51,7 +51,7 @@ final class Actions {
 		}
 	}
 
-	public function registerAuthQueryVars( array $vars = [] ): array {
+	public function registerAuthQueryVars( array $vars = array() ): array {
 		$vars[] = 'skautis_auth';
 
 		return $vars;
@@ -85,7 +85,7 @@ final class Actions {
 
 		if ( ! $this->skautisGateway->isInitialized() ) {
 			if ( ( get_option( 'skautis_integration_appid_type' ) === 'prod' && ! get_option( 'skautis_integration_appid_prod' ) ) ||
-			     ( get_option( 'skautis_integration_appid_type' ) === 'test' && ! get_option( 'skautis_integration_appid_test' ) ) ) {
+				 ( get_option( 'skautis_integration_appid_type' ) === 'test' && ! get_option( 'skautis_integration_appid_test' ) ) ) {
 				if ( Helpers::userIsSkautisManager() ) {
 					wp_die( sprintf( __( 'Pro správné fungování pluginu skautIS integrace, je potřeba <a href="%s">nastavit APP ID</a>', 'skautis-integration' ), admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME ) ), __( 'Chyba v konfiguraci pluginu', 'skautis-integration' ) );
 				} else {
@@ -97,13 +97,13 @@ final class Actions {
 
 		$action = $wpQuery->get( 'skautis_auth' );
 
-		$actions = [
-			self::LOGIN_ACTION                      => [ $this->skautisLogin, 'login' ],
-			self::LOGOUT_CONFIRM_ACTION             => [ $this->wpLoginLogout, 'logout' ],
-			self::CONNECT_ACTION                    => [ $this->connectWpAccount, 'connect' ],
-			self::CONNECT_WP_USER_TO_SKAUTIS_ACTION => [ $this->connectWpAccount, 'connectWpUserToSkautis' ],
-			self::DISCONNECT_ACTION                 => [ $this->connectWpAccount, 'disconnect' ]
-		];
+		$actions = array(
+			self::LOGIN_ACTION                      => array( $this->skautisLogin, 'login' ),
+			self::LOGOUT_CONFIRM_ACTION             => array( $this->wpLoginLogout, 'logout' ),
+			self::CONNECT_ACTION                    => array( $this->connectWpAccount, 'connect' ),
+			self::CONNECT_WP_USER_TO_SKAUTIS_ACTION => array( $this->connectWpAccount, 'connectWpUserToSkautis' ),
+			self::DISCONNECT_ACTION                 => array( $this->connectWpAccount, 'disconnect' ),
+		);
 
 		$actions = apply_filters( SKAUTISINTEGRATION_NAME . '_frontend_actions_router', $actions );
 
@@ -112,7 +112,6 @@ final class Actions {
 		} else {
 			throw new \Exception( 'skautIS Auth action "' . esc_html( $action ) . '" is not defined' );
 		}
-
 	}
 
 }

@@ -22,8 +22,8 @@ final class Settings {
 			return;
 		}
 
-		add_action( 'admin_menu', [ $this, 'setupSettingPage' ], 25 );
-		add_action( 'admin_init', [ $this, 'setupSettingFields' ] );
+		add_action( 'admin_menu', array( $this, 'setupSettingPage' ), 25 );
+		add_action( 'admin_init', array( $this, 'setupSettingFields' ) );
 	}
 
 	public function setupSettingPage() {
@@ -33,7 +33,7 @@ final class Settings {
 			__( 'Registrace', 'skautis-integration' ),
 			Helpers::getSkautisManagerCapability(),
 			SKAUTISINTEGRATION_NAME . '_modules_register',
-			[ $this, 'printSettingPage' ]
+			array( $this, 'printSettingPage' )
 		);
 	}
 
@@ -47,7 +47,8 @@ final class Settings {
 		<div class="wrap">
 			<h1><?php _e( 'Nastavení registrace', 'skautis-integration' ); ?></h1>
 			<form method="POST" action="<?php echo admin_url( 'options.php' ); ?>">
-				<?php settings_fields( SKAUTISINTEGRATION_NAME . '_modules_register' );
+				<?php
+				settings_fields( SKAUTISINTEGRATION_NAME . '_modules_register' );
 				do_settings_sections( SKAUTISINTEGRATION_NAME . '_modules_register' );
 				submit_button();
 				?>
@@ -69,7 +70,7 @@ final class Settings {
 		add_settings_field(
 			SKAUTISINTEGRATION_NAME . '_modules_register_defaultwpRole',
 			__( 'Výchozí úroveň po registraci uživatele přes skautIS', 'skautis-integration' ),
-			[ $this, 'fieldWpRole' ],
+			array( $this, 'fieldWpRole' ),
 			SKAUTISINTEGRATION_NAME . '_modules_register',
 			SKAUTISINTEGRATION_NAME . '_modules_register'
 		);
@@ -77,7 +78,7 @@ final class Settings {
 		add_settings_field(
 			SKAUTISINTEGRATION_NAME . '_modules_register_notifications',
 			__( 'Po úspěšné registraci uživatele poslat emaily:', 'skautis-integration' ),
-			[ $this, 'fieldNewUserNotifications' ],
+			array( $this, 'fieldNewUserNotifications' ),
 			SKAUTISINTEGRATION_NAME . '_modules_register',
 			SKAUTISINTEGRATION_NAME . '_modules_register'
 		);
@@ -85,31 +86,43 @@ final class Settings {
 		add_settings_field(
 			SKAUTISINTEGRATION_NAME . '_modules_register_rules',
 			__( 'Pravidla registrace', 'skautis-integration' ),
-			[ $this, 'fieldRules' ],
+			array( $this, 'fieldRules' ),
 			SKAUTISINTEGRATION_NAME . '_modules_register',
 			SKAUTISINTEGRATION_NAME . '_modules_register'
 		);
 
-		register_setting( SKAUTISINTEGRATION_NAME . '_modules_register', SKAUTISINTEGRATION_NAME . '_modules_register_defaultwpRole', [
-			'type'              => 'string',
-			'show_in_rest'      => false,
-			'sanitize_callback' => 'sanitize_text_field'
-		] );
-		register_setting( SKAUTISINTEGRATION_NAME . '_modules_register', SKAUTISINTEGRATION_NAME . '_modules_register_notifications', [
-			'type'              => 'string',
-			'show_in_rest'      => false,
-			'sanitize_callback' => 'sanitize_text_field'
-		] );
-		register_setting( SKAUTISINTEGRATION_NAME . '_modules_register', SKAUTISINTEGRATION_NAME . '_modules_register_rules', [
-			'type'         => 'string',
-			'show_in_rest' => false
-		] );
+		register_setting(
+			SKAUTISINTEGRATION_NAME . '_modules_register',
+			SKAUTISINTEGRATION_NAME . '_modules_register_defaultwpRole',
+			array(
+				'type'              => 'string',
+				'show_in_rest'      => false,
+				'sanitize_callback' => 'sanitize_text_field',
+			)
+		);
+		register_setting(
+			SKAUTISINTEGRATION_NAME . '_modules_register',
+			SKAUTISINTEGRATION_NAME . '_modules_register_notifications',
+			array(
+				'type'              => 'string',
+				'show_in_rest'      => false,
+				'sanitize_callback' => 'sanitize_text_field',
+			)
+		);
+		register_setting(
+			SKAUTISINTEGRATION_NAME . '_modules_register',
+			SKAUTISINTEGRATION_NAME . '_modules_register_rules',
+			array(
+				'type'         => 'string',
+				'show_in_rest' => false,
+			)
+		);
 	}
 
 	public function fieldWpRole() {
 		?>
 		<select name="<?php echo SKAUTISINTEGRATION_NAME; ?>_modules_register_defaultwpRole"
-		        id="skautis_integration_modules_register_rules_wpRole"><?php wp_dropdown_roles( get_option( SKAUTISINTEGRATION_NAME . '_modules_register_defaultwpRole' ) ); ?></select>
+				id="skautis_integration_modules_register_rules_wpRole"><?php wp_dropdown_roles( get_option( SKAUTISINTEGRATION_NAME . '_modules_register_defaultwpRole' ) ); ?></select>
 		<?php
 	}
 
@@ -118,29 +131,29 @@ final class Settings {
 		?>
 		<label>
 			<input type="radio"
-			       name="<?php echo SKAUTISINTEGRATION_NAME; ?>_modules_register_notifications"
-			       value="none"<?php checked( 'none' === $notificationOption ); ?> />
+				   name="<?php echo SKAUTISINTEGRATION_NAME; ?>_modules_register_notifications"
+				   value="none"<?php checked( 'none' === $notificationOption ); ?> />
 			<span><?php _e( 'Nikomu', 'skautis-integration' ); ?></span>
 		</label>
 		<br/>
 		<label>
 			<input type="radio"
-			       name="<?php echo SKAUTISINTEGRATION_NAME; ?>_modules_register_notifications"
-			       value="admin"<?php checked( 'admin' === $notificationOption ); ?> />
+				   name="<?php echo SKAUTISINTEGRATION_NAME; ?>_modules_register_notifications"
+				   value="admin"<?php checked( 'admin' === $notificationOption ); ?> />
 			<span><?php _e( 'Administrátorovi (info o registraci nového uživatele)', 'skautis-integration' ); ?></span>
 		</label>
 		<br/>
 		<label>
 			<input type="radio"
-			       name="<?php echo SKAUTISINTEGRATION_NAME; ?>_modules_register_notifications"
-			       value="user"<?php checked( 'user' === $notificationOption ); ?> />
+				   name="<?php echo SKAUTISINTEGRATION_NAME; ?>_modules_register_notifications"
+				   value="user"<?php checked( 'user' === $notificationOption ); ?> />
 			<span><?php _e( 'Uživateli (přístupové údaje)', 'skautis-integration' ); ?></span>
 		</label>
 		<br/>
 		<label>
 			<input type="radio"
-			       name="<?php echo SKAUTISINTEGRATION_NAME; ?>_modules_register_notifications"
-			       value="both"<?php checked( 'both' === $notificationOption ); ?> />
+				   name="<?php echo SKAUTISINTEGRATION_NAME; ?>_modules_register_notifications"
+				   value="both"<?php checked( 'both' === $notificationOption ); ?> />
 			<span><?php _e( 'Administrátorovi i uživateli', 'skautis-integration' ); ?></span>
 		</label>
 		<?php
@@ -159,9 +172,15 @@ final class Settings {
 				<a href="<?php echo admin_url( 'edit.php?post_type=' . RulesInit::RULES_TYPE_SLUG ); ?>"><?php _e( 'Správa pravidel', 'skautis-integration' ); ?></a>.</em>
 		</div>
 		<div id="skautis_integration_modules_register_rulesSetHelp">
-			<em><strong><?php _e( 'Pravidla se vyhodnocují shora dolů.', 'skautis-integration' ); ?></strong> <?php _e( 'Jakmile je
+			<em><strong><?php _e( 'Pravidla se vyhodnocují shora dolů.', 'skautis-integration' ); ?></strong> 
+								  <?php
+									_e(
+										'Jakmile je
 			některé pravidlo splněno, další, po něm následující, se již nevyhodnocují. Proto udržujte pořadí pravidel
-			takové, aby nahoře byly vždy specifičtější pravidla, která platí pro užší skupinu uživatelů.', 'skautis-integration' ); ?>
+			takové, aby nahoře byly vždy specifičtější pravidla, která platí pro užší skupinu uživatelů.',
+										'skautis-integration'
+									);
+									?>
 			</em></div>
 		<div id="repeater">
 			<div data-repeater-list="<?php echo SKAUTISINTEGRATION_NAME; ?>_modules_register_rules">
@@ -188,7 +207,7 @@ final class Settings {
 					</select>
 
 					<input data-repeater-delete type="button"
-					       value="<?php _e( 'Odstranit', 'skautis-integration' ); ?>"/>
+						   value="<?php _e( 'Odstranit', 'skautis-integration' ); ?>"/>
 				</div>
 			</div>
 			<input data-repeater-create type="button" value="<?php _e( 'Přidat', 'skautis-integration' ); ?>"/>

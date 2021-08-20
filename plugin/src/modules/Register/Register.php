@@ -45,10 +45,10 @@ final class Register implements IModule {
 	}
 
 	private function initHooks() {
-		add_filter( SKAUTISINTEGRATION_NAME . '_frontend_actions_router', [ $this, 'addActionsToRouter' ] );
+		add_filter( SKAUTISINTEGRATION_NAME . '_frontend_actions_router', array( $this, 'addActionsToRouter' ) );
 		if ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
 			if ( Helpers::getNonceFromUrl( $_GET['ReturnUrl'], SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis' ) ) {
-				add_action( SKAUTISINTEGRATION_NAME . '_after_skautis_token_is_set', [ $this, 'registerConfirm' ] );
+				add_action( SKAUTISINTEGRATION_NAME . '_after_skautis_token_is_set', array( $this, 'registerConfirm' ) );
 			}
 		}
 	}
@@ -66,14 +66,14 @@ final class Register implements IModule {
 		exit;
 	}
 
-	public function addActionsToRouter( array $actions = [] ): array {
-		$actions[ self::REGISTER_ACTION ]                  = [ $this, 'register' ];
-		$actions[ self::MANUALLY_REGISTER_WP_USER_ACTION ] = [ $this, 'registerUserManually' ];
+	public function addActionsToRouter( array $actions = array() ): array {
+		$actions[ self::REGISTER_ACTION ]                  = array( $this, 'register' );
+		$actions[ self::MANUALLY_REGISTER_WP_USER_ACTION ] = array( $this, 'registerUserManually' );
 
 		return $actions;
 	}
 
-	public function registerConfirm( array $data = [] ) {
+	public function registerConfirm( array $data = array() ) {
 		if ( $this->skautisLogin->setLoginDataToLocalSkautisInstance( $data ) ) {
 			$this->registerUser();
 		} elseif ( $this->skautisLogin->isUserLoggedInSkautis() ) {
@@ -148,9 +148,9 @@ final class Register implements IModule {
 
 	public function registerUserManually() {
 		if ( ! $this->skautisLogin->isUserLoggedInSkautis() ||
-		     ! Helpers::userIsSkautisManager() ||
-		     ! current_user_can( 'create_users' ) ||
-		     ! isset( $_GET['ReturnUrl'], $_GET['wpRole'], $_GET['skautisUserId'] ) ) {
+			 ! Helpers::userIsSkautisManager() ||
+			 ! current_user_can( 'create_users' ) ||
+			 ! isset( $_GET['ReturnUrl'], $_GET['wpRole'], $_GET['skautisUserId'] ) ) {
 			wp_die( __( 'Nemáte oprávnění k registraci nových uživatelů.', 'skautis-integration' ), __( 'Neautorizovaný přístup', 'skautis-integration' ) );
 		}
 

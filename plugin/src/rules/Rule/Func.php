@@ -9,11 +9,11 @@ use SkautisIntegration\Auth\SkautisGateway;
 
 class Func implements IRule {
 
-	public static $id = 'func';
-	protected static $type = 'string';
-	protected static $input = 'funcInput';
-	protected static $multiple = true;
-	protected static $operators = [ 'in', 'not_in' ];
+	public static $id           = 'func';
+	protected static $type      = 'string';
+	protected static $input     = 'funcInput';
+	protected static $multiple  = true;
+	protected static $operators = array( 'in', 'not_in' );
 
 	protected $skautisGateway;
 
@@ -54,7 +54,7 @@ class Func implements IRule {
 	}
 
 	public function getValues(): array {
-		$values = [];
+		$values = array();
 		$funcs  = $this->skautisGateway->getSkautisInstance()->OrganizationUnit->FunctionTypeAll();
 
 		foreach ( $funcs as $func ) {
@@ -65,10 +65,16 @@ class Func implements IRule {
 	}
 
 	protected function clearUnitId( string $unitId ): string {
-		return trim( str_replace( [
-			'.',
-			'-'
-		], '', $unitId ) );
+		return trim(
+			str_replace(
+				array(
+					'.',
+					'-',
+				),
+				'',
+				$unitId
+			)
+		);
 	}
 
 	protected function getUserFuncsWithUnitIds(): array {
@@ -76,36 +82,38 @@ class Func implements IRule {
 
 		if ( $userFuncs === null ) {
 			$userDetail = $this->skautisGateway->getSkautisInstance()->UserManagement->UserDetail();
-			$userFuncs  = $this->skautisGateway->getSkautisInstance()->OrganizationUnit->FunctionAllPerson( [
-				'ID_Person' => $userDetail->ID_Person/*,
+			$userFuncs  = $this->skautisGateway->getSkautisInstance()->OrganizationUnit->FunctionAllPerson(
+				array(
+					'ID_Person' => $userDetail->ID_Person, /*
+				,
 				'isValid'   => true*/
-			] );
+				)
+			);
 
-			$result = [];
+			$result = array();
 
 			if ( ! $userFuncs || ! property_exists( $userFuncs, 'FunctionAllOutput' ) || empty( $userFuncs->FunctionAllOutput ) || ! is_array( $userFuncs->FunctionAllOutput ) || empty( $userFuncs->FunctionAllOutput[0] ) ) {
 				return $result;
 			}
 
 			foreach ( $userFuncs->FunctionAllOutput as $userFunc ) {
-
-				if ( $unitDetail = $this->skautisGateway->getSkautisInstance()->OrganizationUnit->UnitDetail( [
-					'ID' => $userFunc->ID_Unit
-				] ) ) {
+				if ( $unitDetail = $this->skautisGateway->getSkautisInstance()->OrganizationUnit->UnitDetail(
+					array(
+						'ID' => $userFunc->ID_Unit,
+					)
+				) ) {
 					if ( ! isset( $result[ $userFunc->ID_FunctionType ] ) ) {
-						$result[ $userFunc->ID_FunctionType ] = [];
+						$result[ $userFunc->ID_FunctionType ] = array();
 					}
 					$result[ $userFunc->ID_FunctionType ][] = $unitDetail->RegistrationNumber;
 				}
-
 			}
 
 			$userFuncs = $result;
-
 		}
 
 		if ( ! is_array( $userFuncs ) ) {
-			return [];
+			return array();
 		}
 
 		return $userFuncs;
@@ -113,12 +121,12 @@ class Func implements IRule {
 
 	public function isRulePassed( string $funcsOperator, $data ): bool {
 		// parse and prepare data from rules UI
-		$output = [];
-		preg_match_all( "|[^~]+|", $data, $output );
+		$output = array();
+		preg_match_all( '|[^~]+|', $data, $output );
 		if ( isset( $output[0], $output[0][0], $output[0][1], $output[0][2] ) ) {
 			list( $funcs, $unitOperator, $unitId ) = $output[0];
-			$funcs  = explode( ',', $funcs );
-			$unitId = $this->clearUnitId( $unitId );
+			$funcs                                 = explode( ',', $funcs );
+			$unitId                                = $this->clearUnitId( $unitId );
 		} else {
 			return false;
 		}
@@ -130,20 +138,20 @@ class Func implements IRule {
 				{
 					$inNotinNegation = 0;
 					break;
-				}
+			}
 			case 'not_in':
 				{
 					$inNotinNegation = 1;
 					break;
-				}
+			}
 			default:
 				{
 					$inNotinNegation = 2;
-					if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-						throw new \Exception( 'Function operator: "' . $funcsOperator . '" is not declared.' );
-					}
-					break;
+				if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+					throw new \Exception( 'Function operator: "' . $funcsOperator . '" is not declared.' );
 				}
+				break;
+			}
 		}
 
 		$userFuncs = $this->getUserFuncsWithUnitIds();
@@ -151,7 +159,6 @@ class Func implements IRule {
 		foreach ( $funcs as $func ) {
 			// in / not_in range check
 			if ( ( $inNotinNegation + array_key_exists( $func, $userFuncs ) ) === 1 ) {
-
 				foreach ( $userFuncs[ $func ] as $userFuncUnitId ) {
 					$userFuncUnitId = $this->clearUnitId( $userFuncUnitId );
 
@@ -160,28 +167,26 @@ class Func implements IRule {
 							{
 								$userPass += ( $userFuncUnitId === $unitId );
 								break;
-							}
+						}
 						case 'begins_with':
 							{
 								$userPass += ( substr( $userFuncUnitId, 0, strlen( $unitId ) ) === $unitId );
 								break;
-							}
+						}
 						case 'any':
 							{
 								$userPass += 1;
 								break;
-							}
+						}
 						default:
 							{
-								if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-									throw new \Exception( 'Unit operator: "' . $unitOperator . '" is not declared.' );
-								}
-								return false;
+							if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+								throw new \Exception( 'Unit operator: "' . $unitOperator . '" is not declared.' );
 							}
+							return false;
+						}
 					}
-
 				}
-
 			}
 		}
 

@@ -19,17 +19,17 @@ final class RulesInit {
 	}
 
 	private function initHooks() {
-		add_action( 'init', [ $this, 'registerPostType' ] );
+		add_action( 'init', array( $this, 'registerPostType' ) );
 
 		if ( is_admin() ) {
-			add_filter( 'default_content', [ $this, 'defaultContent' ] );
-			add_filter( 'enter_title_here', [ $this, 'titlePlaceholder' ] );
-			add_filter( 'post_updated_messages', [ $this, 'updatedMessages' ] );
+			add_filter( 'default_content', array( $this, 'defaultContent' ) );
+			add_filter( 'enter_title_here', array( $this, 'titlePlaceholder' ) );
+			add_filter( 'post_updated_messages', array( $this, 'updatedMessages' ) );
 		}
 	}
 
 	public function registerPostType() {
-		$labels       = [
+		$labels       = array(
 			'name'                  => _x( 'Správa pravidel', 'Post Type General Name', 'skautis-integration' ),
 			'singular_name'         => _x( 'Pravidlo', 'Post Type Singular Name', 'skautis-integration' ),
 			'menu_name'             => __( 'Správa pravidel', 'skautis-integration' ),
@@ -56,9 +56,9 @@ final class RulesInit {
 			'uploaded_to_this_item' => __( 'Přiřazeno k tomuto pravidlu', 'skautis-integration' ),
 			'items_list'            => __( 'Seznam pravidel', 'skautis-integration' ),
 			'items_list_navigation' => __( 'Navigace v seznamu pravidel', 'skautis-integration' ),
-			'filter_items_list'     => __( 'Filtrovat pravidla', 'skautis-integration' )
-		];
-		$capabilities = [
+			'filter_items_list'     => __( 'Filtrovat pravidla', 'skautis-integration' ),
+		);
+		$capabilities = array(
 			'edit_post'              => Helpers::getSkautisManagerCapability(),
 			'read_post'              => Helpers::getSkautisManagerCapability(),
 			'delete_post'            => Helpers::getSkautisManagerCapability(),
@@ -72,12 +72,12 @@ final class RulesInit {
 			'delete_others_posts'    => Helpers::getSkautisManagerCapability(),
 			'edit_private_posts'     => Helpers::getSkautisManagerCapability(),
 			'edit_published_posts'   => Helpers::getSkautisManagerCapability(),
-			'create_posts'           => Helpers::getSkautisManagerCapability()
-		];
-		$args         = [
+			'create_posts'           => Helpers::getSkautisManagerCapability(),
+		);
+		$args         = array(
 			'label'               => __( 'Pravidla', 'skautis-integration' ),
 			'labels'              => $labels,
-			'supports'            => [ 'title', 'editor', 'author', 'revisions', ],
+			'supports'            => array( 'title', 'editor', 'author', 'revisions' ),
 			'hierarchical'        => false,
 			'public'              => false,
 			'show_ui'             => true,
@@ -91,8 +91,8 @@ final class RulesInit {
 			'publicly_queryable'  => false,
 			'rewrite'             => false,
 			'capabilities'        => $capabilities,
-			'show_in_rest'        => false
-		];
+			'show_in_rest'        => false,
+		);
 		register_post_type( self::RULES_TYPE_SLUG, $args );
 	}
 
@@ -114,9 +114,9 @@ final class RulesInit {
 		return $title;
 	}
 
-	public function updatedMessages( array $messages = [] ): array {
+	public function updatedMessages( array $messages = array() ): array {
 		$post                              = get_post();
-		$messages[ self::RULES_TYPE_SLUG ] = [
+		$messages[ self::RULES_TYPE_SLUG ] = array(
 			0  => '', // Unused. Messages start at index 1.
 			1  => __( 'Hotovo', 'skautis-integration' ), // My Post Type updated.
 			2  => __( 'Hotovo', 'skautis-integration' ), // Custom field updated.
@@ -131,24 +131,26 @@ final class RulesInit {
 				// translators: Publish box date format, see http://php.net/date
 				date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) )
 			),
-			10 => __( 'Koncept pravidla aktualizován', 'skautis-integration' ) // My Post Type draft updated.
-		];
+			10 => __( 'Koncept pravidla aktualizován', 'skautis-integration' ), // My Post Type draft updated.
+		);
 
 		return $messages;
 	}
 
 	public function getAllRules(): array {
-		$rulesWpQuery = new \WP_Query( [
-			'post_type'     => self::RULES_TYPE_SLUG,
-			'nopaging'      => true,
-			'no_found_rows' => true
-		] );
+		$rulesWpQuery = new \WP_Query(
+			array(
+				'post_type'     => self::RULES_TYPE_SLUG,
+				'nopaging'      => true,
+				'no_found_rows' => true,
+			)
+		);
 
 		if ( $rulesWpQuery->have_posts() ) {
 			return $rulesWpQuery->posts;
 		}
 
-		return [];
+		return array();
 	}
 
 }

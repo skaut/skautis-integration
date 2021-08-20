@@ -17,8 +17,8 @@ final class Settings {
 			return;
 		}
 
-		add_action( 'admin_menu', [ $this, 'setupSettingPage' ], 25 );
-		add_action( 'admin_init', [ $this, 'setupSettingFields' ] );
+		add_action( 'admin_menu', array( $this, 'setupSettingPage' ), 25 );
+		add_action( 'admin_init', array( $this, 'setupSettingFields' ) );
 	}
 
 	public function setupSettingPage() {
@@ -28,7 +28,7 @@ final class Settings {
 			__( 'Shortcodes', 'skautis-integration' ),
 			Helpers::getSkautisManagerCapability(),
 			SKAUTISINTEGRATION_NAME . '_modules_shortcodes',
-			[ $this, 'printSettingPage' ]
+			array( $this, 'printSettingPage' )
 		);
 	}
 
@@ -42,7 +42,8 @@ final class Settings {
 		<div class="wrap">
 			<h1><?php _e( 'Nastavení shortcodes', 'skautis-integration' ); ?></h1>
 			<form method="POST" action="<?php echo admin_url( 'options.php' ); ?>">
-				<?php settings_fields( SKAUTISINTEGRATION_NAME . '_modules_shortcodes' );
+				<?php
+				settings_fields( SKAUTISINTEGRATION_NAME . '_modules_shortcodes' );
 				do_settings_sections( SKAUTISINTEGRATION_NAME . '_modules_shortcodes' );
 				submit_button();
 				?>
@@ -64,25 +65,29 @@ final class Settings {
 		add_settings_field(
 			SKAUTISINTEGRATION_NAME . '_modules_shortcodes_visibilityMode',
 			__( 'Výchozí způsob skrytí', 'skautis-integration' ),
-			[ $this, 'fieldVisibilityMode' ],
+			array( $this, 'fieldVisibilityMode' ),
 			SKAUTISINTEGRATION_NAME . '_modules_shortcodes',
 			SKAUTISINTEGRATION_NAME . '_modules_shortcodes'
 		);
 
-		register_setting( SKAUTISINTEGRATION_NAME . '_modules_shortcodes', SKAUTISINTEGRATION_NAME . '_modules_shortcodes_visibilityMode', [
-			'type'         => 'string',
-			'show_in_rest' => false
-		] );
+		register_setting(
+			SKAUTISINTEGRATION_NAME . '_modules_shortcodes',
+			SKAUTISINTEGRATION_NAME . '_modules_shortcodes_visibilityMode',
+			array(
+				'type'         => 'string',
+				'show_in_rest' => false,
+			)
+		);
 	}
 
 	public function fieldVisibilityMode() {
 		$visibilityMode = get_option( SKAUTISINTEGRATION_NAME . '_modules_shortcodes_visibilityMode', 'hide' );
 		?>
 		<label><input type="radio" name="<?php echo SKAUTISINTEGRATION_NAME; ?>_modules_shortcodes_visibilityMode"
-		              value="hide" <?php checked( 'hide', $visibilityMode ); ?> /><span><?php _e( 'Úplně skrýt obsah', 'skautis-integration' ); ?></span></label>
+					  value="hide" <?php checked( 'hide', $visibilityMode ); ?> /><span><?php _e( 'Úplně skrýt obsah', 'skautis-integration' ); ?></span></label>
 		<br/>
 		<label><input type="radio" name="<?php echo SKAUTISINTEGRATION_NAME; ?>_modules_shortcodes_visibilityMode"
-		              value="showLogin" <?php checked( 'showLogin', $visibilityMode ); ?> /><span><?php _e( 'Zobrazit přihlášení', 'skautis-integration' ); ?></span></label>
+					  value="showLogin" <?php checked( 'showLogin', $visibilityMode ); ?> /><span><?php _e( 'Zobrazit přihlášení', 'skautis-integration' ); ?></span></label>
 		<p>
 			<em><?php _e( 'Nastavení můžete změnit u jednotlivých typů obsahu dle potřeby.', 'skautis-integration' ); ?></em>
 		</p>

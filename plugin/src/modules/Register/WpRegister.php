@@ -20,21 +20,24 @@ final class WpRegister {
 
 	private function resolveNotificationsAndRegisterUserToWp( string $userLogin, string $userEmail ): int {
 		remove_action( 'register_new_user', 'wp_send_new_user_notifications' );
-		add_action( 'register_new_user', function ( $userId ) {
-			$notify = apply_filters( SKAUTISINTEGRATION_NAME . '_modules_register_newUserNotifications', get_option( SKAUTISINTEGRATION_NAME . '_modules_register_notifications', 'none' ) );
-			if ( $notify != 'none' ) {
-				global $wp_locale_switcher;
-				if ( ! $wp_locale_switcher ) {
-					$GLOBALS['wp_locale_switcher'] = new \WP_Locale_Switcher();
-					$GLOBALS['wp_locale_switcher']->init();
+		add_action(
+			'register_new_user',
+			function ( $userId ) {
+				$notify = apply_filters( SKAUTISINTEGRATION_NAME . '_modules_register_newUserNotifications', get_option( SKAUTISINTEGRATION_NAME . '_modules_register_notifications', 'none' ) );
+				if ( $notify != 'none' ) {
+					global $wp_locale_switcher;
+					if ( ! $wp_locale_switcher ) {
+						$GLOBALS['wp_locale_switcher'] = new \WP_Locale_Switcher();
+						$GLOBALS['wp_locale_switcher']->init();
+					}
+					wp_send_new_user_notifications( $userId, $notify );
 				}
-				wp_send_new_user_notifications( $userId, $notify );
 			}
-		} );
+		);
 
-		add_filter( 'sanitize_user', [ $this, 'sanitizeUsername' ], 10, 3 );
+		add_filter( 'sanitize_user', array( $this, 'sanitizeUsername' ), 10, 3 );
 		$userId = register_new_user( $userLogin, $userEmail );
-		remove_filter( 'sanitize_user', [ $this, 'sanitizeUsername' ], 10 );
+		remove_filter( 'sanitize_user', array( $this, 'sanitizeUsername' ), 10 );
 
 		add_action( 'register_new_user', 'wp_send_new_user_notifications' );
 
@@ -49,40 +52,43 @@ final class WpRegister {
 	}
 
 	private function prepareUserData( $skautisUser ): array {
-		$skautisUserDetail = $this->skautisGateway->getSkautisInstance()->OrganizationUnit->PersonDetail( [
-			'ID_Login' => $this->skautisGateway->getSkautisInstance()->getUser()->getLoginId(),
-			'ID'       => $skautisUser->ID_Person
-		] );
+		$skautisUserDetail = $this->skautisGateway->getSkautisInstance()->OrganizationUnit->PersonDetail(
+			array(
+				'ID_Login' => $this->skautisGateway->getSkautisInstance()->getUser()->getLoginId(),
+				'ID'       => $skautisUser->ID_Person,
+			)
+		);
 
-		$user = [
+		$user = array(
 			'id'        => $skautisUser->ID,
 			'UserName'  => $skautisUser->UserName,
 			'personId'  => $skautisUser->ID_Person,
 			'email'     => $skautisUserDetail->Email,
 			'firstName' => $skautisUserDetail->FirstName,
 			'lastName'  => $skautisUserDetail->LastName,
-			'nickName'  => $skautisUserDetail->NickName
-		];
+			'nickName'  => $skautisUserDetail->NickName,
+		);
 
 		return $user;
 	}
 
 	private function processWpUserRegistration( array $user, string $wpRole ): bool {
 		if ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
-
 			Helpers::validateNonceFromUrl( $_GET['ReturnUrl'], SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis' );
 
 			// check for skautIS User ID collision with existing users
-			$usersWpQuery = new \WP_User_Query( [
-				'number'     => 1,
-				'meta_query' => [
-					[
-						'key'     => 'skautisUserId_' . $this->skautisGateway->getEnv(),
-						'value'   => absint( $user['id'] ),
-						'compare' => '='
-					]
-				]
-			] );
+			$usersWpQuery = new \WP_User_Query(
+				array(
+					'number'     => 1,
+					'meta_query' => array(
+						array(
+							'key'     => 'skautisUserId_' . $this->skautisGateway->getEnv(),
+							'value'   => absint( $user['id'] ),
+							'compare' => '=',
+						),
+					),
+				)
+			);
 			$users        = $usersWpQuery->get_results();
 
 			if ( ! empty( $users ) ) {
@@ -114,14 +120,18 @@ final class WpRegister {
 				$displayName = $firstName . ' ' . $lastName;
 			}
 
-			if ( is_wp_error( wp_update_user( [
-				'ID'           => $userId,
-				'first_name'   => $firstName,
-				'last_name'    => $lastName,
-				'nickname'     => $nickName,
-				'display_name' => $displayName,
-				'role'         => $wpRole
-			] ) ) ) {
+			if ( is_wp_error(
+				wp_update_user(
+					array(
+						'ID'           => $userId,
+						'first_name'   => $firstName,
+						'last_name'    => $lastName,
+						'nickname'     => $nickName,
+						'display_name' => $displayName,
+						'role'         => $wpRole,
+					)
+				)
+			) ) {
 				return false;
 			}
 
@@ -139,16 +149,18 @@ final class WpRegister {
 		}
 
 		// check for skautIS User ID collision with existing users
-		$usersWpQuery = new \WP_User_Query( [
-			'number'     => 1,
-			'meta_query' => [
-				[
-					'key'     => 'skautisUserId_' . $this->skautisGateway->getEnv(),
-					'value'   => absint( $userDetail->ID ),
-					'compare' => '='
-				]
-			]
-		] );
+		$usersWpQuery = new \WP_User_Query(
+			array(
+				'number'     => 1,
+				'meta_query' => array(
+					array(
+						'key'     => 'skautisUserId_' . $this->skautisGateway->getEnv(),
+						'value'   => absint( $userDetail->ID ),
+						'compare' => '=',
+					),
+				),
+			)
+		);
 		$users        = $usersWpQuery->get_results();
 
 		if ( ! empty( $users ) ) {
@@ -179,7 +191,6 @@ final class WpRegister {
 		$userDetail = $this->skautisGateway->getSkautisInstance()->UserManagement->UserDetail();
 
 		if ( $userDetail && isset( $userDetail->ID ) && $userDetail->ID > 0 ) {
-
 			$user = $this->prepareUserData( $userDetail );
 
 			return $this->processWpUserRegistration( $user, $wpRole );
@@ -212,12 +223,12 @@ final class WpRegister {
 	public function sanitizeUsername( string $username, string $rawUsername, bool $strict ): string {
 		$username = wp_strip_all_tags( $rawUsername );
 
-		//$username = remove_accents ($username);
+		// $username = remove_accents ($username);
 
 		// Kill octets
 		$username = preg_replace( '|%([a-fA-F0-9][a-fA-F0-9])|', '', $username );
 
-		//Kill entities
+		// Kill entities
 		$username = preg_replace( '/&.+?;/', '', $username );
 
 		// If strict, reduce to ASCII, Latin and Cyrillic characters for max portability.

@@ -23,8 +23,8 @@ final class Frontend {
 	}
 
 	private function initHooks() {
-		add_action( 'wp_enqueue_scripts', [ $this, 'enqueueStyles' ] );
-		add_shortcode( 'skautis', [ $this, 'processShortcode' ] );
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueueStyles' ) );
+		add_shortcode( 'skautis', array( $this, 'processShortcode' ) );
 	}
 
 	private function getLoginForm( bool $forceLogoutFromSkautis = false ): string {
@@ -54,12 +54,11 @@ final class Frontend {
 
 	public function enqueueStyles() {
 		wp_enqueue_style( 'buttons' );
-		wp_enqueue_style( SKAUTISINTEGRATION_NAME, SKAUTISINTEGRATION_URL . 'src/frontend/public/css/skautis-frontend.css', [], SKAUTISINTEGRATION_VERSION, 'all' );
+		wp_enqueue_style( SKAUTISINTEGRATION_NAME, SKAUTISINTEGRATION_URL . 'src/frontend/public/css/skautis-frontend.css', array(), SKAUTISINTEGRATION_VERSION, 'all' );
 	}
 
-	public function processShortcode( array $atts = [], string $content = '' ): string {
+	public function processShortcode( array $atts = array(), string $content = '' ): string {
 		if ( isset( $atts['rules'] ) && isset( $atts['content'] ) ) {
-
 			if ( current_user_can( 'edit_' . get_post_type() . 's' ) ) {
 				return $content;
 			}

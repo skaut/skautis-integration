@@ -31,10 +31,10 @@ class SkautisIntegration {
 
 		// if incompatible version of WP / PHP or deactivating plugin right now => don´t init
 		if ( ! $this->isCompatibleVersionOfWp() ||
-		     ! $this->isCompatibleVersionOfPhp() ||
-		     ( isset( $_GET['action'], $_GET['plugin'] ) &&
-		       'deactivate' == $_GET['action'] &&
-		       SKAUTISINTEGRATION_PLUGIN_BASENAME == $_GET['plugin'] )
+			 ! $this->isCompatibleVersionOfPhp() ||
+			 ( isset( $_GET['action'], $_GET['plugin'] ) &&
+			   'deactivate' == $_GET['action'] &&
+			   SKAUTISINTEGRATION_PLUGIN_BASENAME == $_GET['plugin'] )
 		) {
 			return;
 		}
@@ -45,11 +45,11 @@ class SkautisIntegration {
 	}
 
 	protected function initHooks() {
-		add_action( 'admin_init', [ $this, 'checkVersionAndPossiblyDeactivatePlugin' ] );
+		add_action( 'admin_init', array( $this, 'checkVersionAndPossiblyDeactivatePlugin' ) );
 
-		register_activation_hook( __FILE__, [ $this, 'activation' ] );
-		register_deactivation_hook( __FILE__, [ $this, 'deactivation' ] );
-		register_uninstall_hook( __FILE__, [ __CLASS__, 'uninstall' ] );
+		register_activation_hook( __FILE__, array( $this, 'activation' ) );
+		register_deactivation_hook( __FILE__, array( $this, 'deactivation' ) );
+		register_uninstall_hook( __FILE__, array( __CLASS__, 'uninstall' ) );
 	}
 
 	protected function init() {
@@ -109,11 +109,16 @@ class SkautisIntegration {
 
 	public static function uninstall() {
 		global $wpdb;
-		$options = $wpdb->get_results( $wpdb->prepare( "
+		$options = $wpdb->get_results(
+			$wpdb->prepare(
+				"
 SELECT `option_name`
 FROM $wpdb->options
 WHERE `option_name` LIKE %s OR `option_name` LIKE %s
-", [ 'skautis_integration_%', SKAUTISINTEGRATION_NAME . '_%' ] ) );
+",
+				array( 'skautis_integration_%', SKAUTISINTEGRATION_NAME . '_%' )
+			)
+		);
 		foreach ( $options as $option ) {
 			delete_option( $option->option_name );
 		}
@@ -128,7 +133,6 @@ WHERE `option_name` LIKE %s OR `option_name` LIKE %s
 	public function checkVersionAndPossiblyDeactivatePlugin() {
 		if ( ! $this->isCompatibleVersionOfWp() ) {
 			if ( is_plugin_active( SKAUTISINTEGRATION_PLUGIN_BASENAME ) ) {
-
 				deactivate_plugins( SKAUTISINTEGRATION_PLUGIN_BASENAME );
 
 				Helpers::showAdminNotice( esc_html__( 'Plugin skautIS integrace vyžaduje verzi WordPress 4.8 nebo vyšší!', 'skautis-integration' ), 'warning' );
@@ -141,7 +145,6 @@ WHERE `option_name` LIKE %s OR `option_name` LIKE %s
 
 		if ( ! $this->isCompatibleVersionOfPhp() ) {
 			if ( is_plugin_active( SKAUTISINTEGRATION_PLUGIN_BASENAME ) ) {
-
 				deactivate_plugins( SKAUTISINTEGRATION_PLUGIN_BASENAME );
 
 				Helpers::showAdminNotice( esc_html__( 'Plugin skautIS integrace vyžaduje verzi PHP 7.0 nebo vyšší!', 'skautis-integration' ), 'warning' );

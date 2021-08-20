@@ -21,8 +21,8 @@ final class Metabox {
 	}
 
 	private function initHooks() {
-		add_action( 'add_meta_boxes', [ $this, 'addMetaboxForRulesField' ] );
-		add_action( 'save_post', [ $this, 'saveRulesCustomField' ] );
+		add_action( 'add_meta_boxes', array( $this, 'addMetaboxForRulesField' ) );
+		add_action( 'save_post', array( $this, 'saveRulesCustomField' ) );
 	}
 
 	public function addMetaboxForRulesField() {
@@ -30,7 +30,7 @@ final class Metabox {
 			add_meta_box(
 				SKAUTISINTEGRATION_NAME . '_modules_visibility_rules_metabox',
 				__( 'SkautIS pravidla', 'skautis-integration' ),
-				[ $this, 'rulesRepeater' ],
+				array( $this, 'rulesRepeater' ),
 				$postType
 			);
 		}
@@ -38,11 +38,10 @@ final class Metabox {
 
 	public function saveRulesCustomField( int $postId ) {
 		if ( isset( $_POST[ SKAUTISINTEGRATION_NAME . '_rules_visibilityMode' ] ) ) {
-
 			if ( isset( $_POST[ SKAUTISINTEGRATION_NAME . '_rules' ] ) ) {
 				$rules = $_POST[ SKAUTISINTEGRATION_NAME . '_rules' ];
 			} else {
-				$rules = [];
+				$rules = array();
 			}
 			update_post_meta(
 				$postId,
@@ -67,7 +66,6 @@ final class Metabox {
 				SKAUTISINTEGRATION_NAME . '_rules_visibilityMode',
 				$visibilityMode
 			);
-
 		}
 	}
 
@@ -131,7 +129,7 @@ final class Metabox {
 					</select>
 
 					<input data-repeater-delete type="button"
-					       value="<?php _e( 'Odstranit', 'skautis-integration' ); ?>"/>
+						   value="<?php _e( 'Odstranit', 'skautis-integration' ); ?>"/>
 				</div>
 			</div>
 			<input data-repeater-create type="button" value="<?php _e( 'Přidat', 'skautis-integration' ); ?>"/>
@@ -139,22 +137,24 @@ final class Metabox {
 		<p>
 			<label>
 				<input type="hidden" name="<?php echo SKAUTISINTEGRATION_NAME; ?>_rules_includeChildren"
-				       value="0"/>
+					   value="0"/>
 				<input type="checkbox" name="<?php echo SKAUTISINTEGRATION_NAME; ?>_rules_includeChildren"
-				       value="1" <?php checked( 1, $includeChildren ); ?> /><span><?php
-					if ( $postTypeObject->hierarchical ) {
-						printf( __( 'Použít vybraná pravidla i na podřízené %s', 'skautis-integration' ), lcfirst( $postTypeObject->labels->name ) );
-					} else {
-						_e( 'Použít vybraná pravidla i na podřízený obsah (média - obrázky, videa, přílohy,...)', 'skautis-integration' );
-					}
-					?>.</span></label>
+					   value="1" <?php checked( 1, $includeChildren ); ?> /><span>
+												<?php
+												if ( $postTypeObject->hierarchical ) {
+													printf( __( 'Použít vybraná pravidla i na podřízené %s', 'skautis-integration' ), lcfirst( $postTypeObject->labels->name ) );
+												} else {
+													_e( 'Použít vybraná pravidla i na podřízený obsah (média - obrázky, videa, přílohy,...)', 'skautis-integration' );
+												}
+												?>
+					.</span></label>
 		</p>
 		<p>
 			<label><input type="radio" name="<?php echo SKAUTISINTEGRATION_NAME; ?>_rules_visibilityMode"
-			              value="full" <?php checked( 'full', $visibilityMode ); ?> /><span><?php _e( 'Úplně skrýt', 'skautis-integration' ); ?></span></label>
+						  value="full" <?php checked( 'full', $visibilityMode ); ?> /><span><?php _e( 'Úplně skrýt', 'skautis-integration' ); ?></span></label>
 			<br/>
 			<label><input type="radio" name="<?php echo SKAUTISINTEGRATION_NAME; ?>_rules_visibilityMode"
-			              value="content" <?php checked( 'content', $visibilityMode ); ?> /><span><?php _e( 'Skrýt pouze obsah', 'skautis-integration' ); ?></span></label>
+						  value="content" <?php checked( 'content', $visibilityMode ); ?> /><span><?php _e( 'Skrýt pouze obsah', 'skautis-integration' ); ?></span></label>
 		</p>
 		<?php
 	}

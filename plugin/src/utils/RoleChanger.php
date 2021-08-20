@@ -19,26 +19,31 @@ class RoleChanger {
 	}
 
 	protected function checkIfUserChangeSkautisRole() {
-		add_action( 'init', function () {
-			if ( isset( $_POST['changeSkautisUserRole'], $_POST['_wpnonce'], $_POST['_wp_http_referer'] ) ) {
-				if ( check_admin_referer( SKAUTISINTEGRATION_NAME . '_changeSkautisUserRole', '_wpnonce' ) ) {
-					if ( $this->skautisLogin->isUserLoggedInSkautis() ) {
-						$this->skautisLogin->changeUserRoleInSkautis( absint( $_POST['changeSkautisUserRole'] ) );
+		add_action(
+			'init',
+			function () {
+				if ( isset( $_POST['changeSkautisUserRole'], $_POST['_wpnonce'], $_POST['_wp_http_referer'] ) ) {
+					if ( check_admin_referer( SKAUTISINTEGRATION_NAME . '_changeSkautisUserRole', '_wpnonce' ) ) {
+						if ( $this->skautisLogin->isUserLoggedInSkautis() ) {
+							$this->skautisLogin->changeUserRoleInSkautis( absint( $_POST['changeSkautisUserRole'] ) );
+						}
 					}
 				}
 			}
-		} );
+		);
 	}
 
 	public function getChangeRolesForm(): string {
 		$result = '';
 
-		$currentUserRoles = $this->skautisGateway->getSkautisInstance()->UserManagement->UserRoleAll( [
-			'ID_Login' => $this->skautisGateway->getSkautisInstance()->getUser()->getLoginId(),
-			'ID_User'  => $this->skautisGateway->getSkautisInstance()->UserManagement->UserDetail()->ID,
-			'IsActive' => true
-		] );
-		$currentUserRole = $this->skautisGateway->getSkautisInstance()->getUser()->getRoleId();
+		$currentUserRoles = $this->skautisGateway->getSkautisInstance()->UserManagement->UserRoleAll(
+			array(
+				'ID_Login' => $this->skautisGateway->getSkautisInstance()->getUser()->getLoginId(),
+				'ID_User'  => $this->skautisGateway->getSkautisInstance()->UserManagement->UserDetail()->ID,
+				'IsActive' => true,
+			)
+		);
+		$currentUserRole  = $this->skautisGateway->getSkautisInstance()->getUser()->getRoleId();
 
 		$result .= '
 <form method="post" action="' . esc_attr( Helpers::getCurrentUrl() ) . '" novalidate="novalidate">

@@ -19,10 +19,10 @@ final class Admin {
 	}
 
 	private function initHooks() {
-		add_action( 'admin_enqueue_scripts', [ $this, 'enqueueStyles' ] );
-		add_action( 'admin_enqueue_scripts', [ $this, 'enqueueScripts' ] );
-		add_action( 'admin_footer', [ $this, 'initRulesOptions' ] );
-		add_action( 'admin_footer', [ $this, 'initRulesData' ] );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueueStyles' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueueScripts' ) );
+		add_action( 'admin_footer', array( $this, 'initRulesOptions' ) );
+		add_action( 'admin_footer', array( $this, 'initRulesData' ) );
 	}
 
 	public function enqueueStyles() {
@@ -30,7 +30,7 @@ final class Admin {
 			wp_enqueue_style(
 				SKAUTISINTEGRATION_NAME . '_modules_register',
 				$this->adminDirUrl . 'css/skautis-modules-register-admin.css',
-				[],
+				array(),
 				SKAUTISINTEGRATION_VERSION,
 				'all'
 			);
@@ -44,7 +44,7 @@ final class Admin {
 			wp_enqueue_script(
 				'jquery-repeater',
 				'https://cdnjs.cloudflare.com/ajax/libs/jquery.repeater/1.2.1/jquery.repeater.min.js',
-				[ 'jquery' ],
+				array( 'jquery' ),
 				'1.2.1',
 				true
 			);
@@ -52,7 +52,7 @@ final class Admin {
 			wp_enqueue_script(
 				SKAUTISINTEGRATION_NAME . '_modules_register',
 				$this->adminDirUrl . 'js/skautis-modules-register-admin.js',
-				[ 'jquery-repeater' ],
+				array( 'jquery-repeater' ),
 				SKAUTISINTEGRATION_VERSION,
 				true
 			);
@@ -62,7 +62,7 @@ final class Admin {
 	public function initRulesOptions() {
 		if ( get_current_screen()->id == 'skautis_page_skautis-integration_modules_register' ) {
 			$data  = '';
-			$rules = [];
+			$rules = array();
 
 			foreach ( (array) $this->rulesManager->getAllRules() as $rule ) {
 				$rules[ $rule->ID ] = $rule->post_title;
@@ -70,7 +70,7 @@ final class Admin {
 			$data = json_encode( $rules );
 			?>
 			<script>
-                window.rulesOptions = <?php echo $data; ?>;
+				window.rulesOptions = <?php echo $data; ?>;
 			</script>
 			<?php
 		}
@@ -81,7 +81,7 @@ final class Admin {
 			$data = json_encode( get_option( SKAUTISINTEGRATION_NAME . '_modules_register_rules' ) );
 			?>
 			<script>
-                window.rulesData = <?php echo $data; ?>;
+				window.rulesData = <?php echo $data; ?>;
 			</script>
 			<?php
 		}

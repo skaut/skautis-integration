@@ -16,7 +16,7 @@ final class Admin {
 	private $metabox;
 	private $adminDirUrl = '';
 
-	public function __construct( array $postTypes = [], RulesManager $rulesManager, Frontend $frontend ) {
+	public function __construct( array $postTypes = array(), RulesManager $rulesManager, Frontend $frontend ) {
 		$this->postTypes    = $postTypes;
 		$this->rulesManager = $rulesManager;
 		$this->frontend     = $frontend;
@@ -27,20 +27,20 @@ final class Admin {
 	}
 
 	private function initHooks() {
-		add_action( 'admin_enqueue_scripts', [ $this, 'enqueueScriptsAndStyles' ] );
-		add_action( 'admin_footer', [ $this, 'initRulesOptions' ] );
-		add_action( 'admin_footer', [ $this, 'initRulesData' ] );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueueScriptsAndStyles' ) );
+		add_action( 'admin_footer', array( $this, 'initRulesOptions' ) );
+		add_action( 'admin_footer', array( $this, 'initRulesData' ) );
 	}
 
 	public function enqueueScriptsAndStyles() {
 		if ( in_array( get_current_screen()->id, $this->postTypes ) ||
-		     get_current_screen()->id == 'skautis_page_' . SKAUTISINTEGRATION_NAME . '_modules_visibility' ) {
+			 get_current_screen()->id == 'skautis_page_' . SKAUTISINTEGRATION_NAME . '_modules_visibility' ) {
 			wp_enqueue_script( 'jquery-ui-sortable' );
 
 			wp_enqueue_style(
 				SKAUTISINTEGRATION_NAME . '_modules_visibility',
 				$this->adminDirUrl . 'css/skautis-modules-visibility-admin.css',
-				[],
+				array(),
 				SKAUTISINTEGRATION_VERSION,
 				'all'
 			);
@@ -48,7 +48,7 @@ final class Admin {
 			wp_enqueue_script(
 				'jquery-repeater',
 				'https://cdnjs.cloudflare.com/ajax/libs/jquery.repeater/1.2.1/jquery.repeater.min.js',
-				[ 'jquery' ],
+				array( 'jquery' ),
 				'1.2.1',
 				true
 			);
@@ -56,7 +56,7 @@ final class Admin {
 			wp_enqueue_script(
 				SKAUTISINTEGRATION_NAME . '_modules_visibility',
 				$this->adminDirUrl . 'js/skautis-modules-visibility-admin.js',
-				[ 'jquery', 'jquery-repeater', 'select2' ],
+				array( 'jquery', 'jquery-repeater', 'select2' ),
 				SKAUTISINTEGRATION_VERSION,
 				true
 			);
@@ -66,7 +66,7 @@ final class Admin {
 	public function initRulesOptions() {
 		if ( in_array( get_current_screen()->id, $this->postTypes ) ) {
 			$data  = '';
-			$rules = [];
+			$rules = array();
 
 			foreach ( (array) $this->rulesManager->getAllRules() as $rule ) {
 				$rules[ $rule->ID ] = $rule->post_title;
@@ -74,7 +74,7 @@ final class Admin {
 			$data = json_encode( $rules );
 			?>
 			<script>
-                window.rulesOptions = <?php echo $data; ?>;
+				window.rulesOptions = <?php echo $data; ?>;
 			</script>
 			<?php
 		}
@@ -85,7 +85,7 @@ final class Admin {
 			$data = json_encode( get_post_meta( get_the_ID(), SKAUTISINTEGRATION_NAME . '_rules', true ) );
 			?>
 			<script>
-                window.rulesData = <?php echo $data; ?>;
+				window.rulesData = <?php echo $data; ?>;
 			</script>
 			<?php
 		}

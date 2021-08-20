@@ -18,32 +18,32 @@ final class WpLoginLogout {
 	}
 
 	private function loginWpUserBySkautisUserId( int $skautisUserId, $try = false ) {
-
 		if ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
-
-			$usersWpQuery = new \WP_User_Query( [
-				'number'     => 1,
-				'meta_query' => [
-					[
-						'key'     => 'skautisUserId_' . $this->skautisGateway->getEnv(),
-						'value'   => absint( $skautisUserId ),
-						'compare' => '='
-					]
-				]
-			] );
+			$usersWpQuery = new \WP_User_Query(
+				array(
+					'number'     => 1,
+					'meta_query' => array(
+						array(
+							'key'     => 'skautisUserId_' . $this->skautisGateway->getEnv(),
+							'value'   => absint( $skautisUserId ),
+							'compare' => '=',
+						),
+					),
+				)
+			);
 			$users        = $usersWpQuery->get_results();
 
 			if ( ! empty( $users )
-			     && isset( $users[0] )
-			     && isset( $users[0]->ID )
-			     && $users[0]->ID > 0
+				 && isset( $users[0] )
+				 && isset( $users[0]->ID )
+				 && $users[0]->ID > 0
 			) {
 				$wpUser = $users[0];
 
 				if ( ! $try ) {
 					if ( Services::getServicesContainer()['modulesManager']->isModuleActivated( Register::getId() ) &&
-					     ! user_can( $wpUser->ID, Helpers::getSkautisManagerCapability() ) &&
-					     get_option( SKAUTISINTEGRATION_NAME . '_checkUserPrivilegesIfLoginBySkautis' ) ) {
+						 ! user_can( $wpUser->ID, Helpers::getSkautisManagerCapability() ) &&
+						 get_option( SKAUTISINTEGRATION_NAME . '_checkUserPrivilegesIfLoginBySkautis' ) ) {
 						if ( ! Services::getServicesContainer()[ Register::getId() ]->getRulesManager()->checkIfUserPassedRulesAndGetHisRole() ) {
 							wp_die( sprintf( __( 'Je nám líto, ale již nemáte oprávnění k přístupu. <a href="%s">Zkuste se znovu zaregistrovat</a>', 'skautis-integration' ), ( Services::getServicesContainer()[ Register::getId() ] )->getWpRegister()->getRegisterUrl() ), __( 'Neautorizovaný přístup', 'skautis-integration' ) );
 						}
@@ -79,7 +79,6 @@ final class WpLoginLogout {
 		}
 
 		return false;
-
 	}
 
 	public function getLoginUrl( string $returnUrl = '' ): string {

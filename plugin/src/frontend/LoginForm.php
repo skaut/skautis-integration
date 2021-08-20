@@ -21,13 +21,13 @@ final class LoginForm {
 
 	private function initHooks() {
 		if ( ! Services::getServicesContainer()['modulesManager']->isModuleActivated( Register::getId() ) ) {
-			add_action( 'login_form', [ $this, 'loginLinkInLoginForm' ] );
-			add_filter( 'login_form_bottom', [ $this, 'loginLinkInLoginFormReturn' ] );
+			add_action( 'login_form', array( $this, 'loginLinkInLoginForm' ) );
+			add_filter( 'login_form_bottom', array( $this, 'loginLinkInLoginFormReturn' ) );
 		}
 	}
 
 	public function enqueueStyles() {
-		wp_enqueue_style( SKAUTISINTEGRATION_NAME, $this->frontendDirUrl . 'css/skautis-frontend.css', [], SKAUTISINTEGRATION_VERSION, 'all' );
+		wp_enqueue_style( SKAUTISINTEGRATION_NAME, $this->frontendDirUrl . 'css/skautis-frontend.css', array(), SKAUTISINTEGRATION_VERSION, 'all' );
 	}
 
 	public function loginLinkInLoginForm() {

@@ -11,18 +11,18 @@ class Revisions {
 	}
 
 	protected function initHooks() {
-		add_action( 'save_post', [ $this, 'savePost' ], 10 );
-		add_action( 'wp_restore_post_revision', [ $this, 'restoreRevision' ], 10, 2 );
-		add_filter( 'wp_save_post_revision_post_has_changed', [ $this, 'postHasChanged' ], 10, 3 );
+		add_action( 'save_post', array( $this, 'savePost' ), 10 );
+		add_action( 'wp_restore_post_revision', array( $this, 'restoreRevision' ), 10, 2 );
+		add_filter( 'wp_save_post_revision_post_has_changed', array( $this, 'postHasChanged' ), 10, 3 );
 
-		add_filter( '_wp_post_revision_fields', [ $this, 'fields' ], 10, 1 );
-		add_filter( '_wp_post_revision_field_custom_fields', [ $this, 'field' ], 10, 3 );
+		add_filter( '_wp_post_revision_fields', array( $this, 'fields' ), 10, 1 );
+		add_filter( '_wp_post_revision_field_custom_fields', array( $this, 'field' ), 10, 3 );
 	}
 
 	public function filterMeta( $meta ): array {
-		$metaFiltered = [];
+		$metaFiltered = array();
 		foreach ( $meta as $key => $value ) {
-			if ( $key[0] != "_" ) {
+			if ( $key[0] != '_' ) {
 				$metaFiltered[ $key ] = $value;
 			}
 		}
@@ -64,13 +64,13 @@ class Revisions {
 		// format response as single string with all custom fields / metadata
 		$return = '';
 		foreach ( $meta as $metaKey => $metaValue ) {
-			$return .= $metaKey . ": " . join( ", ", $metaValue ) . "\n";
+			$return .= $metaKey . ': ' . join( ', ', $metaValue ) . "\n";
 		}
 
 		return $return;
 	}
 
-	public function fields( array $fields = [] ): array {
+	public function fields( array $fields = array() ): array {
 		$fields['custom_fields'] = __( 'Další pole', 'skautis-integration' );
 
 		return $fields;

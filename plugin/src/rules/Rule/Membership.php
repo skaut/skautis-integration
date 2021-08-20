@@ -9,11 +9,11 @@ use SkautisIntegration\Auth\SkautisGateway;
 
 class Membership implements IRule {
 
-	public static $id = 'membership';
-	protected static $type = 'string';
-	protected static $input = 'membershipInput';
-	protected static $multiple = true;
-	protected static $operators = [ 'in' ];
+	public static $id           = 'membership';
+	protected static $type      = 'string';
+	protected static $input     = 'membershipInput';
+	protected static $multiple  = true;
+	protected static $operators = array( 'in' );
 
 	protected $skautisGateway;
 
@@ -54,7 +54,7 @@ class Membership implements IRule {
 	}
 
 	public function getValues(): array {
-		$result      = [];
+		$result      = array();
 		$memberships = $this->skautisGateway->getSkautisInstance()->OrganizationUnit->MembershipTypeAll();
 
 		foreach ( $memberships as $membership ) {
@@ -65,40 +65,47 @@ class Membership implements IRule {
 	}
 
 	protected function clearUnitId( string $unitId ): string {
-		return trim( str_replace( [
-			'.',
-			'-'
-		], '', $unitId ) );
+		return trim(
+			str_replace(
+				array(
+					'.',
+					'-',
+				),
+				'',
+				$unitId
+			)
+		);
 	}
 
 	protected function getUserMembershipsWithUnitIds(): array {
 		static $userMemberships = null;
 
 		if ( $userMemberships === null ) {
-
 			$userDetail      = $this->skautisGateway->getSkautisInstance()->UserManagement->UserDetail();
-			$userMemberships = $this->skautisGateway->getSkautisInstance()->OrganizationUnit->MembershipAllPerson( [
-				'ID_Person'   => $userDetail->ID_Person,
-				'ShowHistory' => false,
-				'isValid'     => true
-			] );
+			$userMemberships = $this->skautisGateway->getSkautisInstance()->OrganizationUnit->MembershipAllPerson(
+				array(
+					'ID_Person'   => $userDetail->ID_Person,
+					'ShowHistory' => false,
+					'isValid'     => true,
+				)
+			);
 
 			if ( ! isset( $userMemberships->MembershipAllOutput ) ) {
-				return [];
+				return array();
 			}
 
 			if ( is_object( $userMemberships->MembershipAllOutput ) && isset( $userMemberships->MembershipAllOutput->ID_MembershipType ) ) {
-				$userMemberships->MembershipAllOutput = [
-					$userMemberships->MembershipAllOutput
-				];
+				$userMemberships->MembershipAllOutput = array(
+					$userMemberships->MembershipAllOutput,
+				);
 			}
 
 			if ( ! is_array( $userMemberships->MembershipAllOutput ) ) {
-				return [];
+				return array();
 			}
 
 			// user has more valid memberships
-			$result = [];
+			$result = array();
 			foreach ( $userMemberships->MembershipAllOutput as $userMembership ) {
 				if ( ! is_object( $userMembership ) ) {
 					continue;
@@ -108,11 +115,13 @@ class Membership implements IRule {
 					continue;
 				}
 
-				if ( $unitDetail = $this->skautisGateway->getSkautisInstance()->OrganizationUnit->UnitDetail( [
-					'ID' => $userMembership->ID_Unit
-				] ) ) {
+				if ( $unitDetail = $this->skautisGateway->getSkautisInstance()->OrganizationUnit->UnitDetail(
+					array(
+						'ID' => $userMembership->ID_Unit,
+					)
+				) ) {
 					if ( ! isset( $result[ $userMembership->ID_MembershipType ] ) ) {
-						$result[ $userMembership->ID_MembershipType ] = [];
+						$result[ $userMembership->ID_MembershipType ] = array();
 					}
 					$result[ $userMembership->ID_MembershipType ][] = $unitDetail->RegistrationNumber;
 				}
@@ -122,9 +131,15 @@ class Membership implements IRule {
 
 		if ( ! is_array( $userMemberships ) ) {
 			if ( is_a( $userMemberships, '\stdClass' ) ) {
-				wp_die( sprintf( __( 'Pravděpodobně nemáte propojený skautIS účet se svojí osobou. <a href="%s">Postupujte podle tohoto návodu</a>',
-					'skautis-integration' ),
-					'https://napoveda.skaut.cz/skautis/informacni-system/uzivatel/propojeni-uctu' ) );
+				wp_die(
+					sprintf(
+						__(
+							'Pravděpodobně nemáte propojený skautIS účet se svojí osobou. <a href="%s">Postupujte podle tohoto návodu</a>',
+							'skautis-integration'
+						),
+						'https://napoveda.skaut.cz/skautis/informacni-system/uzivatel/propojeni-uctu'
+					)
+				);
 			} else {
 				if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 					throw new \Exception( __( 'Nastala neočekávaná chyba.', 'skautis-integration' ) );
@@ -137,12 +152,12 @@ class Membership implements IRule {
 
 	public function isRulePassed( string $rolesOperator, $data ): bool {
 		// parse and prepare data from rules UI
-		$output = [];
-		preg_match_all( "|[^~]+|", $data, $output );
+		$output = array();
+		preg_match_all( '|[^~]+|', $data, $output );
 		if ( isset( $output[0], $output[0][0], $output[0][1], $output[0][2] ) ) {
 			list( $memberships, $membershipOperator, $unitId ) = $output[0];
-			$memberships = explode( ',', $memberships );
-			$unitId      = $this->clearUnitId( $unitId );
+			$memberships                                       = explode( ',', $memberships );
+			$unitId = $this->clearUnitId( $unitId );
 		} else {
 			return false;
 		}
@@ -152,7 +167,6 @@ class Membership implements IRule {
 		foreach ( $memberships as $membership ) {
 			// in / not_in range check
 			if ( array_key_exists( $membership, $userMemberships ) ) {
-
 				foreach ( $userMemberships[ $membership ] as $userMembershipUnitId ) {
 					$userMembershipUnitId = $this->clearUnitId( $userMembershipUnitId );
 
@@ -161,28 +175,26 @@ class Membership implements IRule {
 							{
 								$userPass += ( $userMembershipUnitId === $unitId );
 								break;
-							}
+						}
 						case 'begins_with':
 							{
 								$userPass += ( substr( $userMembershipUnitId, 0, strlen( $unitId ) ) === $unitId );
 								break;
-							}
+						}
 						case 'any':
 							{
 								$userPass += 1;
 								break;
-							}
+						}
 						default:
 							{
-								if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-									throw new \Exception( 'Unit operator: "' . $membershipOperator . '" is not declared.' );
-								}
-								return false;
+							if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+								throw new \Exception( 'Unit operator: "' . $membershipOperator . '" is not declared.' );
 							}
+							return false;
+						}
 					}
-
 				}
-
 			}
 		}
 

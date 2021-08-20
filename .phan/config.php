@@ -20,17 +20,17 @@ return array(
 	'warn_about_redundant_use_namespaced_class' => true,
 	'directory_list'                            => array(
 		'plugin',
-		//'tests',
+		// 'tests',
 		'.phan',
-		//'dist/bundled/vendor',
-		//'vendor/skaut/phan-wordpress-stubs/stubs',
+		// 'dist/bundled/vendor',
+		// 'vendor/skaut/phan-wordpress-stubs/stubs',
 	),
 	'file_list'                                 => array(
-		//'scoper.inc.php',
+		// 'scoper.inc.php',
 	),
 	'exclude_analysis_directory_list'           => array(
-		//'dist/bundled/vendor/',
-		//'vendor/skaut/phan-wordpress-stubs/stubs',
+		// 'dist/bundled/vendor/',
+		// 'vendor/skaut/phan-wordpress-stubs/stubs',
 	),
 	'suppress_issue_types'                      => array(
 		'PhanPluginDuplicateConditionalNullCoalescing',

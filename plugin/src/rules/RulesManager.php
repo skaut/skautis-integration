@@ -11,7 +11,7 @@ final class RulesManager {
 
 	private $skautisGateway;
 	private $wpLoginLogout;
-	private $rules = [];
+	private $rules = array();
 
 	public function __construct( SkautisGateway $skautisGateway, WpLoginLogout $wpLoginLogout ) {
 		$this->skautisGateway = $skautisGateway;
@@ -23,13 +23,16 @@ final class RulesManager {
 	}
 
 	private function initRules(): array {
-		return apply_filters( SKAUTISINTEGRATION_NAME . '_rules', [
-			Rule\Role::$id          => new Rule\Role( $this->skautisGateway ),
-			Rule\Membership::$id    => new Rule\Membership( $this->skautisGateway ),
-			Rule\Func::$id          => new Rule\Func( $this->skautisGateway ),
-			Rule\Qualification::$id => new Rule\Qualification( $this->skautisGateway ),
-			Rule\All::$id           => new Rule\All( $this->skautisGateway )
-		] );
+		return apply_filters(
+			SKAUTISINTEGRATION_NAME . '_rules',
+			array(
+				Rule\Role::$id          => new Rule\Role( $this->skautisGateway ),
+				Rule\Membership::$id    => new Rule\Membership( $this->skautisGateway ),
+				Rule\Func::$id          => new Rule\Func( $this->skautisGateway ),
+				Rule\Qualification::$id => new Rule\Qualification( $this->skautisGateway ),
+				Rule\All::$id           => new Rule\All( $this->skautisGateway ),
+			)
+		);
 	}
 
 	private function processRule( $rule ): bool {
@@ -91,7 +94,6 @@ final class RulesManager {
 		}
 
 		foreach ( (array) $rules as $rule ) {
-
 			if ( isset( $rule['rule'] ) ) {
 				$rulesGroups = json_decode( get_post_meta( $rule['rule'], SKAUTISINTEGRATION_NAME . '_rules_data', true ) );
 			} else {
@@ -111,22 +113,24 @@ final class RulesManager {
 	}
 
 	public function getAllRules(): array {
-		$rulesWpQuery = new \WP_Query( [
-			'post_type'     => RulesInit::RULES_TYPE_SLUG,
-			'nopaging'      => true,
-			'no_found_rows' => true
-		] );
+		$rulesWpQuery = new \WP_Query(
+			array(
+				'post_type'     => RulesInit::RULES_TYPE_SLUG,
+				'nopaging'      => true,
+				'no_found_rows' => true,
+			)
+		);
 
 		if ( $rulesWpQuery->have_posts() ) {
 			return $rulesWpQuery->posts;
 		}
 
-		return [];
+		return array();
 	}
 
 	public function checkIfUserPassedRules( array $rulesIds ): bool {
 		static $rulesGroups = null;
-		$result = false;
+		$result             = false;
 
 		foreach ( $rulesIds as $ruleId ) {
 			if ( is_array( $ruleId ) ) {

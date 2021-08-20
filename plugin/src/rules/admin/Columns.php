@@ -11,24 +11,32 @@ class Columns {
 	}
 
 	protected function initHooks() {
-		add_filter( 'manage_edit-' . RulesInit::RULES_TYPE_SLUG . '_columns', [ $this, 'lastModifiedAdminColumn' ] );
-		add_filter( 'manage_edit-' . RulesInit::RULES_TYPE_SLUG . '_sortable_columns', [
-			$this,
-			'sortableLastModifiedColumn'
-		] );
-		add_action( 'manage_' . RulesInit::RULES_TYPE_SLUG . '_posts_custom_column', [
-			$this,
-			'lastModifiedAdminColumnContent'
-		], 10, 2 );
+		add_filter( 'manage_edit-' . RulesInit::RULES_TYPE_SLUG . '_columns', array( $this, 'lastModifiedAdminColumn' ) );
+		add_filter(
+			'manage_edit-' . RulesInit::RULES_TYPE_SLUG . '_sortable_columns',
+			array(
+				$this,
+				'sortableLastModifiedColumn',
+			)
+		);
+		add_action(
+			'manage_' . RulesInit::RULES_TYPE_SLUG . '_posts_custom_column',
+			array(
+				$this,
+				'lastModifiedAdminColumnContent',
+			),
+			10,
+			2
+		);
 	}
 
-	public function lastModifiedAdminColumn( array $columns = [] ): array {
+	public function lastModifiedAdminColumn( array $columns = array() ): array {
 		$columns['modified_last'] = __( 'Naposledy upraveno', 'skautis-integration' );
 
 		return $columns;
 	}
 
-	public function sortableLastModifiedColumn( array $columns = [] ): array {
+	public function sortableLastModifiedColumn( array $columns = array() ): array {
 		$columns['modified_last'] = 'modified';
 
 		return $columns;
@@ -46,7 +54,6 @@ class Columns {
 		echo $modifiedDate;
 		echo '<br>';
 		echo '<strong>' . $modifiedAuthor . '</strong>';
-
 	}
 
 }

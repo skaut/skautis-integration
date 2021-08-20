@@ -9,10 +9,10 @@ use Pimple\Container;
 final class ModulesManager {
 
 	private $container;
-	private $modules = [];
-	private $activatedModules = [];
+	private $modules          = array();
+	private $activatedModules = array();
 
-	public function __construct( Container $container, array $modules = [] ) {
+	public function __construct( Container $container, array $modules = array() ) {
 		$this->container        = $container;
 		$this->modules          = apply_filters( SKAUTISINTEGRATION_NAME . '_modules', $modules );
 		$this->activatedModules = (array) get_option( 'skautis_integration_activated_modules' );
@@ -20,7 +20,7 @@ final class ModulesManager {
 		$this->registerActivatedModules( $this->modules, $this->activatedModules );
 	}
 
-	private function registerActivatedModules( array $modules = [], array $activatedModules = [] ) {
+	private function registerActivatedModules( array $modules = array(), array $activatedModules = array() ) {
 		foreach ( $modules as $moduleId => $moduleLabel ) {
 			if ( in_array( $moduleId, $activatedModules ) ) {
 				$this->container[ $moduleId ];

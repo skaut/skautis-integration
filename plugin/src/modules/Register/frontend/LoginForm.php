@@ -16,9 +16,9 @@ final class LoginForm {
 	}
 
 	private function initHooks() {
-		add_action( 'login_form', [ $this, 'loginLinkInLoginForm' ] );
-		add_action( 'login_enqueue_scripts', [ $this, 'enqueueLoginStyles' ] );
-		add_filter( 'login_form_bottom', [ $this, 'loginLinkInLoginFormReturn' ] );
+		add_action( 'login_form', array( $this, 'loginLinkInLoginForm' ) );
+		add_action( 'login_enqueue_scripts', array( $this, 'enqueueLoginStyles' ) );
+		add_filter( 'login_form_bottom', array( $this, 'loginLinkInLoginFormReturn' ) );
 	}
 
 	public function enqueueLoginStyles() {

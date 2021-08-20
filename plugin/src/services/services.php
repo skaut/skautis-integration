@@ -108,11 +108,14 @@ class Services {
 
 		// Modules
 		self::$services['modulesManager'] = function ( Container $container ) {
-			return new ModulesManager( $container, [ // for hard modules activation/deactivation look to modules/ModulesManager WP filters
-			                                         Register::getId()   => Register::getLabel(),
-			                                         Visibility::getId() => Visibility::getLabel(),
-			                                         Shortcodes::getId() => Shortcodes::getLabel()
-			] );
+			return new ModulesManager(
+				$container,
+				array( // for hard modules activation/deactivation look to modules/ModulesManager WP filters
+					Register::getId()   => Register::getLabel(),
+					Visibility::getId() => Visibility::getLabel(),
+					Shortcodes::getId() => Shortcodes::getLabel(),
+				)
+			);
 		};
 
 		self::$services[ Register::getId() ] = function ( Container $container ) {

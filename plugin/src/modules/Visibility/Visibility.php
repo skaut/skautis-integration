@@ -26,7 +26,7 @@ final class Visibility implements IModule {
 		$this->rulesManager  = $rulesManager;
 		$this->skautisLogin  = $skautisLogin;
 		$this->wpLoginLogout = $wpLoginLogout;
-		$postTypes           = (array) get_option( SKAUTISINTEGRATION_NAME . '_modules_visibility_postTypes', [] );
+		$postTypes           = (array) get_option( SKAUTISINTEGRATION_NAME . '_modules_visibility_postTypes', array() );
 		$this->frontend      = new Frontend( $postTypes, $this->rulesManager, $this->skautisLogin, $this->wpLoginLogout );
 		if ( is_admin() ) {
 			( new Admin( $postTypes, $this->rulesManager, $this->frontend ) );

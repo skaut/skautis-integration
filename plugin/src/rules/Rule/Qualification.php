@@ -9,11 +9,11 @@ use SkautisIntegration\Auth\SkautisGateway;
 
 class Qualification implements IRule {
 
-	public static $id = 'qualification';
-	protected static $type = 'string';
-	protected static $input = 'qualificationInput';
-	protected static $multiple = true;
-	protected static $operators = [ 'in' ];
+	public static $id           = 'qualification';
+	protected static $type      = 'string';
+	protected static $input     = 'qualificationInput';
+	protected static $multiple  = true;
+	protected static $operators = array( 'in' );
 
 	protected $skautisGateway;
 
@@ -54,7 +54,7 @@ class Qualification implements IRule {
 	}
 
 	public function getValues(): array {
-		$result         = [];
+		$result         = array();
 		$qualifications = $this->skautisGateway->getSkautisInstance()->OrganizationUnit->QualificationTypeAll();
 
 		foreach ( $qualifications as $qualification ) {
@@ -69,16 +69,18 @@ class Qualification implements IRule {
 
 		if ( $userQualifications === null ) {
 			$userDetail         = $this->skautisGateway->getSkautisInstance()->UserManagement->UserDetail();
-			$userQualifications = $this->skautisGateway->getSkautisInstance()->OrganizationUnit->QualificationAll( [
-				'ID_Person'   => $userDetail->ID_Person,
-				'ShowHistory' => true,
-				'isValid'     => true
-			] );
+			$userQualifications = $this->skautisGateway->getSkautisInstance()->OrganizationUnit->QualificationAll(
+				array(
+					'ID_Person'   => $userDetail->ID_Person,
+					'ShowHistory' => true,
+					'isValid'     => true,
+				)
+			);
 
-			$result = [];
+			$result = array();
 
 			if ( ! is_array( $userQualifications ) || empty( $userQualifications ) ) {
-				return [];
+				return array();
 			}
 
 			foreach ( $userQualifications as $userQualification ) {
@@ -86,11 +88,10 @@ class Qualification implements IRule {
 			}
 
 			$userQualifications = $result;
-
 		}
 
 		if ( ! is_array( $userQualifications ) ) {
-			return [];
+			return array();
 		}
 
 		return $userQualifications;
@@ -98,8 +99,8 @@ class Qualification implements IRule {
 
 	public function isRulePassed( string $rolesOperator, $data ): bool {
 		// parse and prepare data from rules UI
-		$output = [];
-		preg_match_all( "|[^~]+|", $data, $output );
+		$output = array();
+		preg_match_all( '|[^~]+|', $data, $output );
 		if ( isset( $output[0], $output[0][0] ) ) {
 			$qualifications = $output[0][0];
 			$qualifications = explode( ',', $qualifications );

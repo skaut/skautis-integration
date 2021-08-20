@@ -25,20 +25,20 @@ final class Frontend {
 
 	private function initHooks() {
 		if ( get_option( SKAUTISINTEGRATION_NAME . '_login_page_url' ) ) {
-			add_filter( 'query_vars', [ $this, 'registerQueryVars' ] );
-			add_filter( 'template_include', [ $this, 'registerTemplates' ] );
+			add_filter( 'query_vars', array( $this, 'registerQueryVars' ) );
+			add_filter( 'template_include', array( $this, 'registerTemplates' ) );
 		}
 
-		add_action( 'wp_enqueue_scripts', [ $this, 'enqueueStyles' ] );
-		add_action( 'login_enqueue_scripts', [ $this, 'enqueueLoginStyles' ] );
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueueStyles' ) );
+		add_action( 'login_enqueue_scripts', array( $this, 'enqueueLoginStyles' ) );
 		if ( $this->skautisGateway->isInitialized() ) {
 			if ( $this->skautisGateway->getSkautisInstance()->getUser()->isLoggedIn() ) {
-				add_action( 'admin_bar_menu', [ $this, 'addLogoutLinkToAdminBar' ], 20 );
+				add_action( 'admin_bar_menu', array( $this, 'addLogoutLinkToAdminBar' ), 20 );
 			}
 		}
 	}
 
-	public function registerQueryVars( array $vars = [] ): array {
+	public function registerQueryVars( array $vars = array() ): array {
 		$vars[] = 'skautis_login';
 
 		return $vars;
@@ -69,7 +69,7 @@ final class Frontend {
 		wp_enqueue_style(
 			SKAUTISINTEGRATION_NAME . '_frontend',
 			$this->frontendDirUrl . 'css/skautis-frontend.css',
-			[],
+			array(),
 			SKAUTISINTEGRATION_VERSION,
 			'all'
 		);
@@ -79,7 +79,7 @@ final class Frontend {
 		wp_enqueue_style(
 			SKAUTISINTEGRATION_NAME . '_frontend',
 			$this->frontendDirUrl . 'css/skautis-frontend.css',
-			[],
+			array(),
 			SKAUTISINTEGRATION_VERSION,
 			'all'
 		);
@@ -105,12 +105,14 @@ final class Frontend {
 			$parent = 'my-account';
 		}
 
-		$wpAdminBar->add_menu( array(
-			'parent' => $parent,
-			'id'     => SKAUTISINTEGRATION_NAME . '_adminBar_logout',
-			'title'  => esc_html__( 'Odhlásit se (i ze skautISu)', 'skautis-integration' ),
-			'href'   => $this->wpLoginLogout->getLogoutUrl(),
-		) );
+		$wpAdminBar->add_menu(
+			array(
+				'parent' => $parent,
+				'id'     => SKAUTISINTEGRATION_NAME . '_adminBar_logout',
+				'title'  => esc_html__( 'Odhlásit se (i ze skautISu)', 'skautis-integration' ),
+				'href'   => $this->wpLoginLogout->getLogoutUrl(),
+			)
+		);
 	}
 
 }

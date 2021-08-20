@@ -15,8 +15,8 @@ class SkautisGateway {
 	protected $appId = '';
 	protected $skautis;
 	protected $skautisInitialized = false;
-	protected $testMode = WP_DEBUG;
-	protected $env = '';
+	protected $testMode           = WP_DEBUG;
+	protected $env                = '';
 
 	public function __construct() {
 		if ( ! headers_sent() ) {
@@ -44,7 +44,6 @@ class SkautisGateway {
 				$this->skautis->enableDebugLog();
 			}
 		}
-
 	}
 
 	public function getEnv(): string {
@@ -60,7 +59,7 @@ class SkautisGateway {
 	}
 
 	public function logout() {
-		$this->skautis->setLoginData( [] );
+		$this->skautis->setLoginData( array() );
 		wp_remote_get( esc_url_raw( $this->getSkautisInstance()->getLogoutUrl() ) );
 	}
 

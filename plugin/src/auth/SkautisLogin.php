@@ -24,7 +24,7 @@ final class SkautisLogin {
 		return false;
 	}
 
-	public function setLoginDataToLocalSkautisInstance( array $data = [] ): bool {
+	public function setLoginDataToLocalSkautisInstance( array $data = array() ): bool {
 		$data = apply_filters( SKAUTISINTEGRATION_NAME . '_login_data_for_skautis_instance', $data );
 
 		if ( isset( $data['skautIS_Token'] ) ) {
@@ -92,10 +92,12 @@ final class SkautisLogin {
 
 	public function changeUserRoleInSkautis( int $roleId ) {
 		if ( $roleId > 0 ) {
-			$result = $this->skautisGateway->getSkautisInstance()->UserManagement->LoginUpdate( [
-				'ID'          => $this->skautisGateway->getSkautisInstance()->getUser()->getLoginId(),
-				'ID_UserRole' => $roleId
-			] );
+			$result = $this->skautisGateway->getSkautisInstance()->UserManagement->LoginUpdate(
+				array(
+					'ID'          => $this->skautisGateway->getSkautisInstance()->getUser()->getLoginId(),
+					'ID_UserRole' => $roleId,
+				)
+			);
 
 			if ( ! $result || ! isset( $result->ID_Unit ) ) {
 				return;
