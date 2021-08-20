@@ -27,7 +27,8 @@
     "lint:php": "run-p -c --aggregate-output lint:php:*",
     "lint:ts:eslint": "eslint --color 'plugin/**/*.ts' 'gulpfile.js'",
     "lint:ts": "run-p -c --aggregate-output lint:ts:*",
-    "lint": "run-p -c --aggregate-output lint:*"
+    "disabled_lint": "run-p -c --aggregate-output lint:*",
+    "lint": "npm run lint:php:phpcs"
   },
   "devDependencies": {
     "@wordpress/browserslist-config": "^4.1.0",
