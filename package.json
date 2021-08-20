@@ -19,13 +19,13 @@
   },
   "scripts": {
     "build": "gulp build",
-    "lint:css:stylelint": "stylelint --color 'plugin/**/*.css'",
+    "lint:css:stylelint": "stylelint --color 'src/**/*.css'",
     "lint:css": "run-p -c --aggregate-output lint:css:*",
     "lint:php:phan": "export PHAN_DISABLE_XDEBUG_WARN=1; vendor/bin/phan",
     "lint:php:phpcs": "vendor/bin/phpcs",
-    "lint:php:phpmd": "vendor/bin/phpmd plugin,.phan/config.php text phpmd.xml",
+    "lint:php:phpmd": "vendor/bin/phpmd src,.phan/config.php,scoper.inc.php text phpmd.xml",
     "lint:php": "run-p -c --aggregate-output lint:php:*",
-    "lint:ts:eslint": "eslint --color 'plugin/**/*.ts' 'gulpfile.js'",
+    "lint:ts:eslint": "eslint --color 'src/**/*.ts' 'gulpfile.js'",
     "lint:ts": "run-p -c --aggregate-output lint:ts:*",
     "disabled_lint": "run-p -c --aggregate-output lint:*",
     "lint": "npm run lint:php:phpcs"

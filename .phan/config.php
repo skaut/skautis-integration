@@ -19,17 +19,17 @@ return array(
 	'unused_variable_detection'                 => true,
 	'warn_about_redundant_use_namespaced_class' => true,
 	'directory_list'                            => array(
-		'plugin',
+		'src',
 		// 'tests',
 		'.phan',
-		// 'dist/bundled/vendor',
+		'dist/vendor',
 		// 'vendor/skaut/phan-wordpress-stubs/stubs',
 	),
 	'file_list'                                 => array(
-		// 'scoper.inc.php',
+		'scoper.inc.php',
 	),
 	'exclude_analysis_directory_list'           => array(
-		// 'dist/bundled/vendor/',
+		'dist/vendor/',
 		// 'vendor/skaut/phan-wordpress-stubs/stubs',
 	),
 	'suppress_issue_types'                      => array(
