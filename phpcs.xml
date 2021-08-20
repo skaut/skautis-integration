@@ -20,12 +20,12 @@
 	<rule ref="WordPress"/>
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
 		<properties>
-			<property name="prefixes" type="array" value="XXXXX"/>
+			<property name="prefixes" type="array" value="SkautisIntegration"/>
 		</properties>
 	</rule>
 	<rule ref="WordPress.WP.I18n">
 		<properties>
-			<property name="text_domain" type="array" value="XXXXX"/>
+			<property name="text_domain" type="array" value="skautis-integration"/>
 		</properties>
 	</rule>
 	<rule ref="WordPress.WhiteSpace.ControlStructureSpacing">
