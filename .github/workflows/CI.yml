@@ -27,7 +27,6 @@ jobs:
   lint:
     name: "Lint"
     runs-on: ubuntu-latest
-    needs: build
     env:
       php-extensions: ast
     steps:
