@@ -73,8 +73,9 @@ final class WpRegister {
 	}
 
 	private function processWpUserRegistration( array $user, string $wpRole ): bool {
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		if ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
-			Helpers::validateNonceFromUrl( $_GET['ReturnUrl'], SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis' );
+			Helpers::validateNonceFromUrl( esc_url_raw( $_GET['ReturnUrl'] ), SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis' );
 
 			// check for skautIS User ID collision with existing users
 			$usersWpQuery = new \WP_User_Query(
@@ -171,10 +172,12 @@ final class WpRegister {
 	}
 
 	public function getRegisterUrl(): string {
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		if ( isset( $_GET['redirect_to'] ) && $_GET['redirect_to'] ) {
-			$returnUrl = $_GET['redirect_to'];
+			$returnUrl = esc_url_raw( $_GET['redirect_to'] );
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		} elseif ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
-			$returnUrl = $_GET['ReturnUrl'];
+			$returnUrl = esc_url_raw( $_GET['ReturnUrl'] );
 		} else {
 			$returnUrl = Helpers::getCurrentUrl();
 		}
@@ -200,15 +203,17 @@ final class WpRegister {
 	}
 
 	public function getManuallyRegisterWpUserUrl(): string {
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		if ( isset( $_GET['redirect_to'] ) && $_GET['redirect_to'] ) {
-			$returnUrl = $_GET['redirect_to'];
+			$returnUrl = esc_url_raw( $_GET['redirect_to'] );
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		} elseif ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
-			$returnUrl = $_GET['ReturnUrl'];
+			$returnUrl = esc_url_raw( $_GET['ReturnUrl'] );
 		} else {
 			$returnUrl = Helpers::getCurrentUrl();
 		}
 
-		$returnUrl = add_query_arg( SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis', wp_create_nonce( SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis' ), $returnUrl );
+		$returnUrl = add_query_arurlg( SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis', wp_create_nonce( SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis' ), $returnUrl );
 		$url       = add_query_arg( 'ReturnUrl', urlencode( $returnUrl ), get_home_url( null, 'skautis/auth/' . Register::MANUALLY_REGISTER_WP_USER_ACTION ) );
 
 		return esc_url( $url );
