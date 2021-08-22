@@ -75,18 +75,18 @@ class UsersManagement {
 		}
 
 		wp_enqueue_style(
-			'datatables',
-			'https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.16/css/jquery.dataTables.min.css',
+			SKAUTISINTEGRATION_NAME . '_datatables',
+			SKAUTISINTEGRATION_URL . 'bundled/jquery.dataTables.min.css',
 			array(),
-			'1.10.16',
+			SKAUTISINTEGRATION_VERSION,
 			'all'
 		);
 
 		wp_enqueue_script(
-			'datatables',
-			'https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.16/js/jquery.dataTables.min.js',
+			SKAUTISINTEGRATION_NAME . '_datatables',
+			SKAUTISINTEGRATION_URL . 'bundled/jquery.dataTables.min.js',
 			array( 'jquery' ),
-			'1.10.16',
+			SKAUTISINTEGRATION_VERSION,
 			true
 		);
 
@@ -99,7 +99,7 @@ class UsersManagement {
 		);
 
 		wp_enqueue_style(
-			SKAUTISINTEGRATION_NAME,
+			SKAUTISINTEGRATION_NAME . '_admin-users-management',
 			$this->adminDirUrl . 'css/skautis-admin-users-management.css',
 			array(),
 			SKAUTISINTEGRATION_VERSION,
@@ -107,11 +107,19 @@ class UsersManagement {
 		);
 
 		wp_enqueue_script(
-			SKAUTISINTEGRATION_NAME,
+			SKAUTISINTEGRATION_NAME . '_admin-users-management',
 			$this->adminDirUrl . 'js/skautis-admin-users-management.js',
 			array( 'jquery', SKAUTISINTEGRATION_NAME . '_select2' ),
 			SKAUTISINTEGRATION_VERSION,
 			true
+		);
+
+		wp_localize_script(
+			SKAUTISINTEGRATION_NAME . '_admin-users-management',
+			'skautisIntegrationAdminUsersManagementLocalize',
+			array(
+				'datatablesFilesUrl' => SKAUTISINTEGRATION_URL . 'bundled/datatables-files',
+			)
 		);
 	}
 

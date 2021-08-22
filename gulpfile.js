@@ -57,6 +57,18 @@ gulp.task(
 	)
 );
 
+gulp.task( 'build:deps:npm:datatables.net:files', function () {
+	return gulp
+		.src( ['node_modules/datatables.net-dt/images/sort_asc.png', 'node_modules/datatables.net-dt/images/sort_desc.png', 'node_modules/datatables.net-plugins/i18n/cs.json'] )
+		.pipe( gulp.dest( 'dist/bundled/datatables-files' ) );
+} );
+
+gulp.task( 'build:deps:npm:datatables.net', gulp.parallel( 'build:deps:npm:datatables.net:files', function () {
+	return gulp
+		.src( ['node_modules/datatables.net-dt/css/jquery.dataTables.min.css', 'node_modules/datatables.net/js/jquery.dataTables.min.js'] )
+		.pipe( gulp.dest( 'dist/bundled/' ) );
+} ) );
+
 gulp.task( 'build:deps:npm:select2', function () {
 	return gulp
 		.src( ['node_modules/select2/dist/css/select2.min.css', 'node_modules/select2/dist/js/select2.min.js'] )
@@ -66,6 +78,7 @@ gulp.task( 'build:deps:npm:select2', function () {
 gulp.task(
 	'build:deps:npm',
 	gulp.series(
+		'build:deps:npm:datatables.net',
 		'build:deps:npm:select2',
 	)
 );

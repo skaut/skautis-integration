@@ -1,12 +1,15 @@
 (function ($) {
     'use strict';
 
+    document.styleSheets[0].addRule('.skautisUserManagementTable th span:after','background-image: url(' + skautisIntegrationAdminUsersManagementLocalize.datatablesFilesUrl + '/sort_asc.png);');
+    document.styleSheets[0].addRule('.skautisUserManagementTable th.sorting_desc span:after','background-image: url(' + skautisIntegrationAdminUsersManagementLocalize.datatablesFilesUrl + '/sort_desc.png);');
+
     var $dataTable = $('.skautisUserManagementTable').DataTable({
         responsive: true,
         pageLength: 25,
         stateSave: true,
         language: {
-            url: 'https://cdn.datatables.net/plug-ins/1.10.16/i18n/Czech.json',
+            url: skautisIntegrationAdminUsersManagementLocalize.datatablesFilesUrl + '/cs.json',
             search: "Hledat",
             clear: "Zrušit"
         },
