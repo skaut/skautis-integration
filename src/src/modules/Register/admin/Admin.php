@@ -42,17 +42,17 @@ final class Admin {
 			wp_enqueue_script( 'jquery-ui-sortable' );
 
 			wp_enqueue_script(
-				'jquery-repeater',
-				'https://cdnjs.cloudflare.com/ajax/libs/jquery.repeater/1.2.1/jquery.repeater.min.js',
+				SKAUTISINTEGRATION_NAME . '_jquery.repeater',
+				SKAUTISINTEGRATION_URL . 'bundled/jquery.repeater.min.js',
 				array( 'jquery' ),
-				'1.2.1',
+				SKAUTISINTEGRATION_VERSION,
 				true
 			);
 
 			wp_enqueue_script(
 				SKAUTISINTEGRATION_NAME . '_modules_register',
 				$this->adminDirUrl . 'js/skautis-modules-register-admin.js',
-				array( 'jquery-repeater' ),
+				array( SKAUTISINTEGRATION_NAME . '_jquery.repeater' ),
 				SKAUTISINTEGRATION_VERSION,
 				true
 			);

@@ -69,6 +69,12 @@ gulp.task( 'build:deps:npm:datatables.net', gulp.parallel( 'build:deps:npm:datat
 		.pipe( gulp.dest( 'dist/bundled/' ) );
 } ) );
 
+gulp.task( 'build:deps:npm:jquery.repeater', function () {
+	return gulp
+		.src( 'node_modules/jquery.repeater/jquery.repeater.min.js' )
+		.pipe( gulp.dest( 'dist/bundled/' ) );
+} );
+
 gulp.task( 'build:deps:npm:select2', function () {
 	return gulp
 		.src( ['node_modules/select2/dist/css/select2.min.css', 'node_modules/select2/dist/js/select2.min.js'] )
@@ -79,6 +85,7 @@ gulp.task(
 	'build:deps:npm',
 	gulp.series(
 		'build:deps:npm:datatables.net',
+		'build:deps:npm:jquery.repeater',
 		'build:deps:npm:select2',
 	)
 );

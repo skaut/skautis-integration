@@ -46,17 +46,17 @@ final class Admin {
 			);
 
 			wp_enqueue_script(
-				'jquery-repeater',
-				'https://cdnjs.cloudflare.com/ajax/libs/jquery.repeater/1.2.1/jquery.repeater.min.js',
+				SKAUTISINTEGRATION_NAME . '_jquery.repeater',
+				SKAUTISINTEGRATION_URL . 'bundled/jquery.repeater.min.js',
 				array( 'jquery' ),
-				'1.2.1',
+				SKAUTISINTEGRATION_VERSION,
 				true
 			);
 
 			wp_enqueue_script(
 				SKAUTISINTEGRATION_NAME . '_modules_visibility',
 				$this->adminDirUrl . 'js/skautis-modules-visibility-admin.js',
-				array( 'jquery', 'jquery-repeater', SKAUTISINTEGRATION_NAME . '_select2' ),
+				array( 'jquery', SKAUTISINTEGRATION_NAME . '_jquery.repeater', SKAUTISINTEGRATION_NAME . '_select2' ),
 				SKAUTISINTEGRATION_VERSION,
 				true
 			);
