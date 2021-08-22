@@ -56,7 +56,7 @@ final class Admin {
 			wp_enqueue_script(
 				SKAUTISINTEGRATION_NAME . '_modules_visibility',
 				$this->adminDirUrl . 'js/skautis-modules-visibility-admin.js',
-				array( 'jquery', 'jquery-repeater', 'select2' ),
+				array( 'jquery', 'jquery-repeater', SKAUTISINTEGRATION_NAME . '_select2' ),
 				SKAUTISINTEGRATION_VERSION,
 				true
 			);

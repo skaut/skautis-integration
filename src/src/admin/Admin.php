@@ -42,18 +42,18 @@ final class Admin {
 
 	public function enqueueScriptsAndStyles() {
 		wp_enqueue_style(
-			'select2',
-			'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css',
+			SKAUTISINTEGRATION_NAME . '_select2',
+			SKAUTISINTEGRATION_URL . 'bundled/select2.min.css',
 			array(),
-			'4.0.5',
+			SKAUTISINTEGRATION_VERSION,
 			'all'
 		);
 
 		wp_enqueue_script(
-			'select2',
-			'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js',
+			SKAUTISINTEGRATION_NAME . '_select2',
+			SKAUTISINTEGRATION_URL . 'bundled/select2.min.js',
 			array( 'jquery' ),
-			'4.0.5',
+			SKAUTISINTEGRATION_VERSION,
 			false
 		);
 

@@ -57,9 +57,22 @@ gulp.task(
 	)
 );
 
+gulp.task( 'build:deps:npm:select2', function () {
+	return gulp
+		.src( ['node_modules/select2/dist/css/select2.min.css', 'node_modules/select2/dist/js/select2.min.js'] )
+		.pipe( gulp.dest( 'dist/bundled/' ) );
+} );
+
+gulp.task(
+	'build:deps:npm',
+	gulp.series(
+		'build:deps:npm:select2',
+	)
+);
+
 gulp.task(
 	'build:deps',
-	gulp.parallel( 'build:deps:composer' )
+	gulp.parallel( 'build:deps:composer', 'build:deps:npm' )
 );
 
 gulp.task( 'build:php:base', function () {

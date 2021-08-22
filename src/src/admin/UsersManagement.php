@@ -109,7 +109,7 @@ class UsersManagement {
 		wp_enqueue_script(
 			SKAUTISINTEGRATION_NAME,
 			$this->adminDirUrl . 'js/skautis-admin-users-management.js',
-			array( 'jquery', 'select2' ),
+			array( 'jquery', SKAUTISINTEGRATION_NAME . '_select2' ),
 			SKAUTISINTEGRATION_VERSION,
 			true
 		);
