@@ -123,10 +123,10 @@ final class Admin {
 		}
 
 		wp_enqueue_style(
-			'font-awesome',
-			'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css',
+			SKAUTISINTEGRATION_NAME . '_font-awesome',
+			SKAUTISINTEGRATION_URL . 'bundled/font-awesome/css/font-awesome.min.css',
 			array(),
-			'4.7.0',
+			SKAUTISINTEGRATION_VERSION,
 			'all'
 		);
 
