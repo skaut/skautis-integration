@@ -185,10 +185,10 @@ final class Admin {
 		);
 
 		wp_enqueue_script(
-			'interact',
-			'https://cdnjs.cloudflare.com/ajax/libs/interact.js/1.2.9/interact.min.js',
+			SKAUTISINTEGRATION_NAME . '_interact',
+			SKAUTISINTEGRATION_URL . 'bundled/interact.min.js',
 			array(),
-			'1.2.8',
+			SKAUTISINTEGRATION_VERSION,
 			false
 		);
 
