@@ -55,6 +55,7 @@ final class ConnectAndDisconnectWpAccount {
 
 	public function connect() {
 		if ( ! $this->skautisLogin->isUserLoggedInSkautis() ) {
+			// phpcs:ignore WordPress.Security.NonceVerification.Missing
 			if ( ! $this->skautisLogin->setLoginDataToLocalSkautisInstance( $_POST ) ) {
 				// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 				if ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {

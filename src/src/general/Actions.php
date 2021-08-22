@@ -65,10 +65,12 @@ final class Actions {
 	}
 
 	public function authInProcess() {
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		if ( ! isset( $_POST['skautIS_Token'] ) ) {
 			return;
 		}
 
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		do_action( SKAUTISINTEGRATION_NAME . '_after_skautis_token_is_set', $_POST );
 
 		if ( strpos( Helpers::getCurrentUrl(), 'profile.php' ) !== false ) {

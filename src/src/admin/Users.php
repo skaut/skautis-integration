@@ -93,6 +93,10 @@ final class Users {
 	}
 
 	public function manageSkautisUserIdField( int $userId ): bool {
+		if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ), 'update-user_' . $user_id ) ) {
+			return false;
+		}
+
 		$saved = false;
 		if ( Helpers::userIsSkautisManager() ) {
 			if ( isset( $_POST['skautisUserId_prod'] ) ) {

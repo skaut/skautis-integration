@@ -37,6 +37,10 @@ final class Metabox {
 	}
 
 	public function saveRulesCustomField( int $postId ) {
+		if ( ! isset( $_POST[SKAUTISINTEGRATION_NAME. '_visibility_metabox_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[SKAUTISINTEGRATION_NAME. '_visibility_metabox_nonce'] ) ), SKAUTISINTEGRATION_NAME. '_visibility_metabox' ) ) {
+			return;
+		}
+
 		if ( isset( $_POST[ SKAUTISINTEGRATION_NAME . '_rules_visibilityMode' ] ) ) {
 			if ( isset( $_POST[ SKAUTISINTEGRATION_NAME . '_rules' ] ) ) {
 				$rules = sanitize_meta( SKAUTISINTEGRATION_NAME . '_rules', wp_unslash( $_POST[ SKAUTISINTEGRATION_NAME . '_rules' ] ), 'post' );
@@ -80,9 +84,9 @@ final class Metabox {
 		if ( $visibilityMode !== 'content' && $visibilityMode !== 'full' ) {
 			$visibilityMode = get_option( SKAUTISINTEGRATION_NAME . '_modules_visibility_visibilityMode', 0 );
 		}
-		?>
 
-		<?php
+		wp_nonce_field( SKAUTISINTEGRATION_NAME. '_visibility_metabox', SKAUTISINTEGRATION_NAME. '_visibility_metabox_nonce' );
+
 		if ( $post->post_parent > 0 ) {
 			$parentRules = $this->frontend->getParentPostsWithRules( absint( $post->ID ), $post->post_type );
 			if ( ! empty( $parentRules ) ) {
