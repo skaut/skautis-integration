@@ -166,7 +166,7 @@ final class Settings {
 		</div>
 		<div id="skautis_integration_modules_register_rulesNotSetHelp">
 			<em><?php esc_html_e( 'Ponecháte-li prázdné - budou se moci přes skautIS registrovat všichni uživatelé. Jejich výchozí úroveň pak bude: ', 'skautis-integration' ); ?>
-				<strong><?php echo esc_html( translate_user_role( ucfirst( get_option( SKAUTISINTEGRATION_NAME . '_modules_register_defaultwpRole' ) ) ) ); ?></strong></em>
+				<strong><?php echo esc_html( translate_user_role( ucfirst( get_option( SKAUTISINTEGRATION_NAME . '_modules_register_defaultwpRole', '' ) ) ) ); ?></strong></em>
 		</div>
 		<div><em><?php esc_html_e( 'Pravidla můžete přidávat v sekci', 'skautis-integration' ); ?>
 				<a href="<?php echo esc_url( admin_url( 'edit.php?post_type=' . RulesInit::RULES_TYPE_SLUG ) ); ?>"><?php esc_html_e( 'Správa pravidel', 'skautis-integration' ); ?></a>.</em>
