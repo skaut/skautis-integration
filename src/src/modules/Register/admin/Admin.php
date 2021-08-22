@@ -61,16 +61,13 @@ final class Admin {
 
 	public function initRulesOptions() {
 		if ( get_current_screen()->id == 'skautis_page_skautis-integration_modules_register' ) {
-			$data  = '';
 			$rules = array();
-
 			foreach ( (array) $this->rulesManager->getAllRules() as $rule ) {
 				$rules[ $rule->ID ] = $rule->post_title;
 			}
-			$data = json_encode( $rules );
 			?>
 			<script>
-				window.rulesOptions = <?php echo $data; ?>;
+				window.rulesOptions = <?php echo wp_json_encode( $rules ); ?>;
 			</script>
 			<?php
 		}
@@ -78,10 +75,10 @@ final class Admin {
 
 	public function initRulesData() {
 		if ( get_current_screen()->id == 'skautis_page_skautis-integration_modules_register' ) {
-			$data = json_encode( get_option( SKAUTISINTEGRATION_NAME . '_modules_register_rules' ) );
+			$data = get_option( SKAUTISINTEGRATION_NAME . '_modules_register_rules' );
 			?>
 			<script>
-				window.rulesData = <?php echo $data; ?>;
+				window.rulesData = <?php echo wp_json_encode( $data ); ?>;
 			</script>
 			<?php
 		}

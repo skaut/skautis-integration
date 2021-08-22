@@ -51,9 +51,9 @@ class Columns {
 		$modifiedDate   = sprintf( _x( 'Před %s', '%s = human-readable time difference', 'skautis-integration' ), human_time_diff( strtotime( $post->post_modified ), current_time( 'timestamp' ) ) );
 		$modifiedAuthor = get_the_modified_author();
 
-		echo $modifiedDate;
+		echo esc_html( $modifiedDate );
 		echo '<br>';
-		echo '<strong>' . $modifiedAuthor . '</strong>';
+		echo '<strong>' . esc_html( $modifiedAuthor ) . '</strong>';
 	}
 
 }

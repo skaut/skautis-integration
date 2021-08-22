@@ -139,11 +139,10 @@ final class Register implements IModule {
 
 		$this->skautisGateway->logout();
 
-		$tryAgain = '';
 		if ( ! empty( $_GET['ReturnUrl'] ) ) {
-			$tryAgain = '<a href="' . esc_url( $_GET['ReturnUrl'] ) . '">' . __( 'Zkuste to znovu', 'skautis-integration' ) . '</a>';
+			wp_die( sprintf( esc_html__( 'Nemáte oprávnění k registraci. %1$sZkuste to znovu%2$s', 'skautis-integration' ), '<a href="' . esc_url( $_GET['ReturnUrl'] ) . '">', '</a>' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
 		}
-		wp_die( sprintf( __( 'Nemáte oprávnění k registraci. %s', 'skautis-integration' ), $tryAgain ), __( 'Neautorizovaný přístup', 'skautis-integration' ) );
+		wp_die( esc_html__( 'Nemáte oprávnění k registraci.', 'skautis-integration' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
 	}
 
 	public function registerUserManually() {
@@ -151,7 +150,7 @@ final class Register implements IModule {
 			 ! Helpers::userIsSkautisManager() ||
 			 ! current_user_can( 'create_users' ) ||
 			 ! isset( $_GET['ReturnUrl'], $_GET['wpRole'], $_GET['skautisUserId'] ) ) {
-			wp_die( __( 'Nemáte oprávnění k registraci nových uživatelů.', 'skautis-integration' ), __( 'Neautorizovaný přístup', 'skautis-integration' ) );
+			wp_die( esc_html__( 'Nemáte oprávnění k registraci nových uživatelů.', 'skautis-integration' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
 		}
 
 		$wpRole        = $_GET['wpRole'];
@@ -161,7 +160,7 @@ final class Register implements IModule {
 			wp_safe_redirect( esc_url_raw( $_GET['ReturnUrl'] ), 302 );
 			exit;
 		} else {
-			wp_die( __( 'Uživatele se nepodařilo zaregistrovat', 'skautis-integration' ), __( 'Chyba při registraci uživatele', 'skautis-integration' ) );
+			wp_die( esc_html__( 'Uživatele se nepodařilo zaregistrovat', 'skautis-integration' ), esc_html__( 'Chyba při registraci uživatele', 'skautis-integration' ) );
 		}
 	}
 

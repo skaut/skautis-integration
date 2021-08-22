@@ -61,7 +61,7 @@ final class Admin {
 	public function RulesFieldContent( \WP_Post $post ) {
 		?>
 		<textarea id="query_builder_values" class=""
-				  name="<?php echo SKAUTISINTEGRATION_NAME; ?>_rules_data"><?php echo get_post_meta( $post->ID, SKAUTISINTEGRATION_NAME . '_rules_data', true ); ?></textarea>
+				  name="<?php echo esc_attr( SKAUTISINTEGRATION_NAME ); ?>_rules_data"><?php echo esc_html( get_post_meta( $post->ID, SKAUTISINTEGRATION_NAME . '_rules_data', true ) ); ?></textarea>
 		<?php
 	}
 
@@ -94,20 +94,19 @@ final class Admin {
 		<div class="meta-box-sortables">
 			<div class="postbox" style="margin-top: 2.5em;">
 				<button type="button" class="handlediv" aria-expanded="true"><span
-						class="screen-reader-text"><?php _e( 'Zobrazit / skrýt panel: Pravidla', 'skautis-integration' ); ?></span><span
+						class="screen-reader-text"><?php esc_html_e( 'Zobrazit / skrýt panel: Pravidla', 'skautis-integration' ); ?></span><span
 						class="toggle-indicator" aria-hidden="true"></span></button>
 				<h2 class="hndle ui-sortable-handle">
-					<span><?php _e( 'Zadejte podmínky pro splnění pravidla', 'skautis-integration' ); ?></span>
+					<span><?php esc_html_e( 'Zadejte podmínky pro splnění pravidla', 'skautis-integration' ); ?></span>
 				</h2>
 				<div class="inside" style="padding: 0.75em 1.5em 1.25em 1.5em;">
 					<label class="screen-reader-text"
-						   for="post_author_override"><?php _e( 'Zadejte podmínky pro splnění pravidla', 'skautis-integration' ); ?></label>
+						   for="post_author_override"><?php esc_html_e( 'Zadejte podmínky pro splnění pravidla', 'skautis-integration' ); ?></label>
 					<?php
 					if ( ! $this->skautisGateway->isInitialized() ) {
-						printf( __( 'Vyberte v <a href="%1$s">nastavení</a> pluginu typ prostředí skautISu', 'skautis-integration' ), admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME ) );
+						printf( esc_html__( 'Vyberte v %1$snastavení%2$s pluginu typ prostředí skautISu', 'skautis-integration' ), '<a href="' . esc_url( admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME ) ) . '">', '</a>' );
 					} elseif ( ! $this->skautisGateway->getSkautisInstance()->getUser()->isLoggedIn( true ) ) {
-						$result = '<h4><a href="' . $this->wpLoginLogout->getLoginUrl( add_query_arg( 'noWpLogin', true, Helpers::getCurrentUrl() ) ) . '">' . __( 'Pro správu podmínek je nutné se přihlásit do skautISu', 'skautis-integration' ) . '</a></h4>';
-						echo $result;
+						echo '<h4><a href="' . esc_url( $this->wpLoginLogout->getLoginUrl( add_query_arg( 'noWpLogin', true, Helpers::getCurrentUrl() ) ) ) . '">' . esc_html__( 'Pro správu podmínek je nutné se přihlásit do skautISu', 'skautis-integration' ) . '</a></h4>';
 					} else {
 						echo '<div id="query_builder"></div>';
 					}
@@ -234,21 +233,19 @@ final class Admin {
 			var data = {};
 			<?php
 			foreach ( (array) $this->rulesManager->getRules() as $rule ) {
-				$data = json_encode(
-					array(
-						'id'          => $rule->getId(),
-						'label'       => $rule->getLabel(),
-						'type'        => $rule->getType(),
-						'input'       => $rule->getInput(),
-						'multiple'    => $rule->getMultiple(),
-						'values'      => $rule->getValues(),
-						'operators'   => $rule->getOperators(),
-						'placeholder' => $rule->getPlaceholder(),
-						'description' => $rule->getDescription(),
-					)
+				$data = array(
+					'id'          => $rule->getId(),
+					'label'       => $rule->getLabel(),
+					'type'        => $rule->getType(),
+					'input'       => $rule->getInput(),
+					'multiple'    => $rule->getMultiple(),
+					'values'      => $rule->getValues(),
+					'operators'   => $rule->getOperators(),
+					'placeholder' => $rule->getPlaceholder(),
+					'description' => $rule->getDescription(),
 				);
 				?>
-			data = <?php echo $data; ?>;
+			data = <?php echo wp_json_encode( $data ); ?>;
 
 			if (data.input === "roleInput") {
 				var role = new Role(data.values);

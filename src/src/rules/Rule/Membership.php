@@ -133,11 +133,12 @@ class Membership implements IRule {
 			if ( is_a( $userMemberships, '\stdClass' ) ) {
 				wp_die(
 					sprintf(
-						__(
-							'Pravděpodobně nemáte propojený skautIS účet se svojí osobou. <a href="%s">Postupujte podle tohoto návodu</a>',
+						esc_html__(
+							'Pravděpodobně nemáte propojený skautIS účet se svojí osobou. %1$sPostupujte podle tohoto návodu%2$s',
 							'skautis-integration'
 						),
-						'https://napoveda.skaut.cz/skautis/informacni-system/uzivatel/propojeni-uctu'
+						'<a href="https://napoveda.skaut.cz/skautis/informacni-system/uzivatel/propojeni-uctu">',
+						'</a>'
 					)
 				);
 			} else {

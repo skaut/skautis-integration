@@ -135,12 +135,12 @@ class SkautisIntegration {
 	public function activation() {
 		if ( ! $this->isCompatibleVersionOfWp() ) {
 			deactivate_plugins( SKAUTISINTEGRATION_PLUGIN_BASENAME );
-			wp_die( __( 'Plugin skautIS integrace vyžaduje verzi WordPress 4.9.6 nebo vyšší!', 'skautis-integration' ) );
+			wp_die( esc_html__( 'Plugin skautIS integrace vyžaduje verzi WordPress 4.9.6 nebo vyšší!', 'skautis-integration' ) );
 		}
 
 		if ( ! $this->isCompatibleVersionOfPhp() ) {
 			deactivate_plugins( SKAUTISINTEGRATION_PLUGIN_BASENAME );
-			wp_die( __( 'Plugin skautIS integrace vyžaduje verzi PHP 7.0 nebo vyšší!', 'skautis-integration' ) );
+			wp_die( esc_html__( 'Plugin skautIS integrace vyžaduje verzi PHP 7.0 nebo vyšší!', 'skautis-integration' ) );
 		}
 
 		if ( ! get_option( 'skautis_rewrite_rules_need_to_flush' ) ) {

@@ -54,14 +54,14 @@ final class Users {
 
 	public function skautisUserIdField( \WP_User $user ) {
 		?>
-		<h3><?php _e( 'skautIS', 'blank' ); ?></h3>
+		<h3><?php esc_html_e( 'skautIS', 'blank' ); ?></h3>
 		<?php
-		echo $this->connectWpAccount->getConnectAndDisconnectButton( $user->ID );
+		$this->connectWpAccount->printConnectAndDisconnectButton( $user->ID );
 		do_action( SKAUTISINTEGRATION_NAME . '_userScreen_userIds_before' );
 		?>
 		<table class="form-table">
 			<tr>
-				<th><label for="skautisUserId_prod"><?php _e( 'skautIS user ID', SKAUTISINTEGRATION_NAME ); ?></label>
+				<th><label for="skautisUserId_prod"><?php esc_html_e( 'skautIS user ID', SKAUTISINTEGRATION_NAME ); ?></label>
 				</th>
 				<td>
 					<input type="text" name="skautisUserId_prod" id="skautisUserId_prod" class="regular-text" 
@@ -75,7 +75,7 @@ final class Users {
 			</tr>
 			<tr>
 				<th><label
-						for="skautisUserId_test"><?php _e( 'skautIS user ID (testovací)', SKAUTISINTEGRATION_NAME ); ?></label>
+						for="skautisUserId_test"><?php esc_html_e( 'skautIS user ID (testovací)', SKAUTISINTEGRATION_NAME ); ?></label>
 				</th>
 				<td>
 					<input type="text" name="skautisUserId_test" id="skautisUserId_test" class="regular-text" 

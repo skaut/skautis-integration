@@ -34,14 +34,14 @@ final class Settings {
 
 	public function printSettingPage() {
 		if ( ! Helpers::userIsSkautisManager() ) {
-			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.' ) );
 		}
 
 		settings_errors();
 		?>
 		<div class="wrap">
-			<h1><?php _e( 'Nastavení shortcodes', 'skautis-integration' ); ?></h1>
-			<form method="POST" action="<?php echo admin_url( 'options.php' ); ?>">
+			<h1><?php esc_html_e( 'Nastavení shortcodes', 'skautis-integration' ); ?></h1>
+			<form method="POST" action="<?php echo esc_url( admin_url( 'options.php' ) ); ?>">
 				<?php
 				settings_fields( SKAUTISINTEGRATION_NAME . '_modules_shortcodes' );
 				do_settings_sections( SKAUTISINTEGRATION_NAME . '_modules_shortcodes' );
@@ -83,13 +83,13 @@ final class Settings {
 	public function fieldVisibilityMode() {
 		$visibilityMode = get_option( SKAUTISINTEGRATION_NAME . '_modules_shortcodes_visibilityMode', 'hide' );
 		?>
-		<label><input type="radio" name="<?php echo SKAUTISINTEGRATION_NAME; ?>_modules_shortcodes_visibilityMode"
-					  value="hide" <?php checked( 'hide', $visibilityMode ); ?> /><span><?php _e( 'Úplně skrýt obsah', 'skautis-integration' ); ?></span></label>
+		<label><input type="radio" name="<?php echo esc_attr( SKAUTISINTEGRATION_NAME ); ?>_modules_shortcodes_visibilityMode"
+					  value="hide" <?php checked( 'hide', $visibilityMode ); ?> /><span><?php esc_html_e( 'Úplně skrýt obsah', 'skautis-integration' ); ?></span></label>
 		<br/>
-		<label><input type="radio" name="<?php echo SKAUTISINTEGRATION_NAME; ?>_modules_shortcodes_visibilityMode"
-					  value="showLogin" <?php checked( 'showLogin', $visibilityMode ); ?> /><span><?php _e( 'Zobrazit přihlášení', 'skautis-integration' ); ?></span></label>
+		<label><input type="radio" name="<?php echo esc_attr( SKAUTISINTEGRATION_NAME ); ?>_modules_shortcodes_visibilityMode"
+					  value="showLogin" <?php checked( 'showLogin', $visibilityMode ); ?> /><span><?php esc_html_e( 'Zobrazit přihlášení', 'skautis-integration' ); ?></span></label>
 		<p>
-			<em><?php _e( 'Nastavení můžete změnit u jednotlivých typů obsahu dle potřeby.', 'skautis-integration' ); ?></em>
+			<em><?php esc_html_e( 'Nastavení můžete změnit u jednotlivých typů obsahu dle potřeby.', 'skautis-integration' ); ?></em>
 		</p>
 		<?php
 	}

@@ -28,33 +28,28 @@ final class ConnectAndDisconnectWpAccount {
 		}
 	}
 
-	public function getConnectAndDisconnectButton( int $wpUserId ): string {
+	public function printConnectAndDisconnectButton( int $wpUserId ): void {
 		$skautisUserId = get_user_meta( $wpUserId, 'skautisUserId_' . $this->skautisGateway->getEnv(), true );
-		if ( get_current_screen()->id == 'profile' ) {
-			if ( ! $skautisUserId ) {
-				$returnUrl = add_query_arg( SKAUTISINTEGRATION_NAME . '_connectWpAccountWithSkautis', wp_create_nonce( SKAUTISINTEGRATION_NAME . '_connectWpAccountWithSkautis' ), Helpers::getCurrentUrl() );
-				$url       = add_query_arg( 'ReturnUrl', urlencode( $returnUrl ), get_home_url( null, 'skautis/auth/' . Actions::CONNECT_ACTION ) );
-
-				return '
-				<a href="' . esc_url( $url ) . '"
-				   class="button">' . __( 'Propojit tento účet se skautISem', 'skautis-integration' ) . '</a>
-				';
-			}
-		}
 		if ( $skautisUserId ) {
 			if ( ! Helpers::userIsSkautisManager() && get_option( SKAUTISINTEGRATION_NAME . '_allowUsersDisconnectFromSkautis' ) !== '1' ) {
-				return '';
+				return;
 			}
 			$returnUrl = add_query_arg( SKAUTISINTEGRATION_NAME . '_disconnectWpAccountFromSkautis', wp_create_nonce( SKAUTISINTEGRATION_NAME . '_disconnectWpAccountFromSkautis' ), Helpers::getCurrentUrl() );
 			$url       = add_query_arg( 'ReturnUrl', urlencode( $returnUrl ), get_home_url( null, 'skautis/auth/' . Actions::DISCONNECT_ACTION ) );
 
-			return '
+			echo '
 			<a href="' . esc_url( $url ) . '"
-			   class="button">' . __( 'Zrušit propojení účtu se skautISem', 'skautis-integration' ) . '</a>
+			   class="button">' . esc_html__( 'Zrušit propojení účtu se skautISem', 'skautis-integration' ) . '</a>
+			';
+		} elseif ( get_current_screen()->id == 'profile' ) {
+			$returnUrl = add_query_arg( SKAUTISINTEGRATION_NAME . '_connectWpAccountWithSkautis', wp_create_nonce( SKAUTISINTEGRATION_NAME . '_connectWpAccountWithSkautis' ), Helpers::getCurrentUrl() );
+			$url       = add_query_arg( 'ReturnUrl', urlencode( $returnUrl ), get_home_url( null, 'skautis/auth/' . Actions::CONNECT_ACTION ) );
+
+			echo '
+			<a href="' . esc_url( $url ) . '"
+			   class="button">' . esc_html__( 'Propojit tento účet se skautISem', 'skautis-integration' ) . '</a>
 			';
 		}
-
-		return '';
 	}
 
 	public function connect() {

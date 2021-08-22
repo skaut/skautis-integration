@@ -45,7 +45,7 @@ final class WpLoginLogout {
 						 ! user_can( $wpUser->ID, Helpers::getSkautisManagerCapability() ) &&
 						 get_option( SKAUTISINTEGRATION_NAME . '_checkUserPrivilegesIfLoginBySkautis' ) ) {
 						if ( ! Services::getServicesContainer()[ Register::getId() ]->getRulesManager()->checkIfUserPassedRulesAndGetHisRole() ) {
-							wp_die( sprintf( __( 'Je nám líto, ale již nemáte oprávnění k přístupu. <a href="%s">Zkuste se znovu zaregistrovat</a>', 'skautis-integration' ), ( Services::getServicesContainer()[ Register::getId() ] )->getWpRegister()->getRegisterUrl() ), __( 'Neautorizovaný přístup', 'skautis-integration' ) );
+							wp_die( sprintf( esc_html__( 'Je nám líto, ale již nemáte oprávnění k přístupu. %1$sZkuste se znovu zaregistrovat%2$s', 'skautis-integration' ), '<a href = "' . esc_url( ( Services::getServicesContainer()[ Register::getId() ] )->getWpRegister()->getRegisterUrl() ) . '">', '</a>' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
 						}
 					}
 				}
@@ -71,10 +71,10 @@ final class WpLoginLogout {
 
 		if ( ! $try ) {
 			if ( Services::getServicesContainer()['modulesManager']->isModuleActivated( Register::getId() ) ) {
-				wp_die( sprintf( __( 'Nemáte oprávnění k přístupu. <a href="%s">Zkuste se nejdříve zaregistrovat</a>', 'skautis-integration' ), ( Services::getServicesContainer()[ Register::getId() ] )->getWpRegister()->getRegisterUrl() ), __( 'Neautorizovaný přístup', 'skautis-integration' ) );
+				wp_die( sprintf( esc_html__( 'Nemáte oprávnění k přístupu. %1$sZkuste se nejdříve zaregistrovat%2$s', 'skautis-integration' ), '<a href ="' . esc_url( ( Services::getServicesContainer()[ Register::getId() ] )->getWpRegister()->getRegisterUrl() ) . '">', '</a>' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
 			} else {
 				$this->skautisGateway->logout();
-				wp_die( __( 'Nemáte oprávnění k přístupu', 'skautis-integration' ), __( 'Neautorizovaný přístup', 'skautis-integration' ) );
+				wp_die( esc_html__( 'Nemáte oprávnění k přístupu', 'skautis-integration' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
 			}
 		}
 

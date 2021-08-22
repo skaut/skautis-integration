@@ -87,7 +87,7 @@ final class Metabox {
 			$parentRules = $this->frontend->getParentPostsWithRules( absint( $post->ID ), $post->post_type );
 			if ( ! empty( $parentRules ) ) {
 				?>
-				<h4><?php _e( 'Pravidla převzatá z nadřazených stránek', 'skautis-integration' ); ?>:</h4>
+				<h4><?php esc_html_e( 'Pravidla převzatá z nadřazených stránek', 'skautis-integration' ); ?>:</h4>
 				<ul id="skautis_modules_visibility_parentRules" class="skautis-admin-list">
 					<?php
 					foreach ( $parentRules as $parentRule ) {
@@ -114,47 +114,47 @@ final class Metabox {
 		}
 		?>
 
-		<p><?php _e( 'Obsah bude pro uživatele viditelný pouze při splnění alespoň jednoho z následujících pravidel.', 'skautis-integration' ); ?></p>
-		<p><?php _e( 'Ponecháte-li prázdné - obsah bude viditelný pro všechny uživatele.', 'skautis-integration' ); ?></p>
+		<p><?php esc_html_e( 'Obsah bude pro uživatele viditelný pouze při splnění alespoň jednoho z následujících pravidel.', 'skautis-integration' ); ?></p>
+		<p><?php esc_html_e( 'Ponecháte-li prázdné - obsah bude viditelný pro všechny uživatele.', 'skautis-integration' ); ?></p>
 		<div id="repeater_post">
-			<div data-repeater-list="<?php echo SKAUTISINTEGRATION_NAME; ?>_rules">
+			<div data-repeater-list="<?php echo esc_attr( SKAUTISINTEGRATION_NAME ); ?>_rules">
 				<div data-repeater-item>
 
-					<select name="<?php echo SKAUTISINTEGRATION_NAME; ?>_rules" class="rule select2">
+					<select name="<?php echo esc_attr( SKAUTISINTEGRATION_NAME ); ?>_rules" class="rule select2">
 						<?php
 						foreach ( (array) $this->rulesManager->getAllRules() as $rule ) {
-							echo '<option value="' . $rule->ID . '">' . $rule->post_title . '</option>';
+							echo '<option value="' . esc_attr( $rule->ID ) . '">' . esc_html( $rule->post_title ) . '</option>';
 						}
 						?>
 					</select>
 
 					<input data-repeater-delete type="button"
-						   value="<?php _e( 'Odstranit', 'skautis-integration' ); ?>"/>
+						   value="<?php esc_attr_e( 'Odstranit', 'skautis-integration' ); ?>"/>
 				</div>
 			</div>
-			<input data-repeater-create type="button" value="<?php _e( 'Přidat', 'skautis-integration' ); ?>"/>
+			<input data-repeater-create type="button" value="<?php esc_attr_e( 'Přidat', 'skautis-integration' ); ?>"/>
 		</div>
 		<p>
 			<label>
-				<input type="hidden" name="<?php echo SKAUTISINTEGRATION_NAME; ?>_rules_includeChildren"
+				<input type="hidden" name="<?php echo esc_attr( SKAUTISINTEGRATION_NAME ); ?>_rules_includeChildren"
 					   value="0"/>
-				<input type="checkbox" name="<?php echo SKAUTISINTEGRATION_NAME; ?>_rules_includeChildren"
+				<input type="checkbox" name="<?php echo esc_attr( SKAUTISINTEGRATION_NAME ); ?>_rules_includeChildren"
 					   value="1" <?php checked( 1, $includeChildren ); ?> /><span>
 												<?php
 												if ( $postTypeObject->hierarchical ) {
-													printf( __( 'Použít vybraná pravidla i na podřízené %s', 'skautis-integration' ), lcfirst( $postTypeObject->labels->name ) );
+													printf( esc_html__( 'Použít vybraná pravidla i na podřízené %s', 'skautis-integration' ), esc_html( lcfirst( $postTypeObject->labels->name ) ) );
 												} else {
-													_e( 'Použít vybraná pravidla i na podřízený obsah (média - obrázky, videa, přílohy,...)', 'skautis-integration' );
+													esc_html_e( 'Použít vybraná pravidla i na podřízený obsah (média - obrázky, videa, přílohy,...)', 'skautis-integration' );
 												}
 												?>
 					.</span></label>
 		</p>
 		<p>
-			<label><input type="radio" name="<?php echo SKAUTISINTEGRATION_NAME; ?>_rules_visibilityMode"
-						  value="full" <?php checked( 'full', $visibilityMode ); ?> /><span><?php _e( 'Úplně skrýt', 'skautis-integration' ); ?></span></label>
+			<label><input type="radio" name="<?php echo esc_attr( SKAUTISINTEGRATION_NAME ); ?>_rules_visibilityMode"
+						  value="full" <?php checked( 'full', $visibilityMode ); ?> /><span><?php esc_html_e( 'Úplně skrýt', 'skautis-integration' ); ?></span></label>
 			<br/>
-			<label><input type="radio" name="<?php echo SKAUTISINTEGRATION_NAME; ?>_rules_visibilityMode"
-						  value="content" <?php checked( 'content', $visibilityMode ); ?> /><span><?php _e( 'Skrýt pouze obsah', 'skautis-integration' ); ?></span></label>
+			<label><input type="radio" name="<?php echo esc_attr( SKAUTISINTEGRATION_NAME ); ?>_rules_visibilityMode"
+						  value="content" <?php checked( 'content', $visibilityMode ); ?> /><span><?php esc_html_e( 'Skrýt pouze obsah', 'skautis-integration' ); ?></span></label>
 		</p>
 		<?php
 	}

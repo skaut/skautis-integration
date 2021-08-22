@@ -65,16 +65,14 @@ final class Admin {
 
 	public function initRulesOptions() {
 		if ( in_array( get_current_screen()->id, $this->postTypes ) ) {
-			$data  = '';
 			$rules = array();
 
 			foreach ( (array) $this->rulesManager->getAllRules() as $rule ) {
 				$rules[ $rule->ID ] = $rule->post_title;
 			}
-			$data = json_encode( $rules );
 			?>
 			<script>
-				window.rulesOptions = <?php echo $data; ?>;
+				window.rulesOptions = <?php wp_json_encode( $rules ); ?>;
 			</script>
 			<?php
 		}
@@ -82,10 +80,10 @@ final class Admin {
 
 	public function initRulesData() {
 		if ( in_array( get_current_screen()->id, $this->postTypes ) ) {
-			$data = json_encode( get_post_meta( get_the_ID(), SKAUTISINTEGRATION_NAME . '_rules', true ) );
+			$data = get_post_meta( get_the_ID(), SKAUTISINTEGRATION_NAME . '_rules', true );
 			?>
 			<script>
-				window.rulesData = <?php echo $data; ?>;
+				window.rulesData = <?php echo wp_json_encode( $data ); ?>;
 			</script>
 			<?php
 		}

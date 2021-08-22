@@ -33,9 +33,7 @@ class RoleChanger {
 		);
 	}
 
-	public function getChangeRolesForm(): string {
-		$result = '';
-
+	public function printChangeRolesForm(): void {
 		$currentUserRoles = $this->skautisGateway->getSkautisInstance()->UserManagement->UserRoleAll(
 			array(
 				'ID_Login' => $this->skautisGateway->getSkautisInstance()->getUser()->getLoginId(),
@@ -45,24 +43,25 @@ class RoleChanger {
 		);
 		$currentUserRole  = $this->skautisGateway->getSkautisInstance()->getUser()->getRoleId();
 
-		$result .= '
-<form method="post" action="' . esc_attr( Helpers::getCurrentUrl() ) . '" novalidate="novalidate">
-' . wp_nonce_field( SKAUTISINTEGRATION_NAME . '_changeSkautisUserRole', '_wpnonce', true, false ) . '
-<table class="form-table">
+		echo '
+<form method="post" action="' . esc_attr( Helpers::getCurrentUrl() ) . '" novalidate="novalidate">' .
+// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		wp_nonce_field( SKAUTISINTEGRATION_NAME . '_changeSkautisUserRole', '_wpnonce', true, false ) .
+		'<table class="form-table">
 <tbody>
 <tr>
 <th scope="row" style="width: 13ex;">
-<label for="skautisRoleChanger">' . __( 'Moje role', 'skautis-integration' ) . '</label>
+<label for="skautisRoleChanger">' . esc_html__( 'Moje role', 'skautis-integration' ) . '</label>
 </th>
 <td>
 <select id="skautisRoleChanger" name="changeSkautisUserRole">';
 		foreach ( (array) $currentUserRoles as $role ) {
-			$result .= '<option value="' . esc_attr( $role->ID ) . '" ' . selected( $role->ID, $currentUserRole, false ) . '>' . esc_html( $role->DisplayName ) . '</option>';
+			echo '<option value="' . esc_attr( $role->ID ) . '" ' . selected( $role->ID, $currentUserRole, false ) . '>' . esc_html( $role->DisplayName ) . '</option>';
 		}
-		$result .= '
+		echo '
 </select>
 <br/>
-<em>' . __( 'Vybraná role ovlivní, kteří uživatelé se zobrazí v tabulce níže.', 'skautis-integration' ) . '</em>
+<em>' . esc_html__( 'Vybraná role ovlivní, kteří uživatelé se zobrazí v tabulce níže.', 'skautis-integration' ) . '</em>
 </td>
 </tr>
 </tbody>
@@ -83,8 +82,6 @@ setTimeout(function() {
 }, timeout);
 </script>
 ';
-
-		return $result;
 	}
 
 }
