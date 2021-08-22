@@ -53,7 +53,7 @@ final class Admin {
 			update_post_meta(
 				$postId,
 				SKAUTISINTEGRATION_NAME . '_rules_data',
-				sanitize_meta( SKAUTISINTEGRATION_NAME . '_rules_data' , $_POST[ SKAUTISINTEGRATION_NAME . '_rules_data' ], 'post' )
+				sanitize_meta( SKAUTISINTEGRATION_NAME . '_rules_data' , wp_unslash( $_POST[ SKAUTISINTEGRATION_NAME . '_rules_data' ] ), 'post' )
 			);
 		}
 	}

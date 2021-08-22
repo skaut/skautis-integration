@@ -18,7 +18,7 @@ final class WpLoginLogout {
 	}
 
 	private function loginWpUserBySkautisUserId( int $skautisUserId, $try = false ) {
-		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 		if ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
 			$usersWpQuery = new \WP_User_Query(
 				array(
@@ -51,7 +51,7 @@ final class WpLoginLogout {
 					}
 				}
 
-				$returnUrl = esc_url_raw( $_GET['ReturnUrl'] );
+				$returnUrl = esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) );
 
 				if ( is_user_logged_in() && get_current_user_id() === $wpUser->ID ) {
 					wp_safe_redirect( $returnUrl, 302 );
@@ -84,12 +84,12 @@ final class WpLoginLogout {
 
 	public function getLoginUrl( string $returnUrl = '' ): string {
 		if ( ! $returnUrl ) {
-			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 			if ( isset( $_GET['redirect_to'] ) && $_GET['redirect_to'] ) {
-				$returnUrl = esc_url_raw( $_GET['redirect_to'] );
-			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+				$returnUrl = esc_url_raw( wp_unslash( $_GET['redirect_to'] ) );
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 			} elseif ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
-				$returnUrl = esc_url_raw( $_GET['ReturnUrl'] );
+				$returnUrl = esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) );
 			} else {
 				$returnUrl = Helpers::getCurrentUrl();
 			}
@@ -108,12 +108,12 @@ final class WpLoginLogout {
 
 	public function getLogoutUrl( string $returnUrl = '' ): string {
 		if ( ! $returnUrl ) {
-			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 			if ( isset( $_GET['redirect_to'] ) && $_GET['redirect_to'] ) {
-				$returnUrl = esc_url_raw( $_GET['redirect_to'] );
-			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+				$returnUrl = esc_url_raw( wp_unslash( $_GET['redirect_to'] ) );
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 			} elseif ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
-				$returnUrl = esc_url_raw( $_GET['ReturnUrl'] );
+				$returnUrl = esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) );
 			} else {
 				$returnUrl = Helpers::getCurrentUrl();
 			}
@@ -153,12 +153,12 @@ final class WpLoginLogout {
 		wp_logout();
 		wp_set_current_user( 0 );
 
-		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 		if ( isset( $_GET['redirect_to'] ) && $_GET['redirect_to'] ) {
-			$returnUrl = esc_url_raw( $_GET['redirect_to'] );
-		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			$returnUrl = esc_url_raw( wp_unslash( $_GET['redirect_to'] ) );
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 		} elseif ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
-			$returnUrl = esc_url_raw( $_GET['ReturnUrl'] );
+			$returnUrl = esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) );
 		} else {
 			$returnUrl = Helpers::getCurrentUrl();
 		}

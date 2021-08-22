@@ -43,12 +43,12 @@ final class SkautisLogin {
 	}
 
 	public function login() {
-		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 		if ( isset( $_GET['redirect_to'] ) && $_GET['redirect_to'] ) {
-			$returnUrl = esc_url_raw( $_GET['redirect_to'] );
-		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			$returnUrl = esc_url_raw( wp_unslash( $_GET['redirect_to'] ) );
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 		} elseif ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
-			$returnUrl = esc_url_raw( $_GET['ReturnUrl'] );
+			$returnUrl = esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) );
 		} else {
 			$returnUrl = Helpers::getCurrentUrl();
 		}
@@ -74,19 +74,19 @@ final class SkautisLogin {
 
 	public function loginConfirm() {
 		if ( $this->setLoginDataToLocalSkautisInstance( $_POST ) ) {
-			if ( ! isset( $_GET['ReturnUrl'] ) || strpos( esc_url_raw( $_GET['ReturnUrl'] ), 'noWpLogin' ) === false ) {
+			if ( ! isset( $_GET['ReturnUrl'] ) || strpos( esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) ), 'noWpLogin' ) === false ) {
 				$this->wpLoginLogout->loginToWp();
 			} elseif ( isset( $_GET['ReturnUrl'] ) ) {
 				$this->wpLoginLogout->tryToLoginToWp();
-				wp_safe_redirect( esc_url_raw( $_GET['ReturnUrl'] ), 302 );
+				wp_safe_redirect( esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) ), 302 );
 				exit;
 			}
 		} elseif ( $this->isUserLoggedInSkautis() ) {
-			if ( ! isset( $_GET['ReturnUrl'] ) || strpos( esc_url_raw( $_GET['ReturnUrl'] ), 'noWpLogin' ) === false ) {
+			if ( ! isset( $_GET['ReturnUrl'] ) || strpos( esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) ), 'noWpLogin' ) === false ) {
 				$this->wpLoginLogout->loginToWp();
 			} elseif ( isset( $_GET['ReturnUrl'] ) ) {
 				$this->wpLoginLogout->tryToLoginToWp();
-				wp_safe_redirect( esc_url_raw( $_GET['ReturnUrl'] ), 302 );
+				wp_safe_redirect( esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) ), 302 );
 				exit;
 			}
 		}

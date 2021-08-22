@@ -18,11 +18,11 @@ class Users {
 	protected function getSearchUserString(): string {
 		$searchUserString = '';
 
-		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 		if ( isset( $_GET['skautisSearchUsers'] ) && $_GET['skautisSearchUsers'] ) {
-			$searchUserString = sanitize_text_field( $_GET['skautisSearchUsers'] );
+			$searchUserString = sanitize_text_field( wp_unslash( $_GET['skautisSearchUsers'] ) );
 		} elseif ( isset( $_GET['ReturnUrl'] ) ) {
-			$searchUserString = Helpers::getVariableFromUrl( esc_url_raw( $_GET['ReturnUrl'] ), 'skautisSearchUsers' );
+			$searchUserString = Helpers::getVariableFromUrl( esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) ), 'skautisSearchUsers' );
 		}
 
 		return $searchUserString;

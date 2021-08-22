@@ -39,7 +39,7 @@ final class Metabox {
 	public function saveRulesCustomField( int $postId ) {
 		if ( isset( $_POST[ SKAUTISINTEGRATION_NAME . '_rules_visibilityMode' ] ) ) {
 			if ( isset( $_POST[ SKAUTISINTEGRATION_NAME . '_rules' ] ) ) {
-				$rules = sanitize_meta( SKAUTISINTEGRATION_NAME . '_rules', $_POST[ SKAUTISINTEGRATION_NAME . '_rules' ], 'post' );
+				$rules = sanitize_meta( SKAUTISINTEGRATION_NAME . '_rules', wp_unslash( $_POST[ SKAUTISINTEGRATION_NAME . '_rules' ] ), 'post' );
 			} else {
 				$rules = array();
 			}
@@ -50,7 +50,7 @@ final class Metabox {
 			);
 
 			if ( isset( $_POST[ SKAUTISINTEGRATION_NAME . '_rules_includeChildren' ] ) ) {
-				$includeChildren = sanitize_meta( SKAUTISINTEGRATION_NAME . '_rules_includeChildren', $_POST[ SKAUTISINTEGRATION_NAME . '_rules_includeChildren' ], 'post' );
+				$includeChildren = sanitize_meta( SKAUTISINTEGRATION_NAME . '_rules_includeChildren', wp_unslash( $_POST[ SKAUTISINTEGRATION_NAME . '_rules_includeChildren' ] ), 'post' );
 			} else {
 				$includeChildren = 0;
 			}
@@ -60,7 +60,7 @@ final class Metabox {
 				$includeChildren
 			);
 
-			$visibilityMode = sanitize_meta( SKAUTISINTEGRATION_NAME . '_rules_visibilityMode', $_POST[ SKAUTISINTEGRATION_NAME . '_rules_visibilityMode' ], 'post' );
+			$visibilityMode = sanitize_meta( SKAUTISINTEGRATION_NAME . '_rules_visibilityMode', wp_unslash( $_POST[ SKAUTISINTEGRATION_NAME . '_rules_visibilityMode' ] ), 'post' );
 			update_post_meta(
 				$postId,
 				SKAUTISINTEGRATION_NAME . '_rules_visibilityMode',

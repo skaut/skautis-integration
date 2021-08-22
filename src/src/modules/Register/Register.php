@@ -46,21 +46,21 @@ final class Register implements IModule {
 
 	private function initHooks() {
 		add_filter( SKAUTISINTEGRATION_NAME . '_frontend_actions_router', array( $this, 'addActionsToRouter' ) );
-		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 		if ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
-			if ( Helpers::getNonceFromUrl( esc_url_raw( $_GET['ReturnUrl'] ), SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis' ) ) {
+			if ( Helpers::getNonceFromUrl( esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) ), SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis' ) ) {
 				add_action( SKAUTISINTEGRATION_NAME . '_after_skautis_token_is_set', array( $this, 'registerConfirm' ) );
 			}
 		}
 	}
 
 	private function loginUserAfterRegistration() {
-		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 		if ( isset( $_GET['redirect_to'] ) && $_GET['redirect_to'] ) {
-			$returnUrl = esc_url_raw( $_GET['redirect_to'] );
-		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			$returnUrl = esc_url_raw( wp_unslash( $_GET['redirect_to'] ) );
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 		} elseif ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
-			$returnUrl = esc_url_raw( $_GET['ReturnUrl'] );
+			$returnUrl = esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) );
 		} else {
 			$returnUrl = Helpers::getCurrentUrl();
 		}
@@ -110,9 +110,9 @@ final class Register implements IModule {
 
 	public function register() {
 		if ( ! $this->skautisLogin->isUserLoggedInSkautis() ) {
-			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 			if ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
-				$returnUrl = esc_url_raw( $_GET['ReturnUrl'] );
+				$returnUrl = esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) );
 			} else {
 				$returnUrl = Helpers::getCurrentUrl();
 			}
@@ -145,7 +145,7 @@ final class Register implements IModule {
 
 		if ( ! empty( $_GET['ReturnUrl'] ) ) {
 			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-			wp_die( sprintf( esc_html__( 'Nemáte oprávnění k registraci. %1$sZkuste to znovu%2$s', 'skautis-integration' ), '<a href="' . esc_url( $_GET['ReturnUrl'] ) . '">', '</a>' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
+			wp_die( sprintf( esc_html__( 'Nemáte oprávnění k registraci. %1$sZkuste to znovu%2$s', 'skautis-integration' ), '<a href="' . esc_url( wp_unslash( $_GET['ReturnUrl'] ) ) . '">', '</a>' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
 		}
 		wp_die( esc_html__( 'Nemáte oprávnění k registraci.', 'skautis-integration' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
 	}
@@ -159,14 +159,14 @@ final class Register implements IModule {
 		}
 
 		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-		$wpRole        = $_GET['wpRole'];
+		$wpRole        = wp_unslash( $_GET['wpRole'] );
 		if ( ! wp_roles()->is_role( $wpRole ) ) {
 			wp_die( esc_html__( 'Uživatele se nepodařilo zaregistrovat - role neexistuje.', 'skautis-integration' ), esc_html__( 'Chyba při registraci uživatele', 'skautis-integration' ) );
 		}
 		$skautisUserId = absint( $_GET['skautisUserId'] );
 
 		if ( $this->wpRegister->registerToWpManually( $wpRole, $skautisUserId ) ) {
-			wp_safe_redirect( esc_url_raw( $_GET['ReturnUrl'] ), 302 );
+			wp_safe_redirect( esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) ), 302 );
 			exit;
 		} else {
 			wp_die( esc_html__( 'Uživatele se nepodařilo zaregistrovat', 'skautis-integration' ), esc_html__( 'Chyba při registraci uživatele', 'skautis-integration' ) );

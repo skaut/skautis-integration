@@ -73,9 +73,9 @@ final class WpRegister {
 	}
 
 	private function processWpUserRegistration( array $user, string $wpRole ): bool {
-		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 		if ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
-			Helpers::validateNonceFromUrl( esc_url_raw( $_GET['ReturnUrl'] ), SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis' );
+			Helpers::validateNonceFromUrl( esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) ), SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis' );
 
 			// check for skautIS User ID collision with existing users
 			$usersWpQuery = new \WP_User_Query(
@@ -172,12 +172,12 @@ final class WpRegister {
 	}
 
 	public function getRegisterUrl(): string {
-		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 		if ( isset( $_GET['redirect_to'] ) && $_GET['redirect_to'] ) {
-			$returnUrl = esc_url_raw( $_GET['redirect_to'] );
-		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			$returnUrl = esc_url_raw( wp_unslash( $_GET['redirect_to'] ) );
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 		} elseif ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
-			$returnUrl = esc_url_raw( $_GET['ReturnUrl'] );
+			$returnUrl = esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) );
 		} else {
 			$returnUrl = Helpers::getCurrentUrl();
 		}
@@ -203,12 +203,12 @@ final class WpRegister {
 	}
 
 	public function getManuallyRegisterWpUserUrl(): string {
-		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 		if ( isset( $_GET['redirect_to'] ) && $_GET['redirect_to'] ) {
-			$returnUrl = esc_url_raw( $_GET['redirect_to'] );
-		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			$returnUrl = esc_url_raw( wp_unslash( $_GET['redirect_to'] ) );
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 		} elseif ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
-			$returnUrl = esc_url_raw( $_GET['ReturnUrl'] );
+			$returnUrl = esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) );
 		} else {
 			$returnUrl = Helpers::getCurrentUrl();
 		}
