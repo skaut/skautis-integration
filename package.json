@@ -12,7 +12,17 @@
     "url": "https://github.com/skaut/skautis-integration/issues"
   },
   "license": "proprietary",
-  "author": "David Odehnal",
+  "author": {
+    "name": "David Odehnal",
+    "email": "info@davidodehnal.cz"
+  },
+  "contributors": [
+    {
+      "name": "Marek Dědič",
+      "email": "marek@dedic.eu",
+      "url": "https://dedic.eu"
+    }
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/skaut/skautis-integration.git"
