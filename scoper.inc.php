@@ -2,7 +2,7 @@
 /**
  * PHP-Scoper configuration
  *
- * @package skaut-google-drive-gallery
+ * @package skautis-integration
  */
 
 use Isolated\Symfony\Component\Finder\Finder;

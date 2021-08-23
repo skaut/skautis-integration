@@ -49,7 +49,7 @@ final class Admin {
 	}
 
 	public function saveRulesCustomField( int $postId ) {
-		if ( ! isset( $_POST[SKAUTISINTEGRATION_NAME. '_rules_metabox_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[SKAUTISINTEGRATION_NAME. '_rules_metabox_nonce'] ) ), SKAUTISINTEGRATION_NAME. '_rules_metabox' ) ) {
+		if ( ! isset( $_POST[ SKAUTISINTEGRATION_NAME . '_rules_metabox_nonce' ] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ SKAUTISINTEGRATION_NAME . '_rules_metabox_nonce' ] ) ), SKAUTISINTEGRATION_NAME . '_rules_metabox' ) ) {
 			return;
 		}
 
@@ -57,13 +57,13 @@ final class Admin {
 			update_post_meta(
 				$postId,
 				SKAUTISINTEGRATION_NAME . '_rules_data',
-				sanitize_meta( SKAUTISINTEGRATION_NAME . '_rules_data' , wp_unslash( $_POST[ SKAUTISINTEGRATION_NAME . '_rules_data' ] ), 'post' )
+				sanitize_meta( SKAUTISINTEGRATION_NAME . '_rules_data', wp_unslash( $_POST[ SKAUTISINTEGRATION_NAME . '_rules_data' ] ), 'post' )
 			);
 		}
 	}
 
 	public function RulesFieldContent( \WP_Post $post ) {
-		wp_nonce_field( SKAUTISINTEGRATION_NAME. '_rules_metabox', SKAUTISINTEGRATION_NAME. '_rules_metabox_nonce' );
+		wp_nonce_field( SKAUTISINTEGRATION_NAME . '_rules_metabox', SKAUTISINTEGRATION_NAME . '_rules_metabox_nonce' );
 		?>
 		<textarea id="query_builder_values" class=""
 				  name="<?php echo esc_attr( SKAUTISINTEGRATION_NAME ); ?>_rules_data"><?php echo esc_html( get_post_meta( $post->ID, SKAUTISINTEGRATION_NAME . '_rules_data', true ) ); ?></textarea>

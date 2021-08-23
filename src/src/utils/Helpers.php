@@ -52,7 +52,7 @@ class Helpers {
 	}
 
 	public static function getCurrentUrl(): string {
-		if ( isset( $_SERVER['HTTP_HOST'] ) &&  isset( $_SERVER['REQUEST_URI'] ) ) {
+		if ( isset( $_SERVER['HTTP_HOST'] ) && isset( $_SERVER['REQUEST_URI'] ) ) {
 			return esc_url_raw( ( isset( $_SERVER['HTTPS'] ) ? 'https' : 'http' ) . '://' . wp_unslash( $_SERVER['HTTP_HOST'] ) . wp_unslash( $_SERVER['REQUEST_URI'] ) );
 		}
 		return '';
