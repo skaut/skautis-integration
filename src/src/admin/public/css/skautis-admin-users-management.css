@@ -1,0 +1,44 @@
+.skautisUserManagementTable {
+	border-collapse: collapse;
+}
+
+.skautisUserManagementTable tbody > :nth-child(odd) {
+	background-color: #f9f9f9;
+}
+
+.skautisUserManagementTable th,
+.skautisUserManagementTable td {
+	padding: 5px 8px;
+}
+
+.skautisUserManagementTable th {
+	text-align: left;
+	background: none !important;
+}
+
+.skautisUserManagementTable th span {
+	position: relative;
+}
+
+.skautisUserManagementTable th span:after {
+	content: "";
+	position: absolute;
+	left: 100%;
+	top: 50%;
+	width: 19px;
+	height: 19px;
+	margin-left: 1ex;
+	-webkit-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	transform: translateY(-50%);
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+#TB_ajaxContent .content {
+	padding: 0 55px 0 0;
+}
+
+#connectUserToSkautisModal {
+	max-width: 400px;
+}
