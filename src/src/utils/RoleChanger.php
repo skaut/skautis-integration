@@ -33,7 +33,7 @@ class RoleChanger {
 		);
 	}
 
-	public function printChangeRolesForm(): void {
+	public function printChangeRolesForm() {
 		$currentUserRoles = $this->skautisGateway->getSkautisInstance()->UserManagement->UserRoleAll(
 			array(
 				'ID_Login' => $this->skautisGateway->getSkautisInstance()->getUser()->getLoginId(),

@@ -29,7 +29,7 @@ final class ConnectAndDisconnectWpAccount {
 		}
 	}
 
-	public function printConnectAndDisconnectButton( int $wpUserId ): void {
+	public function printConnectAndDisconnectButton( int $wpUserId ) {
 		$skautisUserId = get_user_meta( $wpUserId, 'skautisUserId_' . $this->skautisGateway->getEnv(), true );
 		if ( $skautisUserId ) {
 			if ( ! Helpers::userIsSkautisManager() && get_option( SKAUTISINTEGRATION_NAME . '_allowUsersDisconnectFromSkautis' ) !== '1' ) {
