@@ -5,7 +5,7 @@ declare( strict_types=1 );
 namespace SkautisIntegration\Auth;
 
 use SkautisIntegration\Utils\Helpers;
-use SkautisIntegration\Vendor\Skautis\Skautis;
+use SkautisIntegration\Vendor\Skautis;
 
 class SkautisGateway {
 
@@ -37,7 +37,10 @@ class SkautisGateway {
 		}
 
 		if ( $this->appId && $envType ) {
-			$this->skautis            = Skautis::getInstance( $this->appId, $this->testMode, true, true );
+			$sessionAdapter           = new Skautis\SessionAdapter\SessionAdapter();
+			$wsdlManager              = new Skautis\Wsdl\WsdlManager( new Skautis\Wsdl\WebServiceFactory(), new Skautis\Config( $this->appId, $this->testMode ) );
+			$user                     = new Skautis\User( $wsdlManager, $sessionAdapter );
+			$this->skautis            = new Skautis\Skautis( $wsdlManager, $user );
 			$this->skautisInitialized = true;
 
 			if ( $this->testMode ) {
@@ -50,7 +53,7 @@ class SkautisGateway {
 		return $this->env;
 	}
 
-	public function getSkautisInstance(): Skautis {
+	public function getSkautisInstance(): Skautis\Skautis {
 		return $this->skautis;
 	}
 
