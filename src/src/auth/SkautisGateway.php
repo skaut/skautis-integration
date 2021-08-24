@@ -19,12 +19,6 @@ class SkautisGateway {
 	protected $env                = '';
 
 	public function __construct() {
-		if ( ! headers_sent() ) {
-			if ( Helpers::isSessionStarted() === false ) {
-				session_start();
-			}
-		}
-
 		$envType = get_option( 'skautis_integration_appid_type' );
 		if ( $envType === self::PROD_ENV ) {
 			$this->appId    = get_option( 'skautis_integration_appid_prod' );
