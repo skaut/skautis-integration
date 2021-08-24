@@ -5,7 +5,7 @@ declare( strict_types=1 );
 namespace SkautisIntegration\Auth;
 
 use SkautisIntegration\Utils\Helpers;
-use SkautisIntegration\Vendor\Skautis\Skautis;
+use SkautisIntegration\Vendor\Skautis;
 
 class SkautisGateway {
 
@@ -19,12 +19,6 @@ class SkautisGateway {
 	protected $env                = '';
 
 	public function __construct() {
-		if ( ! headers_sent() ) {
-			if ( Helpers::isSessionStarted() === false ) {
-				session_start();
-			}
-		}
-
 		$envType = get_option( 'skautis_integration_appid_type' );
 		if ( $envType === self::PROD_ENV ) {
 			$this->appId    = get_option( 'skautis_integration_appid_prod' );
@@ -37,7 +31,10 @@ class SkautisGateway {
 		}
 
 		if ( $this->appId && $envType ) {
-			$this->skautis            = Skautis::getInstance( $this->appId, $this->testMode, true, true );
+			$sessionAdapter           = new TransientSessionAdapter();
+			$wsdlManager              = new Skautis\Wsdl\WsdlManager( new Skautis\Wsdl\WebServiceFactory(), new Skautis\Config( $this->appId, $this->testMode ) );
+			$user                     = new Skautis\User( $wsdlManager, $sessionAdapter );
+			$this->skautis            = new Skautis\Skautis( $wsdlManager, $user );
 			$this->skautisInitialized = true;
 
 			if ( $this->testMode ) {
@@ -50,7 +47,7 @@ class SkautisGateway {
 		return $this->env;
 	}
 
-	public function getSkautisInstance(): Skautis {
+	public function getSkautisInstance(): Skautis\Skautis {
 		return $this->skautis;
 	}
 
