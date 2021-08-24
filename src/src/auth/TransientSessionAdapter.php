@@ -16,7 +16,7 @@ class TransientSessionAdapter implements AdapterInterface {
 			for ( $i = 0; $i < 32; $i++ ) {
 				$cookie_id .= substr( $chars, \rand( 0, strlen( $chars ) - 1 ), 1 );
 			}
-			setcookie( SKAUTISINTEGRATION_NAME . '-skautis-session', $cookie_id, time() + 40 * \MINUTE_IN_SECONDS, (defined( 'COOKIEPATH' ) ? \COOKIEPATH : '/'), (\COOKIE_DOMAIN ? \COOKIE_DOMAIN : ""), true, true );
+			setcookie( SKAUTISINTEGRATION_NAME . '-skautis-session', $cookie_id, time() + 40 * \MINUTE_IN_SECONDS, (defined( 'COOKIEPATH' ) ? \COOKIEPATH : '/'), (defined( 'COOKIE_DOMAIN' ) ? \COOKIE_DOMAIN : ""), true, true );
 			return $cookie_id;
 		}
 	}
