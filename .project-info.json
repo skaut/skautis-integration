@@ -10,6 +10,10 @@
     ],
     "maintainers": [
         {
+            "name": "Michal Janata – Kalich",
+            "email": "kalich@skaut.cz"
+        },
+        {
             "name": "Marek Dědič – Mlha",
             "email": "mlha@skaut.cz"
         }
@@ -17,7 +21,7 @@
     "links": [
         {
             "type": "email",
-            "uri": "mailto:mlha@skaut.cz"
+            "uri": "mailto:kalich@skaut.cz"
         },
         {
             "type": "homepage",
