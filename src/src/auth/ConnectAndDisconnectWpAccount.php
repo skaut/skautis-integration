@@ -40,7 +40,7 @@ final class ConnectAndDisconnectWpAccount {
 
 			echo '
 			<a href="' . esc_url( $url ) . '"
-			   class="button">' . esc_html__( 'Zrušit propojení účtu se skautISem', 'skautis-integration' ) . '</a>
+			   class="button">' . esc_html__( 'Unlink the account from skautIS', 'skautis-integration' ) . '</a>
 			';
 		} elseif ( get_current_screen()->id == 'profile' ) {
 			$returnUrl = add_query_arg( SKAUTISINTEGRATION_NAME . '_connectWpAccountWithSkautis', wp_create_nonce( SKAUTISINTEGRATION_NAME . '_connectWpAccountWithSkautis' ), Helpers::getCurrentUrl() );
@@ -48,7 +48,7 @@ final class ConnectAndDisconnectWpAccount {
 
 			echo '
 			<a href="' . esc_url( $url ) . '"
-			   class="button">' . esc_html__( 'Propojit tento účet se skautISem', 'skautis-integration' ) . '</a>
+			   class="button">' . esc_html__( 'Link this account to skautIS', 'skautis-integration' ) . '</a>
 			';
 		}
 	}

@@ -126,8 +126,8 @@ class UsersManagement {
 	public function setupUsersManagementPage() {
 		add_submenu_page(
 			SKAUTISINTEGRATION_NAME,
-			__( 'Správa uživatelů', 'skautis-integration' ),
-			__( 'Správa uživatelů', 'skautis-integration' ),
+			__( 'User management', 'skautis-integration' ),
+			__( 'User management', 'skautis-integration' ),
 			Helpers::getSkautisManagerCapability(),
 			SKAUTISINTEGRATION_NAME . '_usersManagement',
 			array( $this, 'printChildUsers' )
@@ -141,7 +141,7 @@ class UsersManagement {
 
 		echo '
 		<div class="wrap">
-			<h1>' . esc_html__( 'Správa uživatelů', 'skautis-integration' ) . '</h1>
+			<h1>' . esc_html__( 'User management', 'skautis-integration' ) . '</h1>
 			<p>' . esc_html__( 'Zde si můžete propojit členy ze skautISu s uživateli ve WordPressu nebo je rovnou zaregistrovat (vyžaduje aktivovaný modul Registrace).', 'skautis-integration' ) . '</p>
 		';
 
@@ -164,7 +164,7 @@ class UsersManagement {
 		$this->roleChanger->printChangeRolesForm();
 
 		echo '<table class="skautisUserManagementTable"><thead style="font-weight: bold;"><tr>';
-		echo '<th>' . esc_html__( 'Jméno a příjmení', 'skautis-integration' ) . '</th><th>' . esc_html__( 'Přezdívka', 'skautis-integration' ) . '</th><th>' . esc_html__( 'ID uživatele', 'skautis-integration' ) . '</th><th>' . esc_html__( 'Propojený uživatel', 'skautis-integration' ) . '</th><th>' . esc_html__( 'Propojení', 'skautis-integration' ) . '</th>';
+		echo '<th>' . esc_html__( 'Name and surname', 'skautis-integration' ) . '</th><th>' . esc_html__( 'Nickname', 'skautis-integration' ) . '</th><th>' . esc_html__( 'ID user', 'skautis-integration' ) . '</th><th>' . esc_html__( 'Connected user', 'skautis-integration' ) . '</th><th>' . esc_html__( 'Propojení', 'skautis-integration' ) . '</th>';
 		echo '</tr></thead ><tbody>';
 
 		$usersData = $this->usersRepository->getConnectedWpUsers();
