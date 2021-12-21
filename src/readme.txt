@@ -3,7 +3,7 @@ Contributors: skaut, davidulus, marekdedic, kalich5
 Tags: skaut, multisite, plugin, shortcode, skautIS, registrace
 Requires at least: 5.0
 Tested up to: 5.8
-Requires PHP: 7.0
+Requires PHP: 7.4
 Stable tag: 1.1.23
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -14,7 +14,7 @@ Implementace přihlašování, registrace a dalších služeb z informačního s
 
 <h2> Minimální požadavky</h2>
 - WordPress 4.9.6 a vyšší
-- PHP 7.0 a vyšší
+- PHP 7.4 a vyšší
 
 Implementace přihlašování, registrace a dalších služeb z informačního systému skautIS do WordPressu.
 

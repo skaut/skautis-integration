@@ -4,11 +4,11 @@ on:
     branches: "*"
   pull_request:
 env:
-  php-version: 7.4
+  php-version: 8.1
   cache-version: 1
 jobs:
   platform-check:
-    name: "PHP 7.0 compatibility"
+    name: "PHP 7.4 compatibility"
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout"
@@ -17,7 +17,7 @@ jobs:
       - name: "Setup PHP"
         uses: shivammathur/setup-php@2.16.0
         with:
-          php-version: 7.0
+          php-version: 7.4
           coverage: none
 
       - name: "Check dependency compatibility"

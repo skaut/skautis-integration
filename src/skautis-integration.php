@@ -126,7 +126,7 @@ class SkautisIntegration {
 	}
 
 	protected function isCompatibleVersionOfPhp() {
-		if ( version_compare( PHP_VERSION, '7.0', '>=' ) ) {
+		if ( version_compare( PHP_VERSION, '7.4', '>=' ) ) {
 			return true;
 		}
 
@@ -141,7 +141,7 @@ class SkautisIntegration {
 
 		if ( ! $this->isCompatibleVersionOfPhp() ) {
 			deactivate_plugins( SKAUTISINTEGRATION_PLUGIN_BASENAME );
-			wp_die( esc_html__( 'Plugin skautIS integrace vyžaduje verzi PHP 7.0 nebo vyšší!', 'skautis-integration' ) );
+			wp_die( esc_html__( 'Plugin skautIS integrace vyžaduje verzi PHP 7.4 nebo vyšší!', 'skautis-integration' ) );
 		}
 
 		if ( ! get_option( 'skautis_rewrite_rules_need_to_flush' ) ) {
@@ -202,7 +202,7 @@ WHERE `option_name` LIKE %s OR `option_name` LIKE %s
 			if ( is_plugin_active( SKAUTISINTEGRATION_PLUGIN_BASENAME ) ) {
 				deactivate_plugins( SKAUTISINTEGRATION_PLUGIN_BASENAME );
 
-				Helpers::showAdminNotice( esc_html__( 'Plugin skautIS integrace vyžaduje verzi PHP 7.0 nebo vyšší!', 'skautis-integration' ), 'warning' );
+				Helpers::showAdminNotice( esc_html__( 'Plugin skautIS integrace vyžaduje verzi PHP 7.4 nebo vyšší!', 'skautis-integration' ), 'warning' );
 
 				if ( isset( $_GET['activate'] ) ) {
 					unset( $_GET['activate'] );
