@@ -31,10 +31,7 @@ class SkautisIntegration {
 
 		// if incompatible version of WP / PHP or deactivating plugin right now => don´t init
 		if ( ! $this->isCompatibleVersionOfWp() ||
-			 ! $this->isCompatibleVersionOfPhp() ||
-			 ( isset( $_GET['action'], $_GET['plugin'] ) &&
-			   'deactivate' == $_GET['action'] &&
-			   SKAUTISINTEGRATION_PLUGIN_BASENAME == $_GET['plugin'] )
+			 ! $this->isCompatibleVersionOfPhp()
 		) {
 			return;
 		}
