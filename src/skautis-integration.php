@@ -29,13 +29,6 @@ class SkautisIntegration {
 	public function __construct() {
 		$this->initHooks();
 
-		// if incompatible version of WP / PHP or deactivating plugin right now => don´t init
-		if ( ! $this->isCompatibleVersionOfWp() ||
-			 ! $this->isCompatibleVersionOfPhp()
-		) {
-			return;
-		}
-
 		require __DIR__ . '/vendor/scoper-autoload.php';
 		require __DIR__ . '/globalFunctions.php';
 
