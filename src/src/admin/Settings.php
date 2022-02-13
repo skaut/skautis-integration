@@ -122,23 +122,6 @@ final class Settings {
 			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.' ) );
 		}
 
-		if ( ! empty( $_GET['settings-updated'] ) ) {
-			if ( ! $this->skautisGateway->testActiveAppId() ) {
-				?>
-				<div class="notice notice-error is-dismissible">
-					<p>
-						<strong><?php esc_html_e( 'Zadané APP ID není pro tento web platné.', 'skautis-integration' ); ?></strong>
-					</p>
-					<button type="button" class="notice-dismiss">
-						<span class="screen-reader-text"><?php esc_html_e( 'Close' ); ?></span>
-					</button>
-					<button type="button" class="notice-dismiss"><span
-							class="screen-reader-text"><?php esc_html_e( 'Hide' ); ?></span></button>
-				</div>
-				<?php
-			}
-		}
-
 		settings_errors();
 		?>
 		<div class="wrap">
@@ -152,6 +135,13 @@ final class Settings {
 			</form>
 		</div>
 		<?php
+	}
+
+	public function testAppId( $value ) {
+		if ( ! $this->skautisGateway->testActiveAppId() ) {
+			add_settings_error( 'general', 'api_invalid', esc_html__( 'Zadané APP ID není pro tento web platné.', 'skautis-integration' ), 'notice-error' );
+		}
+		return sanitize_text_field( $value );
 	}
 
 	public function setupSettingFields() {
@@ -194,7 +184,7 @@ final class Settings {
 			array(
 				'type'              => 'integer',
 				'show_in_rest'      => false,
-				'sanitize_callback' => 'sanitize_text_field',
+				'sanitize_callback' => array( $this, 'testAppId' ),
 			)
 		);
 		register_setting(
