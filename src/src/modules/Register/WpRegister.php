@@ -216,7 +216,7 @@ final class WpRegister {
 		$returnUrl = add_query_arg( SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis', wp_create_nonce( SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis' ), $returnUrl );
 		$url       = add_query_arg( 'ReturnUrl', urlencode( $returnUrl ), get_home_url( null, 'skautis/auth/' . Register::MANUALLY_REGISTER_WP_USER_ACTION ) );
 
-		return esc_url( $url );
+		return esc_url( wp_nonce_url( $url, SKAUTISINTEGRATION_NAME. '_register_user', SKAUTISINTEGRATION_NAME. '_register_user_nonce' ) );
 	}
 
 	public function registerToWpManually( string $wpRole, int $skautisUserId ): bool {
