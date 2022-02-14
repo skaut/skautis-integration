@@ -257,10 +257,6 @@ final class Settings {
 			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.' ) );
 		}
 
-		if ( ! empty( $_GET['settings-updated'] ) ) {
-			flush_rewrite_rules();
-		}
-
 		settings_errors();
 		?>
 		<div class="wrap">
@@ -324,6 +320,8 @@ final class Settings {
 					$url = wp_kses_normalize_entities( $url );
 					$url = str_replace( '&amp;', '&#038;', $url );
 					$url = str_replace( "'", '&#039;', $url );
+
+					flush_rewrite_rules();
 
 					return $url;
 				},
