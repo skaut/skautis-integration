@@ -73,73 +73,73 @@ final class WpRegister {
 	}
 
 	private function processWpUserRegistration( array $user, string $wpRole ): bool {
-		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
-		if ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
-			Helpers::validateNonceFromUrl( esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) ), SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis' );
+		$returnUrl = Helpers::getReturnUrl();
+		if ( is_null( $returnUrl ) ) {
+			return false;
+		}
 
-			// check for skautIS User ID collision with existing users
-			$usersWpQuery = new \WP_User_Query(
-				array(
-					'number'     => 1,
-					'meta_query' => array(
-						array(
-							'key'     => 'skautisUserId_' . $this->skautisGateway->getEnv(),
-							'value'   => absint( $user['id'] ),
-							'compare' => '=',
-						),
-					),
-				)
-			);
-			$users        = $usersWpQuery->get_results();
+		Helpers::validateNonceFromUrl( $returnUrl, SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis' );
 
-			if ( ! empty( $users ) ) {
-				return true;
-			}
-
-			if ( ! isset( $user['UserName'] ) || mb_strlen( $user['UserName'] ) == 0 ) {
-				return false;
-			}
-
-			$username = mb_strcut( $user['UserName'], 0, 60 );
-
-			$userId = $this->resolveNotificationsAndRegisterUserToWp( $username, $user['email'] );
-
-			if ( $userId === 0 ) {
-				return false;
-			}
-
-			if ( ! add_user_meta( $userId, 'skautisUserId_' . $this->skautisGateway->getEnv(), absint( $user['id'] ) ) ) {
-				return false;
-			}
-
-			$firstName = $user['firstName'];
-			$lastName  = $user['lastName'];
-			if ( $nickName = $user['nickName'] ) {
-				$displayName = $nickName;
-			} else {
-				$nickName    = '';
-				$displayName = $firstName . ' ' . $lastName;
-			}
-
-			if ( is_wp_error(
-				wp_update_user(
+		// check for skautIS User ID collision with existing users
+		$usersWpQuery = new \WP_User_Query(
+			array(
+				'number'     => 1,
+				'meta_query' => array(
 					array(
-						'ID'           => $userId,
-						'first_name'   => $firstName,
-						'last_name'    => $lastName,
-						'nickname'     => $nickName,
-						'display_name' => $displayName,
-						'role'         => $wpRole,
-					)
-				)
-			) ) {
-				return false;
-			}
+						'key'     => 'skautisUserId_' . $this->skautisGateway->getEnv(),
+						'value'   => absint( $user['id'] ),
+						'compare' => '=',
+					),
+				),
+			)
+		);
+		$users        = $usersWpQuery->get_results();
 
+		if ( ! empty( $users ) ) {
 			return true;
 		}
 
-		return false;
+		if ( ! isset( $user['UserName'] ) || mb_strlen( $user['UserName'] ) == 0 ) {
+			return false;
+		}
+
+		$username = mb_strcut( $user['UserName'], 0, 60 );
+
+		$userId = $this->resolveNotificationsAndRegisterUserToWp( $username, $user['email'] );
+
+		if ( $userId === 0 ) {
+			return false;
+		}
+
+		if ( ! add_user_meta( $userId, 'skautisUserId_' . $this->skautisGateway->getEnv(), absint( $user['id'] ) ) ) {
+			return false;
+		}
+
+		$firstName = $user['firstName'];
+		$lastName  = $user['lastName'];
+		if ( $nickName = $user['nickName'] ) {
+			$displayName = $nickName;
+		} else {
+			$nickName    = '';
+			$displayName = $firstName . ' ' . $lastName;
+		}
+
+		if ( is_wp_error(
+			wp_update_user(
+				array(
+					'ID'           => $userId,
+					'first_name'   => $firstName,
+					'last_name'    => $lastName,
+					'nickname'     => $nickName,
+					'display_name' => $displayName,
+					'role'         => $wpRole,
+				)
+			)
+		) ) {
+			return false;
+		}
+
+		return true;
 	}
 
 	public function checkIfUserIsAlreadyRegisteredAndGetHisUserId(): int {
