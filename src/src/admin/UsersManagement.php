@@ -47,9 +47,7 @@ class UsersManagement {
 			10
 		);
 
-		if ( ! empty( $_GET['page'] ) && $_GET['page'] == SKAUTISINTEGRATION_NAME . '_usersManagement' ) {
-			add_action( 'admin_enqueue_scripts', array( $this, 'enqueueScriptsAndStyles' ) );
-		}
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueueScriptsAndStyles' ) );
 	}
 
 	protected function checkIfUserChangeSkautisRole() {
@@ -67,7 +65,10 @@ class UsersManagement {
 		);
 	}
 
-	public function enqueueScriptsAndStyles() {
+	public function enqueueScriptsAndStyles( $hook_suffix ) {
+		if ( ! str_ends_with( $hook_suffix, SKAUTISINTEGRATION_NAME . '_usersManagement' ) ) {
+			return;
+		}
 		wp_enqueue_script( 'thickbox' );
 		wp_enqueue_style( 'thickbox' );
 		if ( is_network_admin() ) {
