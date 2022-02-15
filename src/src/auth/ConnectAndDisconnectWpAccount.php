@@ -63,7 +63,7 @@ final class ConnectAndDisconnectWpAccount {
 				} else {
 					$returnUrl = Helpers::getCurrentUrl();
 				}
-				wp_redirect( esc_url_raw( $this->skautisGateway->getSkautisInstance()->getLoginUrl( $returnUrl ) ), 302 );
+				wp_safe_redirect( esc_url_raw( $this->skautisGateway->getSkautisInstance()->getLoginUrl( $returnUrl ) ), 302 );
 				exit;
 			}
 		}
