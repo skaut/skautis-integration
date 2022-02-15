@@ -6,6 +6,15 @@ namespace SkautisIntegration\Utils;
 
 class Helpers {
 
+	public static function getLoginLogoutRedirect() {
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( ! isset( $_GET['redirect_to'] ) || '' === $_GET['redirect_to'] ) {
+			return null;
+		}
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		return esc_url_raw( wp_unslash( $_GET['redirect_to'] ) );
+	}
+
 	public static function showAdminNotice( string $message, string $type = 'warning', string $hideNoticeOnPage = '' ) {
 		add_action(
 			'admin_notices',
