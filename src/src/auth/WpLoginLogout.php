@@ -85,14 +85,6 @@ final class WpLoginLogout {
 	public function getLoginUrl( string $returnUrl = '' ): string {
 		if ( ! $returnUrl ) {
 			$returnUrl = Helpers::getLoginLogoutRedirect();
-			if ( is_null( $returnUrl ) ) {
-				// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
-				if ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
-					$returnUrl = esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) );
-				} else {
-					$returnUrl = Helpers::getCurrentUrl();
-				}
-			}
 		}
 
 		$returnUrl = remove_query_arg( 'loggedout', urldecode( $returnUrl ) );
@@ -109,14 +101,6 @@ final class WpLoginLogout {
 	public function getLogoutUrl( string $returnUrl = '' ): string {
 		if ( ! $returnUrl ) {
 			$returnUrl = Helpers::getLoginLogoutRedirect();
-			if ( is_null( $returnUrl ) ) {
-				// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
-				if ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
-					$returnUrl = esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) );
-				} else {
-					$returnUrl = Helpers::getCurrentUrl();
-				}
-			}
 		}
 
 		$returnUrl = remove_query_arg( 'loggedout', urldecode( $returnUrl ) );
@@ -154,15 +138,6 @@ final class WpLoginLogout {
 		wp_set_current_user( 0 );
 
 		$returnUrl = Helpers::getLoginLogoutRedirect();
-		if ( is_null( $returnUrl ) ) {
-			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
-			if ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
-				$returnUrl = esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) );
-			} else {
-				$returnUrl = Helpers::getCurrentUrl();
-			}
-		}
-
 		wp_safe_redirect( esc_url_raw( $returnUrl ), 302 );
 		exit;
 	}

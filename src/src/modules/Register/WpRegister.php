@@ -173,15 +173,6 @@ final class WpRegister {
 
 	public function getRegisterUrl(): string {
 		$returnUrl = Helpers::getLoginLogoutRedirect();
-		if ( is_null( $returnUrl ) ) {
-			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
-			if ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
-				$returnUrl = esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) );
-			} else {
-				$returnUrl = Helpers::getCurrentUrl();
-			}
-		}
-
 		$returnUrl = remove_query_arg( 'loggedout', urldecode( $returnUrl ) );
 
 		$returnUrl = add_query_arg( SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis', wp_create_nonce( SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis' ), $returnUrl );
@@ -204,15 +195,6 @@ final class WpRegister {
 
 	public function getManuallyRegisterWpUserUrl(): string {
 		$returnUrl = Helpers::getLoginLogoutRedirect();
-		if ( is_null( $returnUrl ) ) {
-			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
-			if ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
-				$returnUrl = esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) );
-			} else {
-				$returnUrl = Helpers::getCurrentUrl();
-			}
-		}
-
 		$returnUrl = add_query_arg( SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis', wp_create_nonce( SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis' ), $returnUrl );
 		$url       = add_query_arg( 'ReturnUrl', urlencode( $returnUrl ), get_home_url( null, 'skautis/auth/' . Register::MANUALLY_REGISTER_WP_USER_ACTION ) );
 

@@ -8,11 +8,21 @@ class Helpers {
 
 	public static function getLoginLogoutRedirect() {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		if ( ! isset( $_GET['redirect_to'] ) || '' === $_GET['redirect_to'] ) {
+		if ( isset( $_GET['redirect_to'] ) && '' !== $_GET['redirect_to'] ) {
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			return esc_url_raw( wp_unslash( $_GET['redirect_to'] ) );
+		}
+		$returnUrl = self::getReturnUrl();
+		return is_null( $returnUrl ) ? self::getCurrentUrl() : $returnUrl;
+	}
+
+	public static function getReturnUrl() {
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( ! isset( $_GET['ReturnUrl'] ) || '' === $_GET['ReturnUrl'] ) {
 			return null;
 		}
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		return esc_url_raw( wp_unslash( $_GET['redirect_to'] ) );
+		return esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) );
 	}
 
 	public static function showAdminNotice( string $message, string $type = 'warning', string $hideNoticeOnPage = '' ) {

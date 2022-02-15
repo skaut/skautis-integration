@@ -56,14 +56,6 @@ final class Register implements IModule {
 
 	private function loginUserAfterRegistration() {
 		$returnUrl = Helpers::getLoginLogoutRedirect();
-		if ( is_null( $returnUrl ) ) {
-			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
-			if ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
-				$returnUrl = esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) );
-			} else {
-				$returnUrl = Helpers::getCurrentUrl();
-			}
-		}
 		$returnUrl = remove_query_arg( SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis', urldecode( $returnUrl ) );
 		wp_safe_redirect( esc_url_raw( $this->wpLoginLogout->getLoginUrl( $returnUrl ) ), 302 );
 		exit;

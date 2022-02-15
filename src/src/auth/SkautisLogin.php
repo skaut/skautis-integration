@@ -44,14 +44,6 @@ final class SkautisLogin {
 
 	public function login() {
 		$returnUrl = Helpers::getLoginLogoutRedirect();
-		if ( is_null( $returnUrl ) ) {
-			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
-			if ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
-				$returnUrl = esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) );
-			} else {
-				$returnUrl = Helpers::getCurrentUrl();
-			}
-		}
 
 		if ( strpos( $returnUrl, 'logoutFromSkautis' ) !== false ) {
 			$this->skautisGateway->logout();
