@@ -172,14 +172,14 @@ final class WpRegister {
 	}
 
 	public function getRegisterUrl(): string {
-		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
-		if ( isset( $_GET['redirect_to'] ) && $_GET['redirect_to'] ) {
-			$returnUrl = esc_url_raw( wp_unslash( $_GET['redirect_to'] ) );
-		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
-		} elseif ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
-			$returnUrl = esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) );
-		} else {
-			$returnUrl = Helpers::getCurrentUrl();
+		$returnUrl = Helpers::getLoginLogoutRedirect();
+		if ( is_null( $returnUrl ) ) {
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
+			if ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
+				$returnUrl = esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) );
+			} else {
+				$returnUrl = Helpers::getCurrentUrl();
+			}
 		}
 
 		$returnUrl = remove_query_arg( 'loggedout', urldecode( $returnUrl ) );
@@ -203,14 +203,14 @@ final class WpRegister {
 	}
 
 	public function getManuallyRegisterWpUserUrl(): string {
-		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
-		if ( isset( $_GET['redirect_to'] ) && $_GET['redirect_to'] ) {
-			$returnUrl = esc_url_raw( wp_unslash( $_GET['redirect_to'] ) );
-		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
-		} elseif ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
-			$returnUrl = esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) );
-		} else {
-			$returnUrl = Helpers::getCurrentUrl();
+		$returnUrl = Helpers::getLoginLogoutRedirect();
+		if ( is_null( $returnUrl ) ) {
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
+			if ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
+				$returnUrl = esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) );
+			} else {
+				$returnUrl = Helpers::getCurrentUrl();
+			}
 		}
 
 		$returnUrl = add_query_arg( SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis', wp_create_nonce( SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis' ), $returnUrl );

@@ -84,14 +84,14 @@ final class WpLoginLogout {
 
 	public function getLoginUrl( string $returnUrl = '' ): string {
 		if ( ! $returnUrl ) {
-			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
-			if ( isset( $_GET['redirect_to'] ) && $_GET['redirect_to'] ) {
-				$returnUrl = esc_url_raw( wp_unslash( $_GET['redirect_to'] ) );
-			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
-			} elseif ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
-				$returnUrl = esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) );
-			} else {
-				$returnUrl = Helpers::getCurrentUrl();
+			$returnUrl = Helpers::getLoginLogoutRedirect();
+			if ( is_null( $returnUrl ) ) {
+				// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
+				if ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
+					$returnUrl = esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) );
+				} else {
+					$returnUrl = Helpers::getCurrentUrl();
+				}
 			}
 		}
 
@@ -108,14 +108,14 @@ final class WpLoginLogout {
 
 	public function getLogoutUrl( string $returnUrl = '' ): string {
 		if ( ! $returnUrl ) {
-			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
-			if ( isset( $_GET['redirect_to'] ) && $_GET['redirect_to'] ) {
-				$returnUrl = esc_url_raw( wp_unslash( $_GET['redirect_to'] ) );
-			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
-			} elseif ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
-				$returnUrl = esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) );
-			} else {
-				$returnUrl = Helpers::getCurrentUrl();
+			$returnUrl = Helpers::getLoginLogoutRedirect();
+			if ( is_null( $returnUrl ) ) {
+				// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
+				if ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
+					$returnUrl = esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) );
+				} else {
+					$returnUrl = Helpers::getCurrentUrl();
+				}
 			}
 		}
 
@@ -153,14 +153,14 @@ final class WpLoginLogout {
 		wp_logout();
 		wp_set_current_user( 0 );
 
-		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
-		if ( isset( $_GET['redirect_to'] ) && $_GET['redirect_to'] ) {
-			$returnUrl = esc_url_raw( wp_unslash( $_GET['redirect_to'] ) );
-		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
-		} elseif ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
-			$returnUrl = esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) );
-		} else {
-			$returnUrl = Helpers::getCurrentUrl();
+		$returnUrl = Helpers::getLoginLogoutRedirect();
+		if ( is_null( $returnUrl ) ) {
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
+			if ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
+				$returnUrl = esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) );
+			} else {
+				$returnUrl = Helpers::getCurrentUrl();
+			}
 		}
 
 		wp_safe_redirect( esc_url_raw( $returnUrl ), 302 );
