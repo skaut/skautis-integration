@@ -18,8 +18,12 @@ class Users {
 	protected function getSearchUserString(): string {
 		$searchUserString = '';
 
-		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
-		if ( isset( $_GET['skautisSearchUsers'] ) && $_GET['skautisSearchUsers'] ) {
+		if ( ! isset( $_GET[SKAUTISINTEGRATION_NAME. '_skautis_search_user_nonce'] ) ||
+			 ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET[SKAUTISINTEGRATION_NAME. '_skautis_search_user_nonce'] ) ), SKAUTISINTEGRATION_NAME. '_skautis_search_user' ) ) {
+			wp_die( esc_html__( 'Nemáte oprávnění k vyhledávání uživatelů.', 'skautis-integration' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
+		}
+
+		if ( isset( $_GET['skautisSearchUsers'] ) && sanitize_text_field( wp_unslash( $_GET['skautisSearchUsers'] ) ) !== '' ) {
 			$searchUserString = sanitize_text_field( wp_unslash( $_GET['skautisSearchUsers'] ) );
 		} elseif ( isset( $_GET['ReturnUrl'] ) ) {
 			$searchUserString = Helpers::getVariableFromUrl( esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) ), 'skautisSearchUsers' );
