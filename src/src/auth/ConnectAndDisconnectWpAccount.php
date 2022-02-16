@@ -18,13 +18,13 @@ final class ConnectAndDisconnectWpAccount {
 	}
 
 	private function setSkautisUserIdToWpAccount( int $wpUserId, int $skautisUserId ) {
-			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
-		if ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
-			Helpers::validateNonceFromUrl( esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) ), SKAUTISINTEGRATION_NAME . '_connectWpAccountWithSkautis' );
+		$returnUrl = Helpers::getReturnUrl();
+		if ( ! is_null( $returnUrl ) ) {
+			Helpers::validateNonceFromUrl( $returnUrl, SKAUTISINTEGRATION_NAME . '_connectWpAccountWithSkautis' );
 
 			update_user_meta( $wpUserId, 'skautisUserId_' . $this->skautisGateway->getEnv(), absint( $skautisUserId ) );
 
-			wp_safe_redirect( esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) ), 302 );
+			wp_safe_redirect( $returnUrl, 302 );
 			exit;
 		}
 	}
@@ -57,12 +57,7 @@ final class ConnectAndDisconnectWpAccount {
 		if ( ! $this->skautisLogin->isUserLoggedInSkautis() ) {
 			// phpcs:ignore WordPress.Security.NonceVerification.Missing
 			if ( ! $this->skautisLogin->setLoginDataToLocalSkautisInstance( $_POST ) ) {
-				// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
-				if ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
-					$returnUrl = esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) );
-				} else {
-					$returnUrl = Helpers::getCurrentUrl();
-				}
+				$returnUrl = Helpers::getReturnUrl() ?? Helpers::getCurrentUrl();
 				wp_safe_redirect( esc_url_raw( $this->skautisGateway->getSkautisInstance()->getLoginUrl( $returnUrl ) ), 302 );
 				exit;
 			}
@@ -107,16 +102,16 @@ final class ConnectAndDisconnectWpAccount {
 
 	public function disconnect() {
 		if ( is_user_logged_in() ) {
-			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
-			if ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
-				Helpers::validateNonceFromUrl( esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) ), SKAUTISINTEGRATION_NAME . '_disconnectWpAccountFromSkautis' );
+			$returnUrl = Helpers::getReturnUrl();
+			if ( ! is_null( $returnUrl ) ) {
+				Helpers::validateNonceFromUrl( $returnUrl, SKAUTISINTEGRATION_NAME . '_disconnectWpAccountFromSkautis' );
 
-				if ( strpos( esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) ), 'profile.php' ) !== false ) {
+				if ( strpos( $returnUrl, 'profile.php' ) !== false ) {
 					delete_user_meta( get_current_user_id(), 'skautisUserId_' . $this->skautisGateway->getEnv() );
-				} elseif ( ( strpos( esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) ), 'user-edit_php' ) !== false ||
-							  strpos( esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) ), 'user-edit.php' ) !== false ) &&
-							strpos( esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) ), 'user_id=' ) !== false ) {
-					if ( ! preg_match( '~user_id=(\d+)~', esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) ), $result ) ) {
+				} elseif ( ( strpos( $returnUrl, 'user-edit_php' ) !== false ||
+							  strpos( $returnUrl, 'user-edit.php' ) !== false ) &&
+							strpos( $returnUrl, 'user_id=' ) !== false ) {
+					if ( ! preg_match( '~user_id=(\d+)~', $returnUrl, $result ) ) {
 						return;
 					}
 					if ( is_array( $result ) && isset( $result[1] ) && $result[1] > 0 ) {
@@ -129,9 +124,9 @@ final class ConnectAndDisconnectWpAccount {
 			}
 		}
 
-		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
-		if ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
-			wp_safe_redirect( esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) ), 302 );
+		$returnUrl = Helpers::getReturnUrl();
+		if ( ! is_null( $returnUrl ) ) {
+			wp_safe_redirect( $returnUrl, 302 );
 			exit;
 		} else {
 			wp_safe_redirect( get_home_url(), 302 );
