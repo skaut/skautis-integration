@@ -120,8 +120,8 @@ class UsersManagement {
 			'skautisIntegrationAdminUsersManagementLocalize',
 			array(
 				'datatablesFilesUrl' => SKAUTISINTEGRATION_URL . 'bundled/datatables-files',
-				'searchNonceName' => SKAUTISINTEGRATION_NAME. '_skautis_search_user_nonce',
-				'searchNonceValue' => wp_create_nonce( SKAUTISINTEGRATION_NAME. '_skautis_search_user' ),
+				'searchNonceName'    => SKAUTISINTEGRATION_NAME. '_skautis_search_user_nonce',
+				'searchNonceValue'   => wp_create_nonce( SKAUTISINTEGRATION_NAME. '_skautis_search_user' ),
 			)
 		);
 	}
