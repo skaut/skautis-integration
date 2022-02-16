@@ -122,6 +122,7 @@ final class RulesInit {
 			2  => __( 'Hotovo', 'skautis-integration' ), // Custom field updated.
 			3  => __( 'Hotovo', 'skautis-integration' ), // Custom field deleted.
 			4  => __( 'Hotovo', 'skautis-integration' ), // My Post Type updated.
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			5  => isset( $_GET['revision'] ) ? sprintf( __( 'Pravidlo bylo obnoveno na starší verzi z %s' ), wp_post_revision_title( absint( $_GET['revision'] ), false ) ) : false,
 			6  => __( 'Hotovo', 'skautis-integration' ), // My Post Type published.
 			7  => __( 'Pravidlo bylo uloženo', 'skautis-integration' ), // My Post Type saved.

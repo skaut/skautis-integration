@@ -46,24 +46,16 @@ final class Register implements IModule {
 
 	private function initHooks() {
 		add_filter( SKAUTISINTEGRATION_NAME . '_frontend_actions_router', array( $this, 'addActionsToRouter' ) );
-		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
-		if ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
-			if ( Helpers::getNonceFromUrl( esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) ), SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis' ) ) {
+		$returnUrl = Helpers::getReturnUrl();
+		if ( ! is_null( $returnUrl ) ) {
+			if ( Helpers::getNonceFromUrl( $returnUrl, SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis' ) ) {
 				add_action( SKAUTISINTEGRATION_NAME . '_after_skautis_token_is_set', array( $this, 'registerConfirm' ) );
 			}
 		}
 	}
 
 	private function loginUserAfterRegistration() {
-		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
-		if ( isset( $_GET['redirect_to'] ) && $_GET['redirect_to'] ) {
-			$returnUrl = esc_url_raw( wp_unslash( $_GET['redirect_to'] ) );
-		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
-		} elseif ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
-			$returnUrl = esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) );
-		} else {
-			$returnUrl = Helpers::getCurrentUrl();
-		}
+		$returnUrl = Helpers::getLoginLogoutRedirect();
 		$returnUrl = remove_query_arg( SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis', urldecode( $returnUrl ) );
 		wp_safe_redirect( esc_url_raw( $this->wpLoginLogout->getLoginUrl( $returnUrl ) ), 302 );
 		exit;
@@ -110,13 +102,8 @@ final class Register implements IModule {
 
 	public function register() {
 		if ( ! $this->skautisLogin->isUserLoggedInSkautis() ) {
-			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
-			if ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
-				$returnUrl = esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) );
-			} else {
-				$returnUrl = Helpers::getCurrentUrl();
-			}
-			wp_redirect( esc_url_raw( $this->skautisGateway->getSkautisInstance()->getLoginUrl( $returnUrl ) ), 302 );
+			$returnUrl = Helpers::getReturnUrl() ?? Helpers::getCurrentUrl();
+			wp_safe_redirect( esc_url_raw( $this->skautisGateway->getSkautisInstance()->getLoginUrl( $returnUrl ) ), 302 );
 			exit;
 		}
 
@@ -143,32 +130,33 @@ final class Register implements IModule {
 
 		$this->skautisGateway->logout();
 
-		if ( ! empty( $_GET['ReturnUrl'] ) ) {
-			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-			wp_die( sprintf( esc_html__( 'Nemáte oprávnění k registraci. %1$sZkuste to znovu%2$s', 'skautis-integration' ), '<a href="' . esc_url( wp_unslash( $_GET['ReturnUrl'] ) ) . '">', '</a>' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
+		$returnUrl = Helpers::getReturnUrl();
+		if ( ! is_null( $returnUrl ) ) {
+			wp_die( sprintf( esc_html__( 'Nemáte oprávnění k registraci. %1$sZkuste to znovu%2$s', 'skautis-integration' ), '<a href="' . esc_url( $returnUrl ) . '">', '</a>' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
 		}
 		wp_die( esc_html__( 'Nemáte oprávnění k registraci.', 'skautis-integration' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
 	}
 
 	public function registerUserManually() {
+		$returnUrl = Helpers::getReturnUrl();
 		if ( ! isset( $_GET[SKAUTISINTEGRATION_NAME. '_register_user_nonce'] ) ||
 			 ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET[SKAUTISINTEGRATION_NAME. '_register_user_nonce'] ) ), SKAUTISINTEGRATION_NAME. '_register_user' ) ||
 			 ! $this->skautisLogin->isUserLoggedInSkautis() ||
 			 ! Helpers::userIsSkautisManager() ||
 			 ! current_user_can( 'create_users' ) ||
-			 ! isset( $_GET['ReturnUrl'], $_GET['wpRole'], $_GET['skautisUserId'] ) ) {
+			 is_null( $returnUrl ) ||
+			 ! isset( $_GET['wpRole'], $_GET['skautisUserId'] ) ) {
 			wp_die( esc_html__( 'Nemáte oprávnění k registraci nových uživatelů.', 'skautis-integration' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
 		}
 
-		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-		$wpRole = wp_unslash( $_GET['wpRole'] );
+		$wpRole = sanitize_text_field( wp_unslash( $_GET['wpRole'] ) );
 		if ( ! wp_roles()->is_role( $wpRole ) ) {
 			wp_die( esc_html__( 'Uživatele se nepodařilo zaregistrovat - role neexistuje.', 'skautis-integration' ), esc_html__( 'Chyba při registraci uživatele', 'skautis-integration' ) );
 		}
 		$skautisUserId = absint( $_GET['skautisUserId'] );
 
 		if ( $this->wpRegister->registerToWpManually( $wpRole, $skautisUserId ) ) {
-			wp_safe_redirect( esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) ), 302 );
+			wp_safe_redirect( $returnUrl, 302 );
 			exit;
 		} else {
 			wp_die( esc_html__( 'Uživatele se nepodařilo zaregistrovat', 'skautis-integration' ), esc_html__( 'Chyba při registraci uživatele', 'skautis-integration' ) );

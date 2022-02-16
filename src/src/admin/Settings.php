@@ -52,14 +52,14 @@ final class Settings {
 		$envType = get_option( 'skautis_integration_appid_type' );
 		if ( $envType === SkautisGateway::PROD_ENV ) {
 			if ( ! get_option( 'skautis_integration_appid_prod' ) ) {
-				Helpers::showAdminNotice( sprintf( esc_html__( 'Zadejte v %1$snastavení%2$s pluginu APP ID produkční verze skautISu', 'skautis-integration' ), '<a href="' . esc_url( admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME ) ) . '">', '</a>' ), 'warning', 'toplevel_page_' . SKAUTISINTEGRATION_NAME );
+				Helpers::showAdminNotice( sprintf( __( 'Zadejte v %1$snastavení%2$s pluginu APP ID produkční verze skautISu', 'skautis-integration' ), '<a href="' . esc_url( admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME ) ) . '">', '</a>' ), 'warning', 'toplevel_page_' . SKAUTISINTEGRATION_NAME );
 			}
 		} elseif ( $envType === SkautisGateway::TEST_ENV ) {
 			if ( ! get_option( 'skautis_integration_appid_test' ) ) {
-				Helpers::showAdminNotice( sprintf( esc_html__( 'Zadejte v %1$snastavení%2$s pluginu APP ID testovací verze skautISu', 'skautis-integration' ), '<a href="' . esc_url( admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME ) ) . '">', '</a>' ), 'warning', 'toplevel_page_' . SKAUTISINTEGRATION_NAME );
+				Helpers::showAdminNotice( sprintf( __( 'Zadejte v %1$snastavení%2$s pluginu APP ID testovací verze skautISu', 'skautis-integration' ), '<a href="' . esc_url( admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME ) ) . '">', '</a>' ), 'warning', 'toplevel_page_' . SKAUTISINTEGRATION_NAME );
 			}
 		} else {
-			Helpers::showAdminNotice( sprintf( esc_html__( 'Vyberte v %1$snastavení%2$s pluginu typ prostředí skautISu', 'skautis-integration' ), '<a href="' . esc_url( admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME ) ) . '">', '</a>' ), 'warning', 'toplevel_page_' . SKAUTISINTEGRATION_NAME );
+			Helpers::showAdminNotice( sprintf( __( 'Vyberte v %1$snastavení%2$s pluginu typ prostředí skautISu', 'skautis-integration' ), '<a href="' . esc_url( admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME ) ) . '">', '</a>' ), 'warning', 'toplevel_page_' . SKAUTISINTEGRATION_NAME );
 		}
 	}
 
@@ -122,23 +122,6 @@ final class Settings {
 			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.' ) );
 		}
 
-		if ( ! empty( $_GET['settings-updated'] ) ) {
-			if ( ! $this->skautisGateway->testActiveAppId() ) {
-				?>
-				<div class="notice notice-error is-dismissible">
-					<p>
-						<strong><?php esc_html_e( 'Zadané APP ID není pro tento web platné.', 'skautis-integration' ); ?></strong>
-					</p>
-					<button type="button" class="notice-dismiss">
-						<span class="screen-reader-text"><?php esc_html_e( 'Close' ); ?></span>
-					</button>
-					<button type="button" class="notice-dismiss"><span
-							class="screen-reader-text"><?php esc_html_e( 'Hide' ); ?></span></button>
-				</div>
-				<?php
-			}
-		}
-
 		settings_errors();
 		?>
 		<div class="wrap">
@@ -152,6 +135,13 @@ final class Settings {
 			</form>
 		</div>
 		<?php
+	}
+
+	public function testAppId( $value ) {
+		if ( ! $this->skautisGateway->testActiveAppId() ) {
+			add_settings_error( 'general', 'api_invalid', esc_html__( 'Zadané APP ID není pro tento web platné.', 'skautis-integration' ), 'notice-error' );
+		}
+		return sanitize_text_field( $value );
 	}
 
 	public function setupSettingFields() {
@@ -194,7 +184,7 @@ final class Settings {
 			array(
 				'type'              => 'integer',
 				'show_in_rest'      => false,
-				'sanitize_callback' => 'sanitize_text_field',
+				'sanitize_callback' => array( $this, 'testAppId' ),
 			)
 		);
 		register_setting(
@@ -267,10 +257,6 @@ final class Settings {
 			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.' ) );
 		}
 
-		if ( ! empty( $_GET['settings-updated'] ) ) {
-			flush_rewrite_rules();
-		}
-
 		settings_errors();
 		?>
 		<div class="wrap">
@@ -334,6 +320,8 @@ final class Settings {
 					$url = wp_kses_normalize_entities( $url );
 					$url = str_replace( '&amp;', '&#038;', $url );
 					$url = str_replace( "'", '&#039;', $url );
+
+					flush_rewrite_rules();
 
 					return $url;
 				},

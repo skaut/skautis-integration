@@ -42,6 +42,13 @@ final class Actions {
 		add_action( 'pre_get_posts', array( $this, 'authActionsRouter' ) );
 
 		add_action( 'plugins_loaded', array( $this, 'authInProcess' ) );
+		add_filter( 'allowed_redirect_hosts', array( $this, 'addRedirectHosts' ) );
+	}
+
+	public function addRedirectHosts( $hosts ) {
+		$hosts[] = 'test-is.skaut.cz';
+		$hosts[] = 'is.skaut.cz';
+		return $hosts;
 	}
 
 	public function registerAuthRewriteRules() {

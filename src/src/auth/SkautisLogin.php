@@ -43,15 +43,7 @@ final class SkautisLogin {
 	}
 
 	public function login() {
-		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
-		if ( isset( $_GET['redirect_to'] ) && $_GET['redirect_to'] ) {
-			$returnUrl = esc_url_raw( wp_unslash( $_GET['redirect_to'] ) );
-		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
-		} elseif ( isset( $_GET['ReturnUrl'] ) && $_GET['ReturnUrl'] ) {
-			$returnUrl = esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) );
-		} else {
-			$returnUrl = Helpers::getCurrentUrl();
-		}
+		$returnUrl = Helpers::getLoginLogoutRedirect();
 
 		if ( strpos( $returnUrl, 'logoutFromSkautis' ) !== false ) {
 			$this->skautisGateway->logout();
@@ -59,7 +51,7 @@ final class SkautisLogin {
 		}
 
 		if ( ! $this->isUserLoggedInSkautis() ) {
-			wp_redirect( esc_url_raw( $this->skautisGateway->getSkautisInstance()->getLoginUrl( $returnUrl ) ), 302 );
+			wp_safe_redirect( esc_url_raw( $this->skautisGateway->getSkautisInstance()->getLoginUrl( $returnUrl ) ), 302 );
 			exit;
 		}
 
@@ -73,21 +65,22 @@ final class SkautisLogin {
 	}
 
 	public function loginConfirm() {
+		$returnUrl = Helpers::getReturnUrl();
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		if ( $this->setLoginDataToLocalSkautisInstance( $_POST ) ) {
-			if ( ! isset( $_GET['ReturnUrl'] ) || strpos( esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) ), 'noWpLogin' ) === false ) {
+			if ( is_null( $returnUrl ) || strpos( $returnUrl, 'noWpLogin' ) === false ) {
 				$this->wpLoginLogout->loginToWp();
-			} elseif ( isset( $_GET['ReturnUrl'] ) ) {
+			} elseif ( ! is_null( $returnUrl ) ) {
 				$this->wpLoginLogout->tryToLoginToWp();
-				wp_safe_redirect( esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) ), 302 );
+				wp_safe_redirect( $returnUrl, 302 );
 				exit;
 			}
 		} elseif ( $this->isUserLoggedInSkautis() ) {
-			if ( ! isset( $_GET['ReturnUrl'] ) || strpos( esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) ), 'noWpLogin' ) === false ) {
+			if ( is_null( $returnUrl ) || strpos( $returnUrl, 'noWpLogin' ) === false ) {
 				$this->wpLoginLogout->loginToWp();
-			} elseif ( isset( $_GET['ReturnUrl'] ) ) {
+			} elseif ( ! is_null( $returnUrl ) ) {
 				$this->wpLoginLogout->tryToLoginToWp();
-				wp_safe_redirect( esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) ), 302 );
+				wp_safe_redirect( $returnUrl, 302 );
 				exit;
 			}
 		}

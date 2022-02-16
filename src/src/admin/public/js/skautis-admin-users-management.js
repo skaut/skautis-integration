@@ -23,7 +23,8 @@
                         .text($dataTable.i18n('search'))
                         .addClass('button button-secondary')
                         .click(function () {
-                            window.location.href = updateQueryStringInUrl('skautisSearchUsers', $input.val(), window.location.href);
+                            var withNonce = updateQueryStringInUrl(skautisIntegrationAdminUsersManagementLocalize.searchNonceName, skautisIntegrationAdminUsersManagementLocalize.searchNonceValue, window.location.href)
+                            window.location.href = updateQueryStringInUrl('skautisSearchUsers', $input.val(), withNonce);
                         });
                 $input.on('keyup', function (e) {
                     if (!e) {

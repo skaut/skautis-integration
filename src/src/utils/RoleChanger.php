@@ -45,7 +45,7 @@ class RoleChanger {
 
 		echo '
 <form method="post" action="' . esc_attr( Helpers::getCurrentUrl() ) . '" novalidate="novalidate">' .
-// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		wp_nonce_field( SKAUTISINTEGRATION_NAME . '_changeSkautisUserRole', '_wpnonce', true, false ) .
 		'<table class="form-table">
 <tbody>
