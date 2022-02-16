@@ -62,7 +62,7 @@ class All implements IRule {
 	}
 
 	public function isRulePassed( string $operator, $data ): bool {
-		if ( ! empty( $data[0] ) && $data[0] == 1 && $this->skautisGateway->getSkautisInstance()->UserManagement->UserDetail()->ID > 0 ) {
+		if ( ! empty( $data[0] ) && 1 === $data[0] && $this->skautisGateway->getSkautisInstance()->UserManagement->UserDetail()->ID > 0 ) {
 			return true;
 		}
 

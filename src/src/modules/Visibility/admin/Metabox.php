@@ -76,12 +76,12 @@ final class Metabox {
 	public function rulesRepeater( \WP_Post $post ) {
 		$postTypeObject  = get_post_type_object( $post->post_type );
 		$includeChildren = get_post_meta( $post->ID, SKAUTISINTEGRATION_NAME . '_rules_includeChildren', true );
-		if ( $includeChildren !== '0' && $includeChildren !== '1' ) {
+		if ( '0' !== $includeChildren && '1' !== $includeChildren ) {
 			$includeChildren = get_option( SKAUTISINTEGRATION_NAME . '_modules_visibility_includeChildren', 0 );
 		}
 
 		$visibilityMode = get_post_meta( $post->ID, SKAUTISINTEGRATION_NAME . '_rules_visibilityMode', true );
-		if ( $visibilityMode !== 'content' && $visibilityMode !== 'full' ) {
+		if ( 'content' !== $visibilityMode && 'full' !== $visibilityMode ) {
 			$visibilityMode = get_option( SKAUTISINTEGRATION_NAME . '_modules_visibility_visibilityMode', 0 );
 		}
 

@@ -94,7 +94,7 @@ final class WpLoginLogout {
 			$returnUrl = admin_url();
 		}
 
-		$url = add_query_arg( 'ReturnUrl', urlencode( $returnUrl ), get_home_url( null, 'skautis/auth/' . Actions::LOGIN_ACTION ) );
+		$url = add_query_arg( 'ReturnUrl', rawurlencode( $returnUrl ), get_home_url( null, 'skautis/auth/' . Actions::LOGIN_ACTION ) );
 
 		return esc_url( $url );
 	}
@@ -111,7 +111,7 @@ final class WpLoginLogout {
 		}
 
 		$returnUrl = add_query_arg( SKAUTISINTEGRATION_NAME . '_logoutFromWpAndSkautis', wp_create_nonce( SKAUTISINTEGRATION_NAME . '_logoutFromWpAndSkautis' ), $returnUrl );
-		$url       = add_query_arg( 'ReturnUrl', urlencode( $returnUrl ), get_home_url( null, 'skautis/auth/' . Actions::LOGOUT_CONFIRM_ACTION ) );
+		$url       = add_query_arg( 'ReturnUrl', rawurlencode( $returnUrl ), get_home_url( null, 'skautis/auth/' . Actions::LOGOUT_CONFIRM_ACTION ) );
 
 		return esc_url( $url );
 	}

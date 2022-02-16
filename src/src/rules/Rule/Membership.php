@@ -80,7 +80,7 @@ class Membership implements IRule {
 	protected function getUserMembershipsWithUnitIds(): array {
 		static $userMemberships = null;
 
-		if ( $userMemberships === null ) {
+		if ( is_null( $userMemberships ) ) {
 			$userDetail      = $this->skautisGateway->getSkautisInstance()->UserManagement->UserDetail();
 			$userMemberships = $this->skautisGateway->getSkautisInstance()->OrganizationUnit->MembershipAllPerson(
 				array(

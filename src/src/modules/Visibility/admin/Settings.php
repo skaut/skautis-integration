@@ -125,7 +125,7 @@ final class Settings {
 		?>
 		<?php
 		foreach ( $availablePostTypes as $postType ) {
-			echo '<label><input type="checkbox" name="' . esc_attr( SKAUTISINTEGRATION_NAME ) . '_modules_visibility_postTypes[]" value="' . esc_attr( $postType->name ) . '" ' . checked( TRUE, in_array( $postType->name, $postTypes ), FALSE ) . '/><span>' . esc_html( $postType->label ) . '</span></label><br/>';
+			echo '<label><input type="checkbox" name="' . esc_attr( SKAUTISINTEGRATION_NAME ) . '_modules_visibility_postTypes[]" value="' . esc_attr( $postType->name ) . '" ' . checked( TRUE, in_array( $postType->name, $postTypes, true ), FALSE ) . '/><span>' . esc_html( $postType->label ) . '</span></label><br/>';
 		}
 		?>
 		<div>

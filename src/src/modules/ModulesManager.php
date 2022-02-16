@@ -22,7 +22,7 @@ final class ModulesManager {
 
 	private function registerActivatedModules( array $modules = array(), array $activatedModules = array() ) {
 		foreach ( $modules as $moduleId => $moduleLabel ) {
-			if ( in_array( $moduleId, $activatedModules ) ) {
+			if ( in_array( $moduleId, $activatedModules, true ) ) {
 				$this->container[ $moduleId ];
 			}
 		}
@@ -33,7 +33,7 @@ final class ModulesManager {
 	}
 
 	public function isModuleActivated( string $moduleName ): bool {
-		return in_array( $moduleName, $this->activatedModules );
+		return in_array( $moduleName, $this->activatedModules, true );
 	}
 
 }

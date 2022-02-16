@@ -183,7 +183,7 @@ class UsersManagement {
 				$returnUrl             = add_query_arg( SKAUTISINTEGRATION_NAME . '_disconnectWpAccountFromSkautis', $nonce, Helpers::getCurrentUrl() );
 				$returnUrl             = add_query_arg( 'user-edit_php', '', $returnUrl );
 				$returnUrl             = add_query_arg( 'user_id', $usersData[ $user->id ]['id'], $returnUrl );
-				$connectDisconnectLink = add_query_arg( 'ReturnUrl', urlencode( $returnUrl ), $homeUrl );
+				$connectDisconnectLink = add_query_arg( 'ReturnUrl', rawurlencode( $returnUrl ), $homeUrl );
 				echo '<tr style="background-color: #d1ffd1;">
 	<td class="username">
 		<span class="firstName">' . esc_html( $user->firstName ) . '</span> <span class="lastName">' . esc_html( $user->lastName ) . '</span>

@@ -45,7 +45,7 @@ class Columns {
     }
 
     public function lastModifiedAdminColumnContent( string $columnName, int $postId ) {
-        if ( 'modified_last' != $columnName ) {
+        if ( 'modified_last' !== $columnName ) {
             return;
         }
 

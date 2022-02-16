@@ -80,7 +80,7 @@ class Role implements IRule {
 	protected function getUserRolesWithUnitIds(): array {
 		static $userRoles = null;
 
-		if ( $userRoles === null ) {
+		if ( is_null( $userRoles ) ) {
 			$userRoles = $this->skautisGateway->getSkautisInstance()->UserManagement->UserRoleAll(
 				array(
 					'ID_Login' => $this->skautisGateway->getSkautisInstance()->getUser()->getLoginId(),
@@ -105,7 +105,6 @@ class Role implements IRule {
 						$result[ $userRole->ID_Role ][] = $unitDetail->RegistrationNumber;
 					}
 				} catch ( \Exception $e ) {
-					error_log( $e->getMessage() );
 					continue;
 				}
 			}

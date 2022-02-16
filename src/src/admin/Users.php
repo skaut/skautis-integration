@@ -34,9 +34,9 @@ final class Users {
 	}
 
 	public function addColumnToUsersTable( $value, string $columnName, int $userId ) {
-		if ( $columnName == SKAUTISINTEGRATION_NAME ) {
+		if ( SKAUTISINTEGRATION_NAME === $columnName ) {
 			$envType = get_option( 'skautis_integration_appid_type' );
-			if ( $envType === SkautisGateway::PROD_ENV ) {
+			if ( SkautisGateway::PROD_ENV === $envType ) {
 				$userId = get_the_author_meta( 'skautisUserId_' . SkautisGateway::PROD_ENV, $userId );
 			} else {
 				$userId = get_the_author_meta( 'skautisUserId_' . SkautisGateway::TEST_ENV, $userId );
@@ -101,7 +101,7 @@ final class Users {
 		if ( Helpers::userIsSkautisManager() ) {
 			if ( isset( $_POST['skautisUserId_prod'] ) ) {
 				$skautisUserId = absint( $_POST['skautisUserId_prod'] );
-				if ( $skautisUserId == 0 ) {
+				if ( 0 === $skautisUserId ) {
 					$skautisUserId = '';
 				}
 				update_user_meta( $userId, 'skautisUserId_prod', $skautisUserId );
@@ -109,7 +109,7 @@ final class Users {
 			}
 			if ( isset( $_POST['skautisUserId_test'] ) ) {
 				$skautisUserId = absint( $_POST['skautisUserId_test'] );
-				if ( $skautisUserId == 0 ) {
+				if ( 0 === $skautisUserId ) {
 					$skautisUserId = '';
 				}
 				update_user_meta( $userId, 'skautisUserId_test', $skautisUserId );

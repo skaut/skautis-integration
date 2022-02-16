@@ -23,7 +23,7 @@ class Users {
 			isset( $_GET[SKAUTISINTEGRATION_NAME. '_skautis_search_user_nonce'] ) &&
 			wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET[SKAUTISINTEGRATION_NAME. '_skautis_search_user_nonce'] ) ), SKAUTISINTEGRATION_NAME. '_skautis_search_user' ) &&
 			isset( $_GET['skautisSearchUsers'] ) &&
-			$_GET['skautisSearchUsers'] !== ''
+			'' !== $_GET['skautisSearchUsers']
 		) {
 			$searchUserString = sanitize_text_field( wp_unslash( $_GET['skautisSearchUsers'] ) );
 		} elseif ( ! is_null( $returnUrl ) ) {
@@ -106,7 +106,7 @@ class Users {
 		foreach ( $currentUserRoles as $role ) {
 			if ( $role->ID === $currentUserRole && isset( $role->Key ) ) {
 				$words = preg_split( '~(?=[A-Z])~', $role->Key );
-				if ( ! empty( $words ) && isset( $words[1], $words[2] ) && $words[1] === 'Event' ) {
+				if ( ! empty( $words ) && isset( $words[1], $words[2] ) && 'Event' === $words[1] ) {
 					$eventType = $words[2];
 
 					$userDetail        = $this->skautisGateway->getSkautisInstance()->UserManagement->UserDetail();
@@ -137,7 +137,7 @@ class Users {
 
 		// different procedure for roles associated with events
 		if ( $eventType && $eventId ) {
-			if ( $eventType === 'Congress' ) {
+			if ( 'Congress' === $eventType ) {
 				/*
 				$participants = $this->skautisGateway->getSkautisInstance()->Events->ParticipantAllPerson( [
 					'ID_Event' . $eventType => $eventId

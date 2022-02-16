@@ -80,7 +80,7 @@ class Func implements IRule {
 	protected function getUserFuncsWithUnitIds(): array {
 		static $userFuncs = null;
 
-		if ( $userFuncs === null ) {
+		if ( is_null( $userFuncs ) ) {
 			$userDetail = $this->skautisGateway->getSkautisInstance()->UserManagement->UserDetail();
 			$userFuncs  = $this->skautisGateway->getSkautisInstance()->OrganizationUnit->FunctionAllPerson(
 				array(

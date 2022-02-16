@@ -67,7 +67,7 @@ class Qualification implements IRule {
 	protected function getUserQualifications(): array {
 		static $userQualifications = null;
 
-		if ( $userQualifications === null ) {
+		if ( is_null( $userQualifications ) ) {
 			$userDetail         = $this->skautisGateway->getSkautisInstance()->UserManagement->UserDetail();
 			$userQualifications = $this->skautisGateway->getSkautisInstance()->OrganizationUnit->QualificationAll(
 				array(
@@ -111,7 +111,7 @@ class Qualification implements IRule {
 		$userQualifications = $this->getUserQualifications();
 		$userPass           = 0;
 		foreach ( $qualifications as $qualification ) {
-			if ( in_array( $qualification, $userQualifications ) ) {
+			if ( in_array( $qualification, $userQualifications, true ) ) {
 				$userPass += 1;
 			}
 		}

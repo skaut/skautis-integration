@@ -25,7 +25,7 @@ final class WpRegister {
             'register_new_user',
             function ( $userId ) {
                 $notify = apply_filters( SKAUTISINTEGRATION_NAME . '_modules_register_newUserNotifications', get_option( SKAUTISINTEGRATION_NAME . '_modules_register_notifications', 'none' ) );
-                if ( $notify != 'none' ) {
+                if ( 'none' !== $notify ) {
                     global $wp_locale_switcher;
                     if ( ! $wp_locale_switcher ) {
                 // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
@@ -105,7 +105,7 @@ final class WpRegister {
             return TRUE;
         }
 
-        if ( ! isset( $user['UserName'] ) || mb_strlen( $user['UserName'] ) == 0 ) {
+        if ( ! isset( $user['UserName'] ) || mb_strlen( $user['UserName'] ) === 0 ) {
             return FALSE;
         }
 
@@ -113,7 +113,7 @@ final class WpRegister {
 
         $userId = $this->resolveNotificationsAndRegisterUserToWp( $username, $user['email'] );
 
-        if ( $userId === 0 ) {
+        if ( 0 === $userId ) {
             return FALSE;
         }
 
@@ -184,7 +184,7 @@ final class WpRegister {
         $returnUrl = remove_query_arg( 'loggedout', urldecode( $returnUrl ) );
 
         $returnUrl = add_query_arg( SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis', wp_create_nonce( SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis' ), $returnUrl );
-        $url       = add_query_arg( 'ReturnUrl', urlencode( $returnUrl ), get_home_url( NULL, 'skautis/auth/' . Register::REGISTER_ACTION ) );
+        $url       = add_query_arg( 'ReturnUrl', rawurlencode( $returnUrl ), get_home_url( NULL, 'skautis/auth/' . Register::REGISTER_ACTION ) );
 
         return esc_url( $url );
     }
@@ -206,7 +206,7 @@ final class WpRegister {
     {
         $returnUrl = Helpers::getLoginLogoutRedirect();
         $returnUrl = add_query_arg( SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis', wp_create_nonce( SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis' ), $returnUrl );
-        $url       = add_query_arg( 'ReturnUrl', urlencode( $returnUrl ), get_home_url( NULL, 'skautis/auth/' . Register::MANUALLY_REGISTER_WP_USER_ACTION ) );
+        $url       = add_query_arg( 'ReturnUrl', rawurlencode( $returnUrl ), get_home_url( NULL, 'skautis/auth/' . Register::MANUALLY_REGISTER_WP_USER_ACTION ) );
 
         return esc_url( wp_nonce_url( $url, SKAUTISINTEGRATION_NAME. '_register_user', SKAUTISINTEGRATION_NAME. '_register_user_nonce' ) );
     }

@@ -82,7 +82,7 @@ final class Frontend {
             $ancestors,
             function ( $ancestor ) {
                 if ( ! empty( $ancestor['rules'] ) && isset( $ancestor['rules'][0][ SKAUTISINTEGRATION_NAME . '_rules' ] ) ) {
-                    if ( $ancestor['includeChildren'] === '1' ) {
+                    if ( '1'$ === ancestor['includeChildren'] ) {
                         return TRUE;
                     }
                 }
@@ -198,7 +198,7 @@ final class Frontend {
                 $wpPost = $post;
             }
 
-            if ( in_array( $wpPost->post_type, $this->postTypes ) ) {
+            if ( in_array( $wpPost->post_type, $this->postTypes, true ) ) {
                 if ( ! current_user_can( 'edit_' . $wpPost->post_type . 's' ) ) {
                     $rulesGroups = [];
 
@@ -218,7 +218,7 @@ final class Frontend {
                     }
 
                     foreach ( $rulesGroups as $rulesGroup ) {
-                        if ( $rulesGroup['visibilityMode'] === 'content' ) {
+                        if ( 'content' === $rulesGroup['visibilityMode'] ) {
                             $this->processRulesAndHideContent( $userIsLoggedInSkautis, $rulesGroup['rules'], $wpPost->ID );
                         } else {
                             $this->proccessRulesAndHidePosts( $userIsLoggedInSkautis, $rulesGroup['rules'], $posts, $key, $wpQuery, $wpPost->post_type, $postsWereFiltered );

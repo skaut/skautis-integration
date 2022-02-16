@@ -58,7 +58,7 @@ final class RulesManager {
 	private function parseRulesGroups( string $condition, array $rules ): bool {
 		$result = 0;
 
-		if ( $condition == 'AND' ) {
+		if ( 'AND' === $condition ) {
 			$result = 1;
 			foreach ( $rules as $rule ) {
 				if ( isset( $rule->rules ) ) {
@@ -104,7 +104,7 @@ final class RulesManager {
 				$result = $this->parseRulesGroups( $rulesGroups->condition, $rulesGroups->rules );
 			}
 
-			if ( $result === true ) {
+			if ( true === $result ) {
 				return $rule['role'];
 			}
 		}
@@ -137,7 +137,7 @@ final class RulesManager {
 				$ruleId = reset( $ruleId );
 			}
 
-			if ( $rulesGroups === null ) {
+			if ( is_null( $rulesGroups ) ) {
 				$rulesGroups = json_decode( (string) get_post_meta( $ruleId, SKAUTISINTEGRATION_NAME . '_rules_data', true ) );
 			}
 
@@ -145,7 +145,7 @@ final class RulesManager {
 				$result = $this->parseRulesGroups( $rulesGroups->condition, $rulesGroups->rules );
 			}
 
-			if ( $result === true ) {
+			if ( true === $result ) {
 				return $result;
 			}
 		}

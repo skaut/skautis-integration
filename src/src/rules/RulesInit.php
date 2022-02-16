@@ -99,7 +99,7 @@ final class RulesInit {
     public function defaultContent( string $content ): string
     {
         global $post_type;
-        if ( $post_type == self::RULES_TYPE_SLUG ) {
+        if ( self::RULES_TYPE_SLUG === $post_type ) {
             $content = '';
         }
 
@@ -109,7 +109,7 @@ final class RulesInit {
     public function titlePlaceholder( string $title ): string
     {
         global $post_type;
-        if ( $post_type == self::RULES_TYPE_SLUG ) {
+        if ( self::RULES_TYPE_SLUG === $post_type ) {
             $title = __( 'Zadejte název pravidla', 'skautis-integration' );
         }
 

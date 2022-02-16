@@ -29,7 +29,7 @@ class Helpers {
 		add_action(
 			'admin_notices',
 			function () use ( $message, $type, $hideNoticeOnPage ) {
-				if ( ! $hideNoticeOnPage || $hideNoticeOnPage != get_current_screen()->id ) {
+				if ( ! $hideNoticeOnPage || get_current_screen()->id !== $hideNoticeOnPage ) {
 					$class = 'notice notice-' . $type . ' is-dismissible';
 					printf(
 						'<div class="%1$s"><p>%2$s</p><button type="button" class="notice-dismiss">
@@ -46,7 +46,7 @@ class Helpers {
 	public static function getSkautisManagerCapability(): string {
 		static $capability = '';
 
-		if ( $capability === '' ) {
+		if ( '' === $capability ) {
 			$capability = apply_filters( SKAUTISINTEGRATION_NAME . '_manager_capability', 'manage_options' );
 		}
 
