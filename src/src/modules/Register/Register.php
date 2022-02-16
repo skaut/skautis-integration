@@ -148,8 +148,7 @@ final class Register implements IModule {
 			wp_die( esc_html__( 'Nemáte oprávnění k registraci nových uživatelů.', 'skautis-integration' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
 		}
 
-		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-		$wpRole = wp_unslash( $_GET['wpRole'] );
+		$wpRole = sanitize_text_field( wp_unslash( $_GET['wpRole'] ) );
 		if ( ! wp_roles()->is_role( $wpRole ) ) {
 			wp_die( esc_html__( 'Uživatele se nepodařilo zaregistrovat - role neexistuje.', 'skautis-integration' ), esc_html__( 'Chyba při registraci uživatele', 'skautis-integration' ) );
 		}
