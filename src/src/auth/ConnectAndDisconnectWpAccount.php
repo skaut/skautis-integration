@@ -75,7 +75,7 @@ final class ConnectAndDisconnectWpAccount {
 			 ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET[SKAUTISINTEGRATION_NAME. '_connect_user_nonce'] ) ), SKAUTISINTEGRATION_NAME. '_connect_user' ) ||
 			 ! $this->skautisLogin->isUserLoggedInSkautis() ||
 			 ! Helpers::userIsSkautisManager() ||
-			 empty( $_GET['ReturnUrl'] )
+			 is_null( Helpers::getReturnUrl() )
 		   ) {
 			wp_die( esc_html__( 'Nemáte oprávnění k propojování uživatelů.', 'skautis-integration' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
 		}

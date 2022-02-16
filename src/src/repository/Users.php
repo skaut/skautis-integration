@@ -23,10 +23,11 @@ class Users {
 			wp_die( esc_html__( 'Nemáte oprávnění k vyhledávání uživatelů.', 'skautis-integration' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
 		}
 
+		$returnUrl = Helpers::getReturnUrl();
 		if ( isset( $_GET['skautisSearchUsers'] ) && sanitize_text_field( wp_unslash( $_GET['skautisSearchUsers'] ) ) !== '' ) {
 			$searchUserString = sanitize_text_field( wp_unslash( $_GET['skautisSearchUsers'] ) );
-		} elseif ( isset( $_GET['ReturnUrl'] ) ) {
-			$searchUserString = Helpers::getVariableFromUrl( esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) ), 'skautisSearchUsers' );
+		} elseif ( ! is_null( $returnUrl ) ) {
+			$searchUserString = Helpers::getVariableFromUrl( $returnUrl, 'skautisSearchUsers' );
 		}
 
 		return $searchUserString;
