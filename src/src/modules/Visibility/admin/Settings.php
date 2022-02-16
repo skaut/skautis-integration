@@ -17,8 +17,8 @@ final class Settings {
 			return;
 		}
 
-		add_action( 'admin_menu', array( $this, 'setupSettingPage' ), 25 );
-		add_action( 'admin_init', array( $this, 'setupSettingFields' ) );
+		add_action( 'admin_menu', [ $this, 'setupSettingPage' ], 25 );
+		add_action( 'admin_init', [ $this, 'setupSettingFields' ] );
 	}
 
 	public function setupSettingPage() {
@@ -28,7 +28,7 @@ final class Settings {
 			__( 'Viditelnost obsahu', 'skautis-integration' ),
 			Helpers::getSkautisManagerCapability(),
 			SKAUTISINTEGRATION_NAME . '_modules_visibility',
-			array( $this, 'printSettingPage' )
+			[ $this, 'printSettingPage' ]
 		);
 	}
 
@@ -65,7 +65,7 @@ final class Settings {
 		add_settings_field(
 			SKAUTISINTEGRATION_NAME . '_modules_visibility_postTypes',
 			__( 'Typy obsahu', 'skautis-integration' ),
-			array( $this, 'fieldPostTypes' ),
+			[ $this, 'fieldPostTypes' ],
 			SKAUTISINTEGRATION_NAME . '_modules_visibility',
 			SKAUTISINTEGRATION_NAME . '_modules_visibility'
 		);
@@ -73,7 +73,7 @@ final class Settings {
 		add_settings_field(
 			SKAUTISINTEGRATION_NAME . '_modules_visibility_visibilityMode',
 			__( 'Způsob skrytí', 'skautis-integration' ),
-			array( $this, 'fieldVisibilityMode' ),
+			[ $this, 'fieldVisibilityMode' ],
 			SKAUTISINTEGRATION_NAME . '_modules_visibility',
 			SKAUTISINTEGRATION_NAME . '_modules_visibility'
 		);
@@ -81,7 +81,7 @@ final class Settings {
 		add_settings_field(
 			SKAUTISINTEGRATION_NAME . '_modules_visibility_includeChildren',
 			__( 'Podřízený obsah', 'skautis-integration' ),
-			array( $this, 'fieldIncludeChildren' ),
+			[ $this, 'fieldIncludeChildren' ],
 			SKAUTISINTEGRATION_NAME . '_modules_visibility',
 			SKAUTISINTEGRATION_NAME . '_modules_visibility'
 		);
@@ -89,43 +89,43 @@ final class Settings {
 		register_setting(
 			SKAUTISINTEGRATION_NAME . '_modules_visibility',
 			SKAUTISINTEGRATION_NAME . '_modules_visibility_postTypes',
-			array(
+			[
 				'type'         => 'string',
-				'show_in_rest' => false,
-			)
+				'show_in_rest' => FALSE,
+			]
 		);
 
 		register_setting(
 			SKAUTISINTEGRATION_NAME . '_modules_visibility',
 			SKAUTISINTEGRATION_NAME . '_modules_visibility_visibilityMode',
-			array(
+			[
 				'type'         => 'string',
-				'show_in_rest' => false,
-			)
+				'show_in_rest' => FALSE,
+			]
 		);
 
 		register_setting(
 			SKAUTISINTEGRATION_NAME . '_modules_visibility',
 			SKAUTISINTEGRATION_NAME . '_modules_visibility_includeChildren',
-			array(
+			[
 				'type'         => 'string',
-				'show_in_rest' => false,
-			)
+				'show_in_rest' => FALSE,
+			]
 		);
 	}
 
 	public function fieldPostTypes() {
 		$availablePostTypes = get_post_types(
-			array(
-				'public' => true,
-			),
+			[
+				'public' => TRUE,
+			],
 			'objects'
 		);
-		$postTypes          = (array) get_option( SKAUTISINTEGRATION_NAME . '_modules_visibility_postTypes', array() );
+		$postTypes          = (array)get_option( SKAUTISINTEGRATION_NAME . '_modules_visibility_postTypes', [] );
 		?>
 		<?php
 		foreach ( $availablePostTypes as $postType ) {
-			echo '<label><input type="checkbox" name="' . esc_attr( SKAUTISINTEGRATION_NAME ) . '_modules_visibility_postTypes[]" value="' . esc_attr( $postType->name ) . '" ' . checked( true, in_array( $postType->name, $postTypes ), false ) . '/><span>' . esc_html( $postType->label ) . '</span></label><br/>';
+			echo '<label><input type="checkbox" name="' . esc_attr( SKAUTISINTEGRATION_NAME ) . '_modules_visibility_postTypes[]" value="' . esc_attr( $postType->name ) . '" ' . checked( TRUE, in_array( $postType->name, $postTypes ), FALSE ) . '/><span>' . esc_html( $postType->label ) . '</span></label><br/>';
 		}
 		?>
 		<div>

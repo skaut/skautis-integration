@@ -12,83 +12,85 @@ use SkautisIntegration\Modules\Register\Register;
 
 final class Settings {
 
-	const HELP_PAGE_URL = 'https://napoveda.skaut.cz/skautis/skautis-integration';
+    const HELP_PAGE_URL = 'https://napoveda.skaut.cz/skautis/skautis-integration';
 
-	private $skautisGateway;
-	private $modulesManager;
-	private $adminDirUrl = '';
+    private $skautisGateway;
+    private $modulesManager;
+    private $adminDirUrl = '';
 
-	public function __construct( SkautisGateway $skautisGateway, ModulesManager $modulesManager ) {
-		$this->skautisGateway = $skautisGateway;
-		$this->modulesManager = $modulesManager;
-		$this->adminDirUrl    = plugin_dir_url( __FILE__ ) . 'public/';
-		$this->initHooks();
-	}
+    public function __construct( SkautisGateway $skautisGateway, ModulesManager $modulesManager ) {
+        $this->skautisGateway = $skautisGateway;
+        $this->modulesManager = $modulesManager;
+        $this->adminDirUrl    = plugin_dir_url( __FILE__ ) . 'public/';
+        $this->initHooks();
+    }
 
-	private function initHooks() {
-		add_filter(
-			'plugin_action_links_' . SKAUTISINTEGRATION_PLUGIN_BASENAME,
-			array(
-				$this,
-				'addSettingsLinkToPluginsTable',
-			)
-		);
-		add_filter(
-			'plugin_action_links_' . SKAUTISINTEGRATION_PLUGIN_BASENAME,
-			array(
-				$this,
-				'addHelpLinkToPluginsTable',
-			)
-		);
+    private function initHooks() {
+        add_filter(
+            'plugin_action_links_' . SKAUTISINTEGRATION_PLUGIN_BASENAME,
+            [
+                $this,
+                'addSettingsLinkToPluginsTable',
+            ]
+        );
+        add_filter(
+            'plugin_action_links_' . SKAUTISINTEGRATION_PLUGIN_BASENAME,
+            [
+                $this,
+                'addHelpLinkToPluginsTable',
+            ]
+        );
 
-		add_action( 'admin_menu', array( $this, 'setupSettingPage' ), 5 );
-		add_action( 'admin_init', array( $this, 'setupSettingFields' ) );
-		add_action( 'admin_init', array( $this, 'setupLoginFields' ) );
+        add_action( 'admin_menu', [ $this, 'setupSettingPage' ], 5 );
+        add_action( 'admin_init', [ $this, 'setupSettingFields' ] );
+        add_action( 'admin_init', [ $this, 'setupLoginFields' ] );
 
-		$this->checkIfAppIdIsSetAndShowNotices();
-	}
+        $this->checkIfAppIdIsSetAndShowNotices();
+    }
 
-	private function checkIfAppIdIsSetAndShowNotices() {
-		$envType = get_option( 'skautis_integration_appid_type' );
-		if ( $envType === SkautisGateway::PROD_ENV ) {
-			if ( ! get_option( 'skautis_integration_appid_prod' ) ) {
-				/* translators: 1: Start of a link to the settings 2: End of the link to the settings */
-				Helpers::showAdminNotice( sprintf( __( 'Zadejte v %1$snastavení%2$s pluginu APP ID produkční verze skautISu', 'skautis-integration' ), '<a href="' . esc_url( admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME ) ) . '">', '</a>' ), 'warning', 'toplevel_page_' . SKAUTISINTEGRATION_NAME );
-			}
-		} elseif ( $envType === SkautisGateway::TEST_ENV ) {
-			if ( ! get_option( 'skautis_integration_appid_test' ) ) {
-				/* translators: 1: Start of a link to the settings 2: End of the link to the settings */
-				Helpers::showAdminNotice( sprintf( __( 'Zadejte v %1$snastavení%2$s pluginu APP ID testovací verze skautISu', 'skautis-integration' ), '<a href="' . esc_url( admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME ) ) . '">', '</a>' ), 'warning', 'toplevel_page_' . SKAUTISINTEGRATION_NAME );
-			}
-		} else {
-				/* translators: 1: Start of a link to the settings 2: End of the link to the settings */
-			Helpers::showAdminNotice( sprintf( __( 'Vyberte v %1$snastavení%2$s pluginu typ prostředí skautISu', 'skautis-integration' ), '<a href="' . esc_url( admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME ) ) . '">', '</a>' ), 'warning', 'toplevel_page_' . SKAUTISINTEGRATION_NAME );
-		}
-	}
+    private function checkIfAppIdIsSetAndShowNotices() {
+        $envType = get_option( 'skautis_integration_appid_type' );
+        if ( $envType === SkautisGateway::PROD_ENV ) {
+            if ( ! get_option( 'skautis_integration_appid_prod' ) ) {
+                /* translators: 1: Start of a link to the settings 2: End of the link to the settings */
+                Helpers::showAdminNotice( sprintf( __( 'Zadejte v %1$snastavení%2$s pluginu APP ID produkční verze skautISu', 'skautis-integration' ), '<a href="' . esc_url( admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME ) ) . '">', '</a>' ), 'warning', 'toplevel_page_' . SKAUTISINTEGRATION_NAME );
+            }
+        } elseif ( $envType === SkautisGateway::TEST_ENV ) {
+            if ( ! get_option( 'skautis_integration_appid_test' ) ) {
+                /* translators: 1: Start of a link to the settings 2: End of the link to the settings */
+                Helpers::showAdminNotice( sprintf( __( 'Zadejte v %1$snastavení%2$s pluginu APP ID testovací verze skautISu', 'skautis-integration' ), '<a href="' . esc_url( admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME ) ) . '">', '</a>' ), 'warning', 'toplevel_page_' . SKAUTISINTEGRATION_NAME );
+            }
+        } else {
+                /* translators: 1: Start of a link to the settings 2: End of the link to the settings */
+            Helpers::showAdminNotice( sprintf( __( 'Vyberte v %1$snastavení%2$s pluginu typ prostředí skautISu', 'skautis-integration' ), '<a href="' . esc_url( admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME ) ) . '">', '</a>' ), 'warning', 'toplevel_page_' . SKAUTISINTEGRATION_NAME );
+        }
+    }
 
-	public function addSettingsLinkToPluginsTable( array $links = array() ): array {
-		$mylinks = array(
-			'<a href="' . admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME, 'skautis-integration' ) . '">' . __( 'Settings', 'skautis-integration' ) . '</a>',
-		);
+    public function addSettingsLinkToPluginsTable( array $links = [] ): array
+    {
+        $mylinks = [
+            '<a href="' . admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME, 'skautis-integration' ) . '">' . __( 'Settings', 'skautis-integration' ) . '</a>',
+        ];
 
-		return array_merge( $links, $mylinks );
-	}
+        return array_merge( $links, $mylinks );
+    }
 
-	public function addHelpLinkToPluginsTable( array $links = array() ): array {
-		$mylinks = array(
-			'<a href="' . self::HELP_PAGE_URL . '" target="_blank">' . __( 'Help', 'skautis-integration' ) . '</a>',
-		);
+    public function addHelpLinkToPluginsTable( array $links = [] ): array
+    {
+        $mylinks = [
+            '<a href="' . self::HELP_PAGE_URL . '" target="_blank">' . __( 'Help', 'skautis-integration' ) . '</a>',
+        ];
 
-		return array_merge( $links, $mylinks );
-	}
+        return array_merge( $links, $mylinks );
+    }
 
-	public function setupSettingPage() {
-		add_menu_page(
-			__( 'Obecné', 'skautis-integration' ),
-			__( 'SkautIS', 'skautis-integration' ),
-			Helpers::getSkautisManagerCapability(),
+    public function setupSettingPage() {
+        add_menu_page(
+            __( 'Obecné', 'skautis-integration' ),
+            __( 'SkautIS', 'skautis-integration' ),
+            Helpers::getSkautisManagerCapability(),
 			SKAUTISINTEGRATION_NAME,
-			array( $this, 'printSettingPage' ),
+			[ $this, 'printSettingPage' ],
 			$this->adminDirUrl . 'img/lilie.png'
 		);
 
@@ -98,7 +100,7 @@ final class Settings {
 			__( 'Obecné', 'skautis-integration' ),
 			Helpers::getSkautisManagerCapability(),
 			SKAUTISINTEGRATION_NAME,
-			array( $this, 'printSettingPage' )
+			[ $this, 'printSettingPage' ]
 		);
 
 		add_submenu_page(
@@ -107,7 +109,7 @@ final class Settings {
 			__( 'Přihlašování', 'skautis-integration' ),
 			Helpers::getSkautisManagerCapability(),
 			SKAUTISINTEGRATION_NAME . '_login',
-			array( $this, 'printLoginPage' )
+			[ $this, 'printLoginPage' ]
 		);
 
 		add_submenu_page(
@@ -116,7 +118,7 @@ final class Settings {
 			__( 'Moduly', 'skautis-integration' ),
 			Helpers::getSkautisManagerCapability(),
 			SKAUTISINTEGRATION_NAME . '_modules',
-			array( $this, 'printModulesPage' )
+			[ $this, 'printModulesPage' ]
 		);
 	}
 
@@ -161,7 +163,7 @@ final class Settings {
 		add_settings_field(
 			'skautis_integration_appid_prod',
 			__( 'APP ID produkční verze', 'skautis-integration' ),
-			array( $this, 'fieldAppIdProd' ),
+			[ $this, 'fieldAppIdProd' ],
 			SKAUTISINTEGRATION_NAME,
 			'skautis_integration_setting'
 		);
@@ -169,7 +171,7 @@ final class Settings {
 		add_settings_field(
 			'skautis_integration_appid_test',
 			__( 'APP ID testovací verze', 'skautis-integration' ),
-			array( $this, 'fieldAppIdTest' ),
+			[ $this, 'fieldAppIdTest' ],
 			SKAUTISINTEGRATION_NAME,
 			'skautis_integration_setting'
 		);
@@ -177,7 +179,7 @@ final class Settings {
 		add_settings_field(
 			'skautis_integration_appid_type',
 			__( 'Vyberte aktivní APP ID', 'skautis-integration' ),
-			array( $this, 'fieldAppIdType' ),
+			[ $this, 'fieldAppIdType' ],
 			SKAUTISINTEGRATION_NAME,
 			'skautis_integration_setting'
 		);
@@ -185,29 +187,29 @@ final class Settings {
 		register_setting(
 			SKAUTISINTEGRATION_NAME,
 			'skautis_integration_appid_prod',
-			array(
+			[
 				'type'              => 'integer',
-				'show_in_rest'      => false,
-				'sanitize_callback' => array( $this, 'testAppId' ),
-			)
+				'show_in_rest'      => FALSE,
+				'sanitize_callback' => [ $this, 'testAppId' ],
+			]
 		);
 		register_setting(
 			SKAUTISINTEGRATION_NAME,
 			'skautis_integration_appid_test',
-			array(
+			[
 				'type'              => 'integer',
-				'show_in_rest'      => false,
+				'show_in_rest'      => FALSE,
 				'sanitize_callback' => 'sanitize_text_field',
-			)
+			]
 		);
 		register_setting(
 			SKAUTISINTEGRATION_NAME,
 			'skautis_integration_appid_type',
-			array(
+			[
 				'type'              => 'string',
-				'show_in_rest'      => false,
+				'show_in_rest'      => FALSE,
 				'sanitize_callback' => 'sanitize_text_field',
-			)
+			]
 		);
 
 		add_settings_section(
@@ -229,9 +231,9 @@ final class Settings {
 			SKAUTISINTEGRATION_NAME . '_modules'
 		);
 
-		$activatedModules = (array) get_option( 'skautis_integration_activated_modules' );
+		$activatedModules = (array)get_option( 'skautis_integration_activated_modules' );
 
-		foreach ( (array) $this->modulesManager->getAllModules() as $moduleId => $moduleLabel ) {
+		foreach ( (array)$this->modulesManager->getAllModules() as $moduleId => $moduleLabel ) {
 			add_settings_field(
 				SKAUTISINTEGRATION_NAME . '_modules_' . $moduleId,
 				$moduleLabel,
@@ -249,10 +251,10 @@ final class Settings {
 		register_setting(
 			SKAUTISINTEGRATION_NAME . '_modules',
 			'skautis_integration_activated_modules',
-			array(
+			[
 				'type'         => 'string',
-				'show_in_rest' => false,
-			)
+				'show_in_rest' => FALSE,
+			]
 		);
 	}
 
@@ -289,7 +291,7 @@ final class Settings {
 		add_settings_field(
 			SKAUTISINTEGRATION_NAME . '_allowUsersDisconnectFromSkautis',
 			__( 'Zrušení spojení se skautISem', 'skautis-integration' ),
-			array( $this, 'fieldAllowUsersDisconnectFromSkautis' ),
+			[ $this, 'fieldAllowUsersDisconnectFromSkautis' ],
 			SKAUTISINTEGRATION_NAME . '_login',
 			SKAUTISINTEGRATION_NAME . '_login'
 		);
@@ -298,7 +300,7 @@ final class Settings {
 			add_settings_field(
 				SKAUTISINTEGRATION_NAME . '_checkUserPrivilegesIfLoginBySkautis',
 				__( 'Ověřování podmínek registrace', 'skautis-integration' ),
-				array( $this, 'fieldcheckUserPrivilegesIfLoginBySkautis' ),
+				[ $this, 'fieldcheckUserPrivilegesIfLoginBySkautis' ],
 				SKAUTISINTEGRATION_NAME . '_login',
 				SKAUTISINTEGRATION_NAME . '_login'
 			);
@@ -307,7 +309,7 @@ final class Settings {
 		add_settings_field(
 			SKAUTISINTEGRATION_NAME . '_login_page_url',
 			__( 'Adresa stránky s přihlašováním', 'skautis-integration' ),
-			array( $this, 'fieldLoginPageUrl' ),
+			[ $this, 'fieldLoginPageUrl' ],
 			SKAUTISINTEGRATION_NAME . '_login',
 			SKAUTISINTEGRATION_NAME . '_login'
 		);
@@ -315,9 +317,9 @@ final class Settings {
 		register_setting(
 			SKAUTISINTEGRATION_NAME . '_login',
 			SKAUTISINTEGRATION_NAME . '_login_page_url',
-			array(
+			[
 				'type'              => 'string',
-				'show_in_rest'      => true,
+				'show_in_rest'      => TRUE,
 				'sanitize_callback' => function ( $url ) {
 					$url = str_replace( ' ', '%20', $url );
 					$url = preg_replace( '|[^a-z0-9-~+_.?=!&;,/:%@$\|*\'()\[\]\\x80-\\xff]|i', '', $url );
@@ -329,25 +331,25 @@ final class Settings {
 
 					return $url;
 				},
-			)
+			]
 		);
 		register_setting(
 			SKAUTISINTEGRATION_NAME . '_login',
 			SKAUTISINTEGRATION_NAME . '_allowUsersDisconnectFromSkautis',
-			array(
+			[
 				'type'         => 'boolean',
-				'show_in_rest' => false,
-			)
+				'show_in_rest' => FALSE,
+			]
 		);
 
 		if ( Services::getServicesContainer()['modulesManager']->isModuleActivated( Register::getId() ) ) {
 			register_setting(
 				SKAUTISINTEGRATION_NAME . '_login',
 				SKAUTISINTEGRATION_NAME . '_checkUserPrivilegesIfLoginBySkautis',
-				array(
+				[
 					'type'         => 'boolean',
-					'show_in_rest' => false,
-				)
+					'show_in_rest' => FALSE,
+				]
 			);
 		}
 	}

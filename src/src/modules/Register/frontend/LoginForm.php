@@ -8,36 +8,37 @@ use SkautisIntegration\Modules\Register\WpRegister;
 
 final class LoginForm {
 
-	private $wpRegister;
+    private $wpRegister;
 
-	public function __construct( WpRegister $wpRegister ) {
-		$this->wpRegister = $wpRegister;
-		$this->initHooks();
-	}
+    public function __construct( WpRegister $wpRegister ) {
+        $this->wpRegister = $wpRegister;
+        $this->initHooks();
+    }
 
-	private function initHooks() {
-		add_action( 'login_form', array( $this, 'loginLinkInLoginForm' ) );
-		add_action( 'login_enqueue_scripts', array( $this, 'enqueueLoginStyles' ) );
-		add_filter( 'login_form_bottom', array( $this, 'loginLinkInLoginFormReturn' ) );
-	}
+    private function initHooks() {
+        add_action( 'login_form', [ $this, 'loginLinkInLoginForm' ] );
+        add_action( 'login_enqueue_scripts', [ $this, 'enqueueLoginStyles' ] );
+        add_filter( 'login_form_bottom', [ $this, 'loginLinkInLoginFormReturn' ] );
+    }
 
-	public function enqueueLoginStyles() {
-		wp_enqueue_style( SKAUTISINTEGRATION_NAME . '_frontend' );
-	}
+    public function enqueueLoginStyles() {
+        wp_enqueue_style( SKAUTISINTEGRATION_NAME . '_frontend' );
+    }
 
-	public function loginLinkInLoginForm() {
-		?>
-		<p style="margin-bottom: 0.3em;">
-			<a class="button button-primary button-hero button-skautis" style="float: none; width: 100%; text-align: center;"
-			   href="<?php echo esc_url( $this->wpRegister->getRegisterUrl() ); ?>"><?php esc_html_e( 'Log in with skautIS', 'skautis-integration' ); ?></a>
-			<br/>
-		</p>
-		<br/>
-		<?php
-	}
+    public function loginLinkInLoginForm() {
+        ?>
+        <p style="margin-bottom: 0.3em;">
+            <a class="button button-primary button-hero button-skautis" style="float: none; width: 100%; text-align: center;"
+               href="<?php echo esc_url( $this->wpRegister->getRegisterUrl() ); ?>"><?php esc_html_e( 'Log in with skautIS', 'skautis-integration' ); ?></a>
+            <br/>
+        </p>
+        <br/>
+        <?php
+    }
 
-	public function loginLinkInLoginFormReturn( string $html ): string {
-		return '
+    public function loginLinkInLoginFormReturn( string $html ): string
+    {
+        return '
 		<p style="margin-bottom: 0.3em;">
 			<a class="button button-primary button-hero button-skautis" style="float: none; width: 100%; text-align: center;"
 			   href="' . $this->wpRegister->getRegisterUrl() . '">' . __( 'Log in with skautIS', 'skautis-integration' ) . '</a>
@@ -45,6 +46,6 @@ final class LoginForm {
 		</p>
 		<br/>
 		';
-	}
+    }
 
 }

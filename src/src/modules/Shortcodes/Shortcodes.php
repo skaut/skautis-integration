@@ -26,25 +26,29 @@ final class Shortcodes implements IModule {
 		$this->skautisLogin  = $skautisLogin;
 		$this->wpLoginLogout = $wpLoginLogout;
 		if ( is_admin() ) {
-			( new Admin( $this->rulesManager ) );
+			(new Admin( $this->rulesManager ));
 		} else {
-			( new Frontend( $this->skautisLogin, $this->rulesManager, $this->wpLoginLogout ) );
+			(new Frontend( $this->skautisLogin, $this->rulesManager, $this->wpLoginLogout ));
 		}
 	}
 
-	public static function getId(): string {
+	public static function getId(): string
+	{
 		return self::$id;
 	}
 
-	public static function getLabel(): string {
+	public static function getLabel(): string
+	{
 		return __( 'Shortcodes', 'skautis-integration' );
 	}
 
-	public static function getPath(): string {
+	public static function getPath(): string
+	{
 		return plugin_dir_path( __FILE__ );
 	}
 
-	public static function getUrl(): string {
+	public static function getUrl(): string
+	{
 		return plugin_dir_url( __FILE__ );
 	}
 

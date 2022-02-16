@@ -55,7 +55,7 @@ final class ConnectAndDisconnectWpAccount {
 
 	public function connect() {
 		if ( ! $this->skautisLogin->isUserLoggedInSkautis() ) {
-			// phpcs:ignore WordPress.Security.NonceVerification.Missing
+            // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			if ( ! $this->skautisLogin->setLoginDataToLocalSkautisInstance( $_POST ) ) {
 				$returnUrl = Helpers::getReturnUrl() ?? Helpers::getCurrentUrl();
 				wp_safe_redirect( esc_url_raw( $this->skautisGateway->getSkautisInstance()->getLoginUrl( $returnUrl ) ), 302 );
@@ -92,7 +92,8 @@ final class ConnectAndDisconnectWpAccount {
 		}
 	}
 
-	public function getConnectWpUserToSkautisUrl(): string {
+	public function getConnectWpUserToSkautisUrl(): string
+	{
 		$returnUrl = Helpers::getCurrentUrl();
 		$returnUrl = add_query_arg( SKAUTISINTEGRATION_NAME . '_connectWpAccountWithSkautis', wp_create_nonce( SKAUTISINTEGRATION_NAME . '_connectWpAccountWithSkautis' ), $returnUrl );
 		$url       = add_query_arg( 'ReturnUrl', urlencode( $returnUrl ), get_home_url( null, 'skautis/auth/' . Actions::CONNECT_WP_USER_TO_SKAUTIS_ACTION ) );
@@ -108,8 +109,8 @@ final class ConnectAndDisconnectWpAccount {
 
 				if ( strpos( $returnUrl, 'profile.php' ) !== false ) {
 					delete_user_meta( get_current_user_id(), 'skautisUserId_' . $this->skautisGateway->getEnv() );
-				} elseif ( ( strpos( $returnUrl, 'user-edit_php' ) !== false ||
-							  strpos( $returnUrl, 'user-edit.php' ) !== false ) &&
+				} elseif ( (strpos( $returnUrl, 'user-edit_php' ) !== false ||
+							  strpos( $returnUrl, 'user-edit.php' ) !== false) &&
 							strpos( $returnUrl, 'user_id=' ) !== false ) {
 					if ( ! preg_match( '~user_id=(\d+)~', $returnUrl, $result ) ) {
 						return;

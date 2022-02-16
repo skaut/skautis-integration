@@ -16,36 +16,38 @@ final class SkautisLogin {
 		$this->wpLoginLogout  = $wpLoginLogout;
 	}
 
-	public function isUserLoggedInSkautis(): bool {
+	public function isUserLoggedInSkautis(): bool
+	{
 		if ( $this->skautisGateway->isInitialized() ) {
-			return $this->skautisGateway->getSkautisInstance()->getUser()->isLoggedIn() && $this->skautisGateway->getSkautisInstance()->getUser()->isLoggedIn( true );
+			return $this->skautisGateway->getSkautisInstance()->getUser()->isLoggedIn() && $this->skautisGateway->getSkautisInstance()->getUser()->isLoggedIn( TRUE );
 		}
 
-		return false;
+		return FALSE;
 	}
 
-	public function setLoginDataToLocalSkautisInstance( array $data = array() ): bool {
+	public function setLoginDataToLocalSkautisInstance( array $data = [] ): bool
+	{
 		$data = apply_filters( SKAUTISINTEGRATION_NAME . '_login_data_for_skautis_instance', $data );
 
 		if ( isset( $data['skautIS_Token'] ) ) {
 			$this->skautisGateway->getSkautisInstance()->setLoginData( $data );
 
 			if ( ! $this->isUserLoggedInSkautis() ) {
-				return false;
+				return FALSE;
 			}
 
 			do_action( SKAUTISINTEGRATION_NAME . '_after_user_is_logged_in_skautis', $data );
 
-			return true;
+			return TRUE;
 		}
 
-		return false;
+		return FALSE;
 	}
 
 	public function login() {
 		$returnUrl = Helpers::getLoginLogoutRedirect();
 
-		if ( strpos( $returnUrl, 'logoutFromSkautis' ) !== false ) {
+		if ( strpos( $returnUrl, 'logoutFromSkautis' ) !== FALSE ) {
 			$this->skautisGateway->logout();
 			$returnUrl = remove_query_arg( 'logoutFromSkautis', $returnUrl );
 		}
@@ -55,7 +57,7 @@ final class SkautisLogin {
 			exit;
 		}
 
-		if ( strpos( $returnUrl, 'noWpLogin' ) !== false ) {
+		if ( strpos( $returnUrl, 'noWpLogin' ) !== FALSE ) {
 			$this->wpLoginLogout->tryToLoginToWp();
 			wp_safe_redirect( esc_url_raw( $returnUrl ), 302 );
 			exit;
@@ -66,9 +68,9 @@ final class SkautisLogin {
 
 	public function loginConfirm() {
 		$returnUrl = Helpers::getReturnUrl();
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		if ( $this->setLoginDataToLocalSkautisInstance( $_POST ) ) {
-			if ( is_null( $returnUrl ) || strpos( $returnUrl, 'noWpLogin' ) === false ) {
+			if ( is_null( $returnUrl ) || strpos( $returnUrl, 'noWpLogin' ) === FALSE ) {
 				$this->wpLoginLogout->loginToWp();
 			} elseif ( ! is_null( $returnUrl ) ) {
 				$this->wpLoginLogout->tryToLoginToWp();
@@ -76,7 +78,7 @@ final class SkautisLogin {
 				exit;
 			}
 		} elseif ( $this->isUserLoggedInSkautis() ) {
-			if ( is_null( $returnUrl ) || strpos( $returnUrl, 'noWpLogin' ) === false ) {
+			if ( is_null( $returnUrl ) || strpos( $returnUrl, 'noWpLogin' ) === FALSE ) {
 				$this->wpLoginLogout->loginToWp();
 			} elseif ( ! is_null( $returnUrl ) ) {
 				$this->wpLoginLogout->tryToLoginToWp();
@@ -89,10 +91,10 @@ final class SkautisLogin {
 	public function changeUserRoleInSkautis( int $roleId ) {
 		if ( $roleId > 0 ) {
 			$result = $this->skautisGateway->getSkautisInstance()->UserManagement->LoginUpdate(
-				array(
+				[
 					'ID'          => $this->skautisGateway->getSkautisInstance()->getUser()->getLoginId(),
 					'ID_UserRole' => $roleId,
-				)
+				]
 			);
 
 			if ( ! $result || ! isset( $result->ID_Unit ) ) {

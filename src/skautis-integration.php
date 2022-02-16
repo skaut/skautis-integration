@@ -90,11 +90,11 @@ class SkautisIntegration {
 	}
 
 	protected function initHooks() {
-		add_action( 'admin_init', array( $this, 'checkVersionAndPossiblyDeactivatePlugin' ) );
+		add_action( 'admin_init', [ $this, 'checkVersionAndPossiblyDeactivatePlugin' ] );
 
-		register_activation_hook( __FILE__, array( $this, 'activation' ) );
-		register_deactivation_hook( __FILE__, array( $this, 'deactivation' ) );
-		register_uninstall_hook( __FILE__, array( __CLASS__, 'uninstall' ) );
+		register_activation_hook( __FILE__, [ $this, 'activation' ] );
+		register_deactivation_hook( __FILE__, [ $this, 'deactivation' ] );
+		register_uninstall_hook( __FILE__, [ __CLASS__, 'uninstall' ] );
 	}
 
 	protected function init() {
@@ -109,18 +109,18 @@ class SkautisIntegration {
 
 	protected function isCompatibleVersionOfWp() {
 		if ( isset( $GLOBALS['wp_version'] ) && version_compare( $GLOBALS['wp_version'], '4.9.6', '>=' ) ) {
-			return true;
+			return TRUE;
 		}
 
-		return false;
+		return FALSE;
 	}
 
 	protected function isCompatibleVersionOfPhp() {
 		if ( version_compare( PHP_VERSION, '7.4', '>=' ) ) {
-			return true;
+			return TRUE;
 		}
 
-		return false;
+		return FALSE;
 	}
 
 	public function activation() {
@@ -135,7 +135,7 @@ class SkautisIntegration {
 		}
 
 		if ( ! get_option( 'skautis_rewrite_rules_need_to_flush' ) ) {
-			add_option( 'skautis_rewrite_rules_need_to_flush', true );
+			add_option( 'skautis_rewrite_rules_need_to_flush', TRUE );
 		}
 
 		if ( ! get_option( 'skautis_integration_login_page_url' ) ) {
@@ -161,7 +161,7 @@ SELECT `option_name`
 FROM $wpdb->options
 WHERE `option_name` LIKE %s OR `option_name` LIKE %s
 ",
-				array( 'skautis_integration_%', SKAUTISINTEGRATION_NAME . '_%' )
+				[ 'skautis_integration_%', SKAUTISINTEGRATION_NAME . '_%' ]
 			)
 		);
 		foreach ( $options as $option ) {
@@ -172,7 +172,7 @@ WHERE `option_name` LIKE %s OR `option_name` LIKE %s
 
 		flush_rewrite_rules();
 
-		return true;
+		return TRUE;
 	}
 
 	public function checkVersionAndPossiblyDeactivatePlugin() {
