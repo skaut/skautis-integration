@@ -18,7 +18,28 @@
 	<rule ref="PHPCompatibilityWP"/>
 
 	<config name="minimum_supported_wp_version" value="7.4"/>
-	<!--rule ref="WordPress"/-->
+	<rule ref="WordPress">
+		<exclude name="Generic.Arrays"/>
+		<exclude name="Generic.Files"/>
+		<exclude name="Generic.Formatting"/>
+		<exclude name="Generic.Functions"/>
+		<exclude name="Generic.PHP"/>
+		<exclude name="Generic.WhiteSpace"/>
+		<exclude name="PSR2.ControlStructures"/>
+		<exclude name="Squiz.Commenting"/>
+		<exclude name="Squiz.Operators"/>
+		<exclude name="Squiz.PHP"/>
+		<exclude name="Squiz.Strings"/>
+		<exclude name="WordPress.Arrays"/>
+		<exclude name="WordPress.CodeAnalysis"/>
+		<exclude name="WordPress.DateTime"/>
+		<exclude name="WordPress.DB"/>
+		<exclude name="WordPress.Files"/>
+		<exclude name="WordPress.NamingConventions"/>
+		<exclude name="WordPress.PHP"/>
+		<exclude name="WordPress.WhiteSpace"/>
+		<exclude name="WordPress.WP"/>
+	</rule>
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
 		<properties>
 			<property name="prefixes" type="array" value="SkautisIntegration"/>
@@ -34,5 +55,4 @@
 			<property name="blank_line_check" value="true"/>
 		</properties>
 	</rule>
-	<rule ref="WordPress.Security"/>
 </ruleset>
