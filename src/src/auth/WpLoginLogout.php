@@ -62,6 +62,7 @@ final class WpLoginLogout {
 				wp_set_current_user( $wpUser->ID, $wpUser->data->user_login );
 				wp_set_auth_cookie( $wpUser->ID, true );
 
+				// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 				do_action( 'wp_login', $wpUser->user_login, $wpUser );
 
 				wp_safe_redirect( $returnUrl, 302 );

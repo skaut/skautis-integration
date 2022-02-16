@@ -5,6 +5,8 @@ declare( strict_types=1 );
 use SkautisIntegration\Services\Services;
 use SkautisIntegration\Modules\Register\Register;
 
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
+
 if ( ! function_exists( 'getSkautisLoginUrl' ) ) {
 	function getSkautisLoginUrl(): string {
 		return ( Services::getServicesContainer()['wpLoginLogout'] )->getLoginUrl();

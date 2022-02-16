@@ -18,12 +18,12 @@
 	<rule ref="PHPCompatibilityWP"/>
 
 	<config name="minimum_supported_wp_version" value="7.4"/>
-	<!--rule ref="WordPress"/>
+	<!--rule ref="WordPress"/-->
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
 		<properties>
 			<property name="prefixes" type="array" value="SkautisIntegration"/>
 		</properties>
-	</rule-->
+	</rule>
 	<rule ref="WordPress.WP.I18n">
 		<properties>
 			<property name="text_domain" type="array" value="skautis-integration"/>

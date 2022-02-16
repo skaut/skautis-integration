@@ -27,6 +27,7 @@ final class WpRegister {
 				if ( $notify != 'none' ) {
 					global $wp_locale_switcher;
 					if ( ! $wp_locale_switcher ) {
+						// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 						$GLOBALS['wp_locale_switcher'] = new \WP_Locale_Switcher();
 						$GLOBALS['wp_locale_switcher']->init();
 					}
