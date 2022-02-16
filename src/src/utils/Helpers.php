@@ -36,8 +36,7 @@ class Helpers {
 		<span class="screen-reader-text">' . esc_html__( 'Zavřít' ) . '</span>
 	</button></div>',
 						esc_attr( $class ),
-						// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-						$message
+						esc_html( $message )
 					);
 				}
 			}
