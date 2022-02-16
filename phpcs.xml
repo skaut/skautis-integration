@@ -38,7 +38,6 @@
 		<exclude name="WordPress.NamingConventions"/>
 		<exclude name="WordPress.PHP"/>
 		<exclude name="WordPress.WhiteSpace"/>
-		<exclude name="WordPress.WP"/>
 	</rule>
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
 		<properties>
