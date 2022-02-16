@@ -122,15 +122,16 @@ final class RulesInit {
 			2  => __( 'Hotovo', 'skautis-integration' ), // Custom field updated.
 			3  => __( 'Hotovo', 'skautis-integration' ), // Custom field deleted.
 			4  => __( 'Hotovo', 'skautis-integration' ), // My Post Type updated.
-			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			5  => isset( $_GET['revision'] ) ? sprintf( __( 'Pravidlo bylo obnoveno na starší verzi z %s' ), wp_post_revision_title( absint( $_GET['revision'] ), false ) ) : false,
+			/* translators: The time of the previous version */
+			5  => isset( $_GET['revision'] ) ? sprintf( __( 'Pravidlo bylo obnoveno na starší verzi z %s', 'skautis-integration' ), wp_post_revision_title( absint( $_GET['revision'] ), false ) ) : false, // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			6  => __( 'Hotovo', 'skautis-integration' ), // My Post Type published.
 			7  => __( 'Pravidlo bylo uloženo', 'skautis-integration' ), // My Post Type saved.
 			8  => __( 'Hotovo', 'skautis-integration' ), // My Post Type submitted.
 			9  => sprintf(
-				__( 'Pravidlo naplánováno na: <strong>%1$s</strong>.' ),
-				// translators: Publish box date format, see http://php.net/date
-				date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) )
+				/* translators: 1: The time of the rule run */
+				__( 'Pravidlo naplánováno na: <strong>%1$s</strong>.', 'skautis-integration' ),
+				/* translators: Publish box date format, see http://php.net/date */
+				date_i18n( __( 'M j, Y @ G:i', 'skautis-integration' ), strtotime( $post->post_date ) )
 			),
 			10 => __( 'Koncept pravidla aktualizován', 'skautis-integration' ), // My Post Type draft updated.
 		);

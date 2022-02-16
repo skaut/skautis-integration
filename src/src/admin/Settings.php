@@ -52,20 +52,23 @@ final class Settings {
 		$envType = get_option( 'skautis_integration_appid_type' );
 		if ( $envType === SkautisGateway::PROD_ENV ) {
 			if ( ! get_option( 'skautis_integration_appid_prod' ) ) {
+				/* translators: 1: Start of a link to the settings 2: End of the link to the settings */
 				Helpers::showAdminNotice( sprintf( __( 'Zadejte v %1$snastavení%2$s pluginu APP ID produkční verze skautISu', 'skautis-integration' ), '<a href="' . esc_url( admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME ) ) . '">', '</a>' ), 'warning', 'toplevel_page_' . SKAUTISINTEGRATION_NAME );
 			}
 		} elseif ( $envType === SkautisGateway::TEST_ENV ) {
 			if ( ! get_option( 'skautis_integration_appid_test' ) ) {
+				/* translators: 1: Start of a link to the settings 2: End of the link to the settings */
 				Helpers::showAdminNotice( sprintf( __( 'Zadejte v %1$snastavení%2$s pluginu APP ID testovací verze skautISu', 'skautis-integration' ), '<a href="' . esc_url( admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME ) ) . '">', '</a>' ), 'warning', 'toplevel_page_' . SKAUTISINTEGRATION_NAME );
 			}
 		} else {
+				/* translators: 1: Start of a link to the settings 2: End of the link to the settings */
 			Helpers::showAdminNotice( sprintf( __( 'Vyberte v %1$snastavení%2$s pluginu typ prostředí skautISu', 'skautis-integration' ), '<a href="' . esc_url( admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME ) ) . '">', '</a>' ), 'warning', 'toplevel_page_' . SKAUTISINTEGRATION_NAME );
 		}
 	}
 
 	public function addSettingsLinkToPluginsTable( array $links = array() ): array {
 		$mylinks = array(
-			'<a href="' . admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME ) . '">' . __( 'Settings' ) . '</a>',
+			'<a href="' . admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME, 'skautis-integration' ) . '">' . __( 'Settings', 'skautis-integration' ) . '</a>',
 		);
 
 		return array_merge( $links, $mylinks );
@@ -73,7 +76,7 @@ final class Settings {
 
 	public function addHelpLinkToPluginsTable( array $links = array() ): array {
 		$mylinks = array(
-			'<a href="' . self::HELP_PAGE_URL . '" target="_blank">' . __( 'Help' ) . '</a>',
+			'<a href="' . self::HELP_PAGE_URL . '" target="_blank">' . __( 'Help', 'skautis-integration' ) . '</a>',
 		);
 
 		return array_merge( $links, $mylinks );
@@ -119,7 +122,7 @@ final class Settings {
 
 	public function printSettingPage() {
 		if ( ! current_user_can( Helpers::getSkautisManagerCapability() ) ) {
-			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.' ) );
+			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'skautis-integration' ) );
 		}
 
 		settings_errors();
@@ -149,6 +152,7 @@ final class Settings {
 			'skautis_integration_setting',
 			__( 'APP ID', 'skautis-integration' ),
 			function () {
+				/* translators: 1: Start of a link to the documentation 2: End of the link to the documentation */
 				printf( esc_html__( 'Návod pro nastavení pluginu a získání APP ID najdete v %1$snápovědě%2$s.', 'skautis-integration' ), '<a href="' . esc_url( self::HELP_PAGE_URL ) . '" target="_blank">', '</a>' );
 			},
 			SKAUTISINTEGRATION_NAME
@@ -254,7 +258,7 @@ final class Settings {
 
 	public function printLoginPage() {
 		if ( ! current_user_can( Helpers::getSkautisManagerCapability() ) ) {
-			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.' ) );
+			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'skautis-integration' ) );
 		}
 
 		settings_errors();
@@ -458,7 +462,7 @@ if ( ! isUserLoggedInSkautis() ) {
 
 	public function printModulesPage() {
 		if ( ! Helpers::userIsSkautisManager() ) {
-			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.' ) );
+			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'skautis-integration' ) );
 		}
 		settings_errors();
 		?>

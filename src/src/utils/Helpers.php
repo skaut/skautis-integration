@@ -33,7 +33,7 @@ class Helpers {
 					$class = 'notice notice-' . $type . ' is-dismissible';
 					printf(
 						'<div class="%1$s"><p>%2$s</p><button type="button" class="notice-dismiss">
-		<span class="screen-reader-text">' . esc_html__( 'Zavřít' ) . '</span>
+		<span class="screen-reader-text">' . esc_html__( 'Zavřít', 'skautis-integration' ) . '</span>
 	</button></div>',
 						esc_attr( $class ),
 						esc_html( $message )

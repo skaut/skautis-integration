@@ -55,7 +55,7 @@ class All implements IRule {
 
 	public function getValues(): array {
 		$result = array(
-			1 => __( 'Ano' ),
+			1 => __( 'Ano', 'skautis-integration' ),
 		);
 
 		return $result;

@@ -43,8 +43,10 @@ final class WpRegister {
 
 		if ( is_wp_error( $userId ) ) {
 			if ( isset( $userId->errors ) && ( isset( $userId->errors['username_exists'] ) || isset( $userId->errors['email_exists'] ) ) ) {
+				/* translators: The user's e-mail address */
 				wp_die( sprintf( esc_html__( 'Vás email %s je již na webu registrován, ale není propojen se skautIS účtem.', 'skautis-integration' ), esc_html( $userEmail ) ), esc_html__( 'Chyba při registraci', 'skautis-integration' ) );
 			}
+				/* translators: The error message */
 			wp_die( sprintf( esc_html__( 'Při registraci nastala neočekávaná chyba: %s', 'skautis-integration' ), esc_html( $userId->get_error_message() ) ), esc_html__( 'Chyba při registraci', 'skautis-integration' ) );
 		}
 

@@ -139,7 +139,7 @@ class UsersManagement {
 
 	public function printChildUsers() {
 		if ( ! Helpers::userIsSkautisManager() ) {
-			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.' ) );
+			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'skautis-integration' ) );
 		}
 
 		echo '
@@ -155,6 +155,7 @@ class UsersManagement {
 		</div>
 			';
 			} else {
+				/* translators: 1: Start of link to the settings 2: End of link to the settings */
 				printf( esc_html__( 'Vyberte v %1$snastavení%2$s pluginu typ prostředí skautISu', 'skautis-integration' ), '<a href="' . esc_url( admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME ) ) . '">', '</a>' );
 				echo '
 		</div>

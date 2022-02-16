@@ -146,6 +146,7 @@ final class Metabox {
 					   value="1" <?php checked( 1, $includeChildren ); ?> /><span>
 												<?php
 												if ( $postTypeObject->hierarchical ) {
+													/* translators: the type of the SkautIS unit */
 													printf( esc_html__( 'Použít vybraná pravidla i na podřízené %s', 'skautis-integration' ), esc_html( lcfirst( $postTypeObject->labels->name ) ) );
 												} else {
 													esc_html_e( 'Použít vybraná pravidla i na podřízený obsah (média - obrázky, videa, přílohy,...)', 'skautis-integration' );
