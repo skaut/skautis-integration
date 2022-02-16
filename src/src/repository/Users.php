@@ -171,8 +171,8 @@ class Users {
 						preg_match( '~([^\s]+)\s([^\s]+)(\s\((.*)\))~', $participant->Person, $regResult );
 
 						if ( $regResult && isset( $regResult[1], $regResult[2] ) ) {
-							  $user->firstName = $regResult[2];
-							  $user->lastName  = $regResult[1];
+							$user->firstName = $regResult[2];
+							$user->lastName  = $regResult[1];
 							if ( isset( $regResult[4] ) && $regResult[4] ) {
 								$user->nickName = $regResult[4];
 							}
@@ -221,8 +221,8 @@ class Users {
 						preg_match( '~([^\s]+)\s([^\s]+)(\s\((.*)\))~', $skautisUser->DisplayName, $regResult );
 
 						if ( $regResult && isset( $regResult[1], $regResult[2] ) ) {
-							  $user->firstName = $regResult[2];
-							  $user->lastName  = $regResult[1];
+							$user->firstName = $regResult[2];
+							$user->lastName  = $regResult[1];
 						}
 						if ( isset( $regResult[4] ) && $regResult[4] ) {
 							$user->nickName = $regResult[4];

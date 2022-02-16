@@ -34,7 +34,7 @@ final class Admin {
 
 	public function enqueueScriptsAndStyles() {
 		if ( in_array( get_current_screen()->id, $this->postTypes ) ||
-			 get_current_screen()->id == 'skautis_page_' . SKAUTISINTEGRATION_NAME . '_modules_visibility' ) {
+			get_current_screen()->id == 'skautis_page_' . SKAUTISINTEGRATION_NAME . '_modules_visibility' ) {
 			wp_enqueue_script( 'jquery-ui-sortable' );
 
 			wp_enqueue_style(

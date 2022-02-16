@@ -133,7 +133,7 @@ final class Metabox {
 					</select>
 
 					<input data-repeater-delete type="button"
-						   value="<?php esc_attr_e( 'Odstranit', 'skautis-integration' ); ?>"/>
+						value="<?php esc_attr_e( 'Odstranit', 'skautis-integration' ); ?>"/>
 				</div>
 			</div>
 			<input data-repeater-create type="button" value="<?php esc_attr_e( 'Přidat', 'skautis-integration' ); ?>"/>
@@ -141,9 +141,9 @@ final class Metabox {
 		<p>
 			<label>
 				<input type="hidden" name="<?php echo esc_attr( SKAUTISINTEGRATION_NAME ); ?>_rules_includeChildren"
-					   value="0"/>
+					value="0"/>
 				<input type="checkbox" name="<?php echo esc_attr( SKAUTISINTEGRATION_NAME ); ?>_rules_includeChildren"
-					   value="1" <?php checked( 1, $includeChildren ); ?> /><span>
+					value="1" <?php checked( 1, $includeChildren ); ?> /><span>
 												<?php
 												if ( $postTypeObject->hierarchical ) {
 													/* translators: the type of the SkautIS unit */
@@ -156,10 +156,10 @@ final class Metabox {
 		</p>
 		<p>
 			<label><input type="radio" name="<?php echo esc_attr( SKAUTISINTEGRATION_NAME ); ?>_rules_visibilityMode"
-						  value="full" <?php checked( 'full', $visibilityMode ); ?> /><span><?php esc_html_e( 'Úplně skrýt', 'skautis-integration' ); ?></span></label>
+						value="full" <?php checked( 'full', $visibilityMode ); ?> /><span><?php esc_html_e( 'Úplně skrýt', 'skautis-integration' ); ?></span></label>
 			<br/>
 			<label><input type="radio" name="<?php echo esc_attr( SKAUTISINTEGRATION_NAME ); ?>_rules_visibilityMode"
-						  value="content" <?php checked( 'content', $visibilityMode ); ?> /><span><?php esc_html_e( 'Skrýt pouze obsah', 'skautis-integration' ); ?></span></label>
+						value="content" <?php checked( 'content', $visibilityMode ); ?> /><span><?php esc_html_e( 'Skrýt pouze obsah', 'skautis-integration' ); ?></span></label>
 		</p>
 		<?php
 	}

@@ -72,11 +72,11 @@ final class ConnectAndDisconnectWpAccount {
 
 	public function connectWpUserToSkautis() {
 		if ( ! isset( $_GET[SKAUTISINTEGRATION_NAME. '_connect_user_nonce'] ) ||
-			 ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET[SKAUTISINTEGRATION_NAME. '_connect_user_nonce'] ) ), SKAUTISINTEGRATION_NAME. '_connect_user' ) ||
-			 ! $this->skautisLogin->isUserLoggedInSkautis() ||
-			 ! Helpers::userIsSkautisManager() ||
-			 is_null( Helpers::getReturnUrl() )
-		   ) {
+			! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET[SKAUTISINTEGRATION_NAME. '_connect_user_nonce'] ) ), SKAUTISINTEGRATION_NAME. '_connect_user' ) ||
+			! $this->skautisLogin->isUserLoggedInSkautis() ||
+			! Helpers::userIsSkautisManager() ||
+			is_null( Helpers::getReturnUrl() )
+		) {
 			wp_die( esc_html__( 'Nemáte oprávnění k propojování uživatelů.', 'skautis-integration' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
 		}
 
@@ -110,7 +110,7 @@ final class ConnectAndDisconnectWpAccount {
 				if ( strpos( $returnUrl, 'profile.php' ) !== false ) {
 					delete_user_meta( get_current_user_id(), 'skautisUserId_' . $this->skautisGateway->getEnv() );
 				} elseif ( (strpos( $returnUrl, 'user-edit_php' ) !== false ||
-							  strpos( $returnUrl, 'user-edit.php' ) !== false) &&
+							strpos( $returnUrl, 'user-edit.php' ) !== false) &&
 							strpos( $returnUrl, 'user_id=' ) !== false ) {
 					if ( ! preg_match( '~user_id=(\d+)~', $returnUrl, $result ) ) {
 						return;

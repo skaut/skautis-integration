@@ -141,12 +141,12 @@ final class Register implements IModule {
 	public function registerUserManually() {
 		$returnUrl = Helpers::getReturnUrl();
 		if ( ! isset( $_GET[SKAUTISINTEGRATION_NAME. '_register_user_nonce'] ) ||
-			 ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET[SKAUTISINTEGRATION_NAME. '_register_user_nonce'] ) ), SKAUTISINTEGRATION_NAME. '_register_user' ) ||
-			 ! $this->skautisLogin->isUserLoggedInSkautis() ||
-			 ! Helpers::userIsSkautisManager() ||
-			 ! current_user_can( 'create_users' ) ||
-			 is_null( $returnUrl ) ||
-			 ! isset( $_GET['wpRole'], $_GET['skautisUserId'] ) ) {
+			! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET[SKAUTISINTEGRATION_NAME. '_register_user_nonce'] ) ), SKAUTISINTEGRATION_NAME. '_register_user' ) ||
+			! $this->skautisLogin->isUserLoggedInSkautis() ||
+			! Helpers::userIsSkautisManager() ||
+			! current_user_can( 'create_users' ) ||
+			is_null( $returnUrl ) ||
+			! isset( $_GET['wpRole'], $_GET['skautisUserId'] ) ) {
 			wp_die( esc_html__( 'Nemáte oprávnění k registraci nových uživatelů.', 'skautis-integration' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
 		}
 

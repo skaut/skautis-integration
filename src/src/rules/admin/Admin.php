@@ -66,7 +66,7 @@ final class Admin {
         wp_nonce_field( SKAUTISINTEGRATION_NAME . '_rules_metabox', SKAUTISINTEGRATION_NAME . '_rules_metabox_nonce' );
         ?>
         <textarea id="query_builder_values" class=""
-                  name="<?php echo esc_attr( SKAUTISINTEGRATION_NAME ); ?>_rules_data"><?php echo esc_html( get_post_meta( $post->ID, SKAUTISINTEGRATION_NAME . '_rules_data', TRUE ) ); ?></textarea>
+                name="<?php echo esc_attr( SKAUTISINTEGRATION_NAME ); ?>_rules_data"><?php echo esc_html( get_post_meta( $post->ID, SKAUTISINTEGRATION_NAME . '_rules_data', TRUE ) ); ?></textarea>
         <?php
     }
 
@@ -107,7 +107,7 @@ final class Admin {
                 </h2>
                 <div class="inside" style="padding: 0.75em 1.5em 1.25em 1.5em;">
                     <label class="screen-reader-text"
-                           for="post_author_override"><?php esc_html_e( 'Zadejte podmínky pro splnění pravidla', 'skautis-integration' ); ?></label>
+                        for="post_author_override"><?php esc_html_e( 'Zadejte podmínky pro splnění pravidla', 'skautis-integration' ); ?></label>
                     <?php
                     if ( ! $this->skautisGateway->isInitialized() ) {
                         /* translators: 1: Start of link to the settings 2: End of link to the settings */

@@ -35,16 +35,16 @@ final class WpLoginLogout {
 			$users        = $usersWpQuery->get_results();
 
 			if ( ! empty( $users )
-				 && isset( $users[0] )
-				 && isset( $users[0]->ID )
-				 && $users[0]->ID > 0
+				&& isset( $users[0] )
+				&& isset( $users[0]->ID )
+				&& $users[0]->ID > 0
 			) {
 				$wpUser = $users[0];
 
 				if ( ! $try ) {
 					if ( Services::getServicesContainer()['modulesManager']->isModuleActivated( Register::getId() ) &&
-						 ! user_can( $wpUser->ID, Helpers::getSkautisManagerCapability() ) &&
-						 get_option( SKAUTISINTEGRATION_NAME . '_checkUserPrivilegesIfLoginBySkautis' ) ) {
+						! user_can( $wpUser->ID, Helpers::getSkautisManagerCapability() ) &&
+						get_option( SKAUTISINTEGRATION_NAME . '_checkUserPrivilegesIfLoginBySkautis' ) ) {
 						if ( ! Services::getServicesContainer()[ Register::getId() ]->getRulesManager()->checkIfUserPassedRulesAndGetHisRole() ) {
 							/* translators: 1: Start of a link to SkautIS login 2: End of the link to SkautIS login */
 							wp_die( sprintf( esc_html__( 'Je nám líto, ale již nemáte oprávnění k přístupu. %1$sZkuste se znovu zaregistrovat%2$s', 'skautis-integration' ), '<a href = "' . esc_url( ( Services::getServicesContainer()[ Register::getId() ] )->getWpRegister()->getRegisterUrl() ) . '">', '</a>' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );

@@ -70,7 +70,7 @@ final class Users {
 						echo 'disabled="disabled"';
 					}
 					?>
-						   value="<?php echo esc_attr( get_the_author_meta( 'skautisUserId_prod', $user->ID ) ); ?>"/><br/>
+						value="<?php echo esc_attr( get_the_author_meta( 'skautisUserId_prod', $user->ID ) ); ?>"/><br/>
 				</td>
 			</tr>
 			<tr>
@@ -84,7 +84,7 @@ final class Users {
 						echo 'disabled="disabled"';
 					}
 					?>
-						   value="<?php echo esc_attr( get_the_author_meta( 'skautisUserId_test', $user->ID ) ); ?>"/><br/>
+						value="<?php echo esc_attr( get_the_author_meta( 'skautisUserId_test', $user->ID ) ); ?>"/><br/>
 				</td>
 			</tr>
 		</table>

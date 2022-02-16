@@ -29,7 +29,7 @@ final class LoginForm {
         ?>
         <p style="margin-bottom: 0.3em;">
             <a class="button button-primary button-hero button-skautis" style="float: none; width: 100%; text-align: center;"
-               href="<?php echo esc_url( $this->wpRegister->getRegisterUrl() ); ?>"><?php esc_html_e( 'Log in with skautIS', 'skautis-integration' ); ?></a>
+                href="<?php echo esc_url( $this->wpRegister->getRegisterUrl() ); ?>"><?php esc_html_e( 'Log in with skautIS', 'skautis-integration' ); ?></a>
             <br/>
         </p>
         <br/>

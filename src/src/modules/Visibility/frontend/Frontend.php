@@ -135,7 +135,7 @@ final class Frontend {
     private function proccessRulesAndHidePosts( bool $userIsLoggedInSkautis, array $rule, array &$posts, int $postKey, \WP_Query $wpQuery, string $postType, &$postsWereFiltered = FALSE ) {
         if ( ! empty( $rules ) && isset( $rules[0][ SKAUTISINTEGRATION_NAME . '_rules' ] ) ) {
             if ( ! $userIsLoggedInSkautis ||
-                 ! $this->rulesManager->checkIfUserPassedRules( $rules ) ) {
+                ! $this->rulesManager->checkIfUserPassedRules( $rules ) ) {
                 unset( $posts[ $postKey ] );
                 unset( $wpQuery->posts[ $postKey ] );
                 if ( $wpQuery->found_posts > 0 ) {
