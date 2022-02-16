@@ -32,7 +32,6 @@
 		<exclude name="Squiz.Strings"/>
 		<exclude name="WordPress.Arrays"/>
 		<exclude name="WordPress.CodeAnalysis"/>
-		<exclude name="WordPress.DateTime"/>
 		<exclude name="WordPress.DB"/>
 		<exclude name="WordPress.Files"/>
 		<exclude name="WordPress.NamingConventions"/>
