@@ -90,11 +90,11 @@ class SkautisIntegration {
 	}
 
 	protected function initHooks() {
-		add_action( 'admin_init', [ $this, 'checkVersionAndPossiblyDeactivatePlugin' ] );
+		add_action( 'admin_init', array( $this, 'checkVersionAndPossiblyDeactivatePlugin' ) );
 
-		register_activation_hook( __FILE__, [ $this, 'activation' ] );
-		register_deactivation_hook( __FILE__, [ $this, 'deactivation' ] );
-		register_uninstall_hook( __FILE__, [ __CLASS__, 'uninstall' ] );
+		register_activation_hook( __FILE__, array( $this, 'activation' ) );
+		register_deactivation_hook( __FILE__, array( $this, 'deactivation' ) );
+		register_uninstall_hook( __FILE__, array( __CLASS__, 'uninstall' ) );
 	}
 
 	protected function init() {
@@ -161,7 +161,7 @@ SELECT `option_name`
 FROM $wpdb->options
 WHERE `option_name` LIKE %s OR `option_name` LIKE %s
 ",
-				[ 'skautis_integration_%', SKAUTISINTEGRATION_NAME . '_%' ]
+				array( 'skautis_integration_%', SKAUTISINTEGRATION_NAME . '_%' )
 			)
 		);
 		foreach ( $options as $option ) {

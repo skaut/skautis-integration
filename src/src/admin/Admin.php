@@ -30,12 +30,12 @@ final class Admin {
 	}
 
 	private function initHooks() {
-		add_action( 'admin_enqueue_scripts', [ $this, 'enqueueScriptsAndStyles' ] );
-		add_action( 'admin_print_scripts', [ $this, 'printInlineJs' ] );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueueScriptsAndStyles' ) );
+		add_action( 'admin_print_scripts', array( $this, 'printInlineJs' ) );
 
 		if ( $this->skautisGateway->isInitialized() ) {
 			if ( $this->skautisGateway->getSkautisInstance()->getUser()->isLoggedIn() ) {
-				add_action( 'admin_bar_menu', [ $this, 'addLogoutLinkToAdminBar' ], 20 );
+				add_action( 'admin_bar_menu', array( $this, 'addLogoutLinkToAdminBar' ), 20 );
 			}
 		}
 	}
@@ -44,7 +44,7 @@ final class Admin {
 		wp_enqueue_style(
 			SKAUTISINTEGRATION_NAME . '_select2',
 			SKAUTISINTEGRATION_URL . 'bundled/select2.min.css',
-			[],
+			array(),
 			SKAUTISINTEGRATION_VERSION,
 			'all'
 		);
@@ -52,7 +52,7 @@ final class Admin {
 		wp_enqueue_script(
 			SKAUTISINTEGRATION_NAME . '_select2',
 			SKAUTISINTEGRATION_URL . 'bundled/select2.min.js',
-			[ 'jquery' ],
+			array( 'jquery' ),
 			SKAUTISINTEGRATION_VERSION,
 			FALSE
 		);
@@ -60,7 +60,7 @@ final class Admin {
 		wp_enqueue_style(
 			SKAUTISINTEGRATION_NAME,
 			$this->adminDirUrl . 'css/skautis-admin.css',
-			[],
+			array(),
 			SKAUTISINTEGRATION_VERSION,
 			'all'
 		);
@@ -97,12 +97,12 @@ final class Admin {
 		}
 
 		$wpAdminBar->add_menu(
-			[
+			array(
 				'parent' => $parent,
 				'id'     => SKAUTISINTEGRATION_NAME . '_adminBar_logout',
 				'title'  => esc_html__( 'Log Out (too from skautIS)', 'skautis-integration' ),
 				'href'   => $this->wpLoginLogout->getLogoutUrl(),
-			]
+			)
 		);
 	}
 

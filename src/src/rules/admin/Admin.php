@@ -26,15 +26,15 @@ final class Admin {
     }
 
     private function initHooks() {
-        add_action( 'add_meta_boxes', [ $this, 'addMetaboxForRulesField' ] );
-        add_action( 'save_post', [ $this, 'saveRulesCustomField' ] );
+        add_action( 'add_meta_boxes', array( $this, 'addMetaboxForRulesField' ) );
+        add_action( 'save_post', array( $this, 'saveRulesCustomField' ) );
 
-        add_action( 'edit_form_after_title', [ $this, 'addRulesUi' ] );
+        add_action( 'edit_form_after_title', array( $this, 'addRulesUi' ) );
 
-        add_action( 'admin_enqueue_scripts', [ $this, 'enqueueStyles' ] );
-        add_action( 'admin_enqueue_scripts', [ $this, 'enqueueScripts' ] );
+        add_action( 'admin_enqueue_scripts', array( $this, 'enqueueStyles' ) );
+        add_action( 'admin_enqueue_scripts', array( $this, 'enqueueScripts' ) );
 
-        add_action( 'admin_footer', [ $this, 'initRulesBuilder' ], 100 );
+        add_action( 'admin_footer', array( $this, 'initRulesBuilder' ), 100 );
     }
 
     public function addMetaboxForRulesField( string $postType ) {
@@ -42,7 +42,7 @@ final class Admin {
             add_meta_box(
                 SKAUTISINTEGRATION_NAME . '_rules_metabox',
                 __( 'skautIS pravidla', 'skautis-integration' ),
-                [ $this, 'RulesFieldContent' ],
+                array( $this, 'RulesFieldContent' ),
                 RulesInit::RULES_TYPE_SLUG
             );
         }
@@ -132,7 +132,7 @@ final class Admin {
         wp_enqueue_style(
             SKAUTISINTEGRATION_NAME . '_font-awesome',
             SKAUTISINTEGRATION_URL . 'bundled/font-awesome/css/font-awesome.min.css',
-            [],
+            array(),
             SKAUTISINTEGRATION_VERSION,
             'all'
         );
@@ -140,7 +140,7 @@ final class Admin {
         wp_enqueue_style(
             SKAUTISINTEGRATION_NAME . '_query-builder',
             $this->adminDirUrl . 'css/skautis-rules-admin.css',
-            [],
+            array(),
             SKAUTISINTEGRATION_VERSION,
             'all'
         );
@@ -148,7 +148,7 @@ final class Admin {
         wp_enqueue_style(
             SKAUTISINTEGRATION_NAME . '_query-builder-main',
             SKAUTISINTEGRATION_URL . 'bundled/query-builder.default.min.css',
-            [],
+            array(),
             SKAUTISINTEGRATION_VERSION,
             'all'
         );
@@ -162,7 +162,7 @@ final class Admin {
         wp_enqueue_script(
             SKAUTISINTEGRATION_NAME . '_rules_role',
             $this->adminDirUrl . 'js/skautis-rules-role.js',
-            [],
+            array(),
             SKAUTISINTEGRATION_VERSION,
             FALSE
         );
@@ -170,7 +170,7 @@ final class Admin {
         wp_enqueue_script(
             SKAUTISINTEGRATION_NAME . '_rules_membership',
             $this->adminDirUrl . 'js/skautis-rules-membership.js',
-            [],
+            array(),
             SKAUTISINTEGRATION_VERSION,
             FALSE
         );
@@ -178,7 +178,7 @@ final class Admin {
         wp_enqueue_script(
             SKAUTISINTEGRATION_NAME . '_rules_func',
             $this->adminDirUrl . 'js/skautis-rules-func.js',
-            [],
+            array(),
             SKAUTISINTEGRATION_VERSION,
             FALSE
         );
@@ -186,7 +186,7 @@ final class Admin {
         wp_enqueue_script(
             SKAUTISINTEGRATION_NAME . '_rules_qualification',
             $this->adminDirUrl . 'js/skautis-rules-qualification.js',
-            [],
+            array(),
             SKAUTISINTEGRATION_VERSION,
             FALSE
         );
@@ -194,7 +194,7 @@ final class Admin {
         wp_enqueue_script(
             SKAUTISINTEGRATION_NAME . '_interact',
             SKAUTISINTEGRATION_URL . 'bundled/interact.min.js',
-            [],
+            array(),
             SKAUTISINTEGRATION_VERSION,
             FALSE
         );
@@ -202,7 +202,7 @@ final class Admin {
         wp_enqueue_script(
             SKAUTISINTEGRATION_NAME . '_query-builder',
             SKAUTISINTEGRATION_URL . 'bundled/query-builder.standalone.min.js',
-            [ 'jquery' ],
+            array( 'jquery' ),
             SKAUTISINTEGRATION_VERSION,
             TRUE
         );
@@ -210,7 +210,7 @@ final class Admin {
         wp_enqueue_script(
             SKAUTISINTEGRATION_NAME . '_query-builder_lang',
             $this->adminDirUrl . 'QueryBuilder/i18n/query-builder.cs.js',
-            [ SKAUTISINTEGRATION_NAME . '_query-builder' ],
+            array( SKAUTISINTEGRATION_NAME . '_query-builder' ),
             SKAUTISINTEGRATION_VERSION,
             TRUE
         );
@@ -218,7 +218,7 @@ final class Admin {
         wp_enqueue_script(
             SKAUTISINTEGRATION_NAME . '_rules',
             $this->adminDirUrl . 'js/skautis-rules-admin.js',
-            [ SKAUTISINTEGRATION_NAME . '_query-builder' ],
+            array( SKAUTISINTEGRATION_NAME . '_query-builder' ),
             SKAUTISINTEGRATION_VERSION,
             TRUE
         );
@@ -240,7 +240,7 @@ final class Admin {
             var data = {};
             <?php
             foreach ( (array)$this->rulesManager->getRules() as $rule ) {
-                $data = [
+                $data = array(
                     'id'          => $rule->getId(),
                     'label'       => $rule->getLabel(),
                     'type'        => $rule->getType(),
@@ -250,7 +250,7 @@ final class Admin {
                     'operators'   => $rule->getOperators(),
                     'placeholder' => $rule->getPlaceholder(),
                     'description' => $rule->getDescription(),
-                ];
+                );
                 ?>
             data = <?php echo wp_json_encode( $data ); ?>;
 

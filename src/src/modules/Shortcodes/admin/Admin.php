@@ -20,27 +20,27 @@ final class Admin {
     }
 
     private function initHooks() {
-        add_action( 'admin_footer', [ $this, 'initAvailableRules' ] );
+        add_action( 'admin_footer', array( $this, 'initAvailableRules' ) );
 
         add_action(
             'admin_init',
             function () {
                 if ( get_user_option( 'rich_editing' ) ) {
-                    add_filter( 'mce_external_plugins', [ $this, 'registerTinymcePlugin' ] );
-                    add_filter( 'mce_buttons', [ $this, 'addTinymceButton' ] );
+                    add_filter( 'mce_external_plugins', array( $this, 'registerTinymcePlugin' ) );
+                    add_filter( 'mce_buttons', array( $this, 'addTinymceButton' ) );
                 }
             }
         );
     }
 
-    public function registerTinymcePlugin( array $plugins = [] ): array
+    public function registerTinymcePlugin( array $plugins = array() ): array
     {
         $plugins['skautis_rules'] = $this->adminDirUrl . 'js/skautis-modules-shortcodes-tinymceRulesButton.js';
 
         return $plugins;
     }
 
-    public function addTinymceButton( array $buttons = [] ): array
+    public function addTinymceButton( array $buttons = array() ): array
     {
         $buttons[] = 'skautis_rules';
 

@@ -24,8 +24,8 @@ final class Frontend {
     }
 
     public function initHooks() {
-        add_action( 'wp_enqueue_scripts', [ $this, 'enqueueStyles' ] );
-        add_action( 'posts_results', [ $this, 'filterPosts' ], 10, 2 );
+        add_action( 'wp_enqueue_scripts', array( $this, 'enqueueStyles' ) );
+        add_action( 'posts_results', array( $this, 'filterPosts' ), 10, 2 );
     }
 
     private function getLoginForm( bool $forceLogoutFromSkautis = FALSE ): string
@@ -61,12 +61,12 @@ final class Frontend {
         $ancestors = get_ancestors( $postId, $postType, 'post_type' );
         $ancestors = array_map(
             function ( $ancestorPostId ) {
-                return [
+                return array(
                     'id'              => $ancestorPostId,
                     'rules'           => (array)get_post_meta( $ancestorPostId, SKAUTISINTEGRATION_NAME . '_rules', TRUE ),
                     'includeChildren' => get_post_meta( $ancestorPostId, SKAUTISINTEGRATION_NAME . '_rules_includeChildren', TRUE ),
                     'visibilityMode'  => get_post_meta( $ancestorPostId, SKAUTISINTEGRATION_NAME . '_rules_visibilityMode', TRUE ),
-                ];
+                );
             },
             $ancestors
         );
@@ -82,7 +82,7 @@ final class Frontend {
             $ancestors,
             function ( $ancestor ) {
                 if ( ! empty( $ancestor['rules'] ) && isset( $ancestor['rules'][0][ SKAUTISINTEGRATION_NAME . '_rules' ] ) ) {
-                    if ( '1'$ === ancestor['includeChildren'] ) {
+                    if ( '1' === $ancestor['includeChildren'] ) {
                         return TRUE;
                     }
                 }
@@ -122,9 +122,9 @@ final class Frontend {
             function ( \WP_Comment_Query $wpCommentQuery ) use ( $postId ) {
                 if ( $wpCommentQuery->query_vars['post_id'] === $postId ) {
                     if ( ! isset( $wpCommentQuery->query_vars['post__not_in'] ) || empty( $wpCommentQuery->query_vars['post__not_in'] ) ) {
-                        $wpCommentQuery->query_vars['post__not_in'] = [];
+                        $wpCommentQuery->query_vars['post__not_in'] = array();
                     } elseif ( ! is_array( $wpCommentQuery->query_vars['post__not_in'] ) ) {
-                        $wpCommentQuery->query_vars['post__not_in'] = [ $wpCommentQuery->query_vars['post__not_in'] ];
+                        $wpCommentQuery->query_vars['post__not_in'] = array( $wpCommentQuery->query_vars['post__not_in'] );
                     }
                     $wpCommentQuery->query_vars['post__not_in'][] = $postId;
                 }
@@ -158,20 +158,20 @@ final class Frontend {
 
     public function enqueueStyles() {
         wp_enqueue_style( 'buttons' );
-        wp_enqueue_style( SKAUTISINTEGRATION_NAME, SKAUTISINTEGRATION_URL . 'src/frontend/public/css/skautis-frontend.css', [], SKAUTISINTEGRATION_VERSION, 'all' );
+        wp_enqueue_style( SKAUTISINTEGRATION_NAME, SKAUTISINTEGRATION_URL . 'src/frontend/public/css/skautis-frontend.css', array(), SKAUTISINTEGRATION_VERSION, 'all' );
     }
 
     public function getParentPostsWithRules( int $childPostId, string $childPostType ): array
     {
-        $result = [];
+        $result = array();
 
         $parentPostsWithRules = $this->getRulesFromParentPostsWithImpactByChildPostId( $childPostId, $childPostType );
 
         foreach ( $parentPostsWithRules as $parentPostWithRules ) {
-            $result[ $parentPostWithRules['id'] ] = [
+            $result[ $parentPostWithRules['id'] ] = array(
                 'parentPostTitle' => get_the_title( $parentPostWithRules['id'] ),
-                'rules'           => [],
-            ];
+                'rules'           => array(),
+            );
 
             foreach ( $parentPostWithRules['rules'] as $rule ) {
                 $result[ $parentPostWithRules['id'] ]['rules'][ $rule['skautis-integration_rules'] ] = get_the_title( $rule['skautis-integration_rules'] );
@@ -200,7 +200,7 @@ final class Frontend {
 
             if ( in_array( $wpPost->post_type, $this->postTypes, true ) ) {
                 if ( ! current_user_can( 'edit_' . $wpPost->post_type . 's' ) ) {
-                    $rulesGroups = [];
+                    $rulesGroups = array();
 
                     if ( $wpPost->post_parent > 0 ) {
                         $rulesGroups = $this->getRulesFromParentPostsWithImpactByChildPostId( $wpPost->ID, $wpPost->post_type );
@@ -208,12 +208,12 @@ final class Frontend {
 
                     $currentPostRules = (array)get_post_meta( $wpPost->ID, SKAUTISINTEGRATION_NAME . '_rules', TRUE );
                     if ( ! empty( $currentPostRules ) ) {
-                        $currentPostRule = [
+                        $currentPostRule = array(
                             'id'              => $wpPost->ID,
                             'rules'           => $currentPostRules,
                             'includeChildren' => get_post_meta( $wpPost->ID, SKAUTISINTEGRATION_NAME . '_rules_includeChildren', TRUE ),
                             'visibilityMode'  => get_post_meta( $wpPost->ID, SKAUTISINTEGRATION_NAME . '_rules_visibilityMode', TRUE ),
-                        ];
+                        );
                         $rulesGroups[]   = $currentPostRule;
                     }
 

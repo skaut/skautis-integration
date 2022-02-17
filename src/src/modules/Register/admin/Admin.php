@@ -19,10 +19,10 @@ final class Admin {
     }
 
     private function initHooks() {
-        add_action( 'admin_enqueue_scripts', [ $this, 'enqueueStyles' ] );
-        add_action( 'admin_enqueue_scripts', [ $this, 'enqueueScripts' ] );
-        add_action( 'admin_footer', [ $this, 'initRulesOptions' ] );
-        add_action( 'admin_footer', [ $this, 'initRulesData' ] );
+        add_action( 'admin_enqueue_scripts', array( $this, 'enqueueStyles' ) );
+        add_action( 'admin_enqueue_scripts', array( $this, 'enqueueScripts' ) );
+        add_action( 'admin_footer', array( $this, 'initRulesOptions' ) );
+        add_action( 'admin_footer', array( $this, 'initRulesData' ) );
     }
 
     public function enqueueStyles() {
@@ -30,7 +30,7 @@ final class Admin {
             wp_enqueue_style(
                 SKAUTISINTEGRATION_NAME . '_modules_register',
                 $this->adminDirUrl . 'css/skautis-modules-register-admin.css',
-                [],
+                array(),
                 SKAUTISINTEGRATION_VERSION,
                 'all'
             );
@@ -44,7 +44,7 @@ final class Admin {
             wp_enqueue_script(
                 SKAUTISINTEGRATION_NAME . '_jquery.repeater',
                 SKAUTISINTEGRATION_URL . 'bundled/jquery.repeater.min.js',
-                [ 'jquery' ],
+                array( 'jquery' ),
                 SKAUTISINTEGRATION_VERSION,
                 TRUE
             );
@@ -52,7 +52,7 @@ final class Admin {
             wp_enqueue_script(
                 SKAUTISINTEGRATION_NAME . '_modules_register',
                 $this->adminDirUrl . 'js/skautis-modules-register-admin.js',
-                [ SKAUTISINTEGRATION_NAME . '_jquery.repeater' ],
+                array( SKAUTISINTEGRATION_NAME . '_jquery.repeater' ),
                 SKAUTISINTEGRATION_VERSION,
                 TRUE
             );
@@ -61,7 +61,7 @@ final class Admin {
 
     public function initRulesOptions() {
         if ( get_current_screen()->id === 'skautis_page_skautis-integration_modules_register' ) {
-            $rules = [];
+            $rules = array();
             foreach ( (array)$this->rulesManager->getAllRules() as $rule ) {
                 $rules[ $rule->ID ] = $rule->post_title;
             }

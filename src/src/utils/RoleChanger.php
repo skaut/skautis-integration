@@ -35,17 +35,17 @@ class RoleChanger {
 
 	public function printChangeRolesForm() {
 		$currentUserRoles = $this->skautisGateway->getSkautisInstance()->UserManagement->UserRoleAll(
-			[
+			array(
 				'ID_Login' => $this->skautisGateway->getSkautisInstance()->getUser()->getLoginId(),
 				'ID_User'  => $this->skautisGateway->getSkautisInstance()->UserManagement->UserDetail()->ID,
 				'IsActive' => TRUE,
-			]
+			)
 		);
 		$currentUserRole  = $this->skautisGateway->getSkautisInstance()->getUser()->getRoleId();
 
 		echo '
 <form method="post" action="' . esc_attr( Helpers::getCurrentUrl() ) . '" novalidate="novalidate">' .
-        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		wp_nonce_field( SKAUTISINTEGRATION_NAME . '_changeSkautisUserRole', '_wpnonce', TRUE, FALSE ) .
 		'<table class="form-table">
 <tbody>
@@ -70,13 +70,13 @@ class RoleChanger {
 <script>
 var timeout = 0;
 if (!jQuery.fn.select2) {
-    timeout = 500;
+	timeout = 500;
 }
 setTimeout(function() {
 	(function ($) {
-	    "use strict";
+		"use strict";
 		$("#skautisRoleChanger").select2().on("change.roleChanger", function () {
-	        $(this).closest("form").submit();
+			$(this).closest("form").submit();
 		});
 	})(jQuery);
 }, timeout);

@@ -22,8 +22,8 @@ final class Settings {
 			return;
 		}
 
-		add_action( 'admin_menu', [ $this, 'setupSettingPage' ], 25 );
-		add_action( 'admin_init', [ $this, 'setupSettingFields' ] );
+		add_action( 'admin_menu', array( $this, 'setupSettingPage' ), 25 );
+		add_action( 'admin_init', array( $this, 'setupSettingFields' ) );
 	}
 
 	public function setupSettingPage() {
@@ -33,7 +33,7 @@ final class Settings {
 			__( 'Registrace', 'skautis-integration' ),
 			Helpers::getSkautisManagerCapability(),
 			SKAUTISINTEGRATION_NAME . '_modules_register',
-			[ $this, 'printSettingPage' ]
+			array( $this, 'printSettingPage' )
 		);
 	}
 
@@ -70,7 +70,7 @@ final class Settings {
 		add_settings_field(
 			SKAUTISINTEGRATION_NAME . '_modules_register_defaultwpRole',
 			__( 'Výchozí úroveň po registraci uživatele přes skautIS', 'skautis-integration' ),
-			[ $this, 'fieldWpRole' ],
+			array( $this, 'fieldWpRole' ),
 			SKAUTISINTEGRATION_NAME . '_modules_register',
 			SKAUTISINTEGRATION_NAME . '_modules_register'
 		);
@@ -78,7 +78,7 @@ final class Settings {
 		add_settings_field(
 			SKAUTISINTEGRATION_NAME . '_modules_register_notifications',
 			__( 'Po úspěšné registraci uživatele poslat emaily:', 'skautis-integration' ),
-			[ $this, 'fieldNewUserNotifications' ],
+			array( $this, 'fieldNewUserNotifications' ),
 			SKAUTISINTEGRATION_NAME . '_modules_register',
 			SKAUTISINTEGRATION_NAME . '_modules_register'
 		);
@@ -86,7 +86,7 @@ final class Settings {
 		add_settings_field(
 			SKAUTISINTEGRATION_NAME . '_modules_register_rules',
 			__( 'Pravidla registrace', 'skautis-integration' ),
-			[ $this, 'fieldRules' ],
+			array( $this, 'fieldRules' ),
 			SKAUTISINTEGRATION_NAME . '_modules_register',
 			SKAUTISINTEGRATION_NAME . '_modules_register'
 		);
@@ -94,28 +94,28 @@ final class Settings {
 		register_setting(
 			SKAUTISINTEGRATION_NAME . '_modules_register',
 			SKAUTISINTEGRATION_NAME . '_modules_register_defaultwpRole',
-			[
+			array(
 				'type'              => 'string',
 				'show_in_rest'      => FALSE,
 				'sanitize_callback' => 'sanitize_text_field',
-			]
+			)
 		);
 		register_setting(
 			SKAUTISINTEGRATION_NAME . '_modules_register',
 			SKAUTISINTEGRATION_NAME . '_modules_register_notifications',
-			[
+			array(
 				'type'              => 'string',
 				'show_in_rest'      => FALSE,
 				'sanitize_callback' => 'sanitize_text_field',
-			]
+			)
 		);
 		register_setting(
 			SKAUTISINTEGRATION_NAME . '_modules_register',
 			SKAUTISINTEGRATION_NAME . '_modules_register_rules',
-			[
+			array(
 				'type'         => 'string',
 				'show_in_rest' => FALSE,
-			]
+			)
 		);
 	}
 
