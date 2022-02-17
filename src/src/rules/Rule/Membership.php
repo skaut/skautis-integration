@@ -80,7 +80,7 @@ class Membership implements IRule {
 	protected function getUserMembershipsWithUnitIds(): array {
 		static $userMemberships = null;
 
-		if ( $userMemberships === null ) {
+		if ( is_null( $userMemberships ) ) {
 			$userDetail      = $this->skautisGateway->getSkautisInstance()->UserManagement->UserDetail();
 			$userMemberships = $this->skautisGateway->getSkautisInstance()->OrganizationUnit->MembershipAllPerson(
 				array(
@@ -115,11 +115,12 @@ class Membership implements IRule {
 					continue;
 				}
 
-				if ( $unitDetail = $this->skautisGateway->getSkautisInstance()->OrganizationUnit->UnitDetail(
+				$unitDetail = $this->skautisGateway->getSkautisInstance()->OrganizationUnit->UnitDetail(
 					array(
 						'ID' => $userMembership->ID_Unit,
 					)
-				) ) {
+				);
+				if ( $unitDetail ) {
 					if ( ! isset( $result[ $userMembership->ID_MembershipType ] ) ) {
 						$result[ $userMembership->ID_MembershipType ] = array();
 					}
@@ -133,6 +134,7 @@ class Membership implements IRule {
 			if ( is_a( $userMemberships, '\stdClass' ) ) {
 				wp_die(
 					sprintf(
+						/* translators: 1: Start of a link to the documentation 2: End of the link to the documentation */
 						esc_html__(
 							'Pravděpodobně nemáte propojený skautIS účet se svojí osobou. %1$sPostupujte podle tohoto návodu%2$s',
 							'skautis-integration'
@@ -173,27 +175,19 @@ class Membership implements IRule {
 
 					switch ( $membershipOperator ) {
 						case 'equal':
-							{
-								$userPass += ( $userMembershipUnitId === $unitId );
-								break;
-						}
+							$userPass += ( $userMembershipUnitId === $unitId );
+							break;
 						case 'begins_with':
-							{
-								$userPass += ( substr( $userMembershipUnitId, 0, strlen( $unitId ) ) === $unitId );
-								break;
-						}
+							$userPass += ( substr( $userMembershipUnitId, 0, strlen( $unitId ) ) === $unitId );
+							break;
 						case 'any':
-							{
-								$userPass += 1;
-								break;
-						}
+							++$userPass;
+							break;
 						default:
-							{
 							if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 								throw new \Exception( 'Unit operator: "' . $membershipOperator . '" is not declared.' );
 							}
 							return false;
-						}
 					}
 				}
 			}

@@ -34,7 +34,7 @@ final class Settings {
 
 	public function printSettingPage() {
 		if ( ! Helpers::userIsSkautisManager() ) {
-			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.' ) );
+			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'skautis-integration' ) );
 		}
 
 		settings_errors();
@@ -84,10 +84,10 @@ final class Settings {
 		$visibilityMode = get_option( SKAUTISINTEGRATION_NAME . '_modules_shortcodes_visibilityMode', 'hide' );
 		?>
 		<label><input type="radio" name="<?php echo esc_attr( SKAUTISINTEGRATION_NAME ); ?>_modules_shortcodes_visibilityMode"
-					  value="hide" <?php checked( 'hide', $visibilityMode ); ?> /><span><?php esc_html_e( 'Úplně skrýt obsah', 'skautis-integration' ); ?></span></label>
+					value="hide" <?php checked( 'hide', $visibilityMode ); ?> /><span><?php esc_html_e( 'Úplně skrýt obsah', 'skautis-integration' ); ?></span></label>
 		<br/>
 		<label><input type="radio" name="<?php echo esc_attr( SKAUTISINTEGRATION_NAME ); ?>_modules_shortcodes_visibilityMode"
-					  value="showLogin" <?php checked( 'showLogin', $visibilityMode ); ?> /><span><?php esc_html_e( 'Zobrazit přihlášení', 'skautis-integration' ); ?></span></label>
+					value="showLogin" <?php checked( 'showLogin', $visibilityMode ); ?> /><span><?php esc_html_e( 'Zobrazit přihlášení', 'skautis-integration' ); ?></span></label>
 		<p>
 			<em><?php esc_html_e( 'Nastavení můžete změnit u jednotlivých typů obsahu dle potřeby.', 'skautis-integration' ); ?></em>
 		</p>

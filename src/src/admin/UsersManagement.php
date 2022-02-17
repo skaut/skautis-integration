@@ -120,8 +120,8 @@ class UsersManagement {
 			'skautisIntegrationAdminUsersManagementLocalize',
 			array(
 				'datatablesFilesUrl' => SKAUTISINTEGRATION_URL . 'bundled/datatables-files',
-				'searchNonceName' => SKAUTISINTEGRATION_NAME. '_skautis_search_user_nonce',
-				'searchNonceValue' => wp_create_nonce( SKAUTISINTEGRATION_NAME. '_skautis_search_user' ),
+				'searchNonceName'    => SKAUTISINTEGRATION_NAME . '_skautis_search_user_nonce',
+				'searchNonceValue'   => wp_create_nonce( SKAUTISINTEGRATION_NAME . '_skautis_search_user' ),
 			)
 		);
 	}
@@ -139,7 +139,7 @@ class UsersManagement {
 
 	public function printChildUsers() {
 		if ( ! Helpers::userIsSkautisManager() ) {
-			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.' ) );
+			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'skautis-integration' ) );
 		}
 
 		echo '
@@ -155,6 +155,7 @@ class UsersManagement {
 		</div>
 			';
 			} else {
+				/* translators: 1: Start of link to the settings 2: End of link to the settings */
 				printf( esc_html__( 'Vyberte v %1$snastavení%2$s pluginu typ prostředí skautISu', 'skautis-integration' ), '<a href="' . esc_url( admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME ) ) . '">', '</a>' );
 				echo '
 		</div>
@@ -182,7 +183,7 @@ class UsersManagement {
 				$returnUrl             = add_query_arg( SKAUTISINTEGRATION_NAME . '_disconnectWpAccountFromSkautis', $nonce, Helpers::getCurrentUrl() );
 				$returnUrl             = add_query_arg( 'user-edit_php', '', $returnUrl );
 				$returnUrl             = add_query_arg( 'user_id', $usersData[ $user->id ]['id'], $returnUrl );
-				$connectDisconnectLink = add_query_arg( 'ReturnUrl', urlencode( $returnUrl ), $homeUrl );
+				$connectDisconnectLink = add_query_arg( 'ReturnUrl', rawurlencode( $returnUrl ), $homeUrl );
 				echo '<tr style="background-color: #d1ffd1;">
 	<td class="username">
 		<span class="firstName">' . esc_html( $user->firstName ) . '</span> <span class="lastName">' . esc_html( $user->lastName ) . '</span>
@@ -221,7 +222,7 @@ class UsersManagement {
 					?>
 				</select>
 				<a id="connectUserToSkautisModal_connectLink" class="button button-primary"
-				   href="<?php echo esc_url( $this->connectAndDisconnectWpAccount->getConnectWpUserToSkautisUrl() ); ?>"><?php esc_html_e( 'Potvrdit', 'skautis-integration' ); ?></a>
+					href="<?php echo esc_url( $this->connectAndDisconnectWpAccount->getConnectWpUserToSkautisUrl() ); ?>"><?php esc_html_e( 'Potvrdit', 'skautis-integration' ); ?></a>
 				<div>
 					<em><?php esc_html_e( 'Je možné vybrat pouze ty uživatele, kteří ještě nemají propojený účet se skautISem.', 'skautis-integration' ); ?></em>
 				</div>
@@ -241,7 +242,7 @@ class UsersManagement {
 					</label>
 					<p>
 						<a id="connectUserToSkautisModal_registerLink" class="button button-primary"
-						   href="<?php echo esc_url( Services::getServicesContainer()[ Register::getId() ]->getWpRegister()->getManuallyRegisterWpUserUrl() ); ?>"><?php esc_html_e( 'Vytvořit nový účet', 'skautis-integration' ); ?></a>
+							href="<?php echo esc_url( Services::getServicesContainer()[ Register::getId() ]->getWpRegister()->getManuallyRegisterWpUserUrl() ); ?>"><?php esc_html_e( 'Vytvořit nový účet', 'skautis-integration' ); ?></a>
 					</p>
 					<?php
 				}

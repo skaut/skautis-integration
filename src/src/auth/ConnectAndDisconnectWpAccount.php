@@ -36,15 +36,15 @@ final class ConnectAndDisconnectWpAccount {
 				return;
 			}
 			$returnUrl = add_query_arg( SKAUTISINTEGRATION_NAME . '_disconnectWpAccountFromSkautis', wp_create_nonce( SKAUTISINTEGRATION_NAME . '_disconnectWpAccountFromSkautis' ), Helpers::getCurrentUrl() );
-			$url       = add_query_arg( 'ReturnUrl', urlencode( $returnUrl ), get_home_url( null, 'skautis/auth/' . Actions::DISCONNECT_ACTION ) );
+			$url       = add_query_arg( 'ReturnUrl', rawurlencode( $returnUrl ), get_home_url( null, 'skautis/auth/' . Actions::DISCONNECT_ACTION ) );
 
 			echo '
 			<a href="' . esc_url( $url ) . '"
 			   class="button">' . esc_html__( 'Zrušit propojení účtu se skautISem', 'skautis-integration' ) . '</a>
 			';
-		} elseif ( get_current_screen()->id == 'profile' ) {
+		} elseif ( get_current_screen()->id === 'profile' ) {
 			$returnUrl = add_query_arg( SKAUTISINTEGRATION_NAME . '_connectWpAccountWithSkautis', wp_create_nonce( SKAUTISINTEGRATION_NAME . '_connectWpAccountWithSkautis' ), Helpers::getCurrentUrl() );
-			$url       = add_query_arg( 'ReturnUrl', urlencode( $returnUrl ), get_home_url( null, 'skautis/auth/' . Actions::CONNECT_ACTION ) );
+			$url       = add_query_arg( 'ReturnUrl', rawurlencode( $returnUrl ), get_home_url( null, 'skautis/auth/' . Actions::CONNECT_ACTION ) );
 
 			echo '
 			<a href="' . esc_url( $url ) . '"
@@ -55,7 +55,7 @@ final class ConnectAndDisconnectWpAccount {
 
 	public function connect() {
 		if ( ! $this->skautisLogin->isUserLoggedInSkautis() ) {
-			// phpcs:ignore WordPress.Security.NonceVerification.Missing
+            // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			if ( ! $this->skautisLogin->setLoginDataToLocalSkautisInstance( $_POST ) ) {
 				$returnUrl = Helpers::getReturnUrl() ?? Helpers::getCurrentUrl();
 				wp_safe_redirect( esc_url_raw( $this->skautisGateway->getSkautisInstance()->getLoginUrl( $returnUrl ) ), 302 );
@@ -71,12 +71,12 @@ final class ConnectAndDisconnectWpAccount {
 	}
 
 	public function connectWpUserToSkautis() {
-		if ( ! isset( $_GET[SKAUTISINTEGRATION_NAME. '_connect_user_nonce'] ) ||
-			 ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET[SKAUTISINTEGRATION_NAME. '_connect_user_nonce'] ) ), SKAUTISINTEGRATION_NAME. '_connect_user' ) ||
-			 ! $this->skautisLogin->isUserLoggedInSkautis() ||
-			 ! Helpers::userIsSkautisManager() ||
-			 is_null( Helpers::getReturnUrl() )
-		   ) {
+		if ( ! isset( $_GET[ SKAUTISINTEGRATION_NAME . '_connect_user_nonce' ] ) ||
+			! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET[ SKAUTISINTEGRATION_NAME . '_connect_user_nonce' ] ) ), SKAUTISINTEGRATION_NAME . '_connect_user' ) ||
+			! $this->skautisLogin->isUserLoggedInSkautis() ||
+			! Helpers::userIsSkautisManager() ||
+			is_null( Helpers::getReturnUrl() )
+		) {
 			wp_die( esc_html__( 'Nemáte oprávnění k propojování uživatelů.', 'skautis-integration' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
 		}
 
@@ -95,9 +95,9 @@ final class ConnectAndDisconnectWpAccount {
 	public function getConnectWpUserToSkautisUrl(): string {
 		$returnUrl = Helpers::getCurrentUrl();
 		$returnUrl = add_query_arg( SKAUTISINTEGRATION_NAME . '_connectWpAccountWithSkautis', wp_create_nonce( SKAUTISINTEGRATION_NAME . '_connectWpAccountWithSkautis' ), $returnUrl );
-		$url       = add_query_arg( 'ReturnUrl', urlencode( $returnUrl ), get_home_url( null, 'skautis/auth/' . Actions::CONNECT_WP_USER_TO_SKAUTIS_ACTION ) );
+		$url       = add_query_arg( 'ReturnUrl', rawurlencode( $returnUrl ), get_home_url( null, 'skautis/auth/' . Actions::CONNECT_WP_USER_TO_SKAUTIS_ACTION ) );
 
-		return esc_url( wp_nonce_url( $url, SKAUTISINTEGRATION_NAME. '_connect_user', SKAUTISINTEGRATION_NAME. '_connect_user_nonce' ) );
+		return esc_url( wp_nonce_url( $url, SKAUTISINTEGRATION_NAME . '_connect_user', SKAUTISINTEGRATION_NAME . '_connect_user_nonce' ) );
 	}
 
 	public function disconnect() {
@@ -109,7 +109,7 @@ final class ConnectAndDisconnectWpAccount {
 				if ( strpos( $returnUrl, 'profile.php' ) !== false ) {
 					delete_user_meta( get_current_user_id(), 'skautisUserId_' . $this->skautisGateway->getEnv() );
 				} elseif ( ( strpos( $returnUrl, 'user-edit_php' ) !== false ||
-							  strpos( $returnUrl, 'user-edit.php' ) !== false ) &&
+							strpos( $returnUrl, 'user-edit.php' ) !== false ) &&
 							strpos( $returnUrl, 'user_id=' ) !== false ) {
 					if ( ! preg_match( '~user_id=(\d+)~', $returnUrl, $result ) ) {
 						return;

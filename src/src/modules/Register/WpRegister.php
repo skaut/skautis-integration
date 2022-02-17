@@ -24,9 +24,10 @@ final class WpRegister {
 			'register_new_user',
 			function ( $userId ) {
 				$notify = apply_filters( SKAUTISINTEGRATION_NAME . '_modules_register_newUserNotifications', get_option( SKAUTISINTEGRATION_NAME . '_modules_register_notifications', 'none' ) );
-				if ( $notify != 'none' ) {
+				if ( 'none' !== $notify ) {
 					global $wp_locale_switcher;
 					if ( ! $wp_locale_switcher ) {
+				// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 						$GLOBALS['wp_locale_switcher'] = new \WP_Locale_Switcher();
 						$GLOBALS['wp_locale_switcher']->init();
 					}
@@ -43,8 +44,10 @@ final class WpRegister {
 
 		if ( is_wp_error( $userId ) ) {
 			if ( isset( $userId->errors ) && ( isset( $userId->errors['username_exists'] ) || isset( $userId->errors['email_exists'] ) ) ) {
+				/* translators: The user's e-mail address */
 				wp_die( sprintf( esc_html__( 'Vás email %s je již na webu registrován, ale není propojen se skautIS účtem.', 'skautis-integration' ), esc_html( $userEmail ) ), esc_html__( 'Chyba při registraci', 'skautis-integration' ) );
 			}
+				/* translators: The error message */
 			wp_die( sprintf( esc_html__( 'Při registraci nastala neočekávaná chyba: %s', 'skautis-integration' ), esc_html( $userId->get_error_message() ) ), esc_html__( 'Chyba při registraci', 'skautis-integration' ) );
 		}
 
@@ -99,7 +102,7 @@ final class WpRegister {
 			return true;
 		}
 
-		if ( ! isset( $user['UserName'] ) || mb_strlen( $user['UserName'] ) == 0 ) {
+		if ( ! isset( $user['UserName'] ) || mb_strlen( $user['UserName'] ) === 0 ) {
 			return false;
 		}
 
@@ -107,7 +110,7 @@ final class WpRegister {
 
 		$userId = $this->resolveNotificationsAndRegisterUserToWp( $username, $user['email'] );
 
-		if ( $userId === 0 ) {
+		if ( 0 === $userId ) {
 			return false;
 		}
 
@@ -117,7 +120,8 @@ final class WpRegister {
 
 		$firstName = $user['firstName'];
 		$lastName  = $user['lastName'];
-		if ( $nickName = $user['nickName'] ) {
+		$nickName  = $user['nickName'];
+		if ( $nickName ) {
 			$displayName = $nickName;
 		} else {
 			$nickName    = '';
@@ -176,7 +180,7 @@ final class WpRegister {
 		$returnUrl = remove_query_arg( 'loggedout', urldecode( $returnUrl ) );
 
 		$returnUrl = add_query_arg( SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis', wp_create_nonce( SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis' ), $returnUrl );
-		$url       = add_query_arg( 'ReturnUrl', urlencode( $returnUrl ), get_home_url( null, 'skautis/auth/' . Register::REGISTER_ACTION ) );
+		$url       = add_query_arg( 'ReturnUrl', rawurlencode( $returnUrl ), get_home_url( null, 'skautis/auth/' . Register::REGISTER_ACTION ) );
 
 		return esc_url( $url );
 	}
@@ -196,9 +200,9 @@ final class WpRegister {
 	public function getManuallyRegisterWpUserUrl(): string {
 		$returnUrl = Helpers::getLoginLogoutRedirect();
 		$returnUrl = add_query_arg( SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis', wp_create_nonce( SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis' ), $returnUrl );
-		$url       = add_query_arg( 'ReturnUrl', urlencode( $returnUrl ), get_home_url( null, 'skautis/auth/' . Register::MANUALLY_REGISTER_WP_USER_ACTION ) );
+		$url       = add_query_arg( 'ReturnUrl', rawurlencode( $returnUrl ), get_home_url( null, 'skautis/auth/' . Register::MANUALLY_REGISTER_WP_USER_ACTION ) );
 
-		return esc_url( wp_nonce_url( $url, SKAUTISINTEGRATION_NAME. '_register_user', SKAUTISINTEGRATION_NAME. '_register_user_nonce' ) );
+		return esc_url( wp_nonce_url( $url, SKAUTISINTEGRATION_NAME . '_register_user', SKAUTISINTEGRATION_NAME . '_register_user_nonce' ) );
 	}
 
 	public function registerToWpManually( string $wpRole, int $skautisUserId ): bool {
@@ -209,8 +213,6 @@ final class WpRegister {
 
 	public function sanitizeUsername( string $username, string $rawUsername, bool $strict ): string {
 		$username = wp_strip_all_tags( $rawUsername );
-
-		// $username = remove_accents ($username);
 
 		// Kill octets
 		$username = preg_replace( '|%([a-fA-F0-9][a-fA-F0-9])|', '', $username );

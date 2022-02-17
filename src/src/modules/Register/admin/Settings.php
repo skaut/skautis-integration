@@ -39,7 +39,7 @@ final class Settings {
 
 	public function printSettingPage() {
 		if ( ! Helpers::userIsSkautisManager() ) {
-			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.' ) );
+			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'skautis-integration' ) );
 		}
 
 		settings_errors();
@@ -131,29 +131,29 @@ final class Settings {
 		?>
 		<label>
 			<input type="radio"
-				   name="<?php echo esc_attr( SKAUTISINTEGRATION_NAME ); ?>_modules_register_notifications"
-				   value="none"<?php checked( 'none' === $notificationOption ); ?> />
+				name="<?php echo esc_attr( SKAUTISINTEGRATION_NAME ); ?>_modules_register_notifications"
+				value="none"<?php checked( 'none' === $notificationOption ); ?> />
 			<span><?php esc_html_e( 'Nikomu', 'skautis-integration' ); ?></span>
 		</label>
 		<br/>
 		<label>
 			<input type="radio"
-				   name="<?php echo esc_attr( SKAUTISINTEGRATION_NAME ); ?>_modules_register_notifications"
-				   value="admin"<?php checked( 'admin' === $notificationOption ); ?> />
+				name="<?php echo esc_attr( SKAUTISINTEGRATION_NAME ); ?>_modules_register_notifications"
+				value="admin"<?php checked( 'admin' === $notificationOption ); ?> />
 			<span><?php esc_html_e( 'Administrátorovi (info o registraci nového uživatele)', 'skautis-integration' ); ?></span>
 		</label>
 		<br/>
 		<label>
 			<input type="radio"
-				   name="<?php echo esc_attr( SKAUTISINTEGRATION_NAME ); ?>_modules_register_notifications"
-				   value="user"<?php checked( 'user' === $notificationOption ); ?> />
+				name="<?php echo esc_attr( SKAUTISINTEGRATION_NAME ); ?>_modules_register_notifications"
+				value="user"<?php checked( 'user' === $notificationOption ); ?> />
 			<span><?php esc_html_e( 'Uživateli (přístupové údaje)', 'skautis-integration' ); ?></span>
 		</label>
 		<br/>
 		<label>
 			<input type="radio"
-				   name="<?php echo esc_attr( SKAUTISINTEGRATION_NAME ); ?>_modules_register_notifications"
-				   value="both"<?php checked( 'both' === $notificationOption ); ?> />
+				name="<?php echo esc_attr( SKAUTISINTEGRATION_NAME ); ?>_modules_register_notifications"
+				value="both"<?php checked( 'both' === $notificationOption ); ?> />
 			<span><?php esc_html_e( 'Administrátorovi i uživateli', 'skautis-integration' ); ?></span>
 		</label>
 		<?php
@@ -173,14 +173,14 @@ final class Settings {
 		</div>
 		<div id="skautis_integration_modules_register_rulesSetHelp">
 			<em><strong><?php esc_html_e( 'Pravidla se vyhodnocují shora dolů.', 'skautis-integration' ); ?></strong> 
-								  <?php
+								<?php
 									esc_html_e(
 										'Jakmile je
 			některé pravidlo splněno, další, po něm následující, se již nevyhodnocují. Proto udržujte pořadí pravidel
 			takové, aby nahoře byly vždy specifičtější pravidla, která platí pro užší skupinu uživatelů.',
 										'skautis-integration'
 									);
-									?>
+								?>
 			</em></div>
 		<div id="repeater">
 			<div data-repeater-list="<?php echo esc_attr( SKAUTISINTEGRATION_NAME ); ?>_modules_register_rules">
@@ -207,7 +207,7 @@ final class Settings {
 					</select>
 
 					<input data-repeater-delete type="button"
-						   value="<?php esc_attr_e( 'Odstranit', 'skautis-integration' ); ?>"/>
+						value="<?php esc_attr_e( 'Odstranit', 'skautis-integration' ); ?>"/>
 				</div>
 			</div>
 			<input data-repeater-create type="button" value="<?php esc_attr_e( 'Přidat', 'skautis-integration' ); ?>"/>

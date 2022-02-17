@@ -94,7 +94,6 @@ class SkautisIntegration {
 
 		register_activation_hook( __FILE__, array( $this, 'activation' ) );
 		register_deactivation_hook( __FILE__, array( $this, 'deactivation' ) );
-		register_uninstall_hook( __FILE__, array( __CLASS__, 'uninstall' ) );
 	}
 
 	protected function init() {
@@ -150,29 +149,6 @@ class SkautisIntegration {
 	public function deactivation() {
 		delete_option( 'skautis_rewrite_rules_need_to_flush' );
 		flush_rewrite_rules();
-	}
-
-	public static function uninstall() {
-		global $wpdb;
-		$options = $wpdb->get_results(
-			$wpdb->prepare(
-				"
-SELECT `option_name`
-FROM $wpdb->options
-WHERE `option_name` LIKE %s OR `option_name` LIKE %s
-",
-				array( 'skautis_integration_%', SKAUTISINTEGRATION_NAME . '_%' )
-			)
-		);
-		foreach ( $options as $option ) {
-			delete_option( $option->option_name );
-		}
-
-		delete_option( 'skautis_rewrite_rules_need_to_flush' );
-
-		flush_rewrite_rules();
-
-		return true;
 	}
 
 	public function checkVersionAndPossiblyDeactivatePlugin() {

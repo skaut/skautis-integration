@@ -38,7 +38,7 @@ final class Admin {
 	}
 
 	public function addMetaboxForRulesField( string $postType ) {
-		if ( $postType == RulesInit::RULES_TYPE_SLUG ) {
+		if ( RulesInit::RULES_TYPE_SLUG === $postType ) {
 			add_meta_box(
 				SKAUTISINTEGRATION_NAME . '_rules_metabox',
 				__( 'skautIS pravidla', 'skautis-integration' ),
@@ -66,7 +66,7 @@ final class Admin {
 		wp_nonce_field( SKAUTISINTEGRATION_NAME . '_rules_metabox', SKAUTISINTEGRATION_NAME . '_rules_metabox_nonce' );
 		?>
 		<textarea id="query_builder_values" class=""
-				  name="<?php echo esc_attr( SKAUTISINTEGRATION_NAME ); ?>_rules_data"><?php echo esc_html( get_post_meta( $post->ID, SKAUTISINTEGRATION_NAME . '_rules_data', true ) ); ?></textarea>
+				name="<?php echo esc_attr( SKAUTISINTEGRATION_NAME ); ?>_rules_data"><?php echo esc_html( get_post_meta( $post->ID, SKAUTISINTEGRATION_NAME . '_rules_data', true ) ); ?></textarea>
 		<?php
 	}
 
@@ -83,7 +83,7 @@ final class Admin {
 	public function restoreRevisionForRulesField( int $postId, int $revisionId ) {
 		$post     = get_post( $postId );
 		$revision = get_post( $revisionId );
-		if ( $post->post_type == RulesInit::RULES_TYPE_SLUG ) {
+		if ( RulesInit::RULES_TYPE_SLUG === $post->post_type ) {
 			$meta = get_metadata( 'post', $revision->ID, SKAUTISINTEGRATION_NAME . '_rules_data', true );
 			if ( false !== $meta ) {
 				update_post_meta( $postId, SKAUTISINTEGRATION_NAME . '_rules_data', $meta );
@@ -92,7 +92,7 @@ final class Admin {
 	}
 
 	public function addRulesUi( \WP_Post $post ) {
-		if ( get_current_screen()->id != RulesInit::RULES_TYPE_SLUG || get_post_type() != RulesInit::RULES_TYPE_SLUG ) {
+		if ( get_current_screen()->id !== RulesInit::RULES_TYPE_SLUG || get_post_type() !== RulesInit::RULES_TYPE_SLUG ) {
 			return;
 		}
 		?>
@@ -106,9 +106,10 @@ final class Admin {
 				</h2>
 				<div class="inside" style="padding: 0.75em 1.5em 1.25em 1.5em;">
 					<label class="screen-reader-text"
-						   for="post_author_override"><?php esc_html_e( 'Zadejte podmínky pro splnění pravidla', 'skautis-integration' ); ?></label>
+						for="post_author_override"><?php esc_html_e( 'Zadejte podmínky pro splnění pravidla', 'skautis-integration' ); ?></label>
 					<?php
 					if ( ! $this->skautisGateway->isInitialized() ) {
+						/* translators: 1: Start of link to the settings 2: End of link to the settings */
 						printf( esc_html__( 'Vyberte v %1$snastavení%2$s pluginu typ prostředí skautISu', 'skautis-integration' ), '<a href="' . esc_url( admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME ) ) . '">', '</a>' );
 					} elseif ( ! $this->skautisGateway->getSkautisInstance()->getUser()->isLoggedIn( true ) ) {
 						echo '<h4><a href="' . esc_url( $this->wpLoginLogout->getLoginUrl( add_query_arg( 'noWpLogin', true, Helpers::getCurrentUrl() ) ) ) . '">' . esc_html__( 'Pro správu podmínek je nutné se přihlásit do skautISu', 'skautis-integration' ) . '</a></h4>';
@@ -123,7 +124,7 @@ final class Admin {
 	}
 
 	public function enqueueStyles() {
-		if ( get_current_screen()->id != RulesInit::RULES_TYPE_SLUG || get_post_type() != RulesInit::RULES_TYPE_SLUG ) {
+		if ( get_current_screen()->id !== RulesInit::RULES_TYPE_SLUG || get_post_type() !== RulesInit::RULES_TYPE_SLUG ) {
 			return;
 		}
 
@@ -153,7 +154,7 @@ final class Admin {
 	}
 
 	public function enqueueScripts() {
-		if ( get_current_screen()->id != RulesInit::RULES_TYPE_SLUG || get_post_type() != RulesInit::RULES_TYPE_SLUG ) {
+		if ( get_current_screen()->id !== RulesInit::RULES_TYPE_SLUG || get_post_type() !== RulesInit::RULES_TYPE_SLUG ) {
 			return;
 		}
 
@@ -223,7 +224,7 @@ final class Admin {
 	}
 
 	public function initRulesBuilder() {
-		if ( get_current_screen()->id != RulesInit::RULES_TYPE_SLUG || get_post_type() != RulesInit::RULES_TYPE_SLUG ) {
+		if ( get_current_screen()->id !== RulesInit::RULES_TYPE_SLUG || get_post_type() !== RulesInit::RULES_TYPE_SLUG ) {
 			return;
 		}
 

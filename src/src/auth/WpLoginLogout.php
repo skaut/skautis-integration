@@ -35,17 +35,18 @@ final class WpLoginLogout {
 			$users        = $usersWpQuery->get_results();
 
 			if ( ! empty( $users )
-				 && isset( $users[0] )
-				 && isset( $users[0]->ID )
-				 && $users[0]->ID > 0
+				&& isset( $users[0] )
+				&& isset( $users[0]->ID )
+				&& $users[0]->ID > 0
 			) {
 				$wpUser = $users[0];
 
 				if ( ! $try ) {
 					if ( Services::getServicesContainer()['modulesManager']->isModuleActivated( Register::getId() ) &&
-						 ! user_can( $wpUser->ID, Helpers::getSkautisManagerCapability() ) &&
-						 get_option( SKAUTISINTEGRATION_NAME . '_checkUserPrivilegesIfLoginBySkautis' ) ) {
+						! user_can( $wpUser->ID, Helpers::getSkautisManagerCapability() ) &&
+						get_option( SKAUTISINTEGRATION_NAME . '_checkUserPrivilegesIfLoginBySkautis' ) ) {
 						if ( ! Services::getServicesContainer()[ Register::getId() ]->getRulesManager()->checkIfUserPassedRulesAndGetHisRole() ) {
+							/* translators: 1: Start of a link to SkautIS login 2: End of the link to SkautIS login */
 							wp_die( sprintf( esc_html__( 'Je nám líto, ale již nemáte oprávnění k přístupu. %1$sZkuste se znovu zaregistrovat%2$s', 'skautis-integration' ), '<a href = "' . esc_url( ( Services::getServicesContainer()[ Register::getId() ] )->getWpRegister()->getRegisterUrl() ) . '">', '</a>' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
 						}
 					}
@@ -61,6 +62,7 @@ final class WpLoginLogout {
 				wp_set_current_user( $wpUser->ID, $wpUser->data->user_login );
 				wp_set_auth_cookie( $wpUser->ID, true );
 
+				// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 				do_action( 'wp_login', $wpUser->user_login, $wpUser );
 
 				wp_safe_redirect( $returnUrl, 302 );
@@ -70,6 +72,7 @@ final class WpLoginLogout {
 
 		if ( ! $try ) {
 			if ( Services::getServicesContainer()['modulesManager']->isModuleActivated( Register::getId() ) ) {
+				/* translators: 1: Start of a link to SkautIS login 2: End of the link to SkautIS login */
 				wp_die( sprintf( esc_html__( 'Nemáte oprávnění k přístupu. %1$sZkuste se nejdříve zaregistrovat%2$s', 'skautis-integration' ), '<a href ="' . esc_url( ( Services::getServicesContainer()[ Register::getId() ] )->getWpRegister()->getRegisterUrl() ) . '">', '</a>' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
 			} else {
 				$this->skautisGateway->logout();
@@ -91,7 +94,7 @@ final class WpLoginLogout {
 			$returnUrl = admin_url();
 		}
 
-		$url = add_query_arg( 'ReturnUrl', urlencode( $returnUrl ), get_home_url( null, 'skautis/auth/' . Actions::LOGIN_ACTION ) );
+		$url = add_query_arg( 'ReturnUrl', rawurlencode( $returnUrl ), get_home_url( null, 'skautis/auth/' . Actions::LOGIN_ACTION ) );
 
 		return esc_url( $url );
 	}
@@ -108,7 +111,7 @@ final class WpLoginLogout {
 		}
 
 		$returnUrl = add_query_arg( SKAUTISINTEGRATION_NAME . '_logoutFromWpAndSkautis', wp_create_nonce( SKAUTISINTEGRATION_NAME . '_logoutFromWpAndSkautis' ), $returnUrl );
-		$url       = add_query_arg( 'ReturnUrl', urlencode( $returnUrl ), get_home_url( null, 'skautis/auth/' . Actions::LOGOUT_CONFIRM_ACTION ) );
+		$url       = add_query_arg( 'ReturnUrl', rawurlencode( $returnUrl ), get_home_url( null, 'skautis/auth/' . Actions::LOGOUT_CONFIRM_ACTION ) );
 
 		return esc_url( $url );
 	}

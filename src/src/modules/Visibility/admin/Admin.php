@@ -33,8 +33,8 @@ final class Admin {
 	}
 
 	public function enqueueScriptsAndStyles() {
-		if ( in_array( get_current_screen()->id, $this->postTypes ) ||
-			 get_current_screen()->id == 'skautis_page_' . SKAUTISINTEGRATION_NAME . '_modules_visibility' ) {
+		if ( in_array( get_current_screen()->id, $this->postTypes, true ) ||
+			get_current_screen()->id === 'skautis_page_' . SKAUTISINTEGRATION_NAME . '_modules_visibility' ) {
 			wp_enqueue_script( 'jquery-ui-sortable' );
 
 			wp_enqueue_style(
@@ -64,7 +64,7 @@ final class Admin {
 	}
 
 	public function initRulesOptions() {
-		if ( in_array( get_current_screen()->id, $this->postTypes ) ) {
+		if ( in_array( get_current_screen()->id, $this->postTypes, true ) ) {
 			$rules = array();
 
 			foreach ( (array) $this->rulesManager->getAllRules() as $rule ) {
@@ -79,7 +79,7 @@ final class Admin {
 	}
 
 	public function initRulesData() {
-		if ( in_array( get_current_screen()->id, $this->postTypes ) ) {
+		if ( in_array( get_current_screen()->id, $this->postTypes, true ) ) {
 			$data = get_post_meta( get_the_ID(), SKAUTISINTEGRATION_NAME . '_rules', true );
 			?>
 			<script>

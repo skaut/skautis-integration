@@ -22,7 +22,7 @@ class Revisions {
 	public function filterMeta( $meta ): array {
 		$metaFiltered = array();
 		foreach ( $meta as $key => $value ) {
-			if ( $key[0] != '_' ) {
+			if ( '_' !== $key[0] ) {
 				$metaFiltered[ $key ] = $value;
 			}
 		}
@@ -93,7 +93,7 @@ class Revisions {
 	public function savePost( int $postId ) {
 		if ( wp_is_post_revision( $postId ) ) {
 			$meta = $this->getMeta( $postId );
-			if ( $meta === false ) {
+			if ( false === $meta ) {
 				return;
 			}
 

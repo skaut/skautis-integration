@@ -11,10 +11,10 @@ class TransientSessionAdapter implements AdapterInterface {
 		if ( isset( $_COOKIE[ SKAUTISINTEGRATION_NAME . '-skautis-session' ] ) ) {
 			return sanitize_text_field( wp_unslash( $_COOKIE[ SKAUTISINTEGRATION_NAME . '-skautis-session' ] ) );
 		} else {
-			$chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+			$chars     = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 			$cookie_id = '';
 			for ( $i = 0; $i < 32; $i++ ) {
-				$cookie_id .= substr( $chars, \rand( 0, strlen( $chars ) - 1 ), 1 );
+				$cookie_id .= substr( $chars, wp_rand( 0, strlen( $chars ) - 1 ), 1 );
 			}
 			setcookie( SKAUTISINTEGRATION_NAME . '-skautis-session', $cookie_id, time() + 40 * \MINUTE_IN_SECONDS, '/', '', true, true );
 			return $cookie_id;

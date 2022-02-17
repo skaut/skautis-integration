@@ -43,12 +43,13 @@ class Columns {
 	}
 
 	public function lastModifiedAdminColumnContent( string $columnName, int $postId ) {
-		if ( 'modified_last' != $columnName ) {
+		if ( 'modified_last' !== $columnName ) {
 			return;
 		}
 
-		$post           = get_post( $postId );
-		$modifiedDate   = sprintf( _x( 'Před %s', '%s = human-readable time difference', 'skautis-integration' ), human_time_diff( strtotime( $post->post_modified ), current_time( 'timestamp' ) ) );
+		$post = get_post( $postId );
+		/* translators: human-readable time difference */
+		$modifiedDate   = sprintf( _x( 'Před %s', '%s = human-readable time difference', 'skautis-integration' ), human_time_diff( strtotime( $post->post_modified ), time() ) );
 		$modifiedAuthor = get_the_modified_author();
 
 		echo esc_html( $modifiedDate );

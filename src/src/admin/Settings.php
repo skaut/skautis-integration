@@ -50,22 +50,25 @@ final class Settings {
 
 	private function checkIfAppIdIsSetAndShowNotices() {
 		$envType = get_option( 'skautis_integration_appid_type' );
-		if ( $envType === SkautisGateway::PROD_ENV ) {
+		if ( SkautisGateway::PROD_ENV === $envType ) {
 			if ( ! get_option( 'skautis_integration_appid_prod' ) ) {
+				/* translators: 1: Start of a link to the settings 2: End of the link to the settings */
 				Helpers::showAdminNotice( sprintf( __( 'Zadejte v %1$snastavení%2$s pluginu APP ID produkční verze skautISu', 'skautis-integration' ), '<a href="' . esc_url( admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME ) ) . '">', '</a>' ), 'warning', 'toplevel_page_' . SKAUTISINTEGRATION_NAME );
 			}
-		} elseif ( $envType === SkautisGateway::TEST_ENV ) {
+		} elseif ( SkautisGateway::TEST_ENV === $envType ) {
 			if ( ! get_option( 'skautis_integration_appid_test' ) ) {
+				/* translators: 1: Start of a link to the settings 2: End of the link to the settings */
 				Helpers::showAdminNotice( sprintf( __( 'Zadejte v %1$snastavení%2$s pluginu APP ID testovací verze skautISu', 'skautis-integration' ), '<a href="' . esc_url( admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME ) ) . '">', '</a>' ), 'warning', 'toplevel_page_' . SKAUTISINTEGRATION_NAME );
 			}
 		} else {
+				/* translators: 1: Start of a link to the settings 2: End of the link to the settings */
 			Helpers::showAdminNotice( sprintf( __( 'Vyberte v %1$snastavení%2$s pluginu typ prostředí skautISu', 'skautis-integration' ), '<a href="' . esc_url( admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME ) ) . '">', '</a>' ), 'warning', 'toplevel_page_' . SKAUTISINTEGRATION_NAME );
 		}
 	}
 
 	public function addSettingsLinkToPluginsTable( array $links = array() ): array {
 		$mylinks = array(
-			'<a href="' . admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME ) . '">' . __( 'Settings' ) . '</a>',
+			'<a href="' . admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME, 'skautis-integration' ) . '">' . __( 'Settings', 'skautis-integration' ) . '</a>',
 		);
 
 		return array_merge( $links, $mylinks );
@@ -73,7 +76,7 @@ final class Settings {
 
 	public function addHelpLinkToPluginsTable( array $links = array() ): array {
 		$mylinks = array(
-			'<a href="' . self::HELP_PAGE_URL . '" target="_blank">' . __( 'Help' ) . '</a>',
+			'<a href="' . self::HELP_PAGE_URL . '" target="_blank">' . __( 'Help', 'skautis-integration' ) . '</a>',
 		);
 
 		return array_merge( $links, $mylinks );
@@ -119,7 +122,7 @@ final class Settings {
 
 	public function printSettingPage() {
 		if ( ! current_user_can( Helpers::getSkautisManagerCapability() ) ) {
-			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.' ) );
+			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'skautis-integration' ) );
 		}
 
 		settings_errors();
@@ -149,6 +152,7 @@ final class Settings {
 			'skautis_integration_setting',
 			__( 'APP ID', 'skautis-integration' ),
 			function () {
+				/* translators: 1: Start of a link to the documentation 2: End of the link to the documentation */
 				printf( esc_html__( 'Návod pro nastavení pluginu a získání APP ID najdete v %1$snápovědě%2$s.', 'skautis-integration' ), '<a href="' . esc_url( self::HELP_PAGE_URL ) . '" target="_blank">', '</a>' );
 			},
 			SKAUTISINTEGRATION_NAME
@@ -232,7 +236,7 @@ final class Settings {
 				SKAUTISINTEGRATION_NAME . '_modules_' . $moduleId,
 				$moduleLabel,
 				function () use ( $moduleId, $moduleLabel, $activatedModules ) {
-					$checked = in_array( $moduleId, $activatedModules );
+					$checked = in_array( $moduleId, $activatedModules, true );
 					echo '
 					<label for="' . esc_attr( $moduleId ) . '"><input name="skautis_integration_activated_modules[]" type="checkbox" id="' . esc_attr( $moduleId ) . '" value="' . esc_attr( $moduleId ) . '" ' . ( $checked ? 'checked="checked"' : '' ) . '></label>
 					';
@@ -254,7 +258,7 @@ final class Settings {
 
 	public function printLoginPage() {
 		if ( ! current_user_can( Helpers::getSkautisManagerCapability() ) ) {
-			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.' ) );
+			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'skautis-integration' ) );
 		}
 
 		settings_errors();
@@ -361,13 +365,13 @@ final class Settings {
 		?>
 		<label>
 			<input type="radio" name="skautis_integration_appid_type"
-				   value="prod"<?php checked( 'prod' === $appIdType ); ?> />
+				value="prod"<?php checked( 'prod' === $appIdType ); ?> />
 			<span><?php esc_html_e( 'Produkční', 'skautis-integration' ); ?></span>
 		</label>
 		<br/>
 		<label>
 			<input type="radio" name="skautis_integration_appid_type"
-				   value="test"<?php checked( 'test' === $appIdType ); ?> />
+				value="test"<?php checked( 'test' === $appIdType ); ?> />
 			<span><?php esc_html_e( 'Testovací', 'skautis-integration' ); ?></span>
 		</label>
 		<?php
@@ -437,8 +441,8 @@ if ( ! isUserLoggedInSkautis() ) {
 	public function fieldAllowUsersDisconnectFromSkautis() {
 		?>
 		<input name="<?php echo esc_attr( SKAUTISINTEGRATION_NAME ); ?>_allowUsersDisconnectFromSkautis"
-			   id="skautis_integration_allowUsersDisconnectFromSkautis" type="checkbox"
-			   <?php checked( get_option( SKAUTISINTEGRATION_NAME . '_allowUsersDisconnectFromSkautis' ) == '1' ); ?>value="1"/>
+			id="skautis_integration_allowUsersDisconnectFromSkautis" type="checkbox"
+			<?php checked( get_option( SKAUTISINTEGRATION_NAME . '_allowUsersDisconnectFromSkautis' ) === '1' ); ?>value="1"/>
 		<div
 			style="margin: 0.4em 0;"><?php esc_html_e( 'Umožní uživatelům zrušit propojení svého účtu se skautISem.', 'skautis-integration' ); ?></div>
 		<em><?php esc_html_e( 'Nastavení nebude mít dopad na uživatele s úrovní administrátora.', 'skautis-integration' ); ?></em>
@@ -448,8 +452,8 @@ if ( ! isUserLoggedInSkautis() ) {
 	public function fieldcheckUserPrivilegesIfLoginBySkautis() {
 		?>
 		<input name="<?php echo esc_attr( SKAUTISINTEGRATION_NAME ); ?>_checkUserPrivilegesIfLoginBySkautis"
-			   id="skautis_integration_checkUserPrivilegesIfLoginBySkautis" type="checkbox"
-			   <?php checked( get_option( SKAUTISINTEGRATION_NAME . '_checkUserPrivilegesIfLoginBySkautis' ) == '1' ); ?>value="1"/>
+			id="skautis_integration_checkUserPrivilegesIfLoginBySkautis" type="checkbox"
+			<?php checked( get_option( SKAUTISINTEGRATION_NAME . '_checkUserPrivilegesIfLoginBySkautis' ) === '1' ); ?>value="1"/>
 		<div
 			style="margin: 0.4em 0;"><?php esc_html_e( 'Při přihlašování uživatele přes skautIS ověřit, zda stále splňuje podmínky pro registraci.', 'skautis-integration' ); ?></div>
 		<em><?php esc_html_e( 'Nastavení nebude mít dopad na uživatele s úrovní administrátora.', 'skautis-integration' ); ?></em>
@@ -458,7 +462,7 @@ if ( ! isUserLoggedInSkautis() ) {
 
 	public function printModulesPage() {
 		if ( ! Helpers::userIsSkautisManager() ) {
-			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.' ) );
+			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'skautis-integration' ) );
 		}
 		settings_errors();
 		?>

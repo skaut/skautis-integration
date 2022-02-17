@@ -55,14 +55,14 @@ class All implements IRule {
 
 	public function getValues(): array {
 		$result = array(
-			1 => __( 'Ano' ),
+			1 => __( 'Ano', 'skautis-integration' ),
 		);
 
 		return $result;
 	}
 
 	public function isRulePassed( string $operator, $data ): bool {
-		if ( ! empty( $data[0] ) && $data[0] == 1 && $this->skautisGateway->getSkautisInstance()->UserManagement->UserDetail()->ID > 0 ) {
+		if ( ! empty( $data[0] ) && 1 === $data[0] && $this->skautisGateway->getSkautisInstance()->UserManagement->UserDetail()->ID > 0 ) {
 			return true;
 		}
 

@@ -70,13 +70,13 @@ class RoleChanger {
 <script>
 var timeout = 0;
 if (!jQuery.fn.select2) {
-    timeout = 500;
+	timeout = 500;
 }
 setTimeout(function() {
 	(function ($) {
-	    "use strict";
+		"use strict";
 		$("#skautisRoleChanger").select2().on("change.roleChanger", function () {
-	        $(this).closest("form").submit();
+			$(this).closest("form").submit();
 		});
 	})(jQuery);
 }, timeout);

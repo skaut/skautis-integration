@@ -111,7 +111,8 @@ final class Register implements IModule {
 	}
 
 	public function registerUser() {
-		if ( $wpRole = $this->rulesManager->checkIfUserPassedRulesAndGetHisRole() ) {
+		$wpRole = $this->rulesManager->checkIfUserPassedRulesAndGetHisRole();
+		if ( $wpRole ) {
 			if ( $this->wpRegister->registerToWp( $wpRole ) ) {
 				$this->loginUserAfterRegistration();
 			}
@@ -132,6 +133,7 @@ final class Register implements IModule {
 
 		$returnUrl = Helpers::getReturnUrl();
 		if ( ! is_null( $returnUrl ) ) {
+			/* translators: 1: Start of the link back 2: End of the link back */
 			wp_die( sprintf( esc_html__( 'Nemáte oprávnění k registraci. %1$sZkuste to znovu%2$s', 'skautis-integration' ), '<a href="' . esc_url( $returnUrl ) . '">', '</a>' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
 		}
 		wp_die( esc_html__( 'Nemáte oprávnění k registraci.', 'skautis-integration' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
@@ -139,13 +141,13 @@ final class Register implements IModule {
 
 	public function registerUserManually() {
 		$returnUrl = Helpers::getReturnUrl();
-		if ( ! isset( $_GET[SKAUTISINTEGRATION_NAME. '_register_user_nonce'] ) ||
-			 ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET[SKAUTISINTEGRATION_NAME. '_register_user_nonce'] ) ), SKAUTISINTEGRATION_NAME. '_register_user' ) ||
-			 ! $this->skautisLogin->isUserLoggedInSkautis() ||
-			 ! Helpers::userIsSkautisManager() ||
-			 ! current_user_can( 'create_users' ) ||
-			 is_null( $returnUrl ) ||
-			 ! isset( $_GET['wpRole'], $_GET['skautisUserId'] ) ) {
+		if ( ! isset( $_GET[ SKAUTISINTEGRATION_NAME . '_register_user_nonce' ] ) ||
+			! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET[ SKAUTISINTEGRATION_NAME . '_register_user_nonce' ] ) ), SKAUTISINTEGRATION_NAME . '_register_user' ) ||
+			! $this->skautisLogin->isUserLoggedInSkautis() ||
+			! Helpers::userIsSkautisManager() ||
+			! current_user_can( 'create_users' ) ||
+			is_null( $returnUrl ) ||
+			! isset( $_GET['wpRole'], $_GET['skautisUserId'] ) ) {
 			wp_die( esc_html__( 'Nemáte oprávnění k registraci nových uživatelů.', 'skautis-integration' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
 		}
 

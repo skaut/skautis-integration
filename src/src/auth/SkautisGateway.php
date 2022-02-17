@@ -20,11 +20,11 @@ class SkautisGateway {
 
 	public function __construct() {
 		$envType = get_option( 'skautis_integration_appid_type' );
-		if ( $envType === self::PROD_ENV ) {
+		if ( self::PROD_ENV === $envType ) {
 			$this->appId    = get_option( 'skautis_integration_appid_prod' );
 			$this->env      = $envType;
 			$this->testMode = false;
-		} elseif ( $envType === self::TEST_ENV ) {
+		} elseif ( self::TEST_ENV === $envType ) {
 			$this->appId    = get_option( 'skautis_integration_appid_test' );
 			$this->env      = $envType;
 			$this->testMode = true;

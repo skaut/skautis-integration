@@ -64,7 +64,7 @@ final class Frontend {
 			}
 
 			if ( ! $this->skautisLogin->isUserLoggedInSkautis() ) {
-				if ( $atts['content'] == 'showLogin' ) {
+				if ( 'showLogin' === $atts['content'] ) {
 					return $this->getLoginRequiredMessage() . $this->getLoginForm();
 				} else {
 					return '';
@@ -74,7 +74,7 @@ final class Frontend {
 			if ( $this->rulesManager->checkIfUserPassedRules( explode( ',', $atts['rules'] ) ) ) {
 				return $content;
 			} else {
-				if ( $atts['content'] == 'showLogin' ) {
+				if ( 'showLogin' === $atts['content'] ) {
 					return $this->getUnauthorizedMessage() . $this->getLoginForm( true );
 				} else {
 					return '';

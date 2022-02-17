@@ -34,9 +34,9 @@ final class Users {
 	}
 
 	public function addColumnToUsersTable( $value, string $columnName, int $userId ) {
-		if ( $columnName == SKAUTISINTEGRATION_NAME ) {
+		if ( SKAUTISINTEGRATION_NAME === $columnName ) {
 			$envType = get_option( 'skautis_integration_appid_type' );
-			if ( $envType === SkautisGateway::PROD_ENV ) {
+			if ( SkautisGateway::PROD_ENV === $envType ) {
 				$userId = get_the_author_meta( 'skautisUserId_' . SkautisGateway::PROD_ENV, $userId );
 			} else {
 				$userId = get_the_author_meta( 'skautisUserId_' . SkautisGateway::TEST_ENV, $userId );
@@ -54,14 +54,14 @@ final class Users {
 
 	public function skautisUserIdField( \WP_User $user ) {
 		?>
-		<h3><?php esc_html_e( 'skautIS', 'blank' ); ?></h3>
+		<h3><?php esc_html_e( 'skautIS', 'skautis-integration' ); ?></h3>
 		<?php
 		$this->connectWpAccount->printConnectAndDisconnectButton( $user->ID );
 		do_action( SKAUTISINTEGRATION_NAME . '_userScreen_userIds_before' );
 		?>
 		<table class="form-table">
 			<tr>
-				<th><label for="skautisUserId_prod"><?php esc_html_e( 'skautIS user ID', SKAUTISINTEGRATION_NAME ); ?></label>
+				<th><label for="skautisUserId_prod"><?php esc_html_e( 'skautIS user ID', 'skautis-integration' ); ?></label>
 				</th>
 				<td>
 					<input type="text" name="skautisUserId_prod" id="skautisUserId_prod" class="regular-text" 
@@ -70,12 +70,12 @@ final class Users {
 						echo 'disabled="disabled"';
 					}
 					?>
-						   value="<?php echo esc_attr( get_the_author_meta( 'skautisUserId_prod', $user->ID ) ); ?>"/><br/>
+						value="<?php echo esc_attr( get_the_author_meta( 'skautisUserId_prod', $user->ID ) ); ?>"/><br/>
 				</td>
 			</tr>
 			<tr>
 				<th><label
-						for="skautisUserId_test"><?php esc_html_e( 'skautIS user ID (testovací)', SKAUTISINTEGRATION_NAME ); ?></label>
+						for="skautisUserId_test"><?php esc_html_e( 'skautIS user ID (testovací)', 'skautis-integration' ); ?></label>
 				</th>
 				<td>
 					<input type="text" name="skautisUserId_test" id="skautisUserId_test" class="regular-text" 
@@ -84,7 +84,7 @@ final class Users {
 						echo 'disabled="disabled"';
 					}
 					?>
-						   value="<?php echo esc_attr( get_the_author_meta( 'skautisUserId_test', $user->ID ) ); ?>"/><br/>
+						value="<?php echo esc_attr( get_the_author_meta( 'skautisUserId_test', $user->ID ) ); ?>"/><br/>
 				</td>
 			</tr>
 		</table>
@@ -101,7 +101,7 @@ final class Users {
 		if ( Helpers::userIsSkautisManager() ) {
 			if ( isset( $_POST['skautisUserId_prod'] ) ) {
 				$skautisUserId = absint( $_POST['skautisUserId_prod'] );
-				if ( $skautisUserId == 0 ) {
+				if ( 0 === $skautisUserId ) {
 					$skautisUserId = '';
 				}
 				update_user_meta( $userId, 'skautisUserId_prod', $skautisUserId );
@@ -109,7 +109,7 @@ final class Users {
 			}
 			if ( isset( $_POST['skautisUserId_test'] ) ) {
 				$skautisUserId = absint( $_POST['skautisUserId_test'] );
-				if ( $skautisUserId == 0 ) {
+				if ( 0 === $skautisUserId ) {
 					$skautisUserId = '';
 				}
 				update_user_meta( $userId, 'skautisUserId_test', $skautisUserId );
