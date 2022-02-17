@@ -175,27 +175,19 @@ class Membership implements IRule {
 
 					switch ( $membershipOperator ) {
 						case 'equal':
-							{
-								$userPass += ( $userMembershipUnitId === $unitId );
-								break;
-						}
+							$userPass += ( $userMembershipUnitId === $unitId );
+							break;
 						case 'begins_with':
-							{
-								$userPass += ( substr( $userMembershipUnitId, 0, strlen( $unitId ) ) === $unitId );
-								break;
-						}
+							$userPass += ( substr( $userMembershipUnitId, 0, strlen( $unitId ) ) === $unitId );
+							break;
 						case 'any':
-							{
-								++$userPass;
-								break;
-						}
+							++$userPass;
+							break;
 						default:
-							{
 							if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 								throw new \Exception( 'Unit operator: "' . $membershipOperator . '" is not declared.' );
 							}
 							return false;
-						}
 					}
 				}
 			}

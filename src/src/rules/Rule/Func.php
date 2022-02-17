@@ -134,23 +134,17 @@ class Func implements IRule {
 		$inNotinNegation = 2;
 		switch ( $funcsOperator ) {
 			case 'in':
-				{
-					$inNotinNegation = 0;
-					break;
-			}
+				$inNotinNegation = 0;
+				break;
 			case 'not_in':
-				{
-					$inNotinNegation = 1;
-					break;
-			}
+				$inNotinNegation = 1;
+				break;
 			default:
-				{
-					$inNotinNegation = 2;
+				$inNotinNegation = 2;
 				if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 					throw new \Exception( 'Function operator: "' . $funcsOperator . '" is not declared.' );
 				}
 				break;
-			}
 		}
 
 		$userFuncs = $this->getUserFuncsWithUnitIds();
@@ -163,27 +157,19 @@ class Func implements IRule {
 
 					switch ( $unitOperator ) {
 						case 'equal':
-							{
-								$userPass += ( $userFuncUnitId === $unitId );
-								break;
-						}
+							$userPass += ( $userFuncUnitId === $unitId );
+							break;
 						case 'begins_with':
-							{
-								$userPass += ( substr( $userFuncUnitId, 0, strlen( $unitId ) ) === $unitId );
-								break;
-						}
+							$userPass += ( substr( $userFuncUnitId, 0, strlen( $unitId ) ) === $unitId );
+							break;
 						case 'any':
-							{
-								++$userPass;
-								break;
-						}
+							++$userPass;
+							break;
 						default:
-							{
 							if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 								throw new \Exception( 'Unit operator: "' . $unitOperator . '" is not declared.' );
 							}
 							return false;
-						}
 					}
 				}
 			}

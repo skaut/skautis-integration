@@ -135,23 +135,17 @@ class Role implements IRule {
 		$inNotinNegation = 2;
 		switch ( $rolesOperator ) {
 			case 'in':
-				{
-					$inNotinNegation = 0;
-					break;
-			}
+				$inNotinNegation = 0;
+				break;
 			case 'not_in':
-				{
-					$inNotinNegation = 1;
-					break;
-			}
+				$inNotinNegation = 1;
+				break;
 			default:
-				{
-					$inNotinNegation = 2;
+				$inNotinNegation = 2;
 				if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 					throw new \Exception( 'Roles operator: "' . $rolesOperator . '" is not declared.' );
 				}
 				break;
-			}
 		}
 
 		$userRoles = $this->getUserRolesWithUnitIds();
@@ -164,27 +158,19 @@ class Role implements IRule {
 
 					switch ( $unitOperator ) {
 						case 'equal':
-							{
-								$userPass += ( $userRoleUnitId === $unitId );
-								break;
-						}
+							$userPass += ( $userRoleUnitId === $unitId );
+							break;
 						case 'begins_with':
-							{
-								$userPass += ( substr( $userRoleUnitId, 0, strlen( $unitId ) ) === $unitId );
-								break;
-						}
+							$userPass += ( substr( $userRoleUnitId, 0, strlen( $unitId ) ) === $unitId );
+							break;
 						case 'any':
-							{
-								++$userPass;
-								break;
-						}
+							++$userPass;
+							break;
 						default:
-							{
 							if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 								throw new \Exception( 'Unit operator: "' . $unitOperator . '" is not declared.' );
 							}
 							return false;
-						}
 					}
 				}
 			}
