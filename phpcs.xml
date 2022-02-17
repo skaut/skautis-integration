@@ -27,7 +27,6 @@
 		<exclude name="Squiz.Commenting"/>
 		<exclude name="Squiz.Operators"/>
 		<exclude name="Squiz.Strings"/>
-		<exclude name="WordPress.CodeAnalysis"/>
 		<exclude name="WordPress.DB"/>
 		<exclude name="WordPress.Files"/>
 		<exclude name="WordPress.NamingConventions"/>
