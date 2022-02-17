@@ -121,7 +121,7 @@ final class Settings {
 			),
 			'objects'
 		);
-		$postTypes          = (array)get_option( SKAUTISINTEGRATION_NAME . '_modules_visibility_postTypes', array() );
+		$postTypes          = (array) get_option( SKAUTISINTEGRATION_NAME . '_modules_visibility_postTypes', array() );
 		?>
 		<?php
 		foreach ( $availablePostTypes as $postType ) {

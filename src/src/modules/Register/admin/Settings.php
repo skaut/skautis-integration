@@ -193,7 +193,7 @@ final class Settings {
 					</label>
 					<select name="rule" class="rule select2">
 						<?php
-						foreach ( (array)$this->rulesManager->getAllRules() as $rule ) {
+						foreach ( (array) $this->rulesManager->getAllRules() as $rule ) {
 							echo '<option value="' . esc_attr( $rule->ID ) . '">' . esc_html( $rule->post_title ) . '</option>';
 						}
 						?>

@@ -31,10 +31,10 @@ class SkautisGateway {
 		}
 
 		if ( $this->appId && $envType ) {
-			$sessionAdapter       = new TransientSessionAdapter();
-			$wsdlManager          = new Skautis\Wsdl\WsdlManager( new Skautis\Wsdl\WebServiceFactory(), new Skautis\Config( $this->appId, $this->testMode ) );
-			$user                 = new Skautis\User( $wsdlManager, $sessionAdapter );
-			$this->skautis        = new Skautis\Skautis( $wsdlManager, $user );
+			$sessionAdapter           = new TransientSessionAdapter();
+			$wsdlManager              = new Skautis\Wsdl\WsdlManager( new Skautis\Wsdl\WebServiceFactory(), new Skautis\Config( $this->appId, $this->testMode ) );
+			$user                     = new Skautis\User( $wsdlManager, $sessionAdapter );
+			$this->skautis            = new Skautis\Skautis( $wsdlManager, $user );
 			$this->skautisInitialized = true;
 
 			if ( $this->testMode ) {

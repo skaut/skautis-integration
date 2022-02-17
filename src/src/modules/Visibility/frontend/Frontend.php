@@ -59,7 +59,7 @@ final class Frontend {
 			function ( $ancestorPostId ) {
 				return array(
 					'id'              => $ancestorPostId,
-					'rules'           => (array)get_post_meta( $ancestorPostId, SKAUTISINTEGRATION_NAME . '_rules', true ),
+					'rules'           => (array) get_post_meta( $ancestorPostId, SKAUTISINTEGRATION_NAME . '_rules', true ),
 					'includeChildren' => get_post_meta( $ancestorPostId, SKAUTISINTEGRATION_NAME . '_rules_includeChildren', true ),
 					'visibilityMode'  => get_post_meta( $ancestorPostId, SKAUTISINTEGRATION_NAME . '_rules_visibilityMode', true ),
 				);
@@ -199,7 +199,7 @@ final class Frontend {
 						$rulesGroups = $this->getRulesFromParentPostsWithImpactByChildPostId( $wpPost->ID, $wpPost->post_type );
 					}
 
-					$currentPostRules = (array)get_post_meta( $wpPost->ID, SKAUTISINTEGRATION_NAME . '_rules', true );
+					$currentPostRules = (array) get_post_meta( $wpPost->ID, SKAUTISINTEGRATION_NAME . '_rules', true );
 					if ( ! empty( $currentPostRules ) ) {
 						$currentPostRule = array(
 							'id'              => $wpPost->ID,

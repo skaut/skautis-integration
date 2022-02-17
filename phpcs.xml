@@ -20,7 +20,6 @@
 	<config name="minimum_supported_wp_version" value="7.4"/>
 	<rule ref="WordPress">
 		<exclude name="Generic.Files"/>
-		<exclude name="Generic.Formatting"/>
 		<exclude name="Squiz.Commenting"/>
 		<exclude name="WordPress.DB.DirectDatabaseQuery.DirectQuery"/>
 		<exclude name="WordPress.DB.DirectDatabaseQuery.NoCaching"/>

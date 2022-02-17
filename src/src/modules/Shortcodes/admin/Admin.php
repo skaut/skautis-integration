@@ -60,7 +60,7 @@ final class Admin {
 				echo 'window.visibilityOptions.push({text: "hideContent", value: "hide"});';
 			}
 
-			foreach ( (array)$this->rulesManager->getAllRules() as $rule ) {
+			foreach ( (array) $this->rulesManager->getAllRules() as $rule ) {
 				echo 'window.rulesOptions.push({text: "' . esc_js( $rule->post_title ) . '", value: "' . esc_js( $rule->ID ) . '"});';
 			}
 			?>

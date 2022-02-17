@@ -29,7 +29,7 @@ final class RulesInit {
 	}
 
 	public function registerPostType() {
-		$labels      = array(
+		$labels       = array(
 			'name'                  => _x( 'Správa pravidel', 'Post Type General Name', 'skautis-integration' ),
 			'singular_name'         => _x( 'Pravidlo', 'Post Type Singular Name', 'skautis-integration' ),
 			'menu_name'             => __( 'Správa pravidel', 'skautis-integration' ),

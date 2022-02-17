@@ -238,7 +238,7 @@ final class Admin {
 
 			var data = {};
 			<?php
-			foreach ( (array)$this->rulesManager->getRules() as $rule ) {
+			foreach ( (array) $this->rulesManager->getRules() as $rule ) {
 				$data = array(
 					'id'          => $rule->getId(),
 					'label'       => $rule->getLabel(),

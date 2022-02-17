@@ -55,7 +55,7 @@ class RoleChanger {
 </th>
 <td>
 <select id="skautisRoleChanger" name="changeSkautisUserRole">';
-		foreach ( (array)$currentUserRoles as $role ) {
+		foreach ( (array) $currentUserRoles as $role ) {
 			echo '<option value="' . esc_attr( $role->ID ) . '" ' . selected( $role->ID, $currentUserRole, false ) . '>' . esc_html( $role->DisplayName ) . '</option>';
 		}
 		echo '

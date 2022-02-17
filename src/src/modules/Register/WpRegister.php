@@ -96,7 +96,7 @@ final class WpRegister {
 				),
 			)
 		);
-		$users       = $usersWpQuery->get_results();
+		$users        = $usersWpQuery->get_results();
 
 		if ( ! empty( $users ) ) {
 			return true;
@@ -166,7 +166,7 @@ final class WpRegister {
 				),
 			)
 		);
-		$users       = $usersWpQuery->get_results();
+		$users        = $usersWpQuery->get_results();
 
 		if ( ! empty( $users ) ) {
 			return $users[0]->ID;
