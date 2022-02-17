@@ -46,7 +46,7 @@ final class Admin {
                 SKAUTISINTEGRATION_URL . 'bundled/jquery.repeater.min.js',
                 array( 'jquery' ),
                 SKAUTISINTEGRATION_VERSION,
-                TRUE
+                true
             );
 
             wp_enqueue_script(
@@ -54,7 +54,7 @@ final class Admin {
                 $this->adminDirUrl . 'js/skautis-modules-register-admin.js',
                 array( SKAUTISINTEGRATION_NAME . '_jquery.repeater' ),
                 SKAUTISINTEGRATION_VERSION,
-                TRUE
+                true
             );
         }
     }

@@ -189,7 +189,7 @@ final class Settings {
 			'skautis_integration_appid_prod',
 			array(
 				'type'              => 'integer',
-				'show_in_rest'      => FALSE,
+				'show_in_rest'      => false,
 				'sanitize_callback' => array( $this, 'testAppId' ),
 			)
 		);
@@ -198,7 +198,7 @@ final class Settings {
 			'skautis_integration_appid_test',
 			array(
 				'type'              => 'integer',
-				'show_in_rest'      => FALSE,
+				'show_in_rest'      => false,
 				'sanitize_callback' => 'sanitize_text_field',
 			)
 		);
@@ -207,7 +207,7 @@ final class Settings {
 			'skautis_integration_appid_type',
 			array(
 				'type'              => 'string',
-				'show_in_rest'      => FALSE,
+				'show_in_rest'      => false,
 				'sanitize_callback' => 'sanitize_text_field',
 			)
 		);
@@ -253,7 +253,7 @@ final class Settings {
 			'skautis_integration_activated_modules',
 			array(
 				'type'         => 'string',
-				'show_in_rest' => FALSE,
+				'show_in_rest' => false,
 			)
 		);
 	}
@@ -319,7 +319,7 @@ final class Settings {
 			SKAUTISINTEGRATION_NAME . '_login_page_url',
 			array(
 				'type'              => 'string',
-				'show_in_rest'      => TRUE,
+				'show_in_rest'      => true,
 				'sanitize_callback' => function ( $url ) {
 					$url = str_replace( ' ', '%20', $url );
 					$url = preg_replace( '|[^a-z0-9-~+_.?=!&;,/:%@$\|*\'()\[\]\\x80-\\xff]|i', '', $url );
@@ -338,7 +338,7 @@ final class Settings {
 			SKAUTISINTEGRATION_NAME . '_allowUsersDisconnectFromSkautis',
 			array(
 				'type'         => 'boolean',
-				'show_in_rest' => FALSE,
+				'show_in_rest' => false,
 			)
 		);
 
@@ -348,7 +348,7 @@ final class Settings {
 				SKAUTISINTEGRATION_NAME . '_checkUserPrivilegesIfLoginBySkautis',
 				array(
 					'type'         => 'boolean',
-					'show_in_rest' => FALSE,
+					'show_in_rest' => false,
 				)
 			);
 		}

@@ -91,7 +91,7 @@ final class Settings {
 			SKAUTISINTEGRATION_NAME . '_modules_visibility_postTypes',
 			array(
 				'type'         => 'string',
-				'show_in_rest' => FALSE,
+				'show_in_rest' => false,
 			)
 		);
 
@@ -100,7 +100,7 @@ final class Settings {
 			SKAUTISINTEGRATION_NAME . '_modules_visibility_visibilityMode',
 			array(
 				'type'         => 'string',
-				'show_in_rest' => FALSE,
+				'show_in_rest' => false,
 			)
 		);
 
@@ -109,7 +109,7 @@ final class Settings {
 			SKAUTISINTEGRATION_NAME . '_modules_visibility_includeChildren',
 			array(
 				'type'         => 'string',
-				'show_in_rest' => FALSE,
+				'show_in_rest' => false,
 			)
 		);
 	}
@@ -117,7 +117,7 @@ final class Settings {
 	public function fieldPostTypes() {
 		$availablePostTypes = get_post_types(
 			array(
-				'public' => TRUE,
+				'public' => true,
 			),
 			'objects'
 		);
@@ -125,7 +125,7 @@ final class Settings {
 		?>
 		<?php
 		foreach ( $availablePostTypes as $postType ) {
-			echo '<label><input type="checkbox" name="' . esc_attr( SKAUTISINTEGRATION_NAME ) . '_modules_visibility_postTypes[]" value="' . esc_attr( $postType->name ) . '" ' . checked( TRUE, in_array( $postType->name, $postTypes, true ), FALSE ) . '/><span>' . esc_html( $postType->label ) . '</span></label><br/>';
+			echo '<label><input type="checkbox" name="' . esc_attr( SKAUTISINTEGRATION_NAME ) . '_modules_visibility_postTypes[]" value="' . esc_attr( $postType->name ) . '" ' . checked( true, in_array( $postType->name, $postTypes, true ), false ) . '/><span>' . esc_html( $postType->label ) . '</span></label><br/>';
 		}
 		?>
 		<div>

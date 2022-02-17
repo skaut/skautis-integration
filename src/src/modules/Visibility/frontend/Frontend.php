@@ -28,11 +28,11 @@ final class Frontend {
         add_action( 'posts_results', array( $this, 'filterPosts' ), 10, 2 );
     }
 
-    private function getLoginForm( bool $forceLogoutFromSkautis = FALSE ): string
+    private function getLoginForm( bool $forceLogoutFromSkautis = false ): string
     {
-        $loginUrlArgs = add_query_arg( 'noWpLogin', TRUE, Helpers::getCurrentUrl() );
+        $loginUrlArgs = add_query_arg( 'noWpLogin', true, Helpers::getCurrentUrl() );
         if ( $forceLogoutFromSkautis ) {
-            $loginUrlArgs = add_query_arg( 'logoutFromSkautis', TRUE, $loginUrlArgs );
+            $loginUrlArgs = add_query_arg( 'logoutFromSkautis', true, $loginUrlArgs );
         }
 
         return '
@@ -63,9 +63,9 @@ final class Frontend {
             function ( $ancestorPostId ) {
                 return array(
                     'id'              => $ancestorPostId,
-                    'rules'           => (array)get_post_meta( $ancestorPostId, SKAUTISINTEGRATION_NAME . '_rules', TRUE ),
-                    'includeChildren' => get_post_meta( $ancestorPostId, SKAUTISINTEGRATION_NAME . '_rules_includeChildren', TRUE ),
-                    'visibilityMode'  => get_post_meta( $ancestorPostId, SKAUTISINTEGRATION_NAME . '_rules_visibilityMode', TRUE ),
+                    'rules'           => (array)get_post_meta( $ancestorPostId, SKAUTISINTEGRATION_NAME . '_rules', true ),
+                    'includeChildren' => get_post_meta( $ancestorPostId, SKAUTISINTEGRATION_NAME . '_rules_includeChildren', true ),
+                    'visibilityMode'  => get_post_meta( $ancestorPostId, SKAUTISINTEGRATION_NAME . '_rules_visibilityMode', true ),
                 );
             },
             $ancestors
@@ -83,11 +83,11 @@ final class Frontend {
             function ( $ancestor ) {
                 if ( ! empty( $ancestor['rules'] ) && isset( $ancestor['rules'][0][ SKAUTISINTEGRATION_NAME . '_rules' ] ) ) {
                     if ( '1' === $ancestor['includeChildren'] ) {
-                        return TRUE;
+                        return true;
                     }
                 }
 
-                return FALSE;
+                return false;
             }
         );
 
@@ -132,7 +132,7 @@ final class Frontend {
         );
     }
 
-    private function proccessRulesAndHidePosts( bool $userIsLoggedInSkautis, array $rule, array &$posts, int $postKey, \WP_Query $wpQuery, string $postType, &$postsWereFiltered = FALSE ) {
+    private function proccessRulesAndHidePosts( bool $userIsLoggedInSkautis, array $rule, array &$posts, int $postKey, \WP_Query $wpQuery, string $postType, &$postsWereFiltered = false ) {
         if ( ! empty( $rules ) && isset( $rules[0][ SKAUTISINTEGRATION_NAME . '_rules' ] ) ) {
             if ( ! $userIsLoggedInSkautis ||
                 ! $this->rulesManager->checkIfUserPassedRules( $rules ) ) {
@@ -141,7 +141,7 @@ final class Frontend {
                 if ( $wpQuery->found_posts > 0 ) {
                     $wpQuery->found_posts --;
                 }
-                $postsWereFiltered = TRUE;
+                $postsWereFiltered = true;
             }
         }
     }
@@ -151,7 +151,7 @@ final class Frontend {
             if ( ! $userIsLoggedInSkautis ) {
                 $this->hideContentExcerptComments( $postId, $this->getLoginRequiredMessage() . $this->getLoginForm(), $this->getLoginRequiredMessage() );
             } elseif ( ! $this->rulesManager->checkIfUserPassedRules( $rules ) ) {
-                $this->hideContentExcerptComments( $postId, $this->getUnauthorizedMessage() . $this->getLoginForm( TRUE ), $this->getUnauthorizedMessage() );
+                $this->hideContentExcerptComments( $postId, $this->getUnauthorizedMessage() . $this->getLoginForm( true ), $this->getUnauthorizedMessage() );
             }
         }
     }
@@ -189,7 +189,7 @@ final class Frontend {
 
         $userIsLoggedInSkautis = $this->skautisLogin->isUserLoggedInSkautis();
 
-        $postsWereFiltered = FALSE;
+        $postsWereFiltered = false;
 
         foreach ( $wpQuery->posts as $key => $post ) {
             if ( ! is_a( $post, 'WP_Post' ) ) {
@@ -206,13 +206,13 @@ final class Frontend {
                         $rulesGroups = $this->getRulesFromParentPostsWithImpactByChildPostId( $wpPost->ID, $wpPost->post_type );
                     }
 
-                    $currentPostRules = (array)get_post_meta( $wpPost->ID, SKAUTISINTEGRATION_NAME . '_rules', TRUE );
+                    $currentPostRules = (array)get_post_meta( $wpPost->ID, SKAUTISINTEGRATION_NAME . '_rules', true );
                     if ( ! empty( $currentPostRules ) ) {
                         $currentPostRule = array(
                             'id'              => $wpPost->ID,
                             'rules'           => $currentPostRules,
-                            'includeChildren' => get_post_meta( $wpPost->ID, SKAUTISINTEGRATION_NAME . '_rules_includeChildren', TRUE ),
-                            'visibilityMode'  => get_post_meta( $wpPost->ID, SKAUTISINTEGRATION_NAME . '_rules_visibilityMode', TRUE ),
+                            'includeChildren' => get_post_meta( $wpPost->ID, SKAUTISINTEGRATION_NAME . '_rules_includeChildren', true ),
+                            'visibilityMode'  => get_post_meta( $wpPost->ID, SKAUTISINTEGRATION_NAME . '_rules_visibilityMode', true ),
                         );
                         $rulesGroups[]   = $currentPostRule;
                     }

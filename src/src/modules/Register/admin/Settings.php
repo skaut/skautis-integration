@@ -96,7 +96,7 @@ final class Settings {
 			SKAUTISINTEGRATION_NAME . '_modules_register_defaultwpRole',
 			array(
 				'type'              => 'string',
-				'show_in_rest'      => FALSE,
+				'show_in_rest'      => false,
 				'sanitize_callback' => 'sanitize_text_field',
 			)
 		);
@@ -105,7 +105,7 @@ final class Settings {
 			SKAUTISINTEGRATION_NAME . '_modules_register_notifications',
 			array(
 				'type'              => 'string',
-				'show_in_rest'      => FALSE,
+				'show_in_rest'      => false,
 				'sanitize_callback' => 'sanitize_text_field',
 			)
 		);
@@ -114,7 +114,7 @@ final class Settings {
 			SKAUTISINTEGRATION_NAME . '_modules_register_rules',
 			array(
 				'type'         => 'string',
-				'show_in_rest' => FALSE,
+				'show_in_rest' => false,
 			)
 		);
 	}

@@ -109,18 +109,18 @@ class SkautisIntegration {
 
 	protected function isCompatibleVersionOfWp() {
 		if ( isset( $GLOBALS['wp_version'] ) && version_compare( $GLOBALS['wp_version'], '4.9.6', '>=' ) ) {
-			return TRUE;
+			return true;
 		}
 
-		return FALSE;
+		return false;
 	}
 
 	protected function isCompatibleVersionOfPhp() {
 		if ( version_compare( PHP_VERSION, '7.4', '>=' ) ) {
-			return TRUE;
+			return true;
 		}
 
-		return FALSE;
+		return false;
 	}
 
 	public function activation() {
@@ -135,7 +135,7 @@ class SkautisIntegration {
 		}
 
 		if ( ! get_option( 'skautis_rewrite_rules_need_to_flush' ) ) {
-			add_option( 'skautis_rewrite_rules_need_to_flush', TRUE );
+			add_option( 'skautis_rewrite_rules_need_to_flush', true );
 		}
 
 		if ( ! get_option( 'skautis_integration_login_page_url' ) ) {
@@ -172,7 +172,7 @@ WHERE `option_name` LIKE %s OR `option_name` LIKE %s
 
 		flush_rewrite_rules();
 
-		return TRUE;
+		return true;
 	}
 
 	public function checkVersionAndPossiblyDeactivatePlugin() {

@@ -81,7 +81,7 @@ final class WpRegister {
     {
         $returnUrl = Helpers::getReturnUrl();
         if ( is_null( $returnUrl ) ) {
-            return FALSE;
+            return false;
         }
 
         Helpers::validateNonceFromUrl( $returnUrl, SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis' );
@@ -102,11 +102,11 @@ final class WpRegister {
         $users        = $usersWpQuery->get_results();
 
         if ( ! empty( $users ) ) {
-            return TRUE;
+            return true;
         }
 
         if ( ! isset( $user['UserName'] ) || mb_strlen( $user['UserName'] ) === 0 ) {
-            return FALSE;
+            return false;
         }
 
         $username = mb_strcut( $user['UserName'], 0, 60 );
@@ -114,11 +114,11 @@ final class WpRegister {
         $userId = $this->resolveNotificationsAndRegisterUserToWp( $username, $user['email'] );
 
         if ( 0 === $userId ) {
-            return FALSE;
+            return false;
         }
 
         if ( ! add_user_meta( $userId, 'skautisUserId_' . $this->skautisGateway->getEnv(), absint( $user['id'] ) ) ) {
-            return FALSE;
+            return false;
         }
 
         $firstName = $user['firstName'];
@@ -143,10 +143,10 @@ final class WpRegister {
                 )
             )
         ) ) {
-            return FALSE;
+            return false;
         }
 
-        return TRUE;
+        return true;
     }
 
     public function checkIfUserIsAlreadyRegisteredAndGetHisUserId(): int
@@ -185,7 +185,7 @@ final class WpRegister {
         $returnUrl = remove_query_arg( 'loggedout', urldecode( $returnUrl ) );
 
         $returnUrl = add_query_arg( SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis', wp_create_nonce( SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis' ), $returnUrl );
-        $url       = add_query_arg( 'ReturnUrl', rawurlencode( $returnUrl ), get_home_url( NULL, 'skautis/auth/' . Register::REGISTER_ACTION ) );
+        $url       = add_query_arg( 'ReturnUrl', rawurlencode( $returnUrl ), get_home_url( null, 'skautis/auth/' . Register::REGISTER_ACTION ) );
 
         return esc_url( $url );
     }
@@ -200,14 +200,14 @@ final class WpRegister {
             return $this->processWpUserRegistration( $user, $wpRole );
         }
 
-        return FALSE;
+        return false;
     }
 
     public function getManuallyRegisterWpUserUrl(): string
     {
         $returnUrl = Helpers::getLoginLogoutRedirect();
         $returnUrl = add_query_arg( SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis', wp_create_nonce( SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis' ), $returnUrl );
-        $url       = add_query_arg( 'ReturnUrl', rawurlencode( $returnUrl ), get_home_url( NULL, 'skautis/auth/' . Register::MANUALLY_REGISTER_WP_USER_ACTION ) );
+        $url       = add_query_arg( 'ReturnUrl', rawurlencode( $returnUrl ), get_home_url( null, 'skautis/auth/' . Register::MANUALLY_REGISTER_WP_USER_ACTION ) );
 
         return esc_url( wp_nonce_url( $url, SKAUTISINTEGRATION_NAME. '_register_user', SKAUTISINTEGRATION_NAME. '_register_user_nonce' ) );
     }

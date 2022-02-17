@@ -54,7 +54,7 @@ final class Admin {
 			SKAUTISINTEGRATION_URL . 'bundled/select2.min.js',
 			array( 'jquery' ),
 			SKAUTISINTEGRATION_VERSION,
-			FALSE
+			false
 		);
 
 		wp_enqueue_style(

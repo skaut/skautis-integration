@@ -22,7 +22,6 @@
 		<exclude name="Generic.Files"/>
 		<exclude name="Generic.Formatting"/>
 		<exclude name="Generic.Functions"/>
-		<exclude name="Generic.PHP"/>
 		<exclude name="Generic.WhiteSpace"/>
 		<exclude name="PSR2.ControlStructures"/>
 		<exclude name="Squiz.Commenting"/>

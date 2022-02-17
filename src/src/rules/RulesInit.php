@@ -78,20 +78,20 @@ final class RulesInit {
 			'label'               => __( 'Pravidla', 'skautis-integration' ),
 			'labels'              => $labels,
 			'supports'            => array( 'title', 'editor', 'author', 'revisions' ),
-			'hierarchical'        => FALSE,
-			'public'              => FALSE,
-			'show_ui'             => TRUE,
+			'hierarchical'        => false,
+			'public'              => false,
+			'show_ui'             => true,
 			'show_in_menu'        => SKAUTISINTEGRATION_NAME,
 			'menu_position'       => 3,
-			'show_in_admin_bar'   => FALSE,
-			'show_in_nav_menus'   => FALSE,
-			'can_export'          => TRUE,
-			'has_archive'         => FALSE,
-			'exclude_from_search' => TRUE,
-			'publicly_queryable'  => FALSE,
-			'rewrite'             => FALSE,
+			'show_in_admin_bar'   => false,
+			'show_in_nav_menus'   => false,
+			'can_export'          => true,
+			'has_archive'         => false,
+			'exclude_from_search' => true,
+			'publicly_queryable'  => false,
+			'rewrite'             => false,
 			'capabilities'        => $capabilities,
-			'show_in_rest'        => FALSE,
+			'show_in_rest'        => false,
 		);
 		register_post_type( self::RULES_TYPE_SLUG, $args );
 	}
@@ -126,7 +126,7 @@ final class RulesInit {
 			3  => __( 'Hotovo', 'skautis-integration' ), // Custom field deleted.
 			4  => __( 'Hotovo', 'skautis-integration' ), // My Post Type updated.
 			/* translators: The time of the previous version */
-			5  => isset( $_GET['revision'] ) ? sprintf( __( 'Pravidlo bylo obnoveno na starší verzi z %s', 'skautis-integration' ), wp_post_revision_title( absint( $_GET['revision'] ), FALSE ) ) : FALSE, // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			5  => isset( $_GET['revision'] ) ? sprintf( __( 'Pravidlo bylo obnoveno na starší verzi z %s', 'skautis-integration' ), wp_post_revision_title( absint( $_GET['revision'] ), false ) ) : false, // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			6  => __( 'Hotovo', 'skautis-integration' ), // My Post Type published.
 			7  => __( 'Pravidlo bylo uloženo', 'skautis-integration' ), // My Post Type saved.
 			8  => __( 'Hotovo', 'skautis-integration' ), // My Post Type submitted.
@@ -147,8 +147,8 @@ final class RulesInit {
 		$rulesWpQuery = new \WP_Query(
 			array(
 				'post_type'     => self::RULES_TYPE_SLUG,
-				'nopaging'      => TRUE,
-				'no_found_rows' => TRUE,
+				'nopaging'      => true,
+				'no_found_rows' => true,
 			)
 		);
 

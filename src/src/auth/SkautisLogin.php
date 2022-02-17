@@ -19,10 +19,10 @@ final class SkautisLogin {
 	public function isUserLoggedInSkautis(): bool
 	{
 		if ( $this->skautisGateway->isInitialized() ) {
-			return $this->skautisGateway->getSkautisInstance()->getUser()->isLoggedIn() && $this->skautisGateway->getSkautisInstance()->getUser()->isLoggedIn( TRUE );
+			return $this->skautisGateway->getSkautisInstance()->getUser()->isLoggedIn() && $this->skautisGateway->getSkautisInstance()->getUser()->isLoggedIn( true );
 		}
 
-		return FALSE;
+		return false;
 	}
 
 	public function setLoginDataToLocalSkautisInstance( array $data = array() ): bool
@@ -33,21 +33,21 @@ final class SkautisLogin {
 			$this->skautisGateway->getSkautisInstance()->setLoginData( $data );
 
 			if ( ! $this->isUserLoggedInSkautis() ) {
-				return FALSE;
+				return false;
 			}
 
 			do_action( SKAUTISINTEGRATION_NAME . '_after_user_is_logged_in_skautis', $data );
 
-			return TRUE;
+			return true;
 		}
 
-		return FALSE;
+		return false;
 	}
 
 	public function login() {
 		$returnUrl = Helpers::getLoginLogoutRedirect();
 
-		if ( strpos( $returnUrl, 'logoutFromSkautis' ) !== FALSE ) {
+		if ( strpos( $returnUrl, 'logoutFromSkautis' ) !== false ) {
 			$this->skautisGateway->logout();
 			$returnUrl = remove_query_arg( 'logoutFromSkautis', $returnUrl );
 		}
@@ -57,7 +57,7 @@ final class SkautisLogin {
 			exit;
 		}
 
-		if ( strpos( $returnUrl, 'noWpLogin' ) !== FALSE ) {
+		if ( strpos( $returnUrl, 'noWpLogin' ) !== false ) {
 			$this->wpLoginLogout->tryToLoginToWp();
 			wp_safe_redirect( esc_url_raw( $returnUrl ), 302 );
 			exit;
@@ -70,7 +70,7 @@ final class SkautisLogin {
 		$returnUrl = Helpers::getReturnUrl();
         // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		if ( $this->setLoginDataToLocalSkautisInstance( $_POST ) ) {
-			if ( is_null( $returnUrl ) || strpos( $returnUrl, 'noWpLogin' ) === FALSE ) {
+			if ( is_null( $returnUrl ) || strpos( $returnUrl, 'noWpLogin' ) === false ) {
 				$this->wpLoginLogout->loginToWp();
 			} elseif ( ! is_null( $returnUrl ) ) {
 				$this->wpLoginLogout->tryToLoginToWp();
@@ -78,7 +78,7 @@ final class SkautisLogin {
 				exit;
 			}
 		} elseif ( $this->isUserLoggedInSkautis() ) {
-			if ( is_null( $returnUrl ) || strpos( $returnUrl, 'noWpLogin' ) === FALSE ) {
+			if ( is_null( $returnUrl ) || strpos( $returnUrl, 'noWpLogin' ) === false ) {
 				$this->wpLoginLogout->loginToWp();
 			} elseif ( ! is_null( $returnUrl ) ) {
 				$this->wpLoginLogout->tryToLoginToWp();

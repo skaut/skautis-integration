@@ -66,7 +66,7 @@ final class Admin {
         wp_nonce_field( SKAUTISINTEGRATION_NAME . '_rules_metabox', SKAUTISINTEGRATION_NAME . '_rules_metabox_nonce' );
         ?>
         <textarea id="query_builder_values" class=""
-                name="<?php echo esc_attr( SKAUTISINTEGRATION_NAME ); ?>_rules_data"><?php echo esc_html( get_post_meta( $post->ID, SKAUTISINTEGRATION_NAME . '_rules_data', TRUE ) ); ?></textarea>
+                name="<?php echo esc_attr( SKAUTISINTEGRATION_NAME ); ?>_rules_data"><?php echo esc_html( get_post_meta( $post->ID, SKAUTISINTEGRATION_NAME . '_rules_data', true ) ); ?></textarea>
         <?php
     }
 
@@ -78,15 +78,15 @@ final class Admin {
     }
 
     public function getRulesFieldValue( $value, $fieldName, \WP_Post $post ) {
-        return get_metadata( 'post', $post->ID, SKAUTISINTEGRATION_NAME . '_rules_data', TRUE );
+        return get_metadata( 'post', $post->ID, SKAUTISINTEGRATION_NAME . '_rules_data', true );
     }
 
     public function restoreRevisionForRulesField( int $postId, int $revisionId ) {
         $post     = get_post( $postId );
         $revision = get_post( $revisionId );
         if ( RulesInit::RULES_TYPE_SLUG === $post->post_type ) {
-            $meta = get_metadata( 'post', $revision->ID, SKAUTISINTEGRATION_NAME . '_rules_data', TRUE );
-            if ( FALSE !== $meta ) {
+            $meta = get_metadata( 'post', $revision->ID, SKAUTISINTEGRATION_NAME . '_rules_data', true );
+            if ( false !== $meta ) {
                 update_post_meta( $postId, SKAUTISINTEGRATION_NAME . '_rules_data', $meta );
             }
         }
@@ -112,8 +112,8 @@ final class Admin {
                     if ( ! $this->skautisGateway->isInitialized() ) {
                         /* translators: 1: Start of link to the settings 2: End of link to the settings */
                         printf( esc_html__( 'Vyberte v %1$snastavení%2$s pluginu typ prostředí skautISu', 'skautis-integration' ), '<a href="' . esc_url( admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME ) ) . '">', '</a>' );
-                    } elseif ( ! $this->skautisGateway->getSkautisInstance()->getUser()->isLoggedIn( TRUE ) ) {
-                        echo '<h4><a href="' . esc_url( $this->wpLoginLogout->getLoginUrl( add_query_arg( 'noWpLogin', TRUE, Helpers::getCurrentUrl() ) ) ) . '">' . esc_html__( 'Pro správu podmínek je nutné se přihlásit do skautISu', 'skautis-integration' ) . '</a></h4>';
+                    } elseif ( ! $this->skautisGateway->getSkautisInstance()->getUser()->isLoggedIn( true ) ) {
+                        echo '<h4><a href="' . esc_url( $this->wpLoginLogout->getLoginUrl( add_query_arg( 'noWpLogin', true, Helpers::getCurrentUrl() ) ) ) . '">' . esc_html__( 'Pro správu podmínek je nutné se přihlásit do skautISu', 'skautis-integration' ) . '</a></h4>';
                     } else {
                         echo '<div id="query_builder"></div>';
                     }
@@ -164,7 +164,7 @@ final class Admin {
             $this->adminDirUrl . 'js/skautis-rules-role.js',
             array(),
             SKAUTISINTEGRATION_VERSION,
-            FALSE
+            false
         );
 
         wp_enqueue_script(
@@ -172,7 +172,7 @@ final class Admin {
             $this->adminDirUrl . 'js/skautis-rules-membership.js',
             array(),
             SKAUTISINTEGRATION_VERSION,
-            FALSE
+            false
         );
 
         wp_enqueue_script(
@@ -180,7 +180,7 @@ final class Admin {
             $this->adminDirUrl . 'js/skautis-rules-func.js',
             array(),
             SKAUTISINTEGRATION_VERSION,
-            FALSE
+            false
         );
 
         wp_enqueue_script(
@@ -188,7 +188,7 @@ final class Admin {
             $this->adminDirUrl . 'js/skautis-rules-qualification.js',
             array(),
             SKAUTISINTEGRATION_VERSION,
-            FALSE
+            false
         );
 
         wp_enqueue_script(
@@ -196,7 +196,7 @@ final class Admin {
             SKAUTISINTEGRATION_URL . 'bundled/interact.min.js',
             array(),
             SKAUTISINTEGRATION_VERSION,
-            FALSE
+            false
         );
 
         wp_enqueue_script(
@@ -204,7 +204,7 @@ final class Admin {
             SKAUTISINTEGRATION_URL . 'bundled/query-builder.standalone.min.js',
             array( 'jquery' ),
             SKAUTISINTEGRATION_VERSION,
-            TRUE
+            true
         );
 
         wp_enqueue_script(
@@ -212,7 +212,7 @@ final class Admin {
             $this->adminDirUrl . 'QueryBuilder/i18n/query-builder.cs.js',
             array( SKAUTISINTEGRATION_NAME . '_query-builder' ),
             SKAUTISINTEGRATION_VERSION,
-            TRUE
+            true
         );
 
         wp_enqueue_script(
@@ -220,7 +220,7 @@ final class Admin {
             $this->adminDirUrl . 'js/skautis-rules-admin.js',
             array( SKAUTISINTEGRATION_NAME . '_query-builder' ),
             SKAUTISINTEGRATION_VERSION,
-            TRUE
+            true
         );
     }
 
@@ -229,7 +229,7 @@ final class Admin {
             return;
         }
 
-        if ( ! $this->skautisGateway->isInitialized() || ! $this->skautisGateway->getSkautisInstance()->getUser()->isLoggedIn( TRUE ) ) {
+        if ( ! $this->skautisGateway->isInitialized() || ! $this->skautisGateway->getSkautisInstance()->getUser()->isLoggedIn( true ) ) {
             return;
         }
 

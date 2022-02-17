@@ -38,7 +38,7 @@ class RoleChanger {
 			array(
 				'ID_Login' => $this->skautisGateway->getSkautisInstance()->getUser()->getLoginId(),
 				'ID_User'  => $this->skautisGateway->getSkautisInstance()->UserManagement->UserDetail()->ID,
-				'IsActive' => TRUE,
+				'IsActive' => true,
 			)
 		);
 		$currentUserRole  = $this->skautisGateway->getSkautisInstance()->getUser()->getRoleId();
@@ -46,7 +46,7 @@ class RoleChanger {
 		echo '
 <form method="post" action="' . esc_attr( Helpers::getCurrentUrl() ) . '" novalidate="novalidate">' .
 		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		wp_nonce_field( SKAUTISINTEGRATION_NAME . '_changeSkautisUserRole', '_wpnonce', TRUE, FALSE ) .
+		wp_nonce_field( SKAUTISINTEGRATION_NAME . '_changeSkautisUserRole', '_wpnonce', true, false ) .
 		'<table class="form-table">
 <tbody>
 <tr>
@@ -56,7 +56,7 @@ class RoleChanger {
 <td>
 <select id="skautisRoleChanger" name="changeSkautisUserRole">';
 		foreach ( (array)$currentUserRoles as $role ) {
-			echo '<option value="' . esc_attr( $role->ID ) . '" ' . selected( $role->ID, $currentUserRole, FALSE ) . '>' . esc_html( $role->DisplayName ) . '</option>';
+			echo '<option value="' . esc_attr( $role->ID ) . '" ' . selected( $role->ID, $currentUserRole, false ) . '>' . esc_html( $role->DisplayName ) . '</option>';
 		}
 		echo '
 </select>
