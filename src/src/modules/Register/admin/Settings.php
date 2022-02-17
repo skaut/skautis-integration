@@ -180,7 +180,7 @@ final class Settings {
 			takové, aby nahoře byly vždy specifičtější pravidla, která platí pro užší skupinu uživatelů.',
 										'skautis-integration'
 									);
-									?>
+								?>
 			</em></div>
 		<div id="repeater">
 			<div data-repeater-list="<?php echo esc_attr( SKAUTISINTEGRATION_NAME ); ?>_modules_register_rules">

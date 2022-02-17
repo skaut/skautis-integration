@@ -26,9 +26,9 @@ final class Shortcodes implements IModule {
 		$this->skautisLogin  = $skautisLogin;
 		$this->wpLoginLogout = $wpLoginLogout;
 		if ( is_admin() ) {
-			(new Admin( $this->rulesManager ));
+			( new Admin( $this->rulesManager ) );
 		} else {
-			(new Frontend( $this->skautisLogin, $this->rulesManager, $this->wpLoginLogout ));
+			( new Frontend( $this->skautisLogin, $this->rulesManager, $this->wpLoginLogout ) );
 		}
 	}
 
