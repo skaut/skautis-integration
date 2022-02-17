@@ -112,7 +112,7 @@ class Qualification implements IRule {
 		$userPass           = 0;
 		foreach ( $qualifications as $qualification ) {
 			if ( in_array( $qualification, $userQualifications, true ) ) {
-				$userPass += 1;
+				++$userPass;
 			}
 		}
 

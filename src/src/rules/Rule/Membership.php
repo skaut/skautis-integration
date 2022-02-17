@@ -186,7 +186,7 @@ class Membership implements IRule {
 						}
 						case 'any':
 							{
-								$userPass += 1;
+								++$userPass;
 								break;
 						}
 						default:
