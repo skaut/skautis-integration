@@ -28,8 +28,7 @@ final class Frontend {
 		add_action( 'posts_results', array( $this, 'filterPosts' ), 10, 2 );
 	}
 
-	private function getLoginForm( bool $forceLogoutFromSkautis = false ): string
-	{
+	private function getLoginForm( bool $forceLogoutFromSkautis = false ): string {
 		$loginUrlArgs = add_query_arg( 'noWpLogin', true, Helpers::getCurrentUrl() );
 		if ( $forceLogoutFromSkautis ) {
 			$loginUrlArgs = add_query_arg( 'logoutFromSkautis', true, $loginUrlArgs );
@@ -46,18 +45,15 @@ final class Frontend {
 		';
 	}
 
-	private function getLoginRequiredMessage(): string
-	{
+	private function getLoginRequiredMessage(): string {
 		return '<p>' . __( 'To view this content you must be logged in skautIS', 'skautis-integration' ) . '</p>';
 	}
 
-	private function getUnauthorizedMessage(): string
-	{
+	private function getUnauthorizedMessage(): string {
 		return '<p>' . __( 'You do not have permission to access this content', 'skautis-integration' ) . '</p>';
 	}
 
-	private function getPostsHierarchyTreeWithRules( int $postId, $postType ): array
-	{
+	private function getPostsHierarchyTreeWithRules( int $postId, $postType ): array {
 		$ancestors = get_ancestors( $postId, $postType, 'post_type' );
 		$ancestors = array_map(
 			function ( $ancestorPostId ) {
@@ -74,8 +70,7 @@ final class Frontend {
 		return array_reverse( $ancestors );
 	}
 
-	private function getRulesFromParentPostsWithImpactByChildPostId( int $childPostId, $postType ): array
-	{
+	private function getRulesFromParentPostsWithImpactByChildPostId( int $childPostId, $postType ): array {
 		$ancestors = $this->getPostsHierarchyTreeWithRules( $childPostId, $postType );
 
 		$ancestors = array_filter(
@@ -161,8 +156,7 @@ final class Frontend {
 		wp_enqueue_style( SKAUTISINTEGRATION_NAME, SKAUTISINTEGRATION_URL . 'src/frontend/public/css/skautis-frontend.css', array(), SKAUTISINTEGRATION_VERSION, 'all' );
 	}
 
-	public function getParentPostsWithRules( int $childPostId, string $childPostType ): array
-	{
+	public function getParentPostsWithRules( int $childPostId, string $childPostType ): array {
 		$result = array();
 
 		$parentPostsWithRules = $this->getRulesFromParentPostsWithImpactByChildPostId( $childPostId, $childPostType );
@@ -181,8 +175,7 @@ final class Frontend {
 		return $result;
 	}
 
-	public function filterPosts( array $posts, \WP_Query $wpQuery ): array
-	{
+	public function filterPosts( array $posts, \WP_Query $wpQuery ): array {
 		if ( empty( $posts ) ) {
 			return $posts;
 		}

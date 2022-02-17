@@ -66,8 +66,7 @@ final class Settings {
 		}
 	}
 
-	public function addSettingsLinkToPluginsTable( array $links = array() ): array
-	{
+	public function addSettingsLinkToPluginsTable( array $links = array() ): array {
 		$mylinks = array(
 			'<a href="' . admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME, 'skautis-integration' ) . '">' . __( 'Settings', 'skautis-integration' ) . '</a>',
 		);
@@ -75,8 +74,7 @@ final class Settings {
 		return array_merge( $links, $mylinks );
 	}
 
-	public function addHelpLinkToPluginsTable( array $links = array() ): array
-	{
+	public function addHelpLinkToPluginsTable( array $links = array() ): array {
 		$mylinks = array(
 			'<a href="' . self::HELP_PAGE_URL . '" target="_blank">' . __( 'Help', 'skautis-integration' ) . '</a>',
 		);

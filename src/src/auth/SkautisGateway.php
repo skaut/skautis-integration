@@ -43,18 +43,15 @@ class SkautisGateway {
 		}
 	}
 
-	public function getEnv(): string
-	{
+	public function getEnv(): string {
 		return $this->env;
 	}
 
-	public function getSkautisInstance(): Skautis\Skautis
-	{
+	public function getSkautisInstance(): Skautis\Skautis {
 		return $this->skautis;
 	}
 
-	public function isInitialized(): bool
-	{
+	public function isInitialized(): bool {
 		return $this->skautisInitialized;
 	}
 
@@ -77,8 +74,7 @@ class SkautisGateway {
 		return false;
 	}
 
-	public function isMaintenance(): bool
-	{
+	public function isMaintenance(): bool {
 		return $this->skautis->isMaintenance();
 	}
 

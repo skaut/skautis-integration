@@ -96,8 +96,7 @@ final class RulesInit {
 		register_post_type( self::RULES_TYPE_SLUG, $args );
 	}
 
-	public function defaultContent( string $content ): string
-	{
+	public function defaultContent( string $content ): string {
 		global $post_type;
 		if ( self::RULES_TYPE_SLUG === $post_type ) {
 			$content = '';
@@ -106,8 +105,7 @@ final class RulesInit {
 		return $content;
 	}
 
-	public function titlePlaceholder( string $title ): string
-	{
+	public function titlePlaceholder( string $title ): string {
 		global $post_type;
 		if ( self::RULES_TYPE_SLUG === $post_type ) {
 			$title = __( 'Zadejte název pravidla', 'skautis-integration' );
@@ -116,8 +114,7 @@ final class RulesInit {
 		return $title;
 	}
 
-	public function updatedMessages( array $messages = array() ): array
-	{
+	public function updatedMessages( array $messages = array() ): array {
 		$post                              = get_post();
 		$messages[ self::RULES_TYPE_SLUG ] = array(
 			0  => '', // Unused. Messages start at index 1.
@@ -142,8 +139,7 @@ final class RulesInit {
 		return $messages;
 	}
 
-	public function getAllRules(): array
-	{
+	public function getAllRules(): array {
 		$rulesWpQuery = new \WP_Query(
 			array(
 				'post_type'     => self::RULES_TYPE_SLUG,

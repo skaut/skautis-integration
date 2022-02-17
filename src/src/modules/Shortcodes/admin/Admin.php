@@ -33,15 +33,13 @@ final class Admin {
 		);
 	}
 
-	public function registerTinymcePlugin( array $plugins = array() ): array
-	{
+	public function registerTinymcePlugin( array $plugins = array() ): array {
 		$plugins['skautis_rules'] = $this->adminDirUrl . 'js/skautis-modules-shortcodes-tinymceRulesButton.js';
 
 		return $plugins;
 	}
 
-	public function addTinymceButton( array $buttons = array() ): array
-	{
+	public function addTinymceButton( array $buttons = array() ): array {
 		$buttons[] = 'skautis_rules';
 
 		return $buttons;

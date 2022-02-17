@@ -7,8 +7,7 @@ namespace SkautisIntegration\Auth;
 use SkautisIntegration\Vendor\Skautis\SessionAdapter\AdapterInterface;
 
 class TransientSessionAdapter implements AdapterInterface {
-	private function get_cookie_id(): string
-	{
+	private function get_cookie_id(): string {
 		if ( isset( $_COOKIE[ SKAUTISINTEGRATION_NAME . '-skautis-session' ] ) ) {
 			return sanitize_text_field( wp_unslash( $_COOKIE[ SKAUTISINTEGRATION_NAME . '-skautis-session' ] ) );
 		} else {
@@ -26,8 +25,7 @@ class TransientSessionAdapter implements AdapterInterface {
 		set_transient( SKAUTISINTEGRATION_NAME . '_session_' . $this->get_cookie_id() . '_' . $name, $object, 40 * \MINUTE_IN_SECONDS );
 	}
 
-	public function has( $name ): bool
-	{
+	public function has( $name ): bool {
 		return get_transient( SKAUTISINTEGRATION_NAME . '_session_' . $this->get_cookie_id() . '_' . $name ) !== false;
 	}
 

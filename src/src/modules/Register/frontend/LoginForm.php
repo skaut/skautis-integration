@@ -36,8 +36,7 @@ final class LoginForm {
 		<?php
 	}
 
-	public function loginLinkInLoginFormReturn( string $html ): string
-	{
+	public function loginLinkInLoginFormReturn( string $html ): string {
 		return '
 				<p style="margin-bottom: 0.3em;">
 						<a class="button button-primary button-hero button-skautis" style="float: none; width: 100%; text-align: center;"

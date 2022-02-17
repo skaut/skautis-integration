@@ -16,8 +16,7 @@ final class SkautisLogin {
 		$this->wpLoginLogout  = $wpLoginLogout;
 	}
 
-	public function isUserLoggedInSkautis(): bool
-	{
+	public function isUserLoggedInSkautis(): bool {
 		if ( $this->skautisGateway->isInitialized() ) {
 			return $this->skautisGateway->getSkautisInstance()->getUser()->isLoggedIn() && $this->skautisGateway->getSkautisInstance()->getUser()->isLoggedIn( true );
 		}
@@ -25,8 +24,7 @@ final class SkautisLogin {
 		return false;
 	}
 
-	public function setLoginDataToLocalSkautisInstance( array $data = array() ): bool
-	{
+	public function setLoginDataToLocalSkautisInstance( array $data = array() ): bool {
 		$data = apply_filters( SKAUTISINTEGRATION_NAME . '_login_data_for_skautis_instance', $data );
 
 		if ( isset( $data['skautIS_Token'] ) ) {

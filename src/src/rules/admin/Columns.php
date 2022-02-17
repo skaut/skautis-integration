@@ -30,15 +30,13 @@ class Columns {
 		);
 	}
 
-	public function lastModifiedAdminColumn( array $columns = array() ): array
-	{
+	public function lastModifiedAdminColumn( array $columns = array() ): array {
 		$columns['modified_last'] = __( 'Naposledy upraveno', 'skautis-integration' );
 
 		return $columns;
 	}
 
-	public function sortableLastModifiedColumn( array $columns = array() ): array
-	{
+	public function sortableLastModifiedColumn( array $columns = array() ): array {
 		$columns['modified_last'] = 'modified';
 
 		return $columns;

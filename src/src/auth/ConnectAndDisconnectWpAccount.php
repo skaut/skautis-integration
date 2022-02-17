@@ -92,8 +92,7 @@ final class ConnectAndDisconnectWpAccount {
 		}
 	}
 
-	public function getConnectWpUserToSkautisUrl(): string
-	{
+	public function getConnectWpUserToSkautisUrl(): string {
 		$returnUrl = Helpers::getCurrentUrl();
 		$returnUrl = add_query_arg( SKAUTISINTEGRATION_NAME . '_connectWpAccountWithSkautis', wp_create_nonce( SKAUTISINTEGRATION_NAME . '_connectWpAccountWithSkautis' ), $returnUrl );
 		$url       = add_query_arg( 'ReturnUrl', rawurlencode( $returnUrl ), get_home_url( null, 'skautis/auth/' . Actions::CONNECT_WP_USER_TO_SKAUTIS_ACTION ) );
