@@ -20,8 +20,6 @@
 	<config name="minimum_supported_wp_version" value="7.4"/>
 	<rule ref="WordPress">
 		<exclude name="Squiz.Commenting"/>
-		<exclude name="WordPress.DB.DirectDatabaseQuery.DirectQuery"/>
-		<exclude name="WordPress.DB.DirectDatabaseQuery.NoCaching"/>
 		<exclude name="WordPress.DB.SlowDBQuery.slow_db_query_meta_query"/>
 		<exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
 		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>
