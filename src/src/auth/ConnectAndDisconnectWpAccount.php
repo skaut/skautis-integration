@@ -71,8 +71,8 @@ final class ConnectAndDisconnectWpAccount {
 	}
 
 	public function connectWpUserToSkautis() {
-		if ( ! isset( $_GET[ SKAUTISINTEGRATION_NAME. '_connect_user_nonce' ] ) ||
-			! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET[ SKAUTISINTEGRATION_NAME. '_connect_user_nonce' ] ) ), SKAUTISINTEGRATION_NAME. '_connect_user' ) ||
+		if ( ! isset( $_GET[ SKAUTISINTEGRATION_NAME . '_connect_user_nonce' ] ) ||
+			! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET[ SKAUTISINTEGRATION_NAME . '_connect_user_nonce' ] ) ), SKAUTISINTEGRATION_NAME . '_connect_user' ) ||
 			! $this->skautisLogin->isUserLoggedInSkautis() ||
 			! Helpers::userIsSkautisManager() ||
 			is_null( Helpers::getReturnUrl() )
@@ -98,7 +98,7 @@ final class ConnectAndDisconnectWpAccount {
 		$returnUrl = add_query_arg( SKAUTISINTEGRATION_NAME . '_connectWpAccountWithSkautis', wp_create_nonce( SKAUTISINTEGRATION_NAME . '_connectWpAccountWithSkautis' ), $returnUrl );
 		$url       = add_query_arg( 'ReturnUrl', rawurlencode( $returnUrl ), get_home_url( null, 'skautis/auth/' . Actions::CONNECT_WP_USER_TO_SKAUTIS_ACTION ) );
 
-		return esc_url( wp_nonce_url( $url, SKAUTISINTEGRATION_NAME. '_connect_user', SKAUTISINTEGRATION_NAME. '_connect_user_nonce' ) );
+		return esc_url( wp_nonce_url( $url, SKAUTISINTEGRATION_NAME . '_connect_user', SKAUTISINTEGRATION_NAME . '_connect_user_nonce' ) );
 	}
 
 	public function disconnect() {

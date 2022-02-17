@@ -141,8 +141,8 @@ final class Register implements IModule {
 
 	public function registerUserManually() {
 		$returnUrl = Helpers::getReturnUrl();
-		if ( ! isset( $_GET[ SKAUTISINTEGRATION_NAME. '_register_user_nonce' ] ) ||
-			! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET[ SKAUTISINTEGRATION_NAME. '_register_user_nonce' ] ) ), SKAUTISINTEGRATION_NAME. '_register_user' ) ||
+		if ( ! isset( $_GET[ SKAUTISINTEGRATION_NAME . '_register_user_nonce' ] ) ||
+			! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET[ SKAUTISINTEGRATION_NAME . '_register_user_nonce' ] ) ), SKAUTISINTEGRATION_NAME . '_register_user' ) ||
 			! $this->skautisLogin->isUserLoggedInSkautis() ||
 			! Helpers::userIsSkautisManager() ||
 			! current_user_can( 'create_users' ) ||

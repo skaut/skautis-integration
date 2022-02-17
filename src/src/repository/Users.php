@@ -20,8 +20,8 @@ class Users {
 
 		$returnUrl = Helpers::getReturnUrl();
 		if (
-			isset( $_GET[ SKAUTISINTEGRATION_NAME. '_skautis_search_user_nonce' ] ) &&
-			wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET[ SKAUTISINTEGRATION_NAME. '_skautis_search_user_nonce' ] ) ), SKAUTISINTEGRATION_NAME. '_skautis_search_user' ) &&
+			isset( $_GET[ SKAUTISINTEGRATION_NAME . '_skautis_search_user_nonce' ] ) &&
+			wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET[ SKAUTISINTEGRATION_NAME . '_skautis_search_user_nonce' ] ) ), SKAUTISINTEGRATION_NAME . '_skautis_search_user' ) &&
 			isset( $_GET['skautisSearchUsers'] ) &&
 			'' !== $_GET['skautisSearchUsers']
 		) {
