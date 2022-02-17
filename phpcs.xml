@@ -27,7 +27,6 @@
 		<exclude name="PSR2.ControlStructures"/>
 		<exclude name="Squiz.Commenting"/>
 		<exclude name="Squiz.Operators"/>
-		<exclude name="Squiz.PHP"/>
 		<exclude name="Squiz.Strings"/>
 		<exclude name="WordPress.CodeAnalysis"/>
 		<exclude name="WordPress.DB"/>

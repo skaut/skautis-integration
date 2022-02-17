@@ -84,9 +84,7 @@ class Func implements IRule {
 			$userDetail = $this->skautisGateway->getSkautisInstance()->UserManagement->UserDetail();
 			$userFuncs  = $this->skautisGateway->getSkautisInstance()->OrganizationUnit->FunctionAllPerson(
 				array(
-					'ID_Person' => $userDetail->ID_Person, /*
-				,
-				'isValid'   => true*/
+					'ID_Person' => $userDetail->ID_Person,
 				)
 			);
 
@@ -97,11 +95,12 @@ class Func implements IRule {
 			}
 
 			foreach ( $userFuncs->FunctionAllOutput as $userFunc ) {
-				if ( $unitDetail = $this->skautisGateway->getSkautisInstance()->OrganizationUnit->UnitDetail(
+				$unitDetail = $this->skautisGateway->getSkautisInstance()->OrganizationUnit->UnitDetail(
 					array(
 						'ID' => $userFunc->ID_Unit,
 					)
-				) ) {
+				);
+				if ( $unitDetail ) {
 					if ( ! isset( $result[ $userFunc->ID_FunctionType ] ) ) {
 						$result[ $userFunc->ID_FunctionType ] = array();
 					}

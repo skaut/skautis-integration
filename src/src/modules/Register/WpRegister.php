@@ -123,7 +123,8 @@ final class WpRegister {
 
         $firstName = $user['firstName'];
         $lastName  = $user['lastName'];
-        if ( $nickName = $user['nickName'] ) {
+        $nickName  = $user['nickName'];
+        if ( $nickName ) {
             $displayName = $nickName;
         } else {
             $nickName    = '';
@@ -221,8 +222,6 @@ final class WpRegister {
     public function sanitizeUsername( string $username, string $rawUsername, bool $strict ): string
     {
         $username = wp_strip_all_tags( $rawUsername );
-
-        // $username = remove_accents ($username);
 
         // Kill octets
         $username = preg_replace( '|%([a-fA-F0-9][a-fA-F0-9])|', '', $username );

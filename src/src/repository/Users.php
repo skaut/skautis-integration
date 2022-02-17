@@ -50,7 +50,7 @@ class Users {
 			)
 		);
 
-		foreach ( $users = $connectedWpUsers->get_results() as $user ) {
+		foreach ( $connectedWpUsers->get_results() as $user ) {
 			$usersData[ get_user_meta( $user->ID, 'skautisUserId_' . $this->skautisGateway->getEnv(), true ) ] = array(
 				'id'   => $user->ID,
 				'name' => $user->display_name,
@@ -138,15 +138,6 @@ class Users {
 		// different procedure for roles associated with events
 		if ( $eventType && $eventId ) {
 			if ( 'Congress' === $eventType ) {
-				/*
-				$participants = $this->skautisGateway->getSkautisInstance()->Events->ParticipantAllPerson( [
-					'ID_Event' . $eventType => $eventId
-				] );
-				if ( ! is_array( $participants ) || count( $participants ) === 0 ) {
-					$participants = $this->skautisGateway->getSkautisInstance()->Events->ParticipantAllUstredi( [
-						'ID_Event' . $eventType => $eventId
-					] );
-				}*/
 				$participants = null;
 			} else {
 				$methodName   = 'Participant' . $eventType . 'All';

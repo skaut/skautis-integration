@@ -53,7 +53,8 @@ final class Actions {
 
 	public function registerAuthRewriteRules() {
 		add_rewrite_rule( '^skautis/auth/(.*?)$', 'index.php?skautis_auth=$matches[1]', 'top' );
-		if ( $loginPageUrl = get_option( SKAUTISINTEGRATION_NAME . '_login_page_url' ) ) {
+		$loginPageUrl = get_option( SKAUTISINTEGRATION_NAME . '_login_page_url' );
+		if ( $loginPageUrl ) {
 			add_rewrite_rule( '^' . $loginPageUrl . '$', 'index.php?skautis_login=1', 'top' );
 		}
 	}

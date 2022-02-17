@@ -115,11 +115,12 @@ class Membership implements IRule {
 					continue;
 				}
 
-				if ( $unitDetail = $this->skautisGateway->getSkautisInstance()->OrganizationUnit->UnitDetail(
+				$unitDetail = $this->skautisGateway->getSkautisInstance()->OrganizationUnit->UnitDetail(
 					array(
 						'ID' => $userMembership->ID_Unit,
 					)
-				) ) {
+				);
+				if ( $unitDetail ) {
 					if ( ! isset( $result[ $userMembership->ID_MembershipType ] ) ) {
 						$result[ $userMembership->ID_MembershipType ] = array();
 					}

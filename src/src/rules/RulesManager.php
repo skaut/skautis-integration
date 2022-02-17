@@ -89,7 +89,8 @@ final class RulesManager {
 	public function checkIfUserPassedRulesAndGetHisRole(): string {
 		$result = '';
 
-		if ( ! $rules = get_option( SKAUTISINTEGRATION_NAME . '_modules_register_rules' ) ) {
+		$rules = get_option( SKAUTISINTEGRATION_NAME . '_modules_register_rules' );
+		if ( ! $rules ) {
 			return (string) get_option( SKAUTISINTEGRATION_NAME . '_modules_register_defaultwpRole' );
 		}
 

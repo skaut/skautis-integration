@@ -111,7 +111,8 @@ final class Register implements IModule {
 	}
 
 	public function registerUser() {
-		if ( $wpRole = $this->rulesManager->checkIfUserPassedRulesAndGetHisRole() ) {
+		$wpRole = $this->rulesManager->checkIfUserPassedRulesAndGetHisRole();
+		if ( $wpRole ) {
 			if ( $this->wpRegister->registerToWp( $wpRole ) ) {
 				$this->loginUserAfterRegistration();
 			}
