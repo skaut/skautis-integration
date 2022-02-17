@@ -27,9 +27,17 @@
 		<exclude name="Squiz.Commenting"/>
 		<exclude name="Squiz.Operators"/>
 		<exclude name="Squiz.Strings"/>
-		<exclude name="WordPress.DB"/>
-		<exclude name="WordPress.Files"/>
-		<exclude name="WordPress.NamingConventions"/>
+		<exclude name="WordPress.DB.DirectDatabaseQuery.DirectQuery"/>
+		<exclude name="WordPress.DB.DirectDatabaseQuery.NoCaching"/>
+		<exclude name="WordPress.DB.SlowDBQuery.slow_db_query_meta_query"/>
+		<exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
+		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>
+		<exclude name="WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid"/>
+		<exclude name="WordPress.NamingConventions.ValidFunctionName.MethodNameInvalid"/>
+		<exclude name="WordPress.NamingConventions.ValidHookName.NotLowercase"/>
+		<exclude name="WordPress.NamingConventions.ValidVariableName.PropertyNotSnakeCase"/>
+		<exclude name="WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase"/>
+		<exclude name="WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase"/>
 	</rule>
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
 		<properties>
