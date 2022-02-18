@@ -1,5 +1,5 @@
 #repeater .handle {
-	cursor: Move;
+	cursor: move;
 }
 
 div[data-repeater-item] {

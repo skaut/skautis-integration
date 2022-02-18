@@ -1,9 +1,10 @@
-#toplevel_page_skautis-integration .wp-menu-image img {
+#toplevel-page-skautis-integration .wp-menu-image img {
 	padding-top: 5px !important;
 }
 
+/* stylelint-disable-next-line selector-class-pattern */
 .skautis_page_skautis-integration_modules .form-table th,
-.skautis_page_skautis-integration_modules .form-table td {
+.skautis_page_skautis-integration_modules .form-table td { /* stylelint-disable-line selector-class-pattern */
 	padding-top: 0.6em;
 	padding-bottom: 0.6em;
 }

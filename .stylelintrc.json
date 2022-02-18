@@ -1,0 +1,6 @@
+{
+	"extends": "@wordpress/stylelint-config",
+	"plugins": [
+		"stylelint-no-unsupported-browser-features"
+	]
+}
