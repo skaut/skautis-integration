@@ -35,10 +35,10 @@
 	background-repeat: no-repeat;
 }
 
-#TB_ajaxContent .content {
+#TB_ajaxContent .content { /* stylelint-disable-line selector-id-pattern */
 	padding: 0 55px 0 0;
 }
 
-#connectUserToSkautisModal {
+#connectUserToSkautisModal { /* stylelint-disable-line selector-id-pattern */
 	max-width: 400px;
 }
