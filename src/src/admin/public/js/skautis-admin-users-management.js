@@ -1,10 +1,10 @@
 (function ($) {
     'use strict';
 
-    document.styleSheets[0].addRule('.skautisUserManagementTable th span:after','background-image: url(' + skautisIntegrationAdminUsersManagementLocalize.datatablesFilesUrl + '/sort_asc.png);');
-    document.styleSheets[0].addRule('.skautisUserManagementTable th.sorting_desc span:after','background-image: url(' + skautisIntegrationAdminUsersManagementLocalize.datatablesFilesUrl + '/sort_desc.png);');
+    document.styleSheets[0].addRule('.skautis-user-management-table th span:after','background-image: url(' + skautisIntegrationAdminUsersManagementLocalize.datatablesFilesUrl + '/sort_asc.png);');
+    document.styleSheets[0].addRule('.skautis-user-management-table th.sorting_desc span:after','background-image: url(' + skautisIntegrationAdminUsersManagementLocalize.datatablesFilesUrl + '/sort_desc.png);');
 
-    var $dataTable = $('.skautisUserManagementTable').DataTable({
+    var $dataTable = $('.skautis-user-management-table').DataTable({
         responsive: true,
         pageLength: 25,
         stateSave: true,

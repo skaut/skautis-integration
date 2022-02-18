@@ -167,7 +167,7 @@ class UsersManagement {
 
 		$this->roleChanger->printChangeRolesForm();
 
-		echo '<table class="skautisUserManagementTable"><thead style="font-weight: bold;"><tr>';
+		echo '<table class="skautis-user-management-table"><thead style="font-weight: bold;"><tr>';
 		echo '<th>' . esc_html__( 'Jméno a příjmení', 'skautis-integration' ) . '</th><th>' . esc_html__( 'Přezdívka', 'skautis-integration' ) . '</th><th>' . esc_html__( 'ID uživatele', 'skautis-integration' ) . '</th><th>' . esc_html__( 'Propojený uživatel', 'skautis-integration' ) . '</th><th>' . esc_html__( 'Propojení', 'skautis-integration' ) . '</th>';
 		echo '</tr></thead ><tbody>';
 

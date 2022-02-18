@@ -1,26 +1,26 @@
-.skautisUserManagementTable {
+.skautis-user-management-table {
 	border-collapse: collapse;
 }
 
-.skautisUserManagementTable tbody > :nth-child(odd) {
+.skautis-user-management-table tbody > :nth-child(odd) {
 	background-color: #f9f9f9;
 }
 
-.skautisUserManagementTable th,
-.skautisUserManagementTable td {
+.skautis-user-management-table th,
+.skautis-user-management-table td {
 	padding: 5px 8px;
 }
 
-.skautisUserManagementTable th {
+.skautis-user-management-table th {
 	text-align: left;
 	background: none !important;
 }
 
-.skautisUserManagementTable th span {
+.skautis-user-management-table th span {
 	position: relative;
 }
 
-.skautisUserManagementTable th span::after {
+.skautis-user-management-table th span::after {
 	content: "";
 	position: absolute;
 	left: 100%;
