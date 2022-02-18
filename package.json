@@ -30,7 +30,7 @@
   "scripts": {
     "build": "gulp build",
     "lint:css:stylelint": "stylelint --color 'src/**/*.css'",
-    "disabled_lint:css": "run-p -c --aggregate-output lint:css:*",
+    "lint:css": "run-p -c --aggregate-output lint:css:*",
     "disabled_lint:php:phan": "export PHAN_DISABLE_XDEBUG_WARN=1; vendor/bin/phan",
     "lint:php:phpcs": "vendor/bin/phpcs",
     "disabled_lint:php:phpmd": "vendor/bin/phpmd src,.phan/config.php,scoper.inc.php text phpmd.xml",
