@@ -4,6 +4,55 @@ const merge = require( 'merge-stream' );
 const replace = require( 'gulp-replace' );
 const shell = require( 'gulp-shell' );
 
+gulp.task('build:css:admin', function() {
+	return gulp
+		.src( [ 'src/css/admin/*.css' ] )
+		.pipe( gulp.dest( 'dist/src/admin/public/css/' ) );
+})
+
+gulp.task('build:css:frontend', function() {
+	return gulp
+		.src( [ 'src/css/frontend/*.css' ] )
+		.pipe( gulp.dest( 'dist/src/frontend/public/css/' ) );
+})
+
+gulp.task('build:css:modules:Register:admin', function() {
+	return gulp
+		.src( [ 'src/css/modules/Register/admin/*.css' ] )
+		.pipe( gulp.dest( 'dist/src/modules/Register/admin/public/css/' ) );
+})
+
+gulp.task('build:css:modules:Register', gulp.parallel('build:css:modules:Register:admin'));
+
+gulp.task('build:css:modules:Shortcodes:admin', function() {
+	return gulp
+		.src( [ 'src/css/modules/Shortcodes/admin/*.css' ] )
+		.pipe( gulp.dest( 'dist/src/modules/Shortcodes/admin/public/css/' ) );
+})
+
+gulp.task('build:css:modules:Shortcodes', gulp.parallel('build:css:modules:Shortcodes:admin'));
+
+gulp.task('build:css:modules:Visibility:admin', function() {
+	return gulp
+		.src( [ 'src/css/modules/Visibility/admin/*.css' ] )
+		.pipe( gulp.dest( 'dist/src/modules/Visibility/admin/public/css/' ) );
+})
+
+gulp.task('build:css:modules:Visibility', gulp.parallel('build:css:modules:Visibility:admin'));
+
+gulp.task('build:css:modules', gulp.parallel('build:css:modules:Register', 'build:css:modules:Shortcodes', 'build:css:modules:Visibility'));
+
+gulp.task('build:css:rules:admin', function() {
+	return gulp
+		.src( [ 'src/css/rules/admin/*.css' ] )
+		.pipe( gulp.dest( 'dist/src/rules/admin/public/css/' ) );
+})
+
+gulp.task('build:css:rules', gulp.parallel('build:css:rules:admin'));
+
+// TODO: CSS minification
+gulp.task('build:css', gulp.parallel('build:css:admin', 'build:css:frontend', 'build:css:modules', 'build:css:rules'));
+
 gulp.task(
 	'build:deps:composer:scoper',
 	shell.task(
@@ -148,7 +197,7 @@ gulp.task( 'build:php:base', function () {
 gulp.task( 'build:php:other', function () {
 	// TODO: Split these
 	return gulp
-		.src( [ 'src/**/*.css', 'src/**/*.js', 'src/**/*.php', 'src/**/*.png', 'src/**/*.txt' ] )
+		.src( [ 'src/**/*.js', 'src/**/*.php', 'src/**/*.png', 'src/**/*.txt' ] )
 		.pipe( gulp.dest( 'dist/' ) );
 } );
 
@@ -163,6 +212,7 @@ gulp.task(
 gulp.task(
 	'build',
 	gulp.parallel(
+		'build:css',
 		'build:deps',
 		'build:php'
 	)
