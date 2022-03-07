@@ -6,6 +6,40 @@ namespace SkautisIntegration\Utils;
 
 class Helpers {
 
+	/**
+	 * Registers a style file
+	 *
+	 * Registers a style so that it can later be enqueued by `wp_enqueue_style()`.
+	 *
+	 * @param string        $handle A unique handle to identify the style with. This handle should be passed to `wp_enqueue_style()`.
+	 * @param string        $src Path to the file, relative to the plugin directory.
+	 * @param array<string> $deps A list of dependencies of the style. These can be either system dependencies or other registered styles. Default [].
+	 *
+	 * @return void
+	 */
+	public static function register_style( $handle, $src, $deps = array() ) {
+		$file = plugin_dir_path( __FILE__ ) . $src;
+		$handle = SKAUTISINTEGRATION_NAME . '_' . $handle;
+		$src = plugin_dir_url( dirname( __FILE__, 2 ) ) . $src;
+		wp_register_style( $handle, $src, $deps, SKAUTISINTEGRATION_VERSION );
+	}
+
+	/**
+	 * Enqueues a style file
+	 *
+	 * Registers and immediately enqueues a style. Note that you should **not** call this function if you've previously registered the style using `register_style()`.
+	 *
+	 * @param string        $handle A unique handle to identify the style with.
+	 * @param string        $src Path to the file, relative to the plugin directory.
+	 * @param array<string> $deps A list of dependencies of the style. These can be either system dependencies or other registered styles. Default [].
+	 *
+	 * @return void
+	 */
+	public static function enqueue_style( $handle, $src, $deps = array() ) {
+		self::register_style( $handle, $src, $deps );
+		wp_enqueue_style( SKAUTISINTEGRATION_NAME . '_' . $handle );
+	}
+
 	public static function getLoginLogoutRedirect() {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( isset( $_GET['redirect_to'] ) && '' !== $_GET['redirect_to'] ) {

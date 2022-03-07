@@ -136,13 +136,7 @@ final class Admin {
 			'all'
 		);
 
-		wp_enqueue_style(
-			SKAUTISINTEGRATION_NAME . '_query-builder',
-			$this->adminDirUrl . 'css/skautis-rules-admin.css',
-			array(),
-			SKAUTISINTEGRATION_VERSION,
-			'all'
-		);
+		Helpers::enqueue_style('query-builder', 'rules/admin/css/skautis-rules-admin.css');
 
 		wp_enqueue_style(
 			SKAUTISINTEGRATION_NAME . '_query-builder-main',

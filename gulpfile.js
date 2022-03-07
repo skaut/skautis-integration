@@ -7,19 +7,19 @@ const shell = require( 'gulp-shell' );
 gulp.task('build:css:admin', function() {
 	return gulp
 		.src( [ 'src/css/admin/*.css' ] )
-		.pipe( gulp.dest( 'dist/src/admin/public/css/' ) );
+		.pipe( gulp.dest( 'dist/admin/css/' ) );
 })
 
 gulp.task('build:css:frontend', function() {
 	return gulp
 		.src( [ 'src/css/frontend/*.css' ] )
-		.pipe( gulp.dest( 'dist/src/frontend/public/css/' ) );
+		.pipe( gulp.dest( 'dist/frontend/css/' ) );
 })
 
 gulp.task('build:css:modules:Register:admin', function() {
 	return gulp
 		.src( [ 'src/css/modules/Register/admin/*.css' ] )
-		.pipe( gulp.dest( 'dist/src/modules/Register/admin/public/css/' ) );
+		.pipe( gulp.dest( 'dist/modules/Register/admin/css/' ) );
 })
 
 gulp.task('build:css:modules:Register', gulp.parallel('build:css:modules:Register:admin'));
@@ -27,7 +27,7 @@ gulp.task('build:css:modules:Register', gulp.parallel('build:css:modules:Registe
 gulp.task('build:css:modules:Shortcodes:admin', function() {
 	return gulp
 		.src( [ 'src/css/modules/Shortcodes/admin/*.css' ] )
-		.pipe( gulp.dest( 'dist/src/modules/Shortcodes/admin/public/css/' ) );
+		.pipe( gulp.dest( 'dist/modules/Shortcodes/admin/css/' ) );
 })
 
 gulp.task('build:css:modules:Shortcodes', gulp.parallel('build:css:modules:Shortcodes:admin'));
@@ -35,7 +35,7 @@ gulp.task('build:css:modules:Shortcodes', gulp.parallel('build:css:modules:Short
 gulp.task('build:css:modules:Visibility:admin', function() {
 	return gulp
 		.src( [ 'src/css/modules/Visibility/admin/*.css' ] )
-		.pipe( gulp.dest( 'dist/src/modules/Visibility/admin/public/css/' ) );
+		.pipe( gulp.dest( 'dist/modules/Visibility/admin/css/' ) );
 })
 
 gulp.task('build:css:modules:Visibility', gulp.parallel('build:css:modules:Visibility:admin'));
@@ -45,7 +45,7 @@ gulp.task('build:css:modules', gulp.parallel('build:css:modules:Register', 'buil
 gulp.task('build:css:rules:admin', function() {
 	return gulp
 		.src( [ 'src/css/rules/admin/*.css' ] )
-		.pipe( gulp.dest( 'dist/src/rules/admin/public/css/' ) );
+		.pipe( gulp.dest( 'dist/rules/admin/css/' ) );
 })
 
 gulp.task('build:css:rules', gulp.parallel('build:css:rules:admin'));

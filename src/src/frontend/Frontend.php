@@ -6,6 +6,7 @@ namespace SkautisIntegration\Frontend;
 
 use SkautisIntegration\Auth\SkautisGateway;
 use SkautisIntegration\Auth\WpLoginLogout;
+use SkautisIntegration\Utils\Helpers;
 
 final class Frontend {
 
@@ -66,23 +67,11 @@ final class Frontend {
 			wp_enqueue_style( 'buttons' );
 		}
 
-		wp_enqueue_style(
-			SKAUTISINTEGRATION_NAME . '_frontend',
-			$this->frontendDirUrl . 'css/skautis-frontend.css',
-			array(),
-			SKAUTISINTEGRATION_VERSION,
-			'all'
-		);
+		Helpers::enqueue_style('frontend', 'frontend/css/skautis-frontend.css');
 	}
 
 	public function enqueueLoginStyles() {
-		wp_enqueue_style(
-			SKAUTISINTEGRATION_NAME . '_frontend',
-			$this->frontendDirUrl . 'css/skautis-frontend.css',
-			array(),
-			SKAUTISINTEGRATION_VERSION,
-			'all'
-		);
+		Helpers::enqueue_style('frontend', 'frontend/css/skautis-frontend.css');
 	}
 
 	public function addLogoutLinkToAdminBar( \WP_Admin_Bar $wpAdminBar ) {
