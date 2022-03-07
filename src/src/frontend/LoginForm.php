@@ -7,6 +7,7 @@ namespace SkautisIntegration\Frontend;
 use SkautisIntegration\Auth\WpLoginLogout;
 use SkautisIntegration\Services\Services;
 use SkautisIntegration\Modules\Register\Register;
+use SkautisIntegration\Utils\Helpers;
 
 final class LoginForm {
 
@@ -27,7 +28,7 @@ final class LoginForm {
 	}
 
 	public function enqueueStyles() {
-		wp_enqueue_style( SKAUTISINTEGRATION_NAME, $this->frontendDirUrl . 'css/skautis-frontend.css', array(), SKAUTISINTEGRATION_VERSION, 'all' );
+		Helpers::enqueue_style( 'frontend', 'frontend/css/skautis-frontened.min.css' );
 	}
 
 	public function loginLinkInLoginForm() {

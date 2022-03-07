@@ -54,7 +54,7 @@ final class Frontend {
 
 	public function enqueueStyles() {
 		wp_enqueue_style( 'buttons' );
-		wp_enqueue_style( SKAUTISINTEGRATION_NAME, SKAUTISINTEGRATION_URL . 'src/frontend/public/css/skautis-frontend.css', array(), SKAUTISINTEGRATION_VERSION, 'all' );
+		Helpers::enqueue_style( 'frontend', 'frontend/css/skautis-frontend.min.css' );
 	}
 
 	public function processShortcode( array $atts = array(), string $content = '' ): string {

@@ -6,6 +6,7 @@ namespace SkautisIntegration\Modules\Visibility\Admin;
 
 use SkautisIntegration\Rules\RulesManager;
 use SkautisIntegration\Modules\Visibility\Frontend\Frontend;
+use SkautisIntegration\Utils\Helpers;
 
 final class Admin {
 
@@ -37,13 +38,7 @@ final class Admin {
 			get_current_screen()->id === 'skautis_page_' . SKAUTISINTEGRATION_NAME . '_modules_visibility' ) {
 			wp_enqueue_script( 'jquery-ui-sortable' );
 
-			wp_enqueue_style(
-				SKAUTISINTEGRATION_NAME . '_modules_visibility',
-				$this->adminDirUrl . 'css/skautis-modules-visibility-admin.css',
-				array(),
-				SKAUTISINTEGRATION_VERSION,
-				'all'
-			);
+			Helpers::enqueue_style( 'modules_visibility', 'modules/Visibility/admin/css/skautis-modules-visibility-admin.min.css' );
 
 			wp_enqueue_script(
 				SKAUTISINTEGRATION_NAME . '_jquery.repeater',

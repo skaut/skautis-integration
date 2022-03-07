@@ -91,21 +91,8 @@ class UsersManagement {
 			true
 		);
 
-		wp_enqueue_style(
-			SKAUTISINTEGRATION_NAME,
-			$this->adminDirUrl . 'css/skautis-admin.css',
-			array(),
-			SKAUTISINTEGRATION_VERSION,
-			'all'
-		);
-
-		wp_enqueue_style(
-			SKAUTISINTEGRATION_NAME . '_admin-users-management',
-			$this->adminDirUrl . 'css/skautis-admin-users-management.css',
-			array(),
-			SKAUTISINTEGRATION_VERSION,
-			'all'
-		);
+		Helpers::enqueue_style( 'admin', 'admin/css/skautis-admin.min.css' );
+		Helpers::enqueue_style( 'admin-users-management', 'admin/css/skautis-admin-users-management.min.css' );
 
 		wp_enqueue_script(
 			SKAUTISINTEGRATION_NAME . '_admin-users-management',

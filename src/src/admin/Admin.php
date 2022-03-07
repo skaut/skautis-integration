@@ -7,6 +7,7 @@ namespace SkautisIntegration\Admin;
 use SkautisIntegration\Auth\SkautisGateway;
 use SkautisIntegration\Auth\WpLoginLogout;
 use SkautisIntegration\Rules\RulesManager;
+use SkautisIntegration\Utils\Helpers;
 
 final class Admin {
 
@@ -57,13 +58,7 @@ final class Admin {
 			false
 		);
 
-		wp_enqueue_style(
-			SKAUTISINTEGRATION_NAME,
-			$this->adminDirUrl . 'css/skautis-admin.css',
-			array(),
-			SKAUTISINTEGRATION_VERSION,
-			'all'
-		);
+		Helpers::enqueue_style( 'admin', 'admin/css/skautis-admin.min.css' );
 	}
 
 	public function printInlineJs() {

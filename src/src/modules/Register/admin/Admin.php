@@ -5,6 +5,7 @@ declare( strict_types=1 );
 namespace SkautisIntegration\Modules\Register\Admin;
 
 use SkautisIntegration\Rules\RulesManager;
+use SkautisIntegration\Utils\Helpers;
 
 final class Admin {
 
@@ -27,13 +28,7 @@ final class Admin {
 
 	public function enqueueStyles() {
 		if ( get_current_screen()->id === 'skautis_page_skautis-integration_modules_register' ) {
-			wp_enqueue_style(
-				SKAUTISINTEGRATION_NAME . '_modules_register',
-				$this->adminDirUrl . 'css/skautis-modules-register-admin.css',
-				array(),
-				SKAUTISINTEGRATION_VERSION,
-				'all'
-			);
+			Helpers::enqueue_style( 'modules_register', 'modules/Register/admin/css/skautis-modules-register-admin.min.css' );
 		}
 	}
 
