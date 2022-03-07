@@ -38,7 +38,7 @@ final class Admin {
 			get_current_screen()->id === 'skautis_page_' . SKAUTISINTEGRATION_NAME . '_modules_visibility' ) {
 			wp_enqueue_script( 'jquery-ui-sortable' );
 
-			Helpers::enqueue_style('modules_visibility', 'modules/Visibility/admin/css/skautis-modules-visibility-admin.css');
+			Helpers::enqueue_style( 'modules_visibility', 'modules/Visibility/admin/css/skautis-modules-visibility-admin.css' );
 
 			wp_enqueue_script(
 				SKAUTISINTEGRATION_NAME . '_jquery.repeater',

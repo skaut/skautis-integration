@@ -136,7 +136,7 @@ final class Admin {
 			'all'
 		);
 
-		Helpers::enqueue_style('query-builder', 'rules/admin/css/skautis-rules-admin.css');
+		Helpers::enqueue_style( 'query-builder', 'rules/admin/css/skautis-rules-admin.css' );
 
 		wp_enqueue_style(
 			SKAUTISINTEGRATION_NAME . '_query-builder-main',

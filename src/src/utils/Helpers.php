@@ -18,9 +18,8 @@ class Helpers {
 	 * @return void
 	 */
 	public static function register_style( $handle, $src, $deps = array() ) {
-		$file = plugin_dir_path( __FILE__ ) . $src;
 		$handle = SKAUTISINTEGRATION_NAME . '_' . $handle;
-		$src = plugin_dir_url( dirname( __FILE__, 2 ) ) . $src;
+		$src    = plugin_dir_url( dirname( __FILE__, 2 ) ) . $src;
 		wp_register_style( $handle, $src, $deps, SKAUTISINTEGRATION_VERSION );
 	}
 
