@@ -28,7 +28,7 @@ final class Admin {
 
 	public function enqueueStyles() {
 		if ( get_current_screen()->id === 'skautis_page_skautis-integration_modules_register' ) {
-			Helpers::enqueue_style( 'modules_register', 'modules/Register/admin/css/skautis-modules-register-admin.css' );
+			Helpers::enqueue_style( 'modules_register', 'modules/Register/admin/css/skautis-modules-register-admin.min.css' );
 		}
 	}
 

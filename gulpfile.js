@@ -1,24 +1,32 @@
 const gulp = require( 'gulp' );
 
+const cleanCSS = require( 'gulp-clean-css' );
 const merge = require( 'merge-stream' );
+const rename = require( 'gulp-rename' );
 const replace = require( 'gulp-replace' );
 const shell = require( 'gulp-shell' );
 
 gulp.task('build:css:admin', function() {
 	return gulp
 		.src( [ 'src/css/admin/*.css' ] )
+		.pipe( cleanCSS() )
+		.pipe( rename( { suffix: '.min' } ) )
 		.pipe( gulp.dest( 'dist/admin/css/' ) );
 })
 
 gulp.task('build:css:frontend', function() {
 	return gulp
 		.src( [ 'src/css/frontend/*.css' ] )
+		.pipe( cleanCSS() )
+		.pipe( rename( { suffix: '.min' } ) )
 		.pipe( gulp.dest( 'dist/frontend/css/' ) );
 })
 
 gulp.task('build:css:modules:Register:admin', function() {
 	return gulp
 		.src( [ 'src/css/modules/Register/admin/*.css' ] )
+		.pipe( cleanCSS() )
+		.pipe( rename( { suffix: '.min' } ) )
 		.pipe( gulp.dest( 'dist/modules/Register/admin/css/' ) );
 })
 
@@ -27,6 +35,8 @@ gulp.task('build:css:modules:Register', gulp.parallel('build:css:modules:Registe
 gulp.task('build:css:modules:Shortcodes:admin', function() {
 	return gulp
 		.src( [ 'src/css/modules/Shortcodes/admin/*.css' ] )
+		.pipe( cleanCSS() )
+		.pipe( rename( { suffix: '.min' } ) )
 		.pipe( gulp.dest( 'dist/modules/Shortcodes/admin/css/' ) );
 })
 
@@ -35,6 +45,8 @@ gulp.task('build:css:modules:Shortcodes', gulp.parallel('build:css:modules:Short
 gulp.task('build:css:modules:Visibility:admin', function() {
 	return gulp
 		.src( [ 'src/css/modules/Visibility/admin/*.css' ] )
+		.pipe( cleanCSS() )
+		.pipe( rename( { suffix: '.min' } ) )
 		.pipe( gulp.dest( 'dist/modules/Visibility/admin/css/' ) );
 })
 
@@ -45,12 +57,13 @@ gulp.task('build:css:modules', gulp.parallel('build:css:modules:Register', 'buil
 gulp.task('build:css:rules:admin', function() {
 	return gulp
 		.src( [ 'src/css/rules/admin/*.css' ] )
+		.pipe( cleanCSS() )
+		.pipe( rename( { suffix: '.min' } ) )
 		.pipe( gulp.dest( 'dist/rules/admin/css/' ) );
 })
 
 gulp.task('build:css:rules', gulp.parallel('build:css:rules:admin'));
 
-// TODO: CSS minification
 gulp.task('build:css', gulp.parallel('build:css:admin', 'build:css:frontend', 'build:css:modules', 'build:css:rules'));
 
 gulp.task(

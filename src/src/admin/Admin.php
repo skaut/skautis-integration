@@ -58,7 +58,7 @@ final class Admin {
 			false
 		);
 
-		Helpers::enqueue_style( 'admin', 'admin/css/skautis-admin.css' );
+		Helpers::enqueue_style( 'admin', 'admin/css/skautis-admin.min.css' );
 	}
 
 	public function printInlineJs() {

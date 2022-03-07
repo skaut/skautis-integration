@@ -91,8 +91,8 @@ class UsersManagement {
 			true
 		);
 
-		Helpers::enqueue_style( 'admin', 'admin/css/skautis-admin.css' );
-		Helpers::enqueue_style( 'admin-users-management', 'admin/css/skautis-admin-users-management.css' );
+		Helpers::enqueue_style( 'admin', 'admin/css/skautis-admin.min.css' );
+		Helpers::enqueue_style( 'admin-users-management', 'admin/css/skautis-admin-users-management.min.css' );
 
 		wp_enqueue_script(
 			SKAUTISINTEGRATION_NAME . '_admin-users-management',

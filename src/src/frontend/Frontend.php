@@ -67,11 +67,11 @@ final class Frontend {
 			wp_enqueue_style( 'buttons' );
 		}
 
-		Helpers::enqueue_style( 'frontend', 'frontend/css/skautis-frontend.css' );
+		Helpers::enqueue_style( 'frontend', 'frontend/css/skautis-frontend.min.css' );
 	}
 
 	public function enqueueLoginStyles() {
-		Helpers::enqueue_style( 'frontend', 'frontend/css/skautis-frontend.css' );
+		Helpers::enqueue_style( 'frontend', 'frontend/css/skautis-frontend.min.css' );
 	}
 
 	public function addLogoutLinkToAdminBar( \WP_Admin_Bar $wpAdminBar ) {
