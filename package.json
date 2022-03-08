@@ -40,6 +40,7 @@
     "lint": "run-p -c --aggregate-output lint:*"
   },
   "devDependencies": {
+    "@types/jquery": "^3.5.14",
     "@wordpress/browserslist-config": "^4.1.1",
     "@wordpress/eslint-plugin": "^10.0.2",
     "@wordpress/stylelint-config": "^20.0.1",

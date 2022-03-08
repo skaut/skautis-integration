@@ -1,3 +1,5 @@
+/// <reference types="datatables.net"/>
+
 (function ($) {
     'use strict';
 
@@ -10,8 +12,7 @@
         stateSave: true,
         language: {
             url: skautisIntegrationAdminUsersManagementLocalize.datatablesFilesUrl + '/cs.json',
-            search: "Hledat",
-            clear: "Zrušit"
+            search: "Hledat"
         },
         initComplete: function () {
             var searchString = getQueryStringFromUrl('skautisSearchUsers', window.location.href);
@@ -20,16 +21,13 @@
                 var $input = $('.dataTables_filter input').unbind(),
                     self = this.api(),
                     $searchButton = $('<button>')
-                        .text($dataTable.i18n('search'))
+                        .text($dataTable.i18n('search', 'Search'))
                         .addClass('button button-secondary')
                         .click(function () {
                             var withNonce = updateQueryStringInUrl(skautisIntegrationAdminUsersManagementLocalize.searchNonceName, skautisIntegrationAdminUsersManagementLocalize.searchNonceValue, window.location.href)
                             window.location.href = updateQueryStringInUrl('skautisSearchUsers', $input.val(), withNonce);
                         });
                 $input.on('keyup', function (e) {
-                    if (!e) {
-                        e = window.event;
-                    }
                     e.preventDefault();
                     if (e.keyCode === 13) {
                         $searchButton.trigger('click');
@@ -40,7 +38,7 @@
 
             if (searchString) {
                 var $clearButton = $('<button>')
-                    .text($dataTable.i18n('clear'))
+                    .text(skautisIntegrationAdminUsersManagementLocalize.cancel)
                     .addClass('button button-secondary')
                     .click(function () {
                         $('.dataTables_filter input').val('');
