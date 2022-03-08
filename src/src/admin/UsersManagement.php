@@ -93,13 +93,10 @@ class UsersManagement {
 
 		Helpers::enqueue_style( 'admin', 'admin/css/skautis-admin.min.css' );
 		Helpers::enqueue_style( 'admin-users-management', 'admin/css/skautis-admin-users-management.min.css' );
-
-		wp_enqueue_script(
-			SKAUTISINTEGRATION_NAME . '_admin-users-management',
-			$this->adminDirUrl . 'js/skautis-admin-users-management.js',
+		Helpers::enqueue_script(
+			'admin-users-management',
+			'admin/js/skautis-admin-users-management.min.js',
 			array( 'jquery', SKAUTISINTEGRATION_NAME . '_select2' ),
-			SKAUTISINTEGRATION_VERSION,
-			true
 		);
 
 		wp_localize_script(

@@ -1,8 +1,21 @@
 (function () {
+    tinymce.addI18n('cs', {
+        'shortcode_options': 'Nastavení shortcode',
+        'insert_skautis_rules': 'Vložit skautIS pravidlo',
+        'select_rules': 'Vyberte pravidla',
+        'hidden_content': 'Skrytý obsah',
+        'rule_1': 'Pravidlo 1',
+        'rule_2': 'Pravidlo 2',
+        'rule_3': 'Pravidlo 3',
+        'rule_4': 'Pravidlo 4',
+        'visibilityMode': 'Při nesplění pravidel:',
+        'hideContent': 'skrýt obsah',
+        'showLogin': 'zobrazit přihlášení'
+    });
     tinymce.PluginManager.add('skautis_rules', function (editor, url) {
         editor.addButton('skautis_rules', {
             title: 'insert_skautis_rules',
-            image: url + '/../img/lilie.png',
+            image: url + '/../../../../src/modules/Shortcodes/admin/public/img/lilie.png',
             onclick: function () {
                 var rules = window.rulesOptions,
                     visibilityOptions = window.visibilityOptions,

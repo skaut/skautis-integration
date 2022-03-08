@@ -7,6 +7,40 @@ namespace SkautisIntegration\Utils;
 class Helpers {
 
 	/**
+	 * Registers a script file
+	 *
+	 * Registers a script so that it can later be enqueued by `wp_enqueue_script()`.
+	 *
+	 * @param string        $handle A unique handle to identify the script with. This handle should be passed to `wp_enqueue_script()`.
+	 * @param string        $src Path to the file, relative to the plugin directory.
+	 * @param array<string> $deps A list of dependencies of the script. These can be either system dependencies like jquery, or other registered scripts. Default [].
+	 * @param boolean       $in_footer  Whether to enqueue the script before </body> instead of in the <head>. Default 'true'.
+	 *
+	 * @return void
+	 */
+	public static function register_script( $handle, $src, $deps = array(), $in_footer = true ) {
+		$handle = SKAUTISINTEGRATION_NAME . '_' . $handle;
+		$src = plugin_dir_url( dirname( __FILE__, 2 ) ) . $src;
+		wp_register_script( $handle, $src, $deps, SKAUTISINTEGRATION_VERSION, $in_footer );
+	}
+
+	/**
+	 * Enqueues a script file
+	 *
+	 * Registers and immediately enqueues a script. Note that you should **not** call this function if you've previously registered the script using `register_script()`.
+	 *
+	 * @param string        $handle A unique handle to identify the script with.
+	 * @param string        $src Path to the file, relative to the plugin directory.
+	 * @param array<string> $deps A list of dependencies of the script. These can be either system dependencies like jquery, or other registered scripts. Default [].
+	 *
+	 * @return void
+	 */
+	public static function enqueue_script( $handle, $src, $deps = array(), $in_footer = true ) {
+		self::register_script( $handle, $src, $deps, $in_footer );
+		wp_enqueue_script( SKAUTISINTEGRATION_NAME . '_' . $handle );
+	}
+
+	/**
 	 * Registers a style file
 	 *
 	 * Registers a style so that it can later be enqueued by `wp_enqueue_style()`.
