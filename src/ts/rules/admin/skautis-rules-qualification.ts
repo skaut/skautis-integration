@@ -3,7 +3,7 @@ function Qualification(qualifications) {
     this.unitOperators = [];
 }
 
-Qualification.prototype.input = function (rule, name) {
+Qualification.prototype.input = function (_, name) {
     var _this = this;
 
     var html = '<select class="form-control select2" name="' + name + '_1" multiple="multiple">';
@@ -19,19 +19,16 @@ Qualification.prototype.input = function (rule, name) {
 };
 
 Qualification.prototype.validation = function () {
-    var _this = this;
     return {
         format: /^(?!null)[^~]+$/
     };
 };
 
 Qualification.prototype.valueGetter = function (rule) {
-    var _this = this;
     return rule.$el.find('.rule-value-container [name$=_1]').val() + '';
 };
 
 Qualification.prototype.valueSetter = function (rule, value) {
-    var _this = this;
     if (rule.operator.nb_inputs > 0) {
         var val0 = value.split(',');
 

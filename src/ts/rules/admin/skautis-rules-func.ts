@@ -6,7 +6,7 @@ function Func(funcs) {
     this.unitOperators['any'] = 'any';
 }
 
-Func.prototype.input = function (rule, name) {
+Func.prototype.input = function (_, name) {
     var _this = this;
 
     _this.unitOperators['equal'] = jQuery.fn.queryBuilder.regional.cs.operators.equal;
@@ -37,21 +37,18 @@ Func.prototype.input = function (rule, name) {
 };
 
 Func.prototype.validation = function () {
-    var _this = this;
     return {
         format: /^(?!null)[^~]+~(?!null)[^~]+~(?!null)[^~]+$/
     };
 };
 
 Func.prototype.valueGetter = function (rule) {
-    var _this = this;
     return rule.$el.find('.rule-value-container [name$=_1]').val()
         + '~' + rule.$el.find('.rule-value-container [name$=_2]').val()
         + '~' + rule.$el.find('.rule-value-container [name$=_3]').val();
 };
 
 Func.prototype.valueSetter = function (rule, value) {
-    var _this = this;
     if (rule.operator.nb_inputs > 0) {
         var val = value.split('~');
 
