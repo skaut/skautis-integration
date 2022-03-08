@@ -48,12 +48,11 @@
     }
 
     function updateAvailableOptions() {
-        var usedOptions = [],
-            $selectRules = {};
+        var usedOptions = [];
 
         setTimeout(function () {
 
-            $selectRules = jQuery('.form-table').find('select.rule');
+            var $selectRules = jQuery('.form-table').find('select.rule');
 
             $selectRules.each(function () {
                 usedOptions.push(jQuery(this).val());
