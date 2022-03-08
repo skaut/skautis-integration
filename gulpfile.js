@@ -201,6 +201,71 @@ gulp.task(
 	gulp.parallel( 'build:deps:composer', 'build:deps:npm' )
 );
 
+gulp.task( 'build:js:admin', function() {
+	return gulp
+		.src( [ 'src/js/admin/*.js' ] )
+		.pipe( gulp.dest( 'dist/src/admin/public/js/' ) );
+	}
+);
+
+gulp.task( 'build:js:modules:Register:admin', function() {
+	return gulp
+		.src( [ 'src/js/modules/Register/admin/*.js' ] )
+		.pipe( gulp.dest( 'dist/src/modules/Register/admin/public/js/' ) );
+	}
+);
+
+gulp.task(
+	'build:js:modules:Register',
+	gulp.parallel( 'build:js:modules:Register:admin' )
+);
+
+gulp.task( 'build:js:modules:Shortcodes:admin', function() {
+	return gulp
+		.src( [ 'src/js/modules/Shortcodes/admin/*.js' ] )
+		.pipe( gulp.dest( 'dist/src/modules/Shortcodes/admin/public/js/' ) );
+	}
+);
+
+gulp.task(
+	'build:js:modules:Shortcodes',
+	gulp.parallel( 'build:js:modules:Shortcodes:admin' )
+);
+
+gulp.task( 'build:js:modules:Visibility:admin', function() {
+	return gulp
+		.src( [ 'src/js/modules/Visibility/admin/*.js' ] )
+		.pipe( gulp.dest( 'dist/src/modules/Visibility/admin/public/js/' ) );
+	}
+);
+
+gulp.task(
+	'build:js:modules:Visibility',
+	gulp.parallel( 'build:js:modules:Visibility:admin' )
+);
+
+gulp.task(
+	'build:js:modules',
+	gulp.parallel( 'build:js:modules:Register', 'build:js:modules:Shortcodes', 'build:js:modules:Visibility' )
+);
+
+gulp.task( 'build:js:rules:admin', function() {
+	return gulp
+		.src( [ 'src/js/rules/admin/*.js' ] )
+		.pipe( gulp.dest( 'dist/src/rules/admin/public/js/' ) );
+	}
+);
+
+gulp.task(
+	'build:js:rules',
+	gulp.parallel( 'build:js:rules:admin' )
+);
+
+gulp.task(
+	'build:js',
+	gulp.parallel( 'build:js:admin', 'build:js:modules', 'build:js:rules' )
+);
+
 gulp.task( 'build:php:base', function () {
 	return gulp
 		.src( [ 'src/*.php' ] )
@@ -210,7 +275,7 @@ gulp.task( 'build:php:base', function () {
 gulp.task( 'build:php:other', function () {
 	// TODO: Split these
 	return gulp
-		.src( [ 'src/**/*.js', 'src/**/*.php', 'src/**/*.png', 'src/**/*.txt' ] )
+		.src( [ 'src/**/*.php', 'src/**/*.png', 'src/**/*.txt' ] )
 		.pipe( gulp.dest( 'dist/' ) );
 } );
 
@@ -227,6 +292,7 @@ gulp.task(
 	gulp.parallel(
 		'build:css',
 		'build:deps',
+		'build:js',
 		'build:php'
 	)
 );

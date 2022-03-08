@@ -202,7 +202,7 @@ final class Admin {
 
 		wp_enqueue_script(
 			SKAUTISINTEGRATION_NAME . '_query-builder_lang',
-			$this->adminDirUrl . 'QueryBuilder/i18n/query-builder.cs.js',
+			$this->adminDirUrl . 'js/query-builder.cs.js',
 			array( SKAUTISINTEGRATION_NAME . '_query-builder' ),
 			SKAUTISINTEGRATION_VERSION,
 			true
