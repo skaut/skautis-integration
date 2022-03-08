@@ -206,7 +206,7 @@ gulp.task(
 gulp.task( 'build:js:admin', function() {
 	const tsProject = ts.createProject( 'tsconfig.json' );
 	return gulp
-		.src( [ 'src/js/admin/*.js' ] )
+		.src( [ 'src/ts/admin/*.ts', 'src/d.ts/*.d.ts' ] )
 		.pipe( tsProject() )
 		.js.pipe( terser() )
 		.pipe( rename( { suffix: '.min' } ) )
@@ -217,7 +217,7 @@ gulp.task( 'build:js:admin', function() {
 gulp.task( 'build:js:modules:Register:admin', function() {
 	const tsProject = ts.createProject( 'tsconfig.json' );
 	return gulp
-		.src( [ 'src/js/modules/Register/admin/*.js' ] )
+		.src( [ 'src/ts/modules/Register/admin/*.ts', 'src/d.ts/*.d.ts' ] )
 		.pipe( tsProject() )
 		.js.pipe( terser() )
 		.pipe( rename( { suffix: '.min' } ) )
@@ -233,7 +233,7 @@ gulp.task(
 gulp.task( 'build:js:modules:Shortcodes:admin', function() {
 	const tsProject = ts.createProject( 'tsconfig.json' );
 	return gulp
-		.src( [ 'src/js/modules/Shortcodes/admin/*.js' ] )
+		.src( [ 'src/ts/modules/Shortcodes/admin/*.ts', 'src/d.ts/*.d.ts' ] )
 		.pipe( tsProject() )
 		.js.pipe( terser() )
 		.pipe( rename( { suffix: '.min' } ) )
@@ -249,7 +249,7 @@ gulp.task(
 gulp.task( 'build:js:modules:Visibility:admin', function() {
 	const tsProject = ts.createProject( 'tsconfig.json' );
 	return gulp
-		.src( [ 'src/js/modules/Visibility/admin/*.js' ] )
+		.src( [ 'src/ts/modules/Visibility/admin/*.ts', 'src/d.ts/*.d.ts' ] )
 		.pipe( tsProject() )
 		.js.pipe( terser() )
 		.pipe( rename( { suffix: '.min' } ) )
@@ -270,7 +270,7 @@ gulp.task(
 gulp.task( 'build:js:rules:admin', function() {
 	const tsProject = ts.createProject( 'tsconfig.json' );
 	return gulp
-		.src( [ 'src/js/rules/admin/*.js' ] )
+		.src( [ 'src/ts/rules/admin/*.ts', 'src/d.ts/*.d.ts' ] )
 		.pipe( tsProject() )
 		.js.pipe( terser() )
 		.pipe( rename( { suffix: '.min' } ) )
