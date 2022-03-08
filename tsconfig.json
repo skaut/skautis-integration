@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false,
-    "noImplicitReturns": false,
-    "noUnusedLocals": false,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
     "noUnusedParameters": false,
     "strict": false,
     "target": "ES3",

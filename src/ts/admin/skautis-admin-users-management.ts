@@ -19,7 +19,6 @@
 
             if ($dataTable.data().length >= 500) {
                 var $input = $('.dataTables_filter input').unbind(),
-                    self = this.api(),
                     $searchButton = $('<button>')
                         .text($dataTable.i18n('search', 'Search'))
                         .addClass('button button-secondary')
@@ -57,7 +56,6 @@
         });
     });
 
-    var $modal = $('#TB_ajaxContent');
     $('.thickbox').on('click', function () {
         var $this = $(this);
         var userName = $this.parents('tr').find('.firstName').html() + ' ' + $this.parents('tr').find('.lastName').html(),
