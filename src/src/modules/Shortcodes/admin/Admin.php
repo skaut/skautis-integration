@@ -32,7 +32,7 @@ final class Admin {
 	}
 
 	public function registerTinymcePlugin( array $plugins = array() ): array {
-		$plugins['skautis_rules'] = plugin_dir_url( dirname( __FILE__, 4 ) ) . 'modules/Shortcodes/admin/js/skautis-modules-shortcodes-tinymceRulesButton.js';
+		$plugins['skautis_rules'] = plugin_dir_url( dirname( __FILE__, 4 ) ) . 'modules/Shortcodes/admin/js/skautis-modules-shortcodes-tinymceRulesButton.min.js';
 
 		return $plugins;
 	}

@@ -50,7 +50,7 @@ final class Admin {
 
 			Helpers::enqueue_script(
 				'modules_visibility',
-				'modules/Visibility/admin/js/skautis-modules-visibility-admin.js',
+				'modules/Visibility/admin/js/skautis-modules-visibility-admin.min.js',
 				array( 'jquery', SKAUTISINTEGRATION_NAME . '_jquery.repeater', SKAUTISINTEGRATION_NAME . '_select2' )
 			);
 		}

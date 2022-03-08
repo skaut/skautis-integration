@@ -154,25 +154,25 @@ final class Admin {
 
 		Helpers::enqueue_script(
 			'rules_role',
-			'rules/admin/js/skautis-rules-role.js',
+			'rules/admin/js/skautis-rules-role.min.js',
 			array(),
 			false
 		);
 		Helpers::enqueue_script(
 			'rules_membership',
-			'rules/admin/js/skautis-rules-membership.js',
+			'rules/admin/js/skautis-rules-membership.min.js',
 			array(),
 			false
 		);
 		Helpers::enqueue_script(
 			'rules_func',
-			'rules/admin/js/skautis-rules-func.js',
+			'rules/admin/js/skautis-rules-func.min.js',
 			array(),
 			false
 		);
 		Helpers::enqueue_script(
 			'rules_qualification',
-			'rules/admin/js/skautis-rules-qualification.js',
+			'rules/admin/js/skautis-rules-qualification.min.js',
 			array(),
 			false
 		);
@@ -195,12 +195,12 @@ final class Admin {
 
 		Helpers::enqueue_script(
 			'query-builder_lang',
-			'rules/admin/js/query-builder.cs.js',
+			'rules/admin/js/query-builder.cs.min.js',
 			array( SKAUTISINTEGRATION_NAME . '_query-builder' )
 		);
 		Helpers::enqueue_script(
 			'rules',
-			'rules/admin/js/skautis-rules-admin.js',
+			'rules/admin/js/skautis-rules-admin.min.js',
 			array( SKAUTISINTEGRATION_NAME . '_query-builder' )
 		);
 	}

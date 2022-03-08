@@ -5,6 +5,7 @@ const merge = require( 'merge-stream' );
 const rename = require( 'gulp-rename' );
 const replace = require( 'gulp-replace' );
 const shell = require( 'gulp-shell' );
+const terser = require( 'gulp-terser' );
 
 gulp.task('build:css:admin', function() {
 	return gulp
@@ -204,6 +205,8 @@ gulp.task(
 gulp.task( 'build:js:admin', function() {
 	return gulp
 		.src( [ 'src/js/admin/*.js' ] )
+		.pipe( terser() )
+		.pipe( rename( { suffix: '.min' } ) )
 		.pipe( gulp.dest( 'dist/admin/js/' ) );
 	}
 );
@@ -211,6 +214,8 @@ gulp.task( 'build:js:admin', function() {
 gulp.task( 'build:js:modules:Register:admin', function() {
 	return gulp
 		.src( [ 'src/js/modules/Register/admin/*.js' ] )
+		.pipe( terser() )
+		.pipe( rename( { suffix: '.min' } ) )
 		.pipe( gulp.dest( 'dist/modules/Register/admin/js/' ) );
 	}
 );
@@ -223,6 +228,8 @@ gulp.task(
 gulp.task( 'build:js:modules:Shortcodes:admin', function() {
 	return gulp
 		.src( [ 'src/js/modules/Shortcodes/admin/*.js' ] )
+		.pipe( terser() )
+		.pipe( rename( { suffix: '.min' } ) )
 		.pipe( gulp.dest( 'dist/modules/Shortcodes/admin/js/' ) );
 	}
 );
@@ -235,6 +242,8 @@ gulp.task(
 gulp.task( 'build:js:modules:Visibility:admin', function() {
 	return gulp
 		.src( [ 'src/js/modules/Visibility/admin/*.js' ] )
+		.pipe( terser() )
+		.pipe( rename( { suffix: '.min' } ) )
 		.pipe( gulp.dest( 'dist/modules/Visibility/admin/js/' ) );
 	}
 );
@@ -252,6 +261,8 @@ gulp.task(
 gulp.task( 'build:js:rules:admin', function() {
 	return gulp
 		.src( [ 'src/js/rules/admin/*.js' ] )
+		.pipe( terser() )
+		.pipe( rename( { suffix: '.min' } ) )
 		.pipe( gulp.dest( 'dist/rules/admin/js/' ) );
 	}
 );

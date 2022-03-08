@@ -95,7 +95,7 @@ class UsersManagement {
 		Helpers::enqueue_style( 'admin-users-management', 'admin/css/skautis-admin-users-management.min.css' );
 		Helpers::enqueue_script(
 			'admin-users-management',
-			'admin/js/skautis-admin-users-management.js',
+			'admin/js/skautis-admin-users-management.min.js',
 			array( 'jquery', SKAUTISINTEGRATION_NAME . '_select2' ),
 		);
 

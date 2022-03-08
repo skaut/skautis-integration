@@ -46,7 +46,7 @@ final class Admin {
 
 			Helpers::enqueue_script(
 				'modules_register',
-				'modules/Register/admin/js/skautis-modules-register-admin.js',
+				'modules/Register/admin/js/skautis-modules-register-admin.min.js',
 				array( SKAUTISINTEGRATION_NAME . '_jquery.repeater' ),
 			);
 		}
