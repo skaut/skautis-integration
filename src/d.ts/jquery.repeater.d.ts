@@ -8,8 +8,8 @@ interface JQueryRepeaterOptions {
 }
 
 interface JQueryRepeater {
-	(fig: JQueryRepeaterOptions): JQuery;
-	setList(rows: Array<Record<string, any>>): void
+	(fig: JQueryRepeaterOptions): JQueryRepeater;
+	setList: (rows: Array<Record<string, any>>) => void;
 }
 
 interface JQuery {
