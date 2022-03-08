@@ -44,12 +44,10 @@ final class Admin {
 				true
 			);
 
-			wp_enqueue_script(
-				SKAUTISINTEGRATION_NAME . '_modules_register',
-				$this->adminDirUrl . 'js/skautis-modules-register-admin.js',
+			Helpers::enqueue_script(
+				'modules_register',
+				'modules/Register/admin/js/skautis-modules-register-admin.js',
 				array( SKAUTISINTEGRATION_NAME . '_jquery.repeater' ),
-				SKAUTISINTEGRATION_VERSION,
-				true
 			);
 		}
 	}

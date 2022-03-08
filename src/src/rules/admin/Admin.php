@@ -152,35 +152,28 @@ final class Admin {
 			return;
 		}
 
-		wp_enqueue_script(
-			SKAUTISINTEGRATION_NAME . '_rules_role',
-			$this->adminDirUrl . 'js/skautis-rules-role.js',
+		Helpers::enqueue_script(
+			'rules_role',
+			'rules/admin/js/skautis-rules-role.js',
 			array(),
-			SKAUTISINTEGRATION_VERSION,
 			false
 		);
-
-		wp_enqueue_script(
-			SKAUTISINTEGRATION_NAME . '_rules_membership',
-			$this->adminDirUrl . 'js/skautis-rules-membership.js',
+		Helpers::enqueue_script(
+			'rules_membership',
+			'rules/admin/js/skautis-rules-membership.js',
 			array(),
-			SKAUTISINTEGRATION_VERSION,
 			false
 		);
-
-		wp_enqueue_script(
-			SKAUTISINTEGRATION_NAME . '_rules_func',
-			$this->adminDirUrl . 'js/skautis-rules-func.js',
+		Helpers::enqueue_script(
+			'rules_func',
+			'rules/admin/js/skautis-rules-func.js',
 			array(),
-			SKAUTISINTEGRATION_VERSION,
 			false
 		);
-
-		wp_enqueue_script(
-			SKAUTISINTEGRATION_NAME . '_rules_qualification',
-			$this->adminDirUrl . 'js/skautis-rules-qualification.js',
+		Helpers::enqueue_script(
+			'rules_qualification',
+			'rules/admin/js/skautis-rules-qualification.js',
 			array(),
-			SKAUTISINTEGRATION_VERSION,
 			false
 		);
 
@@ -200,20 +193,15 @@ final class Admin {
 			true
 		);
 
-		wp_enqueue_script(
-			SKAUTISINTEGRATION_NAME . '_query-builder_lang',
-			$this->adminDirUrl . 'js/query-builder.cs.js',
-			array( SKAUTISINTEGRATION_NAME . '_query-builder' ),
-			SKAUTISINTEGRATION_VERSION,
-			true
+		Helpers::enqueue_script(
+			'query-builder_lang',
+			'rules/admin/js/query-builder.cs.js',
+			array( SKAUTISINTEGRATION_NAME . '_query-builder' )
 		);
-
-		wp_enqueue_script(
-			SKAUTISINTEGRATION_NAME . '_rules',
-			$this->adminDirUrl . 'js/skautis-rules-admin.js',
-			array( SKAUTISINTEGRATION_NAME . '_query-builder' ),
-			SKAUTISINTEGRATION_VERSION,
-			true
+		Helpers::enqueue_script(
+			'rules',
+			'rules/admin/js/skautis-rules-admin.js',
+			array( SKAUTISINTEGRATION_NAME . '_query-builder' )
 		);
 	}
 

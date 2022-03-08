@@ -48,12 +48,10 @@ final class Admin {
 				true
 			);
 
-			wp_enqueue_script(
-				SKAUTISINTEGRATION_NAME . '_modules_visibility',
-				$this->adminDirUrl . 'js/skautis-modules-visibility-admin.js',
-				array( 'jquery', SKAUTISINTEGRATION_NAME . '_jquery.repeater', SKAUTISINTEGRATION_NAME . '_select2' ),
-				SKAUTISINTEGRATION_VERSION,
-				true
+			Helpers::enqueue_script(
+				'modules_visibility',
+				'modules/Visibility/admin/js/skautis-modules-visibility-admin.js',
+				array( 'jquery', SKAUTISINTEGRATION_NAME . '_jquery.repeater', SKAUTISINTEGRATION_NAME . '_select2' )
 			);
 		}
 	}

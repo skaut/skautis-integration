@@ -204,14 +204,14 @@ gulp.task(
 gulp.task( 'build:js:admin', function() {
 	return gulp
 		.src( [ 'src/js/admin/*.js' ] )
-		.pipe( gulp.dest( 'dist/src/admin/public/js/' ) );
+		.pipe( gulp.dest( 'dist/admin/js/' ) );
 	}
 );
 
 gulp.task( 'build:js:modules:Register:admin', function() {
 	return gulp
 		.src( [ 'src/js/modules/Register/admin/*.js' ] )
-		.pipe( gulp.dest( 'dist/src/modules/Register/admin/public/js/' ) );
+		.pipe( gulp.dest( 'dist/modules/Register/admin/js/' ) );
 	}
 );
 
@@ -223,7 +223,7 @@ gulp.task(
 gulp.task( 'build:js:modules:Shortcodes:admin', function() {
 	return gulp
 		.src( [ 'src/js/modules/Shortcodes/admin/*.js' ] )
-		.pipe( gulp.dest( 'dist/src/modules/Shortcodes/admin/public/js/' ) );
+		.pipe( gulp.dest( 'dist/modules/Shortcodes/admin/js/' ) );
 	}
 );
 
@@ -235,7 +235,7 @@ gulp.task(
 gulp.task( 'build:js:modules:Visibility:admin', function() {
 	return gulp
 		.src( [ 'src/js/modules/Visibility/admin/*.js' ] )
-		.pipe( gulp.dest( 'dist/src/modules/Visibility/admin/public/js/' ) );
+		.pipe( gulp.dest( 'dist/modules/Visibility/admin/js/' ) );
 	}
 );
 
@@ -252,7 +252,7 @@ gulp.task(
 gulp.task( 'build:js:rules:admin', function() {
 	return gulp
 		.src( [ 'src/js/rules/admin/*.js' ] )
-		.pipe( gulp.dest( 'dist/src/rules/admin/public/js/' ) );
+		.pipe( gulp.dest( 'dist/rules/admin/js/' ) );
 	}
 );
 

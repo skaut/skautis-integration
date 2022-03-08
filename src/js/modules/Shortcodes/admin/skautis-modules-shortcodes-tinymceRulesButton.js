@@ -15,7 +15,7 @@
     tinymce.PluginManager.add('skautis_rules', function (editor, url) {
         editor.addButton('skautis_rules', {
             title: 'insert_skautis_rules',
-            image: url + '/../img/lilie.png',
+            image: url + '/../../../../src/modules/Shortcodes/admin/public/img/lilie.png',
             onclick: function () {
                 var rules = window.rulesOptions,
                     visibilityOptions = window.visibilityOptions,
