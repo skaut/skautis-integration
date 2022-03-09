@@ -23,7 +23,7 @@
                 reinitSelect2();
             },
             isFirstItemUndeletable: true
-        }).setList(window.rulesData);
+        }).setList(window.rulesData ?? []);
 
     } else {
         reinitSelect2();
@@ -36,14 +36,14 @@
     }
 
     function updateAvailableOptions() {
-        var usedOptions = [];
+        var usedOptions: Array<string> = [];
 
         setTimeout(function () {
 
             var $selectRules = jQuery('select.rule');
 
             $selectRules.each(function () {
-                usedOptions.push(jQuery(this).val());
+                usedOptions.push(jQuery(this).val() as string);
             });
 
             $selectRules.find('option').removeAttr('disabled');

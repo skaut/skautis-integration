@@ -17,7 +17,7 @@
             title: 'insert_skautis_rules',
             image: url + '/../../../../src/modules/Shortcodes/admin/public/img/lilie.png',
             onclick: function () {
-                var rules = window.rulesOptions,
+                var rules = window.rulesOptions ?? [],
                     visibilityOptions = window.visibilityOptions,
                     rulesOptions = [],
                     body = [];
@@ -50,7 +50,7 @@
                     body: body,
                     minWidth: Math.min(viewport().width, 450),
                     minHeight: Math.min(viewport().height, 250),
-                    onsubmit: function (e) {
+                    onsubmit: function (e: JQuery.SubmitEvent) {
                         var rules = [];
 
                         if (e.data.rules1) {

@@ -32,7 +32,7 @@
         },
         isFirstItemUndeletable: true
     });
-    $repeater.setList(window.rulesData);
+    $repeater.setList(window.rulesData ?? []);
 
     $('[data-repeater-list]').sortable({
         handle: '.handle',
@@ -48,14 +48,14 @@
     }
 
     function updateAvailableOptions() {
-        var usedOptions = [];
+        var usedOptions: Array<string> = [];
 
         setTimeout(function () {
 
             var $selectRules = jQuery('.form-table').find('select.rule');
 
             $selectRules.each(function () {
-                usedOptions.push(jQuery(this).val());
+                usedOptions.push(jQuery(this).val() as string);
             });
 
             $selectRules.find('option').removeAttr('disabled');

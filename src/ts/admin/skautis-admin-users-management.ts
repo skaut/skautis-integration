@@ -24,7 +24,7 @@
                         .addClass('button button-secondary')
                         .click(function () {
                             var withNonce = updateQueryStringInUrl(skautisIntegrationAdminUsersManagementLocalize.searchNonceName, skautisIntegrationAdminUsersManagementLocalize.searchNonceValue, window.location.href)
-                            window.location.href = updateQueryStringInUrl('skautisSearchUsers', $input.val(), withNonce);
+                            window.location.href = updateQueryStringInUrl('skautisSearchUsers', $input.val() as string, withNonce);
                         });
                 $input.on('keyup', function (e) {
                     e.preventDefault();
@@ -50,7 +50,7 @@
         }
     });
 
-    $dataTable.on('init.dt', function () {
+    $('.skautis-user-management-table').on('init.dt', function () {
         $(this).find('th').each(function () {
             $(this).html('<span>' + $(this).html() + '</span>');
         });
@@ -67,10 +67,10 @@
         $('#connectUserToSkautisModal_username').html(userName);
 
         var $connectUserToSkautisModal_connectLink = $('#connectUserToSkautisModal_connectLink');
-        $connectUserToSkautisModal_connectLink.attr('href', updateQueryStringInUrl('skautisUserId', $this.parents('tr').find('.skautisUserId').html(), $connectUserToSkautisModal_connectLink.attr('href')));
+        $connectUserToSkautisModal_connectLink.attr('href', updateQueryStringInUrl('skautisUserId', $this.parents('tr').find('.skautisUserId').html(), $connectUserToSkautisModal_connectLink.attr('href')!));
 
         var $connectUserToSkautisModal_registerLink = $('#connectUserToSkautisModal_registerLink');
-        var newHref = updateQueryStringInUrl('skautisUserId', $this.parents('tr').find('.skautisUserId').html(), $connectUserToSkautisModal_registerLink.attr('href'));
+        var newHref = updateQueryStringInUrl('skautisUserId', $this.parents('tr').find('.skautisUserId').html(), $connectUserToSkautisModal_registerLink.attr('href')!);
         $connectUserToSkautisModal_registerLink.attr('href', newHref);
     });
 
@@ -78,21 +78,21 @@
         var $this = $(this),
             $connectUserToSkautisModal_connectLink = $('#connectUserToSkautisModal_connectLink');
         if ($.isNumeric($this.val())) {
-            $connectUserToSkautisModal_connectLink.attr('href', updateQueryStringInUrl('wpUserId', $this.val(), $connectUserToSkautisModal_connectLink.attr('href')));
+            $connectUserToSkautisModal_connectLink.attr('href', updateQueryStringInUrl('wpUserId', $this.val() as string, $connectUserToSkautisModal_connectLink.attr('href')!));
         } else {
-            $connectUserToSkautisModal_connectLink.attr('href', updateQueryStringInUrl('wpUserId', '', $connectUserToSkautisModal_connectLink.attr('href')));
+            $connectUserToSkautisModal_connectLink.attr('href', updateQueryStringInUrl('wpUserId', '', $connectUserToSkautisModal_connectLink.attr('href')!));
         }
     });
 
     $('#connectUserToSkautisModal_defaultRole').on('change', function () {
         var $this = $(this),
             $connectUserToSkautisModal_registerLink = $('#connectUserToSkautisModal_registerLink');
-        $connectUserToSkautisModal_registerLink.attr('href', updateQueryStringInUrl('wpRole', $this.val(), $connectUserToSkautisModal_registerLink.attr('href')));
+        $connectUserToSkautisModal_registerLink.attr('href', updateQueryStringInUrl('wpRole', $this.val() as string, $connectUserToSkautisModal_registerLink.attr('href')!));
     }).trigger('change');
 
 })(jQuery);
 
-function updateQueryStringInUrl(key, value, url) {
+function updateQueryStringInUrl(key: string, value: string, url: string) {
     var re = new RegExp("([?&])" + key + "=.*?(&|#|$)(.*)", "gi"),
         hash;
 
@@ -121,7 +121,7 @@ function updateQueryStringInUrl(key, value, url) {
     }
 }
 
-function getQueryStringFromUrl(key, url) {
+function getQueryStringFromUrl(key: string, url: string) {
     key = key.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
     var regex = new RegExp("[\\?&]" + key + "=([^&#]*)"),
         results = regex.exec(url);
