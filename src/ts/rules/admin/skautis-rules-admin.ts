@@ -11,7 +11,7 @@
     if ($queryBuilder.length) {
         var rules = null;
         var values = $queryBuilderValues.val();
-        if (typeof values === "string") {
+        if (typeof values === "string" && values.length > 0) {
             rules = JSON.parse(values);
         } else {
             rules = null;
