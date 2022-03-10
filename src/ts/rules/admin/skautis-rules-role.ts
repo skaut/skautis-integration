@@ -1,66 +1,69 @@
-function Role(roles) {
-    this.roles = roles;
-    this.unitOperators = [];
-    this.unitOperators['equal'] = 'equal';
-    this.unitOperators['begins_with'] = 'begins_with';
-    this.unitOperators['any'] = 'any';
-}
+class Role {
+    roles: Record<string, string>;
+    unitOperators: Record<string, string>;
 
-Role.prototype.input = function (_, name) {
-    var _this = this;
-
-    _this.unitOperators['equal'] = jQuery.fn.queryBuilder.regional.cs.operators.equal;
-    _this.unitOperators['begins_with'] = jQuery.fn.queryBuilder.regional.cs.operators.begins_with;
-    _this.unitOperators['any'] = jQuery.fn.queryBuilder.regional.cs.operators.any;
-
-    var html = '<select class="form-control select2" name="' + name + '_1" multiple="multiple">';
-
-    for (var key in _this.roles) {
-        if (_this.roles.hasOwnProperty(key)) {
-            html += '<option value="' + key + '">' + _this.roles[key] + '</option>';
-        }
+    constructor(roles: Record<string, string>) {
+        this.roles = roles;
+        this.unitOperators = {};
+        this.unitOperators['equal'] = 'equal';
+        this.unitOperators['begins_with'] = 'begins_with';
+        this.unitOperators['any'] = 'any';
     }
 
-    html += '</select><div style="margin-top: 0.6em;">' + jQuery.fn.queryBuilder.regional.cs.custom.units.inUnitWithNumber;
-    html += '<select class="multi-rules form-control skautis-rule-unitnumber-select" name="' + name + '_2">';
+    input(_: QueryBuilderRule, input_name: string) {
+        this.unitOperators['equal'] = jQuery.fn.queryBuilder.regional.cs.operators.equal;
+        this.unitOperators['begins_with'] = jQuery.fn.queryBuilder.regional.cs.operators.begins_with;
+        this.unitOperators['any'] = jQuery.fn.queryBuilder.regional.cs.operators.any;
 
-    for (key in _this.unitOperators) {
-        if (_this.unitOperators.hasOwnProperty(key)) {
-            html += '<option value="' + key + '">' + _this.unitOperators[key] + '</option>';
-        }
-    }
+        var html = '<select class="form-control select2" name="' + input_name + '_1" multiple="multiple">';
 
-    html += '</select><div class="multi-rules input-container">';
-    html += '<input class="form-control skautis-rule-unitnumber-input" type="text" name="' + name + '_3" value="" placeholder="' + jQuery.fn.queryBuilder.regional.cs.custom.units.unitNumber + '" />';
-    html += '</div></div>';
-    return html;
-};
-
-Role.prototype.validation = function () {
-    return {
-        format: /^(?!null)[^~]+~(?!null)[^~]+~(?!null)[^~]+$/
-    };
-};
-
-Role.prototype.valueGetter = function (rule) {
-    return rule.$el.find('.rule-value-container [name$=_1]').val()
-        + '~' + rule.$el.find('.rule-value-container [name$=_2]').val()
-        + '~' + rule.$el.find('.rule-value-container [name$=_3]').val();
-};
-
-Role.prototype.valueSetter = function (rule, value) {
-    if (rule.operator.nb_inputs > 0) {
-        var val = value.split('~');
-
-        var val0 = val[0].split(',');
-
-        for (var key in val0) {
-            if (val0.hasOwnProperty(key)) {
-                rule.$el.find('.rule-value-container [name$=_1] option[value="' + val0[key] + '"]').prop("selected", true);
+        for (var key in this.roles) {
+            if (this.roles.hasOwnProperty(key)) {
+                html += '<option value="' + key + '">' + this.roles[key] + '</option>';
             }
         }
 
-        rule.$el.find('.rule-value-container [name$=_2]').val(val[1]).trigger('change');
-        rule.$el.find('.rule-value-container [name$=_3]').val(val[2]).trigger('change');
+        html += '</select><div style="margin-top: 0.6em;">' + jQuery.fn.queryBuilder.regional.cs.custom.units.inUnitWithNumber;
+        html += '<select class="multi-rules form-control skautis-rule-unitnumber-select" name="' + input_name + '_2">';
+
+        for (key in this.unitOperators) {
+            if (this.unitOperators.hasOwnProperty(key)) {
+                html += '<option value="' + key + '">' + this.unitOperators[key] + '</option>';
+            }
+        }
+
+        html += '</select><div class="multi-rules input-container">';
+        html += '<input class="form-control skautis-rule-unitnumber-input" type="text" name="' + input_name + '_3" value="" placeholder="' + jQuery.fn.queryBuilder.regional.cs.custom.units.unitNumber + '" />';
+        html += '</div></div>';
+        return html;
     }
-};
+
+   validation() {
+        return {
+            format: /^(?!null)[^~]+~(?!null)[^~]+~(?!null)[^~]+$/
+        };
+    }
+
+    valueGetter(rule: QueryBuilderRule) {
+        return rule.$el.find('.rule-value-container [name$=_1]').val()
+            + '~' + rule.$el.find('.rule-value-container [name$=_2]').val()
+            + '~' + rule.$el.find('.rule-value-container [name$=_3]').val();
+    }
+
+    valueSetter(rule: QueryBuilderRule, value: string) {
+        if (rule.operator.nb_inputs > 0) {
+            var val = value.split('~');
+
+            var val0 = val[0].split(',');
+
+            for (var key in val0) {
+                if (val0.hasOwnProperty(key)) {
+                    rule.$el.find('.rule-value-container [name$=_1] option[value="' + val0[key] + '"]').prop("selected", true);
+                }
+            }
+
+            rule.$el.find('.rule-value-container [name$=_2]').val(val[1]).trigger('change');
+            rule.$el.find('.rule-value-container [name$=_3]').val(val[2]).trigger('change');
+        }
+    }
+}
