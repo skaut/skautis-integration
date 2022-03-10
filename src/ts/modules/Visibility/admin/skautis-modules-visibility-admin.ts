@@ -23,8 +23,7 @@
                 reinitSelect2();
             },
             isFirstItemUndeletable: true
-        });
-        $repeater.setList(window.rulesData);
+        }).setList(window.rulesData ?? []);
 
     } else {
         reinitSelect2();
@@ -37,21 +36,19 @@
     }
 
     function updateAvailableOptions() {
-        var usedOptions = [],
-            $selectRules = {},
-            $rulesUsedInParents = {};
+        var usedOptions: Array<string> = [];
 
         setTimeout(function () {
 
-            $selectRules = jQuery('select.rule');
+            var $selectRules = jQuery('select.rule');
 
             $selectRules.each(function () {
-                usedOptions.push(jQuery(this).val());
+                usedOptions.push(jQuery(this).val() as string);
             });
 
             $selectRules.find('option').removeAttr('disabled');
 
-            $rulesUsedInParents = jQuery('#skautis_modules_visibility_parentRules').find('li[data-rule]');
+            var $rulesUsedInParents = jQuery('#skautis_modules_visibility_parentRules').find('li[data-rule]');
             $rulesUsedInParents.each(function () {
                 usedOptions.push(jQuery(this).data('rule'));
             });

@@ -10,8 +10,9 @@
 
     if ($queryBuilder.length) {
         var rules = null;
-        if ($queryBuilderValues.val().length) {
-            rules = JSON.parse($queryBuilderValues.val());
+        var values = $queryBuilderValues.val();
+        if (typeof values === "string" && values.length > 0) {
+            rules = JSON.parse(values);
         } else {
             rules = null;
         }
@@ -48,7 +49,7 @@
                             if (typeof a.text.localeCompare === 'function') {
                                 return a.text.localeCompare(b.text);
                             } else {
-                                return a.text > b.text;
+                                return a.text > b.text ? 1 : 0;
                             }
                         });
                     }
@@ -66,7 +67,7 @@
                 $queryBuilderValues.val(JSON.stringify(result, null, 2));
             }
 
-            tinymce.activeEditor.setContent($queryBuilderValues.val());
+            tinymce.activeEditor.setContent($queryBuilderValues.val() as string);
 
             return !$queryBuilder.find('.has-error').length;
 

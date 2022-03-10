@@ -103,6 +103,7 @@ class UsersManagement {
 			SKAUTISINTEGRATION_NAME . '_admin-users-management',
 			'skautisIntegrationAdminUsersManagementLocalize',
 			array(
+				'cancel'             => esc_html__( 'Zrušit', 'skautis-integration' ),
 				'datatablesFilesUrl' => SKAUTISINTEGRATION_URL . 'bundled/datatables-files',
 				'searchNonceName'    => SKAUTISINTEGRATION_NAME . '_skautis_search_user_nonce',
 				'searchNonceValue'   => wp_create_nonce( SKAUTISINTEGRATION_NAME . '_skautis_search_user' ),

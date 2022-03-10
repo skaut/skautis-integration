@@ -12,12 +12,12 @@
         'hideContent': 'skrýt obsah',
         'showLogin': 'zobrazit přihlášení'
     });
-    tinymce.PluginManager.add('skautis_rules', function (editor, url) {
+    (tinymce as unknown as typeof import('tinymce')).PluginManager.add('skautis_rules', function (editor, url) {
         editor.addButton('skautis_rules', {
             title: 'insert_skautis_rules',
             image: url + '/../../../../src/modules/Shortcodes/admin/public/img/lilie.png',
             onclick: function () {
-                var rules = window.rulesOptions,
+                var rules = window.rulesOptions ?? [],
                     visibilityOptions = window.visibilityOptions,
                     rulesOptions = [],
                     body = [];
@@ -50,7 +50,7 @@
                     body: body,
                     minWidth: Math.min(viewport().width, 450),
                     minHeight: Math.min(viewport().height, 250),
-                    onsubmit: function (e) {
+                    onsubmit: function (e: JQuery.SubmitEvent) {
                         var rules = [];
 
                         if (e.data.rules1) {
@@ -72,17 +72,16 @@
                             editor.insertContent('[skautis rules="' + rules.join(',') + '" content="' + e.data.content + '"]<div>Skrytý obsah</div>[/skautis]');
                         }
                     }
-                });
+                }, {});
             }
         });
     });
 })();
 
 function viewport() {
-    var e = window, a = 'inner';
-    if (!('innerWidth' in window )) {
-        a = 'client';
-        e = document.documentElement || document.body;
+    if ('innerWidth' in window ) {
+        return {width: window['innerWidth'], height: window['innerHeight']};
     }
-    return {width: e[a + 'Width'], height: e[a + 'Height']};
+    var e = document.documentElement || document.body;
+    return {width: e['clientWidth'], height: e['clientHeight']};
 }
