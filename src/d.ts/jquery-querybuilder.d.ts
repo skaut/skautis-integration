@@ -1,4 +1,47 @@
+interface QueryBuilderRuleOrGroup {
+	$el: JQuery;
+	parent: QueryBuilderGroup;
+	level: number;
+	id: string;
+	error: string;
+	data: object;
+
+	isRoot(): boolean;
+	getPos(): number;
+	drop(): void;
+	moveAfter(_1: QueryBuilderRule|QueryBuilderGroup): void;
+	moveAtBegin(_1: QueryBuilderGroup): void;
+	moveAtEnd(_1: QueryBuilderGroup): void;
+}
+
+interface QueryBuilderRule extends QueryBuilderRuleOrGroup {
+	filter: object;
+	operator: QueryBuilderOperator;
+	value: any;
+	flags: object;
+}
+
+interface QueryBuilderOperator {
+	type: string;
+	optgroup: string;
+	nb_inputs: number;
+	multiple: boolean;
+	apply_to: Array<'string'|'number'|'datetime'|'boolean'>
+}
+
+interface QueryBuilderGroup extends QueryBuilderRuleOrGroup {
+	condition: string;
+
+	empty(): void;
+	length(): number;
+	addGroup(_1: JQuery, _2: number): QueryBuilderGroup;
+	addRule(_1: JQuery, _2: number): QueryBuilderRule;
+	each(..._1: any): void;
+	contains(_1: QueryBuilderRule|QueryBuilderGroup, _2: boolean): boolean;
+}
+
 interface QueryBuilderOptions {
+	// TODO
 }
 
 interface QueryBuilderRegional {
@@ -65,6 +108,7 @@ interface JQueryQueryBuilder {
 	(options: QueryBuilderOptions): void;
 	regional: Record<string, QueryBuilderRegional>;
 	defaults(options: QueryBuilderOptions): void;
+	// TODO
 }
 
 interface JQuery {
