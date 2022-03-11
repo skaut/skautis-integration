@@ -40,6 +40,16 @@ interface QueryBuilderGroup extends QueryBuilderRuleOrGroup {
 	contains(_1: QueryBuilderRule|QueryBuilderGroup, _2: boolean): boolean;
 }
 
+interface QueryBuilderValidation {
+	format?: string|RegExp;
+	min?: number|string;
+	max?: number|string;
+	step?: number;
+	messages?: Record<keyof QueryBuilderValidation, string>
+	allow_empty_value?: boolean;
+	callback?: (value: any, rule: QueryBuilderRule) => true|string
+}
+
 interface QueryBuilderOptions {
 	// TODO
 }
