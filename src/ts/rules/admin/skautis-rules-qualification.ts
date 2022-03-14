@@ -2,11 +2,9 @@
 
 class Qualification {
 	private readonly qualifications: Record< string, string >;
-	private readonly unitOperators: Record< string, string >;
 
 	public constructor( qualifications: Record< string, string > ) {
 		this.qualifications = qualifications;
-		this.unitOperators = {};
 	}
 
 	public input( _: QueryBuilderRule, inputName: string ): string {

@@ -87,7 +87,7 @@
 
 	$( '.thickbox' ).on( 'click', function () {
 		const $this = $( this );
-		const userName =
+		let userName =
 			$this.parents( 'tr' ).find( '.firstName' ).html() +
 			' ' +
 			$this.parents( 'tr' ).find( '.lastName' ).html();
