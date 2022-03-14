@@ -1,3 +1,5 @@
+/* eslint-env node */
+
 const gulp = require( 'gulp' );
 
 const cleanCSS = require( 'gulp-clean-css' );
@@ -8,65 +10,89 @@ const shell = require( 'gulp-shell' );
 const terser = require( 'gulp-terser' );
 const ts = require( 'gulp-typescript' );
 
-gulp.task('build:css:admin', function() {
+gulp.task( 'build:css:admin', function () {
 	return gulp
 		.src( [ 'src/css/admin/*.css' ] )
 		.pipe( cleanCSS() )
 		.pipe( rename( { suffix: '.min' } ) )
 		.pipe( gulp.dest( 'dist/admin/css/' ) );
-})
+} );
 
-gulp.task('build:css:frontend', function() {
+gulp.task( 'build:css:frontend', function () {
 	return gulp
 		.src( [ 'src/css/frontend/*.css' ] )
 		.pipe( cleanCSS() )
 		.pipe( rename( { suffix: '.min' } ) )
 		.pipe( gulp.dest( 'dist/frontend/css/' ) );
-})
+} );
 
-gulp.task('build:css:modules:Register:admin', function() {
+gulp.task( 'build:css:modules:Register:admin', function () {
 	return gulp
 		.src( [ 'src/css/modules/Register/admin/*.css' ] )
 		.pipe( cleanCSS() )
 		.pipe( rename( { suffix: '.min' } ) )
 		.pipe( gulp.dest( 'dist/modules/Register/admin/css/' ) );
-})
+} );
 
-gulp.task('build:css:modules:Register', gulp.parallel('build:css:modules:Register:admin'));
+gulp.task(
+	'build:css:modules:Register',
+	gulp.parallel( 'build:css:modules:Register:admin' )
+);
 
-gulp.task('build:css:modules:Shortcodes:admin', function() {
+gulp.task( 'build:css:modules:Shortcodes:admin', function () {
 	return gulp
 		.src( [ 'src/css/modules/Shortcodes/admin/*.css' ] )
 		.pipe( cleanCSS() )
 		.pipe( rename( { suffix: '.min' } ) )
 		.pipe( gulp.dest( 'dist/modules/Shortcodes/admin/css/' ) );
-})
+} );
 
-gulp.task('build:css:modules:Shortcodes', gulp.parallel('build:css:modules:Shortcodes:admin'));
+gulp.task(
+	'build:css:modules:Shortcodes',
+	gulp.parallel( 'build:css:modules:Shortcodes:admin' )
+);
 
-gulp.task('build:css:modules:Visibility:admin', function() {
+gulp.task( 'build:css:modules:Visibility:admin', function () {
 	return gulp
 		.src( [ 'src/css/modules/Visibility/admin/*.css' ] )
 		.pipe( cleanCSS() )
 		.pipe( rename( { suffix: '.min' } ) )
 		.pipe( gulp.dest( 'dist/modules/Visibility/admin/css/' ) );
-})
+} );
 
-gulp.task('build:css:modules:Visibility', gulp.parallel('build:css:modules:Visibility:admin'));
+gulp.task(
+	'build:css:modules:Visibility',
+	gulp.parallel( 'build:css:modules:Visibility:admin' )
+);
 
-gulp.task('build:css:modules', gulp.parallel('build:css:modules:Register', 'build:css:modules:Shortcodes', 'build:css:modules:Visibility'));
+gulp.task(
+	'build:css:modules',
+	gulp.parallel(
+		'build:css:modules:Register',
+		'build:css:modules:Shortcodes',
+		'build:css:modules:Visibility'
+	)
+);
 
-gulp.task('build:css:rules:admin', function() {
+gulp.task( 'build:css:rules:admin', function () {
 	return gulp
 		.src( [ 'src/css/rules/admin/*.css' ] )
 		.pipe( cleanCSS() )
 		.pipe( rename( { suffix: '.min' } ) )
 		.pipe( gulp.dest( 'dist/rules/admin/css/' ) );
-})
+} );
 
-gulp.task('build:css:rules', gulp.parallel('build:css:rules:admin'));
+gulp.task( 'build:css:rules', gulp.parallel( 'build:css:rules:admin' ) );
 
-gulp.task('build:css', gulp.parallel('build:css:admin', 'build:css:frontend', 'build:css:modules', 'build:css:rules'));
+gulp.task(
+	'build:css',
+	gulp.parallel(
+		'build:css:admin',
+		'build:css:frontend',
+		'build:css:modules',
+		'build:css:rules'
+	)
+);
 
 gulp.task(
 	'build:deps:composer:scoper',
@@ -126,15 +152,25 @@ gulp.task(
 
 gulp.task( 'build:deps:npm:datatables.net:files', function () {
 	return gulp
-		.src( ['node_modules/datatables.net-dt/images/sort_asc.png', 'node_modules/datatables.net-dt/images/sort_desc.png', 'node_modules/datatables.net-plugins/i18n/cs.json'] )
+		.src( [
+			'node_modules/datatables.net-dt/images/sort_asc.png',
+			'node_modules/datatables.net-dt/images/sort_desc.png',
+			'node_modules/datatables.net-plugins/i18n/cs.json',
+		] )
 		.pipe( gulp.dest( 'dist/bundled/datatables-files' ) );
 } );
 
-gulp.task( 'build:deps:npm:datatables.net', gulp.parallel( 'build:deps:npm:datatables.net:files', function () {
-	return gulp
-		.src( ['node_modules/datatables.net-dt/css/jquery.dataTables.min.css', 'node_modules/datatables.net/js/jquery.dataTables.min.js'] )
-		.pipe( gulp.dest( 'dist/bundled/' ) );
-} ) );
+gulp.task(
+	'build:deps:npm:datatables.net',
+	gulp.parallel( 'build:deps:npm:datatables.net:files', function () {
+		return gulp
+			.src( [
+				'node_modules/datatables.net-dt/css/jquery.dataTables.min.css',
+				'node_modules/datatables.net/js/jquery.dataTables.min.js',
+			] )
+			.pipe( gulp.dest( 'dist/bundled/' ) );
+	} )
+);
 
 gulp.task( 'build:deps:npm:font-awesome:css', function () {
 	return gulp
@@ -158,7 +194,7 @@ gulp.task(
 	'build:deps:npm:font-awesome',
 	gulp.parallel(
 		'build:deps:npm:font-awesome:css',
-		'build:deps:npm:font-awesome:fonts',
+		'build:deps:npm:font-awesome:fonts'
 	)
 );
 
@@ -176,13 +212,19 @@ gulp.task( 'build:deps:npm:jquery.repeater', function () {
 
 gulp.task( 'build:deps:npm:jQuery-QueryBuilder', function () {
 	return gulp
-		.src( [ 'node_modules/jQuery-QueryBuilder/dist/css/query-builder.default.min.css', 'node_modules/jQuery-QueryBuilder/dist/js/query-builder.standalone.min.js' ] )
+		.src( [
+			'node_modules/jQuery-QueryBuilder/dist/css/query-builder.default.min.css',
+			'node_modules/jQuery-QueryBuilder/dist/js/query-builder.standalone.min.js',
+		] )
 		.pipe( gulp.dest( 'dist/bundled/' ) );
 } );
 
 gulp.task( 'build:deps:npm:select2', function () {
 	return gulp
-		.src( ['node_modules/select2/dist/css/select2.min.css', 'node_modules/select2/dist/js/select2.min.js'] )
+		.src( [
+			'node_modules/select2/dist/css/select2.min.css',
+			'node_modules/select2/dist/js/select2.min.js',
+		] )
 		.pipe( gulp.dest( 'dist/bundled/' ) );
 } );
 
@@ -194,7 +236,7 @@ gulp.task(
 		'build:deps:npm:interactjs',
 		'build:deps:npm:jquery.repeater',
 		'build:deps:npm:jQuery-QueryBuilder',
-		'build:deps:npm:select2',
+		'build:deps:npm:select2'
 	)
 );
 
@@ -203,7 +245,7 @@ gulp.task(
 	gulp.parallel( 'build:deps:composer', 'build:deps:npm' )
 );
 
-gulp.task( 'build:js:admin', function() {
+gulp.task( 'build:js:admin', function () {
 	const tsProject = ts.createProject( 'tsconfig.json' );
 	return gulp
 		.src( [ 'src/ts/admin/*.ts', 'src/d.ts/*.d.ts' ] )
@@ -211,10 +253,9 @@ gulp.task( 'build:js:admin', function() {
 		.js.pipe( terser() )
 		.pipe( rename( { suffix: '.min' } ) )
 		.pipe( gulp.dest( 'dist/admin/js/' ) );
-	}
-);
+} );
 
-gulp.task( 'build:js:modules:Register:admin', function() {
+gulp.task( 'build:js:modules:Register:admin', function () {
 	const tsProject = ts.createProject( 'tsconfig.json' );
 	return gulp
 		.src( [ 'src/ts/modules/Register/admin/*.ts', 'src/d.ts/*.d.ts' ] )
@@ -222,15 +263,14 @@ gulp.task( 'build:js:modules:Register:admin', function() {
 		.js.pipe( terser() )
 		.pipe( rename( { suffix: '.min' } ) )
 		.pipe( gulp.dest( 'dist/modules/Register/admin/js/' ) );
-	}
-);
+} );
 
 gulp.task(
 	'build:js:modules:Register',
 	gulp.parallel( 'build:js:modules:Register:admin' )
 );
 
-gulp.task( 'build:js:modules:Shortcodes:admin', function() {
+gulp.task( 'build:js:modules:Shortcodes:admin', function () {
 	const tsProject = ts.createProject( 'tsconfig.json' );
 	return gulp
 		.src( [ 'src/ts/modules/Shortcodes/admin/*.ts', 'src/d.ts/*.d.ts' ] )
@@ -238,15 +278,14 @@ gulp.task( 'build:js:modules:Shortcodes:admin', function() {
 		.js.pipe( terser() )
 		.pipe( rename( { suffix: '.min' } ) )
 		.pipe( gulp.dest( 'dist/modules/Shortcodes/admin/js/' ) );
-	}
-);
+} );
 
 gulp.task(
 	'build:js:modules:Shortcodes',
 	gulp.parallel( 'build:js:modules:Shortcodes:admin' )
 );
 
-gulp.task( 'build:js:modules:Visibility:admin', function() {
+gulp.task( 'build:js:modules:Visibility:admin', function () {
 	const tsProject = ts.createProject( 'tsconfig.json' );
 	return gulp
 		.src( [ 'src/ts/modules/Visibility/admin/*.ts', 'src/d.ts/*.d.ts' ] )
@@ -254,8 +293,7 @@ gulp.task( 'build:js:modules:Visibility:admin', function() {
 		.js.pipe( terser() )
 		.pipe( rename( { suffix: '.min' } ) )
 		.pipe( gulp.dest( 'dist/modules/Visibility/admin/js/' ) );
-	}
-);
+} );
 
 gulp.task(
 	'build:js:modules:Visibility',
@@ -264,10 +302,14 @@ gulp.task(
 
 gulp.task(
 	'build:js:modules',
-	gulp.parallel( 'build:js:modules:Register', 'build:js:modules:Shortcodes', 'build:js:modules:Visibility' )
+	gulp.parallel(
+		'build:js:modules:Register',
+		'build:js:modules:Shortcodes',
+		'build:js:modules:Visibility'
+	)
 );
 
-gulp.task( 'build:js:rules:admin', function() {
+gulp.task( 'build:js:rules:admin', function () {
 	const tsProject = ts.createProject( 'tsconfig.json' );
 	return gulp
 		.src( [ 'src/ts/rules/admin/*.ts', 'src/d.ts/*.d.ts' ] )
@@ -275,13 +317,9 @@ gulp.task( 'build:js:rules:admin', function() {
 		.js.pipe( terser() )
 		.pipe( rename( { suffix: '.min' } ) )
 		.pipe( gulp.dest( 'dist/rules/admin/js/' ) );
-	}
-);
+} );
 
-gulp.task(
-	'build:js:rules',
-	gulp.parallel( 'build:js:rules:admin' )
-);
+gulp.task( 'build:js:rules', gulp.parallel( 'build:js:rules:admin' ) );
 
 gulp.task(
 	'build:js',
@@ -289,9 +327,7 @@ gulp.task(
 );
 
 gulp.task( 'build:php:base', function () {
-	return gulp
-		.src( [ 'src/*.php' ] )
-		.pipe( gulp.dest( 'dist/' ) );
+	return gulp.src( [ 'src/*.php' ] ).pipe( gulp.dest( 'dist/' ) );
 } );
 
 gulp.task( 'build:php:other', function () {
@@ -301,20 +337,9 @@ gulp.task( 'build:php:other', function () {
 		.pipe( gulp.dest( 'dist/' ) );
 } );
 
-gulp.task(
-	'build:php',
-	gulp.parallel(
-		'build:php:base',
-		'build:php:other'
-	)
-);
+gulp.task( 'build:php', gulp.parallel( 'build:php:base', 'build:php:other' ) );
 
 gulp.task(
 	'build',
-	gulp.parallel(
-		'build:css',
-		'build:deps',
-		'build:js',
-		'build:php'
-	)
+	gulp.parallel( 'build:css', 'build:deps', 'build:js', 'build:php' )
 );
