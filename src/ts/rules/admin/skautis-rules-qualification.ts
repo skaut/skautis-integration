@@ -37,7 +37,10 @@ class Qualification {
 	}
 
 	public valueGetter( rule: QueryBuilderRule ): string {
-		return rule.$el.find( '.rule-value-container [name$=_1]' ).val() + '';
+		return rule.$el
+			.find( '.rule-value-container [name$=_1]' )
+			.val()!
+			.toString();
 	}
 
 	public valueSetter( rule: QueryBuilderRule, value: string ): void {
