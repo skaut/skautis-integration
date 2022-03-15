@@ -11,17 +11,17 @@
 						.find( 'option:selected' )
 						.val(),
 				},
-				show: function () {
+				show() {
 					$( this ).slideDown( 150 );
 					updateAvailableOptions();
 				},
-				hide: function ( deleteElement ) {
+				hide( deleteElement ) {
 					$( this ).slideUp( 150, deleteElement );
 					setTimeout( function () {
 						updateAvailableOptions();
 					}, 250 );
 				},
-				ready: function () {
+				ready() {
 					reinitSelect2();
 				},
 				isFirstItemUndeletable: true,
@@ -49,7 +49,10 @@
 			const $selectRules = jQuery( 'select.rule' );
 
 			$selectRules.each( function () {
-				usedOptions.push( jQuery( this ).val() as string );
+				const value = jQuery( this ).val() as string | null;
+				if ( value !== null ) {
+					usedOptions.push( value );
+				}
 			} );
 
 			$selectRules.find( 'option' ).removeAttr( 'disabled' );
@@ -58,7 +61,9 @@
 				'#skautis_modules_visibility_parentRules'
 			).find( 'li[data-rule]' );
 			$rulesUsedInParents.each( function () {
-				usedOptions.push( jQuery( this ).data( 'rule' ) );
+				usedOptions.push(
+					( $( this ).data( 'rule' ) as number ).toString()
+				);
 			} );
 
 			for ( const item of usedOptions ) {
