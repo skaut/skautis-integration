@@ -24,7 +24,7 @@
 				'/cs.json',
 			search: 'Hledat',
 		},
-		initComplete: function () {
+		initComplete() {
 			const searchString = getQueryStringFromUrl(
 				'skautisSearchUsers',
 				window.location.href
@@ -173,21 +173,23 @@ function updateQueryStringInUrl(
 	const re = new RegExp( '([?&])' + key + '=.*?(&|#|$)(.*)', 'gi' );
 
 	if ( re.test( url ) ) {
-		if ( typeof value !== 'undefined' && value !== null ) {
+		if ( typeof value !== 'undefined' ) {
 			return url.replace( re, '$1' + key + '=' + value + '$2$3' );
 		}
 		const hash = url.split( '#' );
 		url = hash[ 0 ].replace( re, '$1$3' ).replace( /(&|\?)$/, '' );
-		if ( typeof hash[ 1 ] !== 'undefined' && hash[ 1 ] !== null )
+		if ( typeof hash[ 1 ] !== 'undefined' ) {
 			url += '#' + hash[ 1 ];
+		}
 		return url;
 	}
-	if ( typeof value !== 'undefined' && value !== null ) {
+	if ( typeof value !== 'undefined' ) {
 		const separator = url.includes( '?' ) ? '&' : '?';
 		const hash = url.split( '#' );
 		url = hash[ 0 ] + separator + key + '=' + value;
-		if ( typeof hash[ 1 ] !== 'undefined' && hash[ 1 ] !== null )
+		if ( typeof hash[ 1 ] !== 'undefined' ) {
 			url += '#' + hash[ 1 ];
+		}
 		return url;
 	}
 	return url;
