@@ -7,7 +7,7 @@
 				.find( 'option:selected' )
 				.val(),
 		},
-		show: function () {
+		show() {
 			$( this ).slideDown( 150 );
 			if ( $( '#repeater' ).find( '[data-repeater-item]' ).length ) {
 				$( '.form-table' )
@@ -24,7 +24,7 @@
 			}
 			updateAvailableOptions();
 		},
-		hide: function ( deleteElement ) {
+		hide( deleteElement ) {
 			$( this ).slideUp( 150, deleteElement );
 			setTimeout( function () {
 				if (
