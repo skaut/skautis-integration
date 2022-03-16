@@ -76,11 +76,17 @@ class Role {
 
 	public valueGetter( rule: QueryBuilderRule ): string {
 		return (
-			rule.$el.find( '.rule-value-container [name$=_1]' ).val() +
+			( rule.$el
+				.find( '.rule-value-container [name$=_1]' )
+				.val() as Array< string > ) +
 			'~' +
-			rule.$el.find( '.rule-value-container [name$=_2]' ).val() +
+			( rule.$el
+				.find( '.rule-value-container [name$=_2]' )
+				.val() as string ) +
 			'~' +
-			rule.$el.find( '.rule-value-container [name$=_3]' ).val()
+			( rule.$el
+				.find( '.rule-value-container [name$=_3]' )
+				.val() as string )
 		);
 	}
 
