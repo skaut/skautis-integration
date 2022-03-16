@@ -1,44 +1,61 @@
+/* exported Qualification */
+
 class Qualification {
-    qualifications: Record<string, string>;
-    unitOperators: Record<string, string>;
+	private readonly qualifications: Record< string, string >;
 
-    constructor(qualifications: Record<string, string>) {
-        this.qualifications = qualifications;
-        this.unitOperators = {};
-    }
+	public constructor( qualifications: Record< string, string > ) {
+		this.qualifications = qualifications;
+	}
 
-    input(_: QueryBuilderRule, input_name: string) {
-        var html = '<select class="form-control select2" name="' + input_name + '_1" multiple="multiple">';
+	public input( _: QueryBuilderRule, inputName: string ): string {
+		let html =
+			'<select class="form-control select2" name="' +
+			inputName +
+			'_1" multiple="multiple">';
 
-        for (var key in this.qualifications) {
-            if (this.qualifications.hasOwnProperty(key)) {
-                html += '<option value="' + key + '">' + this.qualifications[key] + '</option>';
-            }
-        }
+		for ( const key in this.qualifications ) {
+			if (
+				Object.prototype.hasOwnProperty.call( this.qualifications, key )
+			) {
+				html +=
+					'<option value="' +
+					key +
+					'">' +
+					this.qualifications[ key ] +
+					'</option>';
+			}
+		}
 
-        html += '</select>';
-        return html;
-    }
+		html += '</select>';
+		return html;
+	}
 
-    validation() {
-        return {
-            format: /^(?!null)[^~]+$/
-        };
-    }
+	public validation(): QueryBuilderValidation {
+		return {
+			format: /^(?!null)[^~]+$/,
+		};
+	}
 
-    valueGetter(rule: QueryBuilderRule) {
-        return rule.$el.find('.rule-value-container [name$=_1]').val() + '';
-    }
+	public valueGetter( rule: QueryBuilderRule ): string {
+		return rule.$el
+			.find( '.rule-value-container [name$=_1]' )
+			.val()!
+			.toString();
+	}
 
-    valueSetter(rule: QueryBuilderRule, value: string) {
-        if (rule.operator.nb_inputs > 0) {
-            var val0 = value.split(',');
+	public valueSetter( rule: QueryBuilderRule, value: string ): void {
+		if ( rule.operator.nb_inputs > 0 ) {
+			const val0 = value.split( ',' );
 
-            for (var key in val0) {
-                if (val0.hasOwnProperty(key)) {
-                    rule.$el.find('.rule-value-container [name$=_1] option[value="' + val0[key] + '"]').prop("selected", true);
-                }
-            }
-        }
-    };
+			for ( const item of val0 ) {
+				rule.$el
+					.find(
+						'.rule-value-container [name$=_1] option[value="' +
+							item +
+							'"]'
+					)
+					.prop( 'selected', true );
+			}
+		}
+	}
 }

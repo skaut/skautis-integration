@@ -40,6 +40,16 @@ interface QueryBuilderGroup extends QueryBuilderRuleOrGroup {
 	contains(_1: QueryBuilderRule|QueryBuilderGroup, _2: boolean): boolean;
 }
 
+interface QueryBuilderValidation {
+	format?: string|RegExp;
+	min?: number|string;
+	max?: number|string;
+	step?: number;
+	messages?: Record<keyof QueryBuilderValidation, string>
+	allow_empty_value?: boolean;
+	callback?: (value: any, rule: QueryBuilderRule) => true|string
+}
+
 interface QueryBuilderOptions {
 	// TODO
 }
@@ -101,11 +111,34 @@ interface QueryBuilderRegional {
 		operator_not_multiple: string;
 	};
 	invert: string;
-	custom: any;
+	custom: any; // TODO: Remove
+}
+
+interface QueryBuilderExportRule {
+	id: string;
+	field: string;
+	type: string;
+	input: string;
+	operator: string;
+	value: any;
+}
+
+interface QueryBuilderExportGroup {
+	condition: string;
+	rules: Array<QueryBuilderExportRule | QueryBuilderExportGroup>
+}
+
+interface QueryBuilderExport extends QueryBuilderExportGroup {
+	valid: boolean;
+}
+
+interface JQueryQueryBuilderInstance {
+	getRules(): QueryBuilderExport;
+	// TODO
 }
 
 interface JQueryQueryBuilder {
-	(options: QueryBuilderOptions): void;
+	(options: QueryBuilderOptions): JQueryQueryBuilderInstance;
 	regional: Record<string, QueryBuilderRegional>;
 	defaults(options: QueryBuilderOptions): void;
 	// TODO

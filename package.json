@@ -36,7 +36,7 @@
     "disabled_lint:php:phpmd": "vendor/bin/phpmd src,.phan/config.php,scoper.inc.php text phpmd.xml",
     "lint:php": "run-p -c --aggregate-output lint:php:*",
     "lint:ts:eslint": "eslint --color 'src/**/*.ts' 'gulpfile.js'",
-    "disabled_lint:ts": "run-p -c --aggregate-output lint:ts:*",
+    "lint:ts": "run-p -c --aggregate-output lint:ts:*",
     "lint": "run-p -c --aggregate-output lint:*"
   },
   "devDependencies": {

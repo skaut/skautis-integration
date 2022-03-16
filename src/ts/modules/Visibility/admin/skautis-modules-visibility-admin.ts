@@ -1,71 +1,84 @@
-(function ($) {
-    'use strict';
+( function( $ ): void {
+	const $repeater = $( '#repeater_post' );
 
-    var $repeater = $('#repeater_post');
+	if ( $repeater.length ) {
+		$repeater
+			.repeater( {
+				initEmpty: true,
+				defaultValues: {
+					role: $( 'select[name="skautis-integration_rules"]' )
+						.first()
+						.find( 'option:selected' )
+						.val(),
+				},
+				show() {
+					$( this ).slideDown( 150 );
+					updateAvailableOptions();
+				},
+				hide( deleteElement ) {
+					$( this ).slideUp( 150, deleteElement );
+					setTimeout( function() {
+						updateAvailableOptions();
+					}, 250 );
+				},
+				ready() {
+					reinitSelect2();
+				},
+				isFirstItemUndeletable: true,
+			} )
+			.setList( window.rulesData ?? [] );
+	} else {
+		reinitSelect2();
+	}
 
-    if ($repeater.length) {
-        $repeater.repeater({
-            initEmpty: true,
-            defaultValues: {
-                'role': $('select[name="skautis-integration_rules"]').first().find('option:selected').val()
-            },
-            show: function () {
-                $(this).slideDown(150);
-                updateAvailableOptions();
-            },
-            hide: function (deleteElement) {
-                $(this).slideUp(150, deleteElement);
-                setTimeout(function () {
-                    updateAvailableOptions();
-                }, 250);
-            },
-            ready: function () {
-                reinitSelect2();
-            },
-            isFirstItemUndeletable: true
-        }).setList(window.rulesData ?? []);
+	function reinitSelect2(): void {
+		jQuery( 'select.select2' )
+			.select2( {
+				placeholder: 'Vyberte pravidlo...',
+			} )
+			.on(
+				'change.skautis_modules_visibility_admin',
+				updateAvailableOptions
+			);
+	}
 
-    } else {
-        reinitSelect2();
-    }
+	function updateAvailableOptions(): void {
+		const usedOptions: Array< string > = [];
 
-    function reinitSelect2() {
-        jQuery('select.select2').select2({
-            placeholder: 'Vyberte pravidlo...'
-        }).on('change.skautis_modules_visibility_admin', updateAvailableOptions);
-    }
+		setTimeout( function() {
+			const $selectRules = jQuery( 'select.rule' );
 
-    function updateAvailableOptions() {
-        var usedOptions: Array<string> = [];
+			$selectRules.each( function() {
+				const value = jQuery( this ).val() as string | null;
+				if ( value !== null ) {
+					usedOptions.push( value );
+				}
+			} );
 
-        setTimeout(function () {
+			$selectRules.find( 'option' ).removeAttr( 'disabled' );
 
-            var $selectRules = jQuery('select.rule');
+			const $rulesUsedInParents = jQuery(
+				'#skautis_modules_visibility_parentRules'
+			).find( 'li[data-rule]' );
+			$rulesUsedInParents.each( function() {
+				usedOptions.push(
+					( $( this ).data( 'rule' ) as number ).toString()
+				);
+			} );
 
-            $selectRules.each(function () {
-                usedOptions.push(jQuery(this).val() as string);
-            });
+			for ( const item of usedOptions ) {
+				$selectRules
+					.find( 'option[value="' + item + '"]' )
+					.attr( 'disabled', 'disabled' );
+			}
 
-            $selectRules.find('option').removeAttr('disabled');
+			$selectRules.each( function() {
+				jQuery( this )
+					.find( 'option:selected' )
+					.removeAttr( 'disabled' );
+			} );
 
-            var $rulesUsedInParents = jQuery('#skautis_modules_visibility_parentRules').find('li[data-rule]');
-            $rulesUsedInParents.each(function () {
-                usedOptions.push(jQuery(this).data('rule'));
-            });
-
-            for (var key in usedOptions) {
-                if (usedOptions.hasOwnProperty(key)) {
-                    $selectRules.find('option[value="' + usedOptions[key] + '"]').attr('disabled', 'disabled');
-                }
-            }
-
-            $selectRules.each(function () {
-                jQuery(this).find('option:selected').removeAttr('disabled');
-            });
-
-            reinitSelect2();
-
-        }, 0);
-    }
-
-})(jQuery);
+			reinitSelect2();
+		}, 0 );
+	}
+}( jQuery ) );
