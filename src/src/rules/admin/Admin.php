@@ -152,24 +152,48 @@ final class Admin {
 			return;
 		}
 
+		$localization = array(
+			'select_placeholder' => esc_html__( 'Vyberte...', 'skautis-integration' ),
+			'unitNumber'         => esc_html__( 'číslo jednotky (např. 411.12)', 'skautis-integration' ),
+			'inUnitWithNumber'   => esc_html__( 'v jednotce, jejíž evidenční číslo', 'skautis-integration' ),
+		);
+
 		Helpers::enqueue_script(
 			'rules_role',
 			'rules/admin/js/skautis-rules-role.min.js',
 			array(),
 			false
 		);
+		wp_localize_script(
+			SKAUTISINTEGRATION_NAME . '_' . 'rules_role',
+			'skautisIntegrationRulesLocalize',
+			$localization,
+		);
+
 		Helpers::enqueue_script(
 			'rules_membership',
 			'rules/admin/js/skautis-rules-membership.min.js',
 			array(),
 			false
 		);
+		wp_localize_script(
+			SKAUTISINTEGRATION_NAME . '_' . 'rules_membership',
+			'skautisIntegrationRulesLocalize',
+			$localization,
+		);
+
 		Helpers::enqueue_script(
 			'rules_func',
 			'rules/admin/js/skautis-rules-func.min.js',
 			array(),
 			false
 		);
+		wp_localize_script(
+			SKAUTISINTEGRATION_NAME . '_' . 'rules_func',
+			'skautisIntegrationRulesLocalize',
+			$localization,
+		);
+
 		Helpers::enqueue_script(
 			'rules_qualification',
 			'rules/admin/js/skautis-rules-qualification.min.js',
@@ -207,9 +231,7 @@ final class Admin {
 		wp_localize_script(
 			SKAUTISINTEGRATION_NAME . '_' . 'rules',
 			'skautisIntegrationRulesLocalize',
-			array(
-				'select_placeholder' => esc_html__( 'Vyberte...', 'skautis-integration' ),
-			)
+			$localization,
 		);
 	}
 

@@ -40,7 +40,7 @@ class Membership {
 
 		html +=
 			'</select><div style="margin-top: 0.6em;">' +
-			jQuery.fn.queryBuilder.regional.cs.custom.units.inUnitWithNumber;
+			skautisIntegrationRulesLocalize.inUnitWithNumber;
 		html +=
 			'<select class="multi-rules form-control skautis-rule-unitnumber-select" name="' +
 			inputName +
@@ -64,7 +64,7 @@ class Membership {
 			'<input class="form-control skautis-rule-unitnumber-input" type="text" name="' +
 			inputName +
 			'_3" value="" placeholder="' +
-			jQuery.fn.queryBuilder.regional.cs.custom.units.unitNumber +
+			skautisIntegrationRulesLocalize.unitNumber +
 			'" />';
 		html += '</div></div>';
 		return html;
