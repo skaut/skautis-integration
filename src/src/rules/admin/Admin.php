@@ -203,6 +203,14 @@ final class Admin {
 			'rules/admin/js/skautis-rules-admin.min.js',
 			array( SKAUTISINTEGRATION_NAME . '_query-builder' )
 		);
+
+		wp_localize_script(
+			SKAUTISINTEGRATION_NAME . '_' . 'rules',
+			'skautisIntegrationRulesLocalize',
+			array(
+				'select_placeholder' => esc_html__( 'Vyberte...', 'skautis-integration' ),
+			)
+		);
 	}
 
 	public function initRulesBuilder() {

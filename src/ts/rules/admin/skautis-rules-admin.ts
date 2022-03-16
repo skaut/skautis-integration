@@ -41,8 +41,7 @@
 				.each( function () {
 					$( this ).select2( {
 						placeholder:
-							jQuery.fn.queryBuilder.regional.cs.custom
-								.select_placeholder,
+							skautisIntegrationRulesLocalize.select_placeholder,
 						sorter: ( data ) =>
 							data.sort( function ( a, b ) {
 								if (
