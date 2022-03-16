@@ -1,3 +1,11 @@
+interface ModalData {
+	content: string;
+	rules1: string | null;
+	rules2: string | null;
+	rules3: string | null;
+	rules4: string | null;
+}
+
 ( function (): void {
 	tinymce.addI18n( 'cs', {
 		shortcode_options: 'Nastavení shortcode',
@@ -77,18 +85,19 @@
 							minHeight: Math.min( viewport().height, 250 ),
 							onsubmit: ( e: JQuery.SubmitEvent ) => {
 								const newRules = [];
+								const eventData = e.data as ModalData;
 
-								if ( e.data.rules1 ) {
-									newRules.push( e.data.rules1 );
+								if ( eventData.rules1 !== null ) {
+									newRules.push( eventData.rules1 );
 								}
-								if ( e.data.rules2 ) {
-									newRules.push( e.data.rules2 );
+								if ( eventData.rules2 !== null ) {
+									newRules.push( eventData.rules2 );
 								}
-								if ( e.data.rules3 ) {
-									newRules.push( e.data.rules3 );
+								if ( eventData.rules3 !== null ) {
+									newRules.push( eventData.rules3 );
 								}
-								if ( e.data.rules4 ) {
-									newRules.push( e.data.rules4 );
+								if ( eventData.rules4 !== null ) {
+									newRules.push( eventData.rules4 );
 								}
 
 								if ( editor.selection.getContent() ) {
@@ -96,7 +105,7 @@
 										'[skautis rules="' +
 											newRules.join( ',' ) +
 											'" content="' +
-											e.data.content +
+											eventData.content +
 											'"]<div>' +
 											editor.selection.getContent() +
 											'</div>[/skautis]'
@@ -106,7 +115,7 @@
 										'[skautis rules="' +
 											newRules.join( ',' ) +
 											'" content="' +
-											e.data.content +
+											eventData.content +
 											'"]<div>Skrytý obsah</div>[/skautis]'
 									);
 								}
