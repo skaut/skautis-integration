@@ -58,9 +58,14 @@ final class Admin {
 				echo 'window.visibilityOptions.push({text: "hideContent", value: "hide"});';
 			}
 
+			$rules = array();
 			foreach ( (array) $this->rulesManager->getAllRules() as $rule ) {
-				echo 'window.rulesOptions.push({text: "' . esc_js( $rule->post_title ) . '", value: "' . esc_js( $rule->ID ) . '"});';
+				$rules[ $rule->ID ] = $rule->post_title;
 			}
+			?>
+			<script>
+				window.rulesOptions = <?php wp_json_encode( $rules ); ?>;
+			</script>
 			?>
 		</script>
 		<?php

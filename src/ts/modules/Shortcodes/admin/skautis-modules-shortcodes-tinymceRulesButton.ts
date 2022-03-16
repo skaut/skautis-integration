@@ -33,11 +33,15 @@
 						values: visibilityOptions,
 					} );
 
-					for ( const item of rules ) {
-						rulesOptions.push( {
-							text: item.text,
-							value: item.value,
-						} );
+					for ( const key in rules ) {
+						if (
+							Object.prototype.hasOwnProperty.call( rules, key )
+						) {
+							rulesOptions.push( {
+								text: key,
+								value: rules[ key ],
+							} );
+						}
 					}
 					body.push( {
 						type: 'listbox',
