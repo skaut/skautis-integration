@@ -78,7 +78,7 @@ class Func {
 		return (
 			( rule.$el
 				.find( '.rule-value-container [name$=_1]' )
-				.val() as Array< string > ) +
+				.val() as Array< string > ).toString() +
 			'~' +
 			( rule.$el
 				.find( '.rule-value-container [name$=_2]' )
