@@ -127,6 +127,8 @@ function viewport(): { height: number; width: number } {
 			height: window.innerHeight,
 		};
 	}
-	const e = document.documentElement || document.body;
-	return { width: e.clientWidth, height: e.clientHeight };
+	return {
+		width: document.documentElement.clientWidth,
+		height: document.documentElement.clientHeight,
+	};
 }
