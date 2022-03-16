@@ -111,11 +111,34 @@ interface QueryBuilderRegional {
 		operator_not_multiple: string;
 	};
 	invert: string;
-	custom: any;
+	custom: any; // TODO: Remove
+}
+
+interface QueryBuilderExportRule {
+	id: string;
+	field: string;
+	type: string;
+	input: string;
+	operator: string;
+	value: any;
+}
+
+interface QueryBuilderExportGroup {
+	condition: string;
+	rules: Array<QueryBuilderExportRule | QueryBuilderExportGroup>
+}
+
+interface QueryBuilderExport extends QueryBuilderExportGroup {
+	valid: boolean;
+}
+
+interface JQueryQueryBuilderInstance {
+	getRules(): QueryBuilderExport;
+	// TODO
 }
 
 interface JQueryQueryBuilder {
-	(options: QueryBuilderOptions): void;
+	(options: QueryBuilderOptions): JQueryQueryBuilderInstance;
 	regional: Record<string, QueryBuilderRegional>;
 	defaults(options: QueryBuilderOptions): void;
 	// TODO

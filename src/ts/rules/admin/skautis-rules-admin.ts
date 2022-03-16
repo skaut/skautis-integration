@@ -3,17 +3,16 @@
 	$( '#postdivrich' ).hide();
 
 	const $form = $( '#post' );
-	const $queryBuilder = $( '#query_builder' );
 	const $queryBuilderValues = $( '#query_builder_values' );
 
-	if ( $queryBuilder.length ) {
+	if ( $( '#query_builder' ).length ) {
 		let rules = null;
 		const values = $queryBuilderValues.val();
 		if ( typeof values === 'string' && values.length > 0 ) {
-			rules = JSON.parse( values );
+			rules = JSON.parse( values ) as QueryBuilderExport;
 		}
 
-		$queryBuilder.queryBuilder( {
+		const $queryBuilder = $( '#query_builder' ).queryBuilder( {
 			plugins: {
 				sortable: {
 					icon: 'fa fa-arrows-alt',
@@ -36,7 +35,7 @@
 			filters: window.skautisQueryBuilderFilters,
 		} );
 
-		$queryBuilder.on( 'change', function () {
+		$( '#query_builder' ).on( 'change', function () {
 			$( this )
 				.find( 'select[multiple]:not(.select2-hidden-accessible)' )
 				.each( function () {
@@ -57,11 +56,11 @@
 				} );
 		} );
 		setTimeout( function () {
-			$queryBuilder.trigger( 'change' );
+			$( '#query_builder' ).trigger( 'change' );
 		}, 100 );
 
 		$form.on( 'submit', function () {
-			const result = $queryBuilder.queryBuilder( 'getRules' );
+			const result = $queryBuilder.getRules();
 
 			if ( ! $.isEmptyObject( result ) ) {
 				$queryBuilderValues.val( JSON.stringify( result, null, 2 ) );
@@ -71,33 +70,36 @@
 				$queryBuilderValues.val() as string
 			);
 
-			return ! $queryBuilder.find( '.has-error' ).length;
+			return ! $( '#query_builder' ).find( '.has-error' ).length;
 		} );
 
-		$queryBuilder.on( 'change.skautis_rules_ui_helper', function () {
-			$queryBuilder.off( 'change.skautis_rules_ui_helper' );
-			setTimeout( function () {
-				$queryBuilder.on(
-					'change.skautis_rule_unitnumber_select',
-					'.skautis-rule-unitnumber-select',
-					function () {
-						const $input = jQuery( this )
-							.parent()
-							.find( '.skautis-rule-unitnumber-input' );
-						if ( jQuery( this ).val() === 'any' ) {
-							$input.fadeOut();
-							if ( $input.val() === '' ) {
-								$input.val( '0' ).trigger( 'change' );
+		$( '#query_builder' ).on(
+			'change.skautis_rules_ui_helper',
+			function () {
+				$( '#query_builder' ).off( 'change.skautis_rules_ui_helper' );
+				setTimeout( function () {
+					$( '#query_builder' ).on(
+						'change.skautis_rule_unitnumber_select',
+						'.skautis-rule-unitnumber-select',
+						function () {
+							const $input = jQuery( this )
+								.parent()
+								.find( '.skautis-rule-unitnumber-input' );
+							if ( jQuery( this ).val() === 'any' ) {
+								$input.fadeOut();
+								if ( $input.val() === '' ) {
+									$input.val( '0' ).trigger( 'change' );
+								}
+							} else {
+								$input.fadeIn();
 							}
-						} else {
-							$input.fadeIn();
 						}
-					}
-				);
-			}, 100 );
-		} );
+					);
+				}, 100 );
+			}
+		);
 
-		$queryBuilder
+		$( '#query_builder' )
 			.find( '.skautis-rule-unitnumber-select' )
 			.each( function () {
 				if ( jQuery( this ).val() === 'any' ) {
