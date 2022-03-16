@@ -165,7 +165,7 @@ final class Admin {
 			false
 		);
 		wp_localize_script(
-			SKAUTISINTEGRATION_NAME . '_' . 'rules_role',
+			SKAUTISINTEGRATION_NAME . '_rules_role',
 			'skautisIntegrationRulesLocalize',
 			$localization,
 		);
@@ -177,7 +177,7 @@ final class Admin {
 			false
 		);
 		wp_localize_script(
-			SKAUTISINTEGRATION_NAME . '_' . 'rules_membership',
+			SKAUTISINTEGRATION_NAME . '_rules_membership',
 			'skautisIntegrationRulesLocalize',
 			$localization,
 		);
@@ -189,7 +189,7 @@ final class Admin {
 			false
 		);
 		wp_localize_script(
-			SKAUTISINTEGRATION_NAME . '_' . 'rules_func',
+			SKAUTISINTEGRATION_NAME . '_rules_func',
 			'skautisIntegrationRulesLocalize',
 			$localization,
 		);
@@ -229,7 +229,7 @@ final class Admin {
 		);
 
 		wp_localize_script(
-			SKAUTISINTEGRATION_NAME . '_' . 'rules',
+			SKAUTISINTEGRATION_NAME . '_rules',
 			'skautisIntegrationRulesLocalize',
 			$localization,
 		);

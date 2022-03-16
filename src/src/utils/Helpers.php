@@ -20,7 +20,7 @@ class Helpers {
 	 */
 	public static function register_script( $handle, $src, $deps = array(), $in_footer = true ) {
 		$handle = SKAUTISINTEGRATION_NAME . '_' . $handle;
-		$src = plugin_dir_url( dirname( __FILE__, 2 ) ) . $src;
+		$src    = plugin_dir_url( dirname( __FILE__, 2 ) ) . $src;
 		wp_register_script( $handle, $src, $deps, SKAUTISINTEGRATION_VERSION, $in_footer );
 	}
 
