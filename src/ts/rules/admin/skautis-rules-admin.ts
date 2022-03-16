@@ -1,4 +1,4 @@
-( function ( $ ): void {
+( function( $ ): void {
 	$( '#skautis-integration_rules_metabox' ).hide();
 	$( '#postdivrich' ).hide();
 
@@ -35,15 +35,15 @@
 			filters: window.skautisQueryBuilderFilters,
 		} );
 
-		$( '#query_builder' ).on( 'change', function () {
+		$( '#query_builder' ).on( 'change', function() {
 			$( this )
 				.find( 'select[multiple]:not(.select2-hidden-accessible)' )
-				.each( function () {
+				.each( function() {
 					$( this ).select2( {
 						placeholder:
 							skautisIntegrationRulesLocalize.select_placeholder,
 						sorter: ( data ) =>
-							data.sort( function ( a, b ) {
+							data.sort( function( a, b ) {
 								if (
 									typeof a.text.localeCompare === 'function'
 								) {
@@ -54,11 +54,11 @@
 					} );
 				} );
 		} );
-		setTimeout( function () {
+		setTimeout( function() {
 			$( '#query_builder' ).trigger( 'change' );
 		}, 100 );
 
-		$form.on( 'submit', function () {
+		$form.on( 'submit', function() {
 			const result = $queryBuilder.getRules();
 
 			if ( ! $.isEmptyObject( result ) ) {
@@ -74,13 +74,13 @@
 
 		$( '#query_builder' ).on(
 			'change.skautis_rules_ui_helper',
-			function () {
+			function() {
 				$( '#query_builder' ).off( 'change.skautis_rules_ui_helper' );
-				setTimeout( function () {
+				setTimeout( function() {
 					$( '#query_builder' ).on(
 						'change.skautis_rule_unitnumber_select',
 						'.skautis-rule-unitnumber-select',
-						function () {
+						function() {
 							const $input = jQuery( this )
 								.parent()
 								.find( '.skautis-rule-unitnumber-input' );
@@ -100,7 +100,7 @@
 
 		$( '#query_builder' )
 			.find( '.skautis-rule-unitnumber-select' )
-			.each( function () {
+			.each( function() {
 				if ( jQuery( this ).val() === 'any' ) {
 					jQuery( this )
 						.parent()
@@ -109,4 +109,4 @@
 				}
 			} );
 	}
-} )( jQuery );
+}( jQuery ) );

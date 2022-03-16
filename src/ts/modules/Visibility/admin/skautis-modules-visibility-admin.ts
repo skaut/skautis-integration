@@ -1,4 +1,4 @@
-( function ( $ ): void {
+( function( $ ): void {
 	const $repeater = $( '#repeater_post' );
 
 	if ( $repeater.length ) {
@@ -17,7 +17,7 @@
 				},
 				hide( deleteElement ) {
 					$( this ).slideUp( 150, deleteElement );
-					setTimeout( function () {
+					setTimeout( function() {
 						updateAvailableOptions();
 					}, 250 );
 				},
@@ -45,10 +45,10 @@
 	function updateAvailableOptions(): void {
 		const usedOptions: Array< string > = [];
 
-		setTimeout( function () {
+		setTimeout( function() {
 			const $selectRules = jQuery( 'select.rule' );
 
-			$selectRules.each( function () {
+			$selectRules.each( function() {
 				const value = jQuery( this ).val() as string | null;
 				if ( value !== null ) {
 					usedOptions.push( value );
@@ -60,7 +60,7 @@
 			const $rulesUsedInParents = jQuery(
 				'#skautis_modules_visibility_parentRules'
 			).find( 'li[data-rule]' );
-			$rulesUsedInParents.each( function () {
+			$rulesUsedInParents.each( function() {
 				usedOptions.push(
 					( $( this ).data( 'rule' ) as number ).toString()
 				);
@@ -72,7 +72,7 @@
 					.attr( 'disabled', 'disabled' );
 			}
 
-			$selectRules.each( function () {
+			$selectRules.each( function() {
 				jQuery( this )
 					.find( 'option:selected' )
 					.removeAttr( 'disabled' );
@@ -81,4 +81,4 @@
 			reinitSelect2();
 		}, 0 );
 	}
-} )( jQuery );
+}( jQuery ) );

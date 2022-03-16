@@ -1,6 +1,6 @@
 /// <reference types="datatables.net"/>
 
-( function ( $ ): void {
+( function( $ ): void {
 	document.styleSheets[ 0 ].addRule(
 		'.skautis-user-management-table th span:after',
 		'background-image: url(' +
@@ -35,7 +35,7 @@
 					$searchButton = $( '<button>' )
 						.text( $dataTable.i18n( 'search', 'Search' ) )
 						.addClass( 'button button-secondary' )
-						.click( function () {
+						.click( function() {
 							const withNonce = updateQueryStringInUrl(
 								skautisIntegrationAdminUsersManagementLocalize.searchNonceName,
 								skautisIntegrationAdminUsersManagementLocalize.searchNonceValue,
@@ -47,7 +47,7 @@
 								withNonce
 							);
 						} );
-				$input.on( 'keyup', function ( e ) {
+				$input.on( 'keyup', function( e ) {
 					e.preventDefault();
 					if ( e.keyCode === 13 ) {
 						$searchButton.trigger( 'click' );
@@ -62,7 +62,7 @@
 						skautisIntegrationAdminUsersManagementLocalize.cancel
 					)
 					.addClass( 'button button-secondary' )
-					.click( function () {
+					.click( function() {
 						$( '.dataTables_filter input' ).val( '' );
 						window.location.href = updateQueryStringInUrl(
 							'skautisSearchUsers',
@@ -77,15 +77,15 @@
 		},
 	} );
 
-	$( '.skautis-user-management-table' ).on( 'init.dt', function () {
+	$( '.skautis-user-management-table' ).on( 'init.dt', function() {
 		$( this )
 			.find( 'th' )
-			.each( function () {
+			.each( function() {
 				$( this ).html( '<span>' + $( this ).html() + '</span>' );
 			} );
 	} );
 
-	$( '.thickbox' ).on( 'click', function () {
+	$( '.thickbox' ).on( 'click', function() {
 		const $this = $( this );
 		let userName =
 			$this.parents( 'tr' ).find( '.firstName' ).html() +
@@ -121,7 +121,7 @@
 		$connectUserToSkautisModalRegisterLink.attr( 'href', newHref );
 	} );
 
-	$( '#connectUserToSkautisModal_select' ).on( 'change', function () {
+	$( '#connectUserToSkautisModal_select' ).on( 'change', function() {
 		const $this = $( this );
 		const $connectUserToSkautisModalConnectLink = $(
 			'#connectUserToSkautisModal_connectLink'
@@ -148,7 +148,7 @@
 	} );
 
 	$( '#connectUserToSkautisModal_defaultRole' )
-		.on( 'change', function () {
+		.on( 'change', function() {
 			const $this = $( this );
 			const $connectUserToSkautisModalRegisterLink = $(
 				'#connectUserToSkautisModal_registerLink'
@@ -163,7 +163,7 @@
 			);
 		} )
 		.trigger( 'change' );
-} )( jQuery );
+}( jQuery ) );
 
 function updateQueryStringInUrl(
 	key: string,

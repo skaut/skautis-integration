@@ -10,7 +10,7 @@ const shell = require( 'gulp-shell' );
 const terser = require( 'gulp-terser' );
 const ts = require( 'gulp-typescript' );
 
-gulp.task( 'build:css:admin', function () {
+gulp.task( 'build:css:admin', function() {
 	return gulp
 		.src( [ 'src/css/admin/*.css' ] )
 		.pipe( cleanCSS() )
@@ -18,7 +18,7 @@ gulp.task( 'build:css:admin', function () {
 		.pipe( gulp.dest( 'dist/admin/css/' ) );
 } );
 
-gulp.task( 'build:css:frontend', function () {
+gulp.task( 'build:css:frontend', function() {
 	return gulp
 		.src( [ 'src/css/frontend/*.css' ] )
 		.pipe( cleanCSS() )
@@ -26,7 +26,7 @@ gulp.task( 'build:css:frontend', function () {
 		.pipe( gulp.dest( 'dist/frontend/css/' ) );
 } );
 
-gulp.task( 'build:css:modules:Register:admin', function () {
+gulp.task( 'build:css:modules:Register:admin', function() {
 	return gulp
 		.src( [ 'src/css/modules/Register/admin/*.css' ] )
 		.pipe( cleanCSS() )
@@ -39,7 +39,7 @@ gulp.task(
 	gulp.parallel( 'build:css:modules:Register:admin' )
 );
 
-gulp.task( 'build:css:modules:Shortcodes:admin', function () {
+gulp.task( 'build:css:modules:Shortcodes:admin', function() {
 	return gulp
 		.src( [ 'src/css/modules/Shortcodes/admin/*.css' ] )
 		.pipe( cleanCSS() )
@@ -52,7 +52,7 @@ gulp.task(
 	gulp.parallel( 'build:css:modules:Shortcodes:admin' )
 );
 
-gulp.task( 'build:css:modules:Visibility:admin', function () {
+gulp.task( 'build:css:modules:Visibility:admin', function() {
 	return gulp
 		.src( [ 'src/css/modules/Visibility/admin/*.css' ] )
 		.pipe( cleanCSS() )
@@ -74,7 +74,7 @@ gulp.task(
 	)
 );
 
-gulp.task( 'build:css:rules:admin', function () {
+gulp.task( 'build:css:rules:admin', function() {
 	return gulp
 		.src( [ 'src/css/rules/admin/*.css' ] )
 		.pipe( cleanCSS() )
@@ -108,7 +108,7 @@ gulp.task(
 			'composer dump-autoload --no-dev' +
 				( process.env.NODE_ENV === 'production' ? ' -o' : '' )
 		),
-		function () {
+		function() {
 			return merge(
 				gulp.src( [
 					'vendor/composer/autoload_classmap.php',
@@ -150,7 +150,7 @@ gulp.task(
 	)
 );
 
-gulp.task( 'build:deps:npm:datatables.net:files', function () {
+gulp.task( 'build:deps:npm:datatables.net:files', function() {
 	return gulp
 		.src( [
 			'node_modules/datatables.net-dt/images/sort_asc.png',
@@ -162,7 +162,7 @@ gulp.task( 'build:deps:npm:datatables.net:files', function () {
 
 gulp.task(
 	'build:deps:npm:datatables.net',
-	gulp.parallel( 'build:deps:npm:datatables.net:files', function () {
+	gulp.parallel( 'build:deps:npm:datatables.net:files', function() {
 		return gulp
 			.src( [
 				'node_modules/datatables.net-dt/css/jquery.dataTables.min.css',
@@ -172,13 +172,13 @@ gulp.task(
 	} )
 );
 
-gulp.task( 'build:deps:npm:font-awesome:css', function () {
+gulp.task( 'build:deps:npm:font-awesome:css', function() {
 	return gulp
 		.src( 'node_modules/font-awesome/css/font-awesome.min.css' )
 		.pipe( gulp.dest( 'dist/bundled/font-awesome/css' ) );
 } );
 
-gulp.task( 'build:deps:npm:font-awesome:fonts', function () {
+gulp.task( 'build:deps:npm:font-awesome:fonts', function() {
 	return gulp
 		.src( [
 			'node_modules/font-awesome/fonts/fontawesome-webfont.eot',
@@ -198,19 +198,19 @@ gulp.task(
 	)
 );
 
-gulp.task( 'build:deps:npm:interactjs', function () {
+gulp.task( 'build:deps:npm:interactjs', function() {
 	return gulp
 		.src( 'node_modules/interactjs/dist/interact.min.js' )
 		.pipe( gulp.dest( 'dist/bundled/' ) );
 } );
 
-gulp.task( 'build:deps:npm:jquery.repeater', function () {
+gulp.task( 'build:deps:npm:jquery.repeater', function() {
 	return gulp
 		.src( 'node_modules/jquery.repeater/jquery.repeater.min.js' )
 		.pipe( gulp.dest( 'dist/bundled/' ) );
 } );
 
-gulp.task( 'build:deps:npm:jQuery-QueryBuilder', function () {
+gulp.task( 'build:deps:npm:jQuery-QueryBuilder', function() {
 	return gulp
 		.src( [
 			'node_modules/jQuery-QueryBuilder/dist/css/query-builder.default.min.css',
@@ -219,7 +219,7 @@ gulp.task( 'build:deps:npm:jQuery-QueryBuilder', function () {
 		.pipe( gulp.dest( 'dist/bundled/' ) );
 } );
 
-gulp.task( 'build:deps:npm:select2', function () {
+gulp.task( 'build:deps:npm:select2', function() {
 	return gulp
 		.src( [
 			'node_modules/select2/dist/css/select2.min.css',
@@ -245,7 +245,7 @@ gulp.task(
 	gulp.parallel( 'build:deps:composer', 'build:deps:npm' )
 );
 
-gulp.task( 'build:js:admin', function () {
+gulp.task( 'build:js:admin', function() {
 	const tsProject = ts.createProject( 'tsconfig.json' );
 	return gulp
 		.src( [ 'src/ts/admin/*.ts', 'src/d.ts/*.d.ts' ] )
@@ -255,7 +255,7 @@ gulp.task( 'build:js:admin', function () {
 		.pipe( gulp.dest( 'dist/admin/js/' ) );
 } );
 
-gulp.task( 'build:js:modules:Register:admin', function () {
+gulp.task( 'build:js:modules:Register:admin', function() {
 	const tsProject = ts.createProject( 'tsconfig.json' );
 	return gulp
 		.src( [ 'src/ts/modules/Register/admin/*.ts', 'src/d.ts/*.d.ts' ] )
@@ -270,7 +270,7 @@ gulp.task(
 	gulp.parallel( 'build:js:modules:Register:admin' )
 );
 
-gulp.task( 'build:js:modules:Shortcodes:admin', function () {
+gulp.task( 'build:js:modules:Shortcodes:admin', function() {
 	const tsProject = ts.createProject( 'tsconfig.json' );
 	return gulp
 		.src( [ 'src/ts/modules/Shortcodes/admin/*.ts', 'src/d.ts/*.d.ts' ] )
@@ -285,7 +285,7 @@ gulp.task(
 	gulp.parallel( 'build:js:modules:Shortcodes:admin' )
 );
 
-gulp.task( 'build:js:modules:Visibility:admin', function () {
+gulp.task( 'build:js:modules:Visibility:admin', function() {
 	const tsProject = ts.createProject( 'tsconfig.json' );
 	return gulp
 		.src( [ 'src/ts/modules/Visibility/admin/*.ts', 'src/d.ts/*.d.ts' ] )
@@ -309,7 +309,7 @@ gulp.task(
 	)
 );
 
-gulp.task( 'build:js:rules:admin', function () {
+gulp.task( 'build:js:rules:admin', function() {
 	const tsProject = ts.createProject( 'tsconfig.json' );
 	return gulp
 		.src( [ 'src/ts/rules/admin/*.ts', 'src/d.ts/*.d.ts' ] )
@@ -326,11 +326,11 @@ gulp.task(
 	gulp.parallel( 'build:js:admin', 'build:js:modules', 'build:js:rules' )
 );
 
-gulp.task( 'build:php:base', function () {
+gulp.task( 'build:php:base', function() {
 	return gulp.src( [ 'src/*.php' ] ).pipe( gulp.dest( 'dist/' ) );
 } );
 
-gulp.task( 'build:php:other', function () {
+gulp.task( 'build:php:other', function() {
 	// TODO: Split these
 	return gulp
 		.src( [ 'src/**/*.php', 'src/**/*.png', 'src/**/*.txt' ] )

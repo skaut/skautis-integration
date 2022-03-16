@@ -1,4 +1,4 @@
-( function ( $ ): void {
+( function( $ ): void {
 	const $repeater = $( '#repeater' ).repeater( {
 		initEmpty: true,
 		defaultValues: {
@@ -26,7 +26,7 @@
 		},
 		hide( deleteElement ) {
 			$( this ).slideUp( 150, deleteElement );
-			setTimeout( function () {
+			setTimeout( function() {
 				if (
 					! $( '#repeater' ).find( '[data-repeater-item]' ).length
 				) {
@@ -78,10 +78,10 @@
 	function updateAvailableOptions(): void {
 		const usedOptions: Array< string > = [];
 
-		setTimeout( function () {
+		setTimeout( function() {
 			const $selectRules = jQuery( '.form-table' ).find( 'select.rule' );
 
-			$selectRules.each( function () {
+			$selectRules.each( function() {
 				usedOptions.push( jQuery( this ).val() as string );
 			} );
 
@@ -93,7 +93,7 @@
 					.attr( 'disabled', 'disabled' );
 			}
 
-			$selectRules.each( function () {
+			$selectRules.each( function() {
 				jQuery( this )
 					.find( 'option:selected' )
 					.removeAttr( 'disabled' );
@@ -102,4 +102,4 @@
 			reinitSelect2();
 		}, 0 );
 	}
-} )( jQuery );
+}( jQuery ) );

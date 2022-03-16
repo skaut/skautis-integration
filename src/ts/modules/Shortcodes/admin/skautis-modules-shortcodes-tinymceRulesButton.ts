@@ -6,7 +6,7 @@ interface ModalData {
 	rules4: string | null;
 }
 
-( function (): void {
+( function(): void {
 	tinymce.addI18n( 'cs', {
 		shortcode_options: 'Nastavení shortcode',
 		insert_skautis_rules: 'Vložit skautIS pravidlo',
@@ -20,9 +20,9 @@ interface ModalData {
 		hideContent: 'skrýt obsah',
 		showLogin: 'zobrazit přihlášení',
 	} );
-	( ( tinymce as unknown ) as typeof import('tinymce') ).PluginManager.add(
+	( ( tinymce as unknown ) as typeof import( 'tinymce' ) ).PluginManager.add(
 		'skautis_rules',
-		function ( editor, url ) {
+		function( editor, url ) {
 			editor.addButton( 'skautis_rules', {
 				title: 'insert_skautis_rules',
 				image:
@@ -127,7 +127,7 @@ interface ModalData {
 			} );
 		}
 	);
-} )();
+}() );
 
 function viewport(): { height: number; width: number } {
 	if ( 'innerWidth' in window ) {
