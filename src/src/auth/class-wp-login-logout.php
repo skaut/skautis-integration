@@ -124,7 +124,7 @@ final class WP_Login_Logout {
 		}
 	}
 
-	public function tryToLoginToWp() {
+	public function try_to_login_to_wp() {
 		$userDetail = $this->skautisGateway->getSkautisInstance()->UserManagement->UserDetail();
 
 		if ( $userDetail && isset( $userDetail->ID ) && $userDetail->ID > 0 ) {
