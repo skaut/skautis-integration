@@ -22,10 +22,10 @@ final class Admin {
 		$this->skautisGateway = $skautisGateway;
 		$this->adminDirUrl    = plugin_dir_url( __FILE__ ) . 'public/';
 		( new Columns() );
-		$this->initHooks();
+		$this->init_hooks();
 	}
 
-	private function initHooks() {
+	private function init_hooks() {
 		add_action( 'add_meta_boxes', array( $this, 'addMetaboxForRulesField' ) );
 		add_action( 'save_post', array( $this, 'saveRulesCustomField' ) );
 

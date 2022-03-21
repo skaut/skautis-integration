@@ -17,10 +17,10 @@ final class Login_Form {
 	public function __construct( WP_Login_Logout $wpLoginLogout ) {
 		$this->wpLoginLogout  = $wpLoginLogout;
 		$this->frontendDirUrl = plugin_dir_url( __FILE__ ) . 'public/';
-		$this->initHooks();
+		$this->init_hooks();
 	}
 
-	private function initHooks() {
+	private function init_hooks() {
 		if ( ! Services::getServicesContainer()['modulesManager']->isModuleActivated( Register::getId() ) ) {
 			add_action( 'login_form', array( $this, 'loginLinkInLoginForm' ) );
 			add_filter( 'login_form_bottom', array( $this, 'loginLinkInLoginFormReturn' ) );

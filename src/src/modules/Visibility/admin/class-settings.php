@@ -9,10 +9,10 @@ use SkautisIntegration\Utils\Helpers;
 final class Settings {
 
 	public function __construct() {
-		$this->initHooks();
+		$this->init_hooks();
 	}
 
-	private function initHooks() {
+	private function init_hooks() {
 		if ( ! is_admin() ) {
 			return;
 		}

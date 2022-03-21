@@ -14,10 +14,10 @@ final class Users {
 
 	public function __construct( Connect_And_Disconnect_WP_Account $connectWpAccount ) {
 		$this->connectWpAccount = $connectWpAccount;
-		$this->initHooks();
+		$this->init_hooks();
 	}
 
-	private function initHooks() {
+	private function init_hooks() {
 		add_filter( 'manage_users_columns', array( $this, 'addColumnHeaderToUsersTable' ) );
 		add_filter( 'manage_users_custom_column', array( $this, 'addColumnToUsersTable' ), 10, 3 );
 

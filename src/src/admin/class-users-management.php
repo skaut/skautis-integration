@@ -34,10 +34,10 @@ class Users_Management {
 		$this->roleChanger                   = $roleChanger;
 		$this->adminDirUrl                   = plugin_dir_url( __FILE__ ) . 'public/';
 		$this->checkIfUserChangeSkautisRole();
-		$this->initHooks();
+		$this->init_hooks();
 	}
 
-	protected function initHooks() {
+	protected function init_hooks() {
 		add_action(
 			'admin_menu',
 			array(

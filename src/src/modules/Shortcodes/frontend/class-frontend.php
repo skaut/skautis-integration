@@ -19,10 +19,10 @@ final class Frontend {
 		$this->skautisLogin  = $skautisLogin;
 		$this->rulesManager  = $rulesManager;
 		$this->wpLoginLogout = $wpLoginLogout;
-		$this->initHooks();
+		$this->init_hooks();
 	}
 
-	private function initHooks() {
+	private function init_hooks() {
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueueStyles' ) );
 		add_shortcode( 'skautis', array( $this, 'processShortcode' ) );
 	}

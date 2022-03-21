@@ -17,10 +17,10 @@ final class Metabox {
 		$this->postTypes    = $postTypes;
 		$this->rulesManager = $rulesManager;
 		$this->frontend     = $frontend;
-		$this->initHooks();
+		$this->init_hooks();
 	}
 
-	private function initHooks() {
+	private function init_hooks() {
 		add_action( 'add_meta_boxes', array( $this, 'addMetaboxForRulesField' ) );
 		add_action( 'save_post', array( $this, 'saveRulesCustomField' ) );
 	}

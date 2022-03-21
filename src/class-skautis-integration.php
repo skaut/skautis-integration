@@ -7,7 +7,7 @@ use SkautisIntegration\Utils\Helpers;
 class Skautis_Integration {
 
 	public function __construct() {
-		$this->initHooks();
+		$this->init_hooks();
 
 		require __DIR__ . '/vendor/scoper-autoload.php';
 		require __DIR__ . '/global-functions.php';
@@ -69,7 +69,7 @@ class Skautis_Integration {
 		$this->init();
 	}
 
-	protected function initHooks() {
+	protected function init_hooks() {
 		add_action( 'admin_init', array( $this, 'checkVersionAndPossiblyDeactivatePlugin' ) );
 
 		register_activation_hook( __FILE__, array( $this, 'activation' ) );

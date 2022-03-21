@@ -15,10 +15,10 @@ final class Rules_Init {
 
 	public function __construct( Revisions $revisions ) {
 		$this->revisions = $revisions;
-		$this->initHooks();
+		$this->init_hooks();
 	}
 
-	private function initHooks() {
+	private function init_hooks() {
 		add_action( 'init', array( $this, 'registerPostType' ) );
 
 		if ( is_admin() ) {

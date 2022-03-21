@@ -14,10 +14,10 @@ final class Settings {
 
 	public function __construct( Rules_Manager $rulesManager ) {
 		$this->rulesManager = $rulesManager;
-		$this->initHooks();
+		$this->init_hooks();
 	}
 
-	private function initHooks() {
+	private function init_hooks() {
 		if ( ! is_admin() ) {
 			return;
 		}

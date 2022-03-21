@@ -7,10 +7,10 @@ namespace SkautisIntegration\Rules;
 class Revisions {
 
 	public function __construct() {
-		$this->initHooks();
+		$this->init_hooks();
 	}
 
-	protected function initHooks() {
+	protected function init_hooks() {
 		add_action( 'save_post', array( $this, 'savePost' ), 10 );
 		add_action( 'wp_restore_post_revision', array( $this, 'restoreRevision' ), 10, 2 );
 		add_filter( 'wp_save_post_revision_post_has_changed', array( $this, 'postHasChanged' ), 10, 3 );

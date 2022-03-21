@@ -7,10 +7,10 @@ namespace SkautisIntegration\Rules;
 class Columns {
 
 	public function __construct() {
-		$this->initHooks();
+		$this->init_hooks();
 	}
 
-	protected function initHooks() {
+	protected function init_hooks() {
 		add_filter( 'manage_edit-' . Rules_Init::RULES_TYPE_SLUG . '_columns', array( $this, 'lastModifiedAdminColumn' ) );
 		add_filter(
 			'manage_edit-' . Rules_Init::RULES_TYPE_SLUG . '_sortable_columns',

@@ -30,10 +30,10 @@ final class Actions {
 		$this->wpLoginLogout    = $wpLoginLogout;
 		$this->connectWpAccount = $connectWpAccount;
 		$this->frontendDirUrl   = plugin_dir_url( __FILE__ ) . 'public/';
-		$this->initHooks();
+		$this->init_hooks();
 	}
 
-	private function initHooks() {
+	private function init_hooks() {
 		add_action( 'init', array( $this, 'registerAuthRewriteRules' ) );
 		add_action( 'query_vars', array( $this, 'registerAuthQueryVars' ) );
 

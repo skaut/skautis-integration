@@ -12,10 +12,10 @@ final class Login_Form {
 
 	public function __construct( WP_Register $wpRegister ) {
 		$this->wpRegister = $wpRegister;
-		$this->initHooks();
+		$this->init_hooks();
 	}
 
-	private function initHooks() {
+	private function init_hooks() {
 		add_action( 'login_form', array( $this, 'loginLinkInLoginForm' ) );
 		add_action( 'login_enqueue_scripts', array( $this, 'enqueueLoginStyles' ) );
 		add_filter( 'login_form_bottom', array( $this, 'loginLinkInLoginFormReturn' ) );

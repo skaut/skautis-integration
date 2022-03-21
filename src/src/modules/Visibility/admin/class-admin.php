@@ -24,10 +24,10 @@ final class Admin {
 		$this->settings     = new Settings();
 		$this->metabox      = new Metabox( $this->postTypes, $this->rulesManager, $frontend );
 		$this->adminDirUrl  = plugin_dir_url( __FILE__ ) . 'public/';
-		$this->initHooks();
+		$this->init_hooks();
 	}
 
-	private function initHooks() {
+	private function init_hooks() {
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueueScriptsAndStyles' ) );
 		add_action( 'admin_footer', array( $this, 'initRulesOptions' ) );
 		add_action( 'admin_footer', array( $this, 'initRulesData' ) );

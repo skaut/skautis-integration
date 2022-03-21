@@ -16,10 +16,10 @@ final class Admin {
 		$this->rulesManager = $rulesManager;
 		$this->adminDirUrl  = plugin_dir_url( __FILE__ ) . 'public/';
 		( new Settings( $this->rulesManager ) );
-		$this->initHooks();
+		$this->init_hooks();
 	}
 
-	private function initHooks() {
+	private function init_hooks() {
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueueStyles' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueueScripts' ) );
 		add_action( 'admin_footer', array( $this, 'initRulesOptions' ) );

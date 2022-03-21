@@ -21,10 +21,10 @@ final class Frontend {
 		$this->skautisGateway  = $skautisGateway;
 		$this->frontendDirUrl  = plugin_dir_url( __FILE__ ) . 'public/';
 		$this->pluginLoginView = false;
-		$this->initHooks();
+		$this->init_hooks();
 	}
 
-	private function initHooks() {
+	private function init_hooks() {
 		if ( get_option( SKAUTISINTEGRATION_NAME . '_login_page_url' ) ) {
 			add_filter( 'query_vars', array( $this, 'registerQueryVars' ) );
 			add_filter( 'template_include', array( $this, 'registerTemplates' ) );

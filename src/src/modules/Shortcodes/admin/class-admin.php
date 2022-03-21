@@ -14,10 +14,10 @@ final class Admin {
 	public function __construct( Rules_Manager $rulesManager ) {
 		$this->rulesManager = $rulesManager;
 		$this->settings     = new Settings();
-		$this->initHooks();
+		$this->init_hooks();
 	}
 
-	private function initHooks() {
+	private function init_hooks() {
 		add_action( 'admin_footer', array( $this, 'initAvailableRules' ) );
 
 		add_action(

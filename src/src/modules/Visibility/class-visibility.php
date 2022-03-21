@@ -31,7 +31,7 @@ final class Visibility implements Module {
 		if ( is_admin() ) {
 			( new Admin( $postTypes, $this->rulesManager, $this->frontend ) );
 		} else {
-			$this->frontend->initHooks();
+			$this->frontend->init_hooks();
 		}
 	}
 

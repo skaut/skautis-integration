@@ -23,7 +23,7 @@ final class Frontend {
 		$this->wpLoginLogout = $wpLoginLogout;
 	}
 
-	public function initHooks() {
+	public function init_hooks() {
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueueStyles' ) );
 		add_action( 'posts_results', array( $this, 'filterPosts' ), 10, 2 );
 	}

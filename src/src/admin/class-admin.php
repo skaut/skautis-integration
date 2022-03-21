@@ -27,10 +27,10 @@ final class Admin {
 		$this->wpLoginLogout   = $wpLoginLogout;
 		$this->skautisGateway  = $skautisGateway;
 		$this->adminDirUrl     = plugin_dir_url( __FILE__ ) . 'public/';
-		$this->initHooks();
+		$this->init_hooks();
 	}
 
-	private function initHooks() {
+	private function init_hooks() {
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueueScriptsAndStyles' ) );
 		add_action( 'admin_print_scripts', array( $this, 'printInlineJs' ) );
 

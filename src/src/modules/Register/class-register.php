@@ -41,10 +41,10 @@ final class Register implements Module {
 		} else {
 			( new Frontend( new Login_Form( $this->wpRegister ) ) );
 		}
-		$this->initHooks();
+		$this->init_hooks();
 	}
 
-	private function initHooks() {
+	private function init_hooks() {
 		add_filter( SKAUTISINTEGRATION_NAME . '_frontend_actions_router', array( $this, 'addActionsToRouter' ) );
 		$returnUrl = Helpers::getReturnUrl();
 		if ( ! is_null( $returnUrl ) ) {

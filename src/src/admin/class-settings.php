@@ -22,10 +22,10 @@ final class Settings {
 		$this->skautisGateway = $skautisGateway;
 		$this->modulesManager = $modulesManager;
 		$this->adminDirUrl    = plugin_dir_url( __FILE__ ) . 'public/';
-		$this->initHooks();
+		$this->init_hooks();
 	}
 
-	private function initHooks() {
+	private function init_hooks() {
 		add_filter(
 			'plugin_action_links_' . SKAUTISINTEGRATION_PLUGIN_BASENAME,
 			array(
