@@ -5,7 +5,7 @@ declare( strict_types=1 );
 namespace SkautisIntegration\Admin;
 
 use SkautisIntegration\Auth\Skautis_Gateway;
-use SkautisIntegration\Modules\ModulesManager;
+use SkautisIntegration\Modules\Modules_Manager;
 use SkautisIntegration\Utils\Helpers;
 use SkautisIntegration\Services\Services;
 use SkautisIntegration\Modules\Register\Register;
@@ -18,7 +18,7 @@ final class Settings {
 	private $modulesManager;
 	private $adminDirUrl = '';
 
-	public function __construct( Skautis_Gateway $skautisGateway, ModulesManager $modulesManager ) {
+	public function __construct( Skautis_Gateway $skautisGateway, Modules_Manager $modulesManager ) {
 		$this->skautisGateway = $skautisGateway;
 		$this->modulesManager = $modulesManager;
 		$this->adminDirUrl    = plugin_dir_url( __FILE__ ) . 'public/';

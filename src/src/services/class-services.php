@@ -18,7 +18,7 @@ use SkautisIntegration\Admin\Admin;
 use SkautisIntegration\Admin\Settings;
 use SkautisIntegration\Admin\Users;
 use SkautisIntegration\Repository\Users as UsersRepository;
-use SkautisIntegration\Modules\ModulesManager;
+use SkautisIntegration\Modules\Modules_Manager;
 use SkautisIntegration\Modules\Register\Register;
 use SkautisIntegration\Modules\Shortcodes\Shortcodes;
 use SkautisIntegration\Modules\Visibility\Visibility;
@@ -108,9 +108,9 @@ class Services {
 
 		// Modules
 		self::$services['modulesManager'] = function ( Container $container ) {
-			return new ModulesManager(
+			return new Modules_Manager(
 				$container,
-				array( // for hard modules activation/deactivation look to modules/ModulesManager WP filters
+				array( // for hard modules activation/deactivation look to modules/Modules_Manager WP filters
 					Register::getId()   => Register::getLabel(),
 					Visibility::getId() => Visibility::getLabel(),
 					Shortcodes::getId() => Shortcodes::getLabel(),

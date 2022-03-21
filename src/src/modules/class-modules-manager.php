@@ -6,7 +6,7 @@ namespace SkautisIntegration\Modules;
 
 use SkautisIntegration\Vendor\Pimple\Container;
 
-final class ModulesManager {
+final class Modules_Manager {
 
 	private $container;
 	private $modules          = array();
