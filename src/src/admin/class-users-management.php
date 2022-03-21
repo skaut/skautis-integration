@@ -15,7 +15,7 @@ use SkautisIntegration\Modules\Register\Register;
 use SkautisIntegration\Utils\Helpers;
 use SkautisIntegration\Utils\RoleChanger;
 
-class UsersManagement {
+class Users_Management {
 
 	protected $skautisGateway;
 	protected $wpLoginLogout;

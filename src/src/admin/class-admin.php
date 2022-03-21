@@ -19,7 +19,7 @@ final class Admin {
 	private $usersManagement;
 	private $adminDirUrl = '';
 
-	public function __construct( Settings $settings, Users $users, Rules_Manager $rulesManager, UsersManagement $usersManagement, WP_Login_Logout $wpLoginLogout, SkautisGateway $skautisGateway ) {
+	public function __construct( Settings $settings, Users $users, Rules_Manager $rulesManager, Users_Management $usersManagement, WP_Login_Logout $wpLoginLogout, SkautisGateway $skautisGateway ) {
 		$this->settings        = $settings;
 		$this->users           = $users;
 		$this->rulesManager    = $rulesManager;

@@ -35,7 +35,7 @@ class SkautisIntegration {
 		require __DIR__ . '/src/admin/class-admin.php';
 		require __DIR__ . '/src/admin/class-settings.php';
 		require __DIR__ . '/src/admin/class-users.php';
-		require __DIR__ . '/src/admin/UsersManagement.php';
+		require __DIR__ . '/src/admin/class-users-management.php';
 
 		require __DIR__ . '/src/auth/TransientSessionAdapter.php';
 		require __DIR__ . '/src/auth/ConnectAndDisconnectWpAccount.php';

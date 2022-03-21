@@ -5,7 +5,7 @@ declare( strict_types=1 );
 namespace SkautisIntegration\Services;
 
 use SkautisIntegration\Vendor\Pimple\Container;
-use SkautisIntegration\Admin\UsersManagement;
+use SkautisIntegration\Admin\Users_Management;
 use SkautisIntegration\Auth\SkautisGateway;
 use SkautisIntegration\Auth\Skautis_Login;
 use SkautisIntegration\Auth\WP_Login_Logout;
@@ -94,7 +94,7 @@ class Services {
 		};
 
 		self::$services['admin_usersManagement'] = function ( Container $container ) {
-			return new UsersManagement( $container['skautisGateway'], $container['wpLoginLogout'], $container['skautisLogin'], $container['connectAndDisconnectWpAccount'], $container['repository_users'], $container['utils_roleChanger'] );
+			return new Users_Management( $container['skautisGateway'], $container['wpLoginLogout'], $container['skautisLogin'], $container['connectAndDisconnectWpAccount'], $container['repository_users'], $container['utils_roleChanger'] );
 		};
 
 		self::$services['utils_roleChanger'] = function ( Container $container ) {
