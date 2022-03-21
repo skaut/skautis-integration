@@ -99,7 +99,7 @@ final class Frontend {
 				'parent' => $parent,
 				'id'     => SKAUTISINTEGRATION_NAME . '_adminBar_logout',
 				'title'  => esc_html__( 'Odhlásit se (i ze skautISu)', 'skautis-integration' ),
-				'href'   => $this->wpLoginLogout->getLogoutUrl(),
+				'href'   => $this->wpLoginLogout->get_logout_url(),
 			)
 		);
 	}

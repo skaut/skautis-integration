@@ -16,7 +16,7 @@ if ( ! function_exists( 'getSkautisLoginUrl' ) ) {
 
 if ( ! function_exists( 'getSkautisLogoutUrl' ) ) {
 	function getSkautisLogoutUrl(): string {
-		return ( Services::getServicesContainer()['wpLoginLogout'] )->getLogoutUrl();
+		return ( Services::getServicesContainer()['wpLoginLogout'] )->get_logout_url();
 	}
 }
 

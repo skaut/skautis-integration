@@ -99,7 +99,7 @@ final class WP_Login_Logout {
 		return esc_url( $url );
 	}
 
-	public function getLogoutUrl( string $returnUrl = '' ): string {
+	public function get_logout_url( string $returnUrl = '' ): string {
 		if ( ! $returnUrl ) {
 			$returnUrl = Helpers::getLoginLogoutRedirect();
 		}
