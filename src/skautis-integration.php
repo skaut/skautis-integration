@@ -72,7 +72,7 @@ class SkautisIntegration {
 		require __DIR__ . '/src/rules/admin/class-admin.php';
 		require __DIR__ . '/src/rules/admin/Columns.php';
 		require __DIR__ . '/src/rules/IRule.php';
-		require __DIR__ . '/src/rules/Revisions.php';
+		require __DIR__ . '/src/rules/class-revisions.php';
 		require __DIR__ . '/src/rules/Rule/All.php';
 		require __DIR__ . '/src/rules/Rule/Func.php';
 		require __DIR__ . '/src/rules/Rule/class-role.php';
