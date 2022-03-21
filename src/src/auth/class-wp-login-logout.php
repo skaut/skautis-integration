@@ -9,7 +9,7 @@ use SkautisIntegration\Utils\Helpers;
 use SkautisIntegration\Services\Services;
 use SkautisIntegration\Modules\Register\Register;
 
-final class WpLoginLogout {
+final class WP_Login_Logout {
 
 	private $skautisGateway;
 

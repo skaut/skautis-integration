@@ -5,7 +5,7 @@ declare( strict_types=1 );
 namespace SkautisIntegration\Frontend;
 
 use SkautisIntegration\Auth\SkautisGateway;
-use SkautisIntegration\Auth\WpLoginLogout;
+use SkautisIntegration\Auth\WP_Login_Logout;
 use SkautisIntegration\Utils\Helpers;
 
 final class Frontend {
@@ -15,7 +15,7 @@ final class Frontend {
 	private $skautisGateway;
 	private $frontendDirUrl = '';
 
-	public function __construct( LoginForm $loginForm, WpLoginLogout $wpLoginLogout, SkautisGateway $skautisGateway ) {
+	public function __construct( LoginForm $loginForm, WP_Login_Logout $wpLoginLogout, SkautisGateway $skautisGateway ) {
 		$this->loginForm       = $loginForm;
 		$this->wpLoginLogout   = $wpLoginLogout;
 		$this->skautisGateway  = $skautisGateway;

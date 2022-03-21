@@ -6,7 +6,7 @@ namespace SkautisIntegration\Modules\Shortcodes\Frontend;
 
 use SkautisIntegration\Auth\SkautisLogin;
 use SkautisIntegration\Rules\RulesManager;
-use SkautisIntegration\Auth\WpLoginLogout;
+use SkautisIntegration\Auth\WP_Login_Logout;
 use SkautisIntegration\Utils\Helpers;
 
 final class Frontend {
@@ -15,7 +15,7 @@ final class Frontend {
 	private $rulesManager;
 	private $wpLoginLogout;
 
-	public function __construct( SkautisLogin $skautisLogin, RulesManager $rulesManager, WpLoginLogout $wpLoginLogout ) {
+	public function __construct( SkautisLogin $skautisLogin, RulesManager $rulesManager, WP_Login_Logout $wpLoginLogout ) {
 		$this->skautisLogin  = $skautisLogin;
 		$this->rulesManager  = $rulesManager;
 		$this->wpLoginLogout = $wpLoginLogout;

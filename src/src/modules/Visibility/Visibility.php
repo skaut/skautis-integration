@@ -4,7 +4,7 @@ declare( strict_types=1 );
 
 namespace SkautisIntegration\Modules\Visibility;
 
-use SkautisIntegration\Auth\WpLoginLogout;
+use SkautisIntegration\Auth\WP_Login_Logout;
 use SkautisIntegration\Modules\IModule;
 use SkautisIntegration\Rules\RulesManager;
 use SkautisIntegration\Auth\SkautisLogin;
@@ -22,7 +22,7 @@ final class Visibility implements IModule {
 
 	public static $id = 'module_Visibility';
 
-	public function __construct( RulesManager $rulesManager, SkautisLogin $skautisLogin, WpLoginLogout $wpLoginLogout ) {
+	public function __construct( RulesManager $rulesManager, SkautisLogin $skautisLogin, WP_Login_Logout $wpLoginLogout ) {
 		$this->rulesManager  = $rulesManager;
 		$this->skautisLogin  = $skautisLogin;
 		$this->wpLoginLogout = $wpLoginLogout;

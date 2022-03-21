@@ -5,7 +5,7 @@ declare( strict_types=1 );
 namespace SkautisIntegration\Rules;
 
 use SkautisIntegration\Auth\SkautisGateway;
-use SkautisIntegration\Auth\WpLoginLogout;
+use SkautisIntegration\Auth\WP_Login_Logout;
 
 final class RulesManager {
 
@@ -13,7 +13,7 @@ final class RulesManager {
 	private $wpLoginLogout;
 	private $rules = array();
 
-	public function __construct( SkautisGateway $skautisGateway, WpLoginLogout $wpLoginLogout ) {
+	public function __construct( SkautisGateway $skautisGateway, WP_Login_Logout $wpLoginLogout ) {
 		$this->skautisGateway = $skautisGateway;
 		$this->wpLoginLogout  = $wpLoginLogout;
 		$this->rules          = $this->initRules();

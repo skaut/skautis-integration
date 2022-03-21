@@ -11,7 +11,7 @@ final class SkautisLogin {
 	private $skautisGateway;
 	private $wpLoginLogout;
 
-	public function __construct( SkautisGateway $skautisGateway, WpLoginLogout $wpLoginLogout ) {
+	public function __construct( SkautisGateway $skautisGateway, WP_Login_Logout $wpLoginLogout ) {
 		$this->skautisGateway = $skautisGateway;
 		$this->wpLoginLogout  = $wpLoginLogout;
 	}

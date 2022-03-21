@@ -4,7 +4,7 @@ declare( strict_types=1 );
 
 namespace SkautisIntegration\Frontend;
 
-use SkautisIntegration\Auth\WpLoginLogout;
+use SkautisIntegration\Auth\WP_Login_Logout;
 use SkautisIntegration\Services\Services;
 use SkautisIntegration\Modules\Register\Register;
 use SkautisIntegration\Utils\Helpers;
@@ -14,7 +14,7 @@ final class LoginForm {
 	private $wpLoginLogout;
 	private $frontendDirUrl = '';
 
-	public function __construct( WpLoginLogout $wpLoginLogout ) {
+	public function __construct( WP_Login_Logout $wpLoginLogout ) {
 		$this->wpLoginLogout  = $wpLoginLogout;
 		$this->frontendDirUrl = plugin_dir_url( __FILE__ ) . 'public/';
 		$this->initHooks();
