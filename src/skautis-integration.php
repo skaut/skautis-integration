@@ -43,7 +43,7 @@ class SkautisIntegration {
 		require __DIR__ . '/src/auth/SkautisLogin.php';
 		require __DIR__ . '/src/auth/class-wp-login-logout.php';
 
-		require __DIR__ . '/src/frontend/Frontend.php';
+		require __DIR__ . '/src/frontend/class-frontend.php';
 		require __DIR__ . '/src/frontend/LoginForm.php';
 
 		require __DIR__ . '/src/general/Actions.php';
@@ -53,18 +53,18 @@ class SkautisIntegration {
 		require __DIR__ . '/src/modules/ModulesManager.php';
 		require __DIR__ . '/src/modules/Register/admin/class-admin.php';
 		require __DIR__ . '/src/modules/Register/admin/class-settings.php';
-		require __DIR__ . '/src/modules/Register/frontend/Frontend.php';
+		require __DIR__ . '/src/modules/Register/frontend/class-frontend.php';
 		require __DIR__ . '/src/modules/Register/frontend/LoginForm.php';
 		require __DIR__ . '/src/modules/Register/Register.php';
 		require __DIR__ . '/src/modules/Register/WpRegister.php';
 		require __DIR__ . '/src/modules/Shortcodes/admin/class-admin.php';
 		require __DIR__ . '/src/modules/Shortcodes/admin/class-settings.php';
-		require __DIR__ . '/src/modules/Shortcodes/frontend/Frontend.php';
+		require __DIR__ . '/src/modules/Shortcodes/frontend/class-frontend.php';
 		require __DIR__ . '/src/modules/Shortcodes/Shortcodes.php';
 		require __DIR__ . '/src/modules/Visibility/admin/class-admin.php';
 		require __DIR__ . '/src/modules/Visibility/admin/Metabox.php';
 		require __DIR__ . '/src/modules/Visibility/admin/class-settings.php';
-		require __DIR__ . '/src/modules/Visibility/frontend/Frontend.php';
+		require __DIR__ . '/src/modules/Visibility/frontend/class-frontend.php';
 		require __DIR__ . '/src/modules/Visibility/Visibility.php';
 
 		require __DIR__ . '/src/repository/class-users.php';
