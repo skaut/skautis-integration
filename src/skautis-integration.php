@@ -46,7 +46,7 @@ class SkautisIntegration {
 		require __DIR__ . '/src/frontend/class-frontend.php';
 		require __DIR__ . '/src/frontend/LoginForm.php';
 
-		require __DIR__ . '/src/general/Actions.php';
+		require __DIR__ . '/src/general/class-actions.php';
 		require __DIR__ . '/src/general/class-general.php';
 
 		require __DIR__ . '/src/modules/IModule.php';
