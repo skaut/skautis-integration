@@ -25,7 +25,7 @@ use SkautisIntegration\Modules\Visibility\Visibility;
 use SkautisIntegration\Rules\Revisions;
 use SkautisIntegration\Rules\RulesInit;
 use SkautisIntegration\Rules\Rules_Manager;
-use SkautisIntegration\Utils\RoleChanger;
+use SkautisIntegration\Utils\Role_Changer;
 
 class Services {
 
@@ -98,7 +98,7 @@ class Services {
 		};
 
 		self::$services['utils_roleChanger'] = function ( Container $container ) {
-			return new RoleChanger( $container['skautisGateway'], $container['skautisLogin'] );
+			return new Role_Changer( $container['skautisGateway'], $container['skautisLogin'] );
 		};
 
 		// Repositories

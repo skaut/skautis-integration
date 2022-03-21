@@ -13,7 +13,7 @@ use SkautisIntegration\General\Actions;
 use SkautisIntegration\Services\Services;
 use SkautisIntegration\Modules\Register\Register;
 use SkautisIntegration\Utils\Helpers;
-use SkautisIntegration\Utils\RoleChanger;
+use SkautisIntegration\Utils\Role_Changer;
 
 class Users_Management {
 
@@ -25,7 +25,7 @@ class Users_Management {
 	protected $roleChanger;
 	protected $adminDirUrl = '';
 
-	public function __construct( Skautis_Gateway $skautisGateway, WP_Login_Logout $wpLoginLogout, Skautis_Login $skautisLogin, ConnectAndDisconnectWpAccount $connectAndDisconnectWpAccount, UsersRepository $usersRepository, RoleChanger $roleChanger ) {
+	public function __construct( Skautis_Gateway $skautisGateway, WP_Login_Logout $wpLoginLogout, Skautis_Login $skautisLogin, ConnectAndDisconnectWpAccount $connectAndDisconnectWpAccount, UsersRepository $usersRepository, Role_Changer $roleChanger ) {
 		$this->skautisGateway                = $skautisGateway;
 		$this->wpLoginLogout                 = $wpLoginLogout;
 		$this->skautisLogin                  = $skautisLogin;

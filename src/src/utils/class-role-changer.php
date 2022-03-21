@@ -7,7 +7,7 @@ namespace SkautisIntegration\Utils;
 use SkautisIntegration\Auth\Skautis_Gateway;
 use SkautisIntegration\Auth\Skautis_Login;
 
-class RoleChanger {
+class Role_Changer {
 
 	protected $skautisGateway;
 	protected $skautisLogin;
