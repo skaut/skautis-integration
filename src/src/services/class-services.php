@@ -13,7 +13,7 @@ use SkautisIntegration\Auth\ConnectAndDisconnectWpAccount;
 use SkautisIntegration\General\General;
 use SkautisIntegration\General\Actions;
 use SkautisIntegration\Frontend\Frontend;
-use SkautisIntegration\Frontend\LoginForm;
+use SkautisIntegration\Frontend\Login_Form;
 use SkautisIntegration\Admin\Admin;
 use SkautisIntegration\Admin\Settings;
 use SkautisIntegration\Admin\Users;
@@ -78,7 +78,7 @@ class Services {
 		};
 
 		self::$services['frontend_loginForm'] = function ( Container $container ) {
-			return new LoginForm( $container['wpLoginLogout'] );
+			return new Login_Form( $container['wpLoginLogout'] );
 		};
 
 		self::$services['admin'] = function ( Container $container ) {

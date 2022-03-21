@@ -15,7 +15,7 @@ final class Frontend {
 	private $skautisGateway;
 	private $frontendDirUrl = '';
 
-	public function __construct( LoginForm $loginForm, WP_Login_Logout $wpLoginLogout, SkautisGateway $skautisGateway ) {
+	public function __construct( Login_Form $loginForm, WP_Login_Logout $wpLoginLogout, SkautisGateway $skautisGateway ) {
 		$this->loginForm       = $loginForm;
 		$this->wpLoginLogout   = $wpLoginLogout;
 		$this->skautisGateway  = $skautisGateway;

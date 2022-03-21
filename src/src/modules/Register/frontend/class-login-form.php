@@ -6,7 +6,7 @@ namespace SkautisIntegration\Modules\Register\Frontend;
 
 use SkautisIntegration\Modules\Register\WpRegister;
 
-final class LoginForm {
+final class Login_Form {
 
 	private $wpRegister;
 

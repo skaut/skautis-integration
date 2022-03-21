@@ -44,7 +44,7 @@ class SkautisIntegration {
 		require __DIR__ . '/src/auth/class-wp-login-logout.php';
 
 		require __DIR__ . '/src/frontend/class-frontend.php';
-		require __DIR__ . '/src/frontend/LoginForm.php';
+		require __DIR__ . '/src/frontend/class-login-form.php';
 
 		require __DIR__ . '/src/general/class-actions.php';
 		require __DIR__ . '/src/general/class-general.php';
@@ -54,7 +54,7 @@ class SkautisIntegration {
 		require __DIR__ . '/src/modules/Register/admin/class-admin.php';
 		require __DIR__ . '/src/modules/Register/admin/class-settings.php';
 		require __DIR__ . '/src/modules/Register/frontend/class-frontend.php';
-		require __DIR__ . '/src/modules/Register/frontend/LoginForm.php';
+		require __DIR__ . '/src/modules/Register/frontend/class-login-form.php';
 		require __DIR__ . '/src/modules/Register/class-register.php';
 		require __DIR__ . '/src/modules/Register/WpRegister.php';
 		require __DIR__ . '/src/modules/Shortcodes/admin/class-admin.php';

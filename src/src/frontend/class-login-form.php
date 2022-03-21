@@ -9,7 +9,7 @@ use SkautisIntegration\Services\Services;
 use SkautisIntegration\Modules\Register\Register;
 use SkautisIntegration\Utils\Helpers;
 
-final class LoginForm {
+final class Login_Form {
 
 	private $wpLoginLogout;
 	private $frontendDirUrl = '';
