@@ -83,7 +83,7 @@ final class WP_Login_Logout {
 		return false;
 	}
 
-	public function getLoginUrl( string $returnUrl = '' ): string {
+	public function get_login_url( string $returnUrl = '' ): string {
 		if ( ! $returnUrl ) {
 			$returnUrl = Helpers::getLoginLogoutRedirect();
 		}

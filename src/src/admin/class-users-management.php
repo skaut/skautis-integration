@@ -135,7 +135,7 @@ class Users_Management {
 
 		if ( ! $this->skautisLogin->isUserLoggedInSkautis() ) {
 			if ( $this->skautisGateway->isInitialized() ) {
-				echo '<a href="' . esc_url( $this->wpLoginLogout->getLoginUrl( add_query_arg( 'noWpLogin', true, Helpers::getCurrentUrl() ) ) ) . '">' . esc_html__( 'Pro zobrazení obsahu je nutné se přihlásit do skautISu', 'skautis-integration' ) . '</a>';
+				echo '<a href="' . esc_url( $this->wpLoginLogout->get_login_url( add_query_arg( 'noWpLogin', true, Helpers::getCurrentUrl() ) ) ) . '">' . esc_html__( 'Pro zobrazení obsahu je nutné se přihlásit do skautISu', 'skautis-integration' ) . '</a>';
 				echo '
 		</div>
 			';

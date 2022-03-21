@@ -10,7 +10,7 @@ use SkautisIntegration\Modules\Register\Register;
 
 if ( ! function_exists( 'getSkautisLoginUrl' ) ) {
 	function getSkautisLoginUrl(): string {
-		return ( Services::getServicesContainer()['wpLoginLogout'] )->getLoginUrl();
+		return ( Services::getServicesContainer()['wpLoginLogout'] )->get_login_url();
 	}
 }
 
