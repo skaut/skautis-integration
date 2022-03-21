@@ -17,7 +17,7 @@ final class WP_Login_Logout {
 		$this->skautisGateway = $skautisGateway;
 	}
 
-	private function loginWpUserBySkautisUserId( int $skautisUserId, $try = false ) {
+	private function login_wp_user_by_skautis_user_id( int $skautisUserId, $try = false ) {
 		$returnUrl = Helpers::getReturnUrl();
 		if ( ! is_null( $returnUrl ) ) {
 			$usersWpQuery = new \WP_User_Query(
@@ -120,7 +120,7 @@ final class WP_Login_Logout {
 		$userDetail = $this->skautisGateway->getSkautisInstance()->UserManagement->UserDetail();
 
 		if ( $userDetail && isset( $userDetail->ID ) && $userDetail->ID > 0 ) {
-			$this->loginWpUserBySkautisUserId( $userDetail->ID );
+			$this->login_wp_user_by_skautis_user_id( $userDetail->ID );
 		}
 	}
 
@@ -128,7 +128,7 @@ final class WP_Login_Logout {
 		$userDetail = $this->skautisGateway->getSkautisInstance()->UserManagement->UserDetail();
 
 		if ( $userDetail && isset( $userDetail->ID ) && $userDetail->ID > 0 ) {
-			$this->loginWpUserBySkautisUserId( $userDetail->ID, true );
+			$this->login_wp_user_by_skautis_user_id( $userDetail->ID, true );
 		}
 	}
 
