@@ -7,7 +7,7 @@ namespace SkautisIntegration\Rules;
 use SkautisIntegration\Auth\SkautisGateway;
 use SkautisIntegration\Auth\WP_Login_Logout;
 
-final class RulesManager {
+final class Rules_Manager {
 
 	private $skautisGateway;
 	private $wpLoginLogout;

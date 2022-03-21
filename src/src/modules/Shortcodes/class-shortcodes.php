@@ -8,7 +8,7 @@ use SkautisIntegration\Auth\SkautisLogin;
 use SkautisIntegration\Modules\IModule;
 use SkautisIntegration\Modules\Shortcodes\Admin\Admin;
 use SkautisIntegration\Modules\Shortcodes\Frontend\Frontend;
-use SkautisIntegration\Rules\RulesManager;
+use SkautisIntegration\Rules\Rules_Manager;
 use SkautisIntegration\Auth\WP_Login_Logout;
 
 final class Shortcodes implements IModule {
@@ -21,7 +21,7 @@ final class Shortcodes implements IModule {
 
 	public static $id = 'module_Shortcodes';
 
-	public function __construct( RulesManager $rulesManager, SkautisLogin $skautisLogin, WP_Login_Logout $wpLoginLogout ) {
+	public function __construct( Rules_Manager $rulesManager, SkautisLogin $skautisLogin, WP_Login_Logout $wpLoginLogout ) {
 		$this->rulesManager  = $rulesManager;
 		$this->skautisLogin  = $skautisLogin;
 		$this->wpLoginLogout = $wpLoginLogout;

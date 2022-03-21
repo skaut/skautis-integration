@@ -5,14 +5,14 @@ declare( strict_types=1 );
 namespace SkautisIntegration\Modules\Register\Admin;
 
 use SkautisIntegration\Rules\RulesInit;
-use SkautisIntegration\Rules\RulesManager;
+use SkautisIntegration\Rules\Rules_Manager;
 use SkautisIntegration\Utils\Helpers;
 
 final class Settings {
 
 	private $rulesManager;
 
-	public function __construct( RulesManager $rulesManager ) {
+	public function __construct( Rules_Manager $rulesManager ) {
 		$this->rulesManager = $rulesManager;
 		$this->initHooks();
 	}

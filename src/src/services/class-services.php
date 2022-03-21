@@ -24,7 +24,7 @@ use SkautisIntegration\Modules\Shortcodes\Shortcodes;
 use SkautisIntegration\Modules\Visibility\Visibility;
 use SkautisIntegration\Rules\Revisions;
 use SkautisIntegration\Rules\RulesInit;
-use SkautisIntegration\Rules\RulesManager;
+use SkautisIntegration\Rules\Rules_Manager;
 use SkautisIntegration\Utils\RoleChanger;
 
 class Services {
@@ -62,7 +62,7 @@ class Services {
 		};
 
 		self::$services['rules_manager'] = function ( Container $container ) {
-			return new RulesManager( $container['skautisGateway'], $container['wpLoginLogout'] );
+			return new Rules_Manager( $container['skautisGateway'], $container['wpLoginLogout'] );
 		};
 
 		self::$services['general'] = function ( Container $container ) {

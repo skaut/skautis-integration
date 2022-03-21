@@ -4,7 +4,7 @@ declare( strict_types=1 );
 
 namespace SkautisIntegration\Modules\Register\Admin;
 
-use SkautisIntegration\Rules\RulesManager;
+use SkautisIntegration\Rules\Rules_Manager;
 use SkautisIntegration\Utils\Helpers;
 
 final class Admin {
@@ -12,7 +12,7 @@ final class Admin {
 	private $rulesManager;
 	private $adminDirUrl = '';
 
-	public function __construct( RulesManager $rulesManager ) {
+	public function __construct( Rules_Manager $rulesManager ) {
 		$this->rulesManager = $rulesManager;
 		$this->adminDirUrl  = plugin_dir_url( __FILE__ ) . 'public/';
 		( new Settings( $this->rulesManager ) );

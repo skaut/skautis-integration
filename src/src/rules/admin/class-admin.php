@@ -15,7 +15,7 @@ final class Admin {
 	private $skautisGateway;
 	private $adminDirUrl = '';
 
-	public function __construct( RulesManager $rulesManager, WP_Login_Logout $wpLoginLogout, SkautisGateway $skautisGateway ) {
+	public function __construct( Rules_Manager $rulesManager, WP_Login_Logout $wpLoginLogout, SkautisGateway $skautisGateway ) {
 		$this->rulesManager   = $rulesManager;
 		$this->wpLoginLogout  = $wpLoginLogout;
 		$this->skautisGateway = $skautisGateway;

@@ -4,7 +4,7 @@ declare( strict_types=1 );
 
 namespace SkautisIntegration\Modules\Visibility\Admin;
 
-use SkautisIntegration\Rules\RulesManager;
+use SkautisIntegration\Rules\Rules_Manager;
 use SkautisIntegration\Modules\Visibility\Frontend\Frontend;
 use SkautisIntegration\Utils\Helpers;
 
@@ -17,7 +17,7 @@ final class Admin {
 	private $metabox;
 	private $adminDirUrl = '';
 
-	public function __construct( array $postTypes, RulesManager $rulesManager, Frontend $frontend ) {
+	public function __construct( array $postTypes, Rules_Manager $rulesManager, Frontend $frontend ) {
 		$this->postTypes    = $postTypes;
 		$this->rulesManager = $rulesManager;
 		$this->frontend     = $frontend;
