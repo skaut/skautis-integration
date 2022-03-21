@@ -60,7 +60,7 @@ class SkautisIntegration {
 		require __DIR__ . '/src/modules/Shortcodes/admin/class-admin.php';
 		require __DIR__ . '/src/modules/Shortcodes/admin/class-settings.php';
 		require __DIR__ . '/src/modules/Shortcodes/frontend/class-frontend.php';
-		require __DIR__ . '/src/modules/Shortcodes/Shortcodes.php';
+		require __DIR__ . '/src/modules/Shortcodes/class-shortcodes.php';
 		require __DIR__ . '/src/modules/Visibility/admin/class-admin.php';
 		require __DIR__ . '/src/modules/Visibility/admin/class-metabox.php';
 		require __DIR__ . '/src/modules/Visibility/admin/class-settings.php';
