@@ -15,7 +15,7 @@ class Users {
 		$this->skautisGateway = $skautisGateway;
 	}
 
-	protected function getSearchUserString(): string {
+	protected function get_search_user_string(): string {
 		$searchUserString = '';
 
 		$returnUrl = Helpers::getReturnUrl();
@@ -189,7 +189,7 @@ class Users {
 
 		// standard get all users procedure
 		if ( empty( $users ) ) {
-			$searchUserString = $this->getSearchUserString();
+			$searchUserString = $this->get_search_user_string();
 
 			$skautisUsers = $this->skautisGateway->getSkautisInstance()->UserManagement->userAll(
 				array(
