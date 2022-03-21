@@ -4,7 +4,7 @@ declare( strict_types=1 );
 
 namespace SkautisIntegration\Admin;
 
-use SkautisIntegration\Auth\ConnectAndDisconnectWpAccount;
+use SkautisIntegration\Auth\Connect_And_Disconnect_WP_Account;
 use SkautisIntegration\Auth\Skautis_Gateway;
 use SkautisIntegration\Utils\Helpers;
 
@@ -12,7 +12,7 @@ final class Users {
 
 	private $connectWpAccount;
 
-	public function __construct( ConnectAndDisconnectWpAccount $connectWpAccount ) {
+	public function __construct( Connect_And_Disconnect_WP_Account $connectWpAccount ) {
 		$this->connectWpAccount = $connectWpAccount;
 		$this->initHooks();
 	}

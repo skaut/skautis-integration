@@ -9,7 +9,7 @@ use SkautisIntegration\Admin\Users_Management;
 use SkautisIntegration\Auth\Skautis_Gateway;
 use SkautisIntegration\Auth\Skautis_Login;
 use SkautisIntegration\Auth\WP_Login_Logout;
-use SkautisIntegration\Auth\ConnectAndDisconnectWpAccount;
+use SkautisIntegration\Auth\Connect_And_Disconnect_WP_Account;
 use SkautisIntegration\General\General;
 use SkautisIntegration\General\Actions;
 use SkautisIntegration\Frontend\Frontend;
@@ -50,7 +50,7 @@ class Services {
 		};
 
 		self::$services['connectAndDisconnectWpAccount'] = function ( Container $container ) {
-			return new ConnectAndDisconnectWpAccount( $container['skautisGateway'], $container['skautisLogin'] );
+			return new Connect_And_Disconnect_WP_Account( $container['skautisGateway'], $container['skautisLogin'] );
 		};
 
 		self::$services['rules_revisions'] = function ( Container $container ) {

@@ -7,7 +7,7 @@ namespace SkautisIntegration\Auth;
 use SkautisIntegration\General\Actions;
 use SkautisIntegration\Utils\Helpers;
 
-final class ConnectAndDisconnectWpAccount {
+final class Connect_And_Disconnect_WP_Account {
 
 	private $skautisGateway;
 	private $skautisLogin;
