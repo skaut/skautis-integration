@@ -6,6 +6,7 @@ use SkautisIntegration\Services\Services;
 use SkautisIntegration\Modules\Register\Register;
 
 // phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
+// phpcs:disable WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid
 
 if ( ! function_exists( 'getSkautisLoginUrl' ) ) {
 	function getSkautisLoginUrl(): string {
