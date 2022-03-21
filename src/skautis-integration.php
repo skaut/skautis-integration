@@ -55,7 +55,7 @@ class SkautisIntegration {
 		require __DIR__ . '/src/modules/Register/admin/class-settings.php';
 		require __DIR__ . '/src/modules/Register/frontend/class-frontend.php';
 		require __DIR__ . '/src/modules/Register/frontend/LoginForm.php';
-		require __DIR__ . '/src/modules/Register/Register.php';
+		require __DIR__ . '/src/modules/Register/class-register.php';
 		require __DIR__ . '/src/modules/Register/WpRegister.php';
 		require __DIR__ . '/src/modules/Shortcodes/admin/class-admin.php';
 		require __DIR__ . '/src/modules/Shortcodes/admin/class-settings.php';
