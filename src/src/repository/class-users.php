@@ -4,14 +4,14 @@ declare( strict_types=1 );
 
 namespace SkautisIntegration\Repository;
 
-use SkautisIntegration\Auth\SkautisGateway;
+use SkautisIntegration\Auth\Skautis_Gateway;
 use SkautisIntegration\Utils\Helpers;
 
 class Users {
 
 	protected $skautisGateway;
 
-	public function __construct( SkautisGateway $skautisGateway ) {
+	public function __construct( Skautis_Gateway $skautisGateway ) {
 		$this->skautisGateway = $skautisGateway;
 	}
 

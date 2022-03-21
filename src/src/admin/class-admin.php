@@ -4,7 +4,7 @@ declare( strict_types=1 );
 
 namespace SkautisIntegration\Admin;
 
-use SkautisIntegration\Auth\SkautisGateway;
+use SkautisIntegration\Auth\Skautis_Gateway;
 use SkautisIntegration\Auth\WP_Login_Logout;
 use SkautisIntegration\Rules\Rules_Manager;
 use SkautisIntegration\Utils\Helpers;
@@ -19,7 +19,7 @@ final class Admin {
 	private $usersManagement;
 	private $adminDirUrl = '';
 
-	public function __construct( Settings $settings, Users $users, Rules_Manager $rulesManager, Users_Management $usersManagement, WP_Login_Logout $wpLoginLogout, SkautisGateway $skautisGateway ) {
+	public function __construct( Settings $settings, Users $users, Rules_Manager $rulesManager, Users_Management $usersManagement, WP_Login_Logout $wpLoginLogout, Skautis_Gateway $skautisGateway ) {
 		$this->settings        = $settings;
 		$this->users           = $users;
 		$this->rulesManager    = $rulesManager;

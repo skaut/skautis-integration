@@ -5,7 +5,7 @@ declare( strict_types=1 );
 namespace SkautisIntegration\General;
 
 use SkautisIntegration\Auth\ConnectAndDisconnectWpAccount;
-use SkautisIntegration\Auth\SkautisGateway;
+use SkautisIntegration\Auth\Skautis_Gateway;
 use SkautisIntegration\Auth\Skautis_Login;
 use SkautisIntegration\Auth\WP_Login_Logout;
 use SkautisIntegration\Utils\Helpers;
@@ -24,7 +24,7 @@ final class Actions {
 	private $connectWpAccount;
 	private $frontendDirUrl = '';
 
-	public function __construct( Skautis_Login $skautisLogin, WP_Login_Logout $wpLoginLogout, ConnectAndDisconnectWpAccount $connectWpAccount, SkautisGateway $skautisGateway ) {
+	public function __construct( Skautis_Login $skautisLogin, WP_Login_Logout $wpLoginLogout, ConnectAndDisconnectWpAccount $connectWpAccount, Skautis_Gateway $skautisGateway ) {
 		$this->skautisGateway   = $skautisGateway;
 		$this->skautisLogin     = $skautisLogin;
 		$this->wpLoginLogout    = $wpLoginLogout;

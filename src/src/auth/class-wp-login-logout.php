@@ -13,7 +13,7 @@ final class WP_Login_Logout {
 
 	private $skautisGateway;
 
-	public function __construct( SkautisGateway $skautisGateway ) {
+	public function __construct( Skautis_Gateway $skautisGateway ) {
 		$this->skautisGateway = $skautisGateway;
 	}
 

@@ -4,7 +4,7 @@ declare( strict_types=1 );
 
 namespace SkautisIntegration\Admin;
 
-use SkautisIntegration\Auth\SkautisGateway;
+use SkautisIntegration\Auth\Skautis_Gateway;
 use SkautisIntegration\Auth\WP_Login_Logout;
 use SkautisIntegration\Auth\Skautis_Login;
 use SkautisIntegration\Auth\ConnectAndDisconnectWpAccount;
@@ -25,7 +25,7 @@ class Users_Management {
 	protected $roleChanger;
 	protected $adminDirUrl = '';
 
-	public function __construct( SkautisGateway $skautisGateway, WP_Login_Logout $wpLoginLogout, Skautis_Login $skautisLogin, ConnectAndDisconnectWpAccount $connectAndDisconnectWpAccount, UsersRepository $usersRepository, RoleChanger $roleChanger ) {
+	public function __construct( Skautis_Gateway $skautisGateway, WP_Login_Logout $wpLoginLogout, Skautis_Login $skautisLogin, ConnectAndDisconnectWpAccount $connectAndDisconnectWpAccount, UsersRepository $usersRepository, RoleChanger $roleChanger ) {
 		$this->skautisGateway                = $skautisGateway;
 		$this->wpLoginLogout                 = $wpLoginLogout;
 		$this->skautisLogin                  = $skautisLogin;

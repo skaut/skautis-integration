@@ -39,7 +39,7 @@ class SkautisIntegration {
 
 		require __DIR__ . '/src/auth/class-transient-session-adapter.php';
 		require __DIR__ . '/src/auth/ConnectAndDisconnectWpAccount.php';
-		require __DIR__ . '/src/auth/SkautisGateway.php';
+		require __DIR__ . '/src/auth/class-skautis-gateway.php';
 		require __DIR__ . '/src/auth/class-skautis-login.php';
 		require __DIR__ . '/src/auth/class-wp-login-logout.php';
 

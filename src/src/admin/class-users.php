@@ -5,7 +5,7 @@ declare( strict_types=1 );
 namespace SkautisIntegration\Admin;
 
 use SkautisIntegration\Auth\ConnectAndDisconnectWpAccount;
-use SkautisIntegration\Auth\SkautisGateway;
+use SkautisIntegration\Auth\Skautis_Gateway;
 use SkautisIntegration\Utils\Helpers;
 
 final class Users {
@@ -36,10 +36,10 @@ final class Users {
 	public function addColumnToUsersTable( $value, string $columnName, int $userId ) {
 		if ( SKAUTISINTEGRATION_NAME === $columnName ) {
 			$envType = get_option( 'skautis_integration_appid_type' );
-			if ( SkautisGateway::PROD_ENV === $envType ) {
-				$userId = get_the_author_meta( 'skautisUserId_' . SkautisGateway::PROD_ENV, $userId );
+			if ( Skautis_Gateway::PROD_ENV === $envType ) {
+				$userId = get_the_author_meta( 'skautisUserId_' . Skautis_Gateway::PROD_ENV, $userId );
 			} else {
-				$userId = get_the_author_meta( 'skautisUserId_' . SkautisGateway::TEST_ENV, $userId );
+				$userId = get_the_author_meta( 'skautisUserId_' . Skautis_Gateway::TEST_ENV, $userId );
 			}
 
 			if ( $userId ) {

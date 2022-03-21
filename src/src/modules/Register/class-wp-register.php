@@ -4,7 +4,7 @@ declare( strict_types=1 );
 
 namespace SkautisIntegration\Modules\Register;
 
-use SkautisIntegration\Auth\SkautisGateway;
+use SkautisIntegration\Auth\Skautis_Gateway;
 use SkautisIntegration\Repository\Users as UsersRepository;
 use SkautisIntegration\Utils\Helpers;
 
@@ -13,7 +13,7 @@ final class WP_Register {
 	private $skautisGateway;
 	private $usersRepository;
 
-	public function __construct( SkautisGateway $skautisGateway, UsersRepository $usersRepository ) {
+	public function __construct( Skautis_Gateway $skautisGateway, UsersRepository $usersRepository ) {
 		$this->skautisGateway  = $skautisGateway;
 		$this->usersRepository = $usersRepository;
 	}

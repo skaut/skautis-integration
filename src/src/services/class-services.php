@@ -6,7 +6,7 @@ namespace SkautisIntegration\Services;
 
 use SkautisIntegration\Vendor\Pimple\Container;
 use SkautisIntegration\Admin\Users_Management;
-use SkautisIntegration\Auth\SkautisGateway;
+use SkautisIntegration\Auth\Skautis_Gateway;
 use SkautisIntegration\Auth\Skautis_Login;
 use SkautisIntegration\Auth\WP_Login_Logout;
 use SkautisIntegration\Auth\ConnectAndDisconnectWpAccount;
@@ -38,7 +38,7 @@ class Services {
 
 	protected static function registerServices() {
 		self::$services['skautisGateway'] = function ( Container $container ) {
-			return new SkautisGateway();
+			return new Skautis_Gateway();
 		};
 
 		self::$services['skautisLogin'] = function ( Container $container ) {

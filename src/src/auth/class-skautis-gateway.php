@@ -7,7 +7,7 @@ namespace SkautisIntegration\Auth;
 use SkautisIntegration\Utils\Helpers;
 use SkautisIntegration\Vendor\Skautis;
 
-class SkautisGateway {
+class Skautis_Gateway {
 
 	const PROD_ENV = 'prod';
 	const TEST_ENV = 'test';

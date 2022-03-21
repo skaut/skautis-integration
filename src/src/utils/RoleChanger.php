@@ -4,7 +4,7 @@ declare( strict_types=1 );
 
 namespace SkautisIntegration\Utils;
 
-use SkautisIntegration\Auth\SkautisGateway;
+use SkautisIntegration\Auth\Skautis_Gateway;
 use SkautisIntegration\Auth\Skautis_Login;
 
 class RoleChanger {
@@ -12,7 +12,7 @@ class RoleChanger {
 	protected $skautisGateway;
 	protected $skautisLogin;
 
-	public function __construct( SkautisGateway $skautisGateway, Skautis_Login $skautisLogin ) {
+	public function __construct( Skautis_Gateway $skautisGateway, Skautis_Login $skautisLogin ) {
 		$this->skautisGateway = $skautisGateway;
 		$this->skautisLogin   = $skautisLogin;
 		$this->checkIfUserChangeSkautisRole();

@@ -5,7 +5,7 @@ declare( strict_types=1 );
 namespace SkautisIntegration\Rules\Rule;
 
 use SkautisIntegration\Rules\IRule;
-use SkautisIntegration\Auth\SkautisGateway;
+use SkautisIntegration\Auth\Skautis_Gateway;
 
 class Role implements IRule {
 
@@ -17,7 +17,7 @@ class Role implements IRule {
 
 	protected $skautisGateway;
 
-	public function __construct( SkautisGateway $skautisGateway ) {
+	public function __construct( Skautis_Gateway $skautisGateway ) {
 		$this->skautisGateway = $skautisGateway;
 	}
 

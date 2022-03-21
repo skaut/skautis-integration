@@ -12,7 +12,7 @@ final class ConnectAndDisconnectWpAccount {
 	private $skautisGateway;
 	private $skautisLogin;
 
-	public function __construct( SkautisGateway $skautisGateway, Skautis_Login $skautisLogin ) {
+	public function __construct( Skautis_Gateway $skautisGateway, Skautis_Login $skautisLogin ) {
 		$this->skautisGateway = $skautisGateway;
 		$this->skautisLogin   = $skautisLogin;
 	}

@@ -4,7 +4,7 @@ declare( strict_types=1 );
 
 namespace SkautisIntegration\Admin;
 
-use SkautisIntegration\Auth\SkautisGateway;
+use SkautisIntegration\Auth\Skautis_Gateway;
 use SkautisIntegration\Modules\ModulesManager;
 use SkautisIntegration\Utils\Helpers;
 use SkautisIntegration\Services\Services;
@@ -18,7 +18,7 @@ final class Settings {
 	private $modulesManager;
 	private $adminDirUrl = '';
 
-	public function __construct( SkautisGateway $skautisGateway, ModulesManager $modulesManager ) {
+	public function __construct( Skautis_Gateway $skautisGateway, ModulesManager $modulesManager ) {
 		$this->skautisGateway = $skautisGateway;
 		$this->modulesManager = $modulesManager;
 		$this->adminDirUrl    = plugin_dir_url( __FILE__ ) . 'public/';
@@ -50,12 +50,12 @@ final class Settings {
 
 	private function checkIfAppIdIsSetAndShowNotices() {
 		$envType = get_option( 'skautis_integration_appid_type' );
-		if ( SkautisGateway::PROD_ENV === $envType ) {
+		if ( Skautis_Gateway::PROD_ENV === $envType ) {
 			if ( ! get_option( 'skautis_integration_appid_prod' ) ) {
 				/* translators: 1: Start of a link to the settings 2: End of the link to the settings */
 				Helpers::showAdminNotice( sprintf( __( 'Zadejte v %1$snastavení%2$s pluginu APP ID produkční verze skautISu', 'skautis-integration' ), '<a href="' . esc_url( admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME ) ) . '">', '</a>' ), 'warning', 'toplevel-page-' . SKAUTISINTEGRATION_NAME );
 			}
-		} elseif ( SkautisGateway::TEST_ENV === $envType ) {
+		} elseif ( Skautis_Gateway::TEST_ENV === $envType ) {
 			if ( ! get_option( 'skautis_integration_appid_test' ) ) {
 				/* translators: 1: Start of a link to the settings 2: End of the link to the settings */
 				Helpers::showAdminNotice( sprintf( __( 'Zadejte v %1$snastavení%2$s pluginu APP ID testovací verze skautISu', 'skautis-integration' ), '<a href="' . esc_url( admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME ) ) . '">', '</a>' ), 'warning', 'toplevel-page-' . SKAUTISINTEGRATION_NAME );
