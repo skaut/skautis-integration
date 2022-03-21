@@ -32,7 +32,7 @@ class SkautisIntegration {
 		require __DIR__ . '/vendor/scoper-autoload.php';
 		require __DIR__ . '/globalFunctions.php';
 
-		require __DIR__ . '/src/admin/Admin.php';
+		require __DIR__ . '/src/admin/class-admin.php';
 		require __DIR__ . '/src/admin/class-settings.php';
 		require __DIR__ . '/src/admin/class-users.php';
 		require __DIR__ . '/src/admin/UsersManagement.php';
@@ -51,17 +51,17 @@ class SkautisIntegration {
 
 		require __DIR__ . '/src/modules/IModule.php';
 		require __DIR__ . '/src/modules/ModulesManager.php';
-		require __DIR__ . '/src/modules/Register/admin/Admin.php';
+		require __DIR__ . '/src/modules/Register/admin/class-admin.php';
 		require __DIR__ . '/src/modules/Register/admin/class-settings.php';
 		require __DIR__ . '/src/modules/Register/frontend/Frontend.php';
 		require __DIR__ . '/src/modules/Register/frontend/LoginForm.php';
 		require __DIR__ . '/src/modules/Register/Register.php';
 		require __DIR__ . '/src/modules/Register/WpRegister.php';
-		require __DIR__ . '/src/modules/Shortcodes/admin/Admin.php';
+		require __DIR__ . '/src/modules/Shortcodes/admin/class-admin.php';
 		require __DIR__ . '/src/modules/Shortcodes/admin/class-settings.php';
 		require __DIR__ . '/src/modules/Shortcodes/frontend/Frontend.php';
 		require __DIR__ . '/src/modules/Shortcodes/Shortcodes.php';
-		require __DIR__ . '/src/modules/Visibility/admin/Admin.php';
+		require __DIR__ . '/src/modules/Visibility/admin/class-admin.php';
 		require __DIR__ . '/src/modules/Visibility/admin/Metabox.php';
 		require __DIR__ . '/src/modules/Visibility/admin/class-settings.php';
 		require __DIR__ . '/src/modules/Visibility/frontend/Frontend.php';
@@ -69,7 +69,7 @@ class SkautisIntegration {
 
 		require __DIR__ . '/src/repository/class-users.php';
 
-		require __DIR__ . '/src/rules/admin/Admin.php';
+		require __DIR__ . '/src/rules/admin/class-admin.php';
 		require __DIR__ . '/src/rules/admin/Columns.php';
 		require __DIR__ . '/src/rules/IRule.php';
 		require __DIR__ . '/src/rules/Revisions.php';
