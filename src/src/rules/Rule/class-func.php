@@ -4,10 +4,10 @@ declare( strict_types=1 );
 
 namespace SkautisIntegration\Rules\Rule;
 
-use SkautisIntegration\Rules\IRule;
+use SkautisIntegration\Rules\Rule;
 use SkautisIntegration\Auth\Skautis_Gateway;
 
-class Func implements IRule {
+class Func implements Rule {
 
 	public static $id           = 'func';
 	protected static $type      = 'string';
