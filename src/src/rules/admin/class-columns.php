@@ -11,16 +11,16 @@ class Columns {
 	}
 
 	protected function initHooks() {
-		add_filter( 'manage_edit-' . RulesInit::RULES_TYPE_SLUG . '_columns', array( $this, 'lastModifiedAdminColumn' ) );
+		add_filter( 'manage_edit-' . Rules_Init::RULES_TYPE_SLUG . '_columns', array( $this, 'lastModifiedAdminColumn' ) );
 		add_filter(
-			'manage_edit-' . RulesInit::RULES_TYPE_SLUG . '_sortable_columns',
+			'manage_edit-' . Rules_Init::RULES_TYPE_SLUG . '_sortable_columns',
 			array(
 				$this,
 				'sortableLastModifiedColumn',
 			)
 		);
 		add_action(
-			'manage_' . RulesInit::RULES_TYPE_SLUG . '_posts_custom_column',
+			'manage_' . Rules_Init::RULES_TYPE_SLUG . '_posts_custom_column',
 			array(
 				$this,
 				'lastModifiedAdminColumnContent',

@@ -116,7 +116,7 @@ final class Rules_Manager {
 	public function getAllRules(): array {
 		$rulesWpQuery = new \WP_Query(
 			array(
-				'post_type'     => RulesInit::RULES_TYPE_SLUG,
+				'post_type'     => Rules_Init::RULES_TYPE_SLUG,
 				'nopaging'      => true,
 				'no_found_rows' => true,
 			)

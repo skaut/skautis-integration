@@ -6,7 +6,7 @@ namespace SkautisIntegration\Rules;
 
 use SkautisIntegration\Utils\Helpers;
 
-final class RulesInit {
+final class Rules_Init {
 
 	const RULES_TYPE_SINGULAR = 'skautis_rule';
 	const RULES_TYPE_SLUG     = 'skautis_rules';

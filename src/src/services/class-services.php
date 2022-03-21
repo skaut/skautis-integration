@@ -23,7 +23,7 @@ use SkautisIntegration\Modules\Register\Register;
 use SkautisIntegration\Modules\Shortcodes\Shortcodes;
 use SkautisIntegration\Modules\Visibility\Visibility;
 use SkautisIntegration\Rules\Revisions;
-use SkautisIntegration\Rules\RulesInit;
+use SkautisIntegration\Rules\Rules_Init;
 use SkautisIntegration\Rules\Rules_Manager;
 use SkautisIntegration\Utils\Role_Changer;
 
@@ -58,7 +58,7 @@ class Services {
 		};
 
 		self::$services['rules_init'] = function ( Container $container ) {
-			return new RulesInit( $container['rules_revisions'] );
+			return new Rules_Init( $container['rules_revisions'] );
 		};
 
 		self::$services['rules_manager'] = function ( Container $container ) {

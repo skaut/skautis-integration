@@ -38,12 +38,12 @@ final class Admin {
 	}
 
 	public function addMetaboxForRulesField( string $postType ) {
-		if ( RulesInit::RULES_TYPE_SLUG === $postType ) {
+		if ( Rules_Init::RULES_TYPE_SLUG === $postType ) {
 			add_meta_box(
 				SKAUTISINTEGRATION_NAME . '_rules_metabox',
 				__( 'skautIS pravidla', 'skautis-integration' ),
 				array( $this, 'RulesFieldContent' ),
-				RulesInit::RULES_TYPE_SLUG
+				Rules_Init::RULES_TYPE_SLUG
 			);
 		}
 	}
@@ -83,7 +83,7 @@ final class Admin {
 	public function restoreRevisionForRulesField( int $postId, int $revisionId ) {
 		$post     = get_post( $postId );
 		$revision = get_post( $revisionId );
-		if ( RulesInit::RULES_TYPE_SLUG === $post->post_type ) {
+		if ( Rules_Init::RULES_TYPE_SLUG === $post->post_type ) {
 			$meta = get_metadata( 'post', $revision->ID, SKAUTISINTEGRATION_NAME . '_rules_data', true );
 			if ( false !== $meta ) {
 				update_post_meta( $postId, SKAUTISINTEGRATION_NAME . '_rules_data', $meta );
@@ -92,7 +92,7 @@ final class Admin {
 	}
 
 	public function addRulesUi( \WP_Post $post ) {
-		if ( get_current_screen()->id !== RulesInit::RULES_TYPE_SLUG || get_post_type() !== RulesInit::RULES_TYPE_SLUG ) {
+		if ( get_current_screen()->id !== Rules_Init::RULES_TYPE_SLUG || get_post_type() !== Rules_Init::RULES_TYPE_SLUG ) {
 			return;
 		}
 		?>
@@ -124,7 +124,7 @@ final class Admin {
 	}
 
 	public function enqueueStyles() {
-		if ( get_current_screen()->id !== RulesInit::RULES_TYPE_SLUG || get_post_type() !== RulesInit::RULES_TYPE_SLUG ) {
+		if ( get_current_screen()->id !== Rules_Init::RULES_TYPE_SLUG || get_post_type() !== Rules_Init::RULES_TYPE_SLUG ) {
 			return;
 		}
 
@@ -148,7 +148,7 @@ final class Admin {
 	}
 
 	public function enqueueScripts() {
-		if ( get_current_screen()->id !== RulesInit::RULES_TYPE_SLUG || get_post_type() !== RulesInit::RULES_TYPE_SLUG ) {
+		if ( get_current_screen()->id !== Rules_Init::RULES_TYPE_SLUG || get_post_type() !== Rules_Init::RULES_TYPE_SLUG ) {
 			return;
 		}
 
@@ -236,7 +236,7 @@ final class Admin {
 	}
 
 	public function initRulesBuilder() {
-		if ( get_current_screen()->id !== RulesInit::RULES_TYPE_SLUG || get_post_type() !== RulesInit::RULES_TYPE_SLUG ) {
+		if ( get_current_screen()->id !== Rules_Init::RULES_TYPE_SLUG || get_post_type() !== Rules_Init::RULES_TYPE_SLUG ) {
 			return;
 		}
 
