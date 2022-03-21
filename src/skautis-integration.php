@@ -34,7 +34,7 @@ class SkautisIntegration {
 
 		require __DIR__ . '/src/admin/Admin.php';
 		require __DIR__ . '/src/admin/Settings.php';
-		require __DIR__ . '/src/admin/Users.php';
+		require __DIR__ . '/src/admin/class-users.php';
 		require __DIR__ . '/src/admin/UsersManagement.php';
 
 		require __DIR__ . '/src/auth/TransientSessionAdapter.php';
@@ -67,7 +67,7 @@ class SkautisIntegration {
 		require __DIR__ . '/src/modules/Visibility/frontend/Frontend.php';
 		require __DIR__ . '/src/modules/Visibility/Visibility.php';
 
-		require __DIR__ . '/src/repository/Users.php';
+		require __DIR__ . '/src/repository/class-users.php';
 
 		require __DIR__ . '/src/rules/admin/Admin.php';
 		require __DIR__ . '/src/rules/admin/Columns.php';
