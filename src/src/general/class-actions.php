@@ -42,10 +42,10 @@ final class Actions {
 		add_action( 'pre_get_posts', array( $this, 'authActionsRouter' ) );
 
 		add_action( 'plugins_loaded', array( $this, 'authInProcess' ) );
-		add_filter( 'allowed_redirect_hosts', array( $this, 'addRedirectHosts' ) );
+		add_filter( 'allowed_redirect_hosts', array( $this, 'add_redirect_hosts' ) );
 	}
 
-	public function addRedirectHosts( $hosts ) {
+	public function add_redirect_hosts( $hosts ) {
 		$hosts[] = 'test-is.skaut.cz';
 		$hosts[] = 'is.skaut.cz';
 		return $hosts;
