@@ -8,7 +8,7 @@ use SkautisIntegration\Auth\SkautisGateway;
 use SkautisIntegration\Repository\Users as UsersRepository;
 use SkautisIntegration\Utils\Helpers;
 
-final class WpRegister {
+final class WP_Register {
 
 	private $skautisGateway;
 	private $usersRepository;

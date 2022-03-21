@@ -35,7 +35,7 @@ final class Register implements IModule {
 		$this->wpLoginLogout   = $wpLoginLogout;
 		$this->rulesManager    = $rulesManager;
 		$this->usersRepository = $usersRepository;
-		$this->wpRegister      = new WpRegister( $this->skautisGateway, $this->usersRepository );
+		$this->wpRegister      = new WP_Register( $this->skautisGateway, $this->usersRepository );
 		if ( is_admin() ) {
 			( new Admin( $rulesManager ) );
 		} else {
@@ -92,7 +92,7 @@ final class Register implements IModule {
 		return plugin_dir_url( __FILE__ );
 	}
 
-	public function getWpRegister(): WpRegister {
+	public function getWpRegister(): WP_Register {
 		return $this->wpRegister;
 	}
 

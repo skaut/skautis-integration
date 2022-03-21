@@ -4,13 +4,13 @@ declare( strict_types=1 );
 
 namespace SkautisIntegration\Modules\Register\Frontend;
 
-use SkautisIntegration\Modules\Register\WpRegister;
+use SkautisIntegration\Modules\Register\WP_Register;
 
 final class Login_Form {
 
 	private $wpRegister;
 
-	public function __construct( WpRegister $wpRegister ) {
+	public function __construct( WP_Register $wpRegister ) {
 		$this->wpRegister = $wpRegister;
 		$this->initHooks();
 	}
