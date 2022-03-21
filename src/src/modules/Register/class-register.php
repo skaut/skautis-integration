@@ -9,13 +9,13 @@ use SkautisIntegration\Auth\Skautis_Login;
 use SkautisIntegration\Auth\WP_Login_Logout;
 use SkautisIntegration\Rules\Rules_Manager;
 use SkautisIntegration\Repository\Users as UsersRepository;
-use SkautisIntegration\Modules\IModule;
+use SkautisIntegration\Modules\Module;
 use SkautisIntegration\Modules\Register\Admin\Admin;
 use SkautisIntegration\Modules\Register\Frontend\Frontend;
 use SkautisIntegration\Modules\Register\Frontend\Login_Form;
 use SkautisIntegration\Utils\Helpers;
 
-final class Register implements IModule {
+final class Register implements Module {
 
 	const REGISTER_ACTION                  = 'register';
 	const MANUALLY_REGISTER_WP_USER_ACTION = 'registerManually';

@@ -49,7 +49,7 @@ class SkautisIntegration {
 		require __DIR__ . '/src/general/class-actions.php';
 		require __DIR__ . '/src/general/class-general.php';
 
-		require __DIR__ . '/src/modules/IModule.php';
+		require __DIR__ . '/src/modules/interface-module.php';
 		require __DIR__ . '/src/modules/class-modules-manager.php';
 		require __DIR__ . '/src/modules/Register/admin/class-admin.php';
 		require __DIR__ . '/src/modules/Register/admin/class-settings.php';

@@ -5,13 +5,13 @@ declare( strict_types=1 );
 namespace SkautisIntegration\Modules\Visibility;
 
 use SkautisIntegration\Auth\WP_Login_Logout;
-use SkautisIntegration\Modules\IModule;
+use SkautisIntegration\Modules\Module;
 use SkautisIntegration\Rules\Rules_Manager;
 use SkautisIntegration\Auth\Skautis_Login;
 use SkautisIntegration\Modules\Visibility\Admin\Admin;
 use SkautisIntegration\Modules\Visibility\Frontend\Frontend;
 
-final class Visibility implements IModule {
+final class Visibility implements Module {
 
 	const REGISTER_ACTION = 'visibility';
 

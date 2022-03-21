@@ -5,13 +5,13 @@ declare( strict_types=1 );
 namespace SkautisIntegration\Modules\Shortcodes;
 
 use SkautisIntegration\Auth\Skautis_Login;
-use SkautisIntegration\Modules\IModule;
+use SkautisIntegration\Modules\Module;
 use SkautisIntegration\Modules\Shortcodes\Admin\Admin;
 use SkautisIntegration\Modules\Shortcodes\Frontend\Frontend;
 use SkautisIntegration\Rules\Rules_Manager;
 use SkautisIntegration\Auth\WP_Login_Logout;
 
-final class Shortcodes implements IModule {
+final class Shortcodes implements Module {
 
 	const REGISTER_ACTION = 'shortcodes';
 
