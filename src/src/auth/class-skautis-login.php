@@ -60,7 +60,7 @@ final class Skautis_Login {
 			wp_safe_redirect( esc_url_raw( $returnUrl ), 302 );
 			exit;
 		} else {
-			$this->wpLoginLogout->loginToWp();
+			$this->wpLoginLogout->login_to_wp();
 		}
 	}
 
@@ -69,7 +69,7 @@ final class Skautis_Login {
         // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		if ( $this->setLoginDataToLocalSkautisInstance( $_POST ) ) {
 			if ( is_null( $returnUrl ) || strpos( $returnUrl, 'noWpLogin' ) === false ) {
-				$this->wpLoginLogout->loginToWp();
+				$this->wpLoginLogout->login_to_wp();
 			} elseif ( ! is_null( $returnUrl ) ) {
 				$this->wpLoginLogout->tryToLoginToWp();
 				wp_safe_redirect( $returnUrl, 302 );
@@ -77,7 +77,7 @@ final class Skautis_Login {
 			}
 		} elseif ( $this->isUserLoggedInSkautis() ) {
 			if ( is_null( $returnUrl ) || strpos( $returnUrl, 'noWpLogin' ) === false ) {
-				$this->wpLoginLogout->loginToWp();
+				$this->wpLoginLogout->login_to_wp();
 			} elseif ( ! is_null( $returnUrl ) ) {
 				$this->wpLoginLogout->tryToLoginToWp();
 				wp_safe_redirect( $returnUrl, 302 );
