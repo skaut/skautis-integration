@@ -30,7 +30,7 @@ class SkautisIntegration {
 		$this->initHooks();
 
 		require __DIR__ . '/vendor/scoper-autoload.php';
-		require __DIR__ . '/globalFunctions.php';
+		require __DIR__ . '/global-functions.php';
 
 		require __DIR__ . '/src/admin/class-admin.php';
 		require __DIR__ . '/src/admin/class-settings.php';
