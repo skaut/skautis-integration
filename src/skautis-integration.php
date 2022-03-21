@@ -65,7 +65,7 @@ class SkautisIntegration {
 		require __DIR__ . '/src/modules/Visibility/admin/Metabox.php';
 		require __DIR__ . '/src/modules/Visibility/admin/class-settings.php';
 		require __DIR__ . '/src/modules/Visibility/frontend/class-frontend.php';
-		require __DIR__ . '/src/modules/Visibility/Visibility.php';
+		require __DIR__ . '/src/modules/Visibility/class-visibility.php';
 
 		require __DIR__ . '/src/repository/class-users.php';
 
