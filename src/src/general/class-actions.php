@@ -35,7 +35,7 @@ final class Actions {
 
 	private function init_hooks() {
 		add_action( 'init', array( $this, 'register_auth_rewrite_rules' ) );
-		add_action( 'query_vars', array( $this, 'registerAuthQueryVars' ) );
+		add_action( 'query_vars', array( $this, 'register_auth_query_vars' ) );
 
 		add_action( 'init', array( $this, 'flushRewriteRulesIfNecessary' ) );
 
@@ -59,7 +59,7 @@ final class Actions {
 		}
 	}
 
-	public function registerAuthQueryVars( array $vars = array() ): array {
+	public function register_auth_query_vars( array $vars = array() ): array {
 		$vars[] = 'skautis_auth';
 
 		return $vars;
