@@ -83,7 +83,7 @@ class SkautisIntegration {
 
 		require __DIR__ . '/src/services/class-services.php';
 
-		require __DIR__ . '/src/utils/Helpers.php';
+		require __DIR__ . '/src/utils/class-helpers.php';
 		require __DIR__ . '/src/utils/RoleChanger.php';
 
 		$this->init();
