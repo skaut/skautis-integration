@@ -9,6 +9,8 @@
  * Text Domain:       skautis-integration
  */
 
+namespace SkautisIntegration;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
