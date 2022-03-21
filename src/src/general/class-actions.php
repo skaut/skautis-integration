@@ -34,7 +34,7 @@ final class Actions {
 	}
 
 	private function init_hooks() {
-		add_action( 'init', array( $this, 'registerAuthRewriteRules' ) );
+		add_action( 'init', array( $this, 'register_auth_rewrite_rules' ) );
 		add_action( 'query_vars', array( $this, 'registerAuthQueryVars' ) );
 
 		add_action( 'init', array( $this, 'flushRewriteRulesIfNecessary' ) );
@@ -51,7 +51,7 @@ final class Actions {
 		return $hosts;
 	}
 
-	public function registerAuthRewriteRules() {
+	public function register_auth_rewrite_rules() {
 		add_rewrite_rule( '^skautis/auth/(.*?)$', 'index.php?skautis_auth=$matches[1]', 'top' );
 		$loginPageUrl = get_option( SKAUTISINTEGRATION_NAME . '_login_page_url' );
 		if ( $loginPageUrl ) {
