@@ -6,7 +6,7 @@ namespace SkautisIntegration\Auth;
 
 use SkautisIntegration\Utils\Helpers;
 
-final class SkautisLogin {
+final class Skautis_Login {
 
 	private $skautisGateway;
 	private $wpLoginLogout;

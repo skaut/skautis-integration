@@ -4,7 +4,7 @@ declare( strict_types=1 );
 
 namespace SkautisIntegration\Modules\Shortcodes;
 
-use SkautisIntegration\Auth\SkautisLogin;
+use SkautisIntegration\Auth\Skautis_Login;
 use SkautisIntegration\Modules\IModule;
 use SkautisIntegration\Modules\Shortcodes\Admin\Admin;
 use SkautisIntegration\Modules\Shortcodes\Frontend\Frontend;
@@ -21,7 +21,7 @@ final class Shortcodes implements IModule {
 
 	public static $id = 'module_Shortcodes';
 
-	public function __construct( Rules_Manager $rulesManager, SkautisLogin $skautisLogin, WP_Login_Logout $wpLoginLogout ) {
+	public function __construct( Rules_Manager $rulesManager, Skautis_Login $skautisLogin, WP_Login_Logout $wpLoginLogout ) {
 		$this->rulesManager  = $rulesManager;
 		$this->skautisLogin  = $skautisLogin;
 		$this->wpLoginLogout = $wpLoginLogout;

@@ -5,7 +5,7 @@ declare( strict_types=1 );
 namespace SkautisIntegration\Modules\Register;
 
 use SkautisIntegration\Auth\SkautisGateway;
-use SkautisIntegration\Auth\SkautisLogin;
+use SkautisIntegration\Auth\Skautis_Login;
 use SkautisIntegration\Auth\WP_Login_Logout;
 use SkautisIntegration\Rules\Rules_Manager;
 use SkautisIntegration\Repository\Users as UsersRepository;
@@ -29,7 +29,7 @@ final class Register implements IModule {
 	private $usersRepository;
 	private $wpRegister;
 
-	public function __construct( SkautisGateway $skautisGateway, SkautisLogin $skautisLogin, WP_Login_Logout $wpLoginLogout, Rules_Manager $rulesManager, UsersRepository $usersRepository ) {
+	public function __construct( SkautisGateway $skautisGateway, Skautis_Login $skautisLogin, WP_Login_Logout $wpLoginLogout, Rules_Manager $rulesManager, UsersRepository $usersRepository ) {
 		$this->skautisGateway  = $skautisGateway;
 		$this->skautisLogin    = $skautisLogin;
 		$this->wpLoginLogout   = $wpLoginLogout;

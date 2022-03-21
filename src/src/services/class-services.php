@@ -7,7 +7,7 @@ namespace SkautisIntegration\Services;
 use SkautisIntegration\Vendor\Pimple\Container;
 use SkautisIntegration\Admin\UsersManagement;
 use SkautisIntegration\Auth\SkautisGateway;
-use SkautisIntegration\Auth\SkautisLogin;
+use SkautisIntegration\Auth\Skautis_Login;
 use SkautisIntegration\Auth\WP_Login_Logout;
 use SkautisIntegration\Auth\ConnectAndDisconnectWpAccount;
 use SkautisIntegration\General\General;
@@ -42,7 +42,7 @@ class Services {
 		};
 
 		self::$services['skautisLogin'] = function ( Container $container ) {
-			return new SkautisLogin( $container['skautisGateway'], $container['wpLoginLogout'] );
+			return new Skautis_Login( $container['skautisGateway'], $container['wpLoginLogout'] );
 		};
 
 		self::$services['wpLoginLogout'] = function ( Container $container ) {
