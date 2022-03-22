@@ -26,7 +26,7 @@ final class Frontend {
 
 	private function init_hooks() {
 		if ( get_option( SKAUTISINTEGRATION_NAME . '_login_page_url' ) ) {
-			add_filter( 'query_vars', array( $this, 'registerQueryVars' ) );
+			add_filter( 'query_vars', array( $this, 'register_query_vars' ) );
 			add_filter( 'template_include', array( $this, 'registerTemplates' ) );
 		}
 
@@ -39,7 +39,7 @@ final class Frontend {
 		}
 	}
 
-	public function registerQueryVars( array $vars = array() ): array {
+	public function register_query_vars( array $vars = array() ): array {
 		$vars[] = 'skautis_login';
 
 		return $vars;
