@@ -127,7 +127,7 @@ final class Frontend {
 		);
 	}
 
-	private function proccessRulesAndHidePosts( bool $userIsLoggedInSkautis, array $rule, array &$posts, int $postKey, \WP_Query $wpQuery, string $postType, &$postsWereFiltered = false ) {
+	private function process_rules_and_hide_posts( bool $userIsLoggedInSkautis, array $rule, array &$posts, int $postKey, \WP_Query $wpQuery, string $postType, &$postsWereFiltered = false ) {
 		if ( ! empty( $rules ) && isset( $rules[0][ SKAUTISINTEGRATION_NAME . '_rules' ] ) ) {
 			if ( ! $userIsLoggedInSkautis ||
 				! $this->rulesManager->checkIfUserPassedRules( $rules ) ) {
@@ -214,7 +214,7 @@ final class Frontend {
 						if ( 'content' === $rulesGroup['visibilityMode'] ) {
 							$this->processRulesAndHideContent( $userIsLoggedInSkautis, $rulesGroup['rules'], $wpPost->ID );
 						} else {
-							$this->proccessRulesAndHidePosts( $userIsLoggedInSkautis, $rulesGroup['rules'], $posts, $key, $wpQuery, $wpPost->post_type, $postsWereFiltered );
+							$this->process_rules_and_hide_posts( $userIsLoggedInSkautis, $rulesGroup['rules'], $posts, $key, $wpQuery, $wpPost->post_type, $postsWereFiltered );
 						}
 					}
 				}
