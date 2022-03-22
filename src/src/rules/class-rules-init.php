@@ -22,7 +22,7 @@ final class Rules_Init {
 		add_action( 'init', array( $this, 'register_post_type' ) );
 
 		if ( is_admin() ) {
-			add_filter( 'default_content', array( $this, 'defaultContent' ) );
+			add_filter( 'default_content', array( $this, 'default_content' ) );
 			add_filter( 'enter_title_here', array( $this, 'titlePlaceholder' ) );
 			add_filter( 'post_updated_messages', array( $this, 'updatedMessages' ) );
 		}
@@ -96,7 +96,7 @@ final class Rules_Init {
 		register_post_type( self::RULES_TYPE_SLUG, $args );
 	}
 
-	public function defaultContent( string $content ): string {
+	public function default_content( string $content ): string {
 		global $post_type;
 		if ( self::RULES_TYPE_SLUG === $post_type ) {
 			$content = '';
