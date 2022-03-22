@@ -37,7 +37,7 @@ final class Actions {
 		add_action( 'init', array( $this, 'register_auth_rewrite_rules' ) );
 		add_action( 'query_vars', array( $this, 'register_auth_query_vars' ) );
 
-		add_action( 'init', array( $this, 'flushRewriteRulesIfNecessary' ) );
+		add_action( 'init', array( $this, 'flush_rewrite_rules_if_necessary' ) );
 
 		add_action( 'pre_get_posts', array( $this, 'authActionsRouter' ) );
 
@@ -65,7 +65,7 @@ final class Actions {
 		return $vars;
 	}
 
-	public function flushRewriteRulesIfNecessary() {
+	public function flush_rewrite_rules_if_necessary() {
 		if ( get_option( 'skautis_rewrite_rules_need_to_flush' ) ) {
 			flush_rewrite_rules();
 			delete_option( 'skautis_rewrite_rules_need_to_flush' );
