@@ -23,7 +23,7 @@ final class Login_Form {
 	private function init_hooks() {
 		if ( ! Services::get_services_container()['modulesManager']->isModuleActivated( Register::getId() ) ) {
 			add_action( 'login_form', array( $this, 'login_link_in_login_form' ) );
-			add_filter( 'login_form_bottom', array( $this, 'loginLinkInLoginFormReturn' ) );
+			add_filter( 'login_form_bottom', array( $this, 'login_link_in_login_form_return' ) );
 		}
 	}
 
@@ -34,10 +34,10 @@ final class Login_Form {
 
 	public function login_link_in_login_form() {
 		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		echo $this->loginLinkInLoginFormReturn();
+		echo $this->login_link_in_login_form_return();
 	}
 
-	public function loginLinkInLoginFormReturn(): string {
+	public function login_link_in_login_form_return(): string {
 		return '
 		<p style="margin-bottom: 0.3em;">
 			<a class="button button-primary button-hero button-skautis" style="float: none; width: 100%; text-align: center;"
