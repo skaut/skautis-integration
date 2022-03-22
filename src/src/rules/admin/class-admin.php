@@ -26,7 +26,7 @@ final class Admin {
 	}
 
 	private function init_hooks() {
-		add_action( 'add_meta_boxes', array( $this, 'addMetaboxForRulesField' ) );
+		add_action( 'add_meta_boxes', array( $this, 'add_metabox_for_rules_field' ) );
 		add_action( 'save_post', array( $this, 'saveRulesCustomField' ) );
 
 		add_action( 'edit_form_after_title', array( $this, 'addRulesUi' ) );
@@ -37,7 +37,7 @@ final class Admin {
 		add_action( 'admin_footer', array( $this, 'initRulesBuilder' ), 100 );
 	}
 
-	public function addMetaboxForRulesField( string $postType ) {
+	public function add_metabox_for_rules_field( string $postType ) {
 		if ( Rules_Init::RULES_TYPE_SLUG === $postType ) {
 			add_meta_box(
 				SKAUTISINTEGRATION_NAME . '_rules_metabox',

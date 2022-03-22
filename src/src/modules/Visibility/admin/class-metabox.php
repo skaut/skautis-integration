@@ -21,11 +21,11 @@ final class Metabox {
 	}
 
 	private function init_hooks() {
-		add_action( 'add_meta_boxes', array( $this, 'addMetaboxForRulesField' ) );
+		add_action( 'add_meta_boxes', array( $this, 'add_metabox_for_rules_field' ) );
 		add_action( 'save_post', array( $this, 'saveRulesCustomField' ) );
 	}
 
-	public function addMetaboxForRulesField() {
+	public function add_metabox_for_rules_field() {
 		foreach ( $this->postTypes as $postType ) {
 			add_meta_box(
 				SKAUTISINTEGRATION_NAME . '_modules_visibility_rules_metabox',
