@@ -25,11 +25,11 @@ class All implements Rule {
 		return self::$id;
 	}
 
-	public function getLabel(): string {
+	public function get_label(): string {
 		return __( 'Všichni bez omezení', 'skautis-integration' );
 	}
 
-	public function getType(): string {
+	public function get_type(): string {
 		return self::$type;
 	}
 

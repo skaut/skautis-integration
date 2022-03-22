@@ -257,7 +257,7 @@ final class Admin {
 				$data = array(
 					'id'          => $rule->get_id(),
 					'label'       => $rule->get_label(),
-					'type'        => $rule->getType(),
+					'type'        => $rule->get_type(),
 					'input'       => $rule->getInput(),
 					'multiple'    => $rule->getMultiple(),
 					'values'      => $rule->getValues(),

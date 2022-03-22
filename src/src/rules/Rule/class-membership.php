@@ -29,7 +29,7 @@ class Membership implements Rule {
 		return __( 'Typ členství', 'skautis-integration' );
 	}
 
-	public function getType(): string {
+	public function get_type(): string {
 		return self::$type;
 	}
 

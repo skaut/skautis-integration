@@ -29,7 +29,7 @@ class Qualification implements Rule {
 		return __( 'Kvalifikace', 'skautis-integration' );
 	}
 
-	public function getType(): string {
+	public function get_type(): string {
 		return self::$type;
 	}
 

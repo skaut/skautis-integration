@@ -5,7 +5,7 @@ declare( strict_types=1 );
 namespace SkautisIntegration\Modules;
 
 interface Module {
-	public static function getLabel(): string;
+	public static function get_label(): string;
 
 	public static function get_id(): string;
 

@@ -29,7 +29,7 @@ class Func implements Rule {
 		return __( 'Funkce', 'skautis-integration' );
 	}
 
-	public function getType(): string {
+	public function get_type(): string {
 		return self::$type;
 	}
 

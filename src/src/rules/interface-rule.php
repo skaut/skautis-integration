@@ -9,7 +9,7 @@ interface Rule {
 
 	public function get_label(): string;
 
-	public function getType(): string;
+	public function get_type(): string;
 
 	public function getInput(): string;
 
