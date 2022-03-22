@@ -28,7 +28,7 @@ final class Frontend {
 		add_action( 'posts_results', array( $this, 'filterPosts' ), 10, 2 );
 	}
 
-	private function getLoginForm( bool $forceLogoutFromSkautis = false ): string {
+	private function get_login_form( bool $forceLogoutFromSkautis = false ): string {
 		$loginUrlArgs = add_query_arg( 'noWpLogin', true, Helpers::getCurrentUrl() );
 		if ( $forceLogoutFromSkautis ) {
 			$loginUrlArgs = add_query_arg( 'logoutFromSkautis', true, $loginUrlArgs );
@@ -144,9 +144,9 @@ final class Frontend {
 	private function processRulesAndHideContent( bool $userIsLoggedInSkautis, array $rules, int $postId ) {
 		if ( ! empty( $rules ) && isset( $rules[0][ SKAUTISINTEGRATION_NAME . '_rules' ] ) ) {
 			if ( ! $userIsLoggedInSkautis ) {
-				$this->hideContentExcerptComments( $postId, $this->getLoginRequiredMessage() . $this->getLoginForm(), $this->getLoginRequiredMessage() );
+				$this->hideContentExcerptComments( $postId, $this->getLoginRequiredMessage() . $this->get_login_form(), $this->getLoginRequiredMessage() );
 			} elseif ( ! $this->rulesManager->checkIfUserPassedRules( $rules ) ) {
-				$this->hideContentExcerptComments( $postId, $this->getUnauthorizedMessage() . $this->getLoginForm( true ), $this->getUnauthorizedMessage() );
+				$this->hideContentExcerptComments( $postId, $this->getUnauthorizedMessage() . $this->get_login_form( true ), $this->getUnauthorizedMessage() );
 			}
 		}
 	}

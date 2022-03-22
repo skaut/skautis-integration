@@ -23,11 +23,11 @@ final class Frontend {
 	}
 
 	private function init_hooks() {
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueueStyles' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ) );
 		add_shortcode( 'skautis', array( $this, 'processShortcode' ) );
 	}
 
-	private function getLoginForm( bool $forceLogoutFromSkautis = false ): string {
+	private function get_login_form( bool $forceLogoutFromSkautis = false ): string {
 		$loginUrlArgs = add_query_arg( 'noWpLogin', true, Helpers::getCurrentUrl() );
 		if ( $forceLogoutFromSkautis ) {
 			$loginUrlArgs = add_query_arg( 'logoutFromSkautis', true, $loginUrlArgs );
@@ -52,7 +52,7 @@ final class Frontend {
 		return '<p>' . __( 'You do not have permission to access this content', 'skautis-integration' ) . '</p>';
 	}
 
-	public function enqueueStyles() {
+	public function enqueue_styles() {
 		wp_enqueue_style( 'buttons' );
 		Helpers::enqueue_style( 'frontend', 'frontend/css/skautis-frontend.min.css' );
 	}
@@ -65,7 +65,7 @@ final class Frontend {
 
 			if ( ! $this->skautisLogin->is_user_logged_in_skautis() ) {
 				if ( 'showLogin' === $atts['content'] ) {
-					return $this->getLoginRequiredMessage() . $this->getLoginForm();
+					return $this->getLoginRequiredMessage() . $this->get_login_form();
 				} else {
 					return '';
 				}
@@ -75,7 +75,7 @@ final class Frontend {
 				return $content;
 			} else {
 				if ( 'showLogin' === $atts['content'] ) {
-					return $this->getUnauthorizedMessage() . $this->getLoginForm( true );
+					return $this->getUnauthorizedMessage() . $this->get_login_form( true );
 				} else {
 					return '';
 				}
