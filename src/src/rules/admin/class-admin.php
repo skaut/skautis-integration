@@ -29,7 +29,7 @@ final class Admin {
 		add_action( 'add_meta_boxes', array( $this, 'add_metabox_for_rules_field' ) );
 		add_action( 'save_post', array( $this, 'save_rules_custom_field' ) );
 
-		add_action( 'edit_form_after_title', array( $this, 'addRulesUi' ) );
+		add_action( 'edit_form_after_title', array( $this, 'add_rules_ui' ) );
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
@@ -94,7 +94,7 @@ final class Admin {
 		}
 	}
 
-	public function addRulesUi( \WP_Post $post ) {
+	public function add_rules_ui( \WP_Post $post ) {
 		if ( get_current_screen()->id !== Rules_Init::RULES_TYPE_SLUG || get_post_type() !== Rules_Init::RULES_TYPE_SLUG ) {
 			return;
 		}
