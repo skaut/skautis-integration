@@ -11,7 +11,7 @@ class Columns {
 	}
 
 	protected function init_hooks() {
-		add_filter( 'manage_edit-' . Rules_Init::RULES_TYPE_SLUG . '_columns', array( $this, 'lastModifiedAdminColumn' ) );
+		add_filter( 'manage_edit-' . Rules_Init::RULES_TYPE_SLUG . '_columns', array( $this, 'last_modified_admin_column' ) );
 		add_filter(
 			'manage_edit-' . Rules_Init::RULES_TYPE_SLUG . '_sortable_columns',
 			array(
@@ -30,7 +30,7 @@ class Columns {
 		);
 	}
 
-	public function lastModifiedAdminColumn( array $columns = array() ): array {
+	public function last_modified_admin_column( array $columns = array() ): array {
 		$columns['modified_last'] = __( 'Naposledy upraveno', 'skautis-integration' );
 
 		return $columns;
