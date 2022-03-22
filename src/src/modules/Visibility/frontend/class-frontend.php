@@ -25,7 +25,7 @@ final class Frontend {
 
 	public function init_hooks() {
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ) );
-		add_action( 'posts_results', array( $this, 'filterPosts' ), 10, 2 );
+		add_action( 'posts_results', array( $this, 'filter_posts' ), 10, 2 );
 	}
 
 	private function get_login_form( bool $forceLogoutFromSkautis = false ): string {
@@ -175,7 +175,7 @@ final class Frontend {
 		return $result;
 	}
 
-	public function filterPosts( array $posts, \WP_Query $wpQuery ): array {
+	public function filter_posts( array $posts, \WP_Query $wpQuery ): array {
 		if ( empty( $posts ) ) {
 			return $posts;
 		}
