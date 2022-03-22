@@ -23,7 +23,7 @@ class Columns {
 			'manage_' . Rules_Init::RULES_TYPE_SLUG . '_posts_custom_column',
 			array(
 				$this,
-				'lastModifiedAdminColumnContent',
+				'last_modified_admin_column_content',
 			),
 			10,
 			2
@@ -42,7 +42,7 @@ class Columns {
 		return $columns;
 	}
 
-	public function lastModifiedAdminColumnContent( string $columnName, int $postId ) {
+	public function last_modified_admin_column_content( string $columnName, int $postId ) {
 		if ( 'modified_last' !== $columnName ) {
 			return;
 		}
