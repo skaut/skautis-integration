@@ -28,12 +28,12 @@ final class Admin {
 	}
 
 	private function init_hooks() {
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueueScriptsAndStyles' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts_and_styles' ) );
 		add_action( 'admin_footer', array( $this, 'initRulesOptions' ) );
 		add_action( 'admin_footer', array( $this, 'initRulesData' ) );
 	}
 
-	public function enqueueScriptsAndStyles() {
+	public function enqueue_scripts_and_styles() {
 		if ( in_array( get_current_screen()->id, $this->postTypes, true ) ||
 			get_current_screen()->id === 'skautis_page_' . SKAUTISINTEGRATION_NAME . '_modules_visibility' ) {
 			wp_enqueue_script( 'jquery-ui-sortable' );

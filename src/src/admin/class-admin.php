@@ -31,7 +31,7 @@ final class Admin {
 	}
 
 	private function init_hooks() {
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueueScriptsAndStyles' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts_and_styles' ) );
 		add_action( 'admin_print_scripts', array( $this, 'printInlineJs' ) );
 
 		if ( $this->skautisGateway->isInitialized() ) {
@@ -41,7 +41,7 @@ final class Admin {
 		}
 	}
 
-	public function enqueueScriptsAndStyles() {
+	public function enqueue_scripts_and_styles() {
 		wp_enqueue_style(
 			SKAUTISINTEGRATION_NAME . '_select2',
 			SKAUTISINTEGRATION_URL . 'bundled/select2.min.css',
