@@ -32,7 +32,7 @@ final class Admin {
 
 	private function init_hooks() {
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts_and_styles' ) );
-		add_action( 'admin_print_scripts', array( $this, 'printInlineJs' ) );
+		add_action( 'admin_print_scripts', array( $this, 'print_inline_js' ) );
 
 		if ( $this->skautisGateway->isInitialized() ) {
 			if ( $this->skautisGateway->getSkautisInstance()->getUser()->isLoggedIn() ) {
@@ -61,7 +61,7 @@ final class Admin {
 		Helpers::enqueue_style( 'admin', 'admin/css/skautis-admin.min.css' );
 	}
 
-	public function printInlineJs() {
+	public function print_inline_js() {
 		?>
 		<script type="text/javascript">
 			//<![CDATA[
