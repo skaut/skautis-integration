@@ -88,7 +88,7 @@ final class Metabox {
 		wp_nonce_field( SKAUTISINTEGRATION_NAME . '_visibility_metabox', SKAUTISINTEGRATION_NAME . '_visibility_metabox_nonce' );
 
 		if ( $post->post_parent > 0 ) {
-			$parentRules = $this->frontend->getParentPostsWithRules( absint( $post->ID ), $post->post_type );
+			$parentRules = $this->frontend->get_parent_posts_with_rules( absint( $post->ID ), $post->post_type );
 			if ( ! empty( $parentRules ) ) {
 				?>
 				<h4><?php esc_html_e( 'Pravidla převzatá z nadřazených stránek', 'skautis-integration' ); ?>:</h4>

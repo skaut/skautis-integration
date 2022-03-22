@@ -156,7 +156,7 @@ final class Frontend {
 		wp_enqueue_style( SKAUTISINTEGRATION_NAME, SKAUTISINTEGRATION_URL . 'src/frontend/public/css/skautis-frontend.css', array(), SKAUTISINTEGRATION_VERSION, 'all' );
 	}
 
-	public function getParentPostsWithRules( int $childPostId, string $childPostType ): array {
+	public function get_parent_posts_with_rules( int $childPostId, string $childPostType ): array {
 		$result = array();
 
 		$parentPostsWithRules = $this->get_rules_from_parent_posts_with_impact_by_child_post_id( $childPostId, $childPostType );
