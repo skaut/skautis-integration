@@ -48,7 +48,7 @@ final class Frontend {
 		return '<p>' . __( 'To view this content you must be logged in skautIS', 'skautis-integration' ) . '</p>';
 	}
 
-	private function getUnauthorizedMessage(): string {
+	private function get_unauthorized_message(): string {
 		return '<p>' . __( 'You do not have permission to access this content', 'skautis-integration' ) . '</p>';
 	}
 
@@ -75,7 +75,7 @@ final class Frontend {
 				return $content;
 			} else {
 				if ( 'showLogin' === $atts['content'] ) {
-					return $this->getUnauthorizedMessage() . $this->get_login_form( true );
+					return $this->get_unauthorized_message() . $this->get_login_form( true );
 				} else {
 					return '';
 				}

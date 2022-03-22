@@ -49,7 +49,7 @@ final class Frontend {
 		return '<p>' . __( 'To view this content you must be logged in skautIS', 'skautis-integration' ) . '</p>';
 	}
 
-	private function getUnauthorizedMessage(): string {
+	private function get_unauthorized_message(): string {
 		return '<p>' . __( 'You do not have permission to access this content', 'skautis-integration' ) . '</p>';
 	}
 
@@ -146,7 +146,7 @@ final class Frontend {
 			if ( ! $userIsLoggedInSkautis ) {
 				$this->hideContentExcerptComments( $postId, $this->get_login_required_message() . $this->get_login_form(), $this->get_login_required_message() );
 			} elseif ( ! $this->rulesManager->checkIfUserPassedRules( $rules ) ) {
-				$this->hideContentExcerptComments( $postId, $this->getUnauthorizedMessage() . $this->get_login_form( true ), $this->getUnauthorizedMessage() );
+				$this->hideContentExcerptComments( $postId, $this->get_unauthorized_message() . $this->get_login_form( true ), $this->get_unauthorized_message() );
 			}
 		}
 	}
