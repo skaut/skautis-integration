@@ -21,8 +21,8 @@ final class Users {
 		add_filter( 'manage_users_columns', array( $this, 'add_column_header_to_users_table' ) );
 		add_filter( 'manage_users_custom_column', array( $this, 'add_column_to_users_table' ), 10, 3 );
 
-		add_action( 'show_user_profile', array( $this, 'skautisUserIdField' ) );
-		add_action( 'edit_user_profile', array( $this, 'skautisUserIdField' ) );
+		add_action( 'show_user_profile', array( $this, 'skautis_user_id_field' ) );
+		add_action( 'edit_user_profile', array( $this, 'skautis_user_id_field' ) );
 		add_action( 'personal_options_update', array( $this, 'manageSkautisUserIdField' ) );
 		add_action( 'edit_user_profile_update', array( $this, 'manageSkautisUserIdField' ) );
 	}
@@ -52,7 +52,7 @@ final class Users {
 		return $value;
 	}
 
-	public function skautisUserIdField( \WP_User $user ) {
+	public function skautis_user_id_field( \WP_User $user ) {
 		?>
 		<h3><?php esc_html_e( 'skautIS', 'skautis-integration' ); ?></h3>
 		<?php
