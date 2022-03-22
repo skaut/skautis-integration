@@ -10,20 +10,20 @@ use SkautisIntegration\Modules\Register\Register;
 
 if ( ! function_exists( 'getSkautisLoginUrl' ) ) {
 	function getSkautisLoginUrl(): string {
-		return ( Services::getServicesContainer()['wpLoginLogout'] )->get_login_url();
+		return ( Services::get_services_container()['wpLoginLogout'] )->get_login_url();
 	}
 }
 
 if ( ! function_exists( 'getSkautisLogoutUrl' ) ) {
 	function getSkautisLogoutUrl(): string {
-		return ( Services::getServicesContainer()['wpLoginLogout'] )->get_logout_url();
+		return ( Services::get_services_container()['wpLoginLogout'] )->get_logout_url();
 	}
 }
 
 if ( ! function_exists( 'getSkautisRegisterUrl' ) ) {
 	function getSkautisRegisterUrl(): string {
-		if ( Services::getServicesContainer()['modulesManager']->isModuleActivated( Register::getId() ) ) {
-			return ( Services::getServicesContainer()[ Register::getId() ] )->getWpRegister()->getRegisterUrl();
+		if ( Services::get_services_container()['modulesManager']->isModuleActivated( Register::getId() ) ) {
+			return ( Services::get_services_container()[ Register::getId() ] )->getWpRegister()->getRegisterUrl();
 		} else {
 			return '';
 		}
@@ -32,12 +32,12 @@ if ( ! function_exists( 'getSkautisRegisterUrl' ) ) {
 
 if ( ! function_exists( 'isUserLoggedInSkautis' ) ) {
 	function isUserLoggedInSkautis(): bool {
-		return ( Services::getServicesContainer()['skautisLogin'] )->is_user_logged_in_skautis();
+		return ( Services::get_services_container()['skautisLogin'] )->is_user_logged_in_skautis();
 	}
 }
 
 if ( ! function_exists( 'userPassedRules' ) ) {
 	function userPassedRules( array $rulesIds ): bool {
-		return ( Services::getServicesContainer()['rules_manager'] )->checkIfUserPassedRules( $rulesIds );
+		return ( Services::get_services_container()['rules_manager'] )->checkIfUserPassedRules( $rulesIds );
 	}
 }

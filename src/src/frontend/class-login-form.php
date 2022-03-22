@@ -21,7 +21,7 @@ final class Login_Form {
 	}
 
 	private function init_hooks() {
-		if ( ! Services::getServicesContainer()['modulesManager']->isModuleActivated( Register::getId() ) ) {
+		if ( ! Services::get_services_container()['modulesManager']->isModuleActivated( Register::getId() ) ) {
 			add_action( 'login_form', array( $this, 'loginLinkInLoginForm' ) );
 			add_filter( 'login_form_bottom', array( $this, 'loginLinkInLoginFormReturn' ) );
 		}

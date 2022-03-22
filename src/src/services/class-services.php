@@ -131,7 +131,7 @@ class Services {
 		};
 	}
 
-	public static function getServicesContainer(): Container {
+	public static function get_services_container(): Container {
 		if ( is_null( self::$services ) ) {
 			self::init();
 		}

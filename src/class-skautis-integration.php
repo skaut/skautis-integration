@@ -77,13 +77,13 @@ class Skautis_Integration {
 	}
 
 	protected function init() {
-		Services::getServicesContainer()['general'];
+		Services::get_services_container()['general'];
 		if ( is_admin() ) {
-			( Services::getServicesContainer()['admin'] );
+			( Services::get_services_container()['admin'] );
 		} else {
-			( Services::getServicesContainer()['frontend'] );
+			( Services::get_services_container()['frontend'] );
 		}
-		Services::getServicesContainer()['modulesManager'];
+		Services::get_services_container()['modulesManager'];
 	}
 
 	protected function is_compatible_version_of_wp() {
