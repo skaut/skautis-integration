@@ -53,7 +53,7 @@ class Func implements Rule {
 		return '';
 	}
 
-	public function getValues(): array {
+	public function get_values(): array {
 		$values = array();
 		$funcs  = $this->skautisGateway->getSkautisInstance()->OrganizationUnit->FunctionTypeAll();
 

@@ -53,7 +53,7 @@ class Qualification implements Rule {
 		return '';
 	}
 
-	public function getValues(): array {
+	public function get_values(): array {
 		$result         = array();
 		$qualifications = $this->skautisGateway->getSkautisInstance()->OrganizationUnit->QualificationTypeAll();
 

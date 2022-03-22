@@ -260,7 +260,7 @@ final class Admin {
 					'type'        => $rule->get_type(),
 					'input'       => $rule->get_input(),
 					'multiple'    => $rule->get_multiple(),
-					'values'      => $rule->getValues(),
+					'values'      => $rule->get_values(),
 					'operators'   => $rule->get_operators(),
 					'placeholder' => $rule->get_placeholder(),
 					'description' => $rule->get_description(),

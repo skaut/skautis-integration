@@ -53,7 +53,7 @@ class Membership implements Rule {
 		return '';
 	}
 
-	public function getValues(): array {
+	public function get_values(): array {
 		$result      = array();
 		$memberships = $this->skautisGateway->getSkautisInstance()->OrganizationUnit->MembershipTypeAll();
 

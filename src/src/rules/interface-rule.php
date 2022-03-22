@@ -21,7 +21,7 @@ interface Rule {
 
 	public function get_description(): string;
 
-	public function getValues(): array;
+	public function get_values(): array;
 
 	public function isRulePassed( string $operator, $data ): bool;
 }
