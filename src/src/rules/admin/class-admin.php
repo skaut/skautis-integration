@@ -70,7 +70,8 @@ final class Admin {
 		<?php
 	}
 
-	public function addRulesFieldToRevisions( array $fields ): array {
+	// TODO: Unused?
+	public function add_rules_field_to_revisions( array $fields ): array {
 		$fields[ SKAUTISINTEGRATION_NAME . '_rules_data' ] = __( 'skautIS Pravidla', 'skautis-integration' );
 
 		return $fields;
