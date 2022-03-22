@@ -31,7 +31,7 @@ final class Frontend {
 		}
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ) );
-		add_action( 'login_enqueue_scripts', array( $this, 'enqueueLoginStyles' ) );
+		add_action( 'login_enqueue_scripts', array( $this, 'enqueue_login_styles' ) );
 		if ( $this->skautisGateway->isInitialized() ) {
 			if ( $this->skautisGateway->getSkautisInstance()->getUser()->isLoggedIn() ) {
 				add_action( 'admin_bar_menu', array( $this, 'add_logout_link_to_admin_bar' ), 20 );
@@ -70,7 +70,7 @@ final class Frontend {
 		Helpers::enqueue_style( 'frontend', 'frontend/css/skautis-frontend.min.css' );
 	}
 
-	public function enqueueLoginStyles() {
+	public function enqueue_login_styles() {
 		Helpers::enqueue_style( 'frontend', 'frontend/css/skautis-frontend.min.css' );
 	}
 

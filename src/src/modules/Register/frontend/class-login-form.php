@@ -17,11 +17,11 @@ final class Login_Form {
 
 	private function init_hooks() {
 		add_action( 'login_form', array( $this, 'login_link_in_login_form' ) );
-		add_action( 'login_enqueue_scripts', array( $this, 'enqueueLoginStyles' ) );
+		add_action( 'login_enqueue_scripts', array( $this, 'enqueue_login_styles' ) );
 		add_filter( 'login_form_bottom', array( $this, 'login_link_in_login_form_return' ) );
 	}
 
-	public function enqueueLoginStyles() {
+	public function enqueue_login_styles() {
 		wp_enqueue_style( SKAUTISINTEGRATION_NAME . '_frontend' );
 	}
 
