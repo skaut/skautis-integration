@@ -84,7 +84,7 @@ final class Actions {
 		if ( strpos( Helpers::getCurrentUrl(), 'profile.php' ) !== false ) {
 			$this->connectWpAccount->connect();
 		} else {
-			$this->skautisLogin->loginConfirm();
+			$this->skautisLogin->login_confirm();
 		}
 	}
 

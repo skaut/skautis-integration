@@ -64,7 +64,7 @@ final class Skautis_Login {
 		}
 	}
 
-	public function loginConfirm() {
+	public function login_confirm() {
 		$returnUrl = Helpers::getReturnUrl();
         // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		if ( $this->set_login_data_to_local_skautis_instance( $_POST ) ) {
