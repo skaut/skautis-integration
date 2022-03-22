@@ -32,7 +32,7 @@ if ( ! function_exists( 'getSkautisRegisterUrl' ) ) {
 
 if ( ! function_exists( 'isUserLoggedInSkautis' ) ) {
 	function isUserLoggedInSkautis(): bool {
-		return ( Services::getServicesContainer()['skautisLogin'] )->isUserLoggedInSkautis();
+		return ( Services::getServicesContainer()['skautisLogin'] )->is_user_logged_in_skautis();
 	}
 }
 

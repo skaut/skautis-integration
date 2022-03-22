@@ -180,7 +180,7 @@ final class Frontend {
 			return $posts;
 		}
 
-		$userIsLoggedInSkautis = $this->skautisLogin->isUserLoggedInSkautis();
+		$userIsLoggedInSkautis = $this->skautisLogin->is_user_logged_in_skautis();
 
 		$postsWereFiltered = false;
 

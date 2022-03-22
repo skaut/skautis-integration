@@ -63,7 +63,7 @@ final class Frontend {
 				return $content;
 			}
 
-			if ( ! $this->skautisLogin->isUserLoggedInSkautis() ) {
+			if ( ! $this->skautisLogin->is_user_logged_in_skautis() ) {
 				if ( 'showLogin' === $atts['content'] ) {
 					return $this->getLoginRequiredMessage() . $this->getLoginForm();
 				} else {

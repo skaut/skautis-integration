@@ -54,7 +54,7 @@ final class Connect_And_Disconnect_WP_Account {
 	}
 
 	public function connect() {
-		if ( ! $this->skautisLogin->isUserLoggedInSkautis() ) {
+		if ( ! $this->skautisLogin->is_user_logged_in_skautis() ) {
             // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			if ( ! $this->skautisLogin->setLoginDataToLocalSkautisInstance( $_POST ) ) {
 				$returnUrl = Helpers::getReturnUrl() ?? Helpers::getCurrentUrl();
@@ -73,7 +73,7 @@ final class Connect_And_Disconnect_WP_Account {
 	public function connectWpUserToSkautis() {
 		if ( ! isset( $_GET[ SKAUTISINTEGRATION_NAME . '_connect_user_nonce' ] ) ||
 			! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET[ SKAUTISINTEGRATION_NAME . '_connect_user_nonce' ] ) ), SKAUTISINTEGRATION_NAME . '_connect_user' ) ||
-			! $this->skautisLogin->isUserLoggedInSkautis() ||
+			! $this->skautisLogin->is_user_logged_in_skautis() ||
 			! Helpers::userIsSkautisManager() ||
 			is_null( Helpers::getReturnUrl() )
 		) {

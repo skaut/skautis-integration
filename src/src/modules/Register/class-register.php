@@ -71,7 +71,7 @@ final class Register implements Module {
 	public function registerConfirm( array $data = array() ) {
 		if ( $this->skautisLogin->setLoginDataToLocalSkautisInstance( $data ) ) {
 			$this->registerUser();
-		} elseif ( $this->skautisLogin->isUserLoggedInSkautis() ) {
+		} elseif ( $this->skautisLogin->is_user_logged_in_skautis() ) {
 			$this->registerUser();
 		}
 	}
@@ -101,7 +101,7 @@ final class Register implements Module {
 	}
 
 	public function register() {
-		if ( ! $this->skautisLogin->isUserLoggedInSkautis() ) {
+		if ( ! $this->skautisLogin->is_user_logged_in_skautis() ) {
 			$returnUrl = Helpers::getReturnUrl() ?? Helpers::getCurrentUrl();
 			wp_safe_redirect( esc_url_raw( $this->skautisGateway->getSkautisInstance()->getLoginUrl( $returnUrl ) ), 302 );
 			exit;
@@ -143,7 +143,7 @@ final class Register implements Module {
 		$returnUrl = Helpers::getReturnUrl();
 		if ( ! isset( $_GET[ SKAUTISINTEGRATION_NAME . '_register_user_nonce' ] ) ||
 			! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET[ SKAUTISINTEGRATION_NAME . '_register_user_nonce' ] ) ), SKAUTISINTEGRATION_NAME . '_register_user' ) ||
-			! $this->skautisLogin->isUserLoggedInSkautis() ||
+			! $this->skautisLogin->is_user_logged_in_skautis() ||
 			! Helpers::userIsSkautisManager() ||
 			! current_user_can( 'create_users' ) ||
 			is_null( $returnUrl ) ||

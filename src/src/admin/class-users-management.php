@@ -56,7 +56,7 @@ class Users_Management {
 			function () {
 				if ( isset( $_POST['changeSkautisUserRole'], $_POST['_wpnonce'], $_POST['_wp_http_referer'] ) ) {
 					if ( check_admin_referer( SKAUTISINTEGRATION_NAME . '_changeSkautisUserRole', '_wpnonce' ) ) {
-						if ( $this->skautisLogin->isUserLoggedInSkautis() ) {
+						if ( $this->skautisLogin->is_user_logged_in_skautis() ) {
 							$this->skautisLogin->changeUserRoleInSkautis( absint( $_POST['changeSkautisUserRole'] ) );
 						}
 					}
@@ -133,7 +133,7 @@ class Users_Management {
 			<p>' . esc_html__( 'Zde si můžete propojit členy ze skautISu s uživateli ve WordPressu nebo je rovnou zaregistrovat (vyžaduje aktivovaný modul Registrace).', 'skautis-integration' ) . '</p>
 		';
 
-		if ( ! $this->skautisLogin->isUserLoggedInSkautis() ) {
+		if ( ! $this->skautisLogin->is_user_logged_in_skautis() ) {
 			if ( $this->skautisGateway->isInitialized() ) {
 				echo '<a href="' . esc_url( $this->wpLoginLogout->get_login_url( add_query_arg( 'noWpLogin', true, Helpers::getCurrentUrl() ) ) ) . '">' . esc_html__( 'Pro zobrazení obsahu je nutné se přihlásit do skautISu', 'skautis-integration' ) . '</a>';
 				echo '

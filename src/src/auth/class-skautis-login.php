@@ -16,7 +16,7 @@ final class Skautis_Login {
 		$this->wpLoginLogout  = $wpLoginLogout;
 	}
 
-	public function isUserLoggedInSkautis(): bool {
+	public function is_user_logged_in_skautis(): bool {
 		if ( $this->skautisGateway->isInitialized() ) {
 			return $this->skautisGateway->getSkautisInstance()->getUser()->isLoggedIn() && $this->skautisGateway->getSkautisInstance()->getUser()->isLoggedIn( true );
 		}
@@ -30,7 +30,7 @@ final class Skautis_Login {
 		if ( isset( $data['skautIS_Token'] ) ) {
 			$this->skautisGateway->getSkautisInstance()->setLoginData( $data );
 
-			if ( ! $this->isUserLoggedInSkautis() ) {
+			if ( ! $this->is_user_logged_in_skautis() ) {
 				return false;
 			}
 
@@ -50,7 +50,7 @@ final class Skautis_Login {
 			$returnUrl = remove_query_arg( 'logoutFromSkautis', $returnUrl );
 		}
 
-		if ( ! $this->isUserLoggedInSkautis() ) {
+		if ( ! $this->is_user_logged_in_skautis() ) {
 			wp_safe_redirect( esc_url_raw( $this->skautisGateway->getSkautisInstance()->getLoginUrl( $returnUrl ) ), 302 );
 			exit;
 		}
@@ -75,7 +75,7 @@ final class Skautis_Login {
 				wp_safe_redirect( $returnUrl, 302 );
 				exit;
 			}
-		} elseif ( $this->isUserLoggedInSkautis() ) {
+		} elseif ( $this->is_user_logged_in_skautis() ) {
 			if ( is_null( $returnUrl ) || strpos( $returnUrl, 'noWpLogin' ) === false ) {
 				$this->wpLoginLogout->login_to_wp();
 			} elseif ( ! is_null( $returnUrl ) ) {
