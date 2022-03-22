@@ -23,7 +23,7 @@ final class Admin {
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 		add_action( 'admin_footer', array( $this, 'init_rules_options' ) );
-		add_action( 'admin_footer', array( $this, 'initRulesData' ) );
+		add_action( 'admin_footer', array( $this, 'init_rules_data' ) );
 	}
 
 	public function enqueue_styles() {
@@ -66,7 +66,7 @@ final class Admin {
 		}
 	}
 
-	public function initRulesData() {
+	public function init_rules_data() {
 		if ( get_current_screen()->id === 'skautis_page_skautis-integration_modules_register' ) {
 			$data = get_option( SKAUTISINTEGRATION_NAME . '_modules_register_rules' );
 			?>
