@@ -259,7 +259,7 @@ final class Admin {
 					'label'       => $rule->get_label(),
 					'type'        => $rule->get_type(),
 					'input'       => $rule->get_input(),
-					'multiple'    => $rule->getMultiple(),
+					'multiple'    => $rule->get_multiple(),
 					'values'      => $rule->getValues(),
 					'operators'   => $rule->getOperators(),
 					'placeholder' => $rule->getPlaceholder(),

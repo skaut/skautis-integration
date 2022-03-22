@@ -37,7 +37,7 @@ class Role implements Rule {
 		return self::$input;
 	}
 
-	public function getMultiple(): bool {
+	public function get_multiple(): bool {
 		return self::$multiple;
 	}
 

@@ -13,7 +13,7 @@ interface Rule {
 
 	public function get_input(): string;
 
-	public function getMultiple(): bool;
+	public function get_multiple(): bool;
 
 	public function getOperators(): array;
 
