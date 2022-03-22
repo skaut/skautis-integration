@@ -41,7 +41,7 @@ final class Actions {
 
 		add_action( 'pre_get_posts', array( $this, 'authActionsRouter' ) );
 
-		add_action( 'plugins_loaded', array( $this, 'authInProcess' ) );
+		add_action( 'plugins_loaded', array( $this, 'auth_in_process' ) );
 		add_filter( 'allowed_redirect_hosts', array( $this, 'add_redirect_hosts' ) );
 	}
 
@@ -72,7 +72,7 @@ final class Actions {
 		}
 	}
 
-	public function authInProcess() {
+	public function auth_in_process() {
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		if ( ! isset( $_POST['skautIS_Token'] ) ) {
 			return;
