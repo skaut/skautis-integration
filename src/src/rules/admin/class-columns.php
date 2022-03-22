@@ -16,7 +16,7 @@ class Columns {
 			'manage_edit-' . Rules_Init::RULES_TYPE_SLUG . '_sortable_columns',
 			array(
 				$this,
-				'sortableLastModifiedColumn',
+				'sortable_last_modified_column',
 			)
 		);
 		add_action(
@@ -36,7 +36,7 @@ class Columns {
 		return $columns;
 	}
 
-	public function sortableLastModifiedColumn( array $columns = array() ): array {
+	public function sortable_last_modified_column( array $columns = array() ): array {
 		$columns['modified_last'] = 'modified';
 
 		return $columns;
