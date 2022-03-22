@@ -195,7 +195,7 @@ class Users_Management {
 				<select id="connectUserToSkautisModal_select">
 					<option><?php esc_html_e( 'Vyberte uživatele...', 'skautis-integration' ); ?></option>
 					<?php
-					foreach ( $this->usersRepository->getConnectableWpUsers() as $user ) {
+					foreach ( $this->usersRepository->get_connectable_wp_users() as $user ) {
 						$userName = $user->data->display_name;
 						if ( ! $userName ) {
 							$userName = $user->data->user_login;

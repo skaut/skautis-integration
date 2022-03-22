@@ -60,7 +60,7 @@ class Users {
 		return $usersData;
 	}
 
-	public function getConnectableWpUsers() {
+	public function get_connectable_wp_users() {
 		$ConnectableWpUsers = new \WP_User_Query(
 			array(
 				'meta_query'  => array(
