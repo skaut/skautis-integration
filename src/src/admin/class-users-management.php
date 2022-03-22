@@ -42,7 +42,7 @@ class Users_Management {
 			'admin_menu',
 			array(
 				$this,
-				'setupUsersManagementPage',
+				'setup_users_management_page',
 			),
 			10
 		);
@@ -111,7 +111,7 @@ class Users_Management {
 		);
 	}
 
-	public function setupUsersManagementPage() {
+	public function setup_users_management_page() {
 		add_submenu_page(
 			SKAUTISINTEGRATION_NAME,
 			__( 'Správa uživatelů', 'skautis-integration' ),
