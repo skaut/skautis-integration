@@ -262,7 +262,7 @@ final class Admin {
 					'multiple'    => $rule->get_multiple(),
 					'values'      => $rule->getValues(),
 					'operators'   => $rule->get_operators(),
-					'placeholder' => $rule->getPlaceholder(),
+					'placeholder' => $rule->get_placeholder(),
 					'description' => $rule->getDescription(),
 				);
 				?>

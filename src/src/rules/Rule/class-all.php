@@ -45,7 +45,7 @@ class All implements Rule {
 		return self::$operators;
 	}
 
-	public function getPlaceholder(): string {
+	public function get_placeholder(): string {
 		return '';
 	}
 

@@ -17,7 +17,7 @@ interface Rule {
 
 	public function get_operators(): array;
 
-	public function getPlaceholder(): string;
+	public function get_placeholder(): string;
 
 	public function getDescription(): string;
 
