@@ -19,7 +19,7 @@ final class Users {
 
 	private function init_hooks() {
 		add_filter( 'manage_users_columns', array( $this, 'add_column_header_to_users_table' ) );
-		add_filter( 'manage_users_custom_column', array( $this, 'addColumnToUsersTable' ), 10, 3 );
+		add_filter( 'manage_users_custom_column', array( $this, 'add_column_to_users_table' ), 10, 3 );
 
 		add_action( 'show_user_profile', array( $this, 'skautisUserIdField' ) );
 		add_action( 'edit_user_profile', array( $this, 'skautisUserIdField' ) );
@@ -33,7 +33,7 @@ final class Users {
 		return $columns;
 	}
 
-	public function addColumnToUsersTable( $value, string $columnName, int $userId ) {
+	public function add_column_to_users_table( $value, string $columnName, int $userId ) {
 		if ( SKAUTISINTEGRATION_NAME === $columnName ) {
 			$envType = get_option( 'skautis_integration_appid_type' );
 			if ( Skautis_Gateway::PROD_ENV === $envType ) {
