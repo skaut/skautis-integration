@@ -33,7 +33,7 @@ class Users_Management {
 		$this->usersRepository               = $usersRepository;
 		$this->roleChanger                   = $roleChanger;
 		$this->adminDirUrl                   = plugin_dir_url( __FILE__ ) . 'public/';
-		$this->checkIfUserChangeSkautisRole();
+		$this->check_if_user_change_skautis_role();
 		$this->init_hooks();
 	}
 
@@ -50,7 +50,7 @@ class Users_Management {
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts_and_styles' ) );
 	}
 
-	protected function checkIfUserChangeSkautisRole() {
+	protected function check_if_user_change_skautis_role() {
 		add_action(
 			'init',
 			function () {

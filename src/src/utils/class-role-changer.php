@@ -15,10 +15,10 @@ class Role_Changer {
 	public function __construct( Skautis_Gateway $skautisGateway, Skautis_Login $skautisLogin ) {
 		$this->skautisGateway = $skautisGateway;
 		$this->skautisLogin   = $skautisLogin;
-		$this->checkIfUserChangeSkautisRole();
+		$this->check_if_user_change_skautis_role();
 	}
 
-	protected function checkIfUserChangeSkautisRole() {
+	protected function check_if_user_change_skautis_role() {
 		add_action(
 			'init',
 			function () {
