@@ -82,7 +82,8 @@ final class Admin {
 		return get_metadata( 'post', $post->ID, SKAUTISINTEGRATION_NAME . '_rules_data', true );
 	}
 
-	public function restoreRevisionForRulesField( int $postId, int $revisionId ) {
+	// TODO: Unused?
+	public function restore_revision_for_rules_field( int $postId, int $revisionId ) {
 		$post     = get_post( $postId );
 		$revision = get_post( $revisionId );
 		if ( Rules_Init::RULES_TYPE_SLUG === $post->post_type ) {
