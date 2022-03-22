@@ -33,7 +33,7 @@ class Membership implements Rule {
 		return self::$type;
 	}
 
-	public function getInput(): string {
+	public function get_input(): string {
 		return self::$input;
 	}
 

@@ -11,7 +11,7 @@ interface Rule {
 
 	public function get_type(): string;
 
-	public function getInput(): string;
+	public function get_input(): string;
 
 	public function getMultiple(): bool;
 

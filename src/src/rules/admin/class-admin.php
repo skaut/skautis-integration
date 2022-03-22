@@ -258,7 +258,7 @@ final class Admin {
 					'id'          => $rule->get_id(),
 					'label'       => $rule->get_label(),
 					'type'        => $rule->get_type(),
-					'input'       => $rule->getInput(),
+					'input'       => $rule->get_input(),
 					'multiple'    => $rule->getMultiple(),
 					'values'      => $rule->getValues(),
 					'operators'   => $rule->getOperators(),
