@@ -18,7 +18,7 @@ final class Users {
 	}
 
 	private function init_hooks() {
-		add_filter( 'manage_users_columns', array( $this, 'addColumnHeaderToUsersTable' ) );
+		add_filter( 'manage_users_columns', array( $this, 'add_column_header_to_users_table' ) );
 		add_filter( 'manage_users_custom_column', array( $this, 'addColumnToUsersTable' ), 10, 3 );
 
 		add_action( 'show_user_profile', array( $this, 'skautisUserIdField' ) );
@@ -27,7 +27,7 @@ final class Users {
 		add_action( 'edit_user_profile_update', array( $this, 'manageSkautisUserIdField' ) );
 	}
 
-	public function addColumnHeaderToUsersTable( array $columns = array() ): array {
+	public function add_column_header_to_users_table( array $columns = array() ): array {
 		$columns[ SKAUTISINTEGRATION_NAME ] = __( 'skautIS', 'skautis-integration' );
 
 		return $columns;
