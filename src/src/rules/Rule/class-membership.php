@@ -153,7 +153,7 @@ class Membership implements Rule {
 		return $userMemberships;
 	}
 
-	public function isRulePassed( string $rolesOperator, $data ): bool {
+	public function is_rule_passed( string $rolesOperator, $data ): bool {
 		// parse and prepare data from rules UI
 		$output = array();
 		preg_match_all( '|[^~]+|', $data, $output );

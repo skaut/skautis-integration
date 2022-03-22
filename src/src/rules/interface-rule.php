@@ -23,5 +23,5 @@ interface Rule {
 
 	public function get_values(): array;
 
-	public function isRulePassed( string $operator, $data ): bool;
+	public function is_rule_passed( string $operator, $data ): bool;
 }

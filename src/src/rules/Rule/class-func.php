@@ -118,7 +118,7 @@ class Func implements Rule {
 		return $userFuncs;
 	}
 
-	public function isRulePassed( string $funcsOperator, $data ): bool {
+	public function is_rule_passed( string $funcsOperator, $data ): bool {
 		// parse and prepare data from rules UI
 		$output = array();
 		preg_match_all( '|[^~]+|', $data, $output );

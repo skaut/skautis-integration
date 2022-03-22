@@ -45,7 +45,7 @@ final class Rules_Manager {
 		}
 
 		if ( isset( $this->rules[ $rule->field ] ) ) {
-			return $this->rules[ $rule->field ]->isRulePassed( $rule->operator, $rule->value );
+			return $this->rules[ $rule->field ]->is_rule_passed( $rule->operator, $rule->value );
 		}
 
 		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
