@@ -78,7 +78,7 @@ final class Settings {
 		add_settings_field(
 			SKAUTISINTEGRATION_NAME . '_modules_register_notifications',
 			__( 'Po úspěšné registraci uživatele poslat emaily:', 'skautis-integration' ),
-			array( $this, 'fieldNewUserNotifications' ),
+			array( $this, 'field_new_user_notifications' ),
 			SKAUTISINTEGRATION_NAME . '_modules_register',
 			SKAUTISINTEGRATION_NAME . '_modules_register'
 		);
@@ -126,7 +126,7 @@ final class Settings {
 		<?php
 	}
 
-	public function fieldNewUserNotifications() {
+	public function field_new_user_notifications() {
 		$notificationOption = get_option( SKAUTISINTEGRATION_NAME . '_modules_register_notifications', 'none' );
 		?>
 		<label>
