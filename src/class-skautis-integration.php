@@ -70,7 +70,7 @@ class Skautis_Integration {
 	}
 
 	protected function init_hooks() {
-		add_action( 'admin_init', array( $this, 'checkVersionAndPossiblyDeactivatePlugin' ) );
+		add_action( 'admin_init', array( $this, 'check_version_and_possibly_deactivate_plugin' ) );
 
 		register_activation_hook( __FILE__, array( $this, 'activation' ) );
 		register_deactivation_hook( __FILE__, array( $this, 'deactivation' ) );
@@ -131,7 +131,7 @@ class Skautis_Integration {
 		flush_rewrite_rules();
 	}
 
-	public function checkVersionAndPossiblyDeactivatePlugin() {
+	public function check_version_and_possibly_deactivate_plugin() {
 		if ( ! $this->is_compatible_version_of_wp() ) {
 			if ( is_plugin_active( SKAUTISINTEGRATION_PLUGIN_BASENAME ) ) {
 				deactivate_plugins( SKAUTISINTEGRATION_PLUGIN_BASENAME );
