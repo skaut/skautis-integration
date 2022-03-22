@@ -27,7 +27,7 @@ final class Frontend {
 	private function init_hooks() {
 		if ( get_option( SKAUTISINTEGRATION_NAME . '_login_page_url' ) ) {
 			add_filter( 'query_vars', array( $this, 'register_query_vars' ) );
-			add_filter( 'template_include', array( $this, 'registerTemplates' ) );
+			add_filter( 'template_include', array( $this, 'register_templates' ) );
 		}
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ) );
@@ -45,7 +45,7 @@ final class Frontend {
 		return $vars;
 	}
 
-	public function registerTemplates( string $path = '' ): string {
+	public function register_templates( string $path = '' ): string {
 		$queryValue = get_query_var( 'skautis_login' );
 		if ( $queryValue && ! empty( $queryValue ) ) {
 			if ( file_exists( get_stylesheet_directory() . '/skautis/login.php' ) ) {
