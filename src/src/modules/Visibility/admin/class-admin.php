@@ -29,7 +29,7 @@ final class Admin {
 
 	private function init_hooks() {
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts_and_styles' ) );
-		add_action( 'admin_footer', array( $this, 'initRulesOptions' ) );
+		add_action( 'admin_footer', array( $this, 'init_rules_options' ) );
 		add_action( 'admin_footer', array( $this, 'initRulesData' ) );
 	}
 
@@ -56,7 +56,7 @@ final class Admin {
 		}
 	}
 
-	public function initRulesOptions() {
+	public function init_rules_options() {
 		if ( in_array( get_current_screen()->id, $this->postTypes, true ) ) {
 			$rules = array();
 
