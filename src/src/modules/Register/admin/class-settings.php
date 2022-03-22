@@ -70,7 +70,7 @@ final class Settings {
 		add_settings_field(
 			SKAUTISINTEGRATION_NAME . '_modules_register_defaultwpRole',
 			__( 'Výchozí úroveň po registraci uživatele přes skautIS', 'skautis-integration' ),
-			array( $this, 'fieldWpRole' ),
+			array( $this, 'field_wp_role' ),
 			SKAUTISINTEGRATION_NAME . '_modules_register',
 			SKAUTISINTEGRATION_NAME . '_modules_register'
 		);
@@ -119,7 +119,7 @@ final class Settings {
 		);
 	}
 
-	public function fieldWpRole() {
+	public function field_wp_role() {
 		?>
 		<select name="<?php echo esc_attr( SKAUTISINTEGRATION_NAME ); ?>_modules_register_defaultwpRole"
 				id="skautis_integration_modules_register_rules_wpRole"><?php wp_dropdown_roles( get_option( SKAUTISINTEGRATION_NAME . '_modules_register_defaultwpRole' ) ); ?></select>
