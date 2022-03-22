@@ -42,7 +42,7 @@ final class Admin {
 			add_meta_box(
 				SKAUTISINTEGRATION_NAME . '_rules_metabox',
 				__( 'skautIS pravidla', 'skautis-integration' ),
-				array( $this, 'RulesFieldContent' ),
+				array( $this, 'rules_field_content' ),
 				Rules_Init::RULES_TYPE_SLUG
 			);
 		}
@@ -62,7 +62,7 @@ final class Admin {
 		}
 	}
 
-	public function RulesFieldContent( \WP_Post $post ) {
+	public function rules_field_content( \WP_Post $post ) {
 		wp_nonce_field( SKAUTISINTEGRATION_NAME . '_rules_metabox', SKAUTISINTEGRATION_NAME . '_rules_metabox_nonce' );
 		?>
 		<textarea id="query_builder_values" class=""
