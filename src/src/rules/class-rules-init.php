@@ -24,7 +24,7 @@ final class Rules_Init {
 		if ( is_admin() ) {
 			add_filter( 'default_content', array( $this, 'default_content' ) );
 			add_filter( 'enter_title_here', array( $this, 'title_placeholder' ) );
-			add_filter( 'post_updated_messages', array( $this, 'updatedMessages' ) );
+			add_filter( 'post_updated_messages', array( $this, 'updated_messages' ) );
 		}
 	}
 
@@ -114,7 +114,7 @@ final class Rules_Init {
 		return $title;
 	}
 
-	public function updatedMessages( array $messages = array() ): array {
+	public function updated_messages( array $messages = array() ): array {
 		$post                              = get_post();
 		$messages[ self::RULES_TYPE_SLUG ] = array(
 			0  => '', // Unused. Messages start at index 1.
