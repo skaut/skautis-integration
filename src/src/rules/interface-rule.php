@@ -15,7 +15,7 @@ interface Rule {
 
 	public function get_multiple(): bool;
 
-	public function getOperators(): array;
+	public function get_operators(): array;
 
 	public function getPlaceholder(): string;
 

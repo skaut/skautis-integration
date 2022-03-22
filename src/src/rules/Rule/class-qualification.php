@@ -41,7 +41,7 @@ class Qualification implements Rule {
 		return self::$multiple;
 	}
 
-	public function getOperators(): array {
+	public function get_operators(): array {
 		return self::$operators;
 	}
 

@@ -261,7 +261,7 @@ final class Admin {
 					'input'       => $rule->get_input(),
 					'multiple'    => $rule->get_multiple(),
 					'values'      => $rule->getValues(),
-					'operators'   => $rule->getOperators(),
+					'operators'   => $rule->get_operators(),
 					'placeholder' => $rule->getPlaceholder(),
 					'description' => $rule->getDescription(),
 				);
