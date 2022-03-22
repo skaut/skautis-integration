@@ -70,7 +70,7 @@ final class Frontend {
 		return array_reverse( $ancestors );
 	}
 
-	private function getRulesFromParentPostsWithImpactByChildPostId( int $childPostId, $postType ): array {
+	private function get_rules_from_parent_posts_with_impact_by_child_post_id( int $childPostId, $postType ): array {
 		$ancestors = $this->get_posts_hierarchy_tree_with_rules( $childPostId, $postType );
 
 		$ancestors = array_filter(
@@ -159,7 +159,7 @@ final class Frontend {
 	public function getParentPostsWithRules( int $childPostId, string $childPostType ): array {
 		$result = array();
 
-		$parentPostsWithRules = $this->getRulesFromParentPostsWithImpactByChildPostId( $childPostId, $childPostType );
+		$parentPostsWithRules = $this->get_rules_from_parent_posts_with_impact_by_child_post_id( $childPostId, $childPostType );
 
 		foreach ( $parentPostsWithRules as $parentPostWithRules ) {
 			$result[ $parentPostWithRules['id'] ] = array(
@@ -196,7 +196,7 @@ final class Frontend {
 					$rulesGroups = array();
 
 					if ( $wpPost->post_parent > 0 ) {
-						$rulesGroups = $this->getRulesFromParentPostsWithImpactByChildPostId( $wpPost->ID, $wpPost->post_type );
+						$rulesGroups = $this->get_rules_from_parent_posts_with_impact_by_child_post_id( $wpPost->ID, $wpPost->post_type );
 					}
 
 					$currentPostRules = (array) get_post_meta( $wpPost->ID, SKAUTISINTEGRATION_NAME . '_rules', true );
