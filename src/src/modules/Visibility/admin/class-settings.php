@@ -18,7 +18,7 @@ final class Settings {
 		}
 
 		add_action( 'admin_menu', array( $this, 'setup_setting_page' ), 25 );
-		add_action( 'admin_init', array( $this, 'setupSettingFields' ) );
+		add_action( 'admin_init', array( $this, 'setup_setting_fields' ) );
 	}
 
 	public function setup_setting_page() {
@@ -52,7 +52,7 @@ final class Settings {
 		<?php
 	}
 
-	public function setupSettingFields() {
+	public function setup_setting_fields() {
 		add_settings_section(
 			SKAUTISINTEGRATION_NAME . '_modules_visibility',
 			'',

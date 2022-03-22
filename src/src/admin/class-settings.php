@@ -42,7 +42,7 @@ final class Settings {
 		);
 
 		add_action( 'admin_menu', array( $this, 'setup_setting_page' ), 5 );
-		add_action( 'admin_init', array( $this, 'setupSettingFields' ) );
+		add_action( 'admin_init', array( $this, 'setup_setting_fields' ) );
 		add_action( 'admin_init', array( $this, 'setupLoginFields' ) );
 
 		$this->checkIfAppIdIsSetAndShowNotices();
@@ -147,7 +147,7 @@ final class Settings {
 		return sanitize_text_field( $value );
 	}
 
-	public function setupSettingFields() {
+	public function setup_setting_fields() {
 		add_settings_section(
 			'skautis_integration_setting',
 			__( 'APP ID', 'skautis-integration' ),
