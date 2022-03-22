@@ -53,7 +53,7 @@ final class Frontend {
 		return '<p>' . __( 'You do not have permission to access this content', 'skautis-integration' ) . '</p>';
 	}
 
-	private function getPostsHierarchyTreeWithRules( int $postId, $postType ): array {
+	private function get_posts_hierarchy_tree_with_rules( int $postId, $postType ): array {
 		$ancestors = get_ancestors( $postId, $postType, 'post_type' );
 		$ancestors = array_map(
 			function ( $ancestorPostId ) {
@@ -71,7 +71,7 @@ final class Frontend {
 	}
 
 	private function getRulesFromParentPostsWithImpactByChildPostId( int $childPostId, $postType ): array {
-		$ancestors = $this->getPostsHierarchyTreeWithRules( $childPostId, $postType );
+		$ancestors = $this->get_posts_hierarchy_tree_with_rules( $childPostId, $postType );
 
 		$ancestors = array_filter(
 			$ancestors,
