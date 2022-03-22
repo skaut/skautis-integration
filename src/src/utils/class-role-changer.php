@@ -25,7 +25,7 @@ class Role_Changer {
 				if ( isset( $_POST['changeSkautisUserRole'], $_POST['_wpnonce'], $_POST['_wp_http_referer'] ) ) {
 					if ( check_admin_referer( SKAUTISINTEGRATION_NAME . '_changeSkautisUserRole', '_wpnonce' ) ) {
 						if ( $this->skautisLogin->is_user_logged_in_skautis() ) {
-							$this->skautisLogin->changeUserRoleInSkautis( absint( $_POST['changeSkautisUserRole'] ) );
+							$this->skautisLogin->change_user_role_in_skautis( absint( $_POST['changeSkautisUserRole'] ) );
 						}
 					}
 				}

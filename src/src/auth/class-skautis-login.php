@@ -86,7 +86,7 @@ final class Skautis_Login {
 		}
 	}
 
-	public function changeUserRoleInSkautis( int $roleId ) {
+	public function change_user_role_in_skautis( int $roleId ) {
 		if ( $roleId > 0 ) {
 			$result = $this->skautisGateway->getSkautisInstance()->UserManagement->LoginUpdate(
 				array(
