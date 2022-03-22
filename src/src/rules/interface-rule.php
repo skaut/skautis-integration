@@ -19,7 +19,7 @@ interface Rule {
 
 	public function get_placeholder(): string;
 
-	public function getDescription(): string;
+	public function get_description(): string;
 
 	public function getValues(): array;
 

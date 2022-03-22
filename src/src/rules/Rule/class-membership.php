@@ -49,7 +49,7 @@ class Membership implements Rule {
 		return '';
 	}
 
-	public function getDescription(): string {
+	public function get_description(): string {
 		return '';
 	}
 

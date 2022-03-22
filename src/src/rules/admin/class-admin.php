@@ -263,7 +263,7 @@ final class Admin {
 					'values'      => $rule->getValues(),
 					'operators'   => $rule->get_operators(),
 					'placeholder' => $rule->get_placeholder(),
-					'description' => $rule->getDescription(),
+					'description' => $rule->get_description(),
 				);
 				?>
 			data = <?php echo wp_json_encode( $data ); ?>;
