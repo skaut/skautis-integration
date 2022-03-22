@@ -23,7 +23,7 @@ final class Rules_Init {
 
 		if ( is_admin() ) {
 			add_filter( 'default_content', array( $this, 'default_content' ) );
-			add_filter( 'enter_title_here', array( $this, 'titlePlaceholder' ) );
+			add_filter( 'enter_title_here', array( $this, 'title_placeholder' ) );
 			add_filter( 'post_updated_messages', array( $this, 'updatedMessages' ) );
 		}
 	}
@@ -105,7 +105,7 @@ final class Rules_Init {
 		return $content;
 	}
 
-	public function titlePlaceholder( string $title ): string {
+	public function title_placeholder( string $title ): string {
 		global $post_type;
 		if ( self::RULES_TYPE_SLUG === $post_type ) {
 			$title = __( 'Zadejte název pravidla', 'skautis-integration' );
