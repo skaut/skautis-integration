@@ -33,10 +33,10 @@ class Services {
 
 	protected static function init() {
 		self::$services = new Container();
-		self::registerServices();
+		self::register_services();
 	}
 
-	protected static function registerServices() {
+	protected static function register_services() {
 		self::$services['skautisGateway'] = function ( Container $container ) {
 			return new Skautis_Gateway();
 		};
