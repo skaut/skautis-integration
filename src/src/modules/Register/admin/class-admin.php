@@ -55,7 +55,7 @@ final class Admin {
 	public function init_rules_options() {
 		if ( get_current_screen()->id === 'skautis_page_skautis-integration_modules_register' ) {
 			$rules = array();
-			foreach ( (array) $this->rulesManager->getAllRules() as $rule ) {
+			foreach ( (array) $this->rulesManager->get_all_rules() as $rule ) {
 				$rules[ $rule->ID ] = $rule->post_title;
 			}
 			?>

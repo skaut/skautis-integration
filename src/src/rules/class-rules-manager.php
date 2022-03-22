@@ -113,7 +113,7 @@ final class Rules_Manager {
 		return '';
 	}
 
-	public function getAllRules(): array {
+	public function get_all_rules(): array {
 		$rulesWpQuery = new \WP_Query(
 			array(
 				'post_type'     => Rules_Init::RULES_TYPE_SLUG,

@@ -126,7 +126,7 @@ final class Metabox {
 
 					<select name="<?php echo esc_attr( SKAUTISINTEGRATION_NAME ); ?>_rules" class="rule select2">
 						<?php
-						foreach ( (array) $this->rulesManager->getAllRules() as $rule ) {
+						foreach ( (array) $this->rulesManager->get_all_rules() as $rule ) {
 							echo '<option value="' . esc_attr( $rule->ID ) . '">' . esc_html( $rule->post_title ) . '</option>';
 						}
 						?>

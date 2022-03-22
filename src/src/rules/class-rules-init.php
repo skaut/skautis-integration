@@ -139,7 +139,7 @@ final class Rules_Init {
 		return $messages;
 	}
 
-	public function getAllRules(): array {
+	public function get_all_rules(): array {
 		$rulesWpQuery = new \WP_Query(
 			array(
 				'post_type'     => self::RULES_TYPE_SLUG,
