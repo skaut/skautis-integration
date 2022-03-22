@@ -23,8 +23,8 @@ final class Users {
 
 		add_action( 'show_user_profile', array( $this, 'skautis_user_id_field' ) );
 		add_action( 'edit_user_profile', array( $this, 'skautis_user_id_field' ) );
-		add_action( 'personal_options_update', array( $this, 'manageSkautisUserIdField' ) );
-		add_action( 'edit_user_profile_update', array( $this, 'manageSkautisUserIdField' ) );
+		add_action( 'personal_options_update', array( $this, 'manage_skautis_user_id_field' ) );
+		add_action( 'edit_user_profile_update', array( $this, 'manage_skautis_user_id_field' ) );
 	}
 
 	public function add_column_header_to_users_table( array $columns = array() ): array {
@@ -92,7 +92,7 @@ final class Users {
 		do_action( SKAUTISINTEGRATION_NAME . '_userScreen_userIds_after' );
 	}
 
-	public function manageSkautisUserIdField( int $userId ): bool {
+	public function manage_skautis_user_id_field( int $userId ): bool {
 		if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ), 'update-user_' . $user_id ) ) {
 			return false;
 		}
