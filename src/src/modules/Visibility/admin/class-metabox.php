@@ -30,7 +30,7 @@ final class Metabox {
 			add_meta_box(
 				SKAUTISINTEGRATION_NAME . '_modules_visibility_rules_metabox',
 				__( 'SkautIS pravidla', 'skautis-integration' ),
-				array( $this, 'rulesRepeater' ),
+				array( $this, 'rules_repeater' ),
 				$postType
 			);
 		}
@@ -73,7 +73,7 @@ final class Metabox {
 		}
 	}
 
-	public function rulesRepeater( \WP_Post $post ) {
+	public function rules_repeater( \WP_Post $post ) {
 		$postTypeObject  = get_post_type_object( $post->post_type );
 		$includeChildren = get_post_meta( $post->ID, SKAUTISINTEGRATION_NAME . '_rules_includeChildren', true );
 		if ( '0' !== $includeChildren && '1' !== $includeChildren ) {
