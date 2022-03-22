@@ -82,7 +82,7 @@ class Users {
 		return $ConnectableWpUsers->get_results();
 	}
 
-	public function getUsers(): array {
+	public function get_users(): array {
 		$users     = array();
 		$eventType = '';
 		$eventId   = 0;
@@ -237,7 +237,7 @@ class Users {
 	public function getUserDetail( int $skautisUserId ): array {
 		$userDetail = array();
 
-		$users = $this->getUsers();
+		$users = $this->get_users();
 
 		if ( $users['eventType'] ) {
 			foreach ( (array) $users['users'] as $user ) {

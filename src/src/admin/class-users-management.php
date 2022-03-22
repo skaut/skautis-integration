@@ -158,7 +158,7 @@ class Users_Management {
 
 		$usersData = $this->usersRepository->get_connected_wp_users();
 
-		$users = $this->usersRepository->getUsers()['users'];
+		$users = $this->usersRepository->get_users()['users'];
 
 		foreach ( $users as $user ) {
 			if ( isset( $usersData[ $user->id ] ) ) {
