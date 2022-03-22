@@ -19,7 +19,7 @@ final class Rules_Init {
 	}
 
 	private function init_hooks() {
-		add_action( 'init', array( $this, 'registerPostType' ) );
+		add_action( 'init', array( $this, 'register_post_type' ) );
 
 		if ( is_admin() ) {
 			add_filter( 'default_content', array( $this, 'defaultContent' ) );
@@ -28,7 +28,7 @@ final class Rules_Init {
 		}
 	}
 
-	public function registerPostType() {
+	public function register_post_type() {
 		$labels       = array(
 			'name'                  => _x( 'Správa pravidel', 'Post Type General Name', 'skautis-integration' ),
 			'singular_name'         => _x( 'Pravidlo', 'Post Type Singular Name', 'skautis-integration' ),
