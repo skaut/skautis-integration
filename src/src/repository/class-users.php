@@ -234,7 +234,7 @@ class Users {
 		);
 	}
 
-	public function getUserDetail( int $skautisUserId ): array {
+	public function get_user_detail( int $skautisUserId ): array {
 		$userDetail = array();
 
 		$users = $this->get_users();

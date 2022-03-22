@@ -206,7 +206,7 @@ final class WP_Register {
 	}
 
 	public function registerToWpManually( string $wpRole, int $skautisUserId ): bool {
-		$userDetail = $this->usersRepository->getUserDetail( $skautisUserId );
+		$userDetail = $this->usersRepository->get_user_detail( $skautisUserId );
 
 		return $this->processWpUserRegistration( $userDetail, $wpRole );
 	}
