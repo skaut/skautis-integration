@@ -34,7 +34,7 @@ final class Admin {
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 
-		add_action( 'admin_footer', array( $this, 'initRulesBuilder' ), 100 );
+		add_action( 'admin_footer', array( $this, 'init_rules_builder' ), 100 );
 	}
 
 	public function add_metabox_for_rules_field( string $postType ) {
@@ -238,7 +238,7 @@ final class Admin {
 		);
 	}
 
-	public function initRulesBuilder() {
+	public function init_rules_builder() {
 		if ( get_current_screen()->id !== Rules_Init::RULES_TYPE_SLUG || get_post_type() !== Rules_Init::RULES_TYPE_SLUG ) {
 			return;
 		}
