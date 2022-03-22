@@ -45,7 +45,7 @@ final class Frontend {
 		';
 	}
 
-	private function getLoginRequiredMessage(): string {
+	private function get_login_required_message(): string {
 		return '<p>' . __( 'To view this content you must be logged in skautIS', 'skautis-integration' ) . '</p>';
 	}
 
@@ -144,7 +144,7 @@ final class Frontend {
 	private function processRulesAndHideContent( bool $userIsLoggedInSkautis, array $rules, int $postId ) {
 		if ( ! empty( $rules ) && isset( $rules[0][ SKAUTISINTEGRATION_NAME . '_rules' ] ) ) {
 			if ( ! $userIsLoggedInSkautis ) {
-				$this->hideContentExcerptComments( $postId, $this->getLoginRequiredMessage() . $this->get_login_form(), $this->getLoginRequiredMessage() );
+				$this->hideContentExcerptComments( $postId, $this->get_login_required_message() . $this->get_login_form(), $this->get_login_required_message() );
 			} elseif ( ! $this->rulesManager->checkIfUserPassedRules( $rules ) ) {
 				$this->hideContentExcerptComments( $postId, $this->getUnauthorizedMessage() . $this->get_login_form( true ), $this->getUnauthorizedMessage() );
 			}

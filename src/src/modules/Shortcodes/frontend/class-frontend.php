@@ -44,7 +44,7 @@ final class Frontend {
 		';
 	}
 
-	private function getLoginRequiredMessage(): string {
+	private function get_login_required_message(): string {
 		return '<p>' . __( 'To view this content you must be logged in skautIS', 'skautis-integration' ) . '</p>';
 	}
 
@@ -65,7 +65,7 @@ final class Frontend {
 
 			if ( ! $this->skautisLogin->is_user_logged_in_skautis() ) {
 				if ( 'showLogin' === $atts['content'] ) {
-					return $this->getLoginRequiredMessage() . $this->get_login_form();
+					return $this->get_login_required_message() . $this->get_login_form();
 				} else {
 					return '';
 				}
