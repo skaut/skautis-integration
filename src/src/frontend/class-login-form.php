@@ -22,17 +22,17 @@ final class Login_Form {
 
 	private function init_hooks() {
 		if ( ! Services::get_services_container()['modulesManager']->isModuleActivated( Register::getId() ) ) {
-			add_action( 'login_form', array( $this, 'loginLinkInLoginForm' ) );
+			add_action( 'login_form', array( $this, 'login_link_in_login_form' ) );
 			add_filter( 'login_form_bottom', array( $this, 'loginLinkInLoginFormReturn' ) );
 		}
 	}
 
-	// TODO: Not used anywhere?
+	// TODO: Unused?
 	public function enqueue_styles() {
 		Helpers::enqueue_style( 'frontend', 'frontend/css/skautis-frontened.min.css' );
 	}
 
-	public function loginLinkInLoginForm() {
+	public function login_link_in_login_form() {
 		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $this->loginLinkInLoginFormReturn();
 	}
