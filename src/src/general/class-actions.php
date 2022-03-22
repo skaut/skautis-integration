@@ -39,7 +39,7 @@ final class Actions {
 
 		add_action( 'init', array( $this, 'flush_rewrite_rules_if_necessary' ) );
 
-		add_action( 'pre_get_posts', array( $this, 'authActionsRouter' ) );
+		add_action( 'pre_get_posts', array( $this, 'auth_actions_router' ) );
 
 		add_action( 'plugins_loaded', array( $this, 'auth_in_process' ) );
 		add_filter( 'allowed_redirect_hosts', array( $this, 'add_redirect_hosts' ) );
@@ -88,7 +88,7 @@ final class Actions {
 		}
 	}
 
-	public function authActionsRouter( \WP_Query $wpQuery ) {
+	public function auth_actions_router( \WP_Query $wpQuery ) {
 		if ( ! $wpQuery->get( 'skautis_auth' ) ) {
 			return $wpQuery;
 		}
