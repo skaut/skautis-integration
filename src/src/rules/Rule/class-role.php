@@ -25,7 +25,7 @@ class Role implements Rule {
 		return self::$id;
 	}
 
-	public function getLabel(): string {
+	public function get_label(): string {
 		return __( 'Role', 'skautis-integration' );
 	}
 

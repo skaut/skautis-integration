@@ -36,7 +36,7 @@ final class Shortcodes implements Module {
 		return self::$id;
 	}
 
-	public static function getLabel(): string {
+	public static function get_label(): string {
 		return __( 'Shortcodes', 'skautis-integration' );
 	}
 

@@ -256,7 +256,7 @@ final class Admin {
 			foreach ( (array) $this->rulesManager->getRules() as $rule ) {
 				$data = array(
 					'id'          => $rule->get_id(),
-					'label'       => $rule->getLabel(),
+					'label'       => $rule->get_label(),
 					'type'        => $rule->getType(),
 					'input'       => $rule->getInput(),
 					'multiple'    => $rule->getMultiple(),

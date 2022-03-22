@@ -111,9 +111,9 @@ class Services {
 			return new Modules_Manager(
 				$container,
 				array( // for hard modules activation/deactivation look to modules/Modules_Manager WP filters
-					Register::get_id()   => Register::getLabel(),
-					Visibility::get_id() => Visibility::getLabel(),
-					Shortcodes::get_id() => Shortcodes::getLabel(),
+					Register::get_id()   => Register::get_label(),
+					Visibility::get_id() => Visibility::get_label(),
+					Shortcodes::get_id() => Shortcodes::get_label(),
 				)
 			);
 		};

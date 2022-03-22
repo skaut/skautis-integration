@@ -39,7 +39,7 @@ final class Visibility implements Module {
 		return self::$id;
 	}
 
-	public static function getLabel(): string {
+	public static function get_label(): string {
 		return __( 'Viditelnost obsahu', 'skautis-integration' );
 	}
 

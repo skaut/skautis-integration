@@ -7,7 +7,7 @@ namespace SkautisIntegration\Rules;
 interface Rule {
 	public function get_id(): string;
 
-	public function getLabel(): string;
+	public function get_label(): string;
 
 	public function getType(): string;
 
