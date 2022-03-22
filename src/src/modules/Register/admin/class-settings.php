@@ -86,7 +86,7 @@ final class Settings {
 		add_settings_field(
 			SKAUTISINTEGRATION_NAME . '_modules_register_rules',
 			__( 'Pravidla registrace', 'skautis-integration' ),
-			array( $this, 'fieldRules' ),
+			array( $this, 'field_rules' ),
 			SKAUTISINTEGRATION_NAME . '_modules_register',
 			SKAUTISINTEGRATION_NAME . '_modules_register'
 		);
@@ -159,7 +159,7 @@ final class Settings {
 		<?php
 	}
 
-	public function fieldRules() {
+	public function field_rules() {
 		?>
 		<div>
 			<em><?php esc_html_e( 'Nastavením omezíte registraci uživatelů pouze při splnění následujících pravidel.', 'skautis-integration' ); ?></em>
