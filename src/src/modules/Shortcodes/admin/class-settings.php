@@ -17,11 +17,11 @@ final class Settings {
 			return;
 		}
 
-		add_action( 'admin_menu', array( $this, 'setupSettingPage' ), 25 );
+		add_action( 'admin_menu', array( $this, 'setup_setting_page' ), 25 );
 		add_action( 'admin_init', array( $this, 'setupSettingFields' ) );
 	}
 
-	public function setupSettingPage() {
+	public function setup_setting_page() {
 		add_submenu_page(
 			SKAUTISINTEGRATION_NAME,
 			__( 'Shortcodes', 'skautis-integration' ),

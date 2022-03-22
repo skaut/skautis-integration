@@ -41,7 +41,7 @@ final class Settings {
 			)
 		);
 
-		add_action( 'admin_menu', array( $this, 'setupSettingPage' ), 5 );
+		add_action( 'admin_menu', array( $this, 'setup_setting_page' ), 5 );
 		add_action( 'admin_init', array( $this, 'setupSettingFields' ) );
 		add_action( 'admin_init', array( $this, 'setupLoginFields' ) );
 
@@ -82,7 +82,7 @@ final class Settings {
 		return array_merge( $links, $mylinks );
 	}
 
-	public function setupSettingPage() {
+	public function setup_setting_page() {
 		add_menu_page(
 			__( 'Obecné', 'skautis-integration' ),
 			__( 'SkautIS', 'skautis-integration' ),
