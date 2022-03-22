@@ -28,11 +28,11 @@ final class Settings {
 			__( 'Shortcodes', 'skautis-integration' ),
 			Helpers::getSkautisManagerCapability(),
 			SKAUTISINTEGRATION_NAME . '_modules_shortcodes',
-			array( $this, 'printSettingPage' )
+			array( $this, 'print_setting_page' )
 		);
 	}
 
-	public function printSettingPage() {
+	public function print_setting_page() {
 		if ( ! Helpers::userIsSkautisManager() ) {
 			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'skautis-integration' ) );
 		}
