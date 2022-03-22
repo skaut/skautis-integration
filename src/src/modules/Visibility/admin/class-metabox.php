@@ -22,7 +22,7 @@ final class Metabox {
 
 	private function init_hooks() {
 		add_action( 'add_meta_boxes', array( $this, 'add_metabox_for_rules_field' ) );
-		add_action( 'save_post', array( $this, 'saveRulesCustomField' ) );
+		add_action( 'save_post', array( $this, 'save_rules_custom_field' ) );
 	}
 
 	public function add_metabox_for_rules_field() {
@@ -36,7 +36,7 @@ final class Metabox {
 		}
 	}
 
-	public function saveRulesCustomField( int $postId ) {
+	public function save_rules_custom_field( int $postId ) {
 		if ( ! isset( $_POST[ SKAUTISINTEGRATION_NAME . '_visibility_metabox_nonce' ] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ SKAUTISINTEGRATION_NAME . '_visibility_metabox_nonce' ] ) ), SKAUTISINTEGRATION_NAME . '_visibility_metabox' ) ) {
 			return;
 		}
