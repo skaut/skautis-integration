@@ -118,11 +118,11 @@ class Users_Management {
 			__( 'Správa uživatelů', 'skautis-integration' ),
 			Helpers::getSkautisManagerCapability(),
 			SKAUTISINTEGRATION_NAME . '_usersManagement',
-			array( $this, 'printChildUsers' )
+			array( $this, 'print_child_users' )
 		);
 	}
 
-	public function printChildUsers() {
+	public function print_child_users() {
 		if ( ! Helpers::userIsSkautisManager() ) {
 			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'skautis-integration' ) );
 		}
