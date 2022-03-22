@@ -32,7 +32,7 @@ final class Admin {
 		add_action( 'edit_form_after_title', array( $this, 'addRulesUi' ) );
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueueScripts' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 
 		add_action( 'admin_footer', array( $this, 'initRulesBuilder' ), 100 );
 	}
@@ -147,7 +147,7 @@ final class Admin {
 		);
 	}
 
-	public function enqueueScripts() {
+	public function enqueue_scripts() {
 		if ( get_current_screen()->id !== Rules_Init::RULES_TYPE_SLUG || get_post_type() !== Rules_Init::RULES_TYPE_SLUG ) {
 			return;
 		}

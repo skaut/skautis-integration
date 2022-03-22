@@ -21,7 +21,7 @@ final class Admin {
 
 	private function init_hooks() {
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueueScripts' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 		add_action( 'admin_footer', array( $this, 'initRulesOptions' ) );
 		add_action( 'admin_footer', array( $this, 'initRulesData' ) );
 	}
@@ -32,7 +32,7 @@ final class Admin {
 		}
 	}
 
-	public function enqueueScripts() {
+	public function enqueue_scripts() {
 		if ( get_current_screen()->id === 'skautis_page_skautis-integration_modules_register' ) {
 			wp_enqueue_script( 'jquery-ui-sortable' );
 
