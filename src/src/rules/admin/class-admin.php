@@ -77,7 +77,8 @@ final class Admin {
 		return $fields;
 	}
 
-	public function getRulesFieldValue( $value, $fieldName, \WP_Post $post ) {
+	// TODO: Unused?
+	public function get_rules_field_value( $value, $fieldName, \WP_Post $post ) {
 		return get_metadata( 'post', $post->ID, SKAUTISINTEGRATION_NAME . '_rules_data', true );
 	}
 
