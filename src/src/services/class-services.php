@@ -111,22 +111,22 @@ class Services {
 			return new Modules_Manager(
 				$container,
 				array( // for hard modules activation/deactivation look to modules/Modules_Manager WP filters
-					Register::getId()   => Register::getLabel(),
-					Visibility::getId() => Visibility::getLabel(),
-					Shortcodes::getId() => Shortcodes::getLabel(),
+					Register::get_id()   => Register::getLabel(),
+					Visibility::get_id() => Visibility::getLabel(),
+					Shortcodes::get_id() => Shortcodes::getLabel(),
 				)
 			);
 		};
 
-		self::$services[ Register::getId() ] = function ( Container $container ) {
+		self::$services[ Register::get_id() ] = function ( Container $container ) {
 			return new Register( $container['skautisGateway'], $container['skautisLogin'], $container['wpLoginLogout'], $container['rules_manager'], $container['repository_users'] );
 		};
 
-		self::$services[ Visibility::getId() ] = function ( Container $container ) {
+		self::$services[ Visibility::get_id() ] = function ( Container $container ) {
 			return new Visibility( $container['rules_manager'], $container['skautisLogin'], $container['wpLoginLogout'] );
 		};
 
-		self::$services[ Shortcodes::getId() ] = function ( Container $container ) {
+		self::$services[ Shortcodes::get_id() ] = function ( Container $container ) {
 			return new Shortcodes( $container['rules_manager'], $container['skautisLogin'], $container['wpLoginLogout'] );
 		};
 	}

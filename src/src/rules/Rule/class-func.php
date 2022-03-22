@@ -21,7 +21,7 @@ class Func implements Rule {
 		$this->skautisGateway = $skautisGateway;
 	}
 
-	public function getId(): string {
+	public function get_id(): string {
 		return self::$id;
 	}
 

@@ -35,7 +35,7 @@ final class Visibility implements Module {
 		}
 	}
 
-	public static function getId(): string {
+	public static function get_id(): string {
 		return self::$id;
 	}
 

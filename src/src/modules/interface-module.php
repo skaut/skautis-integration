@@ -7,7 +7,7 @@ namespace SkautisIntegration\Modules;
 interface Module {
 	public static function getLabel(): string;
 
-	public static function getId(): string;
+	public static function get_id(): string;
 
 	public static function getPath(): string;
 

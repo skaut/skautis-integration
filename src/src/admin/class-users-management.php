@@ -212,7 +212,7 @@ class Users_Management {
 					<em><?php esc_html_e( 'Je možné vybrat pouze ty uživatele, kteří ještě nemají propojený účet se skautISem.', 'skautis-integration' ); ?></em>
 				</div>
 				<?php
-				if ( Services::get_services_container()['modulesManager']->isModuleActivated( Register::getId() ) ) {
+				if ( Services::get_services_container()['modulesManager']->isModuleActivated( Register::get_id() ) ) {
 					?>
 					<hr/>
 					<h3><?php esc_html_e( 'Vytvořit nový účet', 'skautis-integration' ); ?></h3>
@@ -227,7 +227,7 @@ class Users_Management {
 					</label>
 					<p>
 						<a id="connectUserToSkautisModal_registerLink" class="button button-primary"
-							href="<?php echo esc_url( Services::get_services_container()[ Register::getId() ]->getWpRegister()->getManuallyRegisterWpUserUrl() ); ?>"><?php esc_html_e( 'Vytvořit nový účet', 'skautis-integration' ); ?></a>
+							href="<?php echo esc_url( Services::get_services_container()[ Register::get_id() ]->getWpRegister()->getManuallyRegisterWpUserUrl() ); ?>"><?php esc_html_e( 'Vytvořit nový účet', 'skautis-integration' ); ?></a>
 					</p>
 					<?php
 				}
