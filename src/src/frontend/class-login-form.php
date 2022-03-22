@@ -27,7 +27,8 @@ final class Login_Form {
 		}
 	}
 
-	public function enqueueStyles() {
+	// TODO: Not used anywhere?
+	public function enqueue_styles() {
 		Helpers::enqueue_style( 'frontend', 'frontend/css/skautis-frontened.min.css' );
 	}
 

@@ -24,7 +24,7 @@ final class Frontend {
 	}
 
 	public function init_hooks() {
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueueStyles' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ) );
 		add_action( 'posts_results', array( $this, 'filterPosts' ), 10, 2 );
 	}
 
@@ -151,7 +151,7 @@ final class Frontend {
 		}
 	}
 
-	public function enqueueStyles() {
+	public function enqueue_styles() {
 		wp_enqueue_style( 'buttons' );
 		wp_enqueue_style( SKAUTISINTEGRATION_NAME, SKAUTISINTEGRATION_URL . 'src/frontend/public/css/skautis-frontend.css', array(), SKAUTISINTEGRATION_VERSION, 'all' );
 	}

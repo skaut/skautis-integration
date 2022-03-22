@@ -20,13 +20,13 @@ final class Admin {
 	}
 
 	private function init_hooks() {
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueueStyles' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueueScripts' ) );
 		add_action( 'admin_footer', array( $this, 'initRulesOptions' ) );
 		add_action( 'admin_footer', array( $this, 'initRulesData' ) );
 	}
 
-	public function enqueueStyles() {
+	public function enqueue_styles() {
 		if ( get_current_screen()->id === 'skautis_page_skautis-integration_modules_register' ) {
 			Helpers::enqueue_style( 'modules_register', 'modules/Register/admin/css/skautis-modules-register-admin.min.css' );
 		}

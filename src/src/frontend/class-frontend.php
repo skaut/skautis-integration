@@ -30,7 +30,7 @@ final class Frontend {
 			add_filter( 'template_include', array( $this, 'registerTemplates' ) );
 		}
 
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueueStyles' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ) );
 		add_action( 'login_enqueue_scripts', array( $this, 'enqueueLoginStyles' ) );
 		if ( $this->skautisGateway->isInitialized() ) {
 			if ( $this->skautisGateway->getSkautisInstance()->getUser()->isLoggedIn() ) {
@@ -62,7 +62,7 @@ final class Frontend {
 		return $path;
 	}
 
-	public function enqueueStyles() {
+	public function enqueue_styles() {
 		if ( $this->pluginLoginView ) {
 			wp_enqueue_style( 'buttons' );
 		}
