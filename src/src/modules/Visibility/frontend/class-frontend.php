@@ -89,7 +89,7 @@ final class Frontend {
 		return array_values( $ancestors );
 	}
 
-	private function hideContentExcerptComments( int $postId, string $newContent = '', string $newExcerpt = '' ) {
+	private function hide_content_excerpt_comments( int $postId, string $newContent = '', string $newExcerpt = '' ) {
 		add_filter(
 			'the_content',
 			function ( string $content = '' ) use ( $postId, $newContent ) {
@@ -144,9 +144,9 @@ final class Frontend {
 	private function processRulesAndHideContent( bool $userIsLoggedInSkautis, array $rules, int $postId ) {
 		if ( ! empty( $rules ) && isset( $rules[0][ SKAUTISINTEGRATION_NAME . '_rules' ] ) ) {
 			if ( ! $userIsLoggedInSkautis ) {
-				$this->hideContentExcerptComments( $postId, $this->get_login_required_message() . $this->get_login_form(), $this->get_login_required_message() );
+				$this->hide_content_excerpt_comments( $postId, $this->get_login_required_message() . $this->get_login_form(), $this->get_login_required_message() );
 			} elseif ( ! $this->rulesManager->checkIfUserPassedRules( $rules ) ) {
-				$this->hideContentExcerptComments( $postId, $this->get_unauthorized_message() . $this->get_login_form( true ), $this->get_unauthorized_message() );
+				$this->hide_content_excerpt_comments( $postId, $this->get_unauthorized_message() . $this->get_login_form( true ), $this->get_unauthorized_message() );
 			}
 		}
 	}
