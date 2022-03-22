@@ -69,7 +69,7 @@ final class Register implements Module {
 	}
 
 	public function registerConfirm( array $data = array() ) {
-		if ( $this->skautisLogin->setLoginDataToLocalSkautisInstance( $data ) ) {
+		if ( $this->skautisLogin->set_login_data_to_local_skautis_instance( $data ) ) {
 			$this->registerUser();
 		} elseif ( $this->skautisLogin->is_user_logged_in_skautis() ) {
 			$this->registerUser();

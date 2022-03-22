@@ -24,7 +24,7 @@ final class Skautis_Login {
 		return false;
 	}
 
-	public function setLoginDataToLocalSkautisInstance( array $data = array() ): bool {
+	public function set_login_data_to_local_skautis_instance( array $data = array() ): bool {
 		$data = apply_filters( SKAUTISINTEGRATION_NAME . '_login_data_for_skautis_instance', $data );
 
 		if ( isset( $data['skautIS_Token'] ) ) {
@@ -67,7 +67,7 @@ final class Skautis_Login {
 	public function loginConfirm() {
 		$returnUrl = Helpers::getReturnUrl();
         // phpcs:ignore WordPress.Security.NonceVerification.Missing
-		if ( $this->setLoginDataToLocalSkautisInstance( $_POST ) ) {
+		if ( $this->set_login_data_to_local_skautis_instance( $_POST ) ) {
 			if ( is_null( $returnUrl ) || strpos( $returnUrl, 'noWpLogin' ) === false ) {
 				$this->wpLoginLogout->login_to_wp();
 			} elseif ( ! is_null( $returnUrl ) ) {

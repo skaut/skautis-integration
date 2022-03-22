@@ -56,7 +56,7 @@ final class Connect_And_Disconnect_WP_Account {
 	public function connect() {
 		if ( ! $this->skautisLogin->is_user_logged_in_skautis() ) {
             // phpcs:ignore WordPress.Security.NonceVerification.Missing
-			if ( ! $this->skautisLogin->setLoginDataToLocalSkautisInstance( $_POST ) ) {
+			if ( ! $this->skautisLogin->set_login_data_to_local_skautis_instance( $_POST ) ) {
 				$returnUrl = Helpers::getReturnUrl() ?? Helpers::getCurrentUrl();
 				wp_safe_redirect( esc_url_raw( $this->skautisGateway->getSkautisInstance()->getLoginUrl( $returnUrl ) ), 302 );
 				exit;
