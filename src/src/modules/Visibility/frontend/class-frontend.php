@@ -141,7 +141,7 @@ final class Frontend {
 		}
 	}
 
-	private function processRulesAndHideContent( bool $userIsLoggedInSkautis, array $rules, int $postId ) {
+	private function process_rules_and_hide_content( bool $userIsLoggedInSkautis, array $rules, int $postId ) {
 		if ( ! empty( $rules ) && isset( $rules[0][ SKAUTISINTEGRATION_NAME . '_rules' ] ) ) {
 			if ( ! $userIsLoggedInSkautis ) {
 				$this->hide_content_excerpt_comments( $postId, $this->get_login_required_message() . $this->get_login_form(), $this->get_login_required_message() );
@@ -212,7 +212,7 @@ final class Frontend {
 
 					foreach ( $rulesGroups as $rulesGroup ) {
 						if ( 'content' === $rulesGroup['visibilityMode'] ) {
-							$this->processRulesAndHideContent( $userIsLoggedInSkautis, $rulesGroup['rules'], $wpPost->ID );
+							$this->process_rules_and_hide_content( $userIsLoggedInSkautis, $rulesGroup['rules'], $wpPost->ID );
 						} else {
 							$this->process_rules_and_hide_posts( $userIsLoggedInSkautis, $rulesGroup['rules'], $posts, $key, $wpQuery, $wpPost->post_type, $postsWereFiltered );
 						}
