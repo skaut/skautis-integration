@@ -86,7 +86,7 @@ class Skautis_Integration {
 		Services::getServicesContainer()['modulesManager'];
 	}
 
-	protected function isCompatibleVersionOfWp() {
+	protected function is_compatible_version_of_wp() {
 		if ( isset( $GLOBALS['wp_version'] ) && version_compare( $GLOBALS['wp_version'], '4.9.6', '>=' ) ) {
 			return true;
 		}
@@ -103,7 +103,7 @@ class Skautis_Integration {
 	}
 
 	public function activation() {
-		if ( ! $this->isCompatibleVersionOfWp() ) {
+		if ( ! $this->is_compatible_version_of_wp() ) {
 			deactivate_plugins( SKAUTISINTEGRATION_PLUGIN_BASENAME );
 			wp_die( esc_html__( 'Plugin skautIS integrace vyžaduje verzi WordPress 4.9.6 nebo vyšší!', 'skautis-integration' ) );
 		}
@@ -132,7 +132,7 @@ class Skautis_Integration {
 	}
 
 	public function checkVersionAndPossiblyDeactivatePlugin() {
-		if ( ! $this->isCompatibleVersionOfWp() ) {
+		if ( ! $this->is_compatible_version_of_wp() ) {
 			if ( is_plugin_active( SKAUTISINTEGRATION_PLUGIN_BASENAME ) ) {
 				deactivate_plugins( SKAUTISINTEGRATION_PLUGIN_BASENAME );
 				Helpers::showAdminNotice( __( 'Plugin skautIS integrace vyžaduje verzi WordPress 4.8 nebo vyšší!', 'skautis-integration' ), 'warning' );
