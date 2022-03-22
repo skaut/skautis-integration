@@ -156,7 +156,7 @@ class Users_Management {
 		echo '<th>' . esc_html__( 'Jméno a příjmení', 'skautis-integration' ) . '</th><th>' . esc_html__( 'Přezdívka', 'skautis-integration' ) . '</th><th>' . esc_html__( 'ID uživatele', 'skautis-integration' ) . '</th><th>' . esc_html__( 'Propojený uživatel', 'skautis-integration' ) . '</th><th>' . esc_html__( 'Propojení', 'skautis-integration' ) . '</th>';
 		echo '</tr></thead ><tbody>';
 
-		$usersData = $this->usersRepository->getConnectedWpUsers();
+		$usersData = $this->usersRepository->get_connected_wp_users();
 
 		$users = $this->usersRepository->getUsers()['users'];
 

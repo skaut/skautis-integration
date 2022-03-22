@@ -33,7 +33,7 @@ class Users {
 		return $searchUserString;
 	}
 
-	public function getConnectedWpUsers(): array {
+	public function get_connected_wp_users(): array {
 		$usersData = array();
 
 		$connectedWpUsers = new \WP_User_Query(
