@@ -146,7 +146,7 @@ final class WP_Register {
 		return true;
 	}
 
-	public function checkIfUserIsAlreadyRegisteredAndGetHisUserId(): int {
+	public function check_if_user_is_already_registered_and_get_his_user_id(): int {
 		$userDetail = $this->skautisGateway->get_skautis_instance()->UserManagement->UserDetail();
 
 		if ( ! $userDetail || ! isset( $userDetail->ID ) || ! $userDetail->ID > 0 ) {
