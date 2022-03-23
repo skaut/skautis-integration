@@ -17,7 +17,7 @@ use SkautisIntegration\Utils\Role_Changer;
 
 class Users_Management {
 
-	// TODO: Private?
+	// TODO: Make all of them private?
 	protected $skautis_gateway;
 	protected $wp_login_logout;
 	protected $skautis_login;
