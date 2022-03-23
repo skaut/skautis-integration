@@ -129,7 +129,7 @@ final class Rules_Manager {
 		return array();
 	}
 
-	public function checkIfUserPassedRules( array $rulesIds ): bool {
+	public function check_if_user_passed_rules( array $rulesIds ): bool {
 		static $rulesGroups = null;
 		$result             = false;
 

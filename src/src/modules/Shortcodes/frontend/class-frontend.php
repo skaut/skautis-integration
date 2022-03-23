@@ -71,7 +71,7 @@ final class Frontend {
 				}
 			}
 
-			if ( $this->rulesManager->checkIfUserPassedRules( explode( ',', $atts['rules'] ) ) ) {
+			if ( $this->rulesManager->check_if_user_passed_rules( explode( ',', $atts['rules'] ) ) ) {
 				return $content;
 			} else {
 				if ( 'showLogin' === $atts['content'] ) {

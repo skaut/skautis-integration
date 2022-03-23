@@ -130,7 +130,7 @@ final class Frontend {
 	private function process_rules_and_hide_posts( bool $userIsLoggedInSkautis, array $rule, array &$posts, int $postKey, \WP_Query $wpQuery, string $postType, &$postsWereFiltered = false ) {
 		if ( ! empty( $rules ) && isset( $rules[0][ SKAUTISINTEGRATION_NAME . '_rules' ] ) ) {
 			if ( ! $userIsLoggedInSkautis ||
-				! $this->rulesManager->checkIfUserPassedRules( $rules ) ) {
+				! $this->rulesManager->check_if_user_passed_rules( $rules ) ) {
 				unset( $posts[ $postKey ] );
 				unset( $wpQuery->posts[ $postKey ] );
 				if ( $wpQuery->found_posts > 0 ) {
@@ -145,7 +145,7 @@ final class Frontend {
 		if ( ! empty( $rules ) && isset( $rules[0][ SKAUTISINTEGRATION_NAME . '_rules' ] ) ) {
 			if ( ! $userIsLoggedInSkautis ) {
 				$this->hide_content_excerpt_comments( $postId, $this->get_login_required_message() . $this->get_login_form(), $this->get_login_required_message() );
-			} elseif ( ! $this->rulesManager->checkIfUserPassedRules( $rules ) ) {
+			} elseif ( ! $this->rulesManager->check_if_user_passed_rules( $rules ) ) {
 				$this->hide_content_excerpt_comments( $postId, $this->get_unauthorized_message() . $this->get_login_form( true ), $this->get_unauthorized_message() );
 			}
 		}
