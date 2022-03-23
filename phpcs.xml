@@ -21,7 +21,6 @@
 	<rule ref="WordPress">
 		<exclude name="Squiz.Commenting"/>
 		<exclude name="WordPress.DB.SlowDBQuery.slow_db_query_meta_query"/>
-		<exclude name="WordPress.NamingConventions.ValidFunctionName.MethodNameInvalid"/>
 		<exclude name="WordPress.NamingConventions.ValidHookName.NotLowercase"/>
 		<exclude name="WordPress.NamingConventions.ValidVariableName.PropertyNotSnakeCase"/>
 		<exclude name="WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase"/>
