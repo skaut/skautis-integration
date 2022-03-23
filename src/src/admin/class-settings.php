@@ -177,7 +177,7 @@ final class Settings {
 		add_settings_field(
 			'skautis_integration_appid_type',
 			__( 'Vyberte aktivní APP ID', 'skautis-integration' ),
-			array( $this, 'fieldAppIdType' ),
+			array( $this, 'field_app_id_type' ),
 			SKAUTISINTEGRATION_NAME,
 			'skautis_integration_setting'
 		);
@@ -360,7 +360,7 @@ final class Settings {
 		echo '<input name="skautis_integration_appid_test" id="skautis_integration_appid_test" type="text" value="' . esc_attr( get_option( 'skautis_integration_appid_test' ) ) . '" class="regular-text" />';
 	}
 
-	public function fieldAppIdType() {
+	public function field_app_id_type() {
 		$appIdType = get_option( 'skautis_integration_appid_type' );
 		?>
 		<label>
