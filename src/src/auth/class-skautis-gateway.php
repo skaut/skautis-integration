@@ -12,32 +12,35 @@ class Skautis_Gateway {
 	const PROD_ENV = 'prod';
 	const TEST_ENV = 'test';
 
-	protected $appId = '';
+	// TODO: Private?
+	// TODO: Unused?
+	protected $app_id = '';
 	protected $skautis;
-	protected $skautisInitialized = false;
-	protected $testMode           = WP_DEBUG;
+	protected $skautis_initialized = false;
+	// TODO: Unused?
+	protected $test_mode           = WP_DEBUG;
 	protected $env                = '';
 
 	public function __construct() {
 		$envType = get_option( 'skautis_integration_appid_type' );
 		if ( self::PROD_ENV === $envType ) {
-			$this->appId    = get_option( 'skautis_integration_appid_prod' );
+			$this->app_id    = get_option( 'skautis_integration_appid_prod' );
 			$this->env      = $envType;
-			$this->testMode = false;
+			$this->test_mode = false;
 		} elseif ( self::TEST_ENV === $envType ) {
-			$this->appId    = get_option( 'skautis_integration_appid_test' );
+			$this->app_id    = get_option( 'skautis_integration_appid_test' );
 			$this->env      = $envType;
-			$this->testMode = true;
+			$this->test_mode = true;
 		}
 
-		if ( $this->appId && $envType ) {
+		if ( $this->app_id && $envType ) {
 			$sessionAdapter           = new Transient_Session_Adapter();
-			$wsdlManager              = new Skautis\Wsdl\WsdlManager( new Skautis\Wsdl\WebServiceFactory(), new Skautis\Config( $this->appId, $this->testMode ) );
+			$wsdlManager              = new Skautis\Wsdl\WsdlManager( new Skautis\Wsdl\WebServiceFactory(), new Skautis\Config( $this->app_id, $this->test_mode ) );
 			$user                     = new Skautis\User( $wsdlManager, $sessionAdapter );
 			$this->skautis            = new Skautis\Skautis( $wsdlManager, $user );
-			$this->skautisInitialized = true;
+			$this->skautis_initialized = true;
 
-			if ( $this->testMode ) {
+			if ( $this->test_mode ) {
 				$this->skautis->enableDebugLog();
 			}
 		}
@@ -52,7 +55,7 @@ class Skautis_Gateway {
 	}
 
 	public function is_initialized(): bool {
-		return $this->skautisInitialized;
+		return $this->skautis_initialized;
 	}
 
 	public function logout() {
