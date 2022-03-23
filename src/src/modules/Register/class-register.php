@@ -48,7 +48,7 @@ final class Register implements Module {
 		add_filter( SKAUTISINTEGRATION_NAME . '_frontend_actions_router', array( $this, 'addActionsToRouter' ) );
 		$returnUrl = Helpers::get_return_url();
 		if ( ! is_null( $returnUrl ) ) {
-			if ( Helpers::getNonceFromUrl( $returnUrl, SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis' ) ) {
+			if ( Helpers::get_nonce_from_url( $returnUrl, SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis' ) ) {
 				add_action( SKAUTISINTEGRATION_NAME . '_after_skautis_token_is_set', array( $this, 'registerConfirm' ) );
 			}
 		}

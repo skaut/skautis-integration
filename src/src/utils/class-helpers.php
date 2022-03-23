@@ -132,7 +132,7 @@ class Helpers {
 	}
 
 	public static function validate_nonce_from_url( string $url, string $nonceName ) {
-		if ( ! wp_verify_nonce( self::getNonceFromUrl( urldecode( $url ), $nonceName ), $nonceName ) ) {
+		if ( ! wp_verify_nonce( self::get_nonce_from_url( urldecode( $url ), $nonceName ), $nonceName ) ) {
 			wp_nonce_ays( $nonceName );
 		}
 	}
@@ -149,7 +149,7 @@ class Helpers {
 		return '';
 	}
 
-	public static function getNonceFromUrl( string $url, string $nonceName ): string {
+	public static function get_nonce_from_url( string $url, string $nonceName ): string {
 		return self::getVariableFromUrl( $url, $nonceName );
 	}
 
