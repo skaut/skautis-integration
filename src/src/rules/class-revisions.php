@@ -13,7 +13,7 @@ class Revisions {
 	protected function init_hooks() {
 		add_action( 'save_post', array( $this, 'save_post' ), 10 );
 		add_action( 'wp_restore_post_revision', array( $this, 'restore_revision' ), 10, 2 );
-		add_filter( 'wp_save_post_revision_post_has_changed', array( $this, 'postHasChanged' ), 10, 3 );
+		add_filter( 'wp_save_post_revision_post_has_changed', array( $this, 'post_has_changed' ), 10, 3 );
 
 		add_filter( '_wp_post_revision_fields', array( $this, 'fields' ), 10, 1 );
 		add_filter( '_wp_post_revision_field_custom_fields', array( $this, 'field' ), 10, 3 );
@@ -101,7 +101,7 @@ class Revisions {
 		}
 	}
 
-	public function postHasChanged( bool $postHasChanged, \WP_Post $lastRevision, \WP_Post $post ): bool {
+	public function post_has_changed( bool $postHasChanged, \WP_Post $lastRevision, \WP_Post $post ): bool {
 		if ( ! $postHasChanged ) {
 			$meta    = $this->get_meta( $lastRevision->ID );
 			$metaNew = $this->get_meta( $post->ID );
