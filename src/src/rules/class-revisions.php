@@ -11,7 +11,7 @@ class Revisions {
 	}
 
 	protected function init_hooks() {
-		add_action( 'save_post', array( $this, 'savePost' ), 10 );
+		add_action( 'save_post', array( $this, 'save_post' ), 10 );
 		add_action( 'wp_restore_post_revision', array( $this, 'restore_revision' ), 10, 2 );
 		add_filter( 'wp_save_post_revision_post_has_changed', array( $this, 'postHasChanged' ), 10, 3 );
 
@@ -90,7 +90,7 @@ class Revisions {
 		}
 	}
 
-	public function savePost( int $postId ) {
+	public function save_post( int $postId ) {
 		if ( wp_is_post_revision( $postId ) ) {
 			$meta = $this->get_meta( $postId );
 			if ( false === $meta ) {
