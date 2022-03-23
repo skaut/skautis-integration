@@ -25,7 +25,7 @@ final class Admin {
 			function () {
 				if ( get_user_option( 'rich_editing' ) ) {
 					add_filter( 'mce_external_plugins', array( $this, 'register_tinymce_plugin' ) );
-					add_filter( 'mce_buttons', array( $this, 'addTinymceButton' ) );
+					add_filter( 'mce_buttons', array( $this, 'add_tinymce_button' ) );
 				}
 			}
 		);
@@ -37,7 +37,7 @@ final class Admin {
 		return $plugins;
 	}
 
-	public function addTinymceButton( array $buttons = array() ): array {
+	public function add_tinymce_button( array $buttons = array() ): array {
 		$buttons[] = 'skautis_rules';
 
 		return $buttons;
