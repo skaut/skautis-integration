@@ -298,7 +298,7 @@ final class Settings {
 			add_settings_field(
 				SKAUTISINTEGRATION_NAME . '_checkUserPrivilegesIfLoginBySkautis',
 				__( 'Ověřování podmínek registrace', 'skautis-integration' ),
-				array( $this, 'fieldcheckUserPrivilegesIfLoginBySkautis' ),
+				array( $this, 'field_check_user_privileges_if_login_by_skautis' ),
 				SKAUTISINTEGRATION_NAME . '_login',
 				SKAUTISINTEGRATION_NAME . '_login'
 			);
@@ -449,7 +449,7 @@ if ( ! isUserLoggedInSkautis() ) {
 		<?php
 	}
 
-	public function fieldcheckUserPrivilegesIfLoginBySkautis() {
+	public function field_check_user_privileges_if_login_by_skautis() {
 		?>
 		<input name="<?php echo esc_attr( SKAUTISINTEGRATION_NAME ); ?>_checkUserPrivilegesIfLoginBySkautis"
 			id="skautis_integration_checkUserPrivilegesIfLoginBySkautis" type="checkbox"
