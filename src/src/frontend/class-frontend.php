@@ -10,16 +10,18 @@ use SkautisIntegration\Utils\Helpers;
 
 final class Frontend {
 
-	private $loginForm;
-	private $wpLoginLogout;
-	private $skautisGateway;
-	private $frontendDirUrl = '';
+	// TODO: Unused?
+	private $login_form;
+	private $wp_login_logout;
+	private $skautis_gateway;
+	// TODO: Unused?
+	private $frontend_dir_url = '';
 
 	public function __construct( Login_Form $loginForm, WP_Login_Logout $wpLoginLogout, Skautis_Gateway $skautisGateway ) {
-		$this->loginForm       = $loginForm;
-		$this->wpLoginLogout   = $wpLoginLogout;
-		$this->skautisGateway  = $skautisGateway;
-		$this->frontendDirUrl  = plugin_dir_url( __FILE__ ) . 'public/';
+		$this->login_form       = $loginForm;
+		$this->wp_login_logout   = $wpLoginLogout;
+		$this->skautis_gateway  = $skautisGateway;
+		$this->frontend_dir_url  = plugin_dir_url( __FILE__ ) . 'public/';
 		$this->pluginLoginView = false;
 		$this->init_hooks();
 	}
@@ -32,8 +34,8 @@ final class Frontend {
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ) );
 		add_action( 'login_enqueue_scripts', array( $this, 'enqueue_login_styles' ) );
-		if ( $this->skautisGateway->is_initialized() ) {
-			if ( $this->skautisGateway->get_skautis_instance()->getUser()->isLoggedIn() ) {
+		if ( $this->skautis_gateway->is_initialized() ) {
+			if ( $this->skautis_gateway->get_skautis_instance()->getUser()->isLoggedIn() ) {
 				add_action( 'admin_bar_menu', array( $this, 'add_logout_link_to_admin_bar' ), 20 );
 			}
 		}
@@ -99,7 +101,7 @@ final class Frontend {
 				'parent' => $parent,
 				'id'     => SKAUTISINTEGRATION_NAME . '_adminBar_logout',
 				'title'  => esc_html__( 'Odhlásit se (i ze skautISu)', 'skautis-integration' ),
-				'href'   => $this->wpLoginLogout->get_logout_url(),
+				'href'   => $this->wp_login_logout->get_logout_url(),
 			)
 		);
 	}
