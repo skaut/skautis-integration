@@ -10,10 +10,10 @@ use SkautisIntegration\Utils\Helpers;
 
 final class Users {
 
-	private $connectWpAccount;
+	private $connect_wp_account;
 
 	public function __construct( Connect_And_Disconnect_WP_Account $connectWpAccount ) {
-		$this->connectWpAccount = $connectWpAccount;
+		$this->connect_wp_account = $connectWpAccount;
 		$this->init_hooks();
 	}
 
@@ -56,7 +56,7 @@ final class Users {
 		?>
 		<h3><?php esc_html_e( 'skautIS', 'skautis-integration' ); ?></h3>
 		<?php
-		$this->connectWpAccount->print_connect_and_disconnect_button( $user->ID );
+		$this->connect_wp_account->print_connect_and_disconnect_button( $user->ID );
 		do_action( SKAUTISINTEGRATION_NAME . '_userScreen_userIds_before' );
 		?>
 		<table class="form-table">
