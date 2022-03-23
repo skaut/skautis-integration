@@ -9,16 +9,17 @@ use SkautisIntegration\Auth\WP_Login_Logout;
 
 final class Rules_Manager {
 
-	private $skautisGateway;
-	private $wpLoginLogout;
+	private $skautis_gateway;
+	// TODO: Unused?
+	private $wpLogin_logout;
 	private $rules = array();
 
 	public function __construct( Skautis_Gateway $skautisGateway, WP_Login_Logout $wpLoginLogout ) {
-		$this->skautisGateway = $skautisGateway;
-		$this->wpLoginLogout  = $wpLoginLogout;
+		$this->skautis_gateway = $skautisGateway;
+		$this->wpLogin_logout  = $wpLoginLogout;
 		$this->rules          = $this->init_rules();
 		if ( is_admin() ) {
-			( new Admin( $this, $wpLoginLogout, $skautisGateway ) );
+			( new Admin( $this, $wpLoginLogout, $this->skautis_gateway ) );
 		}
 	}
 
@@ -26,11 +27,11 @@ final class Rules_Manager {
 		return apply_filters(
 			SKAUTISINTEGRATION_NAME . '_rules',
 			array(
-				Rule\Role::$id          => new Rule\Role( $this->skautisGateway ),
-				Rule\Membership::$id    => new Rule\Membership( $this->skautisGateway ),
-				Rule\Func::$id          => new Rule\Func( $this->skautisGateway ),
-				Rule\Qualification::$id => new Rule\Qualification( $this->skautisGateway ),
-				Rule\All::$id           => new Rule\All( $this->skautisGateway ),
+				Rule\Role::$id          => new Rule\Role( $this->skautis_gateway ),
+				Rule\Membership::$id    => new Rule\Membership( $this->skautis_gateway ),
+				Rule\Func::$id          => new Rule\Func( $this->skautis_gateway ),
+				Rule\Qualification::$id => new Rule\Qualification( $this->skautis_gateway ),
+				Rule\All::$id           => new Rule\All( $this->skautis_gateway ),
 			)
 		);
 	}
