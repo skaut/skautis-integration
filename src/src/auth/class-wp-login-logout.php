@@ -11,10 +11,10 @@ use SkautisIntegration\Modules\Register\Register;
 
 final class WP_Login_Logout {
 
-	private $skautisGateway;
+	private $skautis_gateway;
 
 	public function __construct( Skautis_Gateway $skautisGateway ) {
-		$this->skautisGateway = $skautisGateway;
+		$this->skautis_gateway = $skautisGateway;
 	}
 
 	private function login_wp_user_by_skautis_user_id( int $skautisUserId, $try = false ) {
@@ -25,7 +25,7 @@ final class WP_Login_Logout {
 					'number'     => 1,
 					'meta_query' => array(
 						array(
-							'key'     => 'skautisUserId_' . $this->skautisGateway->get_env(),
+							'key'     => 'skautisUserId_' . $this->skautis_gateway->get_env(),
 							'value'   => absint( $skautisUserId ),
 							'compare' => '=',
 						),
@@ -75,7 +75,7 @@ final class WP_Login_Logout {
 				/* translators: 1: Start of a link to SkautIS login 2: End of the link to SkautIS login */
 				wp_die( sprintf( esc_html__( 'Nemáte oprávnění k přístupu. %1$sZkuste se nejdříve zaregistrovat%2$s', 'skautis-integration' ), '<a href ="' . esc_url( ( Services::get_services_container()[ Register::get_id() ] )->getWpRegister()->get_register_url() ) . '">', '</a>' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
 			} else {
-				$this->skautisGateway->logout();
+				$this->skautis_gateway->logout();
 				wp_die( esc_html__( 'Nemáte oprávnění k přístupu', 'skautis-integration' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
 			}
 		}
@@ -117,7 +117,7 @@ final class WP_Login_Logout {
 	}
 
 	public function login_to_wp() {
-		$userDetail = $this->skautisGateway->get_skautis_instance()->UserManagement->UserDetail();
+		$userDetail = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserDetail();
 
 		if ( $userDetail && isset( $userDetail->ID ) && $userDetail->ID > 0 ) {
 			$this->login_wp_user_by_skautis_user_id( $userDetail->ID );
@@ -125,7 +125,7 @@ final class WP_Login_Logout {
 	}
 
 	public function try_to_login_to_wp() {
-		$userDetail = $this->skautisGateway->get_skautis_instance()->UserManagement->UserDetail();
+		$userDetail = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserDetail();
 
 		if ( $userDetail && isset( $userDetail->ID ) && $userDetail->ID > 0 ) {
 			$this->login_wp_user_by_skautis_user_id( $userDetail->ID, true );
@@ -133,7 +133,7 @@ final class WP_Login_Logout {
 	}
 
 	public function logout() {
-		$this->skautisGateway->logout();
+		$this->skautis_gateway->logout();
 
 		wp_logout();
 		wp_set_current_user( 0 );
