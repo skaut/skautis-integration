@@ -65,7 +65,7 @@ final class Settings {
 		add_settings_field(
 			SKAUTISINTEGRATION_NAME . '_modules_visibility_postTypes',
 			__( 'Typy obsahu', 'skautis-integration' ),
-			array( $this, 'fieldPostTypes' ),
+			array( $this, 'field_post_types' ),
 			SKAUTISINTEGRATION_NAME . '_modules_visibility',
 			SKAUTISINTEGRATION_NAME . '_modules_visibility'
 		);
@@ -114,7 +114,7 @@ final class Settings {
 		);
 	}
 
-	public function fieldPostTypes() {
+	public function field_post_types() {
 		$availablePostTypes = get_post_types(
 			array(
 				'public' => true,
