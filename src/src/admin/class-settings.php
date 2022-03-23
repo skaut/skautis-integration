@@ -116,7 +116,7 @@ final class Settings {
 			__( 'Moduly', 'skautis-integration' ),
 			Helpers::getSkautisManagerCapability(),
 			SKAUTISINTEGRATION_NAME . '_modules',
-			array( $this, 'printModulesPage' )
+			array( $this, 'print_modules_page' )
 		);
 	}
 
@@ -460,7 +460,7 @@ if ( ! isUserLoggedInSkautis() ) {
 		<?php
 	}
 
-	public function printModulesPage() {
+	public function print_modules_page() {
 		if ( ! Helpers::userIsSkautisManager() ) {
 			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'skautis-integration' ) );
 		}
