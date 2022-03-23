@@ -18,18 +18,19 @@ final class Actions {
 	const CONNECT_WP_USER_TO_SKAUTIS_ACTION = 'connect/users';
 	const DISCONNECT_ACTION                 = 'disconnect';
 
-	private $skautisGateway;
-	private $skautisLogin;
-	private $wpLoginLogout;
-	private $connectWpAccount;
-	private $frontendDirUrl = '';
+	private $skautis_gateway;
+	private $skautis_login;
+	private $wp_login_logout;
+	private $connect_wp_account;
+	// TODO: Unused?
+	private $frontend_dir_url = '';
 
 	public function __construct( Skautis_Login $skautisLogin, WP_Login_Logout $wpLoginLogout, Connect_And_Disconnect_WP_Account $connectWpAccount, Skautis_Gateway $skautisGateway ) {
-		$this->skautisGateway   = $skautisGateway;
-		$this->skautisLogin     = $skautisLogin;
-		$this->wpLoginLogout    = $wpLoginLogout;
-		$this->connectWpAccount = $connectWpAccount;
-		$this->frontendDirUrl   = plugin_dir_url( __FILE__ ) . 'public/';
+		$this->skautis_gateway   = $skautisGateway;
+		$this->skautis_login     = $skautisLogin;
+		$this->wp_login_logout    = $wpLoginLogout;
+		$this->connect_wp_account = $connectWpAccount;
+		$this->frontend_dir_url   = plugin_dir_url( __FILE__ ) . 'public/';
 		$this->init_hooks();
 	}
 
@@ -82,9 +83,9 @@ final class Actions {
 		do_action( SKAUTISINTEGRATION_NAME . '_after_skautis_token_is_set', $_POST );
 
 		if ( strpos( Helpers::get_current_url(), 'profile.php' ) !== false ) {
-			$this->connectWpAccount->connect();
+			$this->connect_wp_account->connect();
 		} else {
-			$this->skautisLogin->login_confirm();
+			$this->skautis_login->login_confirm();
 		}
 	}
 
@@ -93,7 +94,7 @@ final class Actions {
 			return $wpQuery;
 		}
 
-		if ( ! $this->skautisGateway->is_initialized() ) {
+		if ( ! $this->skautis_gateway->is_initialized() ) {
 			if ( ( get_option( 'skautis_integration_appid_type' ) === 'prod' && ! get_option( 'skautis_integration_appid_prod' ) ) ||
 				( get_option( 'skautis_integration_appid_type' ) === 'test' && ! get_option( 'skautis_integration_appid_test' ) ) ) {
 				if ( Helpers::user_is_skautis_manager() ) {
@@ -109,11 +110,11 @@ final class Actions {
 		$action = $wpQuery->get( 'skautis_auth' );
 
 		$actions = array(
-			self::LOGIN_ACTION                      => array( $this->skautisLogin, 'login' ),
-			self::LOGOUT_CONFIRM_ACTION             => array( $this->wpLoginLogout, 'logout' ),
-			self::CONNECT_ACTION                    => array( $this->connectWpAccount, 'connect' ),
-			self::CONNECT_WP_USER_TO_SKAUTIS_ACTION => array( $this->connectWpAccount, 'connect_wp_user_to_skautis' ),
-			self::DISCONNECT_ACTION                 => array( $this->connectWpAccount, 'disconnect' ),
+			self::LOGIN_ACTION                      => array( $this->skautis_login, 'login' ),
+			self::LOGOUT_CONFIRM_ACTION             => array( $this->wp_login_logout, 'logout' ),
+			self::CONNECT_ACTION                    => array( $this->connect_wp_account, 'connect' ),
+			self::CONNECT_WP_USER_TO_SKAUTIS_ACTION => array( $this->connect_wp_account, 'connect_wp_user_to_skautis' ),
+			self::DISCONNECT_ACTION                 => array( $this->connect_wp_account, 'disconnect' ),
 		);
 
 		$actions = apply_filters( SKAUTISINTEGRATION_NAME . '_frontend_actions_router', $actions );
