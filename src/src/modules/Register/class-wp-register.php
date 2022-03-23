@@ -205,7 +205,7 @@ final class WP_Register {
 		return esc_url( wp_nonce_url( $url, SKAUTISINTEGRATION_NAME . '_register_user', SKAUTISINTEGRATION_NAME . '_register_user_nonce' ) );
 	}
 
-	public function registerToWpManually( string $wpRole, int $skautisUserId ): bool {
+	public function register_to_wp_manually( string $wpRole, int $skautisUserId ): bool {
 		$userDetail = $this->usersRepository->get_user_detail( $skautisUserId );
 
 		return $this->process_wp_user_registration( $userDetail, $wpRole );

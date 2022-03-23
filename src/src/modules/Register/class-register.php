@@ -157,7 +157,7 @@ final class Register implements Module {
 		}
 		$skautisUserId = absint( $_GET['skautisUserId'] );
 
-		if ( $this->wpRegister->registerToWpManually( $wpRole, $skautisUserId ) ) {
+		if ( $this->wpRegister->register_to_wp_manually( $wpRole, $skautisUserId ) ) {
 			wp_safe_redirect( $returnUrl, 302 );
 			exit;
 		} else {
