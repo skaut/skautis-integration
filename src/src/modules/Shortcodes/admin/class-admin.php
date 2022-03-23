@@ -24,14 +24,14 @@ final class Admin {
 			'admin_init',
 			function () {
 				if ( get_user_option( 'rich_editing' ) ) {
-					add_filter( 'mce_external_plugins', array( $this, 'registerTinymcePlugin' ) );
+					add_filter( 'mce_external_plugins', array( $this, 'register_tinymce_plugin' ) );
 					add_filter( 'mce_buttons', array( $this, 'addTinymceButton' ) );
 				}
 			}
 		);
 	}
 
-	public function registerTinymcePlugin( array $plugins = array() ): array {
+	public function register_tinymce_plugin( array $plugins = array() ): array {
 		$plugins['skautis_rules'] = plugin_dir_url( dirname( __FILE__, 4 ) ) . 'modules/Shortcodes/admin/js/skautis-modules-shortcodes-tinymceRulesButton.min.js';
 
 		return $plugins;
