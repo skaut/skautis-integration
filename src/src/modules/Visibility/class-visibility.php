@@ -43,7 +43,7 @@ final class Visibility implements Module {
 		return __( 'Viditelnost obsahu', 'skautis-integration' );
 	}
 
-	public static function getPath(): string {
+	public static function get_path(): string {
 		return plugin_dir_path( __FILE__ );
 	}
 

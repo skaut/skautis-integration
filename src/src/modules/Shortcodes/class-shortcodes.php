@@ -40,7 +40,7 @@ final class Shortcodes implements Module {
 		return __( 'Shortcodes', 'skautis-integration' );
 	}
 
-	public static function getPath(): string {
+	public static function get_path(): string {
 		return plugin_dir_path( __FILE__ );
 	}
 

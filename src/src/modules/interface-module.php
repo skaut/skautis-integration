@@ -9,7 +9,7 @@ interface Module {
 
 	public static function get_id(): string;
 
-	public static function getPath(): string;
+	public static function get_path(): string;
 
 	public static function getUrl(): string;
 }

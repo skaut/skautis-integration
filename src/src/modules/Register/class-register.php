@@ -84,7 +84,7 @@ final class Register implements Module {
 		return __( 'Registrace', 'skautis-integration' );
 	}
 
-	public static function getPath(): string {
+	public static function get_path(): string {
 		return plugin_dir_path( __FILE__ );
 	}
 
