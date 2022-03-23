@@ -169,7 +169,7 @@ final class Settings {
 		add_settings_field(
 			'skautis_integration_appid_test',
 			__( 'APP ID testovací verze', 'skautis-integration' ),
-			array( $this, 'fieldAppIdTest' ),
+			array( $this, 'field_app_id_test' ),
 			SKAUTISINTEGRATION_NAME,
 			'skautis_integration_setting'
 		);
@@ -356,7 +356,7 @@ final class Settings {
 		echo '<input name="skautis_integration_appid_prod" id="skautis_integration_appid_prod" type="text" value="' . esc_attr( get_option( 'skautis_integration_appid_prod' ) ) . '" class="regular-text" />';
 	}
 
-	public function fieldAppIdTest() {
+	public function field_app_id_test() {
 		echo '<input name="skautis_integration_appid_test" id="skautis_integration_appid_test" type="text" value="' . esc_attr( get_option( 'skautis_integration_appid_test' ) ) . '" class="regular-text" />';
 	}
 
