@@ -30,7 +30,7 @@ final class Settings {
 			'plugin_action_links_' . SKAUTISINTEGRATION_PLUGIN_BASENAME,
 			array(
 				$this,
-				'addSettingsLinkToPluginsTable',
+				'add_settings_link_to_plugins_table',
 			)
 		);
 		add_filter(
@@ -66,7 +66,7 @@ final class Settings {
 		}
 	}
 
-	public function addSettingsLinkToPluginsTable( array $links = array() ): array {
+	public function add_settings_link_to_plugins_table( array $links = array() ): array {
 		$mylinks = array(
 			'<a href="' . admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME, 'skautis-integration' ) . '">' . __( 'Settings', 'skautis-integration' ) . '</a>',
 		);
