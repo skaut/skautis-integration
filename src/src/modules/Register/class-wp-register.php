@@ -185,7 +185,7 @@ final class WP_Register {
 		return esc_url( $url );
 	}
 
-	public function registerToWp( string $wpRole ): bool {
+	public function register_to_wp( string $wpRole ): bool {
 		$userDetail = $this->skautisGateway->get_skautis_instance()->UserManagement->UserDetail();
 
 		if ( $userDetail && isset( $userDetail->ID ) && $userDetail->ID > 0 ) {
