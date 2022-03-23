@@ -16,8 +16,8 @@ final class Rules_Manager {
 
 	public function __construct( Skautis_Gateway $skautisGateway, WP_Login_Logout $wpLoginLogout ) {
 		$this->skautis_gateway = $skautisGateway;
-		$this->wp_login_logout  = $wpLoginLogout;
-		$this->rules          = $this->init_rules();
+		$this->wp_login_logout = $wpLoginLogout;
+		$this->rules           = $this->init_rules();
 		if ( is_admin() ) {
 			( new Admin( $this, $wpLoginLogout, $this->skautis_gateway ) );
 		}

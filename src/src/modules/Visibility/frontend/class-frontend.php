@@ -17,9 +17,9 @@ final class Frontend {
 	private $wp_login_logout;
 
 	public function __construct( array $postTypes, Rules_Manager $rulesManager, Skautis_Login $skautisLogin, WP_Login_Logout $wpLoginLogout ) {
-		$this->post_types     = $postTypes;
-		$this->rules_manager  = $rulesManager;
-		$this->skautis_login  = $skautisLogin;
+		$this->post_types      = $postTypes;
+		$this->rules_manager   = $rulesManager;
+		$this->skautis_login   = $skautisLogin;
 		$this->wp_login_logout = $wpLoginLogout;
 	}
 

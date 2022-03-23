@@ -19,10 +19,10 @@ final class Frontend {
 
 	public function __construct( Login_Form $loginForm, WP_Login_Logout $wpLoginLogout, Skautis_Gateway $skautisGateway ) {
 		$this->login_form       = $loginForm;
-		$this->wp_login_logout   = $wpLoginLogout;
+		$this->wp_login_logout  = $wpLoginLogout;
 		$this->skautis_gateway  = $skautisGateway;
-		$this->frontend_dir_url  = plugin_dir_url( __FILE__ ) . 'public/';
-		$this->pluginLoginView = false;
+		$this->frontend_dir_url = plugin_dir_url( __FILE__ ) . 'public/';
+		$this->pluginLoginView  = false;
 		$this->init_hooks();
 	}
 

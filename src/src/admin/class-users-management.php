@@ -28,13 +28,13 @@ class Users_Management {
 	protected $admin_dir_url = '';
 
 	public function __construct( Skautis_Gateway $skautisGateway, WP_Login_Logout $wpLoginLogout, Skautis_Login $skautisLogin, Connect_And_Disconnect_WP_Account $connectAndDisconnectWpAccount, UsersRepository $usersRepository, Role_Changer $roleChanger ) {
-		$this->skautis_gateway                = $skautisGateway;
-		$this->wp_login_logout                 = $wpLoginLogout;
-		$this->skautis_login                  = $skautisLogin;
+		$this->skautis_gateway                   = $skautisGateway;
+		$this->wp_login_logout                   = $wpLoginLogout;
+		$this->skautis_login                     = $skautisLogin;
 		$this->connect_and_disconnect_wp_account = $connectAndDisconnectWpAccount;
-		$this->users_repository               = $usersRepository;
-		$this->role_changer                   = $roleChanger;
-		$this->admin_dir_url                   = plugin_dir_url( __FILE__ ) . 'public/';
+		$this->users_repository                  = $usersRepository;
+		$this->role_changer                      = $roleChanger;
+		$this->admin_dir_url                     = plugin_dir_url( __FILE__ ) . 'public/';
 		$this->check_if_user_change_skautis_role();
 		$this->init_hooks();
 	}

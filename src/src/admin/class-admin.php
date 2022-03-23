@@ -23,13 +23,13 @@ final class Admin {
 	private $admin_dir_url = '';
 
 	public function __construct( Settings $settings, Users $users, Rules_Manager $rulesManager, Users_Management $usersManagement, WP_Login_Logout $wpLoginLogout, Skautis_Gateway $skautisGateway ) {
-		$this->settings        = $settings;
-		$this->users           = $users;
+		$this->settings         = $settings;
+		$this->users            = $users;
 		$this->rules_manager    = $rulesManager;
 		$this->users_management = $usersManagement;
-		$this->wp_login_logout   = $wpLoginLogout;
+		$this->wp_login_logout  = $wpLoginLogout;
 		$this->skautis_gateway  = $skautisGateway;
-		$this->admin_dir_url     = plugin_dir_url( __FILE__ ) . 'public/';
+		$this->admin_dir_url    = plugin_dir_url( __FILE__ ) . 'public/';
 		$this->init_hooks();
 	}
 

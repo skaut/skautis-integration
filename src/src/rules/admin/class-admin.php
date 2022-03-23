@@ -18,9 +18,9 @@ final class Admin {
 
 	public function __construct( Rules_Manager $rulesManager, WP_Login_Logout $wpLoginLogout, Skautis_Gateway $skautisGateway ) {
 		$this->rules_manager   = $rulesManager;
-		$this->wp_login_logout  = $wpLoginLogout;
+		$this->wp_login_logout = $wpLoginLogout;
 		$this->skautis_gateway = $skautisGateway;
-		$this->admin_dir_url    = plugin_dir_url( __FILE__ ) . 'public/';
+		$this->admin_dir_url   = plugin_dir_url( __FILE__ ) . 'public/';
 		( new Columns() );
 		$this->init_hooks();
 	}

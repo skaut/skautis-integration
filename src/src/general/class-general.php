@@ -15,7 +15,7 @@ final class General {
 	private $rules_init;
 
 	public function __construct( Actions $actions, Rules_Init $rulesInit ) {
-		$this->actions   = $actions;
+		$this->actions    = $actions;
 		$this->rules_init = $rulesInit;
 	}
 

@@ -26,8 +26,8 @@ final class Actions {
 	private $frontend_dir_url = '';
 
 	public function __construct( Skautis_Login $skautisLogin, WP_Login_Logout $wpLoginLogout, Connect_And_Disconnect_WP_Account $connectWpAccount, Skautis_Gateway $skautisGateway ) {
-		$this->skautis_gateway   = $skautisGateway;
-		$this->skautis_login     = $skautisLogin;
+		$this->skautis_gateway    = $skautisGateway;
+		$this->skautis_login      = $skautisLogin;
 		$this->wp_login_logout    = $wpLoginLogout;
 		$this->connect_wp_account = $connectWpAccount;
 		$this->frontend_dir_url   = plugin_dir_url( __FILE__ ) . 'public/';

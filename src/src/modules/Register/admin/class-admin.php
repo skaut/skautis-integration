@@ -15,7 +15,7 @@ final class Admin {
 
 	public function __construct( Rules_Manager $rulesManager ) {
 		$this->rules_manager = $rulesManager;
-		$this->admin_dir_url  = plugin_dir_url( __FILE__ ) . 'public/';
+		$this->admin_dir_url = plugin_dir_url( __FILE__ ) . 'public/';
 		( new Settings( $this->rules_manager ) );
 		$this->init_hooks();
 	}

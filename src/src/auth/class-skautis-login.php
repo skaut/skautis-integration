@@ -13,7 +13,7 @@ final class Skautis_Login {
 
 	public function __construct( Skautis_Gateway $skautisGateway, WP_Login_Logout $wpLoginLogout ) {
 		$this->skautis_gateway = $skautisGateway;
-		$this->wp_login_logout  = $wpLoginLogout;
+		$this->wp_login_logout = $wpLoginLogout;
 	}
 
 	public function is_user_logged_in_skautis(): bool {

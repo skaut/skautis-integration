@@ -18,26 +18,26 @@ class Skautis_Gateway {
 	protected $skautis;
 	protected $skautis_initialized = false;
 	// TODO: Unused?
-	protected $test_mode           = WP_DEBUG;
-	protected $env                = '';
+	protected $test_mode = WP_DEBUG;
+	protected $env       = '';
 
 	public function __construct() {
 		$envType = get_option( 'skautis_integration_appid_type' );
 		if ( self::PROD_ENV === $envType ) {
 			$this->app_id    = get_option( 'skautis_integration_appid_prod' );
-			$this->env      = $envType;
+			$this->env       = $envType;
 			$this->test_mode = false;
 		} elseif ( self::TEST_ENV === $envType ) {
 			$this->app_id    = get_option( 'skautis_integration_appid_test' );
-			$this->env      = $envType;
+			$this->env       = $envType;
 			$this->test_mode = true;
 		}
 
 		if ( $this->app_id && $envType ) {
-			$sessionAdapter           = new Transient_Session_Adapter();
-			$wsdlManager              = new Skautis\Wsdl\WsdlManager( new Skautis\Wsdl\WebServiceFactory(), new Skautis\Config( $this->app_id, $this->test_mode ) );
-			$user                     = new Skautis\User( $wsdlManager, $sessionAdapter );
-			$this->skautis            = new Skautis\Skautis( $wsdlManager, $user );
+			$sessionAdapter            = new Transient_Session_Adapter();
+			$wsdlManager               = new Skautis\Wsdl\WsdlManager( new Skautis\Wsdl\WebServiceFactory(), new Skautis\Config( $this->app_id, $this->test_mode ) );
+			$user                      = new Skautis\User( $wsdlManager, $sessionAdapter );
+			$this->skautis             = new Skautis\Skautis( $wsdlManager, $user );
 			$this->skautis_initialized = true;
 
 			if ( $this->test_mode ) {

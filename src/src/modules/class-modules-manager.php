@@ -9,12 +9,12 @@ use SkautisIntegration\Vendor\Pimple\Container;
 final class Modules_Manager {
 
 	private $container;
-	private $modules          = array();
+	private $modules           = array();
 	private $activated_modules = array();
 
 	public function __construct( Container $container, array $modules = array() ) {
-		$this->container        = $container;
-		$this->modules          = apply_filters( SKAUTISINTEGRATION_NAME . '_modules', $modules );
+		$this->container         = $container;
+		$this->modules           = apply_filters( SKAUTISINTEGRATION_NAME . '_modules', $modules );
 		$this->activated_modules = (array) get_option( 'skautis_integration_activated_modules' );
 		apply_filters_ref_array( SKAUTISINTEGRATION_NAME . '_activated_modules', $this->activated_modules );
 		$this->register_activated_modules( $this->modules, $this->activated_modules );

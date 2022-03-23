@@ -21,7 +21,7 @@ final class Settings {
 	public function __construct( Skautis_Gateway $skautisGateway, Modules_Manager $modulesManager ) {
 		$this->skautis_gateway = $skautisGateway;
 		$this->modules_manager = $modulesManager;
-		$this->admin_dir_url    = plugin_dir_url( __FILE__ ) . 'public/';
+		$this->admin_dir_url   = plugin_dir_url( __FILE__ ) . 'public/';
 		$this->init_hooks();
 	}
 

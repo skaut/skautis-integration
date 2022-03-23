@@ -16,7 +16,7 @@ final class Metabox {
 	public function __construct( array $postTypes, Rules_Manager $rulesManager, Frontend $frontend ) {
 		$this->post_types    = $postTypes;
 		$this->rules_manager = $rulesManager;
-		$this->frontend     = $frontend;
+		$this->frontend      = $frontend;
 		$this->init_hooks();
 	}
 

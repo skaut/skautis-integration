@@ -16,8 +16,8 @@ final class Frontend {
 	private $wp_login_logout;
 
 	public function __construct( Skautis_Login $skautisLogin, Rules_Manager $rulesManager, WP_Login_Logout $wpLoginLogout ) {
-		$this->skautis_login  = $skautisLogin;
-		$this->rules_manager  = $rulesManager;
+		$this->skautis_login   = $skautisLogin;
+		$this->rules_manager   = $rulesManager;
 		$this->wp_login_logout = $wpLoginLogout;
 		$this->init_hooks();
 	}

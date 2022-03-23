@@ -21,10 +21,10 @@ final class Admin {
 	public function __construct( array $postTypes, Rules_Manager $rulesManager, Frontend $frontend ) {
 		$this->post_types    = $postTypes;
 		$this->rules_manager = $rulesManager;
-		$this->frontend     = $frontend;
-		$this->settings     = new Settings();
-		$this->metabox      = new Metabox( $this->post_types, $this->rules_manager, $frontend );
-		$this->admin_dir_url  = plugin_dir_url( __FILE__ ) . 'public/';
+		$this->frontend      = $frontend;
+		$this->settings      = new Settings();
+		$this->metabox       = new Metabox( $this->post_types, $this->rules_manager, $frontend );
+		$this->admin_dir_url = plugin_dir_url( __FILE__ ) . 'public/';
 		$this->init_hooks();
 	}
 

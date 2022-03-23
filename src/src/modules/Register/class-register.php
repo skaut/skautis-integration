@@ -33,7 +33,7 @@ final class Register implements Module {
 	public function __construct( Skautis_Gateway $skautisGateway, Skautis_Login $skautisLogin, WP_Login_Logout $wpLoginLogout, Rules_Manager $rulesManager, UsersRepository $usersRepository ) {
 		$this->skautis_gateway  = $skautisGateway;
 		$this->skautis_login    = $skautisLogin;
-		$this->wp_login_logout   = $wpLoginLogout;
+		$this->wp_login_logout  = $wpLoginLogout;
 		$this->rules_manager    = $rulesManager;
 		$this->users_repository = $usersRepository;
 		$this->wp_register      = new WP_Register( $this->skautis_gateway, $this->users_repository );
