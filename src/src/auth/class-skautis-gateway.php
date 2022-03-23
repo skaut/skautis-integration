@@ -51,7 +51,7 @@ class Skautis_Gateway {
 		return $this->skautis;
 	}
 
-	public function isInitialized(): bool {
+	public function is_initialized(): bool {
 		return $this->skautisInitialized;
 	}
 

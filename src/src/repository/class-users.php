@@ -87,7 +87,7 @@ class Users {
 		$eventType = '';
 		$eventId   = 0;
 
-		if ( ! $this->skautisGateway->isInitialized() ) {
+		if ( ! $this->skautisGateway->is_initialized() ) {
 			return array(
 				'users'     => $users,
 				'eventType' => $eventType,

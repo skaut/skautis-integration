@@ -111,7 +111,7 @@ final class Admin {
 					<label class="screen-reader-text"
 						for="post_author_override"><?php esc_html_e( 'Zadejte podmínky pro splnění pravidla', 'skautis-integration' ); ?></label>
 					<?php
-					if ( ! $this->skautisGateway->isInitialized() ) {
+					if ( ! $this->skautisGateway->is_initialized() ) {
 						/* translators: 1: Start of link to the settings 2: End of link to the settings */
 						printf( esc_html__( 'Vyberte v %1$snastavení%2$s pluginu typ prostředí skautISu', 'skautis-integration' ), '<a href="' . esc_url( admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME ) ) . '">', '</a>' );
 					} elseif ( ! $this->skautisGateway->get_skautis_instance()->getUser()->isLoggedIn( true ) ) {
@@ -243,7 +243,7 @@ final class Admin {
 			return;
 		}
 
-		if ( ! $this->skautisGateway->isInitialized() || ! $this->skautisGateway->get_skautis_instance()->getUser()->isLoggedIn( true ) ) {
+		if ( ! $this->skautisGateway->is_initialized() || ! $this->skautisGateway->get_skautis_instance()->getUser()->isLoggedIn( true ) ) {
 			return;
 		}
 

@@ -17,7 +17,7 @@ final class Skautis_Login {
 	}
 
 	public function is_user_logged_in_skautis(): bool {
-		if ( $this->skautisGateway->isInitialized() ) {
+		if ( $this->skautisGateway->is_initialized() ) {
 			return $this->skautisGateway->get_skautis_instance()->getUser()->isLoggedIn() && $this->skautisGateway->get_skautis_instance()->getUser()->isLoggedIn( true );
 		}
 

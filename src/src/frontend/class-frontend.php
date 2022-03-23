@@ -32,7 +32,7 @@ final class Frontend {
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ) );
 		add_action( 'login_enqueue_scripts', array( $this, 'enqueue_login_styles' ) );
-		if ( $this->skautisGateway->isInitialized() ) {
+		if ( $this->skautisGateway->is_initialized() ) {
 			if ( $this->skautisGateway->get_skautis_instance()->getUser()->isLoggedIn() ) {
 				add_action( 'admin_bar_menu', array( $this, 'add_logout_link_to_admin_bar' ), 20 );
 			}

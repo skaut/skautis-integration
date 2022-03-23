@@ -93,7 +93,7 @@ final class Actions {
 			return $wpQuery;
 		}
 
-		if ( ! $this->skautisGateway->isInitialized() ) {
+		if ( ! $this->skautisGateway->is_initialized() ) {
 			if ( ( get_option( 'skautis_integration_appid_type' ) === 'prod' && ! get_option( 'skautis_integration_appid_prod' ) ) ||
 				( get_option( 'skautis_integration_appid_type' ) === 'test' && ! get_option( 'skautis_integration_appid_test' ) ) ) {
 				if ( Helpers::userIsSkautisManager() ) {
