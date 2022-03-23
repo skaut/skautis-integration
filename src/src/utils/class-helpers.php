@@ -80,7 +80,7 @@ class Helpers {
 			return esc_url_raw( wp_unslash( $_GET['redirect_to'] ) );
 		}
 		$returnUrl = self::get_return_url();
-		return is_null( $returnUrl ) ? self::getCurrentUrl() : $returnUrl;
+		return is_null( $returnUrl ) ? self::get_current_url() : $returnUrl;
 	}
 
 	public static function get_return_url() {
@@ -124,7 +124,7 @@ class Helpers {
 		return current_user_can( self::get_skautis_manager_capability() );
 	}
 
-	public static function getCurrentUrl(): string {
+	public static function get_current_url(): string {
 		if ( isset( $_SERVER['HTTP_HOST'] ) && isset( $_SERVER['REQUEST_URI'] ) ) {
 			return esc_url_raw( ( isset( $_SERVER['HTTPS'] ) ? 'https' : 'http' ) . '://' . wp_unslash( $_SERVER['HTTP_HOST'] ) . wp_unslash( $_SERVER['REQUEST_URI'] ) );
 		}

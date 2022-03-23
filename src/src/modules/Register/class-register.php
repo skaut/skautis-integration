@@ -102,7 +102,7 @@ final class Register implements Module {
 
 	public function register() {
 		if ( ! $this->skautisLogin->is_user_logged_in_skautis() ) {
-			$returnUrl = Helpers::get_return_url() ?? Helpers::getCurrentUrl();
+			$returnUrl = Helpers::get_return_url() ?? Helpers::get_current_url();
 			wp_safe_redirect( esc_url_raw( $this->skautisGateway->get_skautis_instance()->getLoginUrl( $returnUrl ) ), 302 );
 			exit;
 		}

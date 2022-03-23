@@ -81,7 +81,7 @@ final class Actions {
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		do_action( SKAUTISINTEGRATION_NAME . '_after_skautis_token_is_set', $_POST );
 
-		if ( strpos( Helpers::getCurrentUrl(), 'profile.php' ) !== false ) {
+		if ( strpos( Helpers::get_current_url(), 'profile.php' ) !== false ) {
 			$this->connectWpAccount->connect();
 		} else {
 			$this->skautisLogin->login_confirm();

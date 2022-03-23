@@ -135,7 +135,7 @@ class Users_Management {
 
 		if ( ! $this->skautisLogin->is_user_logged_in_skautis() ) {
 			if ( $this->skautisGateway->is_initialized() ) {
-				echo '<a href="' . esc_url( $this->wpLoginLogout->get_login_url( add_query_arg( 'noWpLogin', true, Helpers::getCurrentUrl() ) ) ) . '">' . esc_html__( 'Pro zobrazení obsahu je nutné se přihlásit do skautISu', 'skautis-integration' ) . '</a>';
+				echo '<a href="' . esc_url( $this->wpLoginLogout->get_login_url( add_query_arg( 'noWpLogin', true, Helpers::get_current_url() ) ) ) . '">' . esc_html__( 'Pro zobrazení obsahu je nutné se přihlásit do skautISu', 'skautis-integration' ) . '</a>';
 				echo '
 		</div>
 			';
@@ -165,7 +165,7 @@ class Users_Management {
 				$homeUrl               = get_home_url( null, 'skautis/auth/' . Actions::DISCONNECT_ACTION );
 				$nonce                 = wp_create_nonce( SKAUTISINTEGRATION_NAME . '_disconnectWpAccountFromSkautis' );
 				$userEditLink          = get_edit_user_link( $usersData[ $user->id ]['id'] );
-				$returnUrl             = add_query_arg( SKAUTISINTEGRATION_NAME . '_disconnectWpAccountFromSkautis', $nonce, Helpers::getCurrentUrl() );
+				$returnUrl             = add_query_arg( SKAUTISINTEGRATION_NAME . '_disconnectWpAccountFromSkautis', $nonce, Helpers::get_current_url() );
 				$returnUrl             = add_query_arg( 'user-edit_php', '', $returnUrl );
 				$returnUrl             = add_query_arg( 'user_id', $usersData[ $user->id ]['id'], $returnUrl );
 				$connectDisconnectLink = add_query_arg( 'ReturnUrl', rawurlencode( $returnUrl ), $homeUrl );

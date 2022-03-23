@@ -35,7 +35,7 @@ final class Connect_And_Disconnect_WP_Account {
 			if ( ! Helpers::user_is_skautis_manager() && get_option( SKAUTISINTEGRATION_NAME . '_allowUsersDisconnectFromSkautis' ) !== '1' ) {
 				return;
 			}
-			$returnUrl = add_query_arg( SKAUTISINTEGRATION_NAME . '_disconnectWpAccountFromSkautis', wp_create_nonce( SKAUTISINTEGRATION_NAME . '_disconnectWpAccountFromSkautis' ), Helpers::getCurrentUrl() );
+			$returnUrl = add_query_arg( SKAUTISINTEGRATION_NAME . '_disconnectWpAccountFromSkautis', wp_create_nonce( SKAUTISINTEGRATION_NAME . '_disconnectWpAccountFromSkautis' ), Helpers::get_current_url() );
 			$url       = add_query_arg( 'ReturnUrl', rawurlencode( $returnUrl ), get_home_url( null, 'skautis/auth/' . Actions::DISCONNECT_ACTION ) );
 
 			echo '
@@ -43,7 +43,7 @@ final class Connect_And_Disconnect_WP_Account {
 			   class="button">' . esc_html__( 'Zrušit propojení účtu se skautISem', 'skautis-integration' ) . '</a>
 			';
 		} elseif ( get_current_screen()->id === 'profile' ) {
-			$returnUrl = add_query_arg( SKAUTISINTEGRATION_NAME . '_connectWpAccountWithSkautis', wp_create_nonce( SKAUTISINTEGRATION_NAME . '_connectWpAccountWithSkautis' ), Helpers::getCurrentUrl() );
+			$returnUrl = add_query_arg( SKAUTISINTEGRATION_NAME . '_connectWpAccountWithSkautis', wp_create_nonce( SKAUTISINTEGRATION_NAME . '_connectWpAccountWithSkautis' ), Helpers::get_current_url() );
 			$url       = add_query_arg( 'ReturnUrl', rawurlencode( $returnUrl ), get_home_url( null, 'skautis/auth/' . Actions::CONNECT_ACTION ) );
 
 			echo '
@@ -57,7 +57,7 @@ final class Connect_And_Disconnect_WP_Account {
 		if ( ! $this->skautisLogin->is_user_logged_in_skautis() ) {
             // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			if ( ! $this->skautisLogin->set_login_data_to_local_skautis_instance( $_POST ) ) {
-				$returnUrl = Helpers::get_return_url() ?? Helpers::getCurrentUrl();
+				$returnUrl = Helpers::get_return_url() ?? Helpers::get_current_url();
 				wp_safe_redirect( esc_url_raw( $this->skautisGateway->get_skautis_instance()->getLoginUrl( $returnUrl ) ), 302 );
 				exit;
 			}
@@ -93,7 +93,7 @@ final class Connect_And_Disconnect_WP_Account {
 	}
 
 	public function get_connect_wp_user_to_skautis_url(): string {
-		$returnUrl = Helpers::getCurrentUrl();
+		$returnUrl = Helpers::get_current_url();
 		$returnUrl = add_query_arg( SKAUTISINTEGRATION_NAME . '_connectWpAccountWithSkautis', wp_create_nonce( SKAUTISINTEGRATION_NAME . '_connectWpAccountWithSkautis' ), $returnUrl );
 		$url       = add_query_arg( 'ReturnUrl', rawurlencode( $returnUrl ), get_home_url( null, 'skautis/auth/' . Actions::CONNECT_WP_USER_TO_SKAUTIS_ACTION ) );
 

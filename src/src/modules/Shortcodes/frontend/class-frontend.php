@@ -28,7 +28,7 @@ final class Frontend {
 	}
 
 	private function get_login_form( bool $forceLogoutFromSkautis = false ): string {
-		$loginUrlArgs = add_query_arg( 'noWpLogin', true, Helpers::getCurrentUrl() );
+		$loginUrlArgs = add_query_arg( 'noWpLogin', true, Helpers::get_current_url() );
 		if ( $forceLogoutFromSkautis ) {
 			$loginUrlArgs = add_query_arg( 'logoutFromSkautis', true, $loginUrlArgs );
 		}

@@ -44,7 +44,7 @@ class Role_Changer {
 		$currentUserRole  = $this->skautisGateway->get_skautis_instance()->getUser()->getRoleId();
 
 		echo '
-<form method="post" action="' . esc_attr( Helpers::getCurrentUrl() ) . '" novalidate="novalidate">' .
+<form method="post" action="' . esc_attr( Helpers::get_current_url() ) . '" novalidate="novalidate">' .
 		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		wp_nonce_field( SKAUTISINTEGRATION_NAME . '_changeSkautisUserRole', '_wpnonce', true, false ) .
 		'<table class="form-table">

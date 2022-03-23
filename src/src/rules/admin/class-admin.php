@@ -115,7 +115,7 @@ final class Admin {
 						/* translators: 1: Start of link to the settings 2: End of link to the settings */
 						printf( esc_html__( 'Vyberte v %1$snastavení%2$s pluginu typ prostředí skautISu', 'skautis-integration' ), '<a href="' . esc_url( admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME ) ) . '">', '</a>' );
 					} elseif ( ! $this->skautisGateway->get_skautis_instance()->getUser()->isLoggedIn( true ) ) {
-						echo '<h4><a href="' . esc_url( $this->wpLoginLogout->get_login_url( add_query_arg( 'noWpLogin', true, Helpers::getCurrentUrl() ) ) ) . '">' . esc_html__( 'Pro správu podmínek je nutné se přihlásit do skautISu', 'skautis-integration' ) . '</a></h4>';
+						echo '<h4><a href="' . esc_url( $this->wpLoginLogout->get_login_url( add_query_arg( 'noWpLogin', true, Helpers::get_current_url() ) ) ) . '">' . esc_html__( 'Pro správu podmínek je nutné se přihlásit do skautISu', 'skautis-integration' ) . '</a></h4>';
 					} else {
 						echo '<div id="query_builder"></div>';
 					}
