@@ -289,7 +289,7 @@ final class Settings {
 		add_settings_field(
 			SKAUTISINTEGRATION_NAME . '_allowUsersDisconnectFromSkautis',
 			__( 'Zrušení spojení se skautISem', 'skautis-integration' ),
-			array( $this, 'fieldAllowUsersDisconnectFromSkautis' ),
+			array( $this, 'field_allow_users_disconnect_from_skautis' ),
 			SKAUTISINTEGRATION_NAME . '_login',
 			SKAUTISINTEGRATION_NAME . '_login'
 		);
@@ -438,7 +438,7 @@ if ( ! isUserLoggedInSkautis() ) {
 		<?php
 	}
 
-	public function fieldAllowUsersDisconnectFromSkautis() {
+	public function field_allow_users_disconnect_from_skautis() {
 		?>
 		<input name="<?php echo esc_attr( SKAUTISINTEGRATION_NAME ); ?>_allowUsersDisconnectFromSkautis"
 			id="skautis_integration_allowUsersDisconnectFromSkautis" type="checkbox"
