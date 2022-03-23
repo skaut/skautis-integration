@@ -9,10 +9,10 @@ use SkautisIntegration\Utils\Helpers;
 
 class Users {
 
-	protected $skautisGateway;
+	protected $skautis_gateway;
 
 	public function __construct( Skautis_Gateway $skautisGateway ) {
-		$this->skautisGateway = $skautisGateway;
+		$this->skautis_gateway = $skautisGateway;
 	}
 
 	protected function get_search_user_string(): string {
@@ -40,7 +40,7 @@ class Users {
 			array(
 				'meta_query'  => array(
 					array(
-						'key'     => 'skautisUserId_' . $this->skautisGateway->get_env(),
+						'key'     => 'skautisUserId_' . $this->skautis_gateway->get_env(),
 						'type'    => 'numeric',
 						'value'   => 0,
 						'compare' => '>',
@@ -51,7 +51,7 @@ class Users {
 		);
 
 		foreach ( $connectedWpUsers->get_results() as $user ) {
-			$usersData[ get_user_meta( $user->ID, 'skautisUserId_' . $this->skautisGateway->get_env(), true ) ] = array(
+			$usersData[ get_user_meta( $user->ID, 'skautisUserId_' . $this->skautis_gateway->get_env(), true ) ] = array(
 				'id'   => $user->ID,
 				'name' => $user->display_name,
 			);
@@ -66,11 +66,11 @@ class Users {
 				'meta_query'  => array(
 					'relation' => 'OR',
 					array(
-						'key'     => 'skautisUserId_' . $this->skautisGateway->get_env(),
+						'key'     => 'skautisUserId_' . $this->skautis_gateway->get_env(),
 						'compare' => 'NOT EXISTS',
 					),
 					array(
-						'key'     => 'skautisUserId_' . $this->skautisGateway->get_env(),
+						'key'     => 'skautisUserId_' . $this->skautis_gateway->get_env(),
 						'value'   => '',
 						'compare' => '=',
 					),
@@ -87,20 +87,20 @@ class Users {
 		$eventType = '';
 		$eventId   = 0;
 
-		if ( ! $this->skautisGateway->is_initialized() ) {
+		if ( ! $this->skautis_gateway->is_initialized() ) {
 			return array(
 				'users'     => $users,
 				'eventType' => $eventType,
 			);
 		}
 
-		$currentUserRoles = $this->skautisGateway->get_skautis_instance()->UserManagement->UserRoleAll(
+		$currentUserRoles = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserRoleAll(
 			array(
-				'ID_Login' => $this->skautisGateway->get_skautis_instance()->getUser()->getLoginId(),
-				'ID_User'  => $this->skautisGateway->get_skautis_instance()->UserManagement->UserDetail()->ID,
+				'ID_Login' => $this->skautis_gateway->get_skautis_instance()->getUser()->getLoginId(),
+				'ID_User'  => $this->skautis_gateway->get_skautis_instance()->UserManagement->UserDetail()->ID,
 			)
 		);
-		$currentUserRole  = $this->skautisGateway->get_skautis_instance()->getUser()->getRoleId();
+		$currentUserRole  = $this->skautis_gateway->get_skautis_instance()->getUser()->getRoleId();
 
 		// different procedure for roles associated with events
 		foreach ( $currentUserRoles as $role ) {
@@ -109,8 +109,8 @@ class Users {
 				if ( ! empty( $words ) && isset( $words[1], $words[2] ) && 'Event' === $words[1] ) {
 					$eventType = $words[2];
 
-					$userDetail        = $this->skautisGateway->get_skautis_instance()->UserManagement->UserDetail();
-					$currentUserEvents = $this->skautisGateway->get_skautis_instance()->Events->EventAllPerson(
+					$userDetail        = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserDetail();
+					$currentUserEvents = $this->skautis_gateway->get_skautis_instance()->Events->EventAllPerson(
 						array(
 							'ID_Person' => $userDetail->ID_Person,
 						)
@@ -118,7 +118,7 @@ class Users {
 
 					foreach ( $currentUserEvents as $event ) {
 						if ( $event->ID_Group === $role->ID_Group ) {
-							$eventUrl = $this->skautisGateway->get_skautis_instance()->Events->EventDetail(
+							$eventUrl = $this->skautis_gateway->get_skautis_instance()->Events->EventDetail(
 								array(
 									'ID' => $event->ID,
 								)
@@ -141,7 +141,7 @@ class Users {
 				$participants = null;
 			} else {
 				$methodName   = 'Participant' . $eventType . 'All';
-				$participants = $this->skautisGateway->get_skautis_instance()->Events->$methodName(
+				$participants = $this->skautis_gateway->get_skautis_instance()->Events->$methodName(
 					array(
 						'ID_Event' . $eventType => $eventId,
 					)
@@ -191,7 +191,7 @@ class Users {
 		if ( empty( $users ) ) {
 			$searchUserString = $this->get_search_user_string();
 
-			$skautisUsers = $this->skautisGateway->get_skautis_instance()->UserManagement->userAll(
+			$skautisUsers = $this->skautis_gateway->get_skautis_instance()->UserManagement->userAll(
 				array(
 					'DisplayName' => $searchUserString,
 				)
@@ -256,7 +256,7 @@ class Users {
 		} else {
 			foreach ( (array) $users['users'] as $user ) {
 				if ( $user->id === $skautisUserId ) {
-					$personDetail = $this->skautisGateway->get_skautis_instance()->OrganizationUnit->PersonDetail(
+					$personDetail = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->PersonDetail(
 						array(
 							'ID' => $user->personId,
 						)
