@@ -11,14 +11,14 @@ use SkautisIntegration\Utils\Helpers;
 
 final class Frontend {
 
-	private $skautisLogin;
-	private $rulesManager;
-	private $wpLoginLogout;
+	private $skautis_login;
+	private $rules_manager;
+	private $wp_login_logout;
 
 	public function __construct( Skautis_Login $skautisLogin, Rules_Manager $rulesManager, WP_Login_Logout $wpLoginLogout ) {
-		$this->skautisLogin  = $skautisLogin;
-		$this->rulesManager  = $rulesManager;
-		$this->wpLoginLogout = $wpLoginLogout;
+		$this->skautis_login  = $skautisLogin;
+		$this->rules_manager  = $rulesManager;
+		$this->wp_login_logout = $wpLoginLogout;
 		$this->init_hooks();
 	}
 
@@ -37,7 +37,7 @@ final class Frontend {
 		<div class="wp-core-ui">
 			<p style="margin-bottom: 0.3em;">
 				<a class="button button-primary button-hero button-skautis"
-				   href="' . $this->wpLoginLogout->get_login_url( $loginUrlArgs ) . '">' . __( 'Log in with skautIS', 'skautis-integration' ) . '</a>
+				   href="' . $this->wp_login_logout->get_login_url( $loginUrlArgs ) . '">' . __( 'Log in with skautIS', 'skautis-integration' ) . '</a>
 			</p>
 		</div>
 		<br/>
@@ -63,7 +63,7 @@ final class Frontend {
 				return $content;
 			}
 
-			if ( ! $this->skautisLogin->is_user_logged_in_skautis() ) {
+			if ( ! $this->skautis_login->is_user_logged_in_skautis() ) {
 				if ( 'showLogin' === $atts['content'] ) {
 					return $this->get_login_required_message() . $this->get_login_form();
 				} else {
@@ -71,7 +71,7 @@ final class Frontend {
 				}
 			}
 
-			if ( $this->rulesManager->check_if_user_passed_rules( explode( ',', $atts['rules'] ) ) ) {
+			if ( $this->rules_manager->check_if_user_passed_rules( explode( ',', $atts['rules'] ) ) ) {
 				return $content;
 			} else {
 				if ( 'showLogin' === $atts['content'] ) {
