@@ -81,7 +81,7 @@ final class Settings {
 		add_settings_field(
 			SKAUTISINTEGRATION_NAME . '_modules_visibility_includeChildren',
 			__( 'Podřízený obsah', 'skautis-integration' ),
-			array( $this, 'fieldIncludeChildren' ),
+			array( $this, 'field_include_children' ),
 			SKAUTISINTEGRATION_NAME . '_modules_visibility',
 			SKAUTISINTEGRATION_NAME . '_modules_visibility'
 		);
@@ -150,7 +150,7 @@ final class Settings {
 		<?php
 	}
 
-	public function fieldIncludeChildren() {
+	public function field_include_children() {
 		$includeChildren = get_option( SKAUTISINTEGRATION_NAME . '_modules_visibility_includeChildren', 0 );
 		?>
 		<label><input type="checkbox" name="<?php echo esc_attr( SKAUTISINTEGRATION_NAME ); ?>_modules_visibility_includeChildren"
