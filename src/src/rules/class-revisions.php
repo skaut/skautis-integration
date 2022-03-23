@@ -19,7 +19,7 @@ class Revisions {
 		add_filter( '_wp_post_revision_field_custom_fields', array( $this, 'field' ), 10, 3 );
 	}
 
-	public function filterMeta( $meta ): array {
+	public function filter_meta( $meta ): array {
 		$metaFiltered = array();
 		foreach ( $meta as $key => $value ) {
 			if ( '_' !== $key[0] ) {
@@ -32,7 +32,7 @@ class Revisions {
 
 	public function getMeta( int $postId ): array {
 		$meta = get_metadata( 'post', $postId );
-		$meta = $this->filterMeta( $meta );
+		$meta = $this->filter_meta( $meta );
 
 		return $meta;
 	}
