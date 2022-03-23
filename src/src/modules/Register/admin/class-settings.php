@@ -10,10 +10,10 @@ use SkautisIntegration\Utils\Helpers;
 
 final class Settings {
 
-	private $rulesManager;
+	private $rules_manager;
 
 	public function __construct( Rules_Manager $rulesManager ) {
-		$this->rulesManager = $rulesManager;
+		$this->rules_manager = $rulesManager;
 		$this->init_hooks();
 	}
 
@@ -193,7 +193,7 @@ final class Settings {
 					</label>
 					<select name="rule" class="rule select2">
 						<?php
-						foreach ( (array) $this->rulesManager->get_all_rules() as $rule ) {
+						foreach ( (array) $this->rules_manager->get_all_rules() as $rule ) {
 							echo '<option value="' . esc_attr( $rule->ID ) . '">' . esc_html( $rule->post_title ) . '</option>';
 						}
 						?>

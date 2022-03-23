@@ -10,17 +10,17 @@ use SkautisIntegration\Utils\Helpers;
 
 final class Admin {
 
-	private $rulesManager;
-	private $wpLoginLogout;
-	private $skautisGateway;
-	private $adminDirUrl = '';
+	private $rules_manager;
+	private $wp_login_logout;
+	private $skautis_gateway;
+	// TODO: Unused?
+	private $admin_dir_url = '';
 
 	public function __construct( Rules_Manager $rulesManager, WP_Login_Logout $wpLoginLogout, Skautis_Gateway $skautisGateway ) {
-		$this->rulesManager   = $rulesManager;
-		$this->wpLoginLogout  = $wpLoginLogout;
-		$this->skautisGateway = $skautisGateway;
-		$this->skautisGateway = $skautisGateway;
-		$this->adminDirUrl    = plugin_dir_url( __FILE__ ) . 'public/';
+		$this->rules_manager   = $rulesManager;
+		$this->wp_login_logout = $wpLoginLogout;
+		$this->skautis_gateway = $skautisGateway;
+		$this->admin_dir_url   = plugin_dir_url( __FILE__ ) . 'public/';
 		( new Columns() );
 		$this->init_hooks();
 	}
@@ -111,11 +111,11 @@ final class Admin {
 					<label class="screen-reader-text"
 						for="post_author_override"><?php esc_html_e( 'Zadejte podmínky pro splnění pravidla', 'skautis-integration' ); ?></label>
 					<?php
-					if ( ! $this->skautisGateway->is_initialized() ) {
+					if ( ! $this->skautis_gateway->is_initialized() ) {
 						/* translators: 1: Start of link to the settings 2: End of link to the settings */
 						printf( esc_html__( 'Vyberte v %1$snastavení%2$s pluginu typ prostředí skautISu', 'skautis-integration' ), '<a href="' . esc_url( admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME ) ) . '">', '</a>' );
-					} elseif ( ! $this->skautisGateway->get_skautis_instance()->getUser()->isLoggedIn( true ) ) {
-						echo '<h4><a href="' . esc_url( $this->wpLoginLogout->get_login_url( add_query_arg( 'noWpLogin', true, Helpers::get_current_url() ) ) ) . '">' . esc_html__( 'Pro správu podmínek je nutné se přihlásit do skautISu', 'skautis-integration' ) . '</a></h4>';
+					} elseif ( ! $this->skautis_gateway->get_skautis_instance()->getUser()->isLoggedIn( true ) ) {
+						echo '<h4><a href="' . esc_url( $this->wp_login_logout->get_login_url( add_query_arg( 'noWpLogin', true, Helpers::get_current_url() ) ) ) . '">' . esc_html__( 'Pro správu podmínek je nutné se přihlásit do skautISu', 'skautis-integration' ) . '</a></h4>';
 					} else {
 						echo '<div id="query_builder"></div>';
 					}
@@ -243,7 +243,7 @@ final class Admin {
 			return;
 		}
 
-		if ( ! $this->skautisGateway->is_initialized() || ! $this->skautisGateway->get_skautis_instance()->getUser()->isLoggedIn( true ) ) {
+		if ( ! $this->skautis_gateway->is_initialized() || ! $this->skautis_gateway->get_skautis_instance()->getUser()->isLoggedIn( true ) ) {
 			return;
 		}
 
@@ -253,7 +253,7 @@ final class Admin {
 
 			var data = {};
 			<?php
-			foreach ( (array) $this->rulesManager->get_rules() as $rule ) {
+			foreach ( (array) $this->rules_manager->get_rules() as $rule ) {
 				$data = array(
 					'id'          => $rule->get_id(),
 					'label'       => $rule->get_label(),

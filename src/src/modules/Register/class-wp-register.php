@@ -10,12 +10,12 @@ use SkautisIntegration\Utils\Helpers;
 
 final class WP_Register {
 
-	private $skautisGateway;
-	private $usersRepository;
+	private $skautis_gateway;
+	private $users_repository;
 
 	public function __construct( Skautis_Gateway $skautisGateway, UsersRepository $usersRepository ) {
-		$this->skautisGateway  = $skautisGateway;
-		$this->usersRepository = $usersRepository;
+		$this->skautis_gateway  = $skautisGateway;
+		$this->users_repository = $usersRepository;
 	}
 
 	private function resolve_notifications_and_register_user_to_wp( string $userLogin, string $userEmail ): int {
@@ -55,9 +55,9 @@ final class WP_Register {
 	}
 
 	private function prepare_user_data( $skautisUser ): array {
-		$skautisUserDetail = $this->skautisGateway->get_skautis_instance()->OrganizationUnit->PersonDetail(
+		$skautisUserDetail = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->PersonDetail(
 			array(
-				'ID_Login' => $this->skautisGateway->get_skautis_instance()->getUser()->getLoginId(),
+				'ID_Login' => $this->skautis_gateway->get_skautis_instance()->getUser()->getLoginId(),
 				'ID'       => $skautisUser->ID_Person,
 			)
 		);
@@ -89,7 +89,7 @@ final class WP_Register {
 				'number'     => 1,
 				'meta_query' => array(
 					array(
-						'key'     => 'skautisUserId_' . $this->skautisGateway->get_env(),
+						'key'     => 'skautisUserId_' . $this->skautis_gateway->get_env(),
 						'value'   => absint( $user['id'] ),
 						'compare' => '=',
 					),
@@ -114,7 +114,7 @@ final class WP_Register {
 			return false;
 		}
 
-		if ( ! add_user_meta( $userId, 'skautisUserId_' . $this->skautisGateway->get_env(), absint( $user['id'] ) ) ) {
+		if ( ! add_user_meta( $userId, 'skautisUserId_' . $this->skautis_gateway->get_env(), absint( $user['id'] ) ) ) {
 			return false;
 		}
 
@@ -147,7 +147,7 @@ final class WP_Register {
 	}
 
 	public function check_if_user_is_already_registered_and_get_his_user_id(): int {
-		$userDetail = $this->skautisGateway->get_skautis_instance()->UserManagement->UserDetail();
+		$userDetail = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserDetail();
 
 		if ( ! $userDetail || ! isset( $userDetail->ID ) || ! $userDetail->ID > 0 ) {
 			return 0;
@@ -159,7 +159,7 @@ final class WP_Register {
 				'number'     => 1,
 				'meta_query' => array(
 					array(
-						'key'     => 'skautisUserId_' . $this->skautisGateway->get_env(),
+						'key'     => 'skautisUserId_' . $this->skautis_gateway->get_env(),
 						'value'   => absint( $userDetail->ID ),
 						'compare' => '=',
 					),
@@ -186,7 +186,7 @@ final class WP_Register {
 	}
 
 	public function register_to_wp( string $wpRole ): bool {
-		$userDetail = $this->skautisGateway->get_skautis_instance()->UserManagement->UserDetail();
+		$userDetail = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserDetail();
 
 		if ( $userDetail && isset( $userDetail->ID ) && $userDetail->ID > 0 ) {
 			$user = $this->prepare_user_data( $userDetail );
@@ -206,7 +206,7 @@ final class WP_Register {
 	}
 
 	public function register_to_wp_manually( string $wpRole, int $skautisUserId ): bool {
-		$userDetail = $this->usersRepository->get_user_detail( $skautisUserId );
+		$userDetail = $this->users_repository->get_user_detail( $skautisUserId );
 
 		return $this->process_wp_user_registration( $userDetail, $wpRole );
 	}

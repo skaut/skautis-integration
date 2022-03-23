@@ -9,14 +9,14 @@ use SkautisIntegration\Modules\Visibility\Frontend\Frontend;
 
 final class Metabox {
 
-	private $postTypes;
-	private $rulesManager;
+	private $post_types;
+	private $rules_manager;
 	private $frontend;
 
 	public function __construct( array $postTypes, Rules_Manager $rulesManager, Frontend $frontend ) {
-		$this->postTypes    = $postTypes;
-		$this->rulesManager = $rulesManager;
-		$this->frontend     = $frontend;
+		$this->post_types    = $postTypes;
+		$this->rules_manager = $rulesManager;
+		$this->frontend      = $frontend;
 		$this->init_hooks();
 	}
 
@@ -26,7 +26,7 @@ final class Metabox {
 	}
 
 	public function add_metabox_for_rules_field() {
-		foreach ( $this->postTypes as $postType ) {
+		foreach ( $this->post_types as $postType ) {
 			add_meta_box(
 				SKAUTISINTEGRATION_NAME . '_modules_visibility_rules_metabox',
 				__( 'SkautIS pravidla', 'skautis-integration' ),
@@ -126,7 +126,7 @@ final class Metabox {
 
 					<select name="<?php echo esc_attr( SKAUTISINTEGRATION_NAME ); ?>_rules" class="rule select2">
 						<?php
-						foreach ( (array) $this->rulesManager->get_all_rules() as $rule ) {
+						foreach ( (array) $this->rules_manager->get_all_rules() as $rule ) {
 							echo '<option value="' . esc_attr( $rule->ID ) . '">' . esc_html( $rule->post_title ) . '</option>';
 						}
 						?>

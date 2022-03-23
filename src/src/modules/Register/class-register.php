@@ -22,24 +22,25 @@ final class Register implements Module {
 
 	public static $id = 'module_Register';
 
-	private $skautisGateway;
-	private $skautisLogin;
-	private $wpLoginLogout;
-	private $rulesManager;
-	private $usersRepository;
-	private $wpRegister;
+	private $skautis_gateway;
+	private $skautis_login;
+	private $wp_login_logout;
+	private $rules_manager;
+	// TODO: Unused?
+	private $users_repository;
+	private $wp_register;
 
 	public function __construct( Skautis_Gateway $skautisGateway, Skautis_Login $skautisLogin, WP_Login_Logout $wpLoginLogout, Rules_Manager $rulesManager, UsersRepository $usersRepository ) {
-		$this->skautisGateway  = $skautisGateway;
-		$this->skautisLogin    = $skautisLogin;
-		$this->wpLoginLogout   = $wpLoginLogout;
-		$this->rulesManager    = $rulesManager;
-		$this->usersRepository = $usersRepository;
-		$this->wpRegister      = new WP_Register( $this->skautisGateway, $this->usersRepository );
+		$this->skautis_gateway  = $skautisGateway;
+		$this->skautis_login    = $skautisLogin;
+		$this->wp_login_logout  = $wpLoginLogout;
+		$this->rules_manager    = $rulesManager;
+		$this->users_repository = $usersRepository;
+		$this->wp_register      = new WP_Register( $this->skautis_gateway, $this->users_repository );
 		if ( is_admin() ) {
-			( new Admin( $rulesManager ) );
+			( new Admin( $this->rules_manager ) );
 		} else {
-			( new Frontend( new Login_Form( $this->wpRegister ) ) );
+			( new Frontend( new Login_Form( $this->wp_register ) ) );
 		}
 		$this->init_hooks();
 	}
@@ -57,7 +58,7 @@ final class Register implements Module {
 	private function loginUserAfterRegistration() {
 		$returnUrl = Helpers::get_login_logout_redirect();
 		$returnUrl = remove_query_arg( SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis', urldecode( $returnUrl ) );
-		wp_safe_redirect( esc_url_raw( $this->wpLoginLogout->get_login_url( $returnUrl ) ), 302 );
+		wp_safe_redirect( esc_url_raw( $this->wp_login_logout->get_login_url( $returnUrl ) ), 302 );
 		exit;
 	}
 
@@ -69,9 +70,9 @@ final class Register implements Module {
 	}
 
 	public function registerConfirm( array $data = array() ) {
-		if ( $this->skautisLogin->set_login_data_to_local_skautis_instance( $data ) ) {
+		if ( $this->skautis_login->set_login_data_to_local_skautis_instance( $data ) ) {
 			$this->registerUser();
-		} elseif ( $this->skautisLogin->is_user_logged_in_skautis() ) {
+		} elseif ( $this->skautis_login->is_user_logged_in_skautis() ) {
 			$this->registerUser();
 		}
 	}
@@ -93,17 +94,17 @@ final class Register implements Module {
 	}
 
 	public function getWpRegister(): WP_Register {
-		return $this->wpRegister;
+		return $this->wp_register;
 	}
 
 	public function getRulesManager(): Rules_Manager {
-		return $this->rulesManager;
+		return $this->rules_manager;
 	}
 
 	public function register() {
-		if ( ! $this->skautisLogin->is_user_logged_in_skautis() ) {
+		if ( ! $this->skautis_login->is_user_logged_in_skautis() ) {
 			$returnUrl = Helpers::get_return_url() ?? Helpers::get_current_url();
-			wp_safe_redirect( esc_url_raw( $this->skautisGateway->get_skautis_instance()->getLoginUrl( $returnUrl ) ), 302 );
+			wp_safe_redirect( esc_url_raw( $this->skautis_gateway->get_skautis_instance()->getLoginUrl( $returnUrl ) ), 302 );
 			exit;
 		}
 
@@ -111,13 +112,13 @@ final class Register implements Module {
 	}
 
 	public function registerUser() {
-		$wpRole = $this->rulesManager->check_if_user_passed_rules_and_get_his_role();
+		$wpRole = $this->rules_manager->check_if_user_passed_rules_and_get_his_role();
 		if ( $wpRole ) {
-			if ( $this->wpRegister->register_to_wp( $wpRole ) ) {
+			if ( $this->wp_register->register_to_wp( $wpRole ) ) {
 				$this->loginUserAfterRegistration();
 			}
 		} else {
-			$wpUserId = $this->wpRegister->check_if_user_is_already_registered_and_get_his_user_id();
+			$wpUserId = $this->wp_register->check_if_user_is_already_registered_and_get_his_user_id();
 			if ( $wpUserId > 0 ) {
 				if ( get_option( SKAUTISINTEGRATION_NAME . '_checkUserPrivilegesIfLoginBySkautis' ) ) {
 					if ( user_can( $wpUserId, Helpers::get_skautis_manager_capability() ) ) {
@@ -129,7 +130,7 @@ final class Register implements Module {
 			}
 		}
 
-		$this->skautisGateway->logout();
+		$this->skautis_gateway->logout();
 
 		$returnUrl = Helpers::get_return_url();
 		if ( ! is_null( $returnUrl ) ) {
@@ -143,7 +144,7 @@ final class Register implements Module {
 		$returnUrl = Helpers::get_return_url();
 		if ( ! isset( $_GET[ SKAUTISINTEGRATION_NAME . '_register_user_nonce' ] ) ||
 			! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET[ SKAUTISINTEGRATION_NAME . '_register_user_nonce' ] ) ), SKAUTISINTEGRATION_NAME . '_register_user' ) ||
-			! $this->skautisLogin->is_user_logged_in_skautis() ||
+			! $this->skautis_login->is_user_logged_in_skautis() ||
 			! Helpers::user_is_skautis_manager() ||
 			! current_user_can( 'create_users' ) ||
 			is_null( $returnUrl ) ||
@@ -157,7 +158,7 @@ final class Register implements Module {
 		}
 		$skautisUserId = absint( $_GET['skautisUserId'] );
 
-		if ( $this->wpRegister->register_to_wp_manually( $wpRole, $skautisUserId ) ) {
+		if ( $this->wp_register->register_to_wp_manually( $wpRole, $skautisUserId ) ) {
 			wp_safe_redirect( $returnUrl, 302 );
 			exit;
 		} else {

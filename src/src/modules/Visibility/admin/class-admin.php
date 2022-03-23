@@ -10,20 +10,21 @@ use SkautisIntegration\Utils\Helpers;
 
 final class Admin {
 
-	private $postTypes;
-	private $rulesManager;
+	private $post_types;
+	private $rules_manager;
 	private $frontend;
 	private $settings;
 	private $metabox;
-	private $adminDirUrl = '';
+	// TODO: Unused?
+	private $admin_dir_url = '';
 
 	public function __construct( array $postTypes, Rules_Manager $rulesManager, Frontend $frontend ) {
-		$this->postTypes    = $postTypes;
-		$this->rulesManager = $rulesManager;
-		$this->frontend     = $frontend;
-		$this->settings     = new Settings();
-		$this->metabox      = new Metabox( $this->postTypes, $this->rulesManager, $frontend );
-		$this->adminDirUrl  = plugin_dir_url( __FILE__ ) . 'public/';
+		$this->post_types    = $postTypes;
+		$this->rules_manager = $rulesManager;
+		$this->frontend      = $frontend;
+		$this->settings      = new Settings();
+		$this->metabox       = new Metabox( $this->post_types, $this->rules_manager, $frontend );
+		$this->admin_dir_url = plugin_dir_url( __FILE__ ) . 'public/';
 		$this->init_hooks();
 	}
 
@@ -34,7 +35,7 @@ final class Admin {
 	}
 
 	public function enqueue_scripts_and_styles() {
-		if ( in_array( get_current_screen()->id, $this->postTypes, true ) ||
+		if ( in_array( get_current_screen()->id, $this->post_types, true ) ||
 			get_current_screen()->id === 'skautis_page_' . SKAUTISINTEGRATION_NAME . '_modules_visibility' ) {
 			wp_enqueue_script( 'jquery-ui-sortable' );
 
@@ -57,10 +58,10 @@ final class Admin {
 	}
 
 	public function init_rules_options() {
-		if ( in_array( get_current_screen()->id, $this->postTypes, true ) ) {
+		if ( in_array( get_current_screen()->id, $this->post_types, true ) ) {
 			$rules = array();
 
-			foreach ( (array) $this->rulesManager->get_all_rules() as $rule ) {
+			foreach ( (array) $this->rules_manager->get_all_rules() as $rule ) {
 				$rules[ $rule->ID ] = $rule->post_title;
 			}
 			?>
@@ -72,7 +73,7 @@ final class Admin {
 	}
 
 	public function init_rules_data() {
-		if ( in_array( get_current_screen()->id, $this->postTypes, true ) ) {
+		if ( in_array( get_current_screen()->id, $this->post_types, true ) ) {
 			$data = get_post_meta( get_the_ID(), SKAUTISINTEGRATION_NAME . '_rules', true );
 			?>
 			<script>

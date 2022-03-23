@@ -11,16 +11,16 @@ use SkautisIntegration\Utils\Helpers;
 
 final class Frontend {
 
-	private $postTypes;
-	private $rulesManager;
-	private $skautisLogin;
-	private $wpLoginLogout;
+	private $post_types;
+	private $rules_manager;
+	private $skautis_login;
+	private $wp_login_logout;
 
 	public function __construct( array $postTypes, Rules_Manager $rulesManager, Skautis_Login $skautisLogin, WP_Login_Logout $wpLoginLogout ) {
-		$this->postTypes     = $postTypes;
-		$this->rulesManager  = $rulesManager;
-		$this->skautisLogin  = $skautisLogin;
-		$this->wpLoginLogout = $wpLoginLogout;
+		$this->post_types      = $postTypes;
+		$this->rules_manager   = $rulesManager;
+		$this->skautis_login   = $skautisLogin;
+		$this->wp_login_logout = $wpLoginLogout;
 	}
 
 	public function init_hooks() {
@@ -38,7 +38,7 @@ final class Frontend {
 		<div class="wp-core-ui">
 			<p style="margin-bottom: 0.3em;">
 				<a class="button button-primary button-hero button-skautis"
-				   href="' . $this->wpLoginLogout->get_login_url( $loginUrlArgs ) . '">' . __( 'Log in with skautIS', 'skautis-integration' ) . '</a>
+				   href="' . $this->wp_login_logout->get_login_url( $loginUrlArgs ) . '">' . __( 'Log in with skautIS', 'skautis-integration' ) . '</a>
 			</p>
 		</div>
 		<br/>
@@ -130,7 +130,7 @@ final class Frontend {
 	private function process_rules_and_hide_posts( bool $userIsLoggedInSkautis, array $rule, array &$posts, int $postKey, \WP_Query $wpQuery, string $postType, &$postsWereFiltered = false ) {
 		if ( ! empty( $rules ) && isset( $rules[0][ SKAUTISINTEGRATION_NAME . '_rules' ] ) ) {
 			if ( ! $userIsLoggedInSkautis ||
-				! $this->rulesManager->check_if_user_passed_rules( $rules ) ) {
+				! $this->rules_manager->check_if_user_passed_rules( $rules ) ) {
 				unset( $posts[ $postKey ] );
 				unset( $wpQuery->posts[ $postKey ] );
 				if ( $wpQuery->found_posts > 0 ) {
@@ -145,7 +145,7 @@ final class Frontend {
 		if ( ! empty( $rules ) && isset( $rules[0][ SKAUTISINTEGRATION_NAME . '_rules' ] ) ) {
 			if ( ! $userIsLoggedInSkautis ) {
 				$this->hide_content_excerpt_comments( $postId, $this->get_login_required_message() . $this->get_login_form(), $this->get_login_required_message() );
-			} elseif ( ! $this->rulesManager->check_if_user_passed_rules( $rules ) ) {
+			} elseif ( ! $this->rules_manager->check_if_user_passed_rules( $rules ) ) {
 				$this->hide_content_excerpt_comments( $postId, $this->get_unauthorized_message() . $this->get_login_form( true ), $this->get_unauthorized_message() );
 			}
 		}
@@ -180,7 +180,7 @@ final class Frontend {
 			return $posts;
 		}
 
-		$userIsLoggedInSkautis = $this->skautisLogin->is_user_logged_in_skautis();
+		$userIsLoggedInSkautis = $this->skautis_login->is_user_logged_in_skautis();
 
 		$postsWereFiltered = false;
 
@@ -191,7 +191,7 @@ final class Frontend {
 				$wpPost = $post;
 			}
 
-			if ( in_array( $wpPost->post_type, $this->postTypes, true ) ) {
+			if ( in_array( $wpPost->post_type, $this->post_types, true ) ) {
 				if ( ! current_user_can( 'edit_' . $wpPost->post_type . 's' ) ) {
 					$rulesGroups = array();
 

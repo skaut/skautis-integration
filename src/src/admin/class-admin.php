@@ -13,20 +13,23 @@ final class Admin {
 
 	private $settings;
 	private $users;
-	private $rulesManager;
-	private $wpLoginLogout;
-	private $skautisGateway;
-	private $usersManagement;
-	private $adminDirUrl = '';
+	// TODO: Unused?
+	private $rules_manager;
+	private $wp_login_logout;
+	private $skautis_gateway;
+	// TODO: Unused?
+	private $users_management;
+	// TODO: Unused?
+	private $admin_dir_url = '';
 
 	public function __construct( Settings $settings, Users $users, Rules_Manager $rulesManager, Users_Management $usersManagement, WP_Login_Logout $wpLoginLogout, Skautis_Gateway $skautisGateway ) {
-		$this->settings        = $settings;
-		$this->users           = $users;
-		$this->rulesManager    = $rulesManager;
-		$this->usersManagement = $usersManagement;
-		$this->wpLoginLogout   = $wpLoginLogout;
-		$this->skautisGateway  = $skautisGateway;
-		$this->adminDirUrl     = plugin_dir_url( __FILE__ ) . 'public/';
+		$this->settings         = $settings;
+		$this->users            = $users;
+		$this->rules_manager    = $rulesManager;
+		$this->users_management = $usersManagement;
+		$this->wp_login_logout  = $wpLoginLogout;
+		$this->skautis_gateway  = $skautisGateway;
+		$this->admin_dir_url    = plugin_dir_url( __FILE__ ) . 'public/';
 		$this->init_hooks();
 	}
 
@@ -34,8 +37,8 @@ final class Admin {
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts_and_styles' ) );
 		add_action( 'admin_print_scripts', array( $this, 'print_inline_js' ) );
 
-		if ( $this->skautisGateway->is_initialized() ) {
-			if ( $this->skautisGateway->get_skautis_instance()->getUser()->isLoggedIn() ) {
+		if ( $this->skautis_gateway->is_initialized() ) {
+			if ( $this->skautis_gateway->get_skautis_instance()->getUser()->isLoggedIn() ) {
 				add_action( 'admin_bar_menu', array( $this, 'add_logout_link_to_admin_bar' ), 20 );
 			}
 		}
@@ -96,7 +99,7 @@ final class Admin {
 				'parent' => $parent,
 				'id'     => SKAUTISINTEGRATION_NAME . '_adminBar_logout',
 				'title'  => esc_html__( 'Log Out (too from skautIS)', 'skautis-integration' ),
-				'href'   => $this->wpLoginLogout->get_logout_url(),
+				'href'   => $this->wp_login_logout->get_logout_url(),
 			)
 		);
 	}

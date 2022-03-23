@@ -15,10 +15,10 @@ class Membership implements Rule {
 	protected static $multiple  = true;
 	protected static $operators = array( 'in' );
 
-	protected $skautisGateway;
+	protected $skautis_gateway;
 
 	public function __construct( Skautis_Gateway $skautisGateway ) {
-		$this->skautisGateway = $skautisGateway;
+		$this->skautis_gateway = $skautisGateway;
 	}
 
 	public function get_id(): string {
@@ -55,7 +55,7 @@ class Membership implements Rule {
 
 	public function get_values(): array {
 		$result      = array();
-		$memberships = $this->skautisGateway->get_skautis_instance()->OrganizationUnit->MembershipTypeAll();
+		$memberships = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->MembershipTypeAll();
 
 		foreach ( $memberships as $membership ) {
 			$result[ $membership->ID ] = $membership->DisplayName;
@@ -81,8 +81,8 @@ class Membership implements Rule {
 		static $userMemberships = null;
 
 		if ( is_null( $userMemberships ) ) {
-			$userDetail      = $this->skautisGateway->get_skautis_instance()->UserManagement->UserDetail();
-			$userMemberships = $this->skautisGateway->get_skautis_instance()->OrganizationUnit->MembershipAllPerson(
+			$userDetail      = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserDetail();
+			$userMemberships = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->MembershipAllPerson(
 				array(
 					'ID_Person'   => $userDetail->ID_Person,
 					'ShowHistory' => false,
@@ -115,7 +115,7 @@ class Membership implements Rule {
 					continue;
 				}
 
-				$unitDetail = $this->skautisGateway->get_skautis_instance()->OrganizationUnit->UnitDetail(
+				$unitDetail = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->UnitDetail(
 					array(
 						'ID' => $userMembership->ID_Unit,
 					)

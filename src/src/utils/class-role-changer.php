@@ -9,12 +9,12 @@ use SkautisIntegration\Auth\Skautis_Login;
 
 class Role_Changer {
 
-	protected $skautisGateway;
-	protected $skautisLogin;
+	protected $skautis_gateway;
+	protected $skautis_login;
 
 	public function __construct( Skautis_Gateway $skautisGateway, Skautis_Login $skautisLogin ) {
-		$this->skautisGateway = $skautisGateway;
-		$this->skautisLogin   = $skautisLogin;
+		$this->skautis_gateway = $skautisGateway;
+		$this->skautis_login   = $skautisLogin;
 		$this->check_if_user_change_skautis_role();
 	}
 
@@ -24,8 +24,8 @@ class Role_Changer {
 			function () {
 				if ( isset( $_POST['changeSkautisUserRole'], $_POST['_wpnonce'], $_POST['_wp_http_referer'] ) ) {
 					if ( check_admin_referer( SKAUTISINTEGRATION_NAME . '_changeSkautisUserRole', '_wpnonce' ) ) {
-						if ( $this->skautisLogin->is_user_logged_in_skautis() ) {
-							$this->skautisLogin->change_user_role_in_skautis( absint( $_POST['changeSkautisUserRole'] ) );
+						if ( $this->skautis_login->is_user_logged_in_skautis() ) {
+							$this->skautis_login->change_user_role_in_skautis( absint( $_POST['changeSkautisUserRole'] ) );
 						}
 					}
 				}
@@ -34,14 +34,14 @@ class Role_Changer {
 	}
 
 	public function print_change_roles_form() {
-		$currentUserRoles = $this->skautisGateway->get_skautis_instance()->UserManagement->UserRoleAll(
+		$currentUserRoles = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserRoleAll(
 			array(
-				'ID_Login' => $this->skautisGateway->get_skautis_instance()->getUser()->getLoginId(),
-				'ID_User'  => $this->skautisGateway->get_skautis_instance()->UserManagement->UserDetail()->ID,
+				'ID_Login' => $this->skautis_gateway->get_skautis_instance()->getUser()->getLoginId(),
+				'ID_User'  => $this->skautis_gateway->get_skautis_instance()->UserManagement->UserDetail()->ID,
 				'IsActive' => true,
 			)
 		);
-		$currentUserRole  = $this->skautisGateway->get_skautis_instance()->getUser()->getRoleId();
+		$currentUserRole  = $this->skautis_gateway->get_skautis_instance()->getUser()->getRoleId();
 
 		echo '
 <form method="post" action="' . esc_attr( Helpers::get_current_url() ) . '" novalidate="novalidate">' .

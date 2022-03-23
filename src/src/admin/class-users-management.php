@@ -17,22 +17,24 @@ use SkautisIntegration\Utils\Role_Changer;
 
 class Users_Management {
 
-	protected $skautisGateway;
-	protected $wpLoginLogout;
-	protected $skautisLogin;
-	protected $connectAndDisconnectWpAccount;
-	protected $usersRepository;
-	protected $roleChanger;
-	protected $adminDirUrl = '';
+	// TODO: Make all of them private?
+	protected $skautis_gateway;
+	protected $wp_login_logout;
+	protected $skautis_login;
+	protected $connect_and_disconnect_wp_account;
+	protected $users_repository;
+	protected $role_changer;
+	// TODO: Unused?
+	protected $admin_dir_url = '';
 
 	public function __construct( Skautis_Gateway $skautisGateway, WP_Login_Logout $wpLoginLogout, Skautis_Login $skautisLogin, Connect_And_Disconnect_WP_Account $connectAndDisconnectWpAccount, UsersRepository $usersRepository, Role_Changer $roleChanger ) {
-		$this->skautisGateway                = $skautisGateway;
-		$this->wpLoginLogout                 = $wpLoginLogout;
-		$this->skautisLogin                  = $skautisLogin;
-		$this->connectAndDisconnectWpAccount = $connectAndDisconnectWpAccount;
-		$this->usersRepository               = $usersRepository;
-		$this->roleChanger                   = $roleChanger;
-		$this->adminDirUrl                   = plugin_dir_url( __FILE__ ) . 'public/';
+		$this->skautis_gateway                   = $skautisGateway;
+		$this->wp_login_logout                   = $wpLoginLogout;
+		$this->skautis_login                     = $skautisLogin;
+		$this->connect_and_disconnect_wp_account = $connectAndDisconnectWpAccount;
+		$this->users_repository                  = $usersRepository;
+		$this->role_changer                      = $roleChanger;
+		$this->admin_dir_url                     = plugin_dir_url( __FILE__ ) . 'public/';
 		$this->check_if_user_change_skautis_role();
 		$this->init_hooks();
 	}
@@ -56,8 +58,8 @@ class Users_Management {
 			function () {
 				if ( isset( $_POST['changeSkautisUserRole'], $_POST['_wpnonce'], $_POST['_wp_http_referer'] ) ) {
 					if ( check_admin_referer( SKAUTISINTEGRATION_NAME . '_changeSkautisUserRole', '_wpnonce' ) ) {
-						if ( $this->skautisLogin->is_user_logged_in_skautis() ) {
-							$this->skautisLogin->change_user_role_in_skautis( absint( $_POST['changeSkautisUserRole'] ) );
+						if ( $this->skautis_login->is_user_logged_in_skautis() ) {
+							$this->skautis_login->change_user_role_in_skautis( absint( $_POST['changeSkautisUserRole'] ) );
 						}
 					}
 				}
@@ -133,9 +135,9 @@ class Users_Management {
 			<p>' . esc_html__( 'Zde si můžete propojit členy ze skautISu s uživateli ve WordPressu nebo je rovnou zaregistrovat (vyžaduje aktivovaný modul Registrace).', 'skautis-integration' ) . '</p>
 		';
 
-		if ( ! $this->skautisLogin->is_user_logged_in_skautis() ) {
-			if ( $this->skautisGateway->is_initialized() ) {
-				echo '<a href="' . esc_url( $this->wpLoginLogout->get_login_url( add_query_arg( 'noWpLogin', true, Helpers::get_current_url() ) ) ) . '">' . esc_html__( 'Pro zobrazení obsahu je nutné se přihlásit do skautISu', 'skautis-integration' ) . '</a>';
+		if ( ! $this->skautis_login->is_user_logged_in_skautis() ) {
+			if ( $this->skautis_gateway->is_initialized() ) {
+				echo '<a href="' . esc_url( $this->wp_login_logout->get_login_url( add_query_arg( 'noWpLogin', true, Helpers::get_current_url() ) ) ) . '">' . esc_html__( 'Pro zobrazení obsahu je nutné se přihlásit do skautISu', 'skautis-integration' ) . '</a>';
 				echo '
 		</div>
 			';
@@ -150,15 +152,15 @@ class Users_Management {
 			return;
 		}
 
-		$this->roleChanger->print_change_roles_form();
+		$this->role_changer->print_change_roles_form();
 
 		echo '<table class="skautis-user-management-table"><thead style="font-weight: bold;"><tr>';
 		echo '<th>' . esc_html__( 'Jméno a příjmení', 'skautis-integration' ) . '</th><th>' . esc_html__( 'Přezdívka', 'skautis-integration' ) . '</th><th>' . esc_html__( 'ID uživatele', 'skautis-integration' ) . '</th><th>' . esc_html__( 'Propojený uživatel', 'skautis-integration' ) . '</th><th>' . esc_html__( 'Propojení', 'skautis-integration' ) . '</th>';
 		echo '</tr></thead ><tbody>';
 
-		$usersData = $this->usersRepository->get_connected_wp_users();
+		$usersData = $this->users_repository->get_connected_wp_users();
 
-		$users = $this->usersRepository->get_users()['users'];
+		$users = $this->users_repository->get_users()['users'];
 
 		foreach ( $users as $user ) {
 			if ( isset( $usersData[ $user->id ] ) ) {
@@ -195,7 +197,7 @@ class Users_Management {
 				<select id="connectUserToSkautisModal_select">
 					<option><?php esc_html_e( 'Vyberte uživatele...', 'skautis-integration' ); ?></option>
 					<?php
-					foreach ( $this->usersRepository->get_connectable_wp_users() as $user ) {
+					foreach ( $this->users_repository->get_connectable_wp_users() as $user ) {
 						$userName = $user->data->display_name;
 						if ( ! $userName ) {
 							$userName = $user->data->user_login;
@@ -207,7 +209,7 @@ class Users_Management {
 					?>
 				</select>
 				<a id="connectUserToSkautisModal_connectLink" class="button button-primary"
-					href="<?php echo esc_url( $this->connectAndDisconnectWpAccount->get_connect_wp_user_to_skautis_url() ); ?>"><?php esc_html_e( 'Potvrdit', 'skautis-integration' ); ?></a>
+					href="<?php echo esc_url( $this->connect_and_disconnect_wp_account->get_connect_wp_user_to_skautis_url() ); ?>"><?php esc_html_e( 'Potvrdit', 'skautis-integration' ); ?></a>
 				<div>
 					<em><?php esc_html_e( 'Je možné vybrat pouze ty uživatele, kteří ještě nemají propojený účet se skautISem.', 'skautis-integration' ); ?></em>
 				</div>

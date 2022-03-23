@@ -15,10 +15,10 @@ class Qualification implements Rule {
 	protected static $multiple  = true;
 	protected static $operators = array( 'in' );
 
-	protected $skautisGateway;
+	protected $skautis_gateway;
 
 	public function __construct( Skautis_Gateway $skautisGateway ) {
-		$this->skautisGateway = $skautisGateway;
+		$this->skautis_gateway = $skautisGateway;
 	}
 
 	public function get_id(): string {
@@ -55,7 +55,7 @@ class Qualification implements Rule {
 
 	public function get_values(): array {
 		$result         = array();
-		$qualifications = $this->skautisGateway->get_skautis_instance()->OrganizationUnit->QualificationTypeAll();
+		$qualifications = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->QualificationTypeAll();
 
 		foreach ( $qualifications as $qualification ) {
 			$result[ $qualification->ID ] = $qualification->DisplayName;
@@ -68,8 +68,8 @@ class Qualification implements Rule {
 		static $userQualifications = null;
 
 		if ( is_null( $userQualifications ) ) {
-			$userDetail         = $this->skautisGateway->get_skautis_instance()->UserManagement->UserDetail();
-			$userQualifications = $this->skautisGateway->get_skautis_instance()->OrganizationUnit->QualificationAll(
+			$userDetail         = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserDetail();
+			$userQualifications = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->QualificationAll(
 				array(
 					'ID_Person'   => $userDetail->ID_Person,
 					'ShowHistory' => true,

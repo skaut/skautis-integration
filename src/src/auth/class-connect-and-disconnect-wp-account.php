@@ -9,12 +9,12 @@ use SkautisIntegration\Utils\Helpers;
 
 final class Connect_And_Disconnect_WP_Account {
 
-	private $skautisGateway;
-	private $skautisLogin;
+	private $skautis_gateway;
+	private $skautis_login;
 
 	public function __construct( Skautis_Gateway $skautisGateway, Skautis_Login $skautisLogin ) {
-		$this->skautisGateway = $skautisGateway;
-		$this->skautisLogin   = $skautisLogin;
+		$this->skautis_gateway = $skautisGateway;
+		$this->skautis_login   = $skautisLogin;
 	}
 
 	private function set_skautis_user_id_to_wp_account( int $wpUserId, int $skautisUserId ) {
@@ -22,7 +22,7 @@ final class Connect_And_Disconnect_WP_Account {
 		if ( ! is_null( $returnUrl ) ) {
 			Helpers::validate_nonce_from_url( $returnUrl, SKAUTISINTEGRATION_NAME . '_connectWpAccountWithSkautis' );
 
-			update_user_meta( $wpUserId, 'skautisUserId_' . $this->skautisGateway->get_env(), absint( $skautisUserId ) );
+			update_user_meta( $wpUserId, 'skautisUserId_' . $this->skautis_gateway->get_env(), absint( $skautisUserId ) );
 
 			wp_safe_redirect( $returnUrl, 302 );
 			exit;
@@ -30,7 +30,7 @@ final class Connect_And_Disconnect_WP_Account {
 	}
 
 	public function print_connect_and_disconnect_button( int $wpUserId ) {
-		$skautisUserId = get_user_meta( $wpUserId, 'skautisUserId_' . $this->skautisGateway->get_env(), true );
+		$skautisUserId = get_user_meta( $wpUserId, 'skautisUserId_' . $this->skautis_gateway->get_env(), true );
 		if ( $skautisUserId ) {
 			if ( ! Helpers::user_is_skautis_manager() && get_option( SKAUTISINTEGRATION_NAME . '_allowUsersDisconnectFromSkautis' ) !== '1' ) {
 				return;
@@ -54,16 +54,16 @@ final class Connect_And_Disconnect_WP_Account {
 	}
 
 	public function connect() {
-		if ( ! $this->skautisLogin->is_user_logged_in_skautis() ) {
+		if ( ! $this->skautis_login->is_user_logged_in_skautis() ) {
             // phpcs:ignore WordPress.Security.NonceVerification.Missing
-			if ( ! $this->skautisLogin->set_login_data_to_local_skautis_instance( $_POST ) ) {
+			if ( ! $this->skautis_login->set_login_data_to_local_skautis_instance( $_POST ) ) {
 				$returnUrl = Helpers::get_return_url() ?? Helpers::get_current_url();
-				wp_safe_redirect( esc_url_raw( $this->skautisGateway->get_skautis_instance()->getLoginUrl( $returnUrl ) ), 302 );
+				wp_safe_redirect( esc_url_raw( $this->skautis_gateway->get_skautis_instance()->getLoginUrl( $returnUrl ) ), 302 );
 				exit;
 			}
 		}
 
-		$userDetail = $this->skautisGateway->get_skautis_instance()->UserManagement->UserDetail();
+		$userDetail = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserDetail();
 
 		if ( $userDetail && isset( $userDetail->ID ) && $userDetail->ID > 0 ) {
 			$this->set_skautis_user_id_to_wp_account( get_current_user_id(), $userDetail->ID );
@@ -73,7 +73,7 @@ final class Connect_And_Disconnect_WP_Account {
 	public function connect_wp_user_to_skautis() {
 		if ( ! isset( $_GET[ SKAUTISINTEGRATION_NAME . '_connect_user_nonce' ] ) ||
 			! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET[ SKAUTISINTEGRATION_NAME . '_connect_user_nonce' ] ) ), SKAUTISINTEGRATION_NAME . '_connect_user' ) ||
-			! $this->skautisLogin->is_user_logged_in_skautis() ||
+			! $this->skautis_login->is_user_logged_in_skautis() ||
 			! Helpers::user_is_skautis_manager() ||
 			is_null( Helpers::get_return_url() )
 		) {
@@ -107,7 +107,7 @@ final class Connect_And_Disconnect_WP_Account {
 				Helpers::validate_nonce_from_url( $returnUrl, SKAUTISINTEGRATION_NAME . '_disconnectWpAccountFromSkautis' );
 
 				if ( strpos( $returnUrl, 'profile.php' ) !== false ) {
-					delete_user_meta( get_current_user_id(), 'skautisUserId_' . $this->skautisGateway->get_env() );
+					delete_user_meta( get_current_user_id(), 'skautisUserId_' . $this->skautis_gateway->get_env() );
 				} elseif ( ( strpos( $returnUrl, 'user-edit_php' ) !== false ||
 							strpos( $returnUrl, 'user-edit.php' ) !== false ) &&
 							strpos( $returnUrl, 'user_id=' ) !== false ) {
@@ -117,7 +117,7 @@ final class Connect_And_Disconnect_WP_Account {
 					if ( is_array( $result ) && isset( $result[1] ) && $result[1] > 0 ) {
 						$userId = absint( $result[1] );
 						if ( Helpers::user_is_skautis_manager() ) {
-							delete_user_meta( $userId, 'skautisUserId_' . $this->skautisGateway->get_env() );
+							delete_user_meta( $userId, 'skautisUserId_' . $this->skautis_gateway->get_env() );
 						}
 					}
 				}

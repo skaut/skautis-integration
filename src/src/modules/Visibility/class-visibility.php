@@ -15,21 +15,24 @@ final class Visibility implements Module {
 
 	const REGISTER_ACTION = 'visibility';
 
-	private $rulesManager;
-	private $skautisLogin;
-	private $wpLoginLogout;
+	// TODO: Unused?
+	private $rules_manager;
+	// TODO: Unused?
+	private $skautis_login;
+	// TODO: Unused?
+	private $wp_login_logout;
 	private $frontend;
 
 	public static $id = 'module_Visibility';
 
 	public function __construct( Rules_Manager $rulesManager, Skautis_Login $skautisLogin, WP_Login_Logout $wpLoginLogout ) {
-		$this->rulesManager  = $rulesManager;
-		$this->skautisLogin  = $skautisLogin;
-		$this->wpLoginLogout = $wpLoginLogout;
-		$postTypes           = (array) get_option( SKAUTISINTEGRATION_NAME . '_modules_visibility_postTypes', array() );
-		$this->frontend      = new Frontend( $postTypes, $this->rulesManager, $this->skautisLogin, $this->wpLoginLogout );
+		$this->rules_manager   = $rulesManager;
+		$this->skautis_login   = $skautisLogin;
+		$this->wp_login_logout = $wpLoginLogout;
+		$postTypes             = (array) get_option( SKAUTISINTEGRATION_NAME . '_modules_visibility_postTypes', array() );
+		$this->frontend        = new Frontend( $postTypes, $this->rules_manager, $this->skautis_login, $this->wp_login_logout );
 		if ( is_admin() ) {
-			( new Admin( $postTypes, $this->rulesManager, $this->frontend ) );
+			( new Admin( $postTypes, $this->rules_manager, $this->frontend ) );
 		} else {
 			$this->frontend->init_hooks();
 		}

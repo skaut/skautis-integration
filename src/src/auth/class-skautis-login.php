@@ -8,17 +8,17 @@ use SkautisIntegration\Utils\Helpers;
 
 final class Skautis_Login {
 
-	private $skautisGateway;
-	private $wpLoginLogout;
+	private $skautis_gateway;
+	private $wp_login_logout;
 
 	public function __construct( Skautis_Gateway $skautisGateway, WP_Login_Logout $wpLoginLogout ) {
-		$this->skautisGateway = $skautisGateway;
-		$this->wpLoginLogout  = $wpLoginLogout;
+		$this->skautis_gateway = $skautisGateway;
+		$this->wp_login_logout = $wpLoginLogout;
 	}
 
 	public function is_user_logged_in_skautis(): bool {
-		if ( $this->skautisGateway->is_initialized() ) {
-			return $this->skautisGateway->get_skautis_instance()->getUser()->isLoggedIn() && $this->skautisGateway->get_skautis_instance()->getUser()->isLoggedIn( true );
+		if ( $this->skautis_gateway->is_initialized() ) {
+			return $this->skautis_gateway->get_skautis_instance()->getUser()->isLoggedIn() && $this->skautis_gateway->get_skautis_instance()->getUser()->isLoggedIn( true );
 		}
 
 		return false;
@@ -28,7 +28,7 @@ final class Skautis_Login {
 		$data = apply_filters( SKAUTISINTEGRATION_NAME . '_login_data_for_skautis_instance', $data );
 
 		if ( isset( $data['skautIS_Token'] ) ) {
-			$this->skautisGateway->get_skautis_instance()->setLoginData( $data );
+			$this->skautis_gateway->get_skautis_instance()->setLoginData( $data );
 
 			if ( ! $this->is_user_logged_in_skautis() ) {
 				return false;
@@ -46,21 +46,21 @@ final class Skautis_Login {
 		$returnUrl = Helpers::get_login_logout_redirect();
 
 		if ( strpos( $returnUrl, 'logoutFromSkautis' ) !== false ) {
-			$this->skautisGateway->logout();
+			$this->skautis_gateway->logout();
 			$returnUrl = remove_query_arg( 'logoutFromSkautis', $returnUrl );
 		}
 
 		if ( ! $this->is_user_logged_in_skautis() ) {
-			wp_safe_redirect( esc_url_raw( $this->skautisGateway->get_skautis_instance()->getLoginUrl( $returnUrl ) ), 302 );
+			wp_safe_redirect( esc_url_raw( $this->skautis_gateway->get_skautis_instance()->getLoginUrl( $returnUrl ) ), 302 );
 			exit;
 		}
 
 		if ( strpos( $returnUrl, 'noWpLogin' ) !== false ) {
-			$this->wpLoginLogout->try_to_login_to_wp();
+			$this->wp_login_logout->try_to_login_to_wp();
 			wp_safe_redirect( esc_url_raw( $returnUrl ), 302 );
 			exit;
 		} else {
-			$this->wpLoginLogout->login_to_wp();
+			$this->wp_login_logout->login_to_wp();
 		}
 	}
 
@@ -69,17 +69,17 @@ final class Skautis_Login {
         // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		if ( $this->set_login_data_to_local_skautis_instance( $_POST ) ) {
 			if ( is_null( $returnUrl ) || strpos( $returnUrl, 'noWpLogin' ) === false ) {
-				$this->wpLoginLogout->login_to_wp();
+				$this->wp_login_logout->login_to_wp();
 			} elseif ( ! is_null( $returnUrl ) ) {
-				$this->wpLoginLogout->try_to_login_to_wp();
+				$this->wp_login_logout->try_to_login_to_wp();
 				wp_safe_redirect( $returnUrl, 302 );
 				exit;
 			}
 		} elseif ( $this->is_user_logged_in_skautis() ) {
 			if ( is_null( $returnUrl ) || strpos( $returnUrl, 'noWpLogin' ) === false ) {
-				$this->wpLoginLogout->login_to_wp();
+				$this->wp_login_logout->login_to_wp();
 			} elseif ( ! is_null( $returnUrl ) ) {
-				$this->wpLoginLogout->try_to_login_to_wp();
+				$this->wp_login_logout->try_to_login_to_wp();
 				wp_safe_redirect( $returnUrl, 302 );
 				exit;
 			}
@@ -88,9 +88,9 @@ final class Skautis_Login {
 
 	public function change_user_role_in_skautis( int $roleId ) {
 		if ( $roleId > 0 ) {
-			$result = $this->skautisGateway->get_skautis_instance()->UserManagement->LoginUpdate(
+			$result = $this->skautis_gateway->get_skautis_instance()->UserManagement->LoginUpdate(
 				array(
-					'ID'          => $this->skautisGateway->get_skautis_instance()->getUser()->getLoginId(),
+					'ID'          => $this->skautis_gateway->get_skautis_instance()->getUser()->getLoginId(),
 					'ID_UserRole' => $roleId,
 				)
 			);
@@ -99,8 +99,8 @@ final class Skautis_Login {
 				return;
 			}
 
-			$this->skautisGateway->get_skautis_instance()->getUser()->updateLoginData(
-				$this->skautisGateway->get_skautis_instance()->getUser()->getLoginId(),
+			$this->skautis_gateway->get_skautis_instance()->getUser()->updateLoginData(
+				$this->skautis_gateway->get_skautis_instance()->getUser()->getLoginId(),
 				$roleId,
 				$result->ID_Unit
 			);
