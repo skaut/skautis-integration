@@ -8,11 +8,11 @@ use SkautisIntegration\Rules\Rules_Manager;
 
 final class Admin {
 
-	private $rulesManager;
+	private $rules_manager;
 	private $settings;
 
 	public function __construct( Rules_Manager $rulesManager ) {
-		$this->rulesManager = $rulesManager;
+		$this->rules_manager = $rulesManager;
 		$this->settings     = new Settings();
 		$this->init_hooks();
 	}
@@ -59,7 +59,7 @@ final class Admin {
 			}
 
 			$rules = array();
-			foreach ( (array) $this->rulesManager->get_all_rules() as $rule ) {
+			foreach ( (array) $this->rules_manager->get_all_rules() as $rule ) {
 				$rules[ $rule->ID ] = $rule->post_title;
 			}
 			?>
