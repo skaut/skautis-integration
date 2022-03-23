@@ -45,10 +45,10 @@ final class Settings {
 		add_action( 'admin_init', array( $this, 'setup_setting_fields' ) );
 		add_action( 'admin_init', array( $this, 'setupLoginFields' ) );
 
-		$this->checkIfAppIdIsSetAndShowNotices();
+		$this->check_if_app_id_is_set_and_show_notices();
 	}
 
-	private function checkIfAppIdIsSetAndShowNotices() {
+	private function check_if_app_id_is_set_and_show_notices() {
 		$envType = get_option( 'skautis_integration_appid_type' );
 		if ( Skautis_Gateway::PROD_ENV === $envType ) {
 			if ( ! get_option( 'skautis_integration_appid_prod' ) ) {
