@@ -38,7 +38,7 @@ final class Rules_Manager {
 	private function process_rule( $rule ): bool {
 		if ( ! isset( $rule->field ) ) {
 			if ( isset( $rule->condition ) && isset( $rule->rules ) ) {
-				return $this->parseRulesGroups( $rule->condition, $rule->rules );
+				return $this->parse_rules_groups( $rule->condition, $rule->rules );
 			}
 
 			return false;
@@ -55,21 +55,21 @@ final class Rules_Manager {
 		return false;
 	}
 
-	private function parseRulesGroups( string $condition, array $rules ): bool {
+	private function parse_rules_groups( string $condition, array $rules ): bool {
 		$result = 0;
 
 		if ( 'AND' === $condition ) {
 			$result = 1;
 			foreach ( $rules as $rule ) {
 				if ( isset( $rule->rules ) ) {
-					$result = $result * $this->parseRulesGroups( $rule->condition, $rule->rules );
+					$result = $result * $this->parse_rules_groups( $rule->condition, $rule->rules );
 				}
 				$result = $result * $this->process_rule( $rule );
 			}
 		} else { // OR
 			foreach ( $rules as $rule ) {
 				if ( isset( $rule->rules ) ) {
-					$result = $result + $this->parseRulesGroups( $rule->condition, $rule->rules );
+					$result = $result + $this->parse_rules_groups( $rule->condition, $rule->rules );
 				}
 				$result = $result + $this->process_rule( $rule );
 			}
@@ -102,7 +102,7 @@ final class Rules_Manager {
 			}
 
 			if ( isset( $rulesGroups->condition ) && isset( $rulesGroups->rules ) && ! empty( $rulesGroups->rules ) ) {
-				$result = $this->parseRulesGroups( $rulesGroups->condition, $rulesGroups->rules );
+				$result = $this->parse_rules_groups( $rulesGroups->condition, $rulesGroups->rules );
 			}
 
 			if ( true === $result ) {
@@ -143,7 +143,7 @@ final class Rules_Manager {
 			}
 
 			if ( isset( $rulesGroups->condition ) && isset( $rulesGroups->rules ) && ! empty( $rulesGroups->rules ) ) {
-				$result = $this->parseRulesGroups( $rulesGroups->condition, $rulesGroups->rules );
+				$result = $this->parse_rules_groups( $rulesGroups->condition, $rulesGroups->rules );
 			}
 
 			if ( true === $result ) {
