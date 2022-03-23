@@ -18,7 +18,7 @@ final class Admin {
 	}
 
 	private function init_hooks() {
-		add_action( 'admin_footer', array( $this, 'initAvailableRules' ) );
+		add_action( 'admin_footer', array( $this, 'init_available_rules' ) );
 
 		add_action(
 			'admin_init',
@@ -43,7 +43,7 @@ final class Admin {
 		return $buttons;
 	}
 
-	public function initAvailableRules() {
+	public function init_available_rules() {
 		?>
 		<script>
 			window.rulesOptions = [];
