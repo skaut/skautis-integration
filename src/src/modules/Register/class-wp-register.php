@@ -197,7 +197,7 @@ final class WP_Register {
 		return false;
 	}
 
-	public function getManuallyRegisterWpUserUrl(): string {
+	public function get_manually_register_wp_user_url(): string {
 		$returnUrl = Helpers::getLoginLogoutRedirect();
 		$returnUrl = add_query_arg( SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis', wp_create_nonce( SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis' ), $returnUrl );
 		$url       = add_query_arg( 'ReturnUrl', rawurlencode( $returnUrl ), get_home_url( null, 'skautis/auth/' . Register::MANUALLY_REGISTER_WP_USER_ACTION ) );
