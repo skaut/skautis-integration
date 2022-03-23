@@ -65,7 +65,7 @@ final class Settings {
 		add_settings_field(
 			SKAUTISINTEGRATION_NAME . '_modules_shortcodes_visibilityMode',
 			__( 'Výchozí způsob skrytí', 'skautis-integration' ),
-			array( $this, 'fieldVisibilityMode' ),
+			array( $this, 'field_visibility_mode' ),
 			SKAUTISINTEGRATION_NAME . '_modules_shortcodes',
 			SKAUTISINTEGRATION_NAME . '_modules_shortcodes'
 		);
@@ -80,7 +80,7 @@ final class Settings {
 		);
 	}
 
-	public function fieldVisibilityMode() {
+	public function field_visibility_mode() {
 		$visibilityMode = get_option( SKAUTISINTEGRATION_NAME . '_modules_shortcodes_visibilityMode', 'hide' );
 		?>
 		<label><input type="radio" name="<?php echo esc_attr( SKAUTISINTEGRATION_NAME ); ?>_modules_shortcodes_visibilityMode"
