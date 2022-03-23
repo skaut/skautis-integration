@@ -18,7 +18,7 @@ final class WP_Login_Logout {
 	}
 
 	private function login_wp_user_by_skautis_user_id( int $skautisUserId, $try = false ) {
-		$returnUrl = Helpers::getReturnUrl();
+		$returnUrl = Helpers::get_return_url();
 		if ( ! is_null( $returnUrl ) ) {
 			$usersWpQuery = new \WP_User_Query(
 				array(

@@ -46,7 +46,7 @@ final class Register implements Module {
 
 	private function init_hooks() {
 		add_filter( SKAUTISINTEGRATION_NAME . '_frontend_actions_router', array( $this, 'addActionsToRouter' ) );
-		$returnUrl = Helpers::getReturnUrl();
+		$returnUrl = Helpers::get_return_url();
 		if ( ! is_null( $returnUrl ) ) {
 			if ( Helpers::getNonceFromUrl( $returnUrl, SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis' ) ) {
 				add_action( SKAUTISINTEGRATION_NAME . '_after_skautis_token_is_set', array( $this, 'registerConfirm' ) );
@@ -102,7 +102,7 @@ final class Register implements Module {
 
 	public function register() {
 		if ( ! $this->skautisLogin->is_user_logged_in_skautis() ) {
-			$returnUrl = Helpers::getReturnUrl() ?? Helpers::getCurrentUrl();
+			$returnUrl = Helpers::get_return_url() ?? Helpers::getCurrentUrl();
 			wp_safe_redirect( esc_url_raw( $this->skautisGateway->get_skautis_instance()->getLoginUrl( $returnUrl ) ), 302 );
 			exit;
 		}
@@ -131,7 +131,7 @@ final class Register implements Module {
 
 		$this->skautisGateway->logout();
 
-		$returnUrl = Helpers::getReturnUrl();
+		$returnUrl = Helpers::get_return_url();
 		if ( ! is_null( $returnUrl ) ) {
 			/* translators: 1: Start of the link back 2: End of the link back */
 			wp_die( sprintf( esc_html__( 'Nemáte oprávnění k registraci. %1$sZkuste to znovu%2$s', 'skautis-integration' ), '<a href="' . esc_url( $returnUrl ) . '">', '</a>' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
@@ -140,7 +140,7 @@ final class Register implements Module {
 	}
 
 	public function registerUserManually() {
-		$returnUrl = Helpers::getReturnUrl();
+		$returnUrl = Helpers::get_return_url();
 		if ( ! isset( $_GET[ SKAUTISINTEGRATION_NAME . '_register_user_nonce' ] ) ||
 			! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET[ SKAUTISINTEGRATION_NAME . '_register_user_nonce' ] ) ), SKAUTISINTEGRATION_NAME . '_register_user' ) ||
 			! $this->skautisLogin->is_user_logged_in_skautis() ||

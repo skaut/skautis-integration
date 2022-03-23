@@ -79,11 +79,11 @@ class Helpers {
 			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return esc_url_raw( wp_unslash( $_GET['redirect_to'] ) );
 		}
-		$returnUrl = self::getReturnUrl();
+		$returnUrl = self::get_return_url();
 		return is_null( $returnUrl ) ? self::getCurrentUrl() : $returnUrl;
 	}
 
-	public static function getReturnUrl() {
+	public static function get_return_url() {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( ! isset( $_GET['ReturnUrl'] ) || '' === $_GET['ReturnUrl'] ) {
 			return null;

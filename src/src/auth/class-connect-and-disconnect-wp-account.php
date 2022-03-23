@@ -18,7 +18,7 @@ final class Connect_And_Disconnect_WP_Account {
 	}
 
 	private function set_skautis_user_id_to_wp_account( int $wpUserId, int $skautisUserId ) {
-		$returnUrl = Helpers::getReturnUrl();
+		$returnUrl = Helpers::get_return_url();
 		if ( ! is_null( $returnUrl ) ) {
 			Helpers::validateNonceFromUrl( $returnUrl, SKAUTISINTEGRATION_NAME . '_connectWpAccountWithSkautis' );
 
@@ -57,7 +57,7 @@ final class Connect_And_Disconnect_WP_Account {
 		if ( ! $this->skautisLogin->is_user_logged_in_skautis() ) {
             // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			if ( ! $this->skautisLogin->set_login_data_to_local_skautis_instance( $_POST ) ) {
-				$returnUrl = Helpers::getReturnUrl() ?? Helpers::getCurrentUrl();
+				$returnUrl = Helpers::get_return_url() ?? Helpers::getCurrentUrl();
 				wp_safe_redirect( esc_url_raw( $this->skautisGateway->get_skautis_instance()->getLoginUrl( $returnUrl ) ), 302 );
 				exit;
 			}
@@ -75,7 +75,7 @@ final class Connect_And_Disconnect_WP_Account {
 			! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET[ SKAUTISINTEGRATION_NAME . '_connect_user_nonce' ] ) ), SKAUTISINTEGRATION_NAME . '_connect_user' ) ||
 			! $this->skautisLogin->is_user_logged_in_skautis() ||
 			! Helpers::userIsSkautisManager() ||
-			is_null( Helpers::getReturnUrl() )
+			is_null( Helpers::get_return_url() )
 		) {
 			wp_die( esc_html__( 'Nemáte oprávnění k propojování uživatelů.', 'skautis-integration' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
 		}
@@ -102,7 +102,7 @@ final class Connect_And_Disconnect_WP_Account {
 
 	public function disconnect() {
 		if ( is_user_logged_in() ) {
-			$returnUrl = Helpers::getReturnUrl();
+			$returnUrl = Helpers::get_return_url();
 			if ( ! is_null( $returnUrl ) ) {
 				Helpers::validateNonceFromUrl( $returnUrl, SKAUTISINTEGRATION_NAME . '_disconnectWpAccountFromSkautis' );
 
@@ -124,7 +124,7 @@ final class Connect_And_Disconnect_WP_Account {
 			}
 		}
 
-		$returnUrl = Helpers::getReturnUrl();
+		$returnUrl = Helpers::get_return_url();
 		if ( ! is_null( $returnUrl ) ) {
 			wp_safe_redirect( $returnUrl, 302 );
 			exit;

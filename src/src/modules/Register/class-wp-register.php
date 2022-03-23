@@ -76,7 +76,7 @@ final class WP_Register {
 	}
 
 	private function process_wp_user_registration( array $user, string $wpRole ): bool {
-		$returnUrl = Helpers::getReturnUrl();
+		$returnUrl = Helpers::get_return_url();
 		if ( is_null( $returnUrl ) ) {
 			return false;
 		}
