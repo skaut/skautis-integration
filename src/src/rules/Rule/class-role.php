@@ -15,10 +15,10 @@ class Role implements Rule {
 	protected static $multiple  = true;
 	protected static $operators = array( 'in', 'not_in' );
 
-	protected $skautisGateway;
+	protected $skautis_gateway;
 
 	public function __construct( Skautis_Gateway $skautisGateway ) {
-		$this->skautisGateway = $skautisGateway;
+		$this->skautis_gateway = $skautisGateway;
 	}
 
 	public function get_id(): string {
@@ -55,7 +55,7 @@ class Role implements Rule {
 
 	public function get_values(): array {
 		$values = array();
-		$roles  = $this->skautisGateway->get_skautis_instance()->UserManagement->RoleAll();
+		$roles  = $this->skautis_gateway->get_skautis_instance()->UserManagement->RoleAll();
 
 		foreach ( $roles as $role ) {
 			$values[ $role->ID ] = $role->DisplayName;
@@ -81,10 +81,10 @@ class Role implements Rule {
 		static $userRoles = null;
 
 		if ( is_null( $userRoles ) ) {
-			$userRoles = $this->skautisGateway->get_skautis_instance()->UserManagement->UserRoleAll(
+			$userRoles = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserRoleAll(
 				array(
-					'ID_Login' => $this->skautisGateway->get_skautis_instance()->getUser()->getLoginId(),
-					'ID_User'  => $this->skautisGateway->get_skautis_instance()->UserManagement->UserDetail()->ID,
+					'ID_Login' => $this->skautis_gateway->get_skautis_instance()->getUser()->getLoginId(),
+					'ID_User'  => $this->skautis_gateway->get_skautis_instance()->UserManagement->UserDetail()->ID,
 					'IsActive' => true,
 				)
 			);
@@ -92,7 +92,7 @@ class Role implements Rule {
 			$result = array();
 			foreach ( $userRoles as $userRole ) {
 				try {
-					$unitDetail = $this->skautisGateway->get_skautis_instance()->OrganizationUnit->UnitDetail(
+					$unitDetail = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->UnitDetail(
 						array(
 							'ID' => $userRole->ID_Unit,
 						)
