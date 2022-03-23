@@ -55,7 +55,7 @@ final class Register implements Module {
 	}
 
 	private function loginUserAfterRegistration() {
-		$returnUrl = Helpers::getLoginLogoutRedirect();
+		$returnUrl = Helpers::get_login_logout_redirect();
 		$returnUrl = remove_query_arg( SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis', urldecode( $returnUrl ) );
 		wp_safe_redirect( esc_url_raw( $this->wpLoginLogout->get_login_url( $returnUrl ) ), 302 );
 		exit;

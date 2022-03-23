@@ -43,7 +43,7 @@ final class Skautis_Login {
 	}
 
 	public function login() {
-		$returnUrl = Helpers::getLoginLogoutRedirect();
+		$returnUrl = Helpers::get_login_logout_redirect();
 
 		if ( strpos( $returnUrl, 'logoutFromSkautis' ) !== false ) {
 			$this->skautisGateway->logout();

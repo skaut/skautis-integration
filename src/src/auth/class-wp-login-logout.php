@@ -85,7 +85,7 @@ final class WP_Login_Logout {
 
 	public function get_login_url( string $returnUrl = '' ): string {
 		if ( ! $returnUrl ) {
-			$returnUrl = Helpers::getLoginLogoutRedirect();
+			$returnUrl = Helpers::get_login_logout_redirect();
 		}
 
 		$returnUrl = remove_query_arg( 'loggedout', urldecode( $returnUrl ) );
@@ -101,7 +101,7 @@ final class WP_Login_Logout {
 
 	public function get_logout_url( string $returnUrl = '' ): string {
 		if ( ! $returnUrl ) {
-			$returnUrl = Helpers::getLoginLogoutRedirect();
+			$returnUrl = Helpers::get_login_logout_redirect();
 		}
 
 		$returnUrl = remove_query_arg( 'loggedout', urldecode( $returnUrl ) );
@@ -138,7 +138,7 @@ final class WP_Login_Logout {
 		wp_logout();
 		wp_set_current_user( 0 );
 
-		$returnUrl = Helpers::getLoginLogoutRedirect();
+		$returnUrl = Helpers::get_login_logout_redirect();
 		wp_safe_redirect( esc_url_raw( $returnUrl ), 302 );
 		exit;
 	}

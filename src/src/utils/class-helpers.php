@@ -73,7 +73,7 @@ class Helpers {
 		wp_enqueue_style( SKAUTISINTEGRATION_NAME . '_' . $handle );
 	}
 
-	public static function getLoginLogoutRedirect() {
+	public static function get_login_logout_redirect() {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( isset( $_GET['redirect_to'] ) && '' !== $_GET['redirect_to'] ) {
 			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
