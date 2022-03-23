@@ -75,7 +75,7 @@ final class WP_Register {
 		return $user;
 	}
 
-	private function processWpUserRegistration( array $user, string $wpRole ): bool {
+	private function process_wp_user_registration( array $user, string $wpRole ): bool {
 		$returnUrl = Helpers::getReturnUrl();
 		if ( is_null( $returnUrl ) ) {
 			return false;
@@ -191,7 +191,7 @@ final class WP_Register {
 		if ( $userDetail && isset( $userDetail->ID ) && $userDetail->ID > 0 ) {
 			$user = $this->prepare_user_data( $userDetail );
 
-			return $this->processWpUserRegistration( $user, $wpRole );
+			return $this->process_wp_user_registration( $user, $wpRole );
 		}
 
 		return false;
@@ -208,7 +208,7 @@ final class WP_Register {
 	public function registerToWpManually( string $wpRole, int $skautisUserId ): bool {
 		$userDetail = $this->usersRepository->get_user_detail( $skautisUserId );
 
-		return $this->processWpUserRegistration( $userDetail, $wpRole );
+		return $this->process_wp_user_registration( $userDetail, $wpRole );
 	}
 
 	public function sanitizeUsername( string $username, string $rawUsername, bool $strict ): string {
