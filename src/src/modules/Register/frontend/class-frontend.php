@@ -4,12 +4,14 @@ declare( strict_types=1 );
 
 namespace SkautisIntegration\Modules\Register\Frontend;
 
+// TODO: Unused?
 final class Frontend {
 
-	private $loginForm;
+	// TODO: Unused?
+	private $login_form;
 
 	public function __construct( Login_Form $loginForm ) {
-		$this->loginForm = $loginForm;
+		$this->login_form = $loginForm;
 	}
 
 }
