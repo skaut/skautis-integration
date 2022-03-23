@@ -36,9 +36,9 @@ final class WP_Register {
 			}
 		);
 
-		add_filter( 'sanitize_user', array( $this, 'sanitizeUsername' ), 10, 3 );
+		add_filter( 'sanitize_user', array( $this, 'sanitize_username' ), 10, 3 );
 		$userId = register_new_user( $userLogin, $userEmail );
-		remove_filter( 'sanitize_user', array( $this, 'sanitizeUsername' ), 10 );
+		remove_filter( 'sanitize_user', array( $this, 'sanitize_username' ), 10 );
 
 		add_action( 'register_new_user', 'wp_send_new_user_notifications' );
 
@@ -211,7 +211,7 @@ final class WP_Register {
 		return $this->process_wp_user_registration( $userDetail, $wpRole );
 	}
 
-	public function sanitizeUsername( string $username, string $rawUsername, bool $strict ): string {
+	public function sanitize_username( string $username, string $rawUsername, bool $strict ): string {
 		$username = wp_strip_all_tags( $rawUsername );
 
 		// Kill octets
