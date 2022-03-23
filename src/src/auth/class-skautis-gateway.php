@@ -74,7 +74,8 @@ class Skautis_Gateway {
 		return false;
 	}
 
-	public function isMaintenance(): bool {
+	// TODO: Unused?
+	public function is_maintenance(): bool {
 		return $this->skautis->isMaintenance();
 	}
 
