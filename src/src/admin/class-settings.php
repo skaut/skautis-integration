@@ -107,7 +107,7 @@ final class Settings {
 			__( 'Přihlašování', 'skautis-integration' ),
 			Helpers::getSkautisManagerCapability(),
 			SKAUTISINTEGRATION_NAME . '_login',
-			array( $this, 'printLoginPage' )
+			array( $this, 'print_login_page' )
 		);
 
 		add_submenu_page(
@@ -256,7 +256,7 @@ final class Settings {
 		);
 	}
 
-	public function printLoginPage() {
+	public function print_login_page() {
 		if ( ! current_user_can( Helpers::getSkautisManagerCapability() ) ) {
 			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'skautis-integration' ) );
 		}
