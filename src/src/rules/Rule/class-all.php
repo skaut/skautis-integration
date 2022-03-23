@@ -15,10 +15,10 @@ class All implements Rule {
 	protected static $multiple  = false;
 	protected static $operators = array( 'equal' );
 
-	protected $skautisGateway;
+	protected $skautis_gateway;
 
 	public function __construct( Skautis_Gateway $skautisGateway ) {
-		$this->skautisGateway = $skautisGateway;
+		$this->skautis_gateway = $skautisGateway;
 	}
 
 	public function get_id(): string {
@@ -62,7 +62,7 @@ class All implements Rule {
 	}
 
 	public function is_rule_passed( string $operator, $data ): bool {
-		if ( ! empty( $data[0] ) && 1 === $data[0] && $this->skautisGateway->get_skautis_instance()->UserManagement->UserDetail()->ID > 0 ) {
+		if ( ! empty( $data[0] ) && 1 === $data[0] && $this->skautis_gateway->get_skautis_instance()->UserManagement->UserDetail()->ID > 0 ) {
 			return true;
 		}
 
