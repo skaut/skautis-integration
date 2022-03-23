@@ -22,7 +22,7 @@ final class Connect_And_Disconnect_WP_Account {
 		if ( ! is_null( $returnUrl ) ) {
 			Helpers::validateNonceFromUrl( $returnUrl, SKAUTISINTEGRATION_NAME . '_connectWpAccountWithSkautis' );
 
-			update_user_meta( $wpUserId, 'skautisUserId_' . $this->skautisGateway->getEnv(), absint( $skautisUserId ) );
+			update_user_meta( $wpUserId, 'skautisUserId_' . $this->skautisGateway->get_env(), absint( $skautisUserId ) );
 
 			wp_safe_redirect( $returnUrl, 302 );
 			exit;
@@ -30,7 +30,7 @@ final class Connect_And_Disconnect_WP_Account {
 	}
 
 	public function printConnectAndDisconnectButton( int $wpUserId ) {
-		$skautisUserId = get_user_meta( $wpUserId, 'skautisUserId_' . $this->skautisGateway->getEnv(), true );
+		$skautisUserId = get_user_meta( $wpUserId, 'skautisUserId_' . $this->skautisGateway->get_env(), true );
 		if ( $skautisUserId ) {
 			if ( ! Helpers::userIsSkautisManager() && get_option( SKAUTISINTEGRATION_NAME . '_allowUsersDisconnectFromSkautis' ) !== '1' ) {
 				return;
@@ -107,7 +107,7 @@ final class Connect_And_Disconnect_WP_Account {
 				Helpers::validateNonceFromUrl( $returnUrl, SKAUTISINTEGRATION_NAME . '_disconnectWpAccountFromSkautis' );
 
 				if ( strpos( $returnUrl, 'profile.php' ) !== false ) {
-					delete_user_meta( get_current_user_id(), 'skautisUserId_' . $this->skautisGateway->getEnv() );
+					delete_user_meta( get_current_user_id(), 'skautisUserId_' . $this->skautisGateway->get_env() );
 				} elseif ( ( strpos( $returnUrl, 'user-edit_php' ) !== false ||
 							strpos( $returnUrl, 'user-edit.php' ) !== false ) &&
 							strpos( $returnUrl, 'user_id=' ) !== false ) {
@@ -117,7 +117,7 @@ final class Connect_And_Disconnect_WP_Account {
 					if ( is_array( $result ) && isset( $result[1] ) && $result[1] > 0 ) {
 						$userId = absint( $result[1] );
 						if ( Helpers::userIsSkautisManager() ) {
-							delete_user_meta( $userId, 'skautisUserId_' . $this->skautisGateway->getEnv() );
+							delete_user_meta( $userId, 'skautisUserId_' . $this->skautisGateway->get_env() );
 						}
 					}
 				}

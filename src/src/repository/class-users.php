@@ -40,7 +40,7 @@ class Users {
 			array(
 				'meta_query'  => array(
 					array(
-						'key'     => 'skautisUserId_' . $this->skautisGateway->getEnv(),
+						'key'     => 'skautisUserId_' . $this->skautisGateway->get_env(),
 						'type'    => 'numeric',
 						'value'   => 0,
 						'compare' => '>',
@@ -51,7 +51,7 @@ class Users {
 		);
 
 		foreach ( $connectedWpUsers->get_results() as $user ) {
-			$usersData[ get_user_meta( $user->ID, 'skautisUserId_' . $this->skautisGateway->getEnv(), true ) ] = array(
+			$usersData[ get_user_meta( $user->ID, 'skautisUserId_' . $this->skautisGateway->get_env(), true ) ] = array(
 				'id'   => $user->ID,
 				'name' => $user->display_name,
 			);
@@ -66,11 +66,11 @@ class Users {
 				'meta_query'  => array(
 					'relation' => 'OR',
 					array(
-						'key'     => 'skautisUserId_' . $this->skautisGateway->getEnv(),
+						'key'     => 'skautisUserId_' . $this->skautisGateway->get_env(),
 						'compare' => 'NOT EXISTS',
 					),
 					array(
-						'key'     => 'skautisUserId_' . $this->skautisGateway->getEnv(),
+						'key'     => 'skautisUserId_' . $this->skautisGateway->get_env(),
 						'value'   => '',
 						'compare' => '=',
 					),

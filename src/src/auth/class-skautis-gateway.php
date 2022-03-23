@@ -43,7 +43,7 @@ class Skautis_Gateway {
 		}
 	}
 
-	public function getEnv(): string {
+	public function get_env(): string {
 		return $this->env;
 	}
 

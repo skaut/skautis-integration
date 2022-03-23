@@ -25,7 +25,7 @@ final class WP_Login_Logout {
 					'number'     => 1,
 					'meta_query' => array(
 						array(
-							'key'     => 'skautisUserId_' . $this->skautisGateway->getEnv(),
+							'key'     => 'skautisUserId_' . $this->skautisGateway->get_env(),
 							'value'   => absint( $skautisUserId ),
 							'compare' => '=',
 						),

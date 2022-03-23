@@ -89,7 +89,7 @@ final class WP_Register {
 				'number'     => 1,
 				'meta_query' => array(
 					array(
-						'key'     => 'skautisUserId_' . $this->skautisGateway->getEnv(),
+						'key'     => 'skautisUserId_' . $this->skautisGateway->get_env(),
 						'value'   => absint( $user['id'] ),
 						'compare' => '=',
 					),
@@ -114,7 +114,7 @@ final class WP_Register {
 			return false;
 		}
 
-		if ( ! add_user_meta( $userId, 'skautisUserId_' . $this->skautisGateway->getEnv(), absint( $user['id'] ) ) ) {
+		if ( ! add_user_meta( $userId, 'skautisUserId_' . $this->skautisGateway->get_env(), absint( $user['id'] ) ) ) {
 			return false;
 		}
 
@@ -159,7 +159,7 @@ final class WP_Register {
 				'number'     => 1,
 				'meta_query' => array(
 					array(
-						'key'     => 'skautisUserId_' . $this->skautisGateway->getEnv(),
+						'key'     => 'skautisUserId_' . $this->skautisGateway->get_env(),
 						'value'   => absint( $userDetail->ID ),
 						'compare' => '=',
 					),
