@@ -18,7 +18,7 @@ final class WP_Register {
 		$this->usersRepository = $usersRepository;
 	}
 
-	private function resolveNotificationsAndRegisterUserToWp( string $userLogin, string $userEmail ): int {
+	private function resolve_notifications_and_register_user_to_wp( string $userLogin, string $userEmail ): int {
 		remove_action( 'register_new_user', 'wp_send_new_user_notifications' );
 		add_action(
 			'register_new_user',
@@ -108,7 +108,7 @@ final class WP_Register {
 
 		$username = mb_strcut( $user['UserName'], 0, 60 );
 
-		$userId = $this->resolveNotificationsAndRegisterUserToWp( $username, $user['email'] );
+		$userId = $this->resolve_notifications_and_register_user_to_wp( $username, $user['email'] );
 
 		if ( 0 === $userId ) {
 			return false;
