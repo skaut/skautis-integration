@@ -17,10 +17,10 @@ final class Modules_Manager {
 		$this->modules          = apply_filters( SKAUTISINTEGRATION_NAME . '_modules', $modules );
 		$this->activatedModules = (array) get_option( 'skautis_integration_activated_modules' );
 		apply_filters_ref_array( SKAUTISINTEGRATION_NAME . '_activated_modules', $this->activatedModules );
-		$this->registerActivatedModules( $this->modules, $this->activatedModules );
+		$this->register_activated_modules( $this->modules, $this->activatedModules );
 	}
 
-	private function registerActivatedModules( array $modules = array(), array $activatedModules = array() ) {
+	private function register_activated_modules( array $modules = array(), array $activatedModules = array() ) {
 		foreach ( $modules as $moduleId => $moduleLabel ) {
 			if ( in_array( $moduleId, $activatedModules, true ) ) {
 				$this->container[ $moduleId ];
