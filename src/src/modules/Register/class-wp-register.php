@@ -54,7 +54,7 @@ final class WP_Register {
 		return $userId;
 	}
 
-	private function prepareUserData( $skautisUser ): array {
+	private function prepare_user_data( $skautisUser ): array {
 		$skautisUserDetail = $this->skautisGateway->get_skautis_instance()->OrganizationUnit->PersonDetail(
 			array(
 				'ID_Login' => $this->skautisGateway->get_skautis_instance()->getUser()->getLoginId(),
@@ -189,7 +189,7 @@ final class WP_Register {
 		$userDetail = $this->skautisGateway->get_skautis_instance()->UserManagement->UserDetail();
 
 		if ( $userDetail && isset( $userDetail->ID ) && $userDetail->ID > 0 ) {
-			$user = $this->prepareUserData( $userDetail );
+			$user = $this->prepare_user_data( $userDetail );
 
 			return $this->processWpUserRegistration( $user, $wpRole );
 		}
