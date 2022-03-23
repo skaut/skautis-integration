@@ -96,7 +96,7 @@ final class Actions {
 		if ( ! $this->skautisGateway->is_initialized() ) {
 			if ( ( get_option( 'skautis_integration_appid_type' ) === 'prod' && ! get_option( 'skautis_integration_appid_prod' ) ) ||
 				( get_option( 'skautis_integration_appid_type' ) === 'test' && ! get_option( 'skautis_integration_appid_test' ) ) ) {
-				if ( Helpers::userIsSkautisManager() ) {
+				if ( Helpers::user_is_skautis_manager() ) {
 					/* translators: 1: Start of link to the settings 2: End of link to the settings */
 					wp_die( sprintf( esc_html__( 'Pro správné fungování pluginu skautIS integrace, je potřeba %1$snastavit APP ID%2$s', 'skautis-integration' ), '<a href="' . esc_url( admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME ) ) . '">', '</a>' ), esc_html__( 'Chyba v konfiguraci pluginu', 'skautis-integration' ) );
 				} else {

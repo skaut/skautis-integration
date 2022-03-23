@@ -32,7 +32,7 @@ final class Connect_And_Disconnect_WP_Account {
 	public function print_connect_and_disconnect_button( int $wpUserId ) {
 		$skautisUserId = get_user_meta( $wpUserId, 'skautisUserId_' . $this->skautisGateway->get_env(), true );
 		if ( $skautisUserId ) {
-			if ( ! Helpers::userIsSkautisManager() && get_option( SKAUTISINTEGRATION_NAME . '_allowUsersDisconnectFromSkautis' ) !== '1' ) {
+			if ( ! Helpers::user_is_skautis_manager() && get_option( SKAUTISINTEGRATION_NAME . '_allowUsersDisconnectFromSkautis' ) !== '1' ) {
 				return;
 			}
 			$returnUrl = add_query_arg( SKAUTISINTEGRATION_NAME . '_disconnectWpAccountFromSkautis', wp_create_nonce( SKAUTISINTEGRATION_NAME . '_disconnectWpAccountFromSkautis' ), Helpers::getCurrentUrl() );
@@ -74,7 +74,7 @@ final class Connect_And_Disconnect_WP_Account {
 		if ( ! isset( $_GET[ SKAUTISINTEGRATION_NAME . '_connect_user_nonce' ] ) ||
 			! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET[ SKAUTISINTEGRATION_NAME . '_connect_user_nonce' ] ) ), SKAUTISINTEGRATION_NAME . '_connect_user' ) ||
 			! $this->skautisLogin->is_user_logged_in_skautis() ||
-			! Helpers::userIsSkautisManager() ||
+			! Helpers::user_is_skautis_manager() ||
 			is_null( Helpers::get_return_url() )
 		) {
 			wp_die( esc_html__( 'Nemáte oprávnění k propojování uživatelů.', 'skautis-integration' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
@@ -116,7 +116,7 @@ final class Connect_And_Disconnect_WP_Account {
 					}
 					if ( is_array( $result ) && isset( $result[1] ) && $result[1] > 0 ) {
 						$userId = absint( $result[1] );
-						if ( Helpers::userIsSkautisManager() ) {
+						if ( Helpers::user_is_skautis_manager() ) {
 							delete_user_meta( $userId, 'skautisUserId_' . $this->skautisGateway->get_env() );
 						}
 					}

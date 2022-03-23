@@ -120,7 +120,7 @@ class Helpers {
 		return $capability;
 	}
 
-	public static function userIsSkautisManager(): bool {
+	public static function user_is_skautis_manager(): bool {
 		return current_user_can( self::get_skautis_manager_capability() );
 	}
 

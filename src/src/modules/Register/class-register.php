@@ -144,7 +144,7 @@ final class Register implements Module {
 		if ( ! isset( $_GET[ SKAUTISINTEGRATION_NAME . '_register_user_nonce' ] ) ||
 			! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET[ SKAUTISINTEGRATION_NAME . '_register_user_nonce' ] ) ), SKAUTISINTEGRATION_NAME . '_register_user' ) ||
 			! $this->skautisLogin->is_user_logged_in_skautis() ||
-			! Helpers::userIsSkautisManager() ||
+			! Helpers::user_is_skautis_manager() ||
 			! current_user_can( 'create_users' ) ||
 			is_null( $returnUrl ) ||
 			! isset( $_GET['wpRole'], $_GET['skautisUserId'] ) ) {

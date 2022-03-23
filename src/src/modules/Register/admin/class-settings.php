@@ -38,7 +38,7 @@ final class Settings {
 	}
 
 	public function print_setting_page() {
-		if ( ! Helpers::userIsSkautisManager() ) {
+		if ( ! Helpers::user_is_skautis_manager() ) {
 			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'skautis-integration' ) );
 		}
 

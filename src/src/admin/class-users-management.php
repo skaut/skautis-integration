@@ -123,7 +123,7 @@ class Users_Management {
 	}
 
 	public function print_child_users() {
-		if ( ! Helpers::userIsSkautisManager() ) {
+		if ( ! Helpers::user_is_skautis_manager() ) {
 			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'skautis-integration' ) );
 		}
 

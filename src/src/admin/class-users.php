@@ -66,7 +66,7 @@ final class Users {
 				<td>
 					<input type="text" name="skautisUserId_prod" id="skautisUserId_prod" class="regular-text" 
 					<?php
-					if ( ! Helpers::userIsSkautisManager() ) {
+					if ( ! Helpers::user_is_skautis_manager() ) {
 						echo 'disabled="disabled"';
 					}
 					?>
@@ -80,7 +80,7 @@ final class Users {
 				<td>
 					<input type="text" name="skautisUserId_test" id="skautisUserId_test" class="regular-text" 
 					<?php
-					if ( ! Helpers::userIsSkautisManager() ) {
+					if ( ! Helpers::user_is_skautis_manager() ) {
 						echo 'disabled="disabled"';
 					}
 					?>
@@ -98,7 +98,7 @@ final class Users {
 		}
 
 		$saved = false;
-		if ( Helpers::userIsSkautisManager() ) {
+		if ( Helpers::user_is_skautis_manager() ) {
 			if ( isset( $_POST['skautisUserId_prod'] ) ) {
 				$skautisUserId = absint( $_POST['skautisUserId_prod'] );
 				if ( 0 === $skautisUserId ) {
