@@ -82,7 +82,7 @@ final class Rules_Manager {
 		return false;
 	}
 
-	public function getRules(): array {
+	public function get_rules(): array {
 		return $this->rules;
 	}
 
