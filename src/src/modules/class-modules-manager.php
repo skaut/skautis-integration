@@ -28,7 +28,7 @@ final class Modules_Manager {
 		}
 	}
 
-	public function getAllModules(): array {
+	public function get_all_modules(): array {
 		return $this->modules;
 	}
 

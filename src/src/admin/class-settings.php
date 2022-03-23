@@ -231,7 +231,7 @@ final class Settings {
 
 		$activatedModules = (array) get_option( 'skautis_integration_activated_modules' );
 
-		foreach ( (array) $this->modulesManager->getAllModules() as $moduleId => $moduleLabel ) {
+		foreach ( (array) $this->modulesManager->get_all_modules() as $moduleId => $moduleLabel ) {
 			add_settings_field(
 				SKAUTISINTEGRATION_NAME . '_modules_' . $moduleId,
 				$moduleLabel,
