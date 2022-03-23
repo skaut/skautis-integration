@@ -14,14 +14,14 @@ final class Settings {
 
 	const HELP_PAGE_URL = 'https://napoveda.skaut.cz/skautis/skautis-integration';
 
-	private $skautisGateway;
-	private $modulesManager;
-	private $adminDirUrl = '';
+	private $skautis_gateway;
+	private $modules_manager;
+	private $admin_dir_url = '';
 
 	public function __construct( Skautis_Gateway $skautisGateway, Modules_Manager $modulesManager ) {
-		$this->skautisGateway = $skautisGateway;
-		$this->modulesManager = $modulesManager;
-		$this->adminDirUrl    = plugin_dir_url( __FILE__ ) . 'public/';
+		$this->skautis_gateway = $skautisGateway;
+		$this->modules_manager = $modulesManager;
+		$this->admin_dir_url    = plugin_dir_url( __FILE__ ) . 'public/';
 		$this->init_hooks();
 	}
 
@@ -89,7 +89,7 @@ final class Settings {
 			Helpers::get_skautis_manager_capability(),
 			SKAUTISINTEGRATION_NAME,
 			array( $this, 'print_setting_page' ),
-			$this->adminDirUrl . 'img/lilie.png'
+			$this->admin_dir_url . 'img/lilie.png'
 		);
 
 		add_submenu_page(
@@ -141,7 +141,7 @@ final class Settings {
 	}
 
 	public function test_app_id( $value ) {
-		if ( ! $this->skautisGateway->test_active_app_id() ) {
+		if ( ! $this->skautis_gateway->test_active_app_id() ) {
 			add_settings_error( 'general', 'api_invalid', esc_html__( 'Zadané APP ID není pro tento web platné.', 'skautis-integration' ), 'notice-error' );
 		}
 		return sanitize_text_field( $value );
@@ -231,7 +231,7 @@ final class Settings {
 
 		$activatedModules = (array) get_option( 'skautis_integration_activated_modules' );
 
-		foreach ( (array) $this->modulesManager->get_all_modules() as $moduleId => $moduleLabel ) {
+		foreach ( (array) $this->modules_manager->get_all_modules() as $moduleId => $moduleLabel ) {
 			add_settings_field(
 				SKAUTISINTEGRATION_NAME . '_modules_' . $moduleId,
 				$moduleLabel,
