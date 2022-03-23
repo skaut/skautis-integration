@@ -43,7 +43,7 @@ final class Settings {
 
 		add_action( 'admin_menu', array( $this, 'setup_setting_page' ), 5 );
 		add_action( 'admin_init', array( $this, 'setup_setting_fields' ) );
-		add_action( 'admin_init', array( $this, 'setupLoginFields' ) );
+		add_action( 'admin_init', array( $this, 'setup_login_fields' ) );
 
 		$this->check_if_app_id_is_set_and_show_notices();
 	}
@@ -276,7 +276,7 @@ final class Settings {
 		<?php
 	}
 
-	public function setupLoginFields() {
+	public function setup_login_fields() {
 		add_settings_section(
 			SKAUTISINTEGRATION_NAME . '_login',
 			'',
