@@ -62,7 +62,7 @@ class All implements Rule {
 	}
 
 	public function is_rule_passed( string $operator, $data ): bool {
-		if ( ! empty( $data[0] ) && 1 === $data[0] && $this->skautisGateway->getSkautisInstance()->UserManagement->UserDetail()->ID > 0 ) {
+		if ( ! empty( $data[0] ) && 1 === $data[0] && $this->skautisGateway->get_skautis_instance()->UserManagement->UserDetail()->ID > 0 ) {
 			return true;
 		}
 

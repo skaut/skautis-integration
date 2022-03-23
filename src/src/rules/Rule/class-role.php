@@ -55,7 +55,7 @@ class Role implements Rule {
 
 	public function get_values(): array {
 		$values = array();
-		$roles  = $this->skautisGateway->getSkautisInstance()->UserManagement->RoleAll();
+		$roles  = $this->skautisGateway->get_skautis_instance()->UserManagement->RoleAll();
 
 		foreach ( $roles as $role ) {
 			$values[ $role->ID ] = $role->DisplayName;
@@ -81,10 +81,10 @@ class Role implements Rule {
 		static $userRoles = null;
 
 		if ( is_null( $userRoles ) ) {
-			$userRoles = $this->skautisGateway->getSkautisInstance()->UserManagement->UserRoleAll(
+			$userRoles = $this->skautisGateway->get_skautis_instance()->UserManagement->UserRoleAll(
 				array(
-					'ID_Login' => $this->skautisGateway->getSkautisInstance()->getUser()->getLoginId(),
-					'ID_User'  => $this->skautisGateway->getSkautisInstance()->UserManagement->UserDetail()->ID,
+					'ID_Login' => $this->skautisGateway->get_skautis_instance()->getUser()->getLoginId(),
+					'ID_User'  => $this->skautisGateway->get_skautis_instance()->UserManagement->UserDetail()->ID,
 					'IsActive' => true,
 				)
 			);
@@ -92,7 +92,7 @@ class Role implements Rule {
 			$result = array();
 			foreach ( $userRoles as $userRole ) {
 				try {
-					$unitDetail = $this->skautisGateway->getSkautisInstance()->OrganizationUnit->UnitDetail(
+					$unitDetail = $this->skautisGateway->get_skautis_instance()->OrganizationUnit->UnitDetail(
 						array(
 							'ID' => $userRole->ID_Unit,
 						)

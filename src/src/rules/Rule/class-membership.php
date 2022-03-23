@@ -55,7 +55,7 @@ class Membership implements Rule {
 
 	public function get_values(): array {
 		$result      = array();
-		$memberships = $this->skautisGateway->getSkautisInstance()->OrganizationUnit->MembershipTypeAll();
+		$memberships = $this->skautisGateway->get_skautis_instance()->OrganizationUnit->MembershipTypeAll();
 
 		foreach ( $memberships as $membership ) {
 			$result[ $membership->ID ] = $membership->DisplayName;
@@ -81,8 +81,8 @@ class Membership implements Rule {
 		static $userMemberships = null;
 
 		if ( is_null( $userMemberships ) ) {
-			$userDetail      = $this->skautisGateway->getSkautisInstance()->UserManagement->UserDetail();
-			$userMemberships = $this->skautisGateway->getSkautisInstance()->OrganizationUnit->MembershipAllPerson(
+			$userDetail      = $this->skautisGateway->get_skautis_instance()->UserManagement->UserDetail();
+			$userMemberships = $this->skautisGateway->get_skautis_instance()->OrganizationUnit->MembershipAllPerson(
 				array(
 					'ID_Person'   => $userDetail->ID_Person,
 					'ShowHistory' => false,
@@ -115,7 +115,7 @@ class Membership implements Rule {
 					continue;
 				}
 
-				$unitDetail = $this->skautisGateway->getSkautisInstance()->OrganizationUnit->UnitDetail(
+				$unitDetail = $this->skautisGateway->get_skautis_instance()->OrganizationUnit->UnitDetail(
 					array(
 						'ID' => $userMembership->ID_Unit,
 					)

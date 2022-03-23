@@ -55,7 +55,7 @@ class Func implements Rule {
 
 	public function get_values(): array {
 		$values = array();
-		$funcs  = $this->skautisGateway->getSkautisInstance()->OrganizationUnit->FunctionTypeAll();
+		$funcs  = $this->skautisGateway->get_skautis_instance()->OrganizationUnit->FunctionTypeAll();
 
 		foreach ( $funcs as $func ) {
 			$values[ $func->ID ] = $func->ShortName;
@@ -81,8 +81,8 @@ class Func implements Rule {
 		static $userFuncs = null;
 
 		if ( is_null( $userFuncs ) ) {
-			$userDetail = $this->skautisGateway->getSkautisInstance()->UserManagement->UserDetail();
-			$userFuncs  = $this->skautisGateway->getSkautisInstance()->OrganizationUnit->FunctionAllPerson(
+			$userDetail = $this->skautisGateway->get_skautis_instance()->UserManagement->UserDetail();
+			$userFuncs  = $this->skautisGateway->get_skautis_instance()->OrganizationUnit->FunctionAllPerson(
 				array(
 					'ID_Person' => $userDetail->ID_Person,
 				)
@@ -95,7 +95,7 @@ class Func implements Rule {
 			}
 
 			foreach ( $userFuncs->FunctionAllOutput as $userFunc ) {
-				$unitDetail = $this->skautisGateway->getSkautisInstance()->OrganizationUnit->UnitDetail(
+				$unitDetail = $this->skautisGateway->get_skautis_instance()->OrganizationUnit->UnitDetail(
 					array(
 						'ID' => $userFunc->ID_Unit,
 					)

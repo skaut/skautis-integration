@@ -55,7 +55,7 @@ class Qualification implements Rule {
 
 	public function get_values(): array {
 		$result         = array();
-		$qualifications = $this->skautisGateway->getSkautisInstance()->OrganizationUnit->QualificationTypeAll();
+		$qualifications = $this->skautisGateway->get_skautis_instance()->OrganizationUnit->QualificationTypeAll();
 
 		foreach ( $qualifications as $qualification ) {
 			$result[ $qualification->ID ] = $qualification->DisplayName;
@@ -68,8 +68,8 @@ class Qualification implements Rule {
 		static $userQualifications = null;
 
 		if ( is_null( $userQualifications ) ) {
-			$userDetail         = $this->skautisGateway->getSkautisInstance()->UserManagement->UserDetail();
-			$userQualifications = $this->skautisGateway->getSkautisInstance()->OrganizationUnit->QualificationAll(
+			$userDetail         = $this->skautisGateway->get_skautis_instance()->UserManagement->UserDetail();
+			$userQualifications = $this->skautisGateway->get_skautis_instance()->OrganizationUnit->QualificationAll(
 				array(
 					'ID_Person'   => $userDetail->ID_Person,
 					'ShowHistory' => true,

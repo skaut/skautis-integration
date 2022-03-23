@@ -18,7 +18,7 @@ final class Skautis_Login {
 
 	public function is_user_logged_in_skautis(): bool {
 		if ( $this->skautisGateway->isInitialized() ) {
-			return $this->skautisGateway->getSkautisInstance()->getUser()->isLoggedIn() && $this->skautisGateway->getSkautisInstance()->getUser()->isLoggedIn( true );
+			return $this->skautisGateway->get_skautis_instance()->getUser()->isLoggedIn() && $this->skautisGateway->get_skautis_instance()->getUser()->isLoggedIn( true );
 		}
 
 		return false;
@@ -28,7 +28,7 @@ final class Skautis_Login {
 		$data = apply_filters( SKAUTISINTEGRATION_NAME . '_login_data_for_skautis_instance', $data );
 
 		if ( isset( $data['skautIS_Token'] ) ) {
-			$this->skautisGateway->getSkautisInstance()->setLoginData( $data );
+			$this->skautisGateway->get_skautis_instance()->setLoginData( $data );
 
 			if ( ! $this->is_user_logged_in_skautis() ) {
 				return false;
@@ -51,7 +51,7 @@ final class Skautis_Login {
 		}
 
 		if ( ! $this->is_user_logged_in_skautis() ) {
-			wp_safe_redirect( esc_url_raw( $this->skautisGateway->getSkautisInstance()->getLoginUrl( $returnUrl ) ), 302 );
+			wp_safe_redirect( esc_url_raw( $this->skautisGateway->get_skautis_instance()->getLoginUrl( $returnUrl ) ), 302 );
 			exit;
 		}
 
@@ -88,9 +88,9 @@ final class Skautis_Login {
 
 	public function change_user_role_in_skautis( int $roleId ) {
 		if ( $roleId > 0 ) {
-			$result = $this->skautisGateway->getSkautisInstance()->UserManagement->LoginUpdate(
+			$result = $this->skautisGateway->get_skautis_instance()->UserManagement->LoginUpdate(
 				array(
-					'ID'          => $this->skautisGateway->getSkautisInstance()->getUser()->getLoginId(),
+					'ID'          => $this->skautisGateway->get_skautis_instance()->getUser()->getLoginId(),
 					'ID_UserRole' => $roleId,
 				)
 			);
@@ -99,8 +99,8 @@ final class Skautis_Login {
 				return;
 			}
 
-			$this->skautisGateway->getSkautisInstance()->getUser()->updateLoginData(
-				$this->skautisGateway->getSkautisInstance()->getUser()->getLoginId(),
+			$this->skautisGateway->get_skautis_instance()->getUser()->updateLoginData(
+				$this->skautisGateway->get_skautis_instance()->getUser()->getLoginId(),
 				$roleId,
 				$result->ID_Unit
 			);

@@ -55,9 +55,9 @@ final class WP_Register {
 	}
 
 	private function prepareUserData( $skautisUser ): array {
-		$skautisUserDetail = $this->skautisGateway->getSkautisInstance()->OrganizationUnit->PersonDetail(
+		$skautisUserDetail = $this->skautisGateway->get_skautis_instance()->OrganizationUnit->PersonDetail(
 			array(
-				'ID_Login' => $this->skautisGateway->getSkautisInstance()->getUser()->getLoginId(),
+				'ID_Login' => $this->skautisGateway->get_skautis_instance()->getUser()->getLoginId(),
 				'ID'       => $skautisUser->ID_Person,
 			)
 		);
@@ -147,7 +147,7 @@ final class WP_Register {
 	}
 
 	public function checkIfUserIsAlreadyRegisteredAndGetHisUserId(): int {
-		$userDetail = $this->skautisGateway->getSkautisInstance()->UserManagement->UserDetail();
+		$userDetail = $this->skautisGateway->get_skautis_instance()->UserManagement->UserDetail();
 
 		if ( ! $userDetail || ! isset( $userDetail->ID ) || ! $userDetail->ID > 0 ) {
 			return 0;
@@ -186,7 +186,7 @@ final class WP_Register {
 	}
 
 	public function registerToWp( string $wpRole ): bool {
-		$userDetail = $this->skautisGateway->getSkautisInstance()->UserManagement->UserDetail();
+		$userDetail = $this->skautisGateway->get_skautis_instance()->UserManagement->UserDetail();
 
 		if ( $userDetail && isset( $userDetail->ID ) && $userDetail->ID > 0 ) {
 			$user = $this->prepareUserData( $userDetail );

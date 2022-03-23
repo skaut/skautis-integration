@@ -34,14 +34,14 @@ class Role_Changer {
 	}
 
 	public function printChangeRolesForm() {
-		$currentUserRoles = $this->skautisGateway->getSkautisInstance()->UserManagement->UserRoleAll(
+		$currentUserRoles = $this->skautisGateway->get_skautis_instance()->UserManagement->UserRoleAll(
 			array(
-				'ID_Login' => $this->skautisGateway->getSkautisInstance()->getUser()->getLoginId(),
-				'ID_User'  => $this->skautisGateway->getSkautisInstance()->UserManagement->UserDetail()->ID,
+				'ID_Login' => $this->skautisGateway->get_skautis_instance()->getUser()->getLoginId(),
+				'ID_User'  => $this->skautisGateway->get_skautis_instance()->UserManagement->UserDetail()->ID,
 				'IsActive' => true,
 			)
 		);
-		$currentUserRole  = $this->skautisGateway->getSkautisInstance()->getUser()->getRoleId();
+		$currentUserRole  = $this->skautisGateway->get_skautis_instance()->getUser()->getRoleId();
 
 		echo '
 <form method="post" action="' . esc_attr( Helpers::getCurrentUrl() ) . '" novalidate="novalidate">' .

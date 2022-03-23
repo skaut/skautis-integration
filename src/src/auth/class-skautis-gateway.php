@@ -47,7 +47,7 @@ class Skautis_Gateway {
 		return $this->env;
 	}
 
-	public function getSkautisInstance(): Skautis\Skautis {
+	public function get_skautis_instance(): Skautis\Skautis {
 		return $this->skautis;
 	}
 
@@ -57,7 +57,7 @@ class Skautis_Gateway {
 
 	public function logout() {
 		$this->skautis->setLoginData( array() );
-		wp_remote_get( esc_url_raw( $this->getSkautisInstance()->getLogoutUrl() ) );
+		wp_remote_get( esc_url_raw( $this->get_skautis_instance()->getLogoutUrl() ) );
 	}
 
 	public function testActiveAppId() {

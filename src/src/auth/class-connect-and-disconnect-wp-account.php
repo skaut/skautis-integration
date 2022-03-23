@@ -58,12 +58,12 @@ final class Connect_And_Disconnect_WP_Account {
             // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			if ( ! $this->skautisLogin->set_login_data_to_local_skautis_instance( $_POST ) ) {
 				$returnUrl = Helpers::getReturnUrl() ?? Helpers::getCurrentUrl();
-				wp_safe_redirect( esc_url_raw( $this->skautisGateway->getSkautisInstance()->getLoginUrl( $returnUrl ) ), 302 );
+				wp_safe_redirect( esc_url_raw( $this->skautisGateway->get_skautis_instance()->getLoginUrl( $returnUrl ) ), 302 );
 				exit;
 			}
 		}
 
-		$userDetail = $this->skautisGateway->getSkautisInstance()->UserManagement->UserDetail();
+		$userDetail = $this->skautisGateway->get_skautis_instance()->UserManagement->UserDetail();
 
 		if ( $userDetail && isset( $userDetail->ID ) && $userDetail->ID > 0 ) {
 			$this->setSkautisUserIdToWpAccount( get_current_user_id(), $userDetail->ID );
