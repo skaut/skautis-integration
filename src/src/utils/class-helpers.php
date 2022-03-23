@@ -110,7 +110,7 @@ class Helpers {
 		);
 	}
 
-	public static function getSkautisManagerCapability(): string {
+	public static function get_skautis_manager_capability(): string {
 		static $capability = '';
 
 		if ( '' === $capability ) {
@@ -121,7 +121,7 @@ class Helpers {
 	}
 
 	public static function userIsSkautisManager(): bool {
-		return current_user_can( self::getSkautisManagerCapability() );
+		return current_user_can( self::get_skautis_manager_capability() );
 	}
 
 	public static function getCurrentUrl(): string {

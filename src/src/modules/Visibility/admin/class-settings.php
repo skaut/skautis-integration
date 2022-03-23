@@ -26,7 +26,7 @@ final class Settings {
 			SKAUTISINTEGRATION_NAME,
 			__( 'Viditelnost obsahu', 'skautis-integration' ),
 			__( 'Viditelnost obsahu', 'skautis-integration' ),
-			Helpers::getSkautisManagerCapability(),
+			Helpers::get_skautis_manager_capability(),
 			SKAUTISINTEGRATION_NAME . '_modules_visibility',
 			array( $this, 'print_setting_page' )
 		);

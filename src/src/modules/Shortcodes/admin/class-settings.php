@@ -26,7 +26,7 @@ final class Settings {
 			SKAUTISINTEGRATION_NAME,
 			__( 'Shortcodes', 'skautis-integration' ),
 			__( 'Shortcodes', 'skautis-integration' ),
-			Helpers::getSkautisManagerCapability(),
+			Helpers::get_skautis_manager_capability(),
 			SKAUTISINTEGRATION_NAME . '_modules_shortcodes',
 			array( $this, 'print_setting_page' )
 		);

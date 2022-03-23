@@ -43,7 +43,7 @@ final class WP_Login_Logout {
 
 				if ( ! $try ) {
 					if ( Services::get_services_container()['modulesManager']->is_module_activated( Register::get_id() ) &&
-						! user_can( $wpUser->ID, Helpers::getSkautisManagerCapability() ) &&
+						! user_can( $wpUser->ID, Helpers::get_skautis_manager_capability() ) &&
 						get_option( SKAUTISINTEGRATION_NAME . '_checkUserPrivilegesIfLoginBySkautis' ) ) {
 						if ( ! Services::get_services_container()[ Register::get_id() ]->getRulesManager()->check_if_user_passed_rules_and_get_his_role() ) {
 							/* translators: 1: Start of a link to SkautIS login 2: End of the link to SkautIS login */

@@ -31,7 +31,7 @@ final class Settings {
 			SKAUTISINTEGRATION_NAME,
 			__( 'Registrace', 'skautis-integration' ),
 			__( 'Registrace', 'skautis-integration' ),
-			Helpers::getSkautisManagerCapability(),
+			Helpers::get_skautis_manager_capability(),
 			SKAUTISINTEGRATION_NAME . '_modules_register',
 			array( $this, 'print_setting_page' )
 		);
