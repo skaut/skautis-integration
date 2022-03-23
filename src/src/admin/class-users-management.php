@@ -207,7 +207,7 @@ class Users_Management {
 					?>
 				</select>
 				<a id="connectUserToSkautisModal_connectLink" class="button button-primary"
-					href="<?php echo esc_url( $this->connectAndDisconnectWpAccount->getConnectWpUserToSkautisUrl() ); ?>"><?php esc_html_e( 'Potvrdit', 'skautis-integration' ); ?></a>
+					href="<?php echo esc_url( $this->connectAndDisconnectWpAccount->get_connect_wp_user_to_skautis_url() ); ?>"><?php esc_html_e( 'Potvrdit', 'skautis-integration' ); ?></a>
 				<div>
 					<em><?php esc_html_e( 'Je možné vybrat pouze ty uživatele, kteří ještě nemají propojený účet se skautISem.', 'skautis-integration' ); ?></em>
 				</div>
