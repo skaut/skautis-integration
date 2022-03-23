@@ -131,7 +131,7 @@ class Helpers {
 		return '';
 	}
 
-	public static function validateNonceFromUrl( string $url, string $nonceName ) {
+	public static function validate_nonce_from_url( string $url, string $nonceName ) {
 		if ( ! wp_verify_nonce( self::getNonceFromUrl( urldecode( $url ), $nonceName ), $nonceName ) ) {
 			wp_nonce_ays( $nonceName );
 		}

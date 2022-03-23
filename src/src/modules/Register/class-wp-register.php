@@ -81,7 +81,7 @@ final class WP_Register {
 			return false;
 		}
 
-		Helpers::validateNonceFromUrl( $returnUrl, SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis' );
+		Helpers::validate_nonce_from_url( $returnUrl, SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis' );
 
 		// check for skautIS User ID collision with existing users
 		$usersWpQuery = new \WP_User_Query(

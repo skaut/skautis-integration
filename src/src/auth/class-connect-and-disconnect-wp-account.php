@@ -20,7 +20,7 @@ final class Connect_And_Disconnect_WP_Account {
 	private function set_skautis_user_id_to_wp_account( int $wpUserId, int $skautisUserId ) {
 		$returnUrl = Helpers::get_return_url();
 		if ( ! is_null( $returnUrl ) ) {
-			Helpers::validateNonceFromUrl( $returnUrl, SKAUTISINTEGRATION_NAME . '_connectWpAccountWithSkautis' );
+			Helpers::validate_nonce_from_url( $returnUrl, SKAUTISINTEGRATION_NAME . '_connectWpAccountWithSkautis' );
 
 			update_user_meta( $wpUserId, 'skautisUserId_' . $this->skautisGateway->get_env(), absint( $skautisUserId ) );
 
@@ -104,7 +104,7 @@ final class Connect_And_Disconnect_WP_Account {
 		if ( is_user_logged_in() ) {
 			$returnUrl = Helpers::get_return_url();
 			if ( ! is_null( $returnUrl ) ) {
-				Helpers::validateNonceFromUrl( $returnUrl, SKAUTISINTEGRATION_NAME . '_disconnectWpAccountFromSkautis' );
+				Helpers::validate_nonce_from_url( $returnUrl, SKAUTISINTEGRATION_NAME . '_disconnectWpAccountFromSkautis' );
 
 				if ( strpos( $returnUrl, 'profile.php' ) !== false ) {
 					delete_user_meta( get_current_user_id(), 'skautisUserId_' . $this->skautisGateway->get_env() );
