@@ -6,14 +6,17 @@ namespace SkautisIntegration\General;
 
 use SkautisIntegration\Rules\Rules_Init;
 
+// TODO: Unused?
 final class General {
 
+	// TODO: Unused?
 	private $actions;
-	private $rulesInit;
+	// TODO: Unused?
+	private $rules_init;
 
 	public function __construct( Actions $actions, Rules_Init $rulesInit ) {
 		$this->actions   = $actions;
-		$this->rulesInit = $rulesInit;
+		$this->rules_init = $rulesInit;
 	}
 
 }
