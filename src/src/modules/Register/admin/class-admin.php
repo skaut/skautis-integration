@@ -9,13 +9,14 @@ use SkautisIntegration\Utils\Helpers;
 
 final class Admin {
 
-	private $rulesManager;
-	private $adminDirUrl = '';
+	private $rules_manager;
+	// TODO: Unused?
+	private $admin_dir_url = '';
 
 	public function __construct( Rules_Manager $rulesManager ) {
-		$this->rulesManager = $rulesManager;
-		$this->adminDirUrl  = plugin_dir_url( __FILE__ ) . 'public/';
-		( new Settings( $this->rulesManager ) );
+		$this->rules_manager = $rulesManager;
+		$this->admin_dir_url  = plugin_dir_url( __FILE__ ) . 'public/';
+		( new Settings( $this->rules_manager ) );
 		$this->init_hooks();
 	}
 
@@ -55,7 +56,7 @@ final class Admin {
 	public function init_rules_options() {
 		if ( get_current_screen()->id === 'skautis_page_skautis-integration_modules_register' ) {
 			$rules = array();
-			foreach ( (array) $this->rulesManager->get_all_rules() as $rule ) {
+			foreach ( (array) $this->rules_manager->get_all_rules() as $rule ) {
 				$rules[ $rule->ID ] = $rule->post_title;
 			}
 			?>
