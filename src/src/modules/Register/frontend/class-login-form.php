@@ -29,7 +29,7 @@ final class Login_Form {
 		?>
 		<p style="margin-bottom: 0.3em;">
 			<a class="button button-primary button-hero button-skautis" style="float: none; width: 100%; text-align: center;"
-				href="<?php echo esc_url( $this->wpRegister->getRegisterUrl() ); ?>"><?php esc_html_e( 'Log in with skautIS', 'skautis-integration' ); ?></a>
+				href="<?php echo esc_url( $this->wpRegister->get_register_url() ); ?>"><?php esc_html_e( 'Log in with skautIS', 'skautis-integration' ); ?></a>
 			<br/>
 		</p>
 		<br/>
@@ -40,7 +40,7 @@ final class Login_Form {
 		return '
 				<p style="margin-bottom: 0.3em;">
 						<a class="button button-primary button-hero button-skautis" style="float: none; width: 100%; text-align: center;"
-						   href="' . $this->wpRegister->getRegisterUrl() . '">' . __( 'Log in with skautIS', 'skautis-integration' ) . '</a>
+						   href="' . $this->wpRegister->get_register_url() . '">' . __( 'Log in with skautIS', 'skautis-integration' ) . '</a>
 						   <br/>
 				</p>
 				<br/>

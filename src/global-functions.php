@@ -23,7 +23,7 @@ if ( ! function_exists( 'getSkautisLogoutUrl' ) ) {
 if ( ! function_exists( 'getSkautisRegisterUrl' ) ) {
 	function getSkautisRegisterUrl(): string {
 		if ( Services::get_services_container()['modulesManager']->is_module_activated( Register::get_id() ) ) {
-			return ( Services::get_services_container()[ Register::get_id() ] )->getWpRegister()->getRegisterUrl();
+			return ( Services::get_services_container()[ Register::get_id() ] )->getWpRegister()->get_register_url();
 		} else {
 			return '';
 		}

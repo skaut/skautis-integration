@@ -175,7 +175,7 @@ final class WP_Register {
 		return 0;
 	}
 
-	public function getRegisterUrl(): string {
+	public function get_register_url(): string {
 		$returnUrl = Helpers::getLoginLogoutRedirect();
 		$returnUrl = remove_query_arg( 'loggedout', urldecode( $returnUrl ) );
 
