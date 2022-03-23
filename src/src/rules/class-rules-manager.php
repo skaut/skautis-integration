@@ -35,7 +35,7 @@ final class Rules_Manager {
 		);
 	}
 
-	private function processRule( $rule ): bool {
+	private function process_rule( $rule ): bool {
 		if ( ! isset( $rule->field ) ) {
 			if ( isset( $rule->condition ) && isset( $rule->rules ) ) {
 				return $this->parseRulesGroups( $rule->condition, $rule->rules );
@@ -64,14 +64,14 @@ final class Rules_Manager {
 				if ( isset( $rule->rules ) ) {
 					$result = $result * $this->parseRulesGroups( $rule->condition, $rule->rules );
 				}
-				$result = $result * $this->processRule( $rule );
+				$result = $result * $this->process_rule( $rule );
 			}
 		} else { // OR
 			foreach ( $rules as $rule ) {
 				if ( isset( $rule->rules ) ) {
 					$result = $result + $this->parseRulesGroups( $rule->condition, $rule->rules );
 				}
-				$result = $result + $this->processRule( $rule );
+				$result = $result + $this->process_rule( $rule );
 			}
 		}
 
