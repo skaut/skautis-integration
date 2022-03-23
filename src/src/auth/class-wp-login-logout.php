@@ -42,7 +42,7 @@ final class WP_Login_Logout {
 				$wpUser = $users[0];
 
 				if ( ! $try ) {
-					if ( Services::get_services_container()['modulesManager']->isModuleActivated( Register::get_id() ) &&
+					if ( Services::get_services_container()['modulesManager']->is_module_activated( Register::get_id() ) &&
 						! user_can( $wpUser->ID, Helpers::getSkautisManagerCapability() ) &&
 						get_option( SKAUTISINTEGRATION_NAME . '_checkUserPrivilegesIfLoginBySkautis' ) ) {
 						if ( ! Services::get_services_container()[ Register::get_id() ]->getRulesManager()->checkIfUserPassedRulesAndGetHisRole() ) {
@@ -71,7 +71,7 @@ final class WP_Login_Logout {
 		}
 
 		if ( ! $try ) {
-			if ( Services::get_services_container()['modulesManager']->isModuleActivated( Register::get_id() ) ) {
+			if ( Services::get_services_container()['modulesManager']->is_module_activated( Register::get_id() ) ) {
 				/* translators: 1: Start of a link to SkautIS login 2: End of the link to SkautIS login */
 				wp_die( sprintf( esc_html__( 'Nemáte oprávnění k přístupu. %1$sZkuste se nejdříve zaregistrovat%2$s', 'skautis-integration' ), '<a href ="' . esc_url( ( Services::get_services_container()[ Register::get_id() ] )->getWpRegister()->getRegisterUrl() ) . '">', '</a>' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
 			} else {

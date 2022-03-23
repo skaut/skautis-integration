@@ -32,7 +32,7 @@ final class Modules_Manager {
 		return $this->modules;
 	}
 
-	public function isModuleActivated( string $moduleName ): bool {
+	public function is_module_activated( string $moduleName ): bool {
 		return in_array( $moduleName, $this->activatedModules, true );
 	}
 

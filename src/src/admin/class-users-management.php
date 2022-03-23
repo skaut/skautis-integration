@@ -212,7 +212,7 @@ class Users_Management {
 					<em><?php esc_html_e( 'Je možné vybrat pouze ty uživatele, kteří ještě nemají propojený účet se skautISem.', 'skautis-integration' ); ?></em>
 				</div>
 				<?php
-				if ( Services::get_services_container()['modulesManager']->isModuleActivated( Register::get_id() ) ) {
+				if ( Services::get_services_container()['modulesManager']->is_module_activated( Register::get_id() ) ) {
 					?>
 					<hr/>
 					<h3><?php esc_html_e( 'Vytvořit nový účet', 'skautis-integration' ); ?></h3>
