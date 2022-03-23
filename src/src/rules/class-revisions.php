@@ -49,7 +49,7 @@ class Revisions {
 		}
 	}
 
-	public function deleteMeta( int $postId ) {
+	public function delete_meta( int $postId ) {
 		$meta = $this->get_meta( $postId );
 
 		foreach ( $meta as $metaKey => $metaValue ) {
@@ -78,14 +78,14 @@ class Revisions {
 
 	public function restoreRevision( int $postId, int $revisionId ) {
 		$meta = $this->get_meta( $revisionId );
-		$this->deleteMeta( $postId );
+		$this->delete_meta( $postId );
 		$this->insert_meta( $postId, $meta );
 
 		// also update last revision custom fields
 		$revisions = wp_get_post_revisions( $postId );
 		if ( count( $revisions ) > 0 ) {
 			$lastRevision = current( $revisions );
-			$this->deleteMeta( $lastRevision->ID );
+			$this->delete_meta( $lastRevision->ID );
 			$this->insert_meta( $lastRevision->ID, $meta );
 		}
 	}
