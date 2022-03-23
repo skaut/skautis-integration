@@ -15,10 +15,10 @@ class Func implements Rule {
 	protected static $multiple  = true;
 	protected static $operators = array( 'in', 'not_in' );
 
-	protected $skautisGateway;
+	protected $skautis_gateway;
 
 	public function __construct( Skautis_Gateway $skautisGateway ) {
-		$this->skautisGateway = $skautisGateway;
+		$this->skautis_gateway = $skautisGateway;
 	}
 
 	public function get_id(): string {
@@ -55,7 +55,7 @@ class Func implements Rule {
 
 	public function get_values(): array {
 		$values = array();
-		$funcs  = $this->skautisGateway->get_skautis_instance()->OrganizationUnit->FunctionTypeAll();
+		$funcs  = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->FunctionTypeAll();
 
 		foreach ( $funcs as $func ) {
 			$values[ $func->ID ] = $func->ShortName;
@@ -81,8 +81,8 @@ class Func implements Rule {
 		static $userFuncs = null;
 
 		if ( is_null( $userFuncs ) ) {
-			$userDetail = $this->skautisGateway->get_skautis_instance()->UserManagement->UserDetail();
-			$userFuncs  = $this->skautisGateway->get_skautis_instance()->OrganizationUnit->FunctionAllPerson(
+			$userDetail = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserDetail();
+			$userFuncs  = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->FunctionAllPerson(
 				array(
 					'ID_Person' => $userDetail->ID_Person,
 				)
@@ -95,7 +95,7 @@ class Func implements Rule {
 			}
 
 			foreach ( $userFuncs->FunctionAllOutput as $userFunc ) {
-				$unitDetail = $this->skautisGateway->get_skautis_instance()->OrganizationUnit->UnitDetail(
+				$unitDetail = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->UnitDetail(
 					array(
 						'ID' => $userFunc->ID_Unit,
 					)
