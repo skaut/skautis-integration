@@ -16,13 +16,13 @@ final class Rules_Manager {
 	public function __construct( Skautis_Gateway $skautisGateway, WP_Login_Logout $wpLoginLogout ) {
 		$this->skautisGateway = $skautisGateway;
 		$this->wpLoginLogout  = $wpLoginLogout;
-		$this->rules          = $this->initRules();
+		$this->rules          = $this->init_rules();
 		if ( is_admin() ) {
 			( new Admin( $this, $wpLoginLogout, $skautisGateway ) );
 		}
 	}
 
-	private function initRules(): array {
+	private function init_rules(): array {
 		return apply_filters(
 			SKAUTISINTEGRATION_NAME . '_rules',
 			array(
