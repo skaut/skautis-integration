@@ -307,7 +307,7 @@ final class Settings {
 		add_settings_field(
 			SKAUTISINTEGRATION_NAME . '_login_page_url',
 			__( 'Adresa stránky s přihlašováním', 'skautis-integration' ),
-			array( $this, 'fieldLoginPageUrl' ),
+			array( $this, 'field_login_page_url' ),
 			SKAUTISINTEGRATION_NAME . '_login',
 			SKAUTISINTEGRATION_NAME . '_login'
 		);
@@ -377,7 +377,7 @@ final class Settings {
 		<?php
 	}
 
-	public function fieldLoginPageUrl() {
+	public function field_login_page_url() {
 		echo esc_html( get_home_url() ) . '/<input name="' . esc_attr( SKAUTISINTEGRATION_NAME ) . '_login_page_url" id="' . esc_attr( SKAUTISINTEGRATION_NAME ) . '_login_page_url" type="text" value="' . esc_attr( get_option( SKAUTISINTEGRATION_NAME . '_login_page_url' ) ) . '" class="regular-text" placeholder="skautis/prihlaseni" />';
 		?>
 		<br/>
