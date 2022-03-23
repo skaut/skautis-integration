@@ -37,7 +37,7 @@ final class Settings {
 			'plugin_action_links_' . SKAUTISINTEGRATION_PLUGIN_BASENAME,
 			array(
 				$this,
-				'addHelpLinkToPluginsTable',
+				'add_help_link_to_plugins_table',
 			)
 		);
 
@@ -74,7 +74,7 @@ final class Settings {
 		return array_merge( $links, $mylinks );
 	}
 
-	public function addHelpLinkToPluginsTable( array $links = array() ): array {
+	public function add_help_link_to_plugins_table( array $links = array() ): array {
 		$mylinks = array(
 			'<a href="' . self::HELP_PAGE_URL . '" target="_blank">' . __( 'Help', 'skautis-integration' ) . '</a>',
 		);
