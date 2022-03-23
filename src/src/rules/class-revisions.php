@@ -30,7 +30,7 @@ class Revisions {
 		return $metaFiltered;
 	}
 
-	public function getMeta( int $postId ): array {
+	public function get_meta( int $postId ): array {
 		$meta = get_metadata( 'post', $postId );
 		$meta = $this->filter_meta( $meta );
 
@@ -50,7 +50,7 @@ class Revisions {
 	}
 
 	public function deleteMeta( int $postId ) {
-		$meta = $this->getMeta( $postId );
+		$meta = $this->get_meta( $postId );
 
 		foreach ( $meta as $metaKey => $metaValue ) {
 			delete_metadata( 'post', $postId, $metaKey );
@@ -59,7 +59,7 @@ class Revisions {
 
 	public function field( $value, $field, $revision ) {
 		$revisionId = $revision->ID;
-		$meta       = $this->getMeta( $revisionId );
+		$meta       = $this->get_meta( $revisionId );
 
 		// format response as single string with all custom fields / metadata
 		$return = '';
@@ -77,7 +77,7 @@ class Revisions {
 	}
 
 	public function restoreRevision( int $postId, int $revisionId ) {
-		$meta = $this->getMeta( $revisionId );
+		$meta = $this->get_meta( $revisionId );
 		$this->deleteMeta( $postId );
 		$this->insertMeta( $postId, $meta );
 
@@ -92,7 +92,7 @@ class Revisions {
 
 	public function savePost( int $postId ) {
 		if ( wp_is_post_revision( $postId ) ) {
-			$meta = $this->getMeta( $postId );
+			$meta = $this->get_meta( $postId );
 			if ( false === $meta ) {
 				return;
 			}
@@ -103,8 +103,8 @@ class Revisions {
 
 	public function postHasChanged( bool $postHasChanged, \WP_Post $lastRevision, \WP_Post $post ): bool {
 		if ( ! $postHasChanged ) {
-			$meta    = $this->getMeta( $lastRevision->ID );
-			$metaNew = $this->getMeta( $post->ID );
+			$meta    = $this->get_meta( $lastRevision->ID );
+			$metaNew = $this->get_meta( $post->ID );
 
 			if ( $meta === $metaNew ) {
 				return $postHasChanged;
