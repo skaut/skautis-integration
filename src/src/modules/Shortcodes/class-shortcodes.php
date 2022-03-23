@@ -15,20 +15,23 @@ final class Shortcodes implements Module {
 
 	const REGISTER_ACTION = 'shortcodes';
 
-	private $rulesManager;
-	private $skautisLogin;
-	private $wpLoginLogout;
+	// TODO: Unused?
+	private $rules_manager;
+	// TODO: Unused?
+	private $skautis_login;
+	// TODO: Unused?
+	private $wp_login_logout;
 
 	public static $id = 'module_Shortcodes';
 
 	public function __construct( Rules_Manager $rulesManager, Skautis_Login $skautisLogin, WP_Login_Logout $wpLoginLogout ) {
-		$this->rulesManager  = $rulesManager;
-		$this->skautisLogin  = $skautisLogin;
-		$this->wpLoginLogout = $wpLoginLogout;
+		$this->rules_manager  = $rulesManager;
+		$this->skautis_login  = $skautisLogin;
+		$this->wp_login_logout = $wpLoginLogout;
 		if ( is_admin() ) {
-			( new Admin( $this->rulesManager ) );
+			( new Admin( $this->rules_manager ) );
 		} else {
-			( new Frontend( $this->skautisLogin, $this->rulesManager, $this->wpLoginLogout ) );
+			( new Frontend( $this->skautis_login, $this->rules_manager, $this->wp_login_logout ) );
 		}
 	}
 
