@@ -11,12 +11,12 @@ final class Rules_Manager {
 
 	private $skautis_gateway;
 	// TODO: Unused?
-	private $wpLogin_logout;
+	private $wp_login_logout;
 	private $rules = array();
 
 	public function __construct( Skautis_Gateway $skautisGateway, WP_Login_Logout $wpLoginLogout ) {
 		$this->skautis_gateway = $skautisGateway;
-		$this->wpLogin_logout  = $wpLoginLogout;
+		$this->wp_login_logout  = $wpLoginLogout;
 		$this->rules          = $this->init_rules();
 		if ( is_admin() ) {
 			( new Admin( $this, $wpLoginLogout, $this->skautis_gateway ) );
