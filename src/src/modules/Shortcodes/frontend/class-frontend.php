@@ -24,7 +24,7 @@ final class Frontend {
 
 	private function init_hooks() {
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ) );
-		add_shortcode( 'skautis', array( $this, 'processShortcode' ) );
+		add_shortcode( 'skautis', array( $this, 'process_shortcode' ) );
 	}
 
 	private function get_login_form( bool $forceLogoutFromSkautis = false ): string {
@@ -57,7 +57,7 @@ final class Frontend {
 		Helpers::enqueue_style( 'frontend', 'frontend/css/skautis-frontend.min.css' );
 	}
 
-	public function processShortcode( array $atts = array(), string $content = '' ): string {
+	public function process_shortcode( array $atts = array(), string $content = '' ): string {
 		if ( isset( $atts['rules'] ) && isset( $atts['content'] ) ) {
 			if ( current_user_can( 'edit_' . get_post_type() . 's' ) ) {
 				return $content;
