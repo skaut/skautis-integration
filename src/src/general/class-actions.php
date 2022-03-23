@@ -112,7 +112,7 @@ final class Actions {
 			self::LOGIN_ACTION                      => array( $this->skautisLogin, 'login' ),
 			self::LOGOUT_CONFIRM_ACTION             => array( $this->wpLoginLogout, 'logout' ),
 			self::CONNECT_ACTION                    => array( $this->connectWpAccount, 'connect' ),
-			self::CONNECT_WP_USER_TO_SKAUTIS_ACTION => array( $this->connectWpAccount, 'connectWpUserToSkautis' ),
+			self::CONNECT_WP_USER_TO_SKAUTIS_ACTION => array( $this->connectWpAccount, 'connect_wp_user_to_skautis' ),
 			self::DISCONNECT_ACTION                 => array( $this->connectWpAccount, 'disconnect' ),
 		);
 

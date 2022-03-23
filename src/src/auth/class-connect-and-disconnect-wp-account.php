@@ -70,7 +70,7 @@ final class Connect_And_Disconnect_WP_Account {
 		}
 	}
 
-	public function connectWpUserToSkautis() {
+	public function connect_wp_user_to_skautis() {
 		if ( ! isset( $_GET[ SKAUTISINTEGRATION_NAME . '_connect_user_nonce' ] ) ||
 			! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET[ SKAUTISINTEGRATION_NAME . '_connect_user_nonce' ] ) ), SKAUTISINTEGRATION_NAME . '_connect_user' ) ||
 			! $this->skautisLogin->is_user_logged_in_skautis() ||
