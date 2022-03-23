@@ -86,7 +86,7 @@ final class Rules_Manager {
 		return $this->rules;
 	}
 
-	public function checkIfUserPassedRulesAndGetHisRole(): string {
+	public function check_if_user_passed_rules_and_get_his_role(): string {
 		$result = '';
 
 		$rules = get_option( SKAUTISINTEGRATION_NAME . '_modules_register_rules' );

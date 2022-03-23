@@ -111,7 +111,7 @@ final class Register implements Module {
 	}
 
 	public function registerUser() {
-		$wpRole = $this->rulesManager->checkIfUserPassedRulesAndGetHisRole();
+		$wpRole = $this->rulesManager->check_if_user_passed_rules_and_get_his_role();
 		if ( $wpRole ) {
 			if ( $this->wpRegister->registerToWp( $wpRole ) ) {
 				$this->loginUserAfterRegistration();
