@@ -12,7 +12,7 @@ class Revisions {
 
 	protected function init_hooks() {
 		add_action( 'save_post', array( $this, 'savePost' ), 10 );
-		add_action( 'wp_restore_post_revision', array( $this, 'restoreRevision' ), 10, 2 );
+		add_action( 'wp_restore_post_revision', array( $this, 'restore_revision' ), 10, 2 );
 		add_filter( 'wp_save_post_revision_post_has_changed', array( $this, 'postHasChanged' ), 10, 3 );
 
 		add_filter( '_wp_post_revision_fields', array( $this, 'fields' ), 10, 1 );
@@ -76,7 +76,7 @@ class Revisions {
 		return $fields;
 	}
 
-	public function restoreRevision( int $postId, int $revisionId ) {
+	public function restore_revision( int $postId, int $revisionId ) {
 		$meta = $this->get_meta( $revisionId );
 		$this->delete_meta( $postId );
 		$this->insert_meta( $postId, $meta );
