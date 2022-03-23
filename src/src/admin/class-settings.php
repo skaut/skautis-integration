@@ -141,7 +141,7 @@ final class Settings {
 	}
 
 	public function testAppId( $value ) {
-		if ( ! $this->skautisGateway->testActiveAppId() ) {
+		if ( ! $this->skautisGateway->test_active_app_id() ) {
 			add_settings_error( 'general', 'api_invalid', esc_html__( 'Zadané APP ID není pro tento web platné.', 'skautis-integration' ), 'notice-error' );
 		}
 		return sanitize_text_field( $value );

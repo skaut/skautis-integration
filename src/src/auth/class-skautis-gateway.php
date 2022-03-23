@@ -60,7 +60,7 @@ class Skautis_Gateway {
 		wp_remote_get( esc_url_raw( $this->get_skautis_instance()->getLogoutUrl() ) );
 	}
 
-	public function testActiveAppId() {
+	public function test_active_app_id() {
 		try {
 			if ( isset( $this->skautis ) ) {
 				if ( $this->skautis->OrganizationUnit->UnitDetail() ) {
