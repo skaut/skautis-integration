@@ -11,5 +11,5 @@ interface Module {
 
 	public static function get_path(): string;
 
-	public static function getUrl(): string;
+	public static function get_url(): string;
 }

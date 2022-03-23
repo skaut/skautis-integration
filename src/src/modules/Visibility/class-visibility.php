@@ -47,7 +47,7 @@ final class Visibility implements Module {
 		return plugin_dir_path( __FILE__ );
 	}
 
-	public static function getUrl(): string {
+	public static function get_url(): string {
 		return plugin_dir_url( __FILE__ );
 	}
 
