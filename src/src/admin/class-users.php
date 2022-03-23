@@ -56,7 +56,7 @@ final class Users {
 		?>
 		<h3><?php esc_html_e( 'skautIS', 'skautis-integration' ); ?></h3>
 		<?php
-		$this->connectWpAccount->printConnectAndDisconnectButton( $user->ID );
+		$this->connectWpAccount->print_connect_and_disconnect_button( $user->ID );
 		do_action( SKAUTISINTEGRATION_NAME . '_userScreen_userIds_before' );
 		?>
 		<table class="form-table">
