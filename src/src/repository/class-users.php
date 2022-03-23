@@ -27,7 +27,7 @@ class Users {
 		) {
 			$searchUserString = sanitize_text_field( wp_unslash( $_GET['skautisSearchUsers'] ) );
 		} elseif ( ! is_null( $returnUrl ) ) {
-			$searchUserString = Helpers::getVariableFromUrl( $returnUrl, 'skautisSearchUsers' );
+			$searchUserString = Helpers::get_variable_from_url( $returnUrl, 'skautisSearchUsers' );
 		}
 
 		return $searchUserString;

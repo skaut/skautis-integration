@@ -137,7 +137,7 @@ class Helpers {
 		}
 	}
 
-	public static function getVariableFromUrl( string $url, string $variableName ): string {
+	public static function get_variable_from_url( string $url, string $variableName ): string {
 		$result = array();
 		$url    = esc_url_raw( $url );
 		if ( preg_match( '~' . $variableName . '=([^\&,\s,\/,\#,\%,\?]*)~', $url, $result ) ) {
@@ -150,7 +150,7 @@ class Helpers {
 	}
 
 	public static function get_nonce_from_url( string $url, string $nonceName ): string {
-		return self::getVariableFromUrl( $url, $nonceName );
+		return self::get_variable_from_url( $url, $nonceName );
 	}
 
 }
