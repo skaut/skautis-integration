@@ -92,7 +92,7 @@ class Helpers {
 		return esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) );
 	}
 
-	public static function showAdminNotice( string $message, string $type = 'warning', string $hideNoticeOnPage = '' ) {
+	public static function show_admin_notice( string $message, string $type = 'warning', string $hideNoticeOnPage = '' ) {
 		add_action(
 			'admin_notices',
 			function () use ( $message, $type, $hideNoticeOnPage ) {
