@@ -134,7 +134,7 @@ final class Admin {
 
 		wp_enqueue_style(
 			SKAUTISINTEGRATION_NAME . '_font-awesome',
-			SKAUTISINTEGRATION_URL . 'bundled/font-awesome/css/font-awesome.min.css',
+			SKAUTIS_INTEGRATION_URL . 'bundled/font-awesome/css/font-awesome.min.css',
 			array(),
 			SKAUTISINTEGRATION_VERSION,
 			'all'
@@ -144,7 +144,7 @@ final class Admin {
 
 		wp_enqueue_style(
 			SKAUTISINTEGRATION_NAME . '_query-builder-main',
-			SKAUTISINTEGRATION_URL . 'bundled/query-builder.default.min.css',
+			SKAUTIS_INTEGRATION_URL . 'bundled/query-builder.default.min.css',
 			array(),
 			SKAUTISINTEGRATION_VERSION,
 			'all'
@@ -207,7 +207,7 @@ final class Admin {
 
 		wp_enqueue_script(
 			SKAUTISINTEGRATION_NAME . '_interact',
-			SKAUTISINTEGRATION_URL . 'bundled/interact.min.js',
+			SKAUTIS_INTEGRATION_URL . 'bundled/interact.min.js',
 			array(),
 			SKAUTISINTEGRATION_VERSION,
 			false
@@ -215,7 +215,7 @@ final class Admin {
 
 		wp_enqueue_script(
 			SKAUTISINTEGRATION_NAME . '_query-builder',
-			SKAUTISINTEGRATION_URL . 'bundled/query-builder.standalone.min.js',
+			SKAUTIS_INTEGRATION_URL . 'bundled/query-builder.standalone.min.js',
 			array( 'jquery' ),
 			SKAUTISINTEGRATION_VERSION,
 			true

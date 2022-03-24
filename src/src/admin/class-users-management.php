@@ -79,7 +79,7 @@ class Users_Management {
 
 		wp_enqueue_style(
 			SKAUTISINTEGRATION_NAME . '_datatables',
-			SKAUTISINTEGRATION_URL . 'bundled/jquery.dataTables.min.css',
+			SKAUTIS_INTEGRATION_URL . 'bundled/jquery.dataTables.min.css',
 			array(),
 			SKAUTISINTEGRATION_VERSION,
 			'all'
@@ -87,7 +87,7 @@ class Users_Management {
 
 		wp_enqueue_script(
 			SKAUTISINTEGRATION_NAME . '_datatables',
-			SKAUTISINTEGRATION_URL . 'bundled/jquery.dataTables.min.js',
+			SKAUTIS_INTEGRATION_URL . 'bundled/jquery.dataTables.min.js',
 			array( 'jquery' ),
 			SKAUTISINTEGRATION_VERSION,
 			true
@@ -106,7 +106,7 @@ class Users_Management {
 			'skautisIntegrationAdminUsersManagementLocalize',
 			array(
 				'cancel'             => esc_html__( 'Zrušit', 'skautis-integration' ),
-				'datatablesFilesUrl' => SKAUTISINTEGRATION_URL . 'bundled/datatables-files',
+				'datatablesFilesUrl' => SKAUTIS_INTEGRATION_URL . 'bundled/datatables-files',
 				'searchNonceName'    => SKAUTISINTEGRATION_NAME . '_skautis_search_user_nonce',
 				'searchNonceValue'   => wp_create_nonce( SKAUTISINTEGRATION_NAME . '_skautis_search_user' ),
 			)

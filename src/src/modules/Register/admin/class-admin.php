@@ -39,7 +39,7 @@ final class Admin {
 
 			wp_enqueue_script(
 				SKAUTISINTEGRATION_NAME . '_jquery.repeater',
-				SKAUTISINTEGRATION_URL . 'bundled/jquery.repeater.min.js',
+				SKAUTIS_INTEGRATION_URL . 'bundled/jquery.repeater.min.js',
 				array( 'jquery' ),
 				SKAUTISINTEGRATION_VERSION,
 				true

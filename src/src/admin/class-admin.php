@@ -47,7 +47,7 @@ final class Admin {
 	public function enqueue_scripts_and_styles() {
 		wp_enqueue_style(
 			SKAUTISINTEGRATION_NAME . '_select2',
-			SKAUTISINTEGRATION_URL . 'bundled/select2.min.css',
+			SKAUTIS_INTEGRATION_URL . 'bundled/select2.min.css',
 			array(),
 			SKAUTISINTEGRATION_VERSION,
 			'all'
@@ -55,7 +55,7 @@ final class Admin {
 
 		wp_enqueue_script(
 			SKAUTISINTEGRATION_NAME . '_select2',
-			SKAUTISINTEGRATION_URL . 'bundled/select2.min.js',
+			SKAUTIS_INTEGRATION_URL . 'bundled/select2.min.js',
 			array( 'jquery' ),
 			SKAUTISINTEGRATION_VERSION,
 			false
