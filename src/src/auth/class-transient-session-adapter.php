@@ -2,9 +2,9 @@
 
 declare( strict_types=1 );
 
-namespace SkautisIntegration\Auth;
+namespace Skautis_Integration\Auth;
 
-use SkautisIntegration\Vendor\Skautis\SessionAdapter\AdapterInterface;
+use Skautis_Integration\Vendor\Skautis\SessionAdapter\AdapterInterface;
 
 class Transient_Session_Adapter implements AdapterInterface {
 	private function get_cookie_id(): string {

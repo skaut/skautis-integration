@@ -2,14 +2,14 @@
 
 declare( strict_types=1 );
 
-namespace SkautisIntegration\Modules\Visibility;
+namespace Skautis_Integration\Modules\Visibility;
 
-use SkautisIntegration\Auth\WP_Login_Logout;
-use SkautisIntegration\Modules\Module;
-use SkautisIntegration\Rules\Rules_Manager;
-use SkautisIntegration\Auth\Skautis_Login;
-use SkautisIntegration\Modules\Visibility\Admin\Admin;
-use SkautisIntegration\Modules\Visibility\Frontend\Frontend;
+use Skautis_Integration\Auth\WP_Login_Logout;
+use Skautis_Integration\Modules\Module;
+use Skautis_Integration\Rules\Rules_Manager;
+use Skautis_Integration\Auth\Skautis_Login;
+use Skautis_Integration\Modules\Visibility\Admin\Admin;
+use Skautis_Integration\Modules\Visibility\Frontend\Frontend;
 
 final class Visibility implements Module {
 

@@ -2,7 +2,7 @@
 
 declare( strict_types=1 );
 
-namespace SkautisIntegration\Modules;
+namespace Skautis_Integration\Modules;
 
 interface Module {
 	public static function get_label(): string;

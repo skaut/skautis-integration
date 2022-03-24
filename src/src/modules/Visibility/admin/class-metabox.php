@@ -2,10 +2,10 @@
 
 declare( strict_types=1 );
 
-namespace SkautisIntegration\Modules\Visibility\Admin;
+namespace Skautis_Integration\Modules\Visibility\Admin;
 
-use SkautisIntegration\Rules\Rules_Manager;
-use SkautisIntegration\Modules\Visibility\Frontend\Frontend;
+use Skautis_Integration\Rules\Rules_Manager;
+use Skautis_Integration\Modules\Visibility\Frontend\Frontend;
 
 final class Metabox {
 

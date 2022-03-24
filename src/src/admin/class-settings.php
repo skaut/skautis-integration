@@ -2,13 +2,13 @@
 
 declare( strict_types=1 );
 
-namespace SkautisIntegration\Admin;
+namespace Skautis_Integration\Admin;
 
-use SkautisIntegration\Auth\Skautis_Gateway;
-use SkautisIntegration\Modules\Modules_Manager;
-use SkautisIntegration\Utils\Helpers;
-use SkautisIntegration\Services\Services;
-use SkautisIntegration\Modules\Register\Register;
+use Skautis_Integration\Auth\Skautis_Gateway;
+use Skautis_Integration\Modules\Modules_Manager;
+use Skautis_Integration\Utils\Helpers;
+use Skautis_Integration\Services\Services;
+use Skautis_Integration\Modules\Register\Register;
 
 final class Settings {
 

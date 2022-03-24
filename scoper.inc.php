@@ -8,7 +8,7 @@
 use Isolated\Symfony\Component\Finder\Finder;
 
 return array(
-	'prefix'   => 'SkautisIntegration\\Vendor',
+	'prefix'   => 'Skautis_Integration\\Vendor',
 	'finders'  => array(
 		Finder::create()->files()
 			->name( array( '*.php', '/LICENSE(.txt)?/' ) )

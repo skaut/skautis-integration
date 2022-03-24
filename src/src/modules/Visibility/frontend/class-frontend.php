@@ -2,12 +2,12 @@
 
 declare( strict_types=1 );
 
-namespace SkautisIntegration\Modules\Visibility\Frontend;
+namespace Skautis_Integration\Modules\Visibility\Frontend;
 
-use SkautisIntegration\Rules\Rules_Manager;
-use SkautisIntegration\Auth\Skautis_Login;
-use SkautisIntegration\Auth\WP_Login_Logout;
-use SkautisIntegration\Utils\Helpers;
+use Skautis_Integration\Rules\Rules_Manager;
+use Skautis_Integration\Auth\Skautis_Login;
+use Skautis_Integration\Auth\WP_Login_Logout;
+use Skautis_Integration\Utils\Helpers;
 
 final class Frontend {
 

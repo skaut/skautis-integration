@@ -2,10 +2,10 @@
 
 declare( strict_types=1 );
 
-namespace SkautisIntegration\Utils;
+namespace Skautis_Integration\Utils;
 
-use SkautisIntegration\Auth\Skautis_Gateway;
-use SkautisIntegration\Auth\Skautis_Login;
+use Skautis_Integration\Auth\Skautis_Gateway;
+use Skautis_Integration\Auth\Skautis_Login;
 
 class Role_Changer {
 

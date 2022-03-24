@@ -2,10 +2,10 @@
 
 declare( strict_types=1 );
 
-namespace SkautisIntegration\Auth;
+namespace Skautis_Integration\Auth;
 
-use SkautisIntegration\General\Actions;
-use SkautisIntegration\Utils\Helpers;
+use Skautis_Integration\General\Actions;
+use Skautis_Integration\Utils\Helpers;
 
 final class Connect_And_Disconnect_WP_Account {
 

@@ -2,7 +2,7 @@
 
 declare( strict_types=1 );
 
-namespace SkautisIntegration\Utils;
+namespace Skautis_Integration\Utils;
 
 class Helpers {
 

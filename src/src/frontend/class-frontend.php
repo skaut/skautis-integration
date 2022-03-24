@@ -2,11 +2,11 @@
 
 declare( strict_types=1 );
 
-namespace SkautisIntegration\Frontend;
+namespace Skautis_Integration\Frontend;
 
-use SkautisIntegration\Auth\Skautis_Gateway;
-use SkautisIntegration\Auth\WP_Login_Logout;
-use SkautisIntegration\Utils\Helpers;
+use Skautis_Integration\Auth\Skautis_Gateway;
+use Skautis_Integration\Auth\WP_Login_Logout;
+use Skautis_Integration\Utils\Helpers;
 
 final class Frontend {
 

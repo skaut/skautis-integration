@@ -2,30 +2,30 @@
 
 declare( strict_types=1 );
 
-namespace SkautisIntegration\Services;
+namespace Skautis_Integration\Services;
 
-use SkautisIntegration\Vendor\Pimple\Container;
-use SkautisIntegration\Admin\Users_Management;
-use SkautisIntegration\Auth\Skautis_Gateway;
-use SkautisIntegration\Auth\Skautis_Login;
-use SkautisIntegration\Auth\WP_Login_Logout;
-use SkautisIntegration\Auth\Connect_And_Disconnect_WP_Account;
-use SkautisIntegration\General\General;
-use SkautisIntegration\General\Actions;
-use SkautisIntegration\Frontend\Frontend;
-use SkautisIntegration\Frontend\Login_Form;
-use SkautisIntegration\Admin\Admin;
-use SkautisIntegration\Admin\Settings;
-use SkautisIntegration\Admin\Users;
-use SkautisIntegration\Repository\Users as UsersRepository;
-use SkautisIntegration\Modules\Modules_Manager;
-use SkautisIntegration\Modules\Register\Register;
-use SkautisIntegration\Modules\Shortcodes\Shortcodes;
-use SkautisIntegration\Modules\Visibility\Visibility;
-use SkautisIntegration\Rules\Revisions;
-use SkautisIntegration\Rules\Rules_Init;
-use SkautisIntegration\Rules\Rules_Manager;
-use SkautisIntegration\Utils\Role_Changer;
+use Skautis_Integration\Vendor\Pimple\Container;
+use Skautis_Integration\Admin\Users_Management;
+use Skautis_Integration\Auth\Skautis_Gateway;
+use Skautis_Integration\Auth\Skautis_Login;
+use Skautis_Integration\Auth\WP_Login_Logout;
+use Skautis_Integration\Auth\Connect_And_Disconnect_WP_Account;
+use Skautis_Integration\General\General;
+use Skautis_Integration\General\Actions;
+use Skautis_Integration\Frontend\Frontend;
+use Skautis_Integration\Frontend\Login_Form;
+use Skautis_Integration\Admin\Admin;
+use Skautis_Integration\Admin\Settings;
+use Skautis_Integration\Admin\Users;
+use Skautis_Integration\Repository\Users as UsersRepository;
+use Skautis_Integration\Modules\Modules_Manager;
+use Skautis_Integration\Modules\Register\Register;
+use Skautis_Integration\Modules\Shortcodes\Shortcodes;
+use Skautis_Integration\Modules\Visibility\Visibility;
+use Skautis_Integration\Rules\Revisions;
+use Skautis_Integration\Rules\Rules_Init;
+use Skautis_Integration\Rules\Rules_Manager;
+use Skautis_Integration\Utils\Role_Changer;
 
 class Services {
 

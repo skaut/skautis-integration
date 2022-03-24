@@ -2,12 +2,12 @@
 
 declare( strict_types=1 );
 
-namespace SkautisIntegration\Admin;
+namespace Skautis_Integration\Admin;
 
-use SkautisIntegration\Auth\Skautis_Gateway;
-use SkautisIntegration\Auth\WP_Login_Logout;
-use SkautisIntegration\Rules\Rules_Manager;
-use SkautisIntegration\Utils\Helpers;
+use Skautis_Integration\Auth\Skautis_Gateway;
+use Skautis_Integration\Auth\WP_Login_Logout;
+use Skautis_Integration\Rules\Rules_Manager;
+use Skautis_Integration\Utils\Helpers;
 
 final class Admin {
 

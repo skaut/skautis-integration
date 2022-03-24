@@ -2,9 +2,9 @@
 
 declare( strict_types=1 );
 
-namespace SkautisIntegration\Modules\Shortcodes\Admin;
+namespace Skautis_Integration\Modules\Shortcodes\Admin;
 
-use SkautisIntegration\Rules\Rules_Manager;
+use Skautis_Integration\Rules\Rules_Manager;
 
 final class Admin {
 

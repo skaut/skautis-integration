@@ -2,9 +2,9 @@
 
 declare( strict_types=1 );
 
-namespace SkautisIntegration\Auth;
+namespace Skautis_Integration\Auth;
 
-use SkautisIntegration\Utils\Helpers;
+use Skautis_Integration\Utils\Helpers;
 
 final class Skautis_Login {
 

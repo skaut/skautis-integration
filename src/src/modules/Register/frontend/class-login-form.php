@@ -2,9 +2,9 @@
 
 declare( strict_types=1 );
 
-namespace SkautisIntegration\Modules\Register\Frontend;
+namespace Skautis_Integration\Modules\Register\Frontend;
 
-use SkautisIntegration\Modules\Register\WP_Register;
+use Skautis_Integration\Modules\Register\WP_Register;
 
 final class Login_Form {
 

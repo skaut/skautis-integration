@@ -2,7 +2,7 @@
 
 declare( strict_types=1 );
 
-namespace SkautisIntegration\Rules;
+namespace Skautis_Integration\Rules;
 
 class Revisions {
 

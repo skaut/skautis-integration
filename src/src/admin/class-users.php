@@ -2,11 +2,11 @@
 
 declare( strict_types=1 );
 
-namespace SkautisIntegration\Admin;
+namespace Skautis_Integration\Admin;
 
-use SkautisIntegration\Auth\Connect_And_Disconnect_WP_Account;
-use SkautisIntegration\Auth\Skautis_Gateway;
-use SkautisIntegration\Utils\Helpers;
+use Skautis_Integration\Auth\Connect_And_Disconnect_WP_Account;
+use Skautis_Integration\Auth\Skautis_Gateway;
+use Skautis_Integration\Utils\Helpers;
 
 final class Users {
 

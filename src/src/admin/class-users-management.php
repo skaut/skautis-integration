@@ -2,18 +2,18 @@
 
 declare( strict_types=1 );
 
-namespace SkautisIntegration\Admin;
+namespace Skautis_Integration\Admin;
 
-use SkautisIntegration\Auth\Skautis_Gateway;
-use SkautisIntegration\Auth\WP_Login_Logout;
-use SkautisIntegration\Auth\Skautis_Login;
-use SkautisIntegration\Auth\Connect_And_Disconnect_WP_Account;
-use SkautisIntegration\Repository\Users as UsersRepository;
-use SkautisIntegration\General\Actions;
-use SkautisIntegration\Services\Services;
-use SkautisIntegration\Modules\Register\Register;
-use SkautisIntegration\Utils\Helpers;
-use SkautisIntegration\Utils\Role_Changer;
+use Skautis_Integration\Auth\Skautis_Gateway;
+use Skautis_Integration\Auth\WP_Login_Logout;
+use Skautis_Integration\Auth\Skautis_Login;
+use Skautis_Integration\Auth\Connect_And_Disconnect_WP_Account;
+use Skautis_Integration\Repository\Users as UsersRepository;
+use Skautis_Integration\General\Actions;
+use Skautis_Integration\Services\Services;
+use Skautis_Integration\Modules\Register\Register;
+use Skautis_Integration\Utils\Helpers;
+use Skautis_Integration\Utils\Role_Changer;
 
 class Users_Management {
 

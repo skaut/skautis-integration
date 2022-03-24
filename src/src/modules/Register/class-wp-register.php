@@ -2,11 +2,11 @@
 
 declare( strict_types=1 );
 
-namespace SkautisIntegration\Modules\Register;
+namespace Skautis_Integration\Modules\Register;
 
-use SkautisIntegration\Auth\Skautis_Gateway;
-use SkautisIntegration\Repository\Users as UsersRepository;
-use SkautisIntegration\Utils\Helpers;
+use Skautis_Integration\Auth\Skautis_Gateway;
+use Skautis_Integration\Repository\Users as UsersRepository;
+use Skautis_Integration\Utils\Helpers;
 
 final class WP_Register {
 

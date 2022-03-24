@@ -2,9 +2,9 @@
 
 declare( strict_types=1 );
 
-namespace SkautisIntegration\Rules;
+namespace Skautis_Integration\Rules;
 
-use SkautisIntegration\Utils\Helpers;
+use Skautis_Integration\Utils\Helpers;
 
 final class Rules_Init {
 

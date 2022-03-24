@@ -2,11 +2,11 @@
 
 declare( strict_types=1 );
 
-namespace SkautisIntegration\Modules\Register\Admin;
+namespace Skautis_Integration\Modules\Register\Admin;
 
-use SkautisIntegration\Rules\Rules_Init;
-use SkautisIntegration\Rules\Rules_Manager;
-use SkautisIntegration\Utils\Helpers;
+use Skautis_Integration\Rules\Rules_Init;
+use Skautis_Integration\Rules\Rules_Manager;
+use Skautis_Integration\Utils\Helpers;
 
 final class Settings {
 

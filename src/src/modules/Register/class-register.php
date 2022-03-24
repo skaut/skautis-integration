@@ -2,18 +2,18 @@
 
 declare( strict_types=1 );
 
-namespace SkautisIntegration\Modules\Register;
+namespace Skautis_Integration\Modules\Register;
 
-use SkautisIntegration\Auth\Skautis_Gateway;
-use SkautisIntegration\Auth\Skautis_Login;
-use SkautisIntegration\Auth\WP_Login_Logout;
-use SkautisIntegration\Rules\Rules_Manager;
-use SkautisIntegration\Repository\Users as UsersRepository;
-use SkautisIntegration\Modules\Module;
-use SkautisIntegration\Modules\Register\Admin\Admin;
-use SkautisIntegration\Modules\Register\Frontend\Frontend;
-use SkautisIntegration\Modules\Register\Frontend\Login_Form;
-use SkautisIntegration\Utils\Helpers;
+use Skautis_Integration\Auth\Skautis_Gateway;
+use Skautis_Integration\Auth\Skautis_Login;
+use Skautis_Integration\Auth\WP_Login_Logout;
+use Skautis_Integration\Rules\Rules_Manager;
+use Skautis_Integration\Repository\Users as UsersRepository;
+use Skautis_Integration\Modules\Module;
+use Skautis_Integration\Modules\Register\Admin\Admin;
+use Skautis_Integration\Modules\Register\Frontend\Frontend;
+use Skautis_Integration\Modules\Register\Frontend\Login_Form;
+use Skautis_Integration\Utils\Helpers;
 
 final class Register implements Module {
 

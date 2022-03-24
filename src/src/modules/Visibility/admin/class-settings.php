@@ -2,9 +2,9 @@
 
 declare( strict_types=1 );
 
-namespace SkautisIntegration\Modules\Visibility\Admin;
+namespace Skautis_Integration\Modules\Visibility\Admin;
 
-use SkautisIntegration\Utils\Helpers;
+use Skautis_Integration\Utils\Helpers;
 
 final class Settings {
 

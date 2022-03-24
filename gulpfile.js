@@ -127,13 +127,13 @@ gulp.task(
 					.pipe(
 						replace(
 							'namespace Composer\\Autoload;',
-							'namespace SkautisIntegration\\Vendor\\Composer\\Autoload;'
+							'namespace Skautis_Integration\\Vendor\\Composer\\Autoload;'
 						)
 					)
 					.pipe(
 						replace(
 							/'(.*)\\\\' => \n/g,
-							"'SkautisIntegration\\\\Vendor\\\\$1\\\\' => \n"
+							"'Skautis_Integration\\\\Vendor\\\\$1\\\\' => \n"
 						)
 					)
 			).pipe( gulp.dest( 'dist/vendor/composer/' ) );

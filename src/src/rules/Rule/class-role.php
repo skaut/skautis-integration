@@ -2,10 +2,10 @@
 
 declare( strict_types=1 );
 
-namespace SkautisIntegration\Rules\Rule;
+namespace Skautis_Integration\Rules\Rule;
 
-use SkautisIntegration\Rules\Rule;
-use SkautisIntegration\Auth\Skautis_Gateway;
+use Skautis_Integration\Rules\Rule;
+use Skautis_Integration\Auth\Skautis_Gateway;
 
 class Role implements Rule {
 

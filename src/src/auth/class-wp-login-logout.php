@@ -2,12 +2,12 @@
 
 declare( strict_types=1 );
 
-namespace SkautisIntegration\Auth;
+namespace Skautis_Integration\Auth;
 
-use SkautisIntegration\General\Actions;
-use SkautisIntegration\Utils\Helpers;
-use SkautisIntegration\Services\Services;
-use SkautisIntegration\Modules\Register\Register;
+use Skautis_Integration\General\Actions;
+use Skautis_Integration\Utils\Helpers;
+use Skautis_Integration\Services\Services;
+use Skautis_Integration\Modules\Register\Register;
 
 final class WP_Login_Logout {
 

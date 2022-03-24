@@ -1,8 +1,8 @@
 <?php
-namespace SkautisIntegration;
+namespace Skautis_Integration;
 
-use SkautisIntegration\Services\Services;
-use SkautisIntegration\Utils\Helpers;
+use Skautis_Integration\Services\Services;
+use Skautis_Integration\Utils\Helpers;
 
 class Skautis_Integration {
 

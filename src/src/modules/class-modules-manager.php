@@ -2,9 +2,9 @@
 
 declare( strict_types=1 );
 
-namespace SkautisIntegration\Modules;
+namespace Skautis_Integration\Modules;
 
-use SkautisIntegration\Vendor\Pimple\Container;
+use Skautis_Integration\Vendor\Pimple\Container;
 
 final class Modules_Manager {
 

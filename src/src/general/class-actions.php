@@ -2,13 +2,13 @@
 
 declare( strict_types=1 );
 
-namespace SkautisIntegration\General;
+namespace Skautis_Integration\General;
 
-use SkautisIntegration\Auth\Connect_And_Disconnect_WP_Account;
-use SkautisIntegration\Auth\Skautis_Gateway;
-use SkautisIntegration\Auth\Skautis_Login;
-use SkautisIntegration\Auth\WP_Login_Logout;
-use SkautisIntegration\Utils\Helpers;
+use Skautis_Integration\Auth\Connect_And_Disconnect_WP_Account;
+use Skautis_Integration\Auth\Skautis_Gateway;
+use Skautis_Integration\Auth\Skautis_Login;
+use Skautis_Integration\Auth\WP_Login_Logout;
+use Skautis_Integration\Utils\Helpers;
 
 final class Actions {
 
