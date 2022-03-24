@@ -12,8 +12,8 @@ final class Users {
 
 	private $connect_wp_account;
 
-	public function __construct( Connect_And_Disconnect_WP_Account $connectWpAccount ) {
-		$this->connect_wp_account = $connectWpAccount;
+	public function __construct( Connect_And_Disconnect_WP_Account $connect_wp_account ) {
+		$this->connect_wp_account = $connect_wp_account;
 		$this->init_hooks();
 	}
 
@@ -33,16 +33,16 @@ final class Users {
 		return $columns;
 	}
 
-	public function add_column_to_users_table( $value, string $columnName, int $userId ) {
-		if ( SKAUTISINTEGRATION_NAME === $columnName ) {
-			$envType = get_option( 'skautis_integration_appid_type' );
-			if ( Skautis_Gateway::PROD_ENV === $envType ) {
-				$userId = get_the_author_meta( 'skautisUserId_' . Skautis_Gateway::PROD_ENV, $userId );
+	public function add_column_to_users_table( $value, string $column_name, int $user_id ) {
+		if ( SKAUTISINTEGRATION_NAME === $column_name ) {
+			$env_type = get_option( 'skautis_integration_appid_type' );
+			if ( Skautis_Gateway::PROD_ENV === $env_type ) {
+				$user_id = get_the_author_meta( 'skautisUserId_' . Skautis_Gateway::PROD_ENV, $user_id );
 			} else {
-				$userId = get_the_author_meta( 'skautisUserId_' . Skautis_Gateway::TEST_ENV, $userId );
+				$user_id = get_the_author_meta( 'skautisUserId_' . Skautis_Gateway::TEST_ENV, $user_id );
 			}
 
-			if ( $userId ) {
+			if ( $user_id ) {
 				return '✓';
 			}
 
@@ -92,7 +92,7 @@ final class Users {
 		do_action( SKAUTISINTEGRATION_NAME . '_userScreen_userIds_after' );
 	}
 
-	public function manage_skautis_user_id_field( int $userId ): bool {
+	public function manage_skautis_user_id_field( int $user_id ): bool {
 		if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ), 'update-user_' . $user_id ) ) {
 			return false;
 		}
@@ -100,19 +100,19 @@ final class Users {
 		$saved = false;
 		if ( Helpers::user_is_skautis_manager() ) {
 			if ( isset( $_POST['skautisUserId_prod'] ) ) {
-				$skautisUserId = absint( $_POST['skautisUserId_prod'] );
-				if ( 0 === $skautisUserId ) {
-					$skautisUserId = '';
+				$skautis_user_id = absint( $_POST['skautisUserId_prod'] );
+				if ( 0 === $skautis_user_id ) {
+					$skautis_user_id = '';
 				}
-				update_user_meta( $userId, 'skautisUserId_prod', $skautisUserId );
+				update_user_meta( $user_id, 'skautisUserId_prod', $skautis_user_id );
 				$saved = true;
 			}
 			if ( isset( $_POST['skautisUserId_test'] ) ) {
-				$skautisUserId = absint( $_POST['skautisUserId_test'] );
-				if ( 0 === $skautisUserId ) {
-					$skautisUserId = '';
+				$skautis_user_id = absint( $_POST['skautisUserId_test'] );
+				if ( 0 === $skautis_user_id ) {
+					$skautis_user_id = '';
 				}
-				update_user_meta( $userId, 'skautisUserId_test', $skautisUserId );
+				update_user_meta( $user_id, 'skautisUserId_test', $skautis_user_id );
 				$saved = true;
 			}
 		}
