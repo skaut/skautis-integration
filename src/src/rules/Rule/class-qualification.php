@@ -17,8 +17,8 @@ class Qualification implements Rule {
 
 	protected $skautis_gateway;
 
-	public function __construct( Skautis_Gateway $skautisGateway ) {
-		$this->skautis_gateway = $skautisGateway;
+	public function __construct( Skautis_Gateway $skautis_gateway ) {
+		$this->skautis_gateway = $skautis_gateway;
 	}
 
 	public function get_id(): string {
@@ -65,13 +65,13 @@ class Qualification implements Rule {
 	}
 
 	protected function getUserQualifications(): array {
-		static $userQualifications = null;
+		static $user_qualifications = null;
 
-		if ( is_null( $userQualifications ) ) {
-			$userDetail         = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserDetail();
-			$userQualifications = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->QualificationAll(
+		if ( is_null( $user_qualifications ) ) {
+			$user_detail         = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserDetail();
+			$user_qualifications = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->QualificationAll(
 				array(
-					'ID_Person'   => $userDetail->ID_Person,
+					'ID_Person'   => $user_detail->ID_Person,
 					'ShowHistory' => true,
 					'isValid'     => true,
 				)
@@ -79,25 +79,26 @@ class Qualification implements Rule {
 
 			$result = array();
 
-			if ( ! is_array( $userQualifications ) || empty( $userQualifications ) ) {
+			if ( ! is_array( $user_qualifications ) || empty( $user_qualifications ) ) {
 				return array();
 			}
 
-			foreach ( $userQualifications as $userQualification ) {
-				$result[] = $userQualification->ID_QualificationType;
+			foreach ( $user_qualifications as $user_qualification ) {
+				$result[] = $user_qualification->ID_QualificationType;
 			}
 
-			$userQualifications = $result;
+			$user_qualifications = $result;
 		}
 
-		if ( ! is_array( $userQualifications ) ) {
+		if ( ! is_array( $user_qualifications ) ) {
 			return array();
 		}
 
-		return $userQualifications;
+		return $user_qualifications;
 	}
 
-	public function is_rule_passed( string $rolesOperator, $data ): bool {
+	// TODO: Unused first parameter?
+	public function is_rule_passed( string $roles_operator, $data ): bool {
 		// parse and prepare data from rules UI
 		$output = array();
 		preg_match_all( '|[^~]+|', $data, $output );
@@ -108,15 +109,15 @@ class Qualification implements Rule {
 			return false;
 		}
 
-		$userQualifications = $this->getUserQualifications();
-		$userPass           = 0;
+		$user_qualifications = $this->getUserQualifications();
+		$user_pass           = 0;
 		foreach ( $qualifications as $qualification ) {
-			if ( in_array( $qualification, $userQualifications, true ) ) {
-				++$userPass;
+			if ( in_array( $qualification, $user_qualifications, true ) ) {
+				++$user_pass;
 			}
 		}
 
-		if ( is_int( $userPass ) && $userPass > 0 ) {
+		if ( is_int( $user_pass ) && $user_pass > 0 ) {
 			return true;
 		}
 
