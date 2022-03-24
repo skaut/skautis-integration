@@ -16,10 +16,10 @@ final class Admin {
 	// TODO: Unused?
 	private $admin_dir_url = '';
 
-	public function __construct( Rules_Manager $rulesManager, WP_Login_Logout $wpLoginLogout, Skautis_Gateway $skautisGateway ) {
-		$this->rules_manager   = $rulesManager;
-		$this->wp_login_logout = $wpLoginLogout;
-		$this->skautis_gateway = $skautisGateway;
+	public function __construct( Rules_Manager $rules_manager, WP_Login_Logout $wp_login_logout, Skautis_Gateway $skautis_gateway ) {
+		$this->rules_manager   = $rules_manager;
+		$this->wp_login_logout = $wp_login_logout;
+		$this->skautis_gateway = $skautis_gateway;
 		$this->admin_dir_url   = plugin_dir_url( __FILE__ ) . 'public/';
 		( new Columns() );
 		$this->init_hooks();
@@ -37,8 +37,8 @@ final class Admin {
 		add_action( 'admin_footer', array( $this, 'init_rules_builder' ), 100 );
 	}
 
-	public function add_metabox_for_rules_field( string $postType ) {
-		if ( Rules_Init::RULES_TYPE_SLUG === $postType ) {
+	public function add_metabox_for_rules_field( string $post_type ) {
+		if ( Rules_Init::RULES_TYPE_SLUG === $post_type ) {
 			add_meta_box(
 				SKAUTISINTEGRATION_NAME . '_rules_metabox',
 				__( 'skautIS pravidla', 'skautis-integration' ),
@@ -48,14 +48,14 @@ final class Admin {
 		}
 	}
 
-	public function save_rules_custom_field( int $postId ) {
+	public function save_rules_custom_field( int $post_id ) {
 		if ( ! isset( $_POST[ SKAUTISINTEGRATION_NAME . '_rules_metabox_nonce' ] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ SKAUTISINTEGRATION_NAME . '_rules_metabox_nonce' ] ) ), SKAUTISINTEGRATION_NAME . '_rules_metabox' ) ) {
 			return;
 		}
 
 		if ( array_key_exists( SKAUTISINTEGRATION_NAME . '_rules_data', $_POST ) ) {
 			update_post_meta(
-				$postId,
+				$post_id,
 				SKAUTISINTEGRATION_NAME . '_rules_data',
 				sanitize_meta( SKAUTISINTEGRATION_NAME . '_rules_data', wp_unslash( $_POST[ SKAUTISINTEGRATION_NAME . '_rules_data' ] ), 'post' )
 			);
@@ -78,18 +78,19 @@ final class Admin {
 	}
 
 	// TODO: Unused?
-	public function get_rules_field_value( $value, $fieldName, \WP_Post $post ) {
+	// TODO: Unused first parameter?
+	public function get_rules_field_value( $value, $field_name, \WP_Post $post ) {
 		return get_metadata( 'post', $post->ID, SKAUTISINTEGRATION_NAME . '_rules_data', true );
 	}
 
 	// TODO: Unused?
-	public function restore_revision_for_rules_field( int $postId, int $revisionId ) {
-		$post     = get_post( $postId );
-		$revision = get_post( $revisionId );
+	public function restore_revision_for_rules_field( int $post_id, int $revision_id ) {
+		$post     = get_post( $post_id );
+		$revision = get_post( $revision_id );
 		if ( Rules_Init::RULES_TYPE_SLUG === $post->post_type ) {
 			$meta = get_metadata( 'post', $revision->ID, SKAUTISINTEGRATION_NAME . '_rules_data', true );
 			if ( false !== $meta ) {
-				update_post_meta( $postId, SKAUTISINTEGRATION_NAME . '_rules_data', $meta );
+				update_post_meta( $post_id, SKAUTISINTEGRATION_NAME . '_rules_data', $meta );
 			}
 		}
 	}
