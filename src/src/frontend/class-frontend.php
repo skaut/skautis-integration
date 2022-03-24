@@ -17,10 +17,10 @@ final class Frontend {
 	// TODO: Unused?
 	private $frontend_dir_url = '';
 
-	public function __construct( Login_Form $loginForm, WP_Login_Logout $wpLoginLogout, Skautis_Gateway $skautisGateway ) {
-		$this->login_form       = $loginForm;
-		$this->wp_login_logout  = $wpLoginLogout;
-		$this->skautis_gateway  = $skautisGateway;
+	public function __construct( Login_Form $login_form, WP_Login_Logout $wp_login_logout, Skautis_Gateway $skautis_gateway ) {
+		$this->login_form       = $login_form;
+		$this->wp_login_logout  = $wp_login_logout;
+		$this->skautis_gateway  = $skautis_gateway;
 		$this->frontend_dir_url = plugin_dir_url( __FILE__ ) . 'public/';
 		$this->pluginLoginView  = false;
 		$this->init_hooks();
@@ -48,8 +48,8 @@ final class Frontend {
 	}
 
 	public function register_templates( string $path = '' ): string {
-		$queryValue = get_query_var( 'skautis_login' );
-		if ( $queryValue && ! empty( $queryValue ) ) {
+		$query_value = get_query_var( 'skautis_login' );
+		if ( $query_value && ! empty( $query_value ) ) {
 			if ( file_exists( get_stylesheet_directory() . '/skautis/login.php' ) ) {
 				return get_stylesheet_directory() . '/skautis/login.php';
 			} elseif ( file_exists( get_template_directory() . '/skautis/login.php' ) ) {
@@ -76,7 +76,7 @@ final class Frontend {
 		Helpers::enqueue_style( 'frontend', 'frontend/css/skautis-frontend.min.css' );
 	}
 
-	public function add_logout_link_to_admin_bar( \WP_Admin_Bar $wpAdminBar ) {
+	public function add_logout_link_to_admin_bar( \WP_Admin_Bar $wp_admin_bar ) {
 		if ( ! function_exists( 'is_admin_bar_showing' ) ) {
 			return;
 		}
@@ -84,8 +84,8 @@ final class Frontend {
 			return;
 		}
 
-		if ( method_exists( $wpAdminBar, 'get_node' ) ) {
-			if ( $wpAdminBar->get_node( 'user-actions' ) ) {
+		if ( method_exists( $wp_admin_bar, 'get_node' ) ) {
+			if ( $wp_admin_bar->get_node( 'user-actions' ) ) {
 				$parent = 'user-actions';
 			} else {
 				return;
@@ -96,7 +96,7 @@ final class Frontend {
 			$parent = 'my-account';
 		}
 
-		$wpAdminBar->add_menu(
+		$wp_admin_bar->add_menu(
 			array(
 				'parent' => $parent,
 				'id'     => SKAUTISINTEGRATION_NAME . '_adminBar_logout',
