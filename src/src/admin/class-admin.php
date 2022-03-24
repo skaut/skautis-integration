@@ -22,13 +22,13 @@ final class Admin {
 	// TODO: Unused?
 	private $admin_dir_url = '';
 
-	public function __construct( Settings $settings, Users $users, Rules_Manager $rulesManager, Users_Management $usersManagement, WP_Login_Logout $wpLoginLogout, Skautis_Gateway $skautisGateway ) {
+	public function __construct( Settings $settings, Users $users, Rules_Manager $rules_manager, Users_Management $users_management, WP_Login_Logout $wp_login_logout, Skautis_Gateway $skautis_gateway ) {
 		$this->settings         = $settings;
 		$this->users            = $users;
-		$this->rules_manager    = $rulesManager;
-		$this->users_management = $usersManagement;
-		$this->wp_login_logout  = $wpLoginLogout;
-		$this->skautis_gateway  = $skautisGateway;
+		$this->rules_manager    = $rules_manager;
+		$this->users_management = $users_management;
+		$this->wp_login_logout  = $wp_login_logout;
+		$this->skautis_gateway  = $skautis_gateway;
 		$this->admin_dir_url    = plugin_dir_url( __FILE__ ) . 'public/';
 		$this->init_hooks();
 	}
@@ -74,7 +74,7 @@ final class Admin {
 		<?php
 	}
 
-	public function add_logout_link_to_admin_bar( \WP_Admin_Bar $wpAdminBar ) {
+	public function add_logout_link_to_admin_bar( \WP_Admin_Bar $wp_admin_bar ) {
 		if ( ! function_exists( 'is_admin_bar_showing' ) ) {
 			return;
 		}
@@ -82,8 +82,8 @@ final class Admin {
 			return;
 		}
 
-		if ( method_exists( $wpAdminBar, 'get_node' ) ) {
-			if ( $wpAdminBar->get_node( 'user-actions' ) ) {
+		if ( method_exists( $wp_admin_bar, 'get_node' ) ) {
+			if ( $wp_admin_bar->get_node( 'user-actions' ) ) {
 				$parent = 'user-actions';
 			} else {
 				return;
@@ -94,7 +94,7 @@ final class Admin {
 			$parent = 'my-account';
 		}
 
-		$wpAdminBar->add_menu(
+		$wp_admin_bar->add_menu(
 			array(
 				'parent' => $parent,
 				'id'     => SKAUTISINTEGRATION_NAME . '_adminBar_logout',
