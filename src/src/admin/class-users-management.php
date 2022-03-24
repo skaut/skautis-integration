@@ -27,13 +27,13 @@ class Users_Management {
 	// TODO: Unused?
 	protected $admin_dir_url = '';
 
-	public function __construct( Skautis_Gateway $skautisGateway, WP_Login_Logout $wpLoginLogout, Skautis_Login $skautisLogin, Connect_And_Disconnect_WP_Account $connectAndDisconnectWpAccount, UsersRepository $usersRepository, Role_Changer $roleChanger ) {
-		$this->skautis_gateway                   = $skautisGateway;
-		$this->wp_login_logout                   = $wpLoginLogout;
-		$this->skautis_login                     = $skautisLogin;
-		$this->connect_and_disconnect_wp_account = $connectAndDisconnectWpAccount;
-		$this->users_repository                  = $usersRepository;
-		$this->role_changer                      = $roleChanger;
+	public function __construct( Skautis_Gateway $skautis_gateway, WP_Login_Logout $wp_login_logout, Skautis_Login $skautis_login, Connect_And_Disconnect_WP_Account $connect_and_disconnect_wp_account, UsersRepository $users_repository, Role_Changer $role_changer ) {
+		$this->skautis_gateway                   = $skautis_gateway;
+		$this->wp_login_logout                   = $wp_login_logout;
+		$this->skautis_login                     = $skautis_login;
+		$this->connect_and_disconnect_wp_account = $connect_and_disconnect_wp_account;
+		$this->users_repository                  = $users_repository;
+		$this->role_changer                      = $role_changer;
 		$this->admin_dir_url                     = plugin_dir_url( __FILE__ ) . 'public/';
 		$this->check_if_user_change_skautis_role();
 		$this->init_hooks();
@@ -158,24 +158,24 @@ class Users_Management {
 		echo '<th>' . esc_html__( 'Jméno a příjmení', 'skautis-integration' ) . '</th><th>' . esc_html__( 'Přezdívka', 'skautis-integration' ) . '</th><th>' . esc_html__( 'ID uživatele', 'skautis-integration' ) . '</th><th>' . esc_html__( 'Propojený uživatel', 'skautis-integration' ) . '</th><th>' . esc_html__( 'Propojení', 'skautis-integration' ) . '</th>';
 		echo '</tr></thead ><tbody>';
 
-		$usersData = $this->users_repository->get_connected_wp_users();
+		$users_data = $this->users_repository->get_connected_wp_users();
 
 		$users = $this->users_repository->get_users()['users'];
 
 		foreach ( $users as $user ) {
-			if ( isset( $usersData[ $user->id ] ) ) {
-				$homeUrl               = get_home_url( null, 'skautis/auth/' . Actions::DISCONNECT_ACTION );
-				$nonce                 = wp_create_nonce( SKAUTISINTEGRATION_NAME . '_disconnectWpAccountFromSkautis' );
-				$userEditLink          = get_edit_user_link( $usersData[ $user->id ]['id'] );
-				$returnUrl             = add_query_arg( SKAUTISINTEGRATION_NAME . '_disconnectWpAccountFromSkautis', $nonce, Helpers::get_current_url() );
-				$returnUrl             = add_query_arg( 'user-edit_php', '', $returnUrl );
-				$returnUrl             = add_query_arg( 'user_id', $usersData[ $user->id ]['id'], $returnUrl );
-				$connectDisconnectLink = add_query_arg( 'ReturnUrl', rawurlencode( $returnUrl ), $homeUrl );
+			if ( isset( $users_data[ $user->id ] ) ) {
+				$home_url                = get_home_url( null, 'skautis/auth/' . Actions::DISCONNECT_ACTION );
+				$nonce                   = wp_create_nonce( SKAUTISINTEGRATION_NAME . '_disconnectWpAccountFromSkautis' );
+				$user_edit_link          = get_edit_user_link( $users_data[ $user->id ]['id'] );
+				$return_url              = add_query_arg( SKAUTISINTEGRATION_NAME . '_disconnectWpAccountFromSkautis', $nonce, Helpers::get_current_url() );
+				$return_url              = add_query_arg( 'user-edit_php', '', $return_url );
+				$return_url              = add_query_arg( 'user_id', $users_data[ $user->id ]['id'], $return_url );
+				$connect_disconnect_link = add_query_arg( 'ReturnUrl', rawurlencode( $return_url ), $home_url );
 				echo '<tr style="background-color: #d1ffd1;">
 	<td class="username">
 		<span class="firstName">' . esc_html( $user->firstName ) . '</span> <span class="lastName">' . esc_html( $user->lastName ) . '</span>
 	</td>
-	<td>&nbsp;&nbsp;<span class="nickName">' . esc_html( $user->nickName ) . '</span></td><td>&nbsp;&nbsp;<span class="skautisUserId">' . esc_html( $user->id ) . '</span></td><td><a href="' . esc_url( $userEditLink ) . '">' . esc_html( $usersData[ $user->id ]['name'] ) . '</a></td><td><a href="' . esc_url( $connectDisconnectLink ) . '" class="button">' . esc_html__( 'Odpojit', 'skautis-integration' ) . '</a></td></tr>';
+	<td>&nbsp;&nbsp;<span class="nickName">' . esc_html( $user->nickName ) . '</span></td><td>&nbsp;&nbsp;<span class="skautisUserId">' . esc_html( $user->id ) . '</span></td><td><a href="' . esc_url( $user_edit_link ) . '">' . esc_html( $users_data[ $user->id ]['name'] ) . '</a></td><td><a href="' . esc_url( $connect_disconnect_link ) . '" class="button">' . esc_html__( 'Odpojit', 'skautis-integration' ) . '</a></td></tr>';
 			} else {
 				echo '<tr>
 	<td class="username">
@@ -198,12 +198,12 @@ class Users_Management {
 					<option><?php esc_html_e( 'Vyberte uživatele...', 'skautis-integration' ); ?></option>
 					<?php
 					foreach ( $this->users_repository->get_connectable_wp_users() as $user ) {
-						$userName = $user->data->display_name;
-						if ( ! $userName ) {
-							$userName = $user->data->user_login;
+						$user_name = $user->data->display_name;
+						if ( ! $user_name ) {
+							$user_name = $user->data->user_login;
 						}
 						echo '
-						<option value="' . absint( $user->ID ) . '">' . esc_html( $userName ) . '</option>
+						<option value="' . absint( $user->ID ) . '">' . esc_html( $user_name ) . '</option>
 						';
 					}
 					?>
