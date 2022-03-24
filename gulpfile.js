@@ -331,13 +331,18 @@ gulp.task( 'build:php:base', function() {
 } );
 
 gulp.task( 'build:php:other', function() {
-	// TODO: Split these
 	return gulp
-		.src( [ 'src/**/*.php', 'src/**/*.png' ] )
+		.src( [ 'src/**/*.php' ] )
 		.pipe( gulp.dest( 'dist/' ) );
 } );
 
 gulp.task( 'build:php', gulp.parallel( 'build:php:base', 'build:php:other' ) );
+
+gulp.task( 'build:png', function() {
+	return gulp
+		.src( [ 'src/**/*.png' ] )
+		.pipe( gulp.dest( 'dist/' ) );
+} );
 
 gulp.task( 'build:txt', function() {
 	return gulp
@@ -347,5 +352,5 @@ gulp.task( 'build:txt', function() {
 
 gulp.task(
 	'build',
-	gulp.parallel( 'build:css', 'build:deps', 'build:js', 'build:php', 'build:txt' )
+	gulp.parallel( 'build:css', 'build:deps', 'build:js', 'build:php', 'build:png', 'build:txt' )
 );
