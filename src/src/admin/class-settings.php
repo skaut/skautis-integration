@@ -18,9 +18,9 @@ final class Settings {
 	private $modules_manager;
 	private $admin_dir_url = '';
 
-	public function __construct( Skautis_Gateway $skautisGateway, Modules_Manager $modulesManager ) {
-		$this->skautis_gateway = $skautisGateway;
-		$this->modules_manager = $modulesManager;
+	public function __construct( Skautis_Gateway $skautis_gateway, Modules_Manager $modules_manager ) {
+		$this->skautis_gateway = $skautis_gateway;
+		$this->modules_manager = $modules_manager;
 		$this->admin_dir_url   = plugin_dir_url( __FILE__ ) . 'public/';
 		$this->init_hooks();
 	}
@@ -49,13 +49,13 @@ final class Settings {
 	}
 
 	private function check_if_app_id_is_set_and_show_notices() {
-		$envType = get_option( 'skautis_integration_appid_type' );
-		if ( Skautis_Gateway::PROD_ENV === $envType ) {
+		$env_type = get_option( 'skautis_integration_appid_type' );
+		if ( Skautis_Gateway::PROD_ENV === $env_type ) {
 			if ( ! get_option( 'skautis_integration_appid_prod' ) ) {
 				/* translators: 1: Start of a link to the settings 2: End of the link to the settings */
 				Helpers::show_admin_notice( sprintf( __( 'Zadejte v %1$snastavení%2$s pluginu APP ID produkční verze skautISu', 'skautis-integration' ), '<a href="' . esc_url( admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME ) ) . '">', '</a>' ), 'warning', 'toplevel-page-' . SKAUTISINTEGRATION_NAME );
 			}
-		} elseif ( Skautis_Gateway::TEST_ENV === $envType ) {
+		} elseif ( Skautis_Gateway::TEST_ENV === $env_type ) {
 			if ( ! get_option( 'skautis_integration_appid_test' ) ) {
 				/* translators: 1: Start of a link to the settings 2: End of the link to the settings */
 				Helpers::show_admin_notice( sprintf( __( 'Zadejte v %1$snastavení%2$s pluginu APP ID testovací verze skautISu', 'skautis-integration' ), '<a href="' . esc_url( admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME ) ) . '">', '</a>' ), 'warning', 'toplevel-page-' . SKAUTISINTEGRATION_NAME );
@@ -229,16 +229,16 @@ final class Settings {
 			SKAUTISINTEGRATION_NAME . '_modules'
 		);
 
-		$activatedModules = (array) get_option( 'skautis_integration_activated_modules' );
+		$activated_modules = (array) get_option( 'skautis_integration_activated_modules' );
 
-		foreach ( (array) $this->modules_manager->get_all_modules() as $moduleId => $moduleLabel ) {
+		foreach ( (array) $this->modules_manager->get_all_modules() as $module_id => $module_label ) {
 			add_settings_field(
-				SKAUTISINTEGRATION_NAME . '_modules_' . $moduleId,
-				$moduleLabel,
-				function () use ( $moduleId, $moduleLabel, $activatedModules ) {
-					$checked = in_array( $moduleId, $activatedModules, true );
+				SKAUTISINTEGRATION_NAME . '_modules_' . $module_id,
+				$module_label,
+				function () use ( $module_id, $module_label, $activated_modules ) {
+					$checked = in_array( $module_id, $activated_modules, true );
 					echo '
-					<label for="' . esc_attr( $moduleId ) . '"><input name="skautis_integration_activated_modules[]" type="checkbox" id="' . esc_attr( $moduleId ) . '" value="' . esc_attr( $moduleId ) . '" ' . ( $checked ? 'checked="checked"' : '' ) . '></label>
+					<label for="' . esc_attr( $module_id ) . '"><input name="skautis_integration_activated_modules[]" type="checkbox" id="' . esc_attr( $module_id ) . '" value="' . esc_attr( $module_id ) . '" ' . ( $checked ? 'checked="checked"' : '' ) . '></label>
 					';
 				},
 				SKAUTISINTEGRATION_NAME . '_modules',
@@ -361,17 +361,17 @@ final class Settings {
 	}
 
 	public function field_app_id_type() {
-		$appIdType = get_option( 'skautis_integration_appid_type' );
+		$app_id_type = get_option( 'skautis_integration_appid_type' );
 		?>
 		<label>
 			<input type="radio" name="skautis_integration_appid_type"
-				value="prod"<?php checked( 'prod' === $appIdType ); ?> />
+				value="prod"<?php checked( 'prod' === $app_id_type ); ?> />
 			<span><?php esc_html_e( 'Produkční', 'skautis-integration' ); ?></span>
 		</label>
 		<br/>
 		<label>
 			<input type="radio" name="skautis_integration_appid_type"
-				value="test"<?php checked( 'test' === $appIdType ); ?> />
+				value="test"<?php checked( 'test' === $app_id_type ); ?> />
 			<span><?php esc_html_e( 'Testovací', 'skautis-integration' ); ?></span>
 		</label>
 		<?php
