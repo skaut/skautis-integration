@@ -17,8 +17,8 @@ class Func implements Rule {
 
 	protected $skautis_gateway;
 
-	public function __construct( Skautis_Gateway $skautisGateway ) {
-		$this->skautis_gateway = $skautisGateway;
+	public function __construct( Skautis_Gateway $skautis_gateway ) {
+		$this->skautis_gateway = $skautis_gateway;
 	}
 
 	public function get_id(): string {
@@ -64,7 +64,7 @@ class Func implements Rule {
 		return $values;
 	}
 
-	protected function clearUnitId( string $unitId ): string {
+	protected function clearUnitId( string $unit_id ): string {
 		return trim(
 			str_replace(
 				array(
@@ -72,102 +72,102 @@ class Func implements Rule {
 					'-',
 				),
 				'',
-				$unitId
+				$unit_id
 			)
 		);
 	}
 
 	protected function getUserFuncsWithUnitIds(): array {
-		static $userFuncs = null;
+		static $user_funcs = null;
 
-		if ( is_null( $userFuncs ) ) {
-			$userDetail = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserDetail();
-			$userFuncs  = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->FunctionAllPerson(
+		if ( is_null( $user_funcs ) ) {
+			$user_detail = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserDetail();
+			$user_funcs  = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->FunctionAllPerson(
 				array(
-					'ID_Person' => $userDetail->ID_Person,
+					'ID_Person' => $user_detail->ID_Person,
 				)
 			);
 
 			$result = array();
 
-			if ( ! $userFuncs || ! property_exists( $userFuncs, 'FunctionAllOutput' ) || empty( $userFuncs->FunctionAllOutput ) || ! is_array( $userFuncs->FunctionAllOutput ) || empty( $userFuncs->FunctionAllOutput[0] ) ) {
+			if ( ! $user_funcs || ! property_exists( $user_funcs, 'FunctionAllOutput' ) || empty( $user_funcs->FunctionAllOutput ) || ! is_array( $user_funcs->FunctionAllOutput ) || empty( $user_funcs->FunctionAllOutput[0] ) ) {
 				return $result;
 			}
 
-			foreach ( $userFuncs->FunctionAllOutput as $userFunc ) {
-				$unitDetail = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->UnitDetail(
+			foreach ( $user_funcs->FunctionAllOutput as $user_func ) {
+				$unit_detail = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->UnitDetail(
 					array(
-						'ID' => $userFunc->ID_Unit,
+						'ID' => $user_func->ID_Unit,
 					)
 				);
-				if ( $unitDetail ) {
-					if ( ! isset( $result[ $userFunc->ID_FunctionType ] ) ) {
-						$result[ $userFunc->ID_FunctionType ] = array();
+				if ( $unit_detail ) {
+					if ( ! isset( $result[ $user_func->ID_FunctionType ] ) ) {
+						$result[ $user_func->ID_FunctionType ] = array();
 					}
-					$result[ $userFunc->ID_FunctionType ][] = $unitDetail->RegistrationNumber;
+					$result[ $user_func->ID_FunctionType ][] = $unit_detail->RegistrationNumber;
 				}
 			}
 
-			$userFuncs = $result;
+			$user_funcs = $result;
 		}
 
-		if ( ! is_array( $userFuncs ) ) {
+		if ( ! is_array( $user_funcs ) ) {
 			return array();
 		}
 
-		return $userFuncs;
+		return $user_funcs;
 	}
 
-	public function is_rule_passed( string $funcsOperator, $data ): bool {
+	public function is_rule_passed( string $funcs_operator, $data ): bool {
 		// parse and prepare data from rules UI
 		$output = array();
 		preg_match_all( '|[^~]+|', $data, $output );
 		if ( isset( $output[0], $output[0][0], $output[0][1], $output[0][2] ) ) {
-			list( $funcs, $unitOperator, $unitId ) = $output[0];
-			$funcs                                 = explode( ',', $funcs );
-			$unitId                                = $this->clearUnitId( $unitId );
+			list( $funcs, $unit_operator, $unit_id ) = $output[0];
+			$funcs                                   = explode( ',', $funcs );
+			$unit_id                                 = $this->clearUnitId( $unit_id );
 		} else {
 			return false;
 		}
 
 		// logic for determine in / not_in range
-		$inNotinNegation = 2;
-		switch ( $funcsOperator ) {
+		$in_not_in_negation = 2;
+		switch ( $funcs_operator ) {
 			case 'in':
-				$inNotinNegation = 0;
+				$in_not_in_negation = 0;
 				break;
 			case 'not_in':
-				$inNotinNegation = 1;
+				$in_not_in_negation = 1;
 				break;
 			default:
-				$inNotinNegation = 2;
+				$in_not_in_negation = 2;
 				if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-					throw new \Exception( 'Function operator: "' . $funcsOperator . '" is not declared.' );
+					throw new \Exception( 'Function operator: "' . $funcs_operator . '" is not declared.' );
 				}
 				break;
 		}
 
-		$userFuncs = $this->getUserFuncsWithUnitIds();
-		$userPass  = 0;
+		$user_funcs = $this->getUserFuncsWithUnitIds();
+		$user_pass  = 0;
 		foreach ( $funcs as $func ) {
 			// in / not_in range check
-			if ( ( $inNotinNegation + array_key_exists( $func, $userFuncs ) ) === 1 ) {
-				foreach ( $userFuncs[ $func ] as $userFuncUnitId ) {
-					$userFuncUnitId = $this->clearUnitId( $userFuncUnitId );
+			if ( ( $in_not_in_negation + array_key_exists( $func, $user_funcs ) ) === 1 ) {
+				foreach ( $user_funcs[ $func ] as $user_func_unit_id ) {
+					$user_func_unit_id = $this->clearUnitId( $user_func_unit_id );
 
-					switch ( $unitOperator ) {
+					switch ( $unit_operator ) {
 						case 'equal':
-							$userPass += ( $userFuncUnitId === $unitId );
+							$user_pass += ( $user_func_unit_id === $unit_id );
 							break;
 						case 'begins_with':
-							$userPass += ( substr( $userFuncUnitId, 0, strlen( $unitId ) ) === $unitId );
+							$user_pass += ( substr( $user_func_unit_id, 0, strlen( $unit_id ) ) === $unit_id );
 							break;
 						case 'any':
-							++$userPass;
+							++$user_pass;
 							break;
 						default:
 							if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-								throw new \Exception( 'Unit operator: "' . $unitOperator . '" is not declared.' );
+								throw new \Exception( 'Unit operator: "' . $unit_operator . '" is not declared.' );
 							}
 							return false;
 					}
@@ -175,7 +175,7 @@ class Func implements Rule {
 			}
 		}
 
-		if ( is_int( $userPass ) && $userPass > 0 ) {
+		if ( is_int( $user_pass ) && $user_pass > 0 ) {
 			return true;
 		}
 
