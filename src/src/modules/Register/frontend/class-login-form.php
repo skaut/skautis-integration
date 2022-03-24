@@ -10,8 +10,8 @@ final class Login_Form {
 
 	private $wp_register;
 
-	public function __construct( WP_Register $wpRegister ) {
-		$this->wp_register = $wpRegister;
+	public function __construct( WP_Register $wp_register ) {
+		$this->wp_register = $wp_register;
 		$this->init_hooks();
 	}
 
