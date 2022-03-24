@@ -16,11 +16,11 @@ final class Frontend {
 	private $skautis_login;
 	private $wp_login_logout;
 
-	public function __construct( array $postTypes, Rules_Manager $rulesManager, Skautis_Login $skautisLogin, WP_Login_Logout $wpLoginLogout ) {
-		$this->post_types      = $postTypes;
-		$this->rules_manager   = $rulesManager;
-		$this->skautis_login   = $skautisLogin;
-		$this->wp_login_logout = $wpLoginLogout;
+	public function __construct( array $post_types, Rules_Manager $rules_manager, Skautis_Login $skautis_login, WP_Login_Logout $wp_login_logout ) {
+		$this->post_types      = $post_types;
+		$this->rules_manager   = $rules_manager;
+		$this->skautis_login   = $skautis_login;
+		$this->wp_login_logout = $wp_login_logout;
 	}
 
 	public function init_hooks() {
@@ -28,17 +28,17 @@ final class Frontend {
 		add_action( 'posts_results', array( $this, 'filter_posts' ), 10, 2 );
 	}
 
-	private function get_login_form( bool $forceLogoutFromSkautis = false ): string {
-		$loginUrlArgs = add_query_arg( 'noWpLogin', true, Helpers::get_current_url() );
-		if ( $forceLogoutFromSkautis ) {
-			$loginUrlArgs = add_query_arg( 'logoutFromSkautis', true, $loginUrlArgs );
+	private function get_login_form( bool $force_logout_from_skautis = false ): string {
+		$login_url_args = add_query_arg( 'noWpLogin', true, Helpers::get_current_url() );
+		if ( $force_logout_from_skautis ) {
+			$login_url_args = add_query_arg( 'logoutFromSkautis', true, $login_url_args );
 		}
 
 		return '
 		<div class="wp-core-ui">
 			<p style="margin-bottom: 0.3em;">
 				<a class="button button-primary button-hero button-skautis"
-				   href="' . $this->wp_login_logout->get_login_url( $loginUrlArgs ) . '">' . __( 'Log in with skautIS', 'skautis-integration' ) . '</a>
+				   href="' . $this->wp_login_logout->get_login_url( $login_url_args ) . '">' . __( 'Log in with skautIS', 'skautis-integration' ) . '</a>
 			</p>
 		</div>
 		<br/>
@@ -53,15 +53,15 @@ final class Frontend {
 		return '<p>' . __( 'You do not have permission to access this content', 'skautis-integration' ) . '</p>';
 	}
 
-	private function get_posts_hierarchy_tree_with_rules( int $postId, $postType ): array {
-		$ancestors = get_ancestors( $postId, $postType, 'post_type' );
+	private function get_posts_hierarchy_tree_with_rules( int $post_id, $post_type ): array {
+		$ancestors = get_ancestors( $post_id, $post_type, 'post_type' );
 		$ancestors = array_map(
-			function ( $ancestorPostId ) {
+			function ( $ancestor_post_id ) {
 				return array(
-					'id'              => $ancestorPostId,
-					'rules'           => (array) get_post_meta( $ancestorPostId, SKAUTISINTEGRATION_NAME . '_rules', true ),
-					'includeChildren' => get_post_meta( $ancestorPostId, SKAUTISINTEGRATION_NAME . '_rules_includeChildren', true ),
-					'visibilityMode'  => get_post_meta( $ancestorPostId, SKAUTISINTEGRATION_NAME . '_rules_visibilityMode', true ),
+					'id'              => $ancestor_post_id,
+					'rules'           => (array) get_post_meta( $ancestor_post_id, SKAUTISINTEGRATION_NAME . '_rules', true ),
+					'includeChildren' => get_post_meta( $ancestor_post_id, SKAUTISINTEGRATION_NAME . '_rules_includeChildren', true ),
+					'visibilityMode'  => get_post_meta( $ancestor_post_id, SKAUTISINTEGRATION_NAME . '_rules_visibilityMode', true ),
 				);
 			},
 			$ancestors
@@ -70,8 +70,8 @@ final class Frontend {
 		return array_reverse( $ancestors );
 	}
 
-	private function get_rules_from_parent_posts_with_impact_by_child_post_id( int $childPostId, $postType ): array {
-		$ancestors = $this->get_posts_hierarchy_tree_with_rules( $childPostId, $postType );
+	private function get_rules_from_parent_posts_with_impact_by_child_post_id( int $child_post_id, $post_type ): array {
+		$ancestors = $this->get_posts_hierarchy_tree_with_rules( $child_post_id, $post_type );
 
 		$ancestors = array_filter(
 			$ancestors,
@@ -89,12 +89,12 @@ final class Frontend {
 		return array_values( $ancestors );
 	}
 
-	private function hide_content_excerpt_comments( int $postId, string $newContent = '', string $newExcerpt = '' ) {
+	private function hide_content_excerpt_comments( int $post_id, string $new_content = '', string $new_excerpt = '' ) {
 		add_filter(
 			'the_content',
-			function ( string $content = '' ) use ( $postId, $newContent ) {
-				if ( get_the_ID() === $postId ) {
-					return $newContent;
+			function ( string $content = '' ) use ( $post_id, $new_content ) {
+				if ( get_the_ID() === $post_id ) {
+					return $new_content;
 				}
 
 				return $content;
@@ -103,9 +103,9 @@ final class Frontend {
 
 		add_filter(
 			'the_excerpt',
-			function ( string $excerpt = '' ) use ( $postId, $newExcerpt ) {
-				if ( get_the_ID() === $postId ) {
-					return $newExcerpt;
+			function ( string $excerpt = '' ) use ( $post_id, $new_excerpt ) {
+				if ( get_the_ID() === $post_id ) {
+					return $new_excerpt;
 				}
 
 				return $excerpt;
@@ -114,39 +114,39 @@ final class Frontend {
 
 		add_action(
 			'pre_get_comments',
-			function ( \WP_Comment_Query $wpCommentQuery ) use ( $postId ) {
-				if ( $wpCommentQuery->query_vars['post_id'] === $postId ) {
-					if ( ! isset( $wpCommentQuery->query_vars['post__not_in'] ) || empty( $wpCommentQuery->query_vars['post__not_in'] ) ) {
-						$wpCommentQuery->query_vars['post__not_in'] = array();
-					} elseif ( ! is_array( $wpCommentQuery->query_vars['post__not_in'] ) ) {
-						$wpCommentQuery->query_vars['post__not_in'] = array( $wpCommentQuery->query_vars['post__not_in'] );
+			function ( \WP_Comment_Query $wp_comment_query ) use ( $post_id ) {
+				if ( $wp_comment_query->query_vars['post_id'] === $post_id ) {
+					if ( ! isset( $wp_comment_query->query_vars['post__not_in'] ) || empty( $wp_comment_query->query_vars['post__not_in'] ) ) {
+						$wp_comment_query->query_vars['post__not_in'] = array();
+					} elseif ( ! is_array( $wp_comment_query->query_vars['post__not_in'] ) ) {
+						$wp_comment_query->query_vars['post__not_in'] = array( $wp_comment_query->query_vars['post__not_in'] );
 					}
-					$wpCommentQuery->query_vars['post__not_in'][] = $postId;
+					$wp_comment_query->query_vars['post__not_in'][] = $post_id;
 				}
 			}
 		);
 	}
 
-	private function process_rules_and_hide_posts( bool $userIsLoggedInSkautis, array $rule, array &$posts, int $postKey, \WP_Query $wpQuery, string $postType, &$postsWereFiltered = false ) {
+	private function process_rules_and_hide_posts( bool $user_is_logged_in_skautis, array $rule, array &$posts, int $post_key, \WP_Query $wp_query, string $post_type, &$posts_were_filtered = false ) {
 		if ( ! empty( $rules ) && isset( $rules[0][ SKAUTISINTEGRATION_NAME . '_rules' ] ) ) {
-			if ( ! $userIsLoggedInSkautis ||
+			if ( ! $user_is_logged_in_skautis ||
 				! $this->rules_manager->check_if_user_passed_rules( $rules ) ) {
-				unset( $posts[ $postKey ] );
-				unset( $wpQuery->posts[ $postKey ] );
-				if ( $wpQuery->found_posts > 0 ) {
-					$wpQuery->found_posts --;
+				unset( $posts[ $post_key ] );
+				unset( $wp_query->posts[ $post_key ] );
+				if ( $wp_query->found_posts > 0 ) {
+					$wp_query->found_posts --;
 				}
-				$postsWereFiltered = true;
+				$posts_were_filtered = true;
 			}
 		}
 	}
 
-	private function process_rules_and_hide_content( bool $userIsLoggedInSkautis, array $rules, int $postId ) {
+	private function process_rules_and_hide_content( bool $user_is_logged_in_skautis, array $rules, int $post_id ) {
 		if ( ! empty( $rules ) && isset( $rules[0][ SKAUTISINTEGRATION_NAME . '_rules' ] ) ) {
-			if ( ! $userIsLoggedInSkautis ) {
-				$this->hide_content_excerpt_comments( $postId, $this->get_login_required_message() . $this->get_login_form(), $this->get_login_required_message() );
+			if ( ! $user_is_logged_in_skautis ) {
+				$this->hide_content_excerpt_comments( $post_id, $this->get_login_required_message() . $this->get_login_form(), $this->get_login_required_message() );
 			} elseif ( ! $this->rules_manager->check_if_user_passed_rules( $rules ) ) {
-				$this->hide_content_excerpt_comments( $postId, $this->get_unauthorized_message() . $this->get_login_form( true ), $this->get_unauthorized_message() );
+				$this->hide_content_excerpt_comments( $post_id, $this->get_unauthorized_message() . $this->get_login_form( true ), $this->get_unauthorized_message() );
 			}
 		}
 	}
@@ -156,74 +156,74 @@ final class Frontend {
 		wp_enqueue_style( SKAUTISINTEGRATION_NAME, SKAUTISINTEGRATION_URL . 'src/frontend/public/css/skautis-frontend.css', array(), SKAUTISINTEGRATION_VERSION, 'all' );
 	}
 
-	public function get_parent_posts_with_rules( int $childPostId, string $childPostType ): array {
+	public function get_parent_posts_with_rules( int $child_post_id, string $child_post_type ): array {
 		$result = array();
 
-		$parentPostsWithRules = $this->get_rules_from_parent_posts_with_impact_by_child_post_id( $childPostId, $childPostType );
+		$parent_posts_with_rules = $this->get_rules_from_parent_posts_with_impact_by_child_post_id( $child_post_id, $child_post_type );
 
-		foreach ( $parentPostsWithRules as $parentPostWithRules ) {
-			$result[ $parentPostWithRules['id'] ] = array(
-				'parentPostTitle' => get_the_title( $parentPostWithRules['id'] ),
+		foreach ( $parent_posts_with_rules as $parent_post_with_rules ) {
+			$result[ $parent_post_with_rules['id'] ] = array(
+				'parentPostTitle' => get_the_title( $parent_post_with_rules['id'] ),
 				'rules'           => array(),
 			);
 
-			foreach ( $parentPostWithRules['rules'] as $rule ) {
-				$result[ $parentPostWithRules['id'] ]['rules'][ $rule['skautis-integration_rules'] ] = get_the_title( $rule['skautis-integration_rules'] );
+			foreach ( $parent_post_with_rules['rules'] as $rule ) {
+				$result[ $parent_post_with_rules['id'] ]['rules'][ $rule['skautis-integration_rules'] ] = get_the_title( $rule['skautis-integration_rules'] );
 			}
 		}
 
 		return $result;
 	}
 
-	public function filter_posts( array $posts, \WP_Query $wpQuery ): array {
+	public function filter_posts( array $posts, \WP_Query $wp_query ): array {
 		if ( empty( $posts ) ) {
 			return $posts;
 		}
 
-		$userIsLoggedInSkautis = $this->skautis_login->is_user_logged_in_skautis();
+		$user_is_logged_in_skautis = $this->skautis_login->is_user_logged_in_skautis();
 
-		$postsWereFiltered = false;
+		$posts_were_filtered = false;
 
-		foreach ( $wpQuery->posts as $key => $post ) {
+		foreach ( $wp_query->posts as $key => $post ) {
 			if ( ! is_a( $post, 'WP_Post' ) ) {
-				$wpPost = get_post( $post );
+				$wp_post = get_post( $post );
 			} else {
-				$wpPost = $post;
+				$wp_post = $post;
 			}
 
-			if ( in_array( $wpPost->post_type, $this->post_types, true ) ) {
-				if ( ! current_user_can( 'edit_' . $wpPost->post_type . 's' ) ) {
-					$rulesGroups = array();
+			if ( in_array( $wp_post->post_type, $this->post_types, true ) ) {
+				if ( ! current_user_can( 'edit_' . $wp_post->post_type . 's' ) ) {
+					$rules_groups = array();
 
-					if ( $wpPost->post_parent > 0 ) {
-						$rulesGroups = $this->get_rules_from_parent_posts_with_impact_by_child_post_id( $wpPost->ID, $wpPost->post_type );
+					if ( $wp_post->post_parent > 0 ) {
+						$rules_groups = $this->get_rules_from_parent_posts_with_impact_by_child_post_id( $wp_post->ID, $wp_post->post_type );
 					}
 
-					$currentPostRules = (array) get_post_meta( $wpPost->ID, SKAUTISINTEGRATION_NAME . '_rules', true );
-					if ( ! empty( $currentPostRules ) ) {
-						$currentPostRule = array(
-							'id'              => $wpPost->ID,
-							'rules'           => $currentPostRules,
-							'includeChildren' => get_post_meta( $wpPost->ID, SKAUTISINTEGRATION_NAME . '_rules_includeChildren', true ),
-							'visibilityMode'  => get_post_meta( $wpPost->ID, SKAUTISINTEGRATION_NAME . '_rules_visibilityMode', true ),
+					$current_post_rules = (array) get_post_meta( $wp_post->ID, SKAUTISINTEGRATION_NAME . '_rules', true );
+					if ( ! empty( $current_post_rules ) ) {
+						$current_post_rule = array(
+							'id'              => $wp_post->ID,
+							'rules'           => $current_post_rules,
+							'includeChildren' => get_post_meta( $wp_post->ID, SKAUTISINTEGRATION_NAME . '_rules_includeChildren', true ),
+							'visibilityMode'  => get_post_meta( $wp_post->ID, SKAUTISINTEGRATION_NAME . '_rules_visibilityMode', true ),
 						);
-						$rulesGroups[]   = $currentPostRule;
+						$rules_groups[]    = $current_post_rule;
 					}
 
-					foreach ( $rulesGroups as $rulesGroup ) {
-						if ( 'content' === $rulesGroup['visibilityMode'] ) {
-							$this->process_rules_and_hide_content( $userIsLoggedInSkautis, $rulesGroup['rules'], $wpPost->ID );
+					foreach ( $rules_groups as $rules_group ) {
+						if ( 'content' === $rules_group['visibilityMode'] ) {
+							$this->process_rules_and_hide_content( $user_is_logged_in_skautis, $rules_group['rules'], $wp_post->ID );
 						} else {
-							$this->process_rules_and_hide_posts( $userIsLoggedInSkautis, $rulesGroup['rules'], $posts, $key, $wpQuery, $wpPost->post_type, $postsWereFiltered );
+							$this->process_rules_and_hide_posts( $user_is_logged_in_skautis, $rules_group['rules'], $posts, $key, $wp_query, $wp_post->post_type, $posts_were_filtered );
 						}
 					}
 				}
 			}
 		}
 
-		if ( $postsWereFiltered ) {
-			$wpQuery->posts = array_values( $wpQuery->posts );
-			$posts          = array_values( $posts );
+		if ( $posts_were_filtered ) {
+			$wp_query->posts = array_values( $wp_query->posts );
+			$posts           = array_values( $posts );
 		}
 
 		return $posts;
