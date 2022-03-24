@@ -27,14 +27,14 @@ final class Settings {
 
 	private function init_hooks() {
 		add_filter(
-			'plugin_action_links_' . SKAUTISINTEGRATION_PLUGIN_BASENAME,
+			'plugin_action_links_' . SKAUTIS_INTEGRATION_PLUGIN_BASENAME,
 			array(
 				$this,
 				'add_settings_link_to_plugins_table',
 			)
 		);
 		add_filter(
-			'plugin_action_links_' . SKAUTISINTEGRATION_PLUGIN_BASENAME,
+			'plugin_action_links_' . SKAUTIS_INTEGRATION_PLUGIN_BASENAME,
 			array(
 				$this,
 				'add_help_link_to_plugins_table',

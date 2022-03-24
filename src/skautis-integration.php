@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'SKAUTISINTEGRATION_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
+define( 'SKAUTIS_INTEGRATION_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 define( 'SKAUTISINTEGRATION_PATH', plugin_dir_path( __FILE__ ) );
 define( 'SKAUTISINTEGRATION_URL', plugin_dir_url( __FILE__ ) );
 define( 'SKAUTISINTEGRATION_NAME', 'skautis-integration' );
