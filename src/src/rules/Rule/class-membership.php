@@ -17,8 +17,8 @@ class Membership implements Rule {
 
 	protected $skautis_gateway;
 
-	public function __construct( Skautis_Gateway $skautisGateway ) {
-		$this->skautis_gateway = $skautisGateway;
+	public function __construct( Skautis_Gateway $skautis_gateway ) {
+		$this->skautis_gateway = $skautis_gateway;
 	}
 
 	public function get_id(): string {
@@ -64,7 +64,7 @@ class Membership implements Rule {
 		return $result;
 	}
 
-	protected function clearUnitId( string $unitId ): string {
+	protected function clearUnitId( string $unit_id ): string {
 		return trim(
 			str_replace(
 				array(
@@ -72,66 +72,66 @@ class Membership implements Rule {
 					'-',
 				),
 				'',
-				$unitId
+				$unit_id
 			)
 		);
 	}
 
 	protected function getUserMembershipsWithUnitIds(): array {
-		static $userMemberships = null;
+		static $user_memberships = null;
 
-		if ( is_null( $userMemberships ) ) {
-			$userDetail      = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserDetail();
-			$userMemberships = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->MembershipAllPerson(
+		if ( is_null( $user_memberships ) ) {
+			$user_detail      = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserDetail();
+			$user_memberships = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->MembershipAllPerson(
 				array(
-					'ID_Person'   => $userDetail->ID_Person,
+					'ID_Person'   => $user_detail->ID_Person,
 					'ShowHistory' => false,
 					'isValid'     => true,
 				)
 			);
 
-			if ( ! isset( $userMemberships->MembershipAllOutput ) ) {
+			if ( ! isset( $user_memberships->MembershipAllOutput ) ) {
 				return array();
 			}
 
-			if ( is_object( $userMemberships->MembershipAllOutput ) && isset( $userMemberships->MembershipAllOutput->ID_MembershipType ) ) {
-				$userMemberships->MembershipAllOutput = array(
-					$userMemberships->MembershipAllOutput,
+			if ( is_object( $user_memberships->MembershipAllOutput ) && isset( $user_memberships->MembershipAllOutput->ID_MembershipType ) ) {
+				$user_memberships->MembershipAllOutput = array(
+					$user_memberships->MembershipAllOutput,
 				);
 			}
 
-			if ( ! is_array( $userMemberships->MembershipAllOutput ) ) {
+			if ( ! is_array( $user_memberships->MembershipAllOutput ) ) {
 				return array();
 			}
 
 			// user has more valid memberships
 			$result = array();
-			foreach ( $userMemberships->MembershipAllOutput as $userMembership ) {
-				if ( ! is_object( $userMembership ) ) {
+			foreach ( $user_memberships->MembershipAllOutput as $user_membership ) {
+				if ( ! is_object( $user_membership ) ) {
 					continue;
 				}
 
-				if ( isset( $userMembership->ValidTo ) && gettype( $userMembership->ValidTo ) !== 'NULL' ) {
+				if ( isset( $user_membership->ValidTo ) && gettype( $user_membership->ValidTo ) !== 'NULL' ) {
 					continue;
 				}
 
-				$unitDetail = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->UnitDetail(
+				$unit_detail = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->UnitDetail(
 					array(
-						'ID' => $userMembership->ID_Unit,
+						'ID' => $user_membership->ID_Unit,
 					)
 				);
-				if ( $unitDetail ) {
-					if ( ! isset( $result[ $userMembership->ID_MembershipType ] ) ) {
-						$result[ $userMembership->ID_MembershipType ] = array();
+				if ( $unit_detail ) {
+					if ( ! isset( $result[ $user_membership->ID_MembershipType ] ) ) {
+						$result[ $user_membership->ID_MembershipType ] = array();
 					}
-					$result[ $userMembership->ID_MembershipType ][] = $unitDetail->RegistrationNumber;
+					$result[ $user_membership->ID_MembershipType ][] = $unit_detail->RegistrationNumber;
 				}
 			}
-			$userMemberships = $result;
+			$user_memberships = $result;
 		}
 
-		if ( ! is_array( $userMemberships ) ) {
-			if ( is_a( $userMemberships, '\stdClass' ) ) {
+		if ( ! is_array( $user_memberships ) ) {
+			if ( is_a( $user_memberships, '\stdClass' ) ) {
 				wp_die(
 					sprintf(
 						/* translators: 1: Start of a link to the documentation 2: End of the link to the documentation */
@@ -150,42 +150,43 @@ class Membership implements Rule {
 			}
 		}
 
-		return $userMemberships;
+		return $user_memberships;
 	}
 
-	public function is_rule_passed( string $rolesOperator, $data ): bool {
+	// TODO: First parameter unused?
+	public function is_rule_passed( string $roles_operator, $data ): bool {
 		// parse and prepare data from rules UI
 		$output = array();
 		preg_match_all( '|[^~]+|', $data, $output );
 		if ( isset( $output[0], $output[0][0], $output[0][1], $output[0][2] ) ) {
-			list( $memberships, $membershipOperator, $unitId ) = $output[0];
-			$memberships                                       = explode( ',', $memberships );
-			$unitId = $this->clearUnitId( $unitId );
+			list( $memberships, $membership_operator, $unit_id ) = $output[0];
+			$memberships = explode( ',', $memberships );
+			$unit_id     = $this->clearUnitId( $unit_id );
 		} else {
 			return false;
 		}
 
-		$userMemberships = $this->getUserMembershipsWithUnitIds();
-		$userPass        = 0;
+		$user_memberships = $this->getUserMembershipsWithUnitIds();
+		$user_pass        = 0;
 		foreach ( $memberships as $membership ) {
 			// in / not_in range check
-			if ( array_key_exists( $membership, $userMemberships ) ) {
-				foreach ( $userMemberships[ $membership ] as $userMembershipUnitId ) {
-					$userMembershipUnitId = $this->clearUnitId( $userMembershipUnitId );
+			if ( array_key_exists( $membership, $user_memberships ) ) {
+				foreach ( $user_memberships[ $membership ] as $user_membership_unit_id ) {
+					$user_membership_unit_id = $this->clearUnitId( $user_membership_unit_id );
 
-					switch ( $membershipOperator ) {
+					switch ( $membership_operator ) {
 						case 'equal':
-							$userPass += ( $userMembershipUnitId === $unitId );
+							$user_pass += ( $user_membership_unit_id === $unit_id );
 							break;
 						case 'begins_with':
-							$userPass += ( substr( $userMembershipUnitId, 0, strlen( $unitId ) ) === $unitId );
+							$user_pass += ( substr( $user_membership_unit_id, 0, strlen( $unit_id ) ) === $unit_id );
 							break;
 						case 'any':
-							++$userPass;
+							++$user_pass;
 							break;
 						default:
 							if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-								throw new \Exception( 'Unit operator: "' . $membershipOperator . '" is not declared.' );
+								throw new \Exception( 'Unit operator: "' . $membership_operator . '" is not declared.' );
 							}
 							return false;
 					}
@@ -193,7 +194,7 @@ class Membership implements Rule {
 			}
 		}
 
-		if ( is_int( $userPass ) && $userPass > 0 ) {
+		if ( is_int( $user_pass ) && $user_pass > 0 ) {
 			return true;
 		}
 

@@ -13,9 +13,9 @@ final class Metabox {
 	private $rules_manager;
 	private $frontend;
 
-	public function __construct( array $postTypes, Rules_Manager $rulesManager, Frontend $frontend ) {
-		$this->post_types    = $postTypes;
-		$this->rules_manager = $rulesManager;
+	public function __construct( array $post_types, Rules_Manager $rules_manager, Frontend $frontend ) {
+		$this->post_types    = $post_types;
+		$this->rules_manager = $rules_manager;
 		$this->frontend      = $frontend;
 		$this->init_hooks();
 	}
@@ -26,17 +26,17 @@ final class Metabox {
 	}
 
 	public function add_metabox_for_rules_field() {
-		foreach ( $this->post_types as $postType ) {
+		foreach ( $this->post_types as $post_type ) {
 			add_meta_box(
 				SKAUTISINTEGRATION_NAME . '_modules_visibility_rules_metabox',
 				__( 'SkautIS pravidla', 'skautis-integration' ),
 				array( $this, 'rules_repeater' ),
-				$postType
+				$post_type
 			);
 		}
 	}
 
-	public function save_rules_custom_field( int $postId ) {
+	public function save_rules_custom_field( int $post_id ) {
 		if ( ! isset( $_POST[ SKAUTISINTEGRATION_NAME . '_visibility_metabox_nonce' ] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ SKAUTISINTEGRATION_NAME . '_visibility_metabox_nonce' ] ) ), SKAUTISINTEGRATION_NAME . '_visibility_metabox' ) ) {
 			return;
 		}
@@ -48,61 +48,61 @@ final class Metabox {
 				$rules = array();
 			}
 			update_post_meta(
-				$postId,
+				$post_id,
 				SKAUTISINTEGRATION_NAME . '_rules',
 				$rules
 			);
 
 			if ( isset( $_POST[ SKAUTISINTEGRATION_NAME . '_rules_includeChildren' ] ) ) {
-				$includeChildren = sanitize_meta( SKAUTISINTEGRATION_NAME . '_rules_includeChildren', wp_unslash( $_POST[ SKAUTISINTEGRATION_NAME . '_rules_includeChildren' ] ), 'post' );
+				$include_children = sanitize_meta( SKAUTISINTEGRATION_NAME . '_rules_includeChildren', wp_unslash( $_POST[ SKAUTISINTEGRATION_NAME . '_rules_includeChildren' ] ), 'post' );
 			} else {
-				$includeChildren = 0;
+				$include_children = 0;
 			}
 			update_post_meta(
-				$postId,
+				$post_id,
 				SKAUTISINTEGRATION_NAME . '_rules_includeChildren',
-				$includeChildren
+				$include_children
 			);
 
-			$visibilityMode = sanitize_meta( SKAUTISINTEGRATION_NAME . '_rules_visibilityMode', wp_unslash( $_POST[ SKAUTISINTEGRATION_NAME . '_rules_visibilityMode' ] ), 'post' );
+			$visibility_mode = sanitize_meta( SKAUTISINTEGRATION_NAME . '_rules_visibilityMode', wp_unslash( $_POST[ SKAUTISINTEGRATION_NAME . '_rules_visibilityMode' ] ), 'post' );
 			update_post_meta(
-				$postId,
+				$post_id,
 				SKAUTISINTEGRATION_NAME . '_rules_visibilityMode',
-				$visibilityMode
+				$visibility_mode
 			);
 		}
 	}
 
 	public function rules_repeater( \WP_Post $post ) {
-		$postTypeObject  = get_post_type_object( $post->post_type );
-		$includeChildren = get_post_meta( $post->ID, SKAUTISINTEGRATION_NAME . '_rules_includeChildren', true );
-		if ( '0' !== $includeChildren && '1' !== $includeChildren ) {
-			$includeChildren = get_option( SKAUTISINTEGRATION_NAME . '_modules_visibility_includeChildren', 0 );
+		$post_type_object = get_post_type_object( $post->post_type );
+		$include_children = get_post_meta( $post->ID, SKAUTISINTEGRATION_NAME . '_rules_includeChildren', true );
+		if ( '0' !== $include_children && '1' !== $include_children ) {
+			$include_children = get_option( SKAUTISINTEGRATION_NAME . '_modules_visibility_includeChildren', 0 );
 		}
 
-		$visibilityMode = get_post_meta( $post->ID, SKAUTISINTEGRATION_NAME . '_rules_visibilityMode', true );
-		if ( 'content' !== $visibilityMode && 'full' !== $visibilityMode ) {
-			$visibilityMode = get_option( SKAUTISINTEGRATION_NAME . '_modules_visibility_visibilityMode', 0 );
+		$visibility_mode = get_post_meta( $post->ID, SKAUTISINTEGRATION_NAME . '_rules_visibilityMode', true );
+		if ( 'content' !== $visibility_mode && 'full' !== $visibility_mode ) {
+			$visibility_mode = get_option( SKAUTISINTEGRATION_NAME . '_modules_visibility_visibilityMode', 0 );
 		}
 
 		wp_nonce_field( SKAUTISINTEGRATION_NAME . '_visibility_metabox', SKAUTISINTEGRATION_NAME . '_visibility_metabox_nonce' );
 
 		if ( $post->post_parent > 0 ) {
-			$parentRules = $this->frontend->get_parent_posts_with_rules( absint( $post->ID ), $post->post_type );
-			if ( ! empty( $parentRules ) ) {
+			$parent_rules = $this->frontend->get_parent_posts_with_rules( absint( $post->ID ), $post->post_type );
+			if ( ! empty( $parent_rules ) ) {
 				?>
 				<h4><?php esc_html_e( 'Pravidla převzatá z nadřazených stránek', 'skautis-integration' ); ?>:</h4>
 				<ul id="skautis_modules_visibility_parentRules" class="skautis-admin-list">
 					<?php
-					foreach ( $parentRules as $parentRule ) {
+					foreach ( $parent_rules as $parent_rule ) {
 						?>
 						<li>
-							<strong><?php echo esc_html( $parentRule['parentPostTitle'] ); ?></strong>
+							<strong><?php echo esc_html( $parent_rule['parentPostTitle'] ); ?></strong>
 							<ul>
 								<?php
-								foreach ( $parentRule['rules'] as $ruleId => $rule ) {
+								foreach ( $parent_rule['rules'] as $rule_id => $rule ) {
 									?>
-									<li data-rule="<?php echo esc_attr( $ruleId ); ?>"><?php echo esc_html( $rule ); ?></li>
+									<li data-rule="<?php echo esc_attr( $rule_id ); ?>"><?php echo esc_html( $rule ); ?></li>
 									<?php
 								}
 								?>
@@ -143,11 +143,11 @@ final class Metabox {
 				<input type="hidden" name="<?php echo esc_attr( SKAUTISINTEGRATION_NAME ); ?>_rules_includeChildren"
 					value="0"/>
 				<input type="checkbox" name="<?php echo esc_attr( SKAUTISINTEGRATION_NAME ); ?>_rules_includeChildren"
-					value="1" <?php checked( 1, $includeChildren ); ?> /><span>
+					value="1" <?php checked( 1, $include_children ); ?> /><span>
 												<?php
-												if ( $postTypeObject->hierarchical ) {
+												if ( $post_type_object->hierarchical ) {
 													/* translators: the type of the SkautIS unit */
-													printf( esc_html__( 'Použít vybraná pravidla i na podřízené %s', 'skautis-integration' ), esc_html( lcfirst( $postTypeObject->labels->name ) ) );
+													printf( esc_html__( 'Použít vybraná pravidla i na podřízené %s', 'skautis-integration' ), esc_html( lcfirst( $post_type_object->labels->name ) ) );
 												} else {
 													esc_html_e( 'Použít vybraná pravidla i na podřízený obsah (média - obrázky, videa, přílohy,...)', 'skautis-integration' );
 												}
@@ -156,10 +156,10 @@ final class Metabox {
 		</p>
 		<p>
 			<label><input type="radio" name="<?php echo esc_attr( SKAUTISINTEGRATION_NAME ); ?>_rules_visibilityMode"
-						value="full" <?php checked( 'full', $visibilityMode ); ?> /><span><?php esc_html_e( 'Úplně skrýt', 'skautis-integration' ); ?></span></label>
+						value="full" <?php checked( 'full', $visibility_mode ); ?> /><span><?php esc_html_e( 'Úplně skrýt', 'skautis-integration' ); ?></span></label>
 			<br/>
 			<label><input type="radio" name="<?php echo esc_attr( SKAUTISINTEGRATION_NAME ); ?>_rules_visibilityMode"
-						value="content" <?php checked( 'content', $visibilityMode ); ?> /><span><?php esc_html_e( 'Skrýt pouze obsah', 'skautis-integration' ); ?></span></label>
+						value="content" <?php checked( 'content', $visibility_mode ); ?> /><span><?php esc_html_e( 'Skrýt pouze obsah', 'skautis-integration' ); ?></span></label>
 		</p>
 		<?php
 	}

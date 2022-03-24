@@ -17,8 +17,8 @@ class All implements Rule {
 
 	protected $skautis_gateway;
 
-	public function __construct( Skautis_Gateway $skautisGateway ) {
-		$this->skautis_gateway = $skautisGateway;
+	public function __construct( Skautis_Gateway $skautis_gateway ) {
+		$this->skautis_gateway = $skautis_gateway;
 	}
 
 	public function get_id(): string {

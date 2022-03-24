@@ -24,10 +24,10 @@ final class Shortcodes implements Module {
 
 	public static $id = 'module_Shortcodes';
 
-	public function __construct( Rules_Manager $rulesManager, Skautis_Login $skautisLogin, WP_Login_Logout $wpLoginLogout ) {
-		$this->rules_manager   = $rulesManager;
-		$this->skautis_login   = $skautisLogin;
-		$this->wp_login_logout = $wpLoginLogout;
+	public function __construct( Rules_Manager $rules_manager, Skautis_Login $skautis_login, WP_Login_Logout $wp_login_logout ) {
+		$this->rules_manager   = $rules_manager;
+		$this->skautis_login   = $skautis_login;
+		$this->wp_login_logout = $wp_login_logout;
 		if ( is_admin() ) {
 			( new Admin( $this->rules_manager ) );
 		} else {

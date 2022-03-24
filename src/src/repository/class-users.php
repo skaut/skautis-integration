@@ -11,32 +11,32 @@ class Users {
 
 	protected $skautis_gateway;
 
-	public function __construct( Skautis_Gateway $skautisGateway ) {
-		$this->skautis_gateway = $skautisGateway;
+	public function __construct( Skautis_Gateway $skautis_gateway ) {
+		$this->skautis_gateway = $skautis_gateway;
 	}
 
 	protected function get_search_user_string(): string {
-		$searchUserString = '';
+		$search_user_string = '';
 
-		$returnUrl = Helpers::get_return_url();
+		$return_url = Helpers::get_return_url();
 		if (
 			isset( $_GET[ SKAUTISINTEGRATION_NAME . '_skautis_search_user_nonce' ] ) &&
 			wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET[ SKAUTISINTEGRATION_NAME . '_skautis_search_user_nonce' ] ) ), SKAUTISINTEGRATION_NAME . '_skautis_search_user' ) &&
 			isset( $_GET['skautisSearchUsers'] ) &&
 			'' !== $_GET['skautisSearchUsers']
 		) {
-			$searchUserString = sanitize_text_field( wp_unslash( $_GET['skautisSearchUsers'] ) );
-		} elseif ( ! is_null( $returnUrl ) ) {
-			$searchUserString = Helpers::get_variable_from_url( $returnUrl, 'skautisSearchUsers' );
+			$search_user_string = sanitize_text_field( wp_unslash( $_GET['skautisSearchUsers'] ) );
+		} elseif ( ! is_null( $return_url ) ) {
+			$search_user_string = Helpers::get_variable_from_url( $return_url, 'skautisSearchUsers' );
 		}
 
-		return $searchUserString;
+		return $search_user_string;
 	}
 
 	public function get_connected_wp_users(): array {
-		$usersData = array();
+		$users_data = array();
 
-		$connectedWpUsers = new \WP_User_Query(
+		$connected_wp_users = new \WP_User_Query(
 			array(
 				'meta_query'  => array(
 					array(
@@ -50,18 +50,18 @@ class Users {
 			)
 		);
 
-		foreach ( $connectedWpUsers->get_results() as $user ) {
-			$usersData[ get_user_meta( $user->ID, 'skautisUserId_' . $this->skautis_gateway->get_env(), true ) ] = array(
+		foreach ( $connected_wp_users->get_results() as $user ) {
+			$users_data[ get_user_meta( $user->ID, 'skautisUserId_' . $this->skautis_gateway->get_env(), true ) ] = array(
 				'id'   => $user->ID,
 				'name' => $user->display_name,
 			);
 		}
 
-		return $usersData;
+		return $users_data;
 	}
 
 	public function get_connectable_wp_users() {
-		$ConnectableWpUsers = new \WP_User_Query(
+		$connectable_wp_users = new \WP_User_Query(
 			array(
 				'meta_query'  => array(
 					'relation' => 'OR',
@@ -79,54 +79,54 @@ class Users {
 			)
 		);
 
-		return $ConnectableWpUsers->get_results();
+		return $connectable_wp_users->get_results();
 	}
 
 	public function get_users(): array {
-		$users     = array();
-		$eventType = '';
-		$eventId   = 0;
+		$users      = array();
+		$event_type = '';
+		$event_id   = 0;
 
 		if ( ! $this->skautis_gateway->is_initialized() ) {
 			return array(
 				'users'     => $users,
-				'eventType' => $eventType,
+				'eventType' => $event_type,
 			);
 		}
 
-		$currentUserRoles = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserRoleAll(
+		$current_user_roles = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserRoleAll(
 			array(
 				'ID_Login' => $this->skautis_gateway->get_skautis_instance()->getUser()->getLoginId(),
 				'ID_User'  => $this->skautis_gateway->get_skautis_instance()->UserManagement->UserDetail()->ID,
 			)
 		);
-		$currentUserRole  = $this->skautis_gateway->get_skautis_instance()->getUser()->getRoleId();
+		$current_user_role  = $this->skautis_gateway->get_skautis_instance()->getUser()->getRoleId();
 
 		// different procedure for roles associated with events
-		foreach ( $currentUserRoles as $role ) {
-			if ( $role->ID === $currentUserRole && isset( $role->Key ) ) {
+		foreach ( $current_user_roles as $role ) {
+			if ( $role->ID === $current_user_role && isset( $role->Key ) ) {
 				$words = preg_split( '~(?=[A-Z])~', $role->Key );
 				if ( ! empty( $words ) && isset( $words[1], $words[2] ) && 'Event' === $words[1] ) {
-					$eventType = $words[2];
+					$event_type = $words[2];
 
-					$userDetail        = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserDetail();
-					$currentUserEvents = $this->skautis_gateway->get_skautis_instance()->Events->EventAllPerson(
+					$user_detail         = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserDetail();
+					$current_user_events = $this->skautis_gateway->get_skautis_instance()->Events->EventAllPerson(
 						array(
-							'ID_Person' => $userDetail->ID_Person,
+							'ID_Person' => $user_detail->ID_Person,
 						)
 					);
 
-					foreach ( $currentUserEvents as $event ) {
+					foreach ( $current_user_events as $event ) {
 						if ( $event->ID_Group === $role->ID_Group ) {
-							$eventUrl = $this->skautis_gateway->get_skautis_instance()->Events->EventDetail(
+							$event_url = $this->skautis_gateway->get_skautis_instance()->Events->EventDetail(
 								array(
 									'ID' => $event->ID,
 								)
 							);
-							if ( isset( $eventUrl->UrlDetail ) ) {
-								preg_match( '~ID=(\d+)$~', $eventUrl->UrlDetail, $regResult );
-								if ( $regResult && isset( $regResult[1] ) ) {
-									$eventId = $regResult[1];
+							if ( isset( $event_url->UrlDetail ) ) {
+								preg_match( '~ID=(\d+)$~', $event_url->UrlDetail, $reg_result );
+								if ( $reg_result && isset( $reg_result[1] ) ) {
+									$event_id = $reg_result[1];
 								}
 							}
 						}
@@ -136,14 +136,14 @@ class Users {
 		}
 
 		// different procedure for roles associated with events
-		if ( $eventType && $eventId ) {
-			if ( 'Congress' === $eventType ) {
+		if ( $event_type && $event_id ) {
+			if ( 'Congress' === $event_type ) {
 				$participants = null;
 			} else {
-				$methodName   = 'Participant' . $eventType . 'All';
-				$participants = $this->skautis_gateway->get_skautis_instance()->Events->$methodName(
+				$method_name  = 'Participant' . $event_type . 'All';
+				$participants = $this->skautis_gateway->get_skautis_instance()->Events->$method_name(
 					array(
-						'ID_Event' . $eventType => $eventId,
+						'ID_Event' . $event_type => $event_id,
 					)
 				);
 			}
@@ -159,13 +159,13 @@ class Users {
 						$user->lastName  = '';
 						$user->nickName  = '';
 
-						preg_match( '~([^\s]+)\s([^\s]+)(\s\((.*)\))~', $participant->Person, $regResult );
+						preg_match( '~([^\s]+)\s([^\s]+)(\s\((.*)\))~', $participant->Person, $reg_result );
 
-						if ( $regResult && isset( $regResult[1], $regResult[2] ) ) {
-							$user->firstName = $regResult[2];
-							$user->lastName  = $regResult[1];
-							if ( isset( $regResult[4] ) && $regResult[4] ) {
-								$user->nickName = $regResult[4];
+						if ( $reg_result && isset( $reg_result[1], $reg_result[2] ) ) {
+							$user->firstName = $reg_result[2];
+							$user->lastName  = $reg_result[1];
+							if ( isset( $reg_result[4] ) && $reg_result[4] ) {
+								$user->nickName = $reg_result[4];
 							}
 						}
 
@@ -189,61 +189,61 @@ class Users {
 
 		// standard get all users procedure
 		if ( empty( $users ) ) {
-			$searchUserString = $this->get_search_user_string();
+			$search_user_string = $this->get_search_user_string();
 
-			$skautisUsers = $this->skautis_gateway->get_skautis_instance()->UserManagement->userAll(
+			$skautis_users = $this->skautis_gateway->get_skautis_instance()->UserManagement->userAll(
 				array(
-					'DisplayName' => $searchUserString,
+					'DisplayName' => $search_user_string,
 				)
 			);
 
-			if ( is_array( $skautisUsers ) ) {
+			if ( is_array( $skautis_users ) ) {
 				$users = array_map(
-					function ( $skautisUser ) {
+					function ( $skautis_user ) {
 						$user = new \stdClass();
 
-						$user->id        = $skautisUser->ID;
-						$user->UserName  = $skautisUser->UserName;
-						$user->personId  = $skautisUser->ID_Person;
-						$user->firstName = $skautisUser->DisplayName;
+						$user->id        = $skautis_user->ID;
+						$user->UserName  = $skautis_user->UserName;
+						$user->personId  = $skautis_user->ID_Person;
+						$user->firstName = $skautis_user->DisplayName;
 						$user->lastName  = '';
 						$user->nickName  = '';
 
-						preg_match( '~([^\s]+)\s([^\s]+)(\s\((.*)\))~', $skautisUser->DisplayName, $regResult );
+						preg_match( '~([^\s]+)\s([^\s]+)(\s\((.*)\))~', $skautis_user->DisplayName, $reg_result );
 
-						if ( $regResult && isset( $regResult[1], $regResult[2] ) ) {
-							$user->firstName = $regResult[2];
-							$user->lastName  = $regResult[1];
+						if ( $reg_result && isset( $reg_result[1], $reg_result[2] ) ) {
+							$user->firstName = $reg_result[2];
+							$user->lastName  = $reg_result[1];
 						}
-						if ( isset( $regResult[4] ) && $regResult[4] ) {
-							$user->nickName = $regResult[4];
+						if ( isset( $reg_result[4] ) && $reg_result[4] ) {
+							$user->nickName = $reg_result[4];
 						}
 
 						$user->email = '';
 
 						return $user;
 					},
-					$skautisUsers
+					$skautis_users
 				);
 			}
 		}
 
 		return array(
 			'users'     => $users,
-			'eventType' => $eventType,
+			'eventType' => $event_type,
 		);
 	}
 
-	public function get_user_detail( int $skautisUserId ): array {
-		$userDetail = array();
+	public function get_user_detail( int $skautis_user_id ): array {
+		$user_detail = array();
 
 		$users = $this->get_users();
 
 		if ( $users['eventType'] ) {
 			foreach ( (array) $users['users'] as $user ) {
-				if ( $user->id === $skautisUserId ) {
-					$userDetail = array(
-						'id'        => $skautisUserId,
+				if ( $user->id === $skautis_user_id ) {
+					$user_detail = array(
+						'id'        => $skautis_user_id,
 						'UserName'  => $user->UserName,
 						'personId'  => $user->personId,
 						'email'     => $user->email,
@@ -255,18 +255,18 @@ class Users {
 			}
 		} else {
 			foreach ( (array) $users['users'] as $user ) {
-				if ( $user->id === $skautisUserId ) {
-					$personDetail = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->PersonDetail(
+				if ( $user->id === $skautis_user_id ) {
+					$person_detail = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->PersonDetail(
 						array(
 							'ID' => $user->personId,
 						)
 					);
 
-					$userDetail = array(
-						'id'        => $skautisUserId,
+					$user_detail = array(
+						'id'        => $skautis_user_id,
 						'UserName'  => $user->UserName,
 						'personId'  => $user->personId,
-						'email'     => $personDetail->Email,
+						'email'     => $person_detail->Email,
 						'firstName' => $user->firstName,
 						'lastName'  => $user->lastName,
 						'nickName'  => $user->nickName,
@@ -275,11 +275,11 @@ class Users {
 			}
 		}
 
-		if ( empty( $userDetail ) ) {
+		if ( empty( $user_detail ) ) {
 			throw new \Exception( __( 'Nepodařilo se získat informace o uživateli ze skautISu', 'skautis-integration' ) );
 		}
 
-		return $userDetail;
+		return $user_detail;
 	}
 
 }

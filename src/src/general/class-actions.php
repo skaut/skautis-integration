@@ -25,11 +25,11 @@ final class Actions {
 	// TODO: Unused?
 	private $frontend_dir_url = '';
 
-	public function __construct( Skautis_Login $skautisLogin, WP_Login_Logout $wpLoginLogout, Connect_And_Disconnect_WP_Account $connectWpAccount, Skautis_Gateway $skautisGateway ) {
-		$this->skautis_gateway    = $skautisGateway;
-		$this->skautis_login      = $skautisLogin;
-		$this->wp_login_logout    = $wpLoginLogout;
-		$this->connect_wp_account = $connectWpAccount;
+	public function __construct( Skautis_Login $skautis_login, WP_Login_Logout $wp_login_logout, Connect_And_Disconnect_WP_Account $connect_wp_account, Skautis_Gateway $skautis_gateway ) {
+		$this->skautis_gateway    = $skautis_gateway;
+		$this->skautis_login      = $skautis_login;
+		$this->wp_login_logout    = $wp_login_logout;
+		$this->connect_wp_account = $connect_wp_account;
 		$this->frontend_dir_url   = plugin_dir_url( __FILE__ ) . 'public/';
 		$this->init_hooks();
 	}
@@ -54,9 +54,9 @@ final class Actions {
 
 	public function register_auth_rewrite_rules() {
 		add_rewrite_rule( '^skautis/auth/(.*?)$', 'index.php?skautis_auth=$matches[1]', 'top' );
-		$loginPageUrl = get_option( SKAUTISINTEGRATION_NAME . '_login_page_url' );
-		if ( $loginPageUrl ) {
-			add_rewrite_rule( '^' . $loginPageUrl . '$', 'index.php?skautis_login=1', 'top' );
+		$login_page_url = get_option( SKAUTISINTEGRATION_NAME . '_login_page_url' );
+		if ( $login_page_url ) {
+			add_rewrite_rule( '^' . $login_page_url . '$', 'index.php?skautis_login=1', 'top' );
 		}
 	}
 
@@ -89,9 +89,9 @@ final class Actions {
 		}
 	}
 
-	public function auth_actions_router( \WP_Query $wpQuery ) {
-		if ( ! $wpQuery->get( 'skautis_auth' ) ) {
-			return $wpQuery;
+	public function auth_actions_router( \WP_Query $wp_query ) {
+		if ( ! $wp_query->get( 'skautis_auth' ) ) {
+			return $wp_query;
 		}
 
 		if ( ! $this->skautis_gateway->is_initialized() ) {
@@ -107,7 +107,7 @@ final class Actions {
 			}
 		}
 
-		$action = $wpQuery->get( 'skautis_auth' );
+		$action = $wp_query->get( 'skautis_auth' );
 
 		$actions = array(
 			self::LOGIN_ACTION                      => array( $this->skautis_login, 'login' ),

@@ -14,12 +14,12 @@ final class Rules_Manager {
 	private $wp_login_logout;
 	private $rules = array();
 
-	public function __construct( Skautis_Gateway $skautisGateway, WP_Login_Logout $wpLoginLogout ) {
-		$this->skautis_gateway = $skautisGateway;
-		$this->wp_login_logout = $wpLoginLogout;
+	public function __construct( Skautis_Gateway $skautis_gateway, WP_Login_Logout $wp_login_logout ) {
+		$this->skautis_gateway = $skautis_gateway;
+		$this->wp_login_logout = $wp_login_logout;
 		$this->rules           = $this->init_rules();
 		if ( is_admin() ) {
-			( new Admin( $this, $wpLoginLogout, $this->skautis_gateway ) );
+			( new Admin( $this, $wp_login_logout, $this->skautis_gateway ) );
 		}
 	}
 
@@ -97,13 +97,13 @@ final class Rules_Manager {
 
 		foreach ( (array) $rules as $rule ) {
 			if ( isset( $rule['rule'] ) ) {
-				$rulesGroups = json_decode( get_post_meta( $rule['rule'], SKAUTISINTEGRATION_NAME . '_rules_data', true ) );
+				$rules_groups = json_decode( get_post_meta( $rule['rule'], SKAUTISINTEGRATION_NAME . '_rules_data', true ) );
 			} else {
 				return '';
 			}
 
-			if ( isset( $rulesGroups->condition ) && isset( $rulesGroups->rules ) && ! empty( $rulesGroups->rules ) ) {
-				$result = $this->parse_rules_groups( $rulesGroups->condition, $rulesGroups->rules );
+			if ( isset( $rules_groups->condition ) && isset( $rules_groups->rules ) && ! empty( $rules_groups->rules ) ) {
+				$result = $this->parse_rules_groups( $rules_groups->condition, $rules_groups->rules );
 			}
 
 			if ( true === $result ) {
@@ -115,7 +115,7 @@ final class Rules_Manager {
 	}
 
 	public function get_all_rules(): array {
-		$rulesWpQuery = new \WP_Query(
+		$rules_wp_query = new \WP_Query(
 			array(
 				'post_type'     => Rules_Init::RULES_TYPE_SLUG,
 				'nopaging'      => true,
@@ -123,28 +123,28 @@ final class Rules_Manager {
 			)
 		);
 
-		if ( $rulesWpQuery->have_posts() ) {
-			return $rulesWpQuery->posts;
+		if ( $rules_wp_query->have_posts() ) {
+			return $rules_wp_query->posts;
 		}
 
 		return array();
 	}
 
-	public function check_if_user_passed_rules( array $rulesIds ): bool {
-		static $rulesGroups = null;
-		$result             = false;
+	public function check_if_user_passed_rules( array $rules_ids ): bool {
+		static $rules_groups = null;
+		$result              = false;
 
-		foreach ( $rulesIds as $ruleId ) {
-			if ( is_array( $ruleId ) ) {
-				$ruleId = reset( $ruleId );
+		foreach ( $rules_ids as $rule_id ) {
+			if ( is_array( $rule_id ) ) {
+				$rule_id = reset( $rule_id );
 			}
 
-			if ( is_null( $rulesGroups ) ) {
-				$rulesGroups = json_decode( (string) get_post_meta( $ruleId, SKAUTISINTEGRATION_NAME . '_rules_data', true ) );
+			if ( is_null( $rules_groups ) ) {
+				$rules_groups = json_decode( (string) get_post_meta( $rule_id, SKAUTISINTEGRATION_NAME . '_rules_data', true ) );
 			}
 
-			if ( isset( $rulesGroups->condition ) && isset( $rulesGroups->rules ) && ! empty( $rulesGroups->rules ) ) {
-				$result = $this->parse_rules_groups( $rulesGroups->condition, $rulesGroups->rules );
+			if ( isset( $rules_groups->condition ) && isset( $rules_groups->rules ) && ! empty( $rules_groups->rules ) ) {
+				$result = $this->parse_rules_groups( $rules_groups->condition, $rules_groups->rules );
 			}
 
 			if ( true === $result ) {

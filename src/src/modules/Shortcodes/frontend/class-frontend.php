@@ -15,10 +15,10 @@ final class Frontend {
 	private $rules_manager;
 	private $wp_login_logout;
 
-	public function __construct( Skautis_Login $skautisLogin, Rules_Manager $rulesManager, WP_Login_Logout $wpLoginLogout ) {
-		$this->skautis_login   = $skautisLogin;
-		$this->rules_manager   = $rulesManager;
-		$this->wp_login_logout = $wpLoginLogout;
+	public function __construct( Skautis_Login $skautis_login, Rules_Manager $rules_manager, WP_Login_Logout $wp_login_logout ) {
+		$this->skautis_login   = $skautis_login;
+		$this->rules_manager   = $rules_manager;
+		$this->wp_login_logout = $wp_login_logout;
 		$this->init_hooks();
 	}
 
@@ -27,17 +27,17 @@ final class Frontend {
 		add_shortcode( 'skautis', array( $this, 'process_shortcode' ) );
 	}
 
-	private function get_login_form( bool $forceLogoutFromSkautis = false ): string {
-		$loginUrlArgs = add_query_arg( 'noWpLogin', true, Helpers::get_current_url() );
-		if ( $forceLogoutFromSkautis ) {
-			$loginUrlArgs = add_query_arg( 'logoutFromSkautis', true, $loginUrlArgs );
+	private function get_login_form( bool $force_logout_from_skautis = false ): string {
+		$login_url_args = add_query_arg( 'noWpLogin', true, Helpers::get_current_url() );
+		if ( $force_logout_from_skautis ) {
+			$login_url_args = add_query_arg( 'logoutFromSkautis', true, $login_url_args );
 		}
 
 		return '
 		<div class="wp-core-ui">
 			<p style="margin-bottom: 0.3em;">
 				<a class="button button-primary button-hero button-skautis"
-				   href="' . $this->wp_login_logout->get_login_url( $loginUrlArgs ) . '">' . __( 'Log in with skautIS', 'skautis-integration' ) . '</a>
+				   href="' . $this->wp_login_logout->get_login_url( $login_url_args ) . '">' . __( 'Log in with skautIS', 'skautis-integration' ) . '</a>
 			</p>
 		</div>
 		<br/>

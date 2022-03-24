@@ -12,8 +12,8 @@ final class Settings {
 
 	private $rules_manager;
 
-	public function __construct( Rules_Manager $rulesManager ) {
-		$this->rules_manager = $rulesManager;
+	public function __construct( Rules_Manager $rules_manager ) {
+		$this->rules_manager = $rules_manager;
 		$this->init_hooks();
 	}
 
@@ -127,33 +127,33 @@ final class Settings {
 	}
 
 	public function field_new_user_notifications() {
-		$notificationOption = get_option( SKAUTISINTEGRATION_NAME . '_modules_register_notifications', 'none' );
+		$notification_option = get_option( SKAUTISINTEGRATION_NAME . '_modules_register_notifications', 'none' );
 		?>
 		<label>
 			<input type="radio"
 				name="<?php echo esc_attr( SKAUTISINTEGRATION_NAME ); ?>_modules_register_notifications"
-				value="none"<?php checked( 'none' === $notificationOption ); ?> />
+				value="none"<?php checked( 'none' === $notification_option ); ?> />
 			<span><?php esc_html_e( 'Nikomu', 'skautis-integration' ); ?></span>
 		</label>
 		<br/>
 		<label>
 			<input type="radio"
 				name="<?php echo esc_attr( SKAUTISINTEGRATION_NAME ); ?>_modules_register_notifications"
-				value="admin"<?php checked( 'admin' === $notificationOption ); ?> />
+				value="admin"<?php checked( 'admin' === $notification_option ); ?> />
 			<span><?php esc_html_e( 'Administrátorovi (info o registraci nového uživatele)', 'skautis-integration' ); ?></span>
 		</label>
 		<br/>
 		<label>
 			<input type="radio"
 				name="<?php echo esc_attr( SKAUTISINTEGRATION_NAME ); ?>_modules_register_notifications"
-				value="user"<?php checked( 'user' === $notificationOption ); ?> />
+				value="user"<?php checked( 'user' === $notification_option ); ?> />
 			<span><?php esc_html_e( 'Uživateli (přístupové údaje)', 'skautis-integration' ); ?></span>
 		</label>
 		<br/>
 		<label>
 			<input type="radio"
 				name="<?php echo esc_attr( SKAUTISINTEGRATION_NAME ); ?>_modules_register_notifications"
-				value="both"<?php checked( 'both' === $notificationOption ); ?> />
+				value="both"<?php checked( 'both' === $notification_option ); ?> />
 			<span><?php esc_html_e( 'Administrátorovi i uživateli', 'skautis-integration' ); ?></span>
 		</label>
 		<?php

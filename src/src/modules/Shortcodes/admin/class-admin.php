@@ -11,8 +11,8 @@ final class Admin {
 	private $rules_manager;
 	private $settings;
 
-	public function __construct( Rules_Manager $rulesManager ) {
-		$this->rules_manager = $rulesManager;
+	public function __construct( Rules_Manager $rules_manager ) {
+		$this->rules_manager = $rules_manager;
 		$this->settings      = new Settings();
 		$this->init_hooks();
 	}

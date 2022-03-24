@@ -20,51 +20,51 @@ class Revisions {
 	}
 
 	public function filter_meta( $meta ): array {
-		$metaFiltered = array();
+		$meta_filtered = array();
 		foreach ( $meta as $key => $value ) {
 			if ( '_' !== $key[0] ) {
-				$metaFiltered[ $key ] = $value;
+				$meta_filtered[ $key ] = $value;
 			}
 		}
 
-		return $metaFiltered;
+		return $meta_filtered;
 	}
 
-	public function get_meta( int $postId ): array {
-		$meta = get_metadata( 'post', $postId );
+	public function get_meta( int $post_id ): array {
+		$meta = get_metadata( 'post', $post_id );
 		$meta = $this->filter_meta( $meta );
 
 		return $meta;
 	}
 
-	public function insert_meta( int $postId, $meta ) {
-		foreach ( $meta as $metaKey => $metaValue ) {
-			if ( is_array( $metaValue ) ) {
-				foreach ( $metaValue as $singleMetaValue ) {
-					add_metadata( 'post', $postId, $metaKey, $singleMetaValue );
+	public function insert_meta( int $post_id, $meta ) {
+		foreach ( $meta as $meta_key => $meta_value ) {
+			if ( is_array( $meta_value ) ) {
+				foreach ( $meta_value as $single_meta_value ) {
+					add_metadata( 'post', $post_id, $meta_key, $single_meta_value );
 				}
 			} else {
-				add_metadata( 'post', $postId, $metaKey, $metaValue );
+				add_metadata( 'post', $post_id, $meta_key, $meta_value );
 			}
 		}
 	}
 
-	public function delete_meta( int $postId ) {
-		$meta = $this->get_meta( $postId );
+	public function delete_meta( int $post_id ) {
+		$meta = $this->get_meta( $post_id );
 
-		foreach ( $meta as $metaKey => $metaValue ) {
-			delete_metadata( 'post', $postId, $metaKey );
+		foreach ( $meta as $meta_key => $meta_value ) {
+			delete_metadata( 'post', $post_id, $meta_key );
 		}
 	}
 
 	public function field( $value, $field, $revision ) {
-		$revisionId = $revision->ID;
-		$meta       = $this->get_meta( $revisionId );
+		$revision_id = $revision->ID;
+		$meta        = $this->get_meta( $revision_id );
 
 		// format response as single string with all custom fields / metadata
 		$return = '';
-		foreach ( $meta as $metaKey => $metaValue ) {
-			$return .= $metaKey . ': ' . join( ', ', $metaValue ) . "\n";
+		foreach ( $meta as $meta_key => $meta_value ) {
+			$return .= $meta_key . ': ' . join( ', ', $meta_value ) . "\n";
 		}
 
 		return $return;
@@ -76,45 +76,45 @@ class Revisions {
 		return $fields;
 	}
 
-	public function restore_revision( int $postId, int $revisionId ) {
-		$meta = $this->get_meta( $revisionId );
-		$this->delete_meta( $postId );
-		$this->insert_meta( $postId, $meta );
+	public function restore_revision( int $post_id, int $revision_id ) {
+		$meta = $this->get_meta( $revision_id );
+		$this->delete_meta( $post_id );
+		$this->insert_meta( $post_id, $meta );
 
 		// also update last revision custom fields
-		$revisions = wp_get_post_revisions( $postId );
+		$revisions = wp_get_post_revisions( $post_id );
 		if ( count( $revisions ) > 0 ) {
-			$lastRevision = current( $revisions );
-			$this->delete_meta( $lastRevision->ID );
-			$this->insert_meta( $lastRevision->ID, $meta );
+			$last_revision = current( $revisions );
+			$this->delete_meta( $last_revision->ID );
+			$this->insert_meta( $last_revision->ID, $meta );
 		}
 	}
 
-	public function save_post( int $postId ) {
-		if ( wp_is_post_revision( $postId ) ) {
-			$meta = $this->get_meta( $postId );
+	public function save_post( int $post_id ) {
+		if ( wp_is_post_revision( $post_id ) ) {
+			$meta = $this->get_meta( $post_id );
 			if ( false === $meta ) {
 				return;
 			}
 
-			$this->insert_meta( $postId, $meta );
+			$this->insert_meta( $post_id, $meta );
 		}
 	}
 
-	public function post_has_changed( bool $postHasChanged, \WP_Post $lastRevision, \WP_Post $post ): bool {
-		if ( ! $postHasChanged ) {
-			$meta    = $this->get_meta( $lastRevision->ID );
-			$metaNew = $this->get_meta( $post->ID );
+	public function post_has_changed( bool $post_has_changed, \WP_Post $last_revision, \WP_Post $post ): bool {
+		if ( ! $post_has_changed ) {
+			$meta     = $this->get_meta( $last_revision->ID );
+			$meta_new = $this->get_meta( $post->ID );
 
-			if ( $meta === $metaNew ) {
-				return $postHasChanged;
+			if ( $meta === $meta_new ) {
+				return $post_has_changed;
 			}
 
 			// Post changed
 			return true;
 		}
 
-		return $postHasChanged;
+		return $post_has_changed;
 	}
 
 }

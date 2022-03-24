@@ -23,5 +23,7 @@ define( 'SKAUTISINTEGRATION_VERSION', '1.1.25' );
 
 require __DIR__ . '/class-skautis-integration.php';
 
-global $skautisIntegration;
-$skautisIntegration = new Skautis_Integration();
+global $skautis_integration;
+// TODO: Fix this
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+$skautis_integration = new Skautis_Integration();

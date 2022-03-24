@@ -37,7 +37,7 @@ if ( ! function_exists( 'isUserLoggedInSkautis' ) ) {
 }
 
 if ( ! function_exists( 'userPassedRules' ) ) {
-	function userPassedRules( array $rulesIds ): bool {
-		return ( Services::get_services_container()['rules_manager'] )->check_if_user_passed_rules( $rulesIds );
+	function userPassedRules( array $rules_ids ): bool {
+		return ( Services::get_services_container()['rules_manager'] )->check_if_user_passed_rules( $rules_ids );
 	}
 }

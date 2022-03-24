@@ -20,10 +20,10 @@ final class Modules_Manager {
 		$this->register_activated_modules( $this->modules, $this->activated_modules );
 	}
 
-	private function register_activated_modules( array $modules = array(), array $activatedModules = array() ) {
-		foreach ( $modules as $moduleId => $moduleLabel ) {
-			if ( in_array( $moduleId, $activatedModules, true ) ) {
-				$this->container[ $moduleId ];
+	private function register_activated_modules( array $modules = array(), array $activated_modules = array() ) {
+		foreach ( $modules as $module_id => $module_label ) {
+			if ( in_array( $module_id, $activated_modules, true ) ) {
+				$this->container[ $module_id ];
 			}
 		}
 	}
@@ -32,8 +32,8 @@ final class Modules_Manager {
 		return $this->modules;
 	}
 
-	public function is_module_activated( string $moduleName ): bool {
-		return in_array( $moduleName, $this->activated_modules, true );
+	public function is_module_activated( string $module_name ): bool {
+		return in_array( $module_name, $this->activated_modules, true );
 	}
 
 }

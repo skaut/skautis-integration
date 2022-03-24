@@ -42,19 +42,19 @@ class Columns {
 		return $columns;
 	}
 
-	public function last_modified_admin_column_content( string $columnName, int $postId ) {
-		if ( 'modified_last' !== $columnName ) {
+	public function last_modified_admin_column_content( string $column_name, int $post_id ) {
+		if ( 'modified_last' !== $column_name ) {
 			return;
 		}
 
-		$post = get_post( $postId );
+		$post = get_post( $post_id );
 		/* translators: human-readable time difference */
-		$modifiedDate   = sprintf( _x( 'Před %s', '%s = human-readable time difference', 'skautis-integration' ), human_time_diff( strtotime( $post->post_modified ), time() ) );
-		$modifiedAuthor = get_the_modified_author();
+		$modified_date   = sprintf( _x( 'Před %s', '%s = human-readable time difference', 'skautis-integration' ), human_time_diff( strtotime( $post->post_modified ), time() ) );
+		$modified_author = get_the_modified_author();
 
-		echo esc_html( $modifiedDate );
+		echo esc_html( $modified_date );
 		echo '<br>';
-		echo '<strong>' . esc_html( $modifiedAuthor ) . '</strong>';
+		echo '<strong>' . esc_html( $modified_author ) . '</strong>';
 	}
 
 }

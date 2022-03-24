@@ -18,9 +18,9 @@ final class Admin {
 	// TODO: Unused?
 	private $admin_dir_url = '';
 
-	public function __construct( array $postTypes, Rules_Manager $rulesManager, Frontend $frontend ) {
-		$this->post_types    = $postTypes;
-		$this->rules_manager = $rulesManager;
+	public function __construct( array $post_types, Rules_Manager $rules_manager, Frontend $frontend ) {
+		$this->post_types    = $post_types;
+		$this->rules_manager = $rules_manager;
 		$this->frontend      = $frontend;
 		$this->settings      = new Settings();
 		$this->metabox       = new Metabox( $this->post_types, $this->rules_manager, $frontend );
