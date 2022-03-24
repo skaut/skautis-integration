@@ -21,7 +21,7 @@ class Helpers {
 	public static function register_script( $handle, $src, $deps = array(), $in_footer = true ) {
 		$handle = SKAUTISINTEGRATION_NAME . '_' . $handle;
 		$src    = plugin_dir_url( dirname( __FILE__, 2 ) ) . $src;
-		wp_register_script( $handle, $src, $deps, SKAUTISINTEGRATION_VERSION, $in_footer );
+		wp_register_script( $handle, $src, $deps, SKAUTIS_INTEGRATION_VERSION, $in_footer );
 	}
 
 	/**
@@ -54,7 +54,7 @@ class Helpers {
 	public static function register_style( $handle, $src, $deps = array() ) {
 		$handle = SKAUTISINTEGRATION_NAME . '_' . $handle;
 		$src    = plugin_dir_url( dirname( __FILE__, 2 ) ) . $src;
-		wp_register_style( $handle, $src, $deps, SKAUTISINTEGRATION_VERSION );
+		wp_register_style( $handle, $src, $deps, SKAUTIS_INTEGRATION_VERSION );
 	}
 
 	/**

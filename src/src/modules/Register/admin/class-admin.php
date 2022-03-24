@@ -41,7 +41,7 @@ final class Admin {
 				SKAUTISINTEGRATION_NAME . '_jquery.repeater',
 				SKAUTIS_INTEGRATION_URL . 'bundled/jquery.repeater.min.js',
 				array( 'jquery' ),
-				SKAUTISINTEGRATION_VERSION,
+				SKAUTIS_INTEGRATION_VERSION,
 				true
 			);
 

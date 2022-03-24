@@ -81,7 +81,7 @@ class Users_Management {
 			SKAUTISINTEGRATION_NAME . '_datatables',
 			SKAUTIS_INTEGRATION_URL . 'bundled/jquery.dataTables.min.css',
 			array(),
-			SKAUTISINTEGRATION_VERSION,
+			SKAUTIS_INTEGRATION_VERSION,
 			'all'
 		);
 
@@ -89,7 +89,7 @@ class Users_Management {
 			SKAUTISINTEGRATION_NAME . '_datatables',
 			SKAUTIS_INTEGRATION_URL . 'bundled/jquery.dataTables.min.js',
 			array( 'jquery' ),
-			SKAUTISINTEGRATION_VERSION,
+			SKAUTIS_INTEGRATION_VERSION,
 			true
 		);
 

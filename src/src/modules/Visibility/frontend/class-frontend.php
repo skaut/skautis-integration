@@ -153,7 +153,7 @@ final class Frontend {
 
 	public function enqueue_styles() {
 		wp_enqueue_style( 'buttons' );
-		wp_enqueue_style( SKAUTISINTEGRATION_NAME, SKAUTIS_INTEGRATION_URL . 'src/frontend/public/css/skautis-frontend.css', array(), SKAUTISINTEGRATION_VERSION, 'all' );
+		wp_enqueue_style( SKAUTISINTEGRATION_NAME, SKAUTIS_INTEGRATION_URL . 'src/frontend/public/css/skautis-frontend.css', array(), SKAUTIS_INTEGRATION_VERSION, 'all' );
 	}
 
 	public function get_parent_posts_with_rules( int $child_post_id, string $child_post_type ): array {

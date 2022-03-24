@@ -49,7 +49,7 @@ final class Admin {
 			SKAUTISINTEGRATION_NAME . '_select2',
 			SKAUTIS_INTEGRATION_URL . 'bundled/select2.min.css',
 			array(),
-			SKAUTISINTEGRATION_VERSION,
+			SKAUTIS_INTEGRATION_VERSION,
 			'all'
 		);
 
@@ -57,7 +57,7 @@ final class Admin {
 			SKAUTISINTEGRATION_NAME . '_select2',
 			SKAUTIS_INTEGRATION_URL . 'bundled/select2.min.js',
 			array( 'jquery' ),
-			SKAUTISINTEGRATION_VERSION,
+			SKAUTIS_INTEGRATION_VERSION,
 			false
 		);
 

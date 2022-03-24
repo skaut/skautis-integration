@@ -136,7 +136,7 @@ final class Admin {
 			SKAUTISINTEGRATION_NAME . '_font-awesome',
 			SKAUTIS_INTEGRATION_URL . 'bundled/font-awesome/css/font-awesome.min.css',
 			array(),
-			SKAUTISINTEGRATION_VERSION,
+			SKAUTIS_INTEGRATION_VERSION,
 			'all'
 		);
 
@@ -146,7 +146,7 @@ final class Admin {
 			SKAUTISINTEGRATION_NAME . '_query-builder-main',
 			SKAUTIS_INTEGRATION_URL . 'bundled/query-builder.default.min.css',
 			array(),
-			SKAUTISINTEGRATION_VERSION,
+			SKAUTIS_INTEGRATION_VERSION,
 			'all'
 		);
 	}
@@ -209,7 +209,7 @@ final class Admin {
 			SKAUTISINTEGRATION_NAME . '_interact',
 			SKAUTIS_INTEGRATION_URL . 'bundled/interact.min.js',
 			array(),
-			SKAUTISINTEGRATION_VERSION,
+			SKAUTIS_INTEGRATION_VERSION,
 			false
 		);
 
@@ -217,7 +217,7 @@ final class Admin {
 			SKAUTISINTEGRATION_NAME . '_query-builder',
 			SKAUTIS_INTEGRATION_URL . 'bundled/query-builder.standalone.min.js',
 			array( 'jquery' ),
-			SKAUTISINTEGRATION_VERSION,
+			SKAUTIS_INTEGRATION_VERSION,
 			true
 		);
 
