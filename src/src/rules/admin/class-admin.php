@@ -297,7 +297,8 @@ final class Admin {
 
 				<?php
 
-				do_action( SKAUTISINTEGRATION_NAME . '_rules_admin_jsConditions', $data );
+				// TODO: Unused action?
+				do_action( SKAUTISINTEGRATION_NAME . '_rules_admin_js_conditions', $data );
 
 				?>
 
