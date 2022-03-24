@@ -327,12 +327,12 @@ gulp.task(
 );
 
 gulp.task( 'build:php:base', function() {
-	return gulp.src( [ 'src/*.php' ] ).pipe( gulp.dest( 'dist/' ) );
+	return gulp.src( [ 'src/php/*.php' ] ).pipe( gulp.dest( 'dist/' ) );
 } );
 
 gulp.task( 'build:php:other', function() {
 	return gulp
-		.src( [ 'src/**/*.php' ] )
+		.src( [ 'src/php/**/*.php' ] )
 		.pipe( gulp.dest( 'dist/' ) );
 } );
 
