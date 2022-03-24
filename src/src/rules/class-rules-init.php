@@ -140,7 +140,7 @@ final class Rules_Init {
 	}
 
 	public function get_all_rules(): array {
-		$rulesWpQuery = new \WP_Query(
+		$rules_wp_query = new \WP_Query(
 			array(
 				'post_type'     => self::RULES_TYPE_SLUG,
 				'nopaging'      => true,
@@ -148,8 +148,8 @@ final class Rules_Init {
 			)
 		);
 
-		if ( $rulesWpQuery->have_posts() ) {
-			return $rulesWpQuery->posts;
+		if ( $rules_wp_query->have_posts() ) {
+			return $rules_wp_query->posts;
 		}
 
 		return array();
