@@ -327,19 +327,30 @@ gulp.task(
 );
 
 gulp.task( 'build:php:base', function() {
-	return gulp.src( [ 'src/*.php' ] ).pipe( gulp.dest( 'dist/' ) );
+	return gulp.src( [ 'src/php/*.php' ] ).pipe( gulp.dest( 'dist/' ) );
 } );
 
 gulp.task( 'build:php:other', function() {
-	// TODO: Split these
 	return gulp
-		.src( [ 'src/**/*.php', 'src/**/*.png', 'src/**/*.txt' ] )
+		.src( [ 'src/php/**/*.php' ] )
 		.pipe( gulp.dest( 'dist/' ) );
 } );
 
 gulp.task( 'build:php', gulp.parallel( 'build:php:base', 'build:php:other' ) );
 
+gulp.task( 'build:png', function() {
+	return gulp
+		.src( [ 'src/png/**/*.png' ] )
+		.pipe( gulp.dest( 'dist/src/' ) );
+} );
+
+gulp.task( 'build:txt', function() {
+	return gulp
+		.src( [ 'src/txt/**/*.txt' ] )
+		.pipe( gulp.dest( 'dist/' ) );
+} );
+
 gulp.task(
 	'build',
-	gulp.parallel( 'build:css', 'build:deps', 'build:js', 'build:php' )
+	gulp.parallel( 'build:css', 'build:deps', 'build:js', 'build:php', 'build:png', 'build:txt' )
 );
