@@ -341,7 +341,7 @@ gulp.task( 'build:php', gulp.parallel( 'build:php:base', 'build:php:other' ) );
 
 gulp.task( 'build:txt', function() {
 	return gulp
-		.src( [ 'src/**/*.txt' ] )
+		.src( [ 'src/txt/**/*.txt' ] )
 		.pipe( gulp.dest( 'dist/' ) );
 } );
 
