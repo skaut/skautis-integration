@@ -17,8 +17,8 @@ class Role implements Rule {
 
 	protected $skautis_gateway;
 
-	public function __construct( Skautis_Gateway $skautisGateway ) {
-		$this->skautis_gateway = $skautisGateway;
+	public function __construct( Skautis_Gateway $skautis_gateway ) {
+		$this->skautis_gateway = $skautis_gateway;
 	}
 
 	public function get_id(): string {
@@ -64,7 +64,7 @@ class Role implements Rule {
 		return $values;
 	}
 
-	protected function clearUnitId( string $unitId ): string {
+	protected function clearUnitId( string $unit_id ): string {
 		return trim(
 			str_replace(
 				array(
@@ -72,16 +72,16 @@ class Role implements Rule {
 					'-',
 				),
 				'',
-				$unitId
+				$unit_id
 			)
 		);
 	}
 
 	protected function getUserRolesWithUnitIds(): array {
-		static $userRoles = null;
+		static $user_roles = null;
 
-		if ( is_null( $userRoles ) ) {
-			$userRoles = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserRoleAll(
+		if ( is_null( $user_roles ) ) {
+			$user_roles = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserRoleAll(
 				array(
 					'ID_Login' => $this->skautis_gateway->get_skautis_instance()->getUser()->getLoginId(),
 					'ID_User'  => $this->skautis_gateway->get_skautis_instance()->UserManagement->UserDetail()->ID,
@@ -90,85 +90,85 @@ class Role implements Rule {
 			);
 
 			$result = array();
-			foreach ( $userRoles as $userRole ) {
+			foreach ( $user_roles as $user_role ) {
 				try {
-					$unitDetail = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->UnitDetail(
+					$unit_detail = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->UnitDetail(
 						array(
-							'ID' => $userRole->ID_Unit,
+							'ID' => $user_role->ID_Unit,
 						)
 					);
 
-					if ( $unitDetail ) {
-						if ( ! isset( $result[ $userRole->ID_Role ] ) ) {
-							$result[ $userRole->ID_Role ] = array();
+					if ( $unit_detail ) {
+						if ( ! isset( $result[ $user_role->ID_Role ] ) ) {
+							$result[ $user_role->ID_Role ] = array();
 						}
-						$result[ $userRole->ID_Role ][] = $unitDetail->RegistrationNumber;
+						$result[ $user_role->ID_Role ][] = $unit_detail->RegistrationNumber;
 					}
 				} catch ( \Exception $e ) {
 					continue;
 				}
 			}
 
-			$userRoles = $result;
+			$user_roles = $result;
 		}
 
-		if ( ! is_array( $userRoles ) ) {
+		if ( ! is_array( $user_roles ) ) {
 			return array();
 		}
 
-		return $userRoles;
+		return $user_roles;
 	}
 
-	public function is_rule_passed( string $rolesOperator, $data ): bool {
+	public function is_rule_passed( string $roles_operator, $data ): bool {
 		// parse and prepare data from rules UI
 		$output = array();
 		preg_match_all( '|[^~]+|', $data, $output );
 		if ( isset( $output[0], $output[0][0], $output[0][1], $output[0][2] ) ) {
-			list( $roles, $unitOperator, $unitId ) = $output[0];
-			$roles                                 = explode( ',', $roles );
-			$unitId                                = $this->clearUnitId( $unitId );
+			list( $roles, $unit_operator, $unit_id ) = $output[0];
+			$roles                                   = explode( ',', $roles );
+			$unit_id                                 = $this->clearUnitId( $unit_id );
 		} else {
 			return false;
 		}
 
 		// logic for determine in / not_in range
-		$inNotinNegation = 2;
-		switch ( $rolesOperator ) {
+		$in_not_in_negation = 2;
+		switch ( $roles_operator ) {
 			case 'in':
-				$inNotinNegation = 0;
+				$in_not_in_negation = 0;
 				break;
 			case 'not_in':
-				$inNotinNegation = 1;
+				$in_not_in_negation = 1;
 				break;
 			default:
-				$inNotinNegation = 2;
+				$in_not_in_negation = 2;
 				if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-					throw new \Exception( 'Roles operator: "' . $rolesOperator . '" is not declared.' );
+					throw new \Exception( 'Roles operator: "' . $roles_operator . '" is not declared.' );
 				}
 				break;
 		}
 
-		$userRoles = $this->getUserRolesWithUnitIds();
-		$userPass  = 0;
+		$user_roles = $this->getUserRolesWithUnitIds();
+		$user_pass  = 0;
 		foreach ( $roles as $role ) {
 			// in / not_in range check
-			if ( ( $inNotinNegation + array_key_exists( $role, $userRoles ) ) === 1 ) {
-				foreach ( $userRoles[ $role ] as $userRoleUnitId ) {
-					$userRoleUnitId = $this->clearUnitId( $userRoleUnitId );
+			if ( ( $in_not_in_negation + array_key_exists( $role, $user_roles ) ) === 1 ) {
+				foreach ( $user_roles[ $role ] as $user_role_unit_id ) {
+					$user_role_unit_id = $this->clearUnitId( $user_role_unit_id );
 
-					switch ( $unitOperator ) {
+					switch ( $unit_operator ) {
 						case 'equal':
-							$userPass += ( $userRoleUnitId === $unitId );
+							$user_pass += ( $user_role_unit_id === $unit_id );
 							break;
 						case 'begins_with':
-							$userPass += ( substr( $userRoleUnitId, 0, strlen( $unitId ) ) === $unitId );
+							$user_pass += ( substr( $user_role_unit_id, 0, strlen( $unit_id ) ) === $unit_id );
 							break;
 						case 'any':
-							++$userPass;
+							++$user_pass;
 							break;
 						default:
 							if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-								throw new \Exception( 'Unit operator: "' . $unitOperator . '" is not declared.' );
+								throw new \Exception( 'Unit operator: "' . $unit_operator . '" is not declared.' );
 							}
 							return false;
 					}
@@ -176,7 +176,7 @@ class Role implements Rule {
 			}
 		}
 
-		if ( is_int( $userPass ) && $userPass > 0 ) {
+		if ( is_int( $user_pass ) && $user_pass > 0 ) {
 			return true;
 		}
 
