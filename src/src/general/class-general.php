@@ -14,9 +14,9 @@ final class General {
 	// TODO: Unused?
 	private $rules_init;
 
-	public function __construct( Actions $actions, Rules_Init $rulesInit ) {
+	public function __construct( Actions $actions, Rules_Init $rules_init ) {
 		$this->actions    = $actions;
-		$this->rules_init = $rulesInit;
+		$this->rules_init = $rules_init;
 	}
 
 }
