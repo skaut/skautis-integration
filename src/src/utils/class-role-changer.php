@@ -12,9 +12,9 @@ class Role_Changer {
 	protected $skautis_gateway;
 	protected $skautis_login;
 
-	public function __construct( Skautis_Gateway $skautisGateway, Skautis_Login $skautisLogin ) {
-		$this->skautis_gateway = $skautisGateway;
-		$this->skautis_login   = $skautisLogin;
+	public function __construct( Skautis_Gateway $skautis_gateway, Skautis_Login $skautis_login ) {
+		$this->skautis_gateway = $skautis_gateway;
+		$this->skautis_login   = $skautis_login;
 		$this->check_if_user_change_skautis_role();
 	}
 
@@ -34,14 +34,14 @@ class Role_Changer {
 	}
 
 	public function print_change_roles_form() {
-		$currentUserRoles = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserRoleAll(
+		$current_user_roles = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserRoleAll(
 			array(
 				'ID_Login' => $this->skautis_gateway->get_skautis_instance()->getUser()->getLoginId(),
 				'ID_User'  => $this->skautis_gateway->get_skautis_instance()->UserManagement->UserDetail()->ID,
 				'IsActive' => true,
 			)
 		);
-		$currentUserRole  = $this->skautis_gateway->get_skautis_instance()->getUser()->getRoleId();
+		$current_user_role  = $this->skautis_gateway->get_skautis_instance()->getUser()->getRoleId();
 
 		echo '
 <form method="post" action="' . esc_attr( Helpers::get_current_url() ) . '" novalidate="novalidate">' .
@@ -55,8 +55,8 @@ class Role_Changer {
 </th>
 <td>
 <select id="skautisRoleChanger" name="changeSkautisUserRole">';
-		foreach ( (array) $currentUserRoles as $role ) {
-			echo '<option value="' . esc_attr( $role->ID ) . '" ' . selected( $role->ID, $currentUserRole, false ) . '>' . esc_html( $role->DisplayName ) . '</option>';
+		foreach ( (array) $current_user_roles as $role ) {
+			echo '<option value="' . esc_attr( $role->ID ) . '" ' . selected( $role->ID, $current_user_role, false ) . '>' . esc_html( $role->DisplayName ) . '</option>';
 		}
 		echo '
 </select>
