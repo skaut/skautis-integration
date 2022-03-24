@@ -79,8 +79,8 @@ class Helpers {
 			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return esc_url_raw( wp_unslash( $_GET['redirect_to'] ) );
 		}
-		$returnUrl = self::get_return_url();
-		return is_null( $returnUrl ) ? self::get_current_url() : $returnUrl;
+		$return_url = self::get_return_url();
+		return is_null( $return_url ) ? self::get_current_url() : $return_url;
 	}
 
 	public static function get_return_url() {
@@ -92,11 +92,11 @@ class Helpers {
 		return esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) );
 	}
 
-	public static function show_admin_notice( string $message, string $type = 'warning', string $hideNoticeOnPage = '' ) {
+	public static function show_admin_notice( string $message, string $type = 'warning', string $hide_notice_on_page = '' ) {
 		add_action(
 			'admin_notices',
-			function () use ( $message, $type, $hideNoticeOnPage ) {
-				if ( ! $hideNoticeOnPage || get_current_screen()->id !== $hideNoticeOnPage ) {
+			function () use ( $message, $type, $hide_notice_on_page ) {
+				if ( ! $hide_notice_on_page || get_current_screen()->id !== $hide_notice_on_page ) {
 					$class = 'notice notice-' . $type . ' is-dismissible';
 					printf(
 						'<div class="%1$s"><p>%2$s</p><button type="button" class="notice-dismiss">
@@ -131,16 +131,16 @@ class Helpers {
 		return '';
 	}
 
-	public static function validate_nonce_from_url( string $url, string $nonceName ) {
-		if ( ! wp_verify_nonce( self::get_nonce_from_url( urldecode( $url ), $nonceName ), $nonceName ) ) {
-			wp_nonce_ays( $nonceName );
+	public static function validate_nonce_from_url( string $url, string $nonce_name ) {
+		if ( ! wp_verify_nonce( self::get_nonce_from_url( urldecode( $url ), $nonce_name ), $nonce_name ) ) {
+			wp_nonce_ays( $nonce_name );
 		}
 	}
 
-	public static function get_variable_from_url( string $url, string $variableName ): string {
+	public static function get_variable_from_url( string $url, string $variable_name ): string {
 		$result = array();
 		$url    = esc_url_raw( $url );
-		if ( preg_match( '~' . $variableName . '=([^\&,\s,\/,\#,\%,\?]*)~', $url, $result ) ) {
+		if ( preg_match( '~' . $variable_name . '=([^\&,\s,\/,\#,\%,\?]*)~', $url, $result ) ) {
 			if ( is_array( $result ) && isset( $result[1] ) && $result[1] ) {
 				return sanitize_text_field( $result[1] );
 			}
@@ -149,8 +149,8 @@ class Helpers {
 		return '';
 	}
 
-	public static function get_nonce_from_url( string $url, string $nonceName ): string {
-		return self::get_variable_from_url( $url, $nonceName );
+	public static function get_nonce_from_url( string $url, string $nonce_name ): string {
+		return self::get_variable_from_url( $url, $nonce_name );
 	}
 
 }
