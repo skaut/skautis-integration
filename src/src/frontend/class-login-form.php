@@ -15,8 +15,8 @@ final class Login_Form {
 	// TODO: Unused?
 	private $frontend_dir_url = '';
 
-	public function __construct( WP_Login_Logout $wpLoginLogout ) {
-		$this->wp_login_logout  = $wpLoginLogout;
+	public function __construct( WP_Login_Logout $wp_login_logout ) {
+		$this->wp_login_logout  = $wp_login_logout;
 		$this->frontend_dir_url = plugin_dir_url( __FILE__ ) . 'public/';
 		$this->init_hooks();
 	}
