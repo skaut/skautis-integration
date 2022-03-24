@@ -57,7 +57,8 @@ final class Users {
 		<h3><?php esc_html_e( 'skautIS', 'skautis-integration' ); ?></h3>
 		<?php
 		$this->connect_wp_account->print_connect_and_disconnect_button( $user->ID );
-		do_action( SKAUTISINTEGRATION_NAME . '_userScreen_userIds_before' );
+		// TODO: Unused action?
+		do_action( SKAUTISINTEGRATION_NAME . '_user_screen_user_ids_before' );
 		?>
 		<table class="form-table">
 			<tr>
@@ -89,7 +90,8 @@ final class Users {
 			</tr>
 		</table>
 		<?php
-		do_action( SKAUTISINTEGRATION_NAME . '_userScreen_userIds_after' );
+		// TODO: Unused action?
+		do_action( SKAUTISINTEGRATION_NAME . '_user_screen_user_ids_after' );
 	}
 
 	public function manage_skautis_user_id_field( int $user_id ): bool {

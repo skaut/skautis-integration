@@ -23,7 +23,8 @@ final class WP_Register {
 		add_action(
 			'register_new_user',
 			function ( $user_id ) {
-				$notify = apply_filters( SKAUTISINTEGRATION_NAME . '_modules_register_newUserNotifications', get_option( SKAUTISINTEGRATION_NAME . '_modules_register_notifications', 'none' ) );
+				// TODO: Unused filter?
+				$notify = apply_filters( SKAUTISINTEGRATION_NAME . '_modules_register_new_user_notifications', get_option( SKAUTISINTEGRATION_NAME . '_modules_register_notifications', 'none' ) );
 				if ( 'none' !== $notify ) {
 					global $wp_locale_switcher;
 					if ( ! $wp_locale_switcher ) {
