@@ -340,8 +340,8 @@ gulp.task( 'build:php', gulp.parallel( 'build:php:base', 'build:php:other' ) );
 
 gulp.task( 'build:png', function() {
 	return gulp
-		.src( [ 'src/**/*.png' ] )
-		.pipe( gulp.dest( 'dist/' ) );
+		.src( [ 'src/png/**/*.png' ] )
+		.pipe( gulp.dest( 'dist/src/' ) );
 } );
 
 gulp.task( 'build:txt', function() {
