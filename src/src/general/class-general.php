@@ -2,9 +2,9 @@
 
 declare( strict_types=1 );
 
-namespace SkautisIntegration\General;
+namespace Skautis_Integration\General;
 
-use SkautisIntegration\Rules\Rules_Init;
+use Skautis_Integration\Rules\Rules_Init;
 
 // TODO: Unused?
 final class General {

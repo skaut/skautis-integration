@@ -2,12 +2,12 @@
 
 declare( strict_types=1 );
 
-namespace SkautisIntegration\Admin;
+namespace Skautis_Integration\Admin;
 
-use SkautisIntegration\Auth\Skautis_Gateway;
-use SkautisIntegration\Auth\WP_Login_Logout;
-use SkautisIntegration\Rules\Rules_Manager;
-use SkautisIntegration\Utils\Helpers;
+use Skautis_Integration\Auth\Skautis_Gateway;
+use Skautis_Integration\Auth\WP_Login_Logout;
+use Skautis_Integration\Rules\Rules_Manager;
+use Skautis_Integration\Utils\Helpers;
 
 final class Admin {
 
@@ -46,18 +46,18 @@ final class Admin {
 
 	public function enqueue_scripts_and_styles() {
 		wp_enqueue_style(
-			SKAUTISINTEGRATION_NAME . '_select2',
-			SKAUTISINTEGRATION_URL . 'bundled/select2.min.css',
+			SKAUTIS_INTEGRATION_NAME . '_select2',
+			SKAUTIS_INTEGRATION_URL . 'bundled/select2.min.css',
 			array(),
-			SKAUTISINTEGRATION_VERSION,
+			SKAUTIS_INTEGRATION_VERSION,
 			'all'
 		);
 
 		wp_enqueue_script(
-			SKAUTISINTEGRATION_NAME . '_select2',
-			SKAUTISINTEGRATION_URL . 'bundled/select2.min.js',
+			SKAUTIS_INTEGRATION_NAME . '_select2',
+			SKAUTIS_INTEGRATION_URL . 'bundled/select2.min.js',
 			array( 'jquery' ),
-			SKAUTISINTEGRATION_VERSION,
+			SKAUTIS_INTEGRATION_VERSION,
 			false
 		);
 
@@ -97,7 +97,7 @@ final class Admin {
 		$wp_admin_bar->add_menu(
 			array(
 				'parent' => $parent,
-				'id'     => SKAUTISINTEGRATION_NAME . '_adminBar_logout',
+				'id'     => SKAUTIS_INTEGRATION_NAME . '_adminBar_logout',
 				'title'  => esc_html__( 'Log Out (too from skautIS)', 'skautis-integration' ),
 				'href'   => $this->wp_login_logout->get_logout_url(),
 			)

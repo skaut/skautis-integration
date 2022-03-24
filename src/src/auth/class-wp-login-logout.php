@@ -2,12 +2,12 @@
 
 declare( strict_types=1 );
 
-namespace SkautisIntegration\Auth;
+namespace Skautis_Integration\Auth;
 
-use SkautisIntegration\General\Actions;
-use SkautisIntegration\Utils\Helpers;
-use SkautisIntegration\Services\Services;
-use SkautisIntegration\Modules\Register\Register;
+use Skautis_Integration\General\Actions;
+use Skautis_Integration\Utils\Helpers;
+use Skautis_Integration\Services\Services;
+use Skautis_Integration\Modules\Register\Register;
 
 final class WP_Login_Logout {
 
@@ -44,7 +44,7 @@ final class WP_Login_Logout {
 				if ( ! $try ) {
 					if ( Services::get_services_container()['modulesManager']->is_module_activated( Register::get_id() ) &&
 						! user_can( $wp_user->ID, Helpers::get_skautis_manager_capability() ) &&
-						get_option( SKAUTISINTEGRATION_NAME . '_checkUserPrivilegesIfLoginBySkautis' ) ) {
+						get_option( SKAUTIS_INTEGRATION_NAME . '_checkUserPrivilegesIfLoginBySkautis' ) ) {
 						if ( ! Services::get_services_container()[ Register::get_id() ]->getRulesManager()->check_if_user_passed_rules_and_get_his_role() ) {
 							/* translators: 1: Start of a link to SkautIS login 2: End of the link to SkautIS login */
 							wp_die( sprintf( esc_html__( 'Je nám líto, ale již nemáte oprávnění k přístupu. %1$sZkuste se znovu zaregistrovat%2$s', 'skautis-integration' ), '<a href = "' . esc_url( ( Services::get_services_container()[ Register::get_id() ] )->getWpRegister()->get_register_url() ) . '">', '</a>' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
@@ -110,7 +110,7 @@ final class WP_Login_Logout {
 			$return_url = admin_url();
 		}
 
-		$return_url = add_query_arg( SKAUTISINTEGRATION_NAME . '_logoutFromWpAndSkautis', wp_create_nonce( SKAUTISINTEGRATION_NAME . '_logoutFromWpAndSkautis' ), $return_url );
+		$return_url = add_query_arg( SKAUTIS_INTEGRATION_NAME . '_logoutFromWpAndSkautis', wp_create_nonce( SKAUTIS_INTEGRATION_NAME . '_logoutFromWpAndSkautis' ), $return_url );
 		$url        = add_query_arg( 'ReturnUrl', rawurlencode( $return_url ), get_home_url( null, 'skautis/auth/' . Actions::LOGOUT_CONFIRM_ACTION ) );
 
 		return esc_url( $url );

@@ -2,14 +2,14 @@
 
 declare( strict_types=1 );
 
-namespace SkautisIntegration\Modules\Shortcodes;
+namespace Skautis_Integration\Modules\Shortcodes;
 
-use SkautisIntegration\Auth\Skautis_Login;
-use SkautisIntegration\Modules\Module;
-use SkautisIntegration\Modules\Shortcodes\Admin\Admin;
-use SkautisIntegration\Modules\Shortcodes\Frontend\Frontend;
-use SkautisIntegration\Rules\Rules_Manager;
-use SkautisIntegration\Auth\WP_Login_Logout;
+use Skautis_Integration\Auth\Skautis_Login;
+use Skautis_Integration\Modules\Module;
+use Skautis_Integration\Modules\Shortcodes\Admin\Admin;
+use Skautis_Integration\Modules\Shortcodes\Frontend\Frontend;
+use Skautis_Integration\Rules\Rules_Manager;
+use Skautis_Integration\Auth\WP_Login_Logout;
 
 final class Shortcodes implements Module {
 

@@ -2,11 +2,11 @@
 
 declare( strict_types=1 );
 
-namespace SkautisIntegration\Modules\Register;
+namespace Skautis_Integration\Modules\Register;
 
-use SkautisIntegration\Auth\Skautis_Gateway;
-use SkautisIntegration\Repository\Users as UsersRepository;
-use SkautisIntegration\Utils\Helpers;
+use Skautis_Integration\Auth\Skautis_Gateway;
+use Skautis_Integration\Repository\Users as UsersRepository;
+use Skautis_Integration\Utils\Helpers;
 
 final class WP_Register {
 
@@ -24,7 +24,7 @@ final class WP_Register {
 			'register_new_user',
 			function ( $user_id ) {
 				// TODO: Unused filter?
-				$notify = apply_filters( SKAUTISINTEGRATION_NAME . '_modules_register_new_user_notifications', get_option( SKAUTISINTEGRATION_NAME . '_modules_register_notifications', 'none' ) );
+				$notify = apply_filters( SKAUTIS_INTEGRATION_NAME . '_modules_register_new_user_notifications', get_option( SKAUTIS_INTEGRATION_NAME . '_modules_register_notifications', 'none' ) );
 				if ( 'none' !== $notify ) {
 					global $wp_locale_switcher;
 					if ( ! $wp_locale_switcher ) {
@@ -82,7 +82,7 @@ final class WP_Register {
 			return false;
 		}
 
-		Helpers::validate_nonce_from_url( $return_url, SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis' );
+		Helpers::validate_nonce_from_url( $return_url, SKAUTIS_INTEGRATION_NAME . '_registerToWpBySkautis' );
 
 		// check for skautIS User ID collision with existing users
 		$users_wp_query = new \WP_User_Query(
@@ -180,7 +180,7 @@ final class WP_Register {
 		$return_url = Helpers::get_login_logout_redirect();
 		$return_url = remove_query_arg( 'loggedout', urldecode( $return_url ) );
 
-		$return_url = add_query_arg( SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis', wp_create_nonce( SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis' ), $return_url );
+		$return_url = add_query_arg( SKAUTIS_INTEGRATION_NAME . '_registerToWpBySkautis', wp_create_nonce( SKAUTIS_INTEGRATION_NAME . '_registerToWpBySkautis' ), $return_url );
 		$url        = add_query_arg( 'ReturnUrl', rawurlencode( $return_url ), get_home_url( null, 'skautis/auth/' . Register::REGISTER_ACTION ) );
 
 		return esc_url( $url );
@@ -200,10 +200,10 @@ final class WP_Register {
 
 	public function get_manually_register_wp_user_url(): string {
 		$return_url = Helpers::get_login_logout_redirect();
-		$return_url = add_query_arg( SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis', wp_create_nonce( SKAUTISINTEGRATION_NAME . '_registerToWpBySkautis' ), $return_url );
+		$return_url = add_query_arg( SKAUTIS_INTEGRATION_NAME . '_registerToWpBySkautis', wp_create_nonce( SKAUTIS_INTEGRATION_NAME . '_registerToWpBySkautis' ), $return_url );
 		$url        = add_query_arg( 'ReturnUrl', rawurlencode( $return_url ), get_home_url( null, 'skautis/auth/' . Register::MANUALLY_REGISTER_WP_USER_ACTION ) );
 
-		return esc_url( wp_nonce_url( $url, SKAUTISINTEGRATION_NAME . '_register_user', SKAUTISINTEGRATION_NAME . '_register_user_nonce' ) );
+		return esc_url( wp_nonce_url( $url, SKAUTIS_INTEGRATION_NAME . '_register_user', SKAUTIS_INTEGRATION_NAME . '_register_user_nonce' ) );
 	}
 
 	public function register_to_wp_manually( string $wp_role, int $skautis_user_id ): bool {

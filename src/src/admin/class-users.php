@@ -2,11 +2,11 @@
 
 declare( strict_types=1 );
 
-namespace SkautisIntegration\Admin;
+namespace Skautis_Integration\Admin;
 
-use SkautisIntegration\Auth\Connect_And_Disconnect_WP_Account;
-use SkautisIntegration\Auth\Skautis_Gateway;
-use SkautisIntegration\Utils\Helpers;
+use Skautis_Integration\Auth\Connect_And_Disconnect_WP_Account;
+use Skautis_Integration\Auth\Skautis_Gateway;
+use Skautis_Integration\Utils\Helpers;
 
 final class Users {
 
@@ -28,13 +28,13 @@ final class Users {
 	}
 
 	public function add_column_header_to_users_table( array $columns = array() ): array {
-		$columns[ SKAUTISINTEGRATION_NAME ] = __( 'skautIS', 'skautis-integration' );
+		$columns[ SKAUTIS_INTEGRATION_NAME ] = __( 'skautIS', 'skautis-integration' );
 
 		return $columns;
 	}
 
 	public function add_column_to_users_table( $value, string $column_name, int $user_id ) {
-		if ( SKAUTISINTEGRATION_NAME === $column_name ) {
+		if ( SKAUTIS_INTEGRATION_NAME === $column_name ) {
 			$env_type = get_option( 'skautis_integration_appid_type' );
 			if ( Skautis_Gateway::PROD_ENV === $env_type ) {
 				$user_id = get_the_author_meta( 'skautisUserId_' . Skautis_Gateway::PROD_ENV, $user_id );
@@ -58,7 +58,7 @@ final class Users {
 		<?php
 		$this->connect_wp_account->print_connect_and_disconnect_button( $user->ID );
 		// TODO: Unused action?
-		do_action( SKAUTISINTEGRATION_NAME . '_user_screen_user_ids_before' );
+		do_action( SKAUTIS_INTEGRATION_NAME . '_user_screen_user_ids_before' );
 		?>
 		<table class="form-table">
 			<tr>
@@ -91,7 +91,7 @@ final class Users {
 		</table>
 		<?php
 		// TODO: Unused action?
-		do_action( SKAUTISINTEGRATION_NAME . '_user_screen_user_ids_after' );
+		do_action( SKAUTIS_INTEGRATION_NAME . '_user_screen_user_ids_after' );
 	}
 
 	public function manage_skautis_user_id_field( int $user_id ): bool {

@@ -2,8 +2,8 @@
 
 declare( strict_types=1 );
 
-use SkautisIntegration\Services\Services;
-use SkautisIntegration\Modules\Register\Register;
+use Skautis_Integration\Services\Services;
+use Skautis_Integration\Modules\Register\Register;
 
 // phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 // phpcs:disable WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid

@@ -9,21 +9,20 @@
  * Text Domain:       skautis-integration
  */
 
-namespace SkautisIntegration;
+namespace Skautis_Integration;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'SKAUTISINTEGRATION_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
-define( 'SKAUTISINTEGRATION_PATH', plugin_dir_path( __FILE__ ) );
-define( 'SKAUTISINTEGRATION_URL', plugin_dir_url( __FILE__ ) );
-define( 'SKAUTISINTEGRATION_NAME', 'skautis-integration' );
-define( 'SKAUTISINTEGRATION_VERSION', '1.1.25' );
+define( 'SKAUTIS_INTEGRATION_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
+// TODO: Unused?
+define( 'SKAUTIS_INTEGRATION_PATH', plugin_dir_path( __FILE__ ) );
+define( 'SKAUTIS_INTEGRATION_URL', plugin_dir_url( __FILE__ ) );
+define( 'SKAUTIS_INTEGRATION_NAME', 'skautis-integration' );
+define( 'SKAUTIS_INTEGRATION_VERSION', '1.1.25' );
 
 require __DIR__ . '/class-skautis-integration.php';
 
 global $skautis_integration;
-// TODO: Fix this
-// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $skautis_integration = new Skautis_Integration();

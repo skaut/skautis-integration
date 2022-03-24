@@ -2,9 +2,9 @@
 
 declare( strict_types=1 );
 
-namespace SkautisIntegration\Modules\Shortcodes\Admin;
+namespace Skautis_Integration\Modules\Shortcodes\Admin;
 
-use SkautisIntegration\Rules\Rules_Manager;
+use Skautis_Integration\Rules\Rules_Manager;
 
 final class Admin {
 
@@ -50,7 +50,7 @@ final class Admin {
 			window.visibilityOptions = [];
 
 			<?php
-			if ( get_option( SKAUTISINTEGRATION_NAME . '_modules_shortcodes_visibilityMode', 'hide' ) === 'hide' ) {
+			if ( get_option( SKAUTIS_INTEGRATION_NAME . '_modules_shortcodes_visibilityMode', 'hide' ) === 'hide' ) {
 				echo 'window.visibilityOptions.push({text: "hideContent", value: "hide"});';
 				echo 'window.visibilityOptions.push({text: "showLogin", value: "showLogin"});';
 			} else {

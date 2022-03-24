@@ -2,10 +2,10 @@
 
 declare( strict_types=1 );
 
-namespace SkautisIntegration\Repository;
+namespace Skautis_Integration\Repository;
 
-use SkautisIntegration\Auth\Skautis_Gateway;
-use SkautisIntegration\Utils\Helpers;
+use Skautis_Integration\Auth\Skautis_Gateway;
+use Skautis_Integration\Utils\Helpers;
 
 class Users {
 
@@ -20,8 +20,8 @@ class Users {
 
 		$return_url = Helpers::get_return_url();
 		if (
-			isset( $_GET[ SKAUTISINTEGRATION_NAME . '_skautis_search_user_nonce' ] ) &&
-			wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET[ SKAUTISINTEGRATION_NAME . '_skautis_search_user_nonce' ] ) ), SKAUTISINTEGRATION_NAME . '_skautis_search_user' ) &&
+			isset( $_GET[ SKAUTIS_INTEGRATION_NAME . '_skautis_search_user_nonce' ] ) &&
+			wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET[ SKAUTIS_INTEGRATION_NAME . '_skautis_search_user_nonce' ] ) ), SKAUTIS_INTEGRATION_NAME . '_skautis_search_user' ) &&
 			isset( $_GET['skautisSearchUsers'] ) &&
 			'' !== $_GET['skautisSearchUsers']
 		) {

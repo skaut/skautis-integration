@@ -2,9 +2,9 @@
 
 declare( strict_types=1 );
 
-namespace SkautisIntegration\Modules\Register\Frontend;
+namespace Skautis_Integration\Modules\Register\Frontend;
 
-use SkautisIntegration\Modules\Register\WP_Register;
+use Skautis_Integration\Modules\Register\WP_Register;
 
 final class Login_Form {
 
@@ -22,7 +22,7 @@ final class Login_Form {
 	}
 
 	public function enqueue_login_styles() {
-		wp_enqueue_style( SKAUTISINTEGRATION_NAME . '_frontend' );
+		wp_enqueue_style( SKAUTIS_INTEGRATION_NAME . '_frontend' );
 	}
 
 	public function login_link_in_login_form() {

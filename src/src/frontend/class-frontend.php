@@ -2,11 +2,11 @@
 
 declare( strict_types=1 );
 
-namespace SkautisIntegration\Frontend;
+namespace Skautis_Integration\Frontend;
 
-use SkautisIntegration\Auth\Skautis_Gateway;
-use SkautisIntegration\Auth\WP_Login_Logout;
-use SkautisIntegration\Utils\Helpers;
+use Skautis_Integration\Auth\Skautis_Gateway;
+use Skautis_Integration\Auth\WP_Login_Logout;
+use Skautis_Integration\Utils\Helpers;
 
 final class Frontend {
 
@@ -27,7 +27,7 @@ final class Frontend {
 	}
 
 	private function init_hooks() {
-		if ( get_option( SKAUTISINTEGRATION_NAME . '_login_page_url' ) ) {
+		if ( get_option( SKAUTIS_INTEGRATION_NAME . '_login_page_url' ) ) {
 			add_filter( 'query_vars', array( $this, 'register_query_vars' ) );
 			add_filter( 'template_include', array( $this, 'register_templates' ) );
 		}
@@ -99,7 +99,7 @@ final class Frontend {
 		$wp_admin_bar->add_menu(
 			array(
 				'parent' => $parent,
-				'id'     => SKAUTISINTEGRATION_NAME . '_adminBar_logout',
+				'id'     => SKAUTIS_INTEGRATION_NAME . '_adminBar_logout',
 				'title'  => esc_html__( 'Odhlásit se (i ze skautISu)', 'skautis-integration' ),
 				'href'   => $this->wp_login_logout->get_logout_url(),
 			)

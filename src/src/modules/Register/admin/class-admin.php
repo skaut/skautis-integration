@@ -2,10 +2,10 @@
 
 declare( strict_types=1 );
 
-namespace SkautisIntegration\Modules\Register\Admin;
+namespace Skautis_Integration\Modules\Register\Admin;
 
-use SkautisIntegration\Rules\Rules_Manager;
-use SkautisIntegration\Utils\Helpers;
+use Skautis_Integration\Rules\Rules_Manager;
+use Skautis_Integration\Utils\Helpers;
 
 final class Admin {
 
@@ -38,17 +38,17 @@ final class Admin {
 			wp_enqueue_script( 'jquery-ui-sortable' );
 
 			wp_enqueue_script(
-				SKAUTISINTEGRATION_NAME . '_jquery.repeater',
-				SKAUTISINTEGRATION_URL . 'bundled/jquery.repeater.min.js',
+				SKAUTIS_INTEGRATION_NAME . '_jquery.repeater',
+				SKAUTIS_INTEGRATION_URL . 'bundled/jquery.repeater.min.js',
 				array( 'jquery' ),
-				SKAUTISINTEGRATION_VERSION,
+				SKAUTIS_INTEGRATION_VERSION,
 				true
 			);
 
 			Helpers::enqueue_script(
 				'modules_register',
 				'modules/Register/admin/js/skautis-modules-register-admin.min.js',
-				array( SKAUTISINTEGRATION_NAME . '_jquery.repeater' ),
+				array( SKAUTIS_INTEGRATION_NAME . '_jquery.repeater' ),
 			);
 		}
 	}
@@ -69,7 +69,7 @@ final class Admin {
 
 	public function init_rules_data() {
 		if ( get_current_screen()->id === 'skautis_page_skautis-integration_modules_register' ) {
-			$data = get_option( SKAUTISINTEGRATION_NAME . '_modules_register_rules' );
+			$data = get_option( SKAUTIS_INTEGRATION_NAME . '_modules_register_rules' );
 			?>
 			<script>
 				window.rulesData = <?php echo wp_json_encode( $data ); ?>;

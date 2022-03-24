@@ -2,10 +2,10 @@
 
 declare( strict_types=1 );
 
-namespace SkautisIntegration\Auth;
+namespace Skautis_Integration\Auth;
 
-use SkautisIntegration\Utils\Helpers;
-use SkautisIntegration\Vendor\Skautis;
+use Skautis_Integration\Utils\Helpers;
+use Skautis_Integration\Vendor\Skautis;
 
 class Skautis_Gateway {
 

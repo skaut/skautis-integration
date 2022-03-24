@@ -2,10 +2,10 @@
 
 declare( strict_types=1 );
 
-namespace SkautisIntegration\Utils;
+namespace Skautis_Integration\Utils;
 
-use SkautisIntegration\Auth\Skautis_Gateway;
-use SkautisIntegration\Auth\Skautis_Login;
+use Skautis_Integration\Auth\Skautis_Gateway;
+use Skautis_Integration\Auth\Skautis_Login;
 
 class Role_Changer {
 
@@ -23,7 +23,7 @@ class Role_Changer {
 			'init',
 			function () {
 				if ( isset( $_POST['changeSkautisUserRole'], $_POST['_wpnonce'], $_POST['_wp_http_referer'] ) ) {
-					if ( check_admin_referer( SKAUTISINTEGRATION_NAME . '_changeSkautisUserRole', '_wpnonce' ) ) {
+					if ( check_admin_referer( SKAUTIS_INTEGRATION_NAME . '_changeSkautisUserRole', '_wpnonce' ) ) {
 						if ( $this->skautis_login->is_user_logged_in_skautis() ) {
 							$this->skautis_login->change_user_role_in_skautis( absint( $_POST['changeSkautisUserRole'] ) );
 						}
@@ -46,7 +46,7 @@ class Role_Changer {
 		echo '
 <form method="post" action="' . esc_attr( Helpers::get_current_url() ) . '" novalidate="novalidate">' .
 		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		wp_nonce_field( SKAUTISINTEGRATION_NAME . '_changeSkautisUserRole', '_wpnonce', true, false ) .
+		wp_nonce_field( SKAUTIS_INTEGRATION_NAME . '_changeSkautisUserRole', '_wpnonce', true, false ) .
 		'<table class="form-table">
 <tbody>
 <tr>

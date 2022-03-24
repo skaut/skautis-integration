@@ -2,10 +2,10 @@
 
 declare( strict_types=1 );
 
-namespace SkautisIntegration\Rules;
+namespace Skautis_Integration\Rules;
 
-use SkautisIntegration\Auth\Skautis_Gateway;
-use SkautisIntegration\Auth\WP_Login_Logout;
+use Skautis_Integration\Auth\Skautis_Gateway;
+use Skautis_Integration\Auth\WP_Login_Logout;
 
 final class Rules_Manager {
 
@@ -25,7 +25,7 @@ final class Rules_Manager {
 
 	private function init_rules(): array {
 		return apply_filters(
-			SKAUTISINTEGRATION_NAME . '_rules',
+			SKAUTIS_INTEGRATION_NAME . '_rules',
 			array(
 				Rule\Role::$id          => new Rule\Role( $this->skautis_gateway ),
 				Rule\Membership::$id    => new Rule\Membership( $this->skautis_gateway ),
@@ -90,14 +90,14 @@ final class Rules_Manager {
 	public function check_if_user_passed_rules_and_get_his_role(): string {
 		$result = '';
 
-		$rules = get_option( SKAUTISINTEGRATION_NAME . '_modules_register_rules' );
+		$rules = get_option( SKAUTIS_INTEGRATION_NAME . '_modules_register_rules' );
 		if ( ! $rules ) {
-			return (string) get_option( SKAUTISINTEGRATION_NAME . '_modules_register_defaultwpRole' );
+			return (string) get_option( SKAUTIS_INTEGRATION_NAME . '_modules_register_defaultwpRole' );
 		}
 
 		foreach ( (array) $rules as $rule ) {
 			if ( isset( $rule['rule'] ) ) {
-				$rules_groups = json_decode( get_post_meta( $rule['rule'], SKAUTISINTEGRATION_NAME . '_rules_data', true ) );
+				$rules_groups = json_decode( get_post_meta( $rule['rule'], SKAUTIS_INTEGRATION_NAME . '_rules_data', true ) );
 			} else {
 				return '';
 			}
@@ -140,7 +140,7 @@ final class Rules_Manager {
 			}
 
 			if ( is_null( $rules_groups ) ) {
-				$rules_groups = json_decode( (string) get_post_meta( $rule_id, SKAUTISINTEGRATION_NAME . '_rules_data', true ) );
+				$rules_groups = json_decode( (string) get_post_meta( $rule_id, SKAUTIS_INTEGRATION_NAME . '_rules_data', true ) );
 			}
 
 			if ( isset( $rules_groups->condition ) && isset( $rules_groups->rules ) && ! empty( $rules_groups->rules ) ) {

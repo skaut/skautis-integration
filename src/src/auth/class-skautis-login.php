@@ -2,9 +2,9 @@
 
 declare( strict_types=1 );
 
-namespace SkautisIntegration\Auth;
+namespace Skautis_Integration\Auth;
 
-use SkautisIntegration\Utils\Helpers;
+use Skautis_Integration\Utils\Helpers;
 
 final class Skautis_Login {
 
@@ -25,7 +25,7 @@ final class Skautis_Login {
 	}
 
 	public function set_login_data_to_local_skautis_instance( array $data = array() ): bool {
-		$data = apply_filters( SKAUTISINTEGRATION_NAME . '_login_data_for_skautis_instance', $data );
+		$data = apply_filters( SKAUTIS_INTEGRATION_NAME . '_login_data_for_skautis_instance', $data );
 
 		if ( isset( $data['skautIS_Token'] ) ) {
 			$this->skautis_gateway->get_skautis_instance()->setLoginData( $data );
@@ -34,7 +34,7 @@ final class Skautis_Login {
 				return false;
 			}
 
-			do_action( SKAUTISINTEGRATION_NAME . '_after_user_is_logged_in_skautis', $data );
+			do_action( SKAUTIS_INTEGRATION_NAME . '_after_user_is_logged_in_skautis', $data );
 
 			return true;
 		}

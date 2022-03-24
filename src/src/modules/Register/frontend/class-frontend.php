@@ -2,7 +2,7 @@
 
 declare( strict_types=1 );
 
-namespace SkautisIntegration\Modules\Register\Frontend;
+namespace Skautis_Integration\Modules\Register\Frontend;
 
 // TODO: Unused?
 final class Frontend {

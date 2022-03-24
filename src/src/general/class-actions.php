@@ -2,13 +2,13 @@
 
 declare( strict_types=1 );
 
-namespace SkautisIntegration\General;
+namespace Skautis_Integration\General;
 
-use SkautisIntegration\Auth\Connect_And_Disconnect_WP_Account;
-use SkautisIntegration\Auth\Skautis_Gateway;
-use SkautisIntegration\Auth\Skautis_Login;
-use SkautisIntegration\Auth\WP_Login_Logout;
-use SkautisIntegration\Utils\Helpers;
+use Skautis_Integration\Auth\Connect_And_Disconnect_WP_Account;
+use Skautis_Integration\Auth\Skautis_Gateway;
+use Skautis_Integration\Auth\Skautis_Login;
+use Skautis_Integration\Auth\WP_Login_Logout;
+use Skautis_Integration\Utils\Helpers;
 
 final class Actions {
 
@@ -54,7 +54,7 @@ final class Actions {
 
 	public function register_auth_rewrite_rules() {
 		add_rewrite_rule( '^skautis/auth/(.*?)$', 'index.php?skautis_auth=$matches[1]', 'top' );
-		$login_page_url = get_option( SKAUTISINTEGRATION_NAME . '_login_page_url' );
+		$login_page_url = get_option( SKAUTIS_INTEGRATION_NAME . '_login_page_url' );
 		if ( $login_page_url ) {
 			add_rewrite_rule( '^' . $login_page_url . '$', 'index.php?skautis_login=1', 'top' );
 		}
@@ -80,7 +80,7 @@ final class Actions {
 		}
 
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing
-		do_action( SKAUTISINTEGRATION_NAME . '_after_skautis_token_is_set', $_POST );
+		do_action( SKAUTIS_INTEGRATION_NAME . '_after_skautis_token_is_set', $_POST );
 
 		if ( strpos( Helpers::get_current_url(), 'profile.php' ) !== false ) {
 			$this->connect_wp_account->connect();
@@ -99,7 +99,7 @@ final class Actions {
 				( get_option( 'skautis_integration_appid_type' ) === 'test' && ! get_option( 'skautis_integration_appid_test' ) ) ) {
 				if ( Helpers::user_is_skautis_manager() ) {
 					/* translators: 1: Start of link to the settings 2: End of link to the settings */
-					wp_die( sprintf( esc_html__( 'Pro správné fungování pluginu skautIS integrace, je potřeba %1$snastavit APP ID%2$s', 'skautis-integration' ), '<a href="' . esc_url( admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME ) ) . '">', '</a>' ), esc_html__( 'Chyba v konfiguraci pluginu', 'skautis-integration' ) );
+					wp_die( sprintf( esc_html__( 'Pro správné fungování pluginu skautIS integrace, je potřeba %1$snastavit APP ID%2$s', 'skautis-integration' ), '<a href="' . esc_url( admin_url( 'admin.php?page=' . SKAUTIS_INTEGRATION_NAME ) ) . '">', '</a>' ), esc_html__( 'Chyba v konfiguraci pluginu', 'skautis-integration' ) );
 				} else {
 					wp_safe_redirect( get_home_url(), 302 );
 					exit;
@@ -117,7 +117,7 @@ final class Actions {
 			self::DISCONNECT_ACTION                 => array( $this->connect_wp_account, 'disconnect' ),
 		);
 
-		$actions = apply_filters( SKAUTISINTEGRATION_NAME . '_frontend_actions_router', $actions );
+		$actions = apply_filters( SKAUTIS_INTEGRATION_NAME . '_frontend_actions_router', $actions );
 
 		if ( isset( $actions[ $action ] ) ) {
 			return call_user_func( $actions[ $action ] );
