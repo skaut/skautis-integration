@@ -333,13 +333,19 @@ gulp.task( 'build:php:base', function() {
 gulp.task( 'build:php:other', function() {
 	// TODO: Split these
 	return gulp
-		.src( [ 'src/**/*.php', 'src/**/*.png', 'src/**/*.txt' ] )
+		.src( [ 'src/**/*.php', 'src/**/*.png' ] )
 		.pipe( gulp.dest( 'dist/' ) );
 } );
 
 gulp.task( 'build:php', gulp.parallel( 'build:php:base', 'build:php:other' ) );
 
+gulp.task( 'build:txt', function() {
+	return gulp
+		.src( [ 'src/**/*.txt' ] )
+		.pipe( gulp.dest( 'dist/' ) );
+} );
+
 gulp.task(
 	'build',
-	gulp.parallel( 'build:css', 'build:deps', 'build:js', 'build:php' )
+	gulp.parallel( 'build:css', 'build:deps', 'build:js', 'build:php', 'build:txt' )
 );
