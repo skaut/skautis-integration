@@ -29,7 +29,7 @@ final class Visibility implements Module {
 		$this->rules_manager   = $rules_manager;
 		$this->skautis_login   = $skautis_login;
 		$this->wp_login_logout = $wp_login_logout;
-		$post_types            = (array) get_option( SKAUTISINTEGRATION_NAME . '_modules_visibility_postTypes', array() );
+		$post_types            = (array) get_option( SKAUTIS_INTEGRATION_NAME . '_modules_visibility_postTypes', array() );
 		$this->frontend        = new Frontend( $post_types, $this->rules_manager, $this->skautis_login, $this->wp_login_logout );
 		if ( is_admin() ) {
 			( new Admin( $post_types, $this->rules_manager, $this->frontend ) );

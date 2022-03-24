@@ -46,7 +46,7 @@ final class Admin {
 
 	public function enqueue_scripts_and_styles() {
 		wp_enqueue_style(
-			SKAUTISINTEGRATION_NAME . '_select2',
+			SKAUTIS_INTEGRATION_NAME . '_select2',
 			SKAUTIS_INTEGRATION_URL . 'bundled/select2.min.css',
 			array(),
 			SKAUTIS_INTEGRATION_VERSION,
@@ -54,7 +54,7 @@ final class Admin {
 		);
 
 		wp_enqueue_script(
-			SKAUTISINTEGRATION_NAME . '_select2',
+			SKAUTIS_INTEGRATION_NAME . '_select2',
 			SKAUTIS_INTEGRATION_URL . 'bundled/select2.min.js',
 			array( 'jquery' ),
 			SKAUTIS_INTEGRATION_VERSION,
@@ -97,7 +97,7 @@ final class Admin {
 		$wp_admin_bar->add_menu(
 			array(
 				'parent' => $parent,
-				'id'     => SKAUTISINTEGRATION_NAME . '_adminBar_logout',
+				'id'     => SKAUTIS_INTEGRATION_NAME . '_adminBar_logout',
 				'title'  => esc_html__( 'Log Out (too from skautIS)', 'skautis-integration' ),
 				'href'   => $this->wp_login_logout->get_logout_url(),
 			)

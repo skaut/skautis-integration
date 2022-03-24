@@ -19,7 +19,7 @@ define( 'SKAUTIS_INTEGRATION_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 // TODO: Unused?
 define( 'SKAUTIS_INTEGRATION_PATH', plugin_dir_path( __FILE__ ) );
 define( 'SKAUTIS_INTEGRATION_URL', plugin_dir_url( __FILE__ ) );
-define( 'SKAUTISINTEGRATION_NAME', 'skautis-integration' );
+define( 'SKAUTIS_INTEGRATION_NAME', 'skautis-integration' );
 define( 'SKAUTIS_INTEGRATION_VERSION', '1.1.25' );
 
 require __DIR__ . '/class-skautis-integration.php';

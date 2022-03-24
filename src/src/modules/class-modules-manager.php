@@ -14,9 +14,9 @@ final class Modules_Manager {
 
 	public function __construct( Container $container, array $modules = array() ) {
 		$this->container         = $container;
-		$this->modules           = apply_filters( SKAUTISINTEGRATION_NAME . '_modules', $modules );
+		$this->modules           = apply_filters( SKAUTIS_INTEGRATION_NAME . '_modules', $modules );
 		$this->activated_modules = (array) get_option( 'skautis_integration_activated_modules' );
-		apply_filters_ref_array( SKAUTISINTEGRATION_NAME . '_activated_modules', $this->activated_modules );
+		apply_filters_ref_array( SKAUTIS_INTEGRATION_NAME . '_activated_modules', $this->activated_modules );
 		$this->register_activated_modules( $this->modules, $this->activated_modules );
 	}
 

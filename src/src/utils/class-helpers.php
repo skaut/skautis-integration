@@ -19,7 +19,7 @@ class Helpers {
 	 * @return void
 	 */
 	public static function register_script( $handle, $src, $deps = array(), $in_footer = true ) {
-		$handle = SKAUTISINTEGRATION_NAME . '_' . $handle;
+		$handle = SKAUTIS_INTEGRATION_NAME . '_' . $handle;
 		$src    = plugin_dir_url( dirname( __FILE__, 2 ) ) . $src;
 		wp_register_script( $handle, $src, $deps, SKAUTIS_INTEGRATION_VERSION, $in_footer );
 	}
@@ -37,7 +37,7 @@ class Helpers {
 	 */
 	public static function enqueue_script( $handle, $src, $deps = array(), $in_footer = true ) {
 		self::register_script( $handle, $src, $deps, $in_footer );
-		wp_enqueue_script( SKAUTISINTEGRATION_NAME . '_' . $handle );
+		wp_enqueue_script( SKAUTIS_INTEGRATION_NAME . '_' . $handle );
 	}
 
 	/**
@@ -52,7 +52,7 @@ class Helpers {
 	 * @return void
 	 */
 	public static function register_style( $handle, $src, $deps = array() ) {
-		$handle = SKAUTISINTEGRATION_NAME . '_' . $handle;
+		$handle = SKAUTIS_INTEGRATION_NAME . '_' . $handle;
 		$src    = plugin_dir_url( dirname( __FILE__, 2 ) ) . $src;
 		wp_register_style( $handle, $src, $deps, SKAUTIS_INTEGRATION_VERSION );
 	}
@@ -70,7 +70,7 @@ class Helpers {
 	 */
 	public static function enqueue_style( $handle, $src, $deps = array() ) {
 		self::register_style( $handle, $src, $deps );
-		wp_enqueue_style( SKAUTISINTEGRATION_NAME . '_' . $handle );
+		wp_enqueue_style( SKAUTIS_INTEGRATION_NAME . '_' . $handle );
 	}
 
 	public static function get_login_logout_redirect() {
@@ -114,7 +114,7 @@ class Helpers {
 		static $capability = '';
 
 		if ( '' === $capability ) {
-			$capability = apply_filters( SKAUTISINTEGRATION_NAME . '_manager_capability', 'manage_options' );
+			$capability = apply_filters( SKAUTIS_INTEGRATION_NAME . '_manager_capability', 'manage_options' );
 		}
 
 		return $capability;

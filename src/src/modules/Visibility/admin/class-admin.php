@@ -36,13 +36,13 @@ final class Admin {
 
 	public function enqueue_scripts_and_styles() {
 		if ( in_array( get_current_screen()->id, $this->post_types, true ) ||
-			get_current_screen()->id === 'skautis_page_' . SKAUTISINTEGRATION_NAME . '_modules_visibility' ) {
+			get_current_screen()->id === 'skautis_page_' . SKAUTIS_INTEGRATION_NAME . '_modules_visibility' ) {
 			wp_enqueue_script( 'jquery-ui-sortable' );
 
 			Helpers::enqueue_style( 'modules_visibility', 'modules/Visibility/admin/css/skautis-modules-visibility-admin.min.css' );
 
 			wp_enqueue_script(
-				SKAUTISINTEGRATION_NAME . '_jquery.repeater',
+				SKAUTIS_INTEGRATION_NAME . '_jquery.repeater',
 				SKAUTIS_INTEGRATION_URL . 'bundled/jquery.repeater.min.js',
 				array( 'jquery' ),
 				SKAUTIS_INTEGRATION_VERSION,
@@ -52,7 +52,7 @@ final class Admin {
 			Helpers::enqueue_script(
 				'modules_visibility',
 				'modules/Visibility/admin/js/skautis-modules-visibility-admin.min.js',
-				array( 'jquery', SKAUTISINTEGRATION_NAME . '_jquery.repeater', SKAUTISINTEGRATION_NAME . '_select2' )
+				array( 'jquery', SKAUTIS_INTEGRATION_NAME . '_jquery.repeater', SKAUTIS_INTEGRATION_NAME . '_select2' )
 			);
 		}
 	}
@@ -74,7 +74,7 @@ final class Admin {
 
 	public function init_rules_data() {
 		if ( in_array( get_current_screen()->id, $this->post_types, true ) ) {
-			$data = get_post_meta( get_the_ID(), SKAUTISINTEGRATION_NAME . '_rules', true );
+			$data = get_post_meta( get_the_ID(), SKAUTIS_INTEGRATION_NAME . '_rules', true );
 			?>
 			<script>
 				window.rulesData = <?php echo wp_json_encode( $data ); ?>;

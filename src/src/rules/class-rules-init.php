@@ -81,7 +81,7 @@ final class Rules_Init {
 			'hierarchical'        => false,
 			'public'              => false,
 			'show_ui'             => true,
-			'show_in_menu'        => SKAUTISINTEGRATION_NAME,
+			'show_in_menu'        => SKAUTIS_INTEGRATION_NAME,
 			'menu_position'       => 3,
 			'show_in_admin_bar'   => false,
 			'show_in_nav_menus'   => false,

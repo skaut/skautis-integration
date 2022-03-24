@@ -57,7 +57,7 @@ class Users_Management {
 			'init',
 			function () {
 				if ( isset( $_POST['changeSkautisUserRole'], $_POST['_wpnonce'], $_POST['_wp_http_referer'] ) ) {
-					if ( check_admin_referer( SKAUTISINTEGRATION_NAME . '_changeSkautisUserRole', '_wpnonce' ) ) {
+					if ( check_admin_referer( SKAUTIS_INTEGRATION_NAME . '_changeSkautisUserRole', '_wpnonce' ) ) {
 						if ( $this->skautis_login->is_user_logged_in_skautis() ) {
 							$this->skautis_login->change_user_role_in_skautis( absint( $_POST['changeSkautisUserRole'] ) );
 						}
@@ -68,7 +68,7 @@ class Users_Management {
 	}
 
 	public function enqueue_scripts_and_styles( $hook_suffix ) {
-		if ( ! str_ends_with( $hook_suffix, SKAUTISINTEGRATION_NAME . '_usersManagement' ) ) {
+		if ( ! str_ends_with( $hook_suffix, SKAUTIS_INTEGRATION_NAME . '_usersManagement' ) ) {
 			return;
 		}
 		wp_enqueue_script( 'thickbox' );
@@ -78,7 +78,7 @@ class Users_Management {
 		}
 
 		wp_enqueue_style(
-			SKAUTISINTEGRATION_NAME . '_datatables',
+			SKAUTIS_INTEGRATION_NAME . '_datatables',
 			SKAUTIS_INTEGRATION_URL . 'bundled/jquery.dataTables.min.css',
 			array(),
 			SKAUTIS_INTEGRATION_VERSION,
@@ -86,7 +86,7 @@ class Users_Management {
 		);
 
 		wp_enqueue_script(
-			SKAUTISINTEGRATION_NAME . '_datatables',
+			SKAUTIS_INTEGRATION_NAME . '_datatables',
 			SKAUTIS_INTEGRATION_URL . 'bundled/jquery.dataTables.min.js',
 			array( 'jquery' ),
 			SKAUTIS_INTEGRATION_VERSION,
@@ -98,28 +98,28 @@ class Users_Management {
 		Helpers::enqueue_script(
 			'admin-users-management',
 			'admin/js/skautis-admin-users-management.min.js',
-			array( 'jquery', SKAUTISINTEGRATION_NAME . '_select2' ),
+			array( 'jquery', SKAUTIS_INTEGRATION_NAME . '_select2' ),
 		);
 
 		wp_localize_script(
-			SKAUTISINTEGRATION_NAME . '_admin-users-management',
+			SKAUTIS_INTEGRATION_NAME . '_admin-users-management',
 			'skautisIntegrationAdminUsersManagementLocalize',
 			array(
 				'cancel'             => esc_html__( 'Zrušit', 'skautis-integration' ),
 				'datatablesFilesUrl' => SKAUTIS_INTEGRATION_URL . 'bundled/datatables-files',
-				'searchNonceName'    => SKAUTISINTEGRATION_NAME . '_skautis_search_user_nonce',
-				'searchNonceValue'   => wp_create_nonce( SKAUTISINTEGRATION_NAME . '_skautis_search_user' ),
+				'searchNonceName'    => SKAUTIS_INTEGRATION_NAME . '_skautis_search_user_nonce',
+				'searchNonceValue'   => wp_create_nonce( SKAUTIS_INTEGRATION_NAME . '_skautis_search_user' ),
 			)
 		);
 	}
 
 	public function setup_users_management_page() {
 		add_submenu_page(
-			SKAUTISINTEGRATION_NAME,
+			SKAUTIS_INTEGRATION_NAME,
 			__( 'Správa uživatelů', 'skautis-integration' ),
 			__( 'Správa uživatelů', 'skautis-integration' ),
 			Helpers::get_skautis_manager_capability(),
-			SKAUTISINTEGRATION_NAME . '_usersManagement',
+			SKAUTIS_INTEGRATION_NAME . '_usersManagement',
 			array( $this, 'print_child_users' )
 		);
 	}
@@ -143,7 +143,7 @@ class Users_Management {
 			';
 			} else {
 				/* translators: 1: Start of link to the settings 2: End of link to the settings */
-				printf( esc_html__( 'Vyberte v %1$snastavení%2$s pluginu typ prostředí skautISu', 'skautis-integration' ), '<a href="' . esc_url( admin_url( 'admin.php?page=' . SKAUTISINTEGRATION_NAME ) ) . '">', '</a>' );
+				printf( esc_html__( 'Vyberte v %1$snastavení%2$s pluginu typ prostředí skautISu', 'skautis-integration' ), '<a href="' . esc_url( admin_url( 'admin.php?page=' . SKAUTIS_INTEGRATION_NAME ) ) . '">', '</a>' );
 				echo '
 		</div>
 			';
@@ -165,9 +165,9 @@ class Users_Management {
 		foreach ( $users as $user ) {
 			if ( isset( $users_data[ $user->id ] ) ) {
 				$home_url                = get_home_url( null, 'skautis/auth/' . Actions::DISCONNECT_ACTION );
-				$nonce                   = wp_create_nonce( SKAUTISINTEGRATION_NAME . '_disconnectWpAccountFromSkautis' );
+				$nonce                   = wp_create_nonce( SKAUTIS_INTEGRATION_NAME . '_disconnectWpAccountFromSkautis' );
 				$user_edit_link          = get_edit_user_link( $users_data[ $user->id ]['id'] );
-				$return_url              = add_query_arg( SKAUTISINTEGRATION_NAME . '_disconnectWpAccountFromSkautis', $nonce, Helpers::get_current_url() );
+				$return_url              = add_query_arg( SKAUTIS_INTEGRATION_NAME . '_disconnectWpAccountFromSkautis', $nonce, Helpers::get_current_url() );
 				$return_url              = add_query_arg( 'user-edit_php', '', $return_url );
 				$return_url              = add_query_arg( 'user_id', $users_data[ $user->id ]['id'], $return_url );
 				$connect_disconnect_link = add_query_arg( 'ReturnUrl', rawurlencode( $return_url ), $home_url );
@@ -224,7 +224,7 @@ class Users_Management {
 					<label>
 						<span><?php esc_html_e( 'Vyberte úroveň nového uživatele', 'skautis-integration' ); ?></span>
 						<select name="role" id="connectUserToSkautisModal_defaultRole">
-							<?php wp_dropdown_roles( get_option( SKAUTISINTEGRATION_NAME . '_modules_register_defaultwpRole' ) ); ?>
+							<?php wp_dropdown_roles( get_option( SKAUTIS_INTEGRATION_NAME . '_modules_register_defaultwpRole' ) ); ?>
 						</select>
 					</label>
 					<p>
