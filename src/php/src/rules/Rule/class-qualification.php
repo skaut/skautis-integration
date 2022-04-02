@@ -99,7 +99,7 @@ class Qualification implements Rule {
 
 	// TODO: Unused first parameter?
 	public function is_rule_passed( string $roles_operator, $data ): bool {
-		// parse and prepare data from rules UI
+		// Parse and prepare data from rules UI.
 		$output = array();
 		preg_match_all( '|[^~]+|', $data, $output );
 		if ( isset( $output[0], $output[0][0] ) ) {

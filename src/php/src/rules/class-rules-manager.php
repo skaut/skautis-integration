@@ -67,7 +67,7 @@ final class Rules_Manager {
 				}
 				$result = $result * $this->process_rule( $rule );
 			}
-		} else { // OR
+		} else { // OR.
 			foreach ( $rules as $rule ) {
 				if ( isset( $rule->rules ) ) {
 					$result = $result + $this->parse_rules_groups( $rule->condition, $rule->rules );

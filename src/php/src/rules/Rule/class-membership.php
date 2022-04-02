@@ -104,7 +104,7 @@ class Membership implements Rule {
 				return array();
 			}
 
-			// user has more valid memberships
+			// User has more valid memberships.
 			$result = array();
 			foreach ( $user_memberships->MembershipAllOutput as $user_membership ) {
 				if ( ! is_object( $user_membership ) ) {
@@ -155,7 +155,7 @@ class Membership implements Rule {
 
 	// TODO: First parameter unused?
 	public function is_rule_passed( string $roles_operator, $data ): bool {
-		// parse and prepare data from rules UI
+		// Parse and prepare data from rules UI.
 		$output = array();
 		preg_match_all( '|[^~]+|', $data, $output );
 		if ( isset( $output[0], $output[0][0], $output[0][1], $output[0][2] ) ) {
@@ -169,7 +169,7 @@ class Membership implements Rule {
 		$user_memberships = $this->getUserMembershipsWithUnitIds();
 		$user_pass        = 0;
 		foreach ( $memberships as $membership ) {
-			// in / not_in range check
+			// in / not_in range check.
 			if ( array_key_exists( $membership, $user_memberships ) ) {
 				foreach ( $user_memberships[ $membership ] as $user_membership_unit_id ) {
 					$user_membership_unit_id = $this->clearUnitId( $user_membership_unit_id );

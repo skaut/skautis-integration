@@ -84,7 +84,7 @@ final class WP_Register {
 
 		Helpers::validate_nonce_from_url( $return_url, SKAUTIS_INTEGRATION_NAME . '_registerToWpBySkautis' );
 
-		// check for skautIS User ID collision with existing users
+		// Check for skautIS User ID collision with existing users.
 		$users_wp_query = new \WP_User_Query(
 			array(
 				'number'     => 1,
@@ -154,7 +154,7 @@ final class WP_Register {
 			return 0;
 		}
 
-		// check for skautIS User ID collision with existing users
+		// Check for skautIS User ID collision with existing users.
 		$users_wp_query = new \WP_User_Query(
 			array(
 				'number'     => 1,
@@ -215,10 +215,10 @@ final class WP_Register {
 	public function sanitize_username( string $username, string $raw_username, bool $strict ): string {
 		$username = wp_strip_all_tags( $raw_username );
 
-		// Kill octets
+		// Kill octets.
 		$username = preg_replace( '|%([a-fA-F0-9][a-fA-F0-9])|', '', $username );
 
-		// Kill entities
+		// Kill entities.
 		$username = preg_replace( '/&.+?;/', '', $username );
 
 		// If strict, reduce to ASCII, Latin and Cyrillic characters for max portability.
@@ -228,7 +228,7 @@ final class WP_Register {
 
 		$username = trim( $username );
 
-		// Consolidate contiguous whitespace
+		// Consolidate contiguous whitespace.
 		$username = preg_replace( '|\s+|', ' ', $username );
 
 		return $username;

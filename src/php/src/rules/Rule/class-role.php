@@ -120,7 +120,7 @@ class Role implements Rule {
 	}
 
 	public function is_rule_passed( string $roles_operator, $data ): bool {
-		// parse and prepare data from rules UI
+		// Parse and prepare data from rules UI.
 		$output = array();
 		preg_match_all( '|[^~]+|', $data, $output );
 		if ( isset( $output[0], $output[0][0], $output[0][1], $output[0][2] ) ) {
@@ -131,7 +131,7 @@ class Role implements Rule {
 			return false;
 		}
 
-		// logic for determine in / not_in range
+		// Logic to determine in / not_in range.
 		$in_not_in_negation = 2;
 		switch ( $roles_operator ) {
 			case 'in':
@@ -151,7 +151,7 @@ class Role implements Rule {
 		$user_roles = $this->getUserRolesWithUnitIds();
 		$user_pass  = 0;
 		foreach ( $roles as $role ) {
-			// in / not_in range check
+			// in / not_in range check.
 			if ( ( $in_not_in_negation + array_key_exists( $role, $user_roles ) ) === 1 ) {
 				foreach ( $user_roles[ $role ] as $user_role_unit_id ) {
 					$user_role_unit_id = $this->clearUnitId( $user_role_unit_id );

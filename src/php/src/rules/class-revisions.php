@@ -61,7 +61,7 @@ class Revisions {
 		$revision_id = $revision->ID;
 		$meta        = $this->get_meta( $revision_id );
 
-		// format response as single string with all custom fields / metadata
+		// format response as single string with all custom fields / metadata.
 		$return = '';
 		foreach ( $meta as $meta_key => $meta_value ) {
 			$return .= $meta_key . ': ' . join( ', ', $meta_value ) . "\n";
@@ -81,7 +81,7 @@ class Revisions {
 		$this->delete_meta( $post_id );
 		$this->insert_meta( $post_id, $meta );
 
-		// also update last revision custom fields
+		// also update last revision custom fields.
 		$revisions = wp_get_post_revisions( $post_id );
 		if ( count( $revisions ) > 0 ) {
 			$last_revision = current( $revisions );
@@ -110,7 +110,7 @@ class Revisions {
 				return $post_has_changed;
 			}
 
-			// Post changed
+			// Post changed.
 			return true;
 		}
 

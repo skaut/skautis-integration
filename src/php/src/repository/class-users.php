@@ -102,7 +102,7 @@ class Users {
 		);
 		$current_user_role  = $this->skautis_gateway->get_skautis_instance()->getUser()->getRoleId();
 
-		// different procedure for roles associated with events
+		// Different procedure for roles associated with events.
 		foreach ( $current_user_roles as $role ) {
 			if ( $role->ID === $current_user_role && isset( $role->Key ) ) {
 				$words = preg_split( '~(?=[A-Z])~', $role->Key );
@@ -135,7 +135,7 @@ class Users {
 			}
 		}
 
-		// different procedure for roles associated with events
+		// Different procedure for roles associated with events.
 		if ( $event_type && $event_id ) {
 			if ( 'Congress' === $event_type ) {
 				$participants = null;
@@ -187,7 +187,7 @@ class Users {
 			}
 		}
 
-		// standard get all users procedure
+		// Standard get all users procedure.
 		if ( empty( $users ) ) {
 			$search_user_string = $this->get_search_user_string();
 

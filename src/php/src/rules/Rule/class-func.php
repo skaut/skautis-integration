@@ -119,7 +119,7 @@ class Func implements Rule {
 	}
 
 	public function is_rule_passed( string $funcs_operator, $data ): bool {
-		// parse and prepare data from rules UI
+		// Parse and prepare data from rules UI.
 		$output = array();
 		preg_match_all( '|[^~]+|', $data, $output );
 		if ( isset( $output[0], $output[0][0], $output[0][1], $output[0][2] ) ) {
@@ -130,7 +130,7 @@ class Func implements Rule {
 			return false;
 		}
 
-		// logic for determine in / not_in range
+		// Logic to determine in / not_in range.
 		$in_not_in_negation = 2;
 		switch ( $funcs_operator ) {
 			case 'in':
@@ -150,7 +150,7 @@ class Func implements Rule {
 		$user_funcs = $this->getUserFuncsWithUnitIds();
 		$user_pass  = 0;
 		foreach ( $funcs as $func ) {
-			// in / not_in range check
+			// in / not_in range check.
 			if ( ( $in_not_in_negation + array_key_exists( $func, $user_funcs ) ) === 1 ) {
 				foreach ( $user_funcs[ $func ] as $user_func_unit_id ) {
 					$user_func_unit_id = $this->clearUnitId( $user_func_unit_id );
