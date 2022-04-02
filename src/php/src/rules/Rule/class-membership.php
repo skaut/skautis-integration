@@ -1,4 +1,9 @@
 <?php
+/**
+ * Contains the Membership class.
+ *
+ * @package skautis-integration
+ */
 
 declare( strict_types=1 );
 

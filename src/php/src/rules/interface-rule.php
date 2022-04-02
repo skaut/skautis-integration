@@ -1,4 +1,9 @@
 <?php
+/**
+ * Contains the Rule interface.
+ *
+ * @package skautis-integration
+ */
 
 declare( strict_types=1 );
 

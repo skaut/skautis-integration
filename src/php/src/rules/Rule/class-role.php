@@ -1,4 +1,9 @@
 <?php
+/**
+ * Contains the Role class.
+ *
+ * @package skautis-integration
+ */
 
 declare( strict_types=1 );
 

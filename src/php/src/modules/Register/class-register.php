@@ -1,4 +1,9 @@
 <?php
+/**
+ * Contains the Register class.
+ *
+ * @package skautis-integration
+ */
 
 declare( strict_types=1 );
 

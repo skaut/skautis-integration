@@ -1,4 +1,9 @@
 <?php
+/**
+ * Contains the Login_Form class.
+ *
+ * @package skautis-integration
+ */
 
 declare( strict_types=1 );
 

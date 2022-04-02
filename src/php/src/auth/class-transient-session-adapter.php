@@ -1,4 +1,9 @@
 <?php
+/**
+ * Contains the Transient_Session_Adapter class.
+ *
+ * @package skautis-integration
+ */
 
 declare( strict_types=1 );
 

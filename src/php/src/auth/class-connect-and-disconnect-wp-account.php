@@ -1,4 +1,9 @@
 <?php
+/**
+ * Contains the Connect_And_Disconnect_WP_Account class.
+ *
+ * @package skautis-integration
+ */
 
 declare( strict_types=1 );
 

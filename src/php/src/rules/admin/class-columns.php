@@ -1,4 +1,9 @@
 <?php
+/**
+ * Contains the Columns class.
+ *
+ * @package skautis-integration
+ */
 
 declare( strict_types=1 );
 

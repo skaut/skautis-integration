@@ -1,4 +1,9 @@
 <?php
+/**
+ * Contains the Module interface.
+ *
+ * @package skautis-integration
+ */
 
 declare( strict_types=1 );
 

@@ -1,4 +1,9 @@
 <?php
+/**
+ * Contains function to be called from custom login view.
+ *
+ * @package skautis-integration
+ */
 
 declare( strict_types=1 );
 

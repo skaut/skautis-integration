@@ -1,4 +1,11 @@
-<?php get_header(); ?>
+<?php
+/**
+ * Renders the login/logout button.
+ *
+ * @package skautis-integration
+ */
+
+get_header(); ?>
 
 <?php
 if ( ! isUserLoggedInSkautis() ) {
