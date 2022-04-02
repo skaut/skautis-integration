@@ -14,7 +14,8 @@ class Transient_Session_Adapter implements AdapterInterface {
 			$chars     = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 			$cookie_id = '';
 			for ( $i = 0; $i < 32; $i++ ) {
-				$cookie_id .= substr( $chars, wp_rand( 0, strlen( $chars ) - 1 ), 1 );
+				// phpcs:ignore WordPress.WP.AlternativeFunctions.rand_rand
+				$cookie_id .= substr( $chars, rand( 0, strlen( $chars ) - 1 ), 1 );
 			}
 			setcookie( SKAUTIS_INTEGRATION_NAME . '-skautis-session', $cookie_id, time() + 40 * \MINUTE_IN_SECONDS, '/', '', true, true );
 			return $cookie_id;
