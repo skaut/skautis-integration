@@ -299,7 +299,7 @@ final class Settings {
 			SKAUTIS_INTEGRATION_NAME . '_login'
 		);
 
-		if ( Services::get_services_container()['modulesManager']->is_module_activated( Register::get_id() ) ) {
+		if ( Services::get_modules_manager()->is_module_activated( Register::get_id() ) ) {
 			add_settings_field(
 				SKAUTIS_INTEGRATION_NAME . '_checkUserPrivilegesIfLoginBySkautis',
 				__( 'Ověřování podmínek registrace', 'skautis-integration' ),
@@ -345,7 +345,7 @@ final class Settings {
 			)
 		);
 
-		if ( Services::get_services_container()['modulesManager']->is_module_activated( Register::get_id() ) ) {
+		if ( Services::get_modules_manager()->is_module_activated( Register::get_id() ) ) {
 			register_setting(
 				SKAUTIS_INTEGRATION_NAME . '_login',
 				SKAUTIS_INTEGRATION_NAME . '_checkUserPrivilegesIfLoginBySkautis',
