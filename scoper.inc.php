@@ -48,10 +48,6 @@ return array(
 				$contents = safe_replace( "\\\\spl_autoload_unregister\\(array\\('ComposerAutoloaderInit", "\\spl_autoload_unregister(array('{$replace_prefix}\\\\ComposerAutoloaderInit", $contents );
 				$contents = safe_replace( "\\\$GLOBALS\['__composer_autoload_files'\]", "\$GLOBALS['__composer_autoload_files_" . $var_name_prefix . "']", $contents );
 			}
-			// PSR-0 support
-			if ( __DIR__ . '/vendor/composer/ClassLoader.php' === $file_path ) {
-				$contents = safe_replace( "// PSR-0 lookup\n", "// PSR-0 lookup\n        \$scoperPrefix = '{$replace_prefix}\\\\';\n        if (substr(\$class, 0, strlen(\$scoperPrefix)) == \$scoperPrefix) {\n            \$class = substr(\$class, strlen(\$scoperPrefix));\n            \$first = \$class[0];\n            \$logicalPathPsr4 = substr(\$logicalPathPsr4, strlen(\$scoperPrefix));\n        }\n", $contents );
-			}
 
 			return $contents;
 		},
