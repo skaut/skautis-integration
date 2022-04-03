@@ -79,7 +79,7 @@ class Skautis_Integration {
 	protected function init() {
 		Services::get_general();
 		if ( is_admin() ) {
-			( Services::get_services_container()['admin'] );
+			( Services::get_admin() );
 		} else {
 			( Services::get_services_container()['frontend'] );
 		}

@@ -108,7 +108,7 @@ class Services {
 	private static $general = null;
 
 	/**
-	 * A Repository_Users service instance.
+	 * A Repository\Users service instance.
 	 *
 	 * Depends on $skautis_gateway.
 	 *
@@ -124,6 +124,58 @@ class Services {
 	 * @var Rules_Manager|null
 	 */
 	private static $rules_manager = null;
+
+	/**
+	 * A Modules_Manager service instance.
+	 *
+	 * @var Modules_Manager|null
+	 */
+	private static $modules_manager = null;
+
+	/**
+	 * An Admin\Settings service instance.
+	 *
+	 * Depends on $skautis_gateway and $modules_manager.
+	 *
+	 * @var Settings|null
+	 */
+	private static $admin_settings = null;
+
+	/**
+	 * An Admin\Users service instance.
+	 *
+	 * Depends on $connect_and_disconnect_wp_account.
+	 *
+	 * @var Users|null
+	 */
+	private static $admin_users = null;
+
+	/**
+	 * A Role_Changer service instance.
+	 *
+	 * Depends on $skautis_gateway and $skautis_login.
+	 *
+	 * @var Role_Changer|null
+	 */
+	private static $role_changer = null;
+
+	/**
+	 * A Users_Management service instance.
+	 *
+	 * Depends on $skautis_gateway, $wp_login_logout, $skautis_login, $connect_and_disconnect_wp_account, $repository_users and $role_changer.
+	 *
+	 * @var Users_Management|null
+	 */
+	private static $users_management = null;
+
+	/**
+	 * An Admin service instance.
+	 *
+	 * Depends on $admin_settings, $admin_users, $rules_manager, $users_management, $wp_login_logout and $skautis_gateway.
+	 *
+	 * @var Admin|null
+	 */
+	private static $admin = null;
 
 	protected static function init() {
 		self::$services = new Container();
@@ -372,5 +424,97 @@ class Services {
 			self::$rules_manager = new Rules_Manager( self::get_skautis_gateway(), self::get_wp_login_logout() );
 		}
 		return self::$rules_manager;
+	}
+
+	/**
+	 * Gets the Modules_Manager service.
+	 *
+	 * @return Modules_Manager The initialized service object.
+	 */
+	public static function get_modules_manager() {
+		if ( is_null( self::$modules_manager ) ) {
+			self::$modules_manager = new Modules_Manager(
+				array( // for hard modules activation/deactivation look to modules/Modules_Manager WP filters
+					Register::get_id()   => Register::get_label(),
+					Visibility::get_id() => Visibility::get_label(),
+					Shortcodes::get_id() => Shortcodes::get_label(),
+				)
+			);
+		}
+		return self::$modules_manager;
+	}
+
+	/**
+	 * Gets the Admin\Settings service.
+	 *
+	 * @return Settings The initialized service object.
+	 */
+	public static function get_admin_settings() {
+		if ( is_null( self::$admin_settings ) ) {
+			self::$admin_settings = new Settings( self::get_skautis_gateway(), self::get_modules_manager() );
+		}
+		return self::$admin_settings;
+	}
+
+	/**
+	 * Gets the Admin\Users service.
+	 *
+	 * @return Users The initialized service object.
+	 */
+	public static function get_admin_users() {
+		if ( is_null( self::$admin_users ) ) {
+			self::$admin_users = new Users( self::get_connect_and_disconnect_wp_account() );
+		}
+		return self::$admin_users;
+	}
+
+	/**
+	 * Gets the Role_Changer service.
+	 *
+	 * @return Role_Changer The initialized service object.
+	 */
+	public static function get_role_changer() {
+		if ( is_null( self::$role_changer ) ) {
+			self::$role_changer = new Role_Changer( self::get_skautis_gateway(), self::get_skautis_login() );
+		}
+		return self::$role_changer;
+	}
+
+	/**
+	 * Gets the Users_Management service.
+	 *
+	 * @return Users_Management The initialized service object.
+	 */
+	public static function get_users_management() {
+		if ( is_null( self::$users_management ) ) {
+			self::$users_management = new Users_Management(
+				self::get_skautis_gateway(),
+				self::get_wp_login_logout(),
+				self::get_skautis_login(),
+				self::get_connect_and_disconnect_wp_account(),
+				self::get_repository_users(),
+				self::get_role_changer()
+			);
+		}
+		return self::$users_management;
+	}
+
+	/**
+	 * Gets the Admin service.
+	 *
+	 * @return Admin The initialized service object.
+	 */
+	public static function get_admin() {
+		if ( is_null( self::$admin ) ) {
+			self::$admin = new Admin(
+				self::get_admin_settings(),
+				self::get_admin_users(),
+				self::get_rules_manager(),
+				self::get_users_management(),
+				self::get_wp_login_logout(),
+				self::get_skautis_gateway()
+			);
+		}
+		return self::$admin;
 	}
 }
