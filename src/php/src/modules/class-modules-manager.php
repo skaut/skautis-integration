@@ -5,7 +5,6 @@ declare( strict_types=1 );
 namespace Skautis_Integration\Modules;
 
 use Skautis_Integration\Services\Services;
-use Skautis_Integration\Vendor\Pimple\Container;
 
 final class Modules_Manager {
 
