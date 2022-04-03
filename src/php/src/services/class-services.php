@@ -108,6 +108,15 @@ class Services {
 	 */
 	private static $repository_users = null;
 
+	/**
+	 * A Rules_Manager service instance.
+	 *
+	 * Depends on $skautis_gateway and $wp_login_logout.
+	 *
+	 * @var Rules_Manager|null
+	 */
+	private static $rules_manager = null;
+
 	protected static function init() {
 		self::$services = new Container();
 		self::register_services();
@@ -313,7 +322,7 @@ class Services {
 	}
 
 	/**
-	 * Gets the Repository_Users service.
+	 * Gets the Repository\Users service.
 	 *
 	 * @return Repository_Users The initialized service object.
 	 */
@@ -322,5 +331,17 @@ class Services {
 			self::$repository_users = new Repository_Users( self::get_skautis_gateway() );
 		}
 		return self::$repository_users;
+	}
+
+	/**
+	 * Gets the Rules_Manager service.
+	 *
+	 * @return Rules_Manager The initialized service object.
+	 */
+	public static function get_rules_manager() {
+		if ( is_null( self::$rules_manager ) ) {
+			self::$rules_manager = new Rules_Manager( self::get_skautis_gateway(), self::get_wp_login_logout() );
+		}
+		return self::$rules_manager;
 	}
 }
