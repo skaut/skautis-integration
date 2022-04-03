@@ -177,6 +177,24 @@ class Services {
 	 */
 	private static $admin = null;
 
+	/**
+	 * A Login_Form service instance.
+	 *
+	 * Depends on $wp_login_logout.
+	 *
+	 * @var Login_Form|null
+	 */
+	private static $login_form = null;
+
+	/**
+	 * A Frontend service instance.
+	 *
+	 * Depends on $login_form, $wp_login_logout and $skautis_gateway.
+	 *
+	 * @var Frontend|null
+	 */
+	private static $frontend = null;
+
 	protected static function init() {
 		self::$services = new Container();
 		self::register_services();
@@ -516,5 +534,29 @@ class Services {
 			);
 		}
 		return self::$admin;
+	}
+
+	/**
+	 * Gets the Login_Form service.
+	 *
+	 * @return Login_Form The initialized service object.
+	 */
+	public static function get_login_form() {
+		if ( is_null( self::$login_form ) ) {
+			self::$login_form = new Login_Form( self::get_wp_login_logout() );
+		}
+		return self::$login_form;
+	}
+
+	/**
+	 * Gets the Frontend service.
+	 *
+	 * @return Frontend The initialized service object.
+	 */
+	public static function get_frontend() {
+		if ( is_null( self::$frontend ) ) {
+			self::$frontend = new Frontend( self::get_login_form(), self::get_wp_login_logout(), self::get_skautis_gateway() );
+		}
+		return self::$frontend;
 	}
 }

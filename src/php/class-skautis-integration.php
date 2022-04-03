@@ -81,9 +81,9 @@ class Skautis_Integration {
 		if ( is_admin() ) {
 			( Services::get_admin() );
 		} else {
-			( Services::get_services_container()['frontend'] );
+			( Services::get_frontend() );
 		}
-		Services::get_services_container()['modulesManager'];
+		Services::get_modules_manager();
 	}
 
 	protected function is_compatible_version_of_wp() {
