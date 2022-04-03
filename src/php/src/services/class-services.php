@@ -341,7 +341,7 @@ class Services {
 	 *
 	 * @return WP_Login_Logout The initialized service object.
 	 */
-	private static function get_wp_login_logout() {
+	public static function get_wp_login_logout() {
 		if ( is_null( self::$wp_login_logout ) ) {
 			self::$wp_login_logout = new WP_Login_Logout( self::get_skautis_gateway() );
 		}
@@ -353,7 +353,7 @@ class Services {
 	 *
 	 * @return Skautis_Login The initialized service object.
 	 */
-	private static function get_skautis_login() {
+	public static function get_skautis_login() {
 		if ( is_null( self::$skautis_login ) ) {
 			self::$skautis_login = new Skautis_Login( self::get_skautis_gateway(), self::get_wp_login_logout() );
 		}
@@ -425,7 +425,7 @@ class Services {
 	 *
 	 * @return Repository_Users The initialized service object.
 	 */
-	public static function get_repository_users() {
+	private static function get_repository_users() {
 		if ( is_null( self::$repository_users ) ) {
 			self::$repository_users = new Repository_Users( self::get_skautis_gateway() );
 		}
@@ -467,7 +467,7 @@ class Services {
 	 *
 	 * @return Settings The initialized service object.
 	 */
-	public static function get_admin_settings() {
+	private static function get_admin_settings() {
 		if ( is_null( self::$admin_settings ) ) {
 			self::$admin_settings = new Settings( self::get_skautis_gateway(), self::get_modules_manager() );
 		}
@@ -479,7 +479,7 @@ class Services {
 	 *
 	 * @return Users The initialized service object.
 	 */
-	public static function get_admin_users() {
+	private static function get_admin_users() {
 		if ( is_null( self::$admin_users ) ) {
 			self::$admin_users = new Users( self::get_connect_and_disconnect_wp_account() );
 		}
@@ -491,7 +491,7 @@ class Services {
 	 *
 	 * @return Role_Changer The initialized service object.
 	 */
-	public static function get_role_changer() {
+	private static function get_role_changer() {
 		if ( is_null( self::$role_changer ) ) {
 			self::$role_changer = new Role_Changer( self::get_skautis_gateway(), self::get_skautis_login() );
 		}
@@ -503,7 +503,7 @@ class Services {
 	 *
 	 * @return Users_Management The initialized service object.
 	 */
-	public static function get_users_management() {
+	private static function get_users_management() {
 		if ( is_null( self::$users_management ) ) {
 			self::$users_management = new Users_Management(
 				self::get_skautis_gateway(),
@@ -541,7 +541,7 @@ class Services {
 	 *
 	 * @return Login_Form The initialized service object.
 	 */
-	public static function get_login_form() {
+	private static function get_login_form() {
 		if ( is_null( self::$login_form ) ) {
 			self::$login_form = new Login_Form( self::get_wp_login_logout() );
 		}
