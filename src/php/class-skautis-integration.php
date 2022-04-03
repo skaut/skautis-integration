@@ -77,7 +77,7 @@ class Skautis_Integration {
 	}
 
 	protected function init() {
-		Services::get_services_container()['general'];
+		Services::get_general();
 		if ( is_admin() ) {
 			( Services::get_services_container()['admin'] );
 		} else {

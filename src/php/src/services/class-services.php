@@ -31,6 +31,74 @@ class Services {
 
 	protected static $services = null;
 
+	/**
+	 * A Skautis_Gateway service instance.
+	 *
+	 * @var Skautis_Gateway|null
+	 */
+	private static $skautis_gateway = null;
+
+	/**
+	 * A WP_Login_Logout service instance.
+	 *
+	 * Depends on $skautis_gateway.
+	 *
+	 * @var WP_Login_Logout|null
+	 */
+	private static $wp_login_logout = null;
+
+	/**
+	 * A Skautis_Login service instance.
+	 *
+	 * Depends on $skautis_gateway and $wp_login_logout.
+	 *
+	 * @var Skautis_Login|null
+	 */
+	private static $skautis_login = null;
+
+	/**
+	 * A Connect_And_Disconnect_WP_Account service instance.
+	 *
+	 * Depends on $skautis_gateway and $skautis_login.
+	 *
+	 * @var Connect_And_Disconnect_WP_Account|null
+	 */
+	private static $connect_and_disconnect_wp_account = null;
+
+	/**
+	 * An Actions service instance.
+	 *
+	 * Depends on $skautis_login, $wp_login_logout, $connect_and_disconnect_wp_account and $skautis_gateway.
+	 *
+	 * @var Actions|null
+	 */
+	private static $actions = null;
+
+	/**
+	 * A Revisions service instance.
+	 *
+	 * @var Revisions|null
+	 */
+	private static $revisions = null;
+
+	/**
+	 * A Rules_Init service instance.
+	 *
+	 * Depends on $revisions.
+	 *
+	 * @var Rules_Init|null
+	 */
+	private static $rules_init = null;
+
+	/**
+	 * A General service instance.
+	 *
+	 * Depends on $revisions.
+	 *
+	 * @var General|null
+	 */
+	private static $general = null;
+
 	protected static function init() {
 		self::$services = new Container();
 		self::register_services();
@@ -137,5 +205,101 @@ class Services {
 		}
 
 		return self::$services;
+	}
+
+	/**
+	 * Gets the Skautis_Gateway service.
+	 *
+	 * @return Skautis_Gateway The initialized service object.
+	 */
+	private static function get_skautis_gateway() {
+		if ( is_null( self::$skautis_gateway ) ) {
+			self::$skautis_gateway = new Skautis_Gateway();
+		}
+		return self::$skautis_gateway;
+	}
+
+	/**
+	 * Gets the WP_Login_Logout service.
+	 *
+	 * @return WP_Login_Logout The initialized service object.
+	 */
+	private static function get_wp_login_logout() {
+		if ( is_null( self::$wp_login_logout ) ) {
+			self::$wp_login_logout = new WP_Login_Logout( self::get_skautis_gateway() );
+		}
+		return self::$wp_login_logout;
+	}
+
+	/**
+	 * Gets the Skautis_Login service.
+	 *
+	 * @return Skautis_Login The initialized service object.
+	 */
+	private static function get_skautis_login() {
+		if ( is_null( self::$skautis_login ) ) {
+			self::$skautis_login = new Skautis_Login( self::get_skautis_gateway(), self::get_wp_login_logout() );
+		}
+		return self::$skautis_login;
+	}
+
+	/**
+	 * Gets the Connect_And_Disconnect_WP_Account service.
+	 *
+	 * @return Connect_And_Disconnect_WP_Account The initialized service object.
+	 */
+	private static function get_connect_and_disconnect_wp_account() {
+		if ( is_null( self::$connect_and_disconnect_wp_account ) ) {
+			self::$connect_and_disconnect_wp_account = new Connect_And_Disconnect_WP_Account( self::get_skautis_gateway(), self::get_skautis_login() );
+		}
+		return self::$connect_and_disconnect_wp_account;
+	}
+
+	/**
+	 * Gets the Actions service.
+	 *
+	 * @return Actions The initialized service object.
+	 */
+	private static function get_actions() {
+		if ( is_null( self::$actions ) ) {
+			self::$actions = new Actions( self::get_skautis_login(), self::get_wp_login_logout(), self::get_connect_and_disconnect_wp_account(), self::get_skautis_gateway() );
+		}
+		return self::$actions;
+	}
+
+	/**
+	 * Gets the Revisions service.
+	 *
+	 * @return Revisions The initialized service object.
+	 */
+	private static function get_revisions() {
+		if ( is_null( self::$revisions ) ) {
+			self::$revisions = new Revisions();
+		}
+		return self::$revisions;
+	}
+
+	/**
+	 * Gets the Rules_Init service.
+	 *
+	 * @return Rules_Init The initialized service object.
+	 */
+	private static function get_rules_init() {
+		if ( is_null( self::$rules_init ) ) {
+			self::$rules_init = new Rules_Init( self::get_revisions() );
+		}
+		return self::$rules_init;
+	}
+
+	/**
+	 * Gets the General service.
+	 *
+	 * @return General The initialized service object.
+	 */
+	public static function get_general() {
+		if ( is_null( self::$general ) ) {
+			self::$general = new General( self::get_actions(), self::get_rules_init() );
+		}
+		return self::$general;
 	}
 }
