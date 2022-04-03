@@ -17,11 +17,11 @@ use Skautis_Integration\Frontend\Login_Form;
 use Skautis_Integration\Admin\Admin;
 use Skautis_Integration\Admin\Settings;
 use Skautis_Integration\Admin\Users;
-use Skautis_Integration\Repository\Users as UsersRepository;
 use Skautis_Integration\Modules\Modules_Manager;
 use Skautis_Integration\Modules\Register\Register;
 use Skautis_Integration\Modules\Shortcodes\Shortcodes;
 use Skautis_Integration\Modules\Visibility\Visibility;
+use Skautis_Integration\Repository\Users as Repository_Users;
 use Skautis_Integration\Rules\Revisions;
 use Skautis_Integration\Rules\Rules_Init;
 use Skautis_Integration\Rules\Rules_Manager;
@@ -99,6 +99,15 @@ class Services {
 	 */
 	private static $general = null;
 
+	/**
+	 * A Repository_Users service instance.
+	 *
+	 * Depends on $skautis_gateway.
+	 *
+	 * @var Repository_Users|null
+	 */
+	private static $repository_users = null;
+
 	protected static function init() {
 		self::$services = new Container();
 		self::register_services();
@@ -171,7 +180,7 @@ class Services {
 
 		// Repositories
 		self::$services['repository_users'] = function ( Container $container ) {
-			return new UsersRepository( $container['skautisGateway'] );
+			return new Repository_Users( $container['skautisGateway'] );
 		};
 
 		// Modules
@@ -301,5 +310,17 @@ class Services {
 			self::$general = new General( self::get_actions(), self::get_rules_init() );
 		}
 		return self::$general;
+	}
+
+	/**
+	 * Gets the Repository_Users service.
+	 *
+	 * @return Repository_Users The initialized service object.
+	 */
+	public static function get_repository_users() {
+		if ( is_null( self::$repository_users ) ) {
+			self::$repository_users = new Repository_Users( self::get_skautis_gateway() );
+		}
+		return self::$repository_users;
 	}
 }
