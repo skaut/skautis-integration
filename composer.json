@@ -28,7 +28,6 @@
   },
   "require": {
     "php": "^7.4 || ^8.0",
-    "pimple/pimple": "^3.5",
     "skautis/skautis": "^2.2"
   },
   "require-dev": {
