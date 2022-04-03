@@ -17,6 +17,7 @@ use Skautis_Integration\Frontend\Login_Form;
 use Skautis_Integration\Admin\Admin;
 use Skautis_Integration\Admin\Settings;
 use Skautis_Integration\Admin\Users;
+use Skautis_Integration\Modules\Module;
 use Skautis_Integration\Modules\Modules_Manager;
 use Skautis_Integration\Modules\Register\Register;
 use Skautis_Integration\Modules\Shortcodes\Shortcodes;
@@ -30,6 +31,13 @@ use Skautis_Integration\Utils\Role_Changer;
 class Services {
 
 	protected static $services = null;
+
+	/**
+	 * All the plugin modules.
+	 *
+	 * @var array<Module>
+	 */
+	private static $modules = array();
 
 	/**
 	 * A Skautis_Gateway service instance.
@@ -195,7 +203,6 @@ class Services {
 		// Modules
 		self::$services['modulesManager'] = function ( Container $container ) {
 			return new Modules_Manager(
-				$container,
 				array( // for hard modules activation/deactivation look to modules/Modules_Manager WP filters
 					Register::get_id()   => Register::get_label(),
 					Visibility::get_id() => Visibility::get_label(),
@@ -223,6 +230,28 @@ class Services {
 		}
 
 		return self::$services;
+	}
+
+	/**
+	 * Gets an instance of a module.
+	 *
+	 * @return Module The initialized modules instance.
+	 */
+	public static function get_module( $module_id ) {
+		if ( ! array_key_exists( $module_id, self::$modules ) ) {
+			switch ( $module_id ) {
+				case Register::get_id():
+					self::$modules[ $module_id ] = new Register( self::get_skautis_gateway(), self::get_skautis_login(), self::get_wp_login_logout(), self::get_rules_manager(), self::get_repository_users() );
+					break;
+				case Shortcodes::get_id():
+					self::$modules[ $module_id ] = new Shortcodes( self::get_rules_manager(), self::get_skautis_login(), self::get_wp_login_logout() );
+					break;
+				case Visibility::get_id():
+					self::$modules[ $module_id ] = new Visibility( self::get_rules_manager(), self::get_skautis_login(), self::get_wp_login_logout() );
+					break;
+			}
+		}
+		return self::$modules[ $module_id ];
 	}
 
 	/**
