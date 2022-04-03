@@ -30,7 +30,6 @@ return array(
 		Finder::create()->files()
 			->name( array( '*.php', '/LICENSE(.txt)?/' ) )
 
-			->path( '#^pimple/pimple/#' )
 			->path( '#^psr/container/#' )
 			->path( '#^skautis/skautis/#' )
 			->path( '#^composer/#' )
