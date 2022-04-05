@@ -30,6 +30,9 @@ final class Actions {
 	// TODO: Unused?
 	private $frontend_dir_url = '';
 
+	/**
+	 * Constructs the service and saves all dependencies.
+	 */
 	public function __construct( Skautis_Login $skautis_login, WP_Login_Logout $wp_login_logout, Connect_And_Disconnect_WP_Account $connect_wp_account, Skautis_Gateway $skautis_gateway ) {
 		$this->skautis_gateway    = $skautis_gateway;
 		$this->skautis_login      = $skautis_login;
@@ -39,6 +42,9 @@ final class Actions {
 		$this->init_hooks();
 	}
 
+	/**
+	 * Intializes all hooks used by the object.
+	 */
 	private function init_hooks() {
 		add_action( 'init', array( $this, 'register_auth_rewrite_rules' ) );
 		add_action( 'query_vars', array( $this, 'register_auth_query_vars' ) );
@@ -71,6 +77,9 @@ final class Actions {
 		return $vars;
 	}
 
+	/**
+	 * Makes WordPress update rewrite rules if it is needed.
+	 */
 	public function flush_rewrite_rules_if_necessary() {
 		if ( get_option( 'skautis_rewrite_rules_need_to_flush' ) ) {
 			flush_rewrite_rules();

@@ -18,6 +18,9 @@ final class WP_Login_Logout {
 
 	private $skautis_gateway;
 
+	/**
+	 * Constructs the service and saves all dependencies.
+	 */
 	public function __construct( Skautis_Gateway $skautis_gateway ) {
 		$this->skautis_gateway = $skautis_gateway;
 	}
@@ -137,6 +140,9 @@ final class WP_Login_Logout {
 		}
 	}
 
+	/**
+	 * Logs the current user out.
+	 */
 	public function logout() {
 		$this->skautis_gateway->logout();
 

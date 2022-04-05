@@ -16,6 +16,9 @@ final class Skautis_Login {
 	private $skautis_gateway;
 	private $wp_login_logout;
 
+	/**
+	 * Constructs the service and saves all dependencies.
+	 */
 	public function __construct( Skautis_Gateway $skautis_gateway, WP_Login_Logout $wp_login_logout ) {
 		$this->skautis_gateway = $skautis_gateway;
 		$this->wp_login_logout = $wp_login_logout;

@@ -14,12 +14,18 @@ use Skautis_Integration\Modules\Register\Register;
 // phpcs:disable WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid
 
 if ( ! function_exists( 'getSkautisLoginUrl' ) ) {
+	/**
+	 * Returns a URL for logging in to SkautIS.
+	 */
 	function getSkautisLoginUrl(): string {
 		return Services::get_wp_login_logout()->get_login_url();
 	}
 }
 
 if ( ! function_exists( 'getSkautisLogoutUrl' ) ) {
+	/**
+	 * Returns a URL for logging out of SkautIS.
+	 */
 	function getSkautisLogoutUrl(): string {
 		return Services::get_wp_login_logout()->get_logout_url();
 	}
@@ -36,12 +42,18 @@ if ( ! function_exists( 'getSkautisRegisterUrl' ) ) {
 }
 
 if ( ! function_exists( 'isUserLoggedInSkautis' ) ) {
+	/**
+	 * Checks whether the current user is logged into SkautIS.
+	 */
 	function isUserLoggedInSkautis(): bool {
 		return Services::get_skautis_login()->is_user_logged_in_skautis();
 	}
 }
 
 if ( ! function_exists( 'userPassedRules' ) ) {
+	/**
+	 * Checks whether the current user passed plugin rules
+	 */
 	function userPassedRules( array $rules_ids ): bool {
 		return Services::get_rules_manager()->check_if_user_passed_rules( $rules_ids );
 	}
