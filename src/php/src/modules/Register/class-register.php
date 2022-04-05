@@ -35,6 +35,9 @@ final class Register implements Module {
 	private $users_repository;
 	private $wp_register;
 
+	/**
+	 * Constructs the module and saves all dependencies.
+	 */
 	public function __construct( Skautis_Gateway $skautis_gateway, Skautis_Login $skautis_login, WP_Login_Logout $wp_login_logout, Rules_Manager $rules_manager, UsersRepository $users_repository ) {
 		$this->skautis_gateway  = $skautis_gateway;
 		$this->skautis_login    = $skautis_login;
@@ -50,6 +53,9 @@ final class Register implements Module {
 		$this->init_hooks();
 	}
 
+	/**
+	 * Intializes all hooks used by the object.
+	 */
 	private function init_hooks() {
 		add_filter( SKAUTIS_INTEGRATION_NAME . '_frontend_actions_router', array( $this, 'addActionsToRouter' ) );
 		$return_url = Helpers::get_return_url();
@@ -82,18 +88,30 @@ final class Register implements Module {
 		}
 	}
 
+	/**
+	 * Returns the module ID.
+	 */
 	public static function get_id(): string {
 		return self::$id;
 	}
 
+	/**
+	 * Returns the localized module name.
+	 */
 	public static function get_label(): string {
 		return __( 'Registrace', 'skautis-integration' );
 	}
 
+	/**
+	 * Returns the path to the module.
+	 */
 	public static function get_path(): string {
 		return plugin_dir_path( __FILE__ );
 	}
 
+	/**
+	 * Returns the URL of the module.
+	 */
 	public static function get_url(): string {
 		return plugin_dir_url( __FILE__ );
 	}

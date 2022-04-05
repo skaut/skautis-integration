@@ -29,6 +29,9 @@ final class Shortcodes implements Module {
 
 	public static $id = 'module_Shortcodes';
 
+	/**
+	 * Constructs the module and saves all dependencies.
+	 */
 	public function __construct( Rules_Manager $rules_manager, Skautis_Login $skautis_login, WP_Login_Logout $wp_login_logout ) {
 		$this->rules_manager   = $rules_manager;
 		$this->skautis_login   = $skautis_login;
@@ -40,18 +43,30 @@ final class Shortcodes implements Module {
 		}
 	}
 
+	/**
+	 * Returns the module ID.
+	 */
 	public static function get_id(): string {
 		return self::$id;
 	}
 
+	/**
+	 * Returns the localized module name.
+	 */
 	public static function get_label(): string {
 		return __( 'Shortcodes', 'skautis-integration' );
 	}
 
+	/**
+	 * Returns the path to the module.
+	 */
 	public static function get_path(): string {
 		return plugin_dir_path( __FILE__ );
 	}
 
+	/**
+	 * Returns the URL of the module.
+	 */
 	public static function get_url(): string {
 		return plugin_dir_url( __FILE__ );
 	}

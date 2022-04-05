@@ -22,6 +22,9 @@ final class Frontend {
 	// TODO: Unused?
 	private $frontend_dir_url = '';
 
+	/**
+	 * Constructs the service and saves all dependencies.
+	 */
 	public function __construct( Login_Form $login_form, WP_Login_Logout $wp_login_logout, Skautis_Gateway $skautis_gateway ) {
 		$this->login_form       = $login_form;
 		$this->wp_login_logout  = $wp_login_logout;
