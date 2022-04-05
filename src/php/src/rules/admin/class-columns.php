@@ -11,10 +11,16 @@ namespace Skautis_Integration\Rules;
 
 class Columns {
 
+	/**
+	 * Intializes all hooks used by the object.
+	 */
 	public function __construct() {
 		$this->init_hooks();
 	}
 
+	/**
+	 * Intializes all hooks used by the object.
+	 */
 	protected function init_hooks() {
 		add_filter( 'manage_edit-' . Rules_Init::RULES_TYPE_SLUG . '_columns', array( $this, 'last_modified_admin_column' ) );
 		add_filter(

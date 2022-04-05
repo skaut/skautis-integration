@@ -91,6 +91,9 @@ final class WP_Login_Logout {
 		return false;
 	}
 
+	/**
+	 * Returns the SkautIS logout URL with all arguments initialized.
+	 */
 	public function get_login_url( string $return_url = '' ): string {
 		if ( ! $return_url ) {
 			$return_url = Helpers::get_login_logout_redirect();
@@ -107,6 +110,9 @@ final class WP_Login_Logout {
 		return esc_url( $url );
 	}
 
+	/**
+	 * Returns the SkautIS logout URL with all arguments and nonces initialized.
+	 */
 	public function get_logout_url( string $return_url = '' ): string {
 		if ( ! $return_url ) {
 			$return_url = Helpers::get_login_logout_redirect();

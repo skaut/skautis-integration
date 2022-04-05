@@ -57,6 +57,9 @@ final class Actions {
 		add_filter( 'allowed_redirect_hosts', array( $this, 'add_redirect_hosts' ) );
 	}
 
+	/**
+	 * Adds both test and live SkautIS to host that WordPress is allowed to redirect to.
+	 */
 	public function add_redirect_hosts( $hosts ) {
 		$hosts[] = 'test-is.skaut.cz';
 		$hosts[] = 'is.skaut.cz';
@@ -71,6 +74,9 @@ final class Actions {
 		}
 	}
 
+	/**
+	 * Adds query variables that WordPress is allowed to use when redirecting.
+	 */
 	public function register_auth_query_vars( array $vars = array() ): array {
 		$vars[] = 'skautis_auth';
 

@@ -24,6 +24,9 @@ final class Skautis_Login {
 		$this->wp_login_logout = $wp_login_logout;
 	}
 
+	/**
+	 * Checks whether the current user is logged into SkautIS.
+	 */
 	public function is_user_logged_in_skautis(): bool {
 		if ( $this->skautis_gateway->is_initialized() ) {
 			return $this->skautis_gateway->get_skautis_instance()->getUser()->isLoggedIn() && $this->skautis_gateway->get_skautis_instance()->getUser()->isLoggedIn( true );
@@ -74,7 +77,7 @@ final class Skautis_Login {
 
 	public function login_confirm() {
 		$return_url = Helpers::get_return_url();
-        // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		if ( $this->set_login_data_to_local_skautis_instance( $_POST ) ) {
 			if ( is_null( $return_url ) || strpos( $return_url, 'noWpLogin' ) === false ) {
 				$this->wp_login_logout->login_to_wp();
@@ -94,6 +97,9 @@ final class Skautis_Login {
 		}
 	}
 
+	/**
+	 * Changes the user's role in SkautIS.
+	 */
 	public function change_user_role_in_skautis( int $role_id ) {
 		if ( $role_id > 0 ) {
 			$result = $this->skautis_gateway->get_skautis_instance()->UserManagement->LoginUpdate(

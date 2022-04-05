@@ -19,6 +19,9 @@ final class General {
 	// TODO: Unused?
 	private $rules_init;
 
+	/**
+	 * Constructs the service and saves all dependencies.
+	 */
 	public function __construct( Actions $actions, Rules_Init $rules_init ) {
 		$this->actions    = $actions;
 		$this->rules_init = $rules_init;
