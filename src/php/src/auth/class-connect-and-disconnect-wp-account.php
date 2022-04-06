@@ -17,6 +17,9 @@ final class Connect_And_Disconnect_WP_Account {
 	private $skautis_gateway;
 	private $skautis_login;
 
+	/**
+	 * Constructs the service and saves all dependencies.
+	 */
 	public function __construct( Skautis_Gateway $skautis_gateway, Skautis_Login $skautis_login ) {
 		$this->skautis_gateway = $skautis_gateway;
 		$this->skautis_login   = $skautis_login;
@@ -60,7 +63,7 @@ final class Connect_And_Disconnect_WP_Account {
 
 	public function connect() {
 		if ( ! $this->skautis_login->is_user_logged_in_skautis() ) {
-            // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 			if ( ! $this->skautis_login->set_login_data_to_local_skautis_instance( $_POST ) ) {
 				$return_url = Helpers::get_return_url() ?? Helpers::get_current_url();
 				wp_safe_redirect( esc_url_raw( $this->skautis_gateway->get_skautis_instance()->getLoginUrl( $return_url ) ), 302 );

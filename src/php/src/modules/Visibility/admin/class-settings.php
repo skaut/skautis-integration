@@ -13,10 +13,16 @@ use Skautis_Integration\Utils\Helpers;
 
 final class Settings {
 
+	/**
+	 * Constructs the service and saves all dependencies.
+	 */
 	public function __construct() {
 		$this->init_hooks();
 	}
 
+	/**
+	 * Intializes all hooks used by the object.
+	 */
 	private function init_hooks() {
 		if ( ! is_admin() ) {
 			return;
@@ -26,6 +32,9 @@ final class Settings {
 		add_action( 'admin_init', array( $this, 'setup_setting_fields' ) );
 	}
 
+	/**
+	 * Adds an admin settings page for the Visibility module.
+	 */
 	public function setup_setting_page() {
 		add_submenu_page(
 			SKAUTIS_INTEGRATION_NAME,
@@ -37,6 +46,9 @@ final class Settings {
 		);
 	}
 
+	/**
+	 * Prints the admin settings page for the Visibility module.
+	 */
 	public function print_setting_page() {
 		if ( ! Helpers::user_is_skautis_manager() ) {
 			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'skautis-integration' ) );
@@ -57,6 +69,9 @@ final class Settings {
 		<?php
 	}
 
+	/**
+	 * Adds Visibility module seetings to WordPress.
+	 */
 	public function setup_setting_fields() {
 		add_settings_section(
 			SKAUTIS_INTEGRATION_NAME . '_modules_visibility',

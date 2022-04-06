@@ -17,6 +17,9 @@ class Role_Changer {
 	protected $skautis_gateway;
 	protected $skautis_login;
 
+	/**
+	 * Constructs the service and saves all dependencies.
+	 */
 	public function __construct( Skautis_Gateway $skautis_gateway, Skautis_Login $skautis_login ) {
 		$this->skautis_gateway = $skautis_gateway;
 		$this->skautis_login   = $skautis_login;
@@ -38,6 +41,9 @@ class Role_Changer {
 		);
 	}
 
+	/**
+	 * Prints the SkautIS role changer.
+	 */
 	public function print_change_roles_form() {
 		$current_user_roles = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserRoleAll(
 			array(

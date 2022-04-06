@@ -18,6 +18,9 @@ final class Metabox {
 	private $rules_manager;
 	private $frontend;
 
+	/**
+	 * Constructs the service and saves all dependencies.
+	 */
 	public function __construct( array $post_types, Rules_Manager $rules_manager, Frontend $frontend ) {
 		$this->post_types    = $post_types;
 		$this->rules_manager = $rules_manager;
@@ -25,11 +28,17 @@ final class Metabox {
 		$this->init_hooks();
 	}
 
+	/**
+	 * Intializes all hooks used by the object.
+	 */
 	private function init_hooks() {
 		add_action( 'add_meta_boxes', array( $this, 'add_metabox_for_rules_field' ) );
 		add_action( 'save_post', array( $this, 'save_rules_custom_field' ) );
 	}
 
+	/**
+	 * Adds the metabox to WordPress.
+	 */
 	public function add_metabox_for_rules_field() {
 		foreach ( $this->post_types as $post_type ) {
 			add_meta_box(
@@ -41,6 +50,9 @@ final class Metabox {
 		}
 	}
 
+	/**
+	 * Saves the data from the metabox to the post meta.
+	 */
 	public function save_rules_custom_field( int $post_id ) {
 		if ( ! isset( $_POST[ SKAUTIS_INTEGRATION_NAME . '_visibility_metabox_nonce' ] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ SKAUTIS_INTEGRATION_NAME . '_visibility_metabox_nonce' ] ) ), SKAUTIS_INTEGRATION_NAME . '_visibility_metabox' ) ) {
 			return;
@@ -78,6 +90,9 @@ final class Metabox {
 		}
 	}
 
+	/**
+	 * Prints the rules metabox.
+	 */
 	public function rules_repeater( \WP_Post $post ) {
 		$post_type_object = get_post_type_object( $post->post_type );
 		$include_children = get_post_meta( $post->ID, SKAUTIS_INTEGRATION_NAME . '_rules_includeChildren', true );

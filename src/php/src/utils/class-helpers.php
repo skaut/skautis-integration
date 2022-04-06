@@ -78,6 +78,9 @@ class Helpers {
 		wp_enqueue_style( SKAUTIS_INTEGRATION_NAME . '_' . $handle );
 	}
 
+	/**
+	 * Parses and sanitizes a login or logout redirect URL from GET variablea.
+	 */
 	public static function get_login_logout_redirect() {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( isset( $_GET['redirect_to'] ) && '' !== $_GET['redirect_to'] ) {
@@ -88,6 +91,9 @@ class Helpers {
 		return is_null( $return_url ) ? self::get_current_url() : $return_url;
 	}
 
+	/**
+	 * Parses and sanitizes the `ReturnUrl` GET variable.
+	 */
 	public static function get_return_url() {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( ! isset( $_GET['ReturnUrl'] ) || '' === $_GET['ReturnUrl'] ) {
@@ -97,6 +103,9 @@ class Helpers {
 		return esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) );
 	}
 
+	/**
+	 * Shows a notice in the administration.
+	 */
 	public static function show_admin_notice( string $message, string $type = 'warning', string $hide_notice_on_page = '' ) {
 		add_action(
 			'admin_notices',
@@ -129,6 +138,9 @@ class Helpers {
 		return current_user_can( self::get_skautis_manager_capability() );
 	}
 
+	/**
+	 * Returns the current URL.
+	 */
 	public static function get_current_url(): string {
 		if ( isset( $_SERVER['HTTP_HOST'] ) && isset( $_SERVER['REQUEST_URI'] ) ) {
 			return esc_url_raw( ( isset( $_SERVER['HTTPS'] ) ? 'https' : 'http' ) . '://' . wp_unslash( $_SERVER['HTTP_HOST'] ) . wp_unslash( $_SERVER['REQUEST_URI'] ) );
@@ -136,12 +148,18 @@ class Helpers {
 		return '';
 	}
 
+	/**
+	 * Parses a nonce from a URL and verifies it.
+	 */
 	public static function validate_nonce_from_url( string $url, string $nonce_name ) {
 		if ( ! wp_verify_nonce( self::get_nonce_from_url( urldecode( $url ), $nonce_name ), $nonce_name ) ) {
 			wp_nonce_ays( $nonce_name );
 		}
 	}
 
+	/**
+	 * Parses a GET variable from a URL.
+	 */
 	public static function get_variable_from_url( string $url, string $variable_name ): string {
 		$result = array();
 		$url    = esc_url_raw( $url );
@@ -154,6 +172,9 @@ class Helpers {
 		return '';
 	}
 
+	/**
+	 * Parses a nonce from a URL.
+	 */
 	public static function get_nonce_from_url( string $url, string $nonce_name ): string {
 		return self::get_variable_from_url( $url, $nonce_name );
 	}

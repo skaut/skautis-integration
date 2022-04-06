@@ -19,6 +19,9 @@ final class Rules_Manager {
 	private $wp_login_logout;
 	private $rules = array();
 
+	/**
+	 * Constructs the service and saves all dependencies.
+	 */
 	public function __construct( Skautis_Gateway $skautis_gateway, WP_Login_Logout $wp_login_logout ) {
 		$this->skautis_gateway = $skautis_gateway;
 		$this->wp_login_logout = $wp_login_logout;

@@ -18,6 +18,9 @@ final class Admin {
 	// TODO: Unused?
 	private $admin_dir_url = '';
 
+	/**
+	 * Constructs the service and saves all dependencies.
+	 */
 	public function __construct( Rules_Manager $rules_manager ) {
 		$this->rules_manager = $rules_manager;
 		$this->admin_dir_url = plugin_dir_url( __FILE__ ) . 'public/';
@@ -25,6 +28,9 @@ final class Admin {
 		$this->init_hooks();
 	}
 
+	/**
+	 * Intializes all hooks used by the object.
+	 */
 	private function init_hooks() {
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
@@ -32,12 +38,18 @@ final class Admin {
 		add_action( 'admin_footer', array( $this, 'init_rules_data' ) );
 	}
 
+	/**
+	 * Enqueues all styles needed for the user registration admin page.
+	 */
 	public function enqueue_styles() {
 		if ( get_current_screen()->id === 'skautis_page_skautis-integration_modules_register' ) {
 			Helpers::enqueue_style( 'modules_register', 'modules/Register/admin/css/skautis-modules-register-admin.min.css' );
 		}
 	}
 
+	/**
+	 * Enqueues all scripts needed for the user registration admin page.
+	 */
 	public function enqueue_scripts() {
 		if ( get_current_screen()->id === 'skautis_page_skautis-integration_modules_register' ) {
 			wp_enqueue_script( 'jquery-ui-sortable' );

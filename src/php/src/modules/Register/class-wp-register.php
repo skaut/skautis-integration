@@ -18,6 +18,9 @@ final class WP_Register {
 	private $skautis_gateway;
 	private $users_repository;
 
+	/**
+	 * Constructs the service and saves all dependencies.
+	 */
 	public function __construct( Skautis_Gateway $skautis_gateway, UsersRepository $users_repository ) {
 		$this->skautis_gateway  = $skautis_gateway;
 		$this->users_repository = $users_repository;
