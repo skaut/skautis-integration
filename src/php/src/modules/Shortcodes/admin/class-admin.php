@@ -16,12 +16,18 @@ final class Admin {
 	private $rules_manager;
 	private $settings;
 
+	/**
+	 * Constructs the service and saves all dependencies.
+	 */
 	public function __construct( Rules_Manager $rules_manager ) {
 		$this->rules_manager = $rules_manager;
 		$this->settings      = new Settings();
 		$this->init_hooks();
 	}
 
+	/**
+	 * Intializes all hooks used by the object.
+	 */
 	private function init_hooks() {
 		add_action( 'admin_footer', array( $this, 'init_available_rules' ) );
 
@@ -36,18 +42,27 @@ final class Admin {
 		);
 	}
 
+	/**
+	 * Registers the TinyMCE shortcode button code.
+	 */
 	public function register_tinymce_plugin( array $plugins = array() ): array {
 		$plugins['skautis_rules'] = plugin_dir_url( dirname( __FILE__, 4 ) ) . 'modules/Shortcodes/admin/js/skautis-modules-shortcodes-tinymceRulesButton.min.js';
 
 		return $plugins;
 	}
 
+	/**
+	 * Adds the TinyMCE shortcode button to the UI.
+	 */
 	public function add_tinymce_button( array $buttons = array() ): array {
 		$buttons[] = 'skautis_rules';
 
 		return $buttons;
 	}
 
+	/**
+	 * Initializes dynamic options for the shortcode button JS code.
+	 */
 	public function init_available_rules() {
 		?>
 		<script>

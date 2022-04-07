@@ -23,6 +23,9 @@ final class Settings {
 	private $modules_manager;
 	private $admin_dir_url = '';
 
+	/**
+	 * Constructs the service and saves all dependencies.
+	 */
 	public function __construct( Skautis_Gateway $skautis_gateway, Modules_Manager $modules_manager ) {
 		$this->skautis_gateway = $skautis_gateway;
 		$this->modules_manager = $modules_manager;
@@ -30,6 +33,9 @@ final class Settings {
 		$this->init_hooks();
 	}
 
+	/**
+	 * Intializes all hooks used by the object.
+	 */
 	private function init_hooks() {
 		add_filter(
 			'plugin_action_links_' . SKAUTIS_INTEGRATION_PLUGIN_BASENAME,
@@ -53,6 +59,9 @@ final class Settings {
 		$this->check_if_app_id_is_set_and_show_notices();
 	}
 
+	/**
+	 * Shows a notice in the administration if the app id is not set.
+	 */
 	private function check_if_app_id_is_set_and_show_notices() {
 		$env_type = get_option( 'skautis_integration_appid_type' );
 		if ( Skautis_Gateway::PROD_ENV === $env_type ) {
@@ -71,6 +80,9 @@ final class Settings {
 		}
 	}
 
+	/**
+	 * Adds a link to the plugin settings to the plugin management table.
+	 */
 	public function add_settings_link_to_plugins_table( array $links = array() ): array {
 		$mylinks = array(
 			'<a href="' . admin_url( 'admin.php?page=' . SKAUTIS_INTEGRATION_NAME, 'skautis-integration' ) . '">' . __( 'Settings', 'skautis-integration' ) . '</a>',
@@ -79,6 +91,9 @@ final class Settings {
 		return array_merge( $links, $mylinks );
 	}
 
+	/**
+	 * Adds a link to the plugin help to the plugin management table.
+	 */
 	public function add_help_link_to_plugins_table( array $links = array() ): array {
 		$mylinks = array(
 			'<a href="' . self::HELP_PAGE_URL . '" target="_blank">' . __( 'Help', 'skautis-integration' ) . '</a>',
@@ -87,6 +102,9 @@ final class Settings {
 		return array_merge( $links, $mylinks );
 	}
 
+	/**
+	 * Adds the settings pages to the administration.
+	 */
 	public function setup_setting_page() {
 		add_menu_page(
 			__( 'Obecné', 'skautis-integration' ),
@@ -125,6 +143,9 @@ final class Settings {
 		);
 	}
 
+	/**
+	 * Prints the basic settings page.
+	 */
 	public function print_setting_page() {
 		if ( ! current_user_can( Helpers::get_skautis_manager_capability() ) ) {
 			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'skautis-integration' ) );
@@ -152,6 +173,9 @@ final class Settings {
 		return sanitize_text_field( $value );
 	}
 
+	/**
+	 * Adds basic settings to WordPress.
+	 */
 	public function setup_setting_fields() {
 		add_settings_section(
 			'skautis_integration_setting',
@@ -261,6 +285,9 @@ final class Settings {
 		);
 	}
 
+	/**
+	 * Prints the login settings page.
+	 */
 	public function print_login_page() {
 		if ( ! current_user_can( Helpers::get_skautis_manager_capability() ) ) {
 			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'skautis-integration' ) );
@@ -281,6 +308,9 @@ final class Settings {
 		<?php
 	}
 
+	/**
+	 * Adds login settings to WordPress.
+	 */
 	public function setup_login_fields() {
 		add_settings_section(
 			SKAUTIS_INTEGRATION_NAME . '_login',
@@ -357,14 +387,23 @@ final class Settings {
 		}
 	}
 
+	/**
+	 * Prints the settings field for the production app id.
+	 */
 	public function field_app_id_prod() {
 		echo '<input name="skautis_integration_appid_prod" id="skautis_integration_appid_prod" type="text" value="' . esc_attr( get_option( 'skautis_integration_appid_prod' ) ) . '" class="regular-text" />';
 	}
 
+	/**
+	 * Prints the settings field for the testing app id.
+	 */
 	public function field_app_id_test() {
 		echo '<input name="skautis_integration_appid_test" id="skautis_integration_appid_test" type="text" value="' . esc_attr( get_option( 'skautis_integration_appid_test' ) ) . '" class="regular-text" />';
 	}
 
+	/**
+	 * Prints the settings field for choosing between testing and production environment.
+	 */
 	public function field_app_id_type() {
 		$app_id_type = get_option( 'skautis_integration_appid_type' );
 		?>
@@ -382,6 +421,9 @@ final class Settings {
 		<?php
 	}
 
+	/**
+	 * Prints the settings field for custom login URL.
+	 */
 	public function field_login_page_url() {
 		echo esc_html( get_home_url() ) . '/<input name="' . esc_attr( SKAUTIS_INTEGRATION_NAME ) . '_login_page_url" id="' . esc_attr( SKAUTIS_INTEGRATION_NAME ) . '_login_page_url" type="text" value="' . esc_attr( get_option( SKAUTIS_INTEGRATION_NAME . '_login_page_url' ) ) . '" class="regular-text" placeholder="skautis/prihlaseni" />';
 		?>
@@ -443,6 +485,9 @@ if ( ! isUserLoggedInSkautis() ) {
 		<?php
 	}
 
+	/**
+	 * Prints the settings field for dis/allowing users to disconnect their SkautIS account from their WordPress account.
+	 */
 	public function field_allow_users_disconnect_from_skautis() {
 		?>
 		<input name="<?php echo esc_attr( SKAUTIS_INTEGRATION_NAME ); ?>_allowUsersDisconnectFromSkautis"
@@ -454,6 +499,9 @@ if ( ! isUserLoggedInSkautis() ) {
 		<?php
 	}
 
+	/**
+	 * Prints the settings field for checking user rules on each login.
+	 */
 	public function field_check_user_privileges_if_login_by_skautis() {
 		?>
 		<input name="<?php echo esc_attr( SKAUTIS_INTEGRATION_NAME ); ?>_checkUserPrivilegesIfLoginBySkautis"
@@ -465,6 +513,9 @@ if ( ! isUserLoggedInSkautis() ) {
 		<?php
 	}
 
+	/**
+	 * Prints the module settings page.
+	 */
 	public function print_modules_page() {
 		if ( ! Helpers::user_is_skautis_manager() ) {
 			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'skautis-integration' ) );

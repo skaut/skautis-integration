@@ -23,6 +23,9 @@ final class Admin {
 	// TODO: Unused?
 	private $admin_dir_url = '';
 
+	/**
+	 * Constructs the service and saves all dependencies.
+	 */
 	public function __construct( array $post_types, Rules_Manager $rules_manager, Frontend $frontend ) {
 		$this->post_types    = $post_types;
 		$this->rules_manager = $rules_manager;
@@ -33,12 +36,18 @@ final class Admin {
 		$this->init_hooks();
 	}
 
+	/**
+	 * Intializes all hooks used by the object.
+	 */
 	private function init_hooks() {
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts_and_styles' ) );
 		add_action( 'admin_footer', array( $this, 'init_rules_options' ) );
 		add_action( 'admin_footer', array( $this, 'init_rules_data' ) );
 	}
 
+	/**
+	 * Enqueues all scripts and styles needed for the visibility module.
+	 */
 	public function enqueue_scripts_and_styles() {
 		if ( in_array( get_current_screen()->id, $this->post_types, true ) ||
 			get_current_screen()->id === 'skautis_page_' . SKAUTIS_INTEGRATION_NAME . '_modules_visibility' ) {
@@ -62,6 +71,9 @@ final class Admin {
 		}
 	}
 
+	/**
+	 * Initializes dynamic options for the visibility JS code.
+	 */
 	public function init_rules_options() {
 		if ( in_array( get_current_screen()->id, $this->post_types, true ) ) {
 			$rules = array();
@@ -77,6 +89,9 @@ final class Admin {
 		}
 	}
 
+	/**
+	 * Initializes dynamic options for the visibility JS code.
+	 */
 	public function init_rules_data() {
 		if ( in_array( get_current_screen()->id, $this->post_types, true ) ) {
 			$data = get_post_meta( get_the_ID(), SKAUTIS_INTEGRATION_NAME . '_rules', true );

@@ -26,6 +26,9 @@ class Skautis_Gateway {
 	protected $test_mode = WP_DEBUG;
 	protected $env       = '';
 
+	/**
+	 * Constructs the service and saves all dependencies.
+	 */
 	public function __construct() {
 		$env_type = get_option( 'skautis_integration_appid_type' );
 		if ( self::PROD_ENV === $env_type ) {
@@ -51,23 +54,38 @@ class Skautis_Gateway {
 		}
 	}
 
+	/**
+	 * Returns the current SkautIS environment (testing or production).
+	 */
 	public function get_env(): string {
 		return $this->env;
 	}
 
+	/**
+	 * Returns the raw SkauIS library instance
+	 */
 	public function get_skautis_instance(): Skautis\Skautis {
 		return $this->skautis;
 	}
 
+	/**
+	 * Checks whether the SkautIS library instance is initialized.
+	 */
 	public function is_initialized(): bool {
 		return $this->skautis_initialized;
 	}
 
+	/**
+	 * Logs the user out of SkautIS.
+	 */
 	public function logout() {
 		$this->skautis->setLoginData( array() );
 		wp_remote_get( esc_url_raw( $this->get_skautis_instance()->getLogoutUrl() ) );
 	}
 
+	/**
+	 * Performs a dummy request to SkautIS to check whether the library is initialized correctly.
+	 */
 	public function test_active_app_id() {
 		try {
 			if ( isset( $this->skautis ) ) {
