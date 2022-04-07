@@ -34,6 +34,9 @@ final class Frontend {
 		$this->init_hooks();
 	}
 
+	/**
+	 * Intializes all hooks used by the object.
+	 */
 	private function init_hooks() {
 		if ( get_option( SKAUTIS_INTEGRATION_NAME . '_login_page_url' ) ) {
 			add_filter( 'query_vars', array( $this, 'register_query_vars' ) );
@@ -72,6 +75,9 @@ final class Frontend {
 		return $path;
 	}
 
+	/**
+	 * Enqueues frontend styles.
+	 */
 	public function enqueue_styles() {
 		if ( $this->pluginLoginView ) {
 			wp_enqueue_style( 'buttons' );
@@ -80,10 +86,16 @@ final class Frontend {
 		Helpers::enqueue_style( 'frontend', 'frontend/css/skautis-frontend.min.css' );
 	}
 
+	/**
+	 * Enqueues login styles.
+	 */
 	public function enqueue_login_styles() {
 		Helpers::enqueue_style( 'frontend', 'frontend/css/skautis-frontend.min.css' );
 	}
 
+	/**
+	 * Adds a link to admin bar right-hand-side menu to log out from both WordPress and SkautIS at once.
+	 */
 	public function add_logout_link_to_admin_bar( \WP_Admin_Bar $wp_admin_bar ) {
 		if ( ! function_exists( 'is_admin_bar_showing' ) ) {
 			return;

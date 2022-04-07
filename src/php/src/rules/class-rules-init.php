@@ -18,11 +18,17 @@ final class Rules_Init {
 
 	private $revisions;
 
+	/**
+	 * Constructs the service and saves all dependencies.
+	 */
 	public function __construct( Revisions $revisions ) {
 		$this->revisions = $revisions;
 		$this->init_hooks();
 	}
 
+	/**
+	 * Intializes all hooks used by the object.
+	 */
 	private function init_hooks() {
 		add_action( 'init', array( $this, 'register_post_type' ) );
 
@@ -33,6 +39,9 @@ final class Rules_Init {
 		}
 	}
 
+	/**
+	 * Registers the rule post type with WordPress.
+	 */
 	public function register_post_type() {
 		$labels       = array(
 			'name'                  => _x( 'Správa pravidel', 'Post Type General Name', 'skautis-integration' ),
@@ -101,6 +110,9 @@ final class Rules_Init {
 		register_post_type( self::RULES_TYPE_SLUG, $args );
 	}
 
+	/**
+	 * Registers the default content for the rules post types.
+	 */
 	public function default_content( string $content ): string {
 		global $post_type;
 		if ( self::RULES_TYPE_SLUG === $post_type ) {
@@ -110,6 +122,9 @@ final class Rules_Init {
 		return $content;
 	}
 
+	/**
+	 * Registers the title placeholder for the rules post types.
+	 */
 	public function title_placeholder( string $title ): string {
 		global $post_type;
 		if ( self::RULES_TYPE_SLUG === $post_type ) {
@@ -144,6 +159,9 @@ final class Rules_Init {
 		return $messages;
 	}
 
+	/**
+	 * Returns all rules.
+	 */
 	public function get_all_rules(): array {
 		$rules_wp_query = new \WP_Query(
 			array(

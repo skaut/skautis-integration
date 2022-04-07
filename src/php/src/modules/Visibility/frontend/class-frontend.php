@@ -21,6 +21,9 @@ final class Frontend {
 	private $skautis_login;
 	private $wp_login_logout;
 
+	/**
+	 * Constructs the service and saves all dependencies.
+	 */
 	public function __construct( array $post_types, Rules_Manager $rules_manager, Skautis_Login $skautis_login, WP_Login_Logout $wp_login_logout ) {
 		$this->post_types      = $post_types;
 		$this->rules_manager   = $rules_manager;
@@ -28,6 +31,9 @@ final class Frontend {
 		$this->wp_login_logout = $wp_login_logout;
 	}
 
+	/**
+	 * Intializes all hooks used by the object.
+	 */
 	public function init_hooks() {
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ) );
 		add_action( 'posts_results', array( $this, 'filter_posts' ), 10, 2 );
@@ -156,6 +162,9 @@ final class Frontend {
 		}
 	}
 
+	/**
+	 * Enqueues styles for the frontend part of the Visibility module.
+	 */
 	public function enqueue_styles() {
 		wp_enqueue_style( 'buttons' );
 		wp_enqueue_style( SKAUTIS_INTEGRATION_NAME, SKAUTIS_INTEGRATION_URL . 'src/frontend/public/css/skautis-frontend.css', array(), SKAUTIS_INTEGRATION_VERSION, 'all' );

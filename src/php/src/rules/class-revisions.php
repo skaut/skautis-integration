@@ -11,10 +11,16 @@ namespace Skautis_Integration\Rules;
 
 class Revisions {
 
+	/**
+	 * Constructs the service and saves all dependencies.
+	 */
 	public function __construct() {
 		$this->init_hooks();
 	}
 
+	/**
+	 * Intializes all hooks used by the object.
+	 */
 	protected function init_hooks() {
 		add_action( 'save_post', array( $this, 'save_post' ), 10 );
 		add_action( 'wp_restore_post_revision', array( $this, 'restore_revision' ), 10, 2 );

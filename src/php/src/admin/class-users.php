@@ -17,11 +17,17 @@ final class Users {
 
 	private $connect_wp_account;
 
+	/**
+	 * Constructs the service and saves all dependencies.
+	 */
 	public function __construct( Connect_And_Disconnect_WP_Account $connect_wp_account ) {
 		$this->connect_wp_account = $connect_wp_account;
 		$this->init_hooks();
 	}
 
+	/**
+	 * Intializes all hooks used by the object.
+	 */
 	private function init_hooks() {
 		add_filter( 'manage_users_columns', array( $this, 'add_column_header_to_users_table' ) );
 		add_filter( 'manage_users_custom_column', array( $this, 'add_column_to_users_table' ), 10, 3 );

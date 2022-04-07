@@ -15,17 +15,26 @@ final class Login_Form {
 
 	private $wp_register;
 
+	/**
+	 * Constructs the service and saves all dependencies.
+	 */
 	public function __construct( WP_Register $wp_register ) {
 		$this->wp_register = $wp_register;
 		$this->init_hooks();
 	}
 
+	/**
+	 * Intializes all hooks used by the object.
+	 */
 	private function init_hooks() {
 		add_action( 'login_form', array( $this, 'login_link_in_login_form' ) );
 		add_action( 'login_enqueue_scripts', array( $this, 'enqueue_login_styles' ) );
 		add_filter( 'login_form_bottom', array( $this, 'login_link_in_login_form_return' ) );
 	}
 
+	/**
+	 * Enqueues login page styles.
+	 */
 	public function enqueue_login_styles() {
 		wp_enqueue_style( SKAUTIS_INTEGRATION_NAME . '_frontend' );
 	}
