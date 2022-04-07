@@ -32,6 +32,9 @@ class Users_Management {
 	// TODO: Unused?
 	protected $admin_dir_url = '';
 
+	/**
+	 * Constructs the service and saves all dependencies.
+	 */
 	public function __construct( Skautis_Gateway $skautis_gateway, WP_Login_Logout $wp_login_logout, Skautis_Login $skautis_login, Connect_And_Disconnect_WP_Account $connect_and_disconnect_wp_account, UsersRepository $users_repository, Role_Changer $role_changer ) {
 		$this->skautis_gateway                   = $skautis_gateway;
 		$this->wp_login_logout                   = $wp_login_logout;
@@ -44,6 +47,9 @@ class Users_Management {
 		$this->init_hooks();
 	}
 
+	/**
+	 * Intializes all hooks used by the object.
+	 */
 	protected function init_hooks() {
 		add_action(
 			'admin_menu',
@@ -72,6 +78,9 @@ class Users_Management {
 		);
 	}
 
+	/**
+	 * Enqueues scripts and styles used for the user management table.
+	 */
 	public function enqueue_scripts_and_styles( $hook_suffix ) {
 		if ( ! str_ends_with( $hook_suffix, SKAUTIS_INTEGRATION_NAME . '_usersManagement' ) ) {
 			return;
@@ -118,6 +127,9 @@ class Users_Management {
 		);
 	}
 
+	/**
+	 * Registers the user management administration page with WordPress.
+	 */
 	public function setup_users_management_page() {
 		add_submenu_page(
 			SKAUTIS_INTEGRATION_NAME,
@@ -129,6 +141,9 @@ class Users_Management {
 		);
 	}
 
+	/**
+	 * Prints the user management administration page.
+	 */
 	public function print_child_users() {
 		if ( ! Helpers::user_is_skautis_manager() ) {
 			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'skautis-integration' ) );

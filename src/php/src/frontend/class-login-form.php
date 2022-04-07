@@ -20,12 +20,18 @@ final class Login_Form {
 	// TODO: Unused?
 	private $frontend_dir_url = '';
 
+	/**
+	 * Constructs the service and saves all dependencies.
+	 */
 	public function __construct( WP_Login_Logout $wp_login_logout ) {
 		$this->wp_login_logout  = $wp_login_logout;
 		$this->frontend_dir_url = plugin_dir_url( __FILE__ ) . 'public/';
 		$this->init_hooks();
 	}
 
+	/**
+	 * Intializes all hooks used by the object.
+	 */
 	private function init_hooks() {
 		if ( ! Services::get_modules_manager()->is_module_activated( Register::get_id() ) ) {
 			add_action( 'login_form', array( $this, 'login_link_in_login_form' ) );

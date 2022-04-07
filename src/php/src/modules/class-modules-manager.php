@@ -38,8 +38,8 @@ final class Modules_Manager {
 	}
 
 	/**
-	* Returns a list of all modules (even inactive ones).
-	*/
+	 * Returns a list of all modules (even inactive ones).
+	 */
 	public function get_all_modules(): array {
 		return $this->modules;
 	}
