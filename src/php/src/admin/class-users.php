@@ -64,6 +64,7 @@ final class Users {
 	}
 
 	public function skautis_user_id_field( \WP_User $user ) {
+		// TODO: SkautIS, not skautIS
 		?>
 		<h3><?php esc_html_e( 'skautIS', 'skautis-integration' ); ?></h3>
 		<?php

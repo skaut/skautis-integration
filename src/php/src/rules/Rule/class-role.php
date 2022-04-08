@@ -84,6 +84,9 @@ class Role implements Rule {
 		return '';
 	}
 
+	/**
+	 * Returns an optional additional description of the rule.
+	 */
 	public function get_description(): string {
 		return '';
 	}
@@ -118,6 +121,9 @@ class Role implements Rule {
 		);
 	}
 
+	/**
+	 * Returns an array of arrays where for each user role ID, there are listed units asssociated with that role.
+	 */
 	protected function getUserRolesWithUnitIds(): array {
 		static $user_roles = null;
 

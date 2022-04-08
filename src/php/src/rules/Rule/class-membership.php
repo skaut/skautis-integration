@@ -84,6 +84,9 @@ class Membership implements Rule {
 		return '';
 	}
 
+	/**
+	 * Returns an optional additional description of the rule.
+	 */
 	public function get_description(): string {
 		return '';
 	}

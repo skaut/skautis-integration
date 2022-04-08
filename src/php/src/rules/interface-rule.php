@@ -51,6 +51,9 @@ interface Rule {
 	 */
 	public function get_placeholder(): string;
 
+	/**
+	 * Returns an optional additional description of the rule.
+	 */
 	public function get_description(): string;
 
 	/**
