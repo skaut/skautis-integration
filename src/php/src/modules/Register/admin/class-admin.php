@@ -70,6 +70,9 @@ final class Admin {
 		}
 	}
 
+	/**
+	 * Initializes dynamic options for the register JS code.
+	 */
 	public function init_rules_options() {
 		if ( get_current_screen()->id === 'skautis_page_skautis-integration_modules_register' ) {
 			$rules = array();
@@ -84,6 +87,9 @@ final class Admin {
 		}
 	}
 
+	/**
+	 * Initializes dynamic data for the register JS code.
+	 */
 	public function init_rules_data() {
 		if ( get_current_screen()->id === 'skautis_page_skautis-integration_modules_register' ) {
 			$data = get_option( SKAUTIS_INTEGRATION_NAME . '_modules_register_rules' );

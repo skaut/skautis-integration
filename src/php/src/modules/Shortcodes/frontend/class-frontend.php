@@ -80,6 +80,11 @@ final class Frontend {
 		Helpers::enqueue_style( 'frontend', 'frontend/css/skautis-frontend.min.css' );
 	}
 
+	/**
+	 * Runs the shortcode.
+	 *
+	 * This is the function that gets called to process and return the shortcode content.
+	 */
 	public function process_shortcode( array $atts = array(), string $content = '' ): string {
 		if ( isset( $atts['rules'] ) && isset( $atts['content'] ) ) {
 			if ( current_user_can( 'edit_' . get_post_type() . 's' ) ) {

@@ -134,6 +134,9 @@ final class Settings {
 		);
 	}
 
+	/**
+	 * Prints the settings field for choosing which post types to apply the Visibility module to.
+	 */
 	public function field_post_types() {
 		$available_post_types = get_post_types(
 			array(
@@ -157,6 +160,9 @@ final class Settings {
 		<?php
 	}
 
+	/**
+	 * Prints the settings field for choosing between hiding the whole post or page, or just its content.
+	 */
 	public function field_visibility_mode() {
 		$visibility_mode = get_option( SKAUTIS_INTEGRATION_NAME . '_modules_visibility_visibilityMode', 'full' );
 		?>
@@ -171,6 +177,9 @@ final class Settings {
 		<?php
 	}
 
+	/**
+	 * Prints the settings field for choosing whether to apply visibility rules to child posts and pages.
+	 */
 	public function field_include_children() {
 		$include_children = get_option( SKAUTIS_INTEGRATION_NAME . '_modules_visibility_includeChildren', 0 );
 		?>

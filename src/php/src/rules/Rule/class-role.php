@@ -102,6 +102,9 @@ class Role implements Rule {
 		return $values;
 	}
 
+	/**
+	 * Removes special characters ("." and "-") from SkautIS unit IDs.
+	 */
 	protected function clearUnitId( string $unit_id ): string {
 		return trim(
 			str_replace(
