@@ -27,6 +27,9 @@ final class Admin {
 	// TODO: Unused?
 	private $admin_dir_url = '';
 
+	/**
+	 * Constructs the service and saves all dependencies.
+	 */
 	public function __construct( Settings $settings, Users $users, Rules_Manager $rules_manager, Users_Management $users_management, WP_Login_Logout $wp_login_logout, Skautis_Gateway $skautis_gateway ) {
 		$this->settings         = $settings;
 		$this->users            = $users;
@@ -38,6 +41,9 @@ final class Admin {
 		$this->init_hooks();
 	}
 
+	/**
+	 * Intializes all hooks used by the object.
+	 */
 	private function init_hooks() {
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts_and_styles' ) );
 		add_action( 'admin_print_scripts', array( $this, 'print_inline_js' ) );
@@ -49,6 +55,9 @@ final class Admin {
 		}
 	}
 
+	/**
+	 * Enqueues administration scripts and styles.
+	 */
 	public function enqueue_scripts_and_styles() {
 		wp_enqueue_style(
 			SKAUTIS_INTEGRATION_NAME . '_select2',
@@ -79,6 +88,11 @@ final class Admin {
 		<?php
 	}
 
+	/**
+	 * Adds a link to admin bar right-hand-side menu to log out from both WordPress and SkautIS at once.
+	 *
+	 * TODO: Duplicated code?
+	 */
 	public function add_logout_link_to_admin_bar( \WP_Admin_Bar $wp_admin_bar ) {
 		if ( ! function_exists( 'is_admin_bar_showing' ) ) {
 			return;

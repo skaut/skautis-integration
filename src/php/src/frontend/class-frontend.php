@@ -95,6 +95,8 @@ final class Frontend {
 
 	/**
 	 * Adds a link to admin bar right-hand-side menu to log out from both WordPress and SkautIS at once.
+	 *
+	 * TODO: Duplicated code?
 	 */
 	public function add_logout_link_to_admin_bar( \WP_Admin_Bar $wp_admin_bar ) {
 		if ( ! function_exists( 'is_admin_bar_showing' ) ) {

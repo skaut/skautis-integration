@@ -21,6 +21,9 @@ final class Admin {
 	// TODO: Unused?
 	private $admin_dir_url = '';
 
+	/**
+	 * Constructs the service and saves all dependencies.
+	 */
 	public function __construct( Rules_Manager $rules_manager, WP_Login_Logout $wp_login_logout, Skautis_Gateway $skautis_gateway ) {
 		$this->rules_manager   = $rules_manager;
 		$this->wp_login_logout = $wp_login_logout;
@@ -30,6 +33,9 @@ final class Admin {
 		$this->init_hooks();
 	}
 
+	/**
+	 * Intializes all hooks used by the object.
+	 */
 	private function init_hooks() {
 		add_action( 'add_meta_boxes', array( $this, 'add_metabox_for_rules_field' ) );
 		add_action( 'save_post', array( $this, 'save_rules_custom_field' ) );
@@ -42,6 +48,9 @@ final class Admin {
 		add_action( 'admin_footer', array( $this, 'init_rules_builder' ), 100 );
 	}
 
+	/**
+	 * Adds the rules metabox to WordPress.
+	 */
 	public function add_metabox_for_rules_field( string $post_type ) {
 		if ( Rules_Init::RULES_TYPE_SLUG === $post_type ) {
 			add_meta_box(
@@ -132,6 +141,9 @@ final class Admin {
 		<?php
 	}
 
+	/**
+	 * Enqueues styles for rules management.
+	 */
 	public function enqueue_styles() {
 		if ( get_current_screen()->id !== Rules_Init::RULES_TYPE_SLUG || get_post_type() !== Rules_Init::RULES_TYPE_SLUG ) {
 			return;
@@ -156,6 +168,9 @@ final class Admin {
 		);
 	}
 
+	/**
+	 * Enqueues scripts for rules management.
+	 */
 	public function enqueue_scripts() {
 		if ( get_current_screen()->id !== Rules_Init::RULES_TYPE_SLUG || get_post_type() !== Rules_Init::RULES_TYPE_SLUG ) {
 			return;
@@ -244,6 +259,9 @@ final class Admin {
 		);
 	}
 
+	/**
+	 * Initializes dynamic options for the rules JS code.
+	 */
 	public function init_rules_builder() {
 		if ( get_current_screen()->id !== Rules_Init::RULES_TYPE_SLUG || get_post_type() !== Rules_Init::RULES_TYPE_SLUG ) {
 			return;

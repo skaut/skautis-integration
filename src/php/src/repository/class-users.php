@@ -16,6 +16,9 @@ class Users {
 
 	protected $skautis_gateway;
 
+	/**
+	 * Constructs the service and saves all dependencies.
+	 */
 	public function __construct( Skautis_Gateway $skautis_gateway ) {
 		$this->skautis_gateway = $skautis_gateway;
 	}
@@ -38,6 +41,9 @@ class Users {
 		return $search_user_string;
 	}
 
+	/**
+	 * Lists all users with a connected SkautIS account under the current environment (testing or production).
+	 */
 	public function get_connected_wp_users(): array {
 		$users_data = array();
 
@@ -65,6 +71,9 @@ class Users {
 		return $users_data;
 	}
 
+	/**
+	 * Lists all users without a connected SkautIS account under the current environment (testing or production).
+	 */
 	public function get_connectable_wp_users() {
 		$connectable_wp_users = new \WP_User_Query(
 			array(
