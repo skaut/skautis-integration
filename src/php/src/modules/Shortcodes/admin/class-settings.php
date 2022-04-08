@@ -100,6 +100,9 @@ final class Settings {
 		);
 	}
 
+	/**
+	 * Prints the settings field for choosing whether to show a login prompt or hide the content outright.
+	 */
 	public function field_visibility_mode() {
 		$visibility_mode = get_option( SKAUTIS_INTEGRATION_NAME . '_modules_shortcodes_visibilityMode', 'hide' );
 		?>

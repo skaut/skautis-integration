@@ -159,6 +159,9 @@ class Func implements Rule {
 		return $user_funcs;
 	}
 
+	/**
+	 * Checks whether the rule is fulfilled.
+	 */
 	public function is_rule_passed( string $funcs_operator, $data ): bool {
 		// Parse and prepare data from rules UI.
 		$output = array();

@@ -15,6 +15,9 @@ final class Frontend {
 	// TODO: Unused?
 	private $login_form;
 
+	/**
+	 * Constructs the service and saves all dependencies.
+	 */
 	public function __construct( Login_Form $login_form ) {
 		$this->login_form = $login_form;
 	}

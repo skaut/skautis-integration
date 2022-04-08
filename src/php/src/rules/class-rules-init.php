@@ -134,6 +134,9 @@ final class Rules_Init {
 		return $title;
 	}
 
+	/**
+	 * Registers messages to use on post update for the rule post type.
+	 */
 	public function updated_messages( array $messages = array() ): array {
 		$post                              = get_post();
 		$messages[ self::RULES_TYPE_SLUG ] = array(

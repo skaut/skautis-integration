@@ -30,6 +30,7 @@ class Role_Changer {
 	 * On page load, changes the user's SkautIS role if requested by a POST variable.
 	 *
 	 * TODO: Find a more robust way to do this?
+	 * TODO: Duplicated in Users_Management.
 	 */
 	protected function check_if_user_change_skautis_role() {
 		add_action(

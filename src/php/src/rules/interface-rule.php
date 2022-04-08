@@ -61,5 +61,8 @@ interface Rule {
 	 */
 	public function get_values(): array;
 
+	/**
+	 * Checks whether the rule is fulfilled.
+	 */
 	public function is_rule_passed( string $operator, $data ): bool;
 }

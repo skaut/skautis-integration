@@ -63,6 +63,12 @@ class Users_Management {
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts_and_styles' ) );
 	}
 
+	/**
+	 * On page load, changes the user's SkautIS role if requested by a POST variable.
+	 *
+	 * TODO: Find a more robust way to do this?
+	 * TODO: Duplicated in Role_Changer.
+	 */
 	protected function check_if_user_change_skautis_role() {
 		add_action(
 			'init',

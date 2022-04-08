@@ -166,6 +166,9 @@ final class Settings {
 		<?php
 	}
 
+	/**
+	 * Checks that the App ID works with SkautIS.
+	 */
 	public function test_app_id( $value ) {
 		if ( ! $this->skautis_gateway->test_active_app_id() ) {
 			add_settings_error( 'general', 'api_invalid', esc_html__( 'Zadané APP ID není pro tento web platné.', 'skautis-integration' ), 'notice-error' );

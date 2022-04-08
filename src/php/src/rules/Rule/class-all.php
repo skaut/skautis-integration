@@ -102,6 +102,9 @@ class All implements Rule {
 		return $result;
 	}
 
+	/**
+	 * Checks whether the rule is fulfilled.
+	 */
 	public function is_rule_passed( string $operator, $data ): bool {
 		if ( ! empty( $data[0] ) && 1 === $data[0] && $this->skautis_gateway->get_skautis_instance()->UserManagement->UserDetail()->ID > 0 ) {
 			return true;

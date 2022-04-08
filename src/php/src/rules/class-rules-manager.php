@@ -31,6 +31,9 @@ final class Rules_Manager {
 		}
 	}
 
+	/**
+	 * Initializes all available rule blocks and stores them in this object.
+	 */
 	private function init_rules(): array {
 		return apply_filters(
 			SKAUTIS_INTEGRATION_NAME . '_rules',
@@ -44,6 +47,9 @@ final class Rules_Manager {
 		);
 	}
 
+	/**
+	 * Checks whether a user passed a rule.
+	 */
 	private function process_rule( $rule ): bool {
 		if ( ! isset( $rule->field ) ) {
 			if ( isset( $rule->condition ) && isset( $rule->rules ) ) {
@@ -64,6 +70,9 @@ final class Rules_Manager {
 		return false;
 	}
 
+	/**
+	 * Checks whether a user passed a rule group.
+	 */
 	private function parse_rules_groups( string $condition, array $rules ): bool {
 		$result = 0;
 
@@ -91,10 +100,18 @@ final class Rules_Manager {
 		return false;
 	}
 
+	/**
+	 * Returns a list of all available rule blocks.
+	 */
 	public function get_rules(): array {
 		return $this->rules;
 	}
 
+	/**
+	 * Checks whether a user passed plugin rules and returns their role if they did.
+	 *
+	 * TODO: Deduplicate with the other method in this class.
+	 */
 	public function check_if_user_passed_rules_and_get_his_role(): string {
 		$result = '';
 
@@ -122,6 +139,9 @@ final class Rules_Manager {
 		return '';
 	}
 
+	/**
+	 * Returns all rules (posts of type rule).
+	 */
 	public function get_all_rules(): array {
 		$rules_wp_query = new \WP_Query(
 			array(
@@ -138,6 +158,11 @@ final class Rules_Manager {
 		return array();
 	}
 
+	/**
+	 * Checks whether a user passed plugin rules
+	 *
+	 * TODO: Deduplicate with the other method in this class.
+	 */
 	public function check_if_user_passed_rules( array $rules_ids ): bool {
 		static $rules_groups = null;
 		$result              = false;
@@ -156,7 +181,7 @@ final class Rules_Manager {
 			}
 
 			if ( true === $result ) {
-				return $result;
+				return true;
 			}
 		}
 

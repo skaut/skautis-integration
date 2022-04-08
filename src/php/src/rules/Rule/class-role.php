@@ -166,6 +166,9 @@ class Role implements Rule {
 		return $user_roles;
 	}
 
+	/**
+	 * Checks whether the rule is fulfilled.
+	 */
 	public function is_rule_passed( string $roles_operator, $data ): bool {
 		// Parse and prepare data from rules UI.
 		$output = array();
