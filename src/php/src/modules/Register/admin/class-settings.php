@@ -139,6 +139,9 @@ final class Settings {
 		);
 	}
 
+	/**
+	 * Prints the settings field for choosing the default WordPress role for newly registered users
+	 */
 	public function field_wp_role() {
 		?>
 		<select name="<?php echo esc_attr( SKAUTIS_INTEGRATION_NAME ); ?>_modules_register_defaultwpRole"
@@ -146,6 +149,9 @@ final class Settings {
 		<?php
 	}
 
+	/**
+	 * Prints the settings field for choosing whom to send an e-mail upon sucessfull user registration.
+	 */
 	public function field_new_user_notifications() {
 		$notification_option = get_option( SKAUTIS_INTEGRATION_NAME . '_modules_register_notifications', 'none' );
 		?>
@@ -179,6 +185,9 @@ final class Settings {
 		<?php
 	}
 
+	/**
+	 * Prints the settings field for selecting user registration rules.
+	 */
 	public function field_rules() {
 		?>
 		<div>

@@ -105,6 +105,11 @@ class Membership implements Rule {
 		return $result;
 	}
 
+	/**
+	 * Removes special characters ("." and "-") from SkautIS unit IDs.
+	 *
+	 * TODO: Duplicated in Role.
+	 */
 	protected function clearUnitId( string $unit_id ): string {
 		return trim(
 			str_replace(
@@ -118,6 +123,9 @@ class Membership implements Rule {
 		);
 	}
 
+	/**
+	 * Returns an array of arrays where for each user unit membership ID, there are listed units asssociated with that membership.
+	 */
 	protected function getUserMembershipsWithUnitIds(): array {
 		static $user_memberships = null;
 
