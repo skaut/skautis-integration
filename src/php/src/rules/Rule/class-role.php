@@ -170,6 +170,8 @@ class Role implements Rule {
 
 	/**
 	 * Checks whether the rule is fulfilled.
+	 *
+	 * @throws \Exception An operator is undefined.
 	 */
 	public function is_rule_passed( string $roles_operator, $data ): bool {
 		// Parse and prepare data from rules UI.

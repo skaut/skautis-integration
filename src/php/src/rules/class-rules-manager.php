@@ -49,6 +49,8 @@ final class Rules_Manager {
 
 	/**
 	 * Checks whether a user passed a rule.
+	 *
+	 * @throws \Exception An undefined rule was passed to the function.
 	 */
 	private function process_rule( $rule ): bool {
 		if ( ! isset( $rule->field ) ) {
