@@ -108,7 +108,7 @@ class Membership implements Rule {
 	/**
 	 * Removes special characters ("." and "-") from SkautIS unit IDs.
 	 *
-	 * TODO: Duplicated in Role.
+	 * TODO: Duplicated in Role and Func.
 	 */
 	protected function clearUnitId( string $unit_id ): string {
 		return trim(

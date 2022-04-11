@@ -78,6 +78,11 @@ final class Admin {
 		Helpers::enqueue_style( 'admin', 'admin/css/skautis-admin.min.css' );
 	}
 
+	/**
+	 * Adds a default value to the JS `window.skautis` global.
+	 *
+	 * TODO: Is this really needed?
+	 */
 	public function print_inline_js() {
 		?>
 		<script type="text/javascript">

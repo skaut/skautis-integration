@@ -105,6 +105,9 @@ class Qualification implements Rule {
 		return $result;
 	}
 
+	/**
+	 * Returns an array of user qualification IDs.
+	 */
 	protected function getUserQualifications(): array {
 		static $user_qualifications = null;
 

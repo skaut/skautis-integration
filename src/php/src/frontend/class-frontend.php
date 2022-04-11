@@ -52,12 +52,18 @@ final class Frontend {
 		}
 	}
 
+	/**
+	 * Adds query variables that WordPress is allowed to use when redirecting.
+	 */
 	public function register_query_vars( array $vars = array() ): array {
 		$vars[] = 'skautis_login';
 
 		return $vars;
 	}
 
+	/**
+	 * Shows the SkautIS login template when the "skautis_login" query variable is present.
+	 */
 	public function register_templates( string $path = '' ): string {
 		$query_value = get_query_var( 'skautis_login' );
 		if ( $query_value && ! empty( $query_value ) ) {

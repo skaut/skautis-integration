@@ -105,6 +105,11 @@ class Func implements Rule {
 		return $values;
 	}
 
+	/**
+	 * Removes special characters ("." and "-") from SkautIS unit IDs.
+	 *
+	 * TODO: Duplicated in Membership and Role.
+	 */
 	protected function clearUnitId( string $unit_id ): string {
 		return trim(
 			str_replace(
@@ -118,6 +123,9 @@ class Func implements Rule {
 		);
 	}
 
+	/**
+	 * Returns an array of arrays where for each user function ID, there are listed units asssociated with that function.
+	 */
 	protected function getUserFuncsWithUnitIds(): array {
 		static $user_funcs = null;
 

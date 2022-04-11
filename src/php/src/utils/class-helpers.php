@@ -124,16 +124,25 @@ class Helpers {
 		);
 	}
 
+	/**
+	 * Returns the capability level needed to manage SkautIS options.
+	 *
+	 * TODO: This function just returns "manage_options".
+	 */
 	public static function get_skautis_manager_capability(): string {
 		static $capability = '';
 
 		if ( '' === $capability ) {
+			// TODO: Unused hook?
 			$capability = apply_filters( SKAUTIS_INTEGRATION_NAME . '_manager_capability', 'manage_options' );
 		}
 
 		return $capability;
 	}
 
+	/**
+	 * Returns whether the current user has the capability level needed to manage SkautIS options.
+	 */
 	public static function user_is_skautis_manager(): bool {
 		return current_user_can( self::get_skautis_manager_capability() );
 	}
