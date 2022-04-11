@@ -62,6 +62,9 @@ final class Admin {
 		}
 	}
 
+	/**
+	 * Saves the rules data.
+	 */
 	public function save_rules_custom_field( int $post_id ) {
 		if ( ! isset( $_POST[ SKAUTIS_INTEGRATION_NAME . '_rules_metabox_nonce' ] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ SKAUTIS_INTEGRATION_NAME . '_rules_metabox_nonce' ] ) ), SKAUTIS_INTEGRATION_NAME . '_rules_metabox' ) ) {
 			return;
@@ -76,6 +79,11 @@ final class Admin {
 		}
 	}
 
+	/**
+	 * Prints the rules metabox.
+	 *
+	 * TODO: This box is hidden, why is it here?
+	 */
 	public function rules_field_content( \WP_Post $post ) {
 		wp_nonce_field( SKAUTIS_INTEGRATION_NAME . '_rules_metabox', SKAUTIS_INTEGRATION_NAME . '_rules_metabox_nonce' );
 		?>
@@ -109,6 +117,9 @@ final class Admin {
 		}
 	}
 
+	/**
+	 * Prints the rules query builder UI.
+	 */
 	public function add_rules_ui( \WP_Post $post ) {
 		if ( get_current_screen()->id !== Rules_Init::RULES_TYPE_SLUG || get_post_type() !== Rules_Init::RULES_TYPE_SLUG ) {
 			return;

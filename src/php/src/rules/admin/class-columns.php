@@ -41,18 +41,27 @@ class Columns {
 		);
 	}
 
+	/**
+	 * Adds the header for the "Last modified" column in the rules overview.
+	 */
 	public function last_modified_admin_column( array $columns = array() ): array {
 		$columns['modified_last'] = __( 'Naposledy upraveno', 'skautis-integration' );
 
 		return $columns;
 	}
 
+	/**
+	 * Adds the "Last modified" column to the rules overview.
+	 */
 	public function sortable_last_modified_column( array $columns = array() ): array {
 		$columns['modified_last'] = 'modified';
 
 		return $columns;
 	}
 
+	/**
+	 * Adds the content for the "Last modified" column in the rules overview.
+	 */
 	public function last_modified_admin_column_content( string $column_name, int $post_id ) {
 		if ( 'modified_last' !== $column_name ) {
 			return;
