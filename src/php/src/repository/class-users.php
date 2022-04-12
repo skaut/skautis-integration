@@ -23,6 +23,9 @@ class Users {
 		$this->skautis_gateway = $skautis_gateway;
 	}
 
+	/**
+	 * Parses the "skautisSearchUsers" GET variable from the URL.
+	 */
 	protected function get_search_user_string(): string {
 		$search_user_string = '';
 

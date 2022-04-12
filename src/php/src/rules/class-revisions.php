@@ -9,6 +9,9 @@ declare( strict_types=1 );
 
 namespace Skautis_Integration\Rules;
 
+/**
+ * Enables support for revisions for the rule custom post type.
+ */
 class Revisions {
 
 	/**

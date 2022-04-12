@@ -38,12 +38,18 @@ final class Users {
 		add_action( 'edit_user_profile_update', array( $this, 'manage_skautis_user_id_field' ) );
 	}
 
+	/**
+	 * Adds the header for the SkautIS column in the user table view.
+	 */
 	public function add_column_header_to_users_table( array $columns = array() ): array {
 		$columns[ SKAUTIS_INTEGRATION_NAME ] = __( 'skautIS', 'skautis-integration' );
 
 		return $columns;
 	}
 
+	/**
+	 * Adds the SkautIS column to the user table view.
+	 */
 	public function add_column_to_users_table( $value, string $column_name, int $user_id ) {
 		if ( SKAUTIS_INTEGRATION_NAME === $column_name ) {
 			$env_type = get_option( 'skautis_integration_appid_type' );
@@ -63,6 +69,9 @@ final class Users {
 		return $value;
 	}
 
+	/**
+	 * Shows the SkautIS section in the user profile both for the current user as well as when managing other users.
+	 */
 	public function skautis_user_id_field( \WP_User $user ) {
 		// TODO: SkautIS, not skautIS.
 		?>
@@ -106,6 +115,9 @@ final class Users {
 		do_action( SKAUTIS_INTEGRATION_NAME . '_user_screen_user_ids_after' );
 	}
 
+	/**
+	 * Saves settings from the SkautIS section of the user profile.
+	 */
 	public function manage_skautis_user_id_field( int $user_id ): bool {
 		if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ), 'update-user_' . $user_id ) ) {
 			return false;
