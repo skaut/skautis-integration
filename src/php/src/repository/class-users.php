@@ -99,6 +99,9 @@ class Users {
 		return $connectable_wp_users->get_results();
 	}
 
+	/**
+	 * Returns all users for the current unit or event. Returns users whose name matches the "skautisSearchUsers" GET variable if it is present.
+	 */
 	public function get_users(): array {
 		$users      = array();
 		$event_type = '';
@@ -251,6 +254,9 @@ class Users {
 		);
 	}
 
+	/**
+	 * Returns info about a SkautIS user.
+	 */
 	public function get_user_detail( int $skautis_user_id ): array {
 		$user_detail = array();
 

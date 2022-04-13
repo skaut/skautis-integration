@@ -11,6 +11,8 @@ namespace Skautis_Integration\Rules;
 
 /**
  * Enables support for revisions for the rule custom post type.
+ *
+ * TODO: The meta is actually empty?
  */
 class Revisions {
 
@@ -33,6 +35,9 @@ class Revisions {
 		add_filter( '_wp_post_revision_field_custom_fields', array( $this, 'field' ), 10, 3 );
 	}
 
+	/**
+	 * Removes all hidden fields from a post metadata.
+	 */
 	public function filter_meta( $meta ): array {
 		$meta_filtered = array();
 		foreach ( $meta as $key => $value ) {
@@ -44,6 +49,9 @@ class Revisions {
 		return $meta_filtered;
 	}
 
+	/**
+	 * Returns the post metadata, without hidden fields.
+	 */
 	public function get_meta( int $post_id ): array {
 		$meta = get_metadata( 'post', $post_id );
 		$meta = $this->filter_meta( $meta );
@@ -51,6 +59,9 @@ class Revisions {
 		return $meta;
 	}
 
+	/**
+	 * Adds metadata to a post.
+	 */
 	public function insert_meta( int $post_id, $meta ) {
 		foreach ( $meta as $meta_key => $meta_value ) {
 			if ( is_array( $meta_value ) ) {
@@ -63,6 +74,9 @@ class Revisions {
 		}
 	}
 
+	/**
+	 * Deletes all metadata from a post.
+	 */
 	public function delete_meta( int $post_id ) {
 		$meta = $this->get_meta( $post_id );
 
@@ -71,6 +85,11 @@ class Revisions {
 		}
 	}
 
+	/**
+	 * Returns the "custom_fields" field value transformed for comparison.
+	 *
+	 * This function is used when comparing between revisions and serves to transform the field before comaprison.
+	 */
 	public function field( $value, $field, $revision ) {
 		$revision_id = $revision->ID;
 		$meta        = $this->get_meta( $revision_id );
@@ -84,12 +103,18 @@ class Revisions {
 		return $return;
 	}
 
+	/**
+	 * Adds the field "custom_fields" to post revisions.
+	 */
 	public function fields( array $fields = array() ): array {
 		$fields['custom_fields'] = __( 'Další pole', 'skautis-integration' );
 
 		return $fields;
 	}
 
+	/**
+	 * Restores metadata when restoring a previous revision.
+	 */
 	public function restore_revision( int $post_id, int $revision_id ) {
 		$meta = $this->get_meta( $revision_id );
 		$this->delete_meta( $post_id );
@@ -104,6 +129,11 @@ class Revisions {
 		}
 	}
 
+	/**
+	 * Resets metadata on revision save.
+	 *
+	 * TODO: Why is this done?
+	 */
 	public function save_post( int $post_id ) {
 		if ( wp_is_post_revision( $post_id ) ) {
 			$meta = $this->get_meta( $post_id );
@@ -115,6 +145,11 @@ class Revisions {
 		}
 	}
 
+	/**
+	 * Checks whether the post metadata has changed from the last revision.
+	 *
+	 * This function gets called when deciding whether to save a new revision - a new revision is saved only when the post has changed since the last revision.
+	 */
 	public function post_has_changed( bool $post_has_changed, \WP_Post $last_revision, \WP_Post $post ): bool {
 		if ( ! $post_has_changed ) {
 			$meta     = $this->get_meta( $last_revision->ID );
