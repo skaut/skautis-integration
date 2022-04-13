@@ -256,6 +256,8 @@ class Users {
 
 	/**
 	 * Returns info about a SkautIS user.
+	 *
+	 * @throws \Exception Couldn't get the user info from SkautIS.
 	 */
 	public function get_user_detail( int $skautis_user_id ): array {
 		$user_detail = array();
