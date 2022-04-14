@@ -11,7 +11,9 @@ namespace Skautis_Integration\General;
 
 use Skautis_Integration\Rules\Rules_Init;
 
-// TODO: Unused?
+/**
+ * TODO: An unused service?
+ */
 final class General {
 
 	// TODO: Unused?

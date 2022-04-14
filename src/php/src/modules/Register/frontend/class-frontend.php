@@ -9,7 +9,9 @@ declare( strict_types=1 );
 
 namespace Skautis_Integration\Modules\Register\Frontend;
 
-// TODO: Unused?
+/**
+ * TODO: An unused service?
+ */
 final class Frontend {
 
 	// TODO: Unused?

@@ -10,7 +10,11 @@ namespace Skautis_Integration;
 use Skautis_Integration\Services\Services;
 use Skautis_Integration\Utils\Helpers;
 
-// TODO: Rename to Main?
+/**
+ * The plugin main class.
+ *
+ * TODO: Rename to Main?
+ */
 class Skautis_Integration {
 
 	/**

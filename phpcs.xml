@@ -19,7 +19,6 @@
 
 	<config name="minimum_supported_wp_version" value="7.4"/>
 	<rule ref="WordPress">
-		<exclude name="Squiz.Commenting.ClassComment.WrongStyle"/>
 		<exclude name="Squiz.Commenting.FunctionComment.MissingParamTag"/>
 		<exclude name="Squiz.Commenting.VariableComment.Missing"/>
 		<exclude name="Squiz.Commenting.VariableComment.WrongStyle"/>
