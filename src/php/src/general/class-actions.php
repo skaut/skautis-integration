@@ -66,6 +66,11 @@ final class Actions {
 		return $hosts;
 	}
 
+	/**
+	 * Registers redirect/rewrite for SkautIS authentication.
+	 *
+	 * @see Actions::auth_actions_router() for more details about how the redirect is used.
+	 */
 	public function register_auth_rewrite_rules() {
 		add_rewrite_rule( '^skautis/auth/(.*?)$', 'index.php?skautis_auth=$matches[1]', 'top' );
 		$login_page_url = get_option( SKAUTIS_INTEGRATION_NAME . '_login_page_url' );
@@ -93,6 +98,9 @@ final class Actions {
 		}
 	}
 
+	/**
+	 * Fires upon redirect back from SkautIS and based on the current page finishes either the login or account linking.
+	 */
 	public function auth_in_process() {
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		if ( ! isset( $_POST['skautIS_Token'] ) ) {
@@ -102,6 +110,7 @@ final class Actions {
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		do_action( SKAUTIS_INTEGRATION_NAME . '_after_skautis_token_is_set', $_POST );
 
+		// TODO: What if I login to the profile page? (e. g. after a timeout...)
 		if ( strpos( Helpers::get_current_url(), 'profile.php' ) !== false ) {
 			$this->connect_wp_account->connect();
 		} else {
@@ -109,6 +118,9 @@ final class Actions {
 		}
 	}
 
+	/**
+	 * Fires upon redirect to SkautIS authentication and fires the correct action.
+	 */
 	public function auth_actions_router( \WP_Query $wp_query ) {
 		if ( ! $wp_query->get( 'skautis_auth' ) ) {
 			return $wp_query;

@@ -44,11 +44,19 @@ final class Login_Form {
 		Helpers::enqueue_style( 'frontend', 'frontend/css/skautis-frontened.min.css' );
 	}
 
+	/**
+	 * Prints the "Log in with SkautIS" button as part of the login page.
+	 */
 	public function login_link_in_login_form() {
 		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $this->login_link_in_login_form_return();
 	}
 
+	/**
+	 * Returns the "Log in with SkautIS" button HTML code.
+	 *
+	 * TODO: Remove this function.
+	 */
 	public function login_link_in_login_form_return(): string {
 		return '
 		<p style="margin-bottom: 0.3em;">

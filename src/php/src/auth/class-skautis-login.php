@@ -35,6 +35,9 @@ final class Skautis_Login {
 		return false;
 	}
 
+	/**
+	 * Takes the data returned from SkautIS login and passes it to the SkautIS library.
+	 */
 	public function set_login_data_to_local_skautis_instance( array $data = array() ): bool {
 		$data = apply_filters( SKAUTIS_INTEGRATION_NAME . '_login_data_for_skautis_instance', $data );
 
@@ -53,6 +56,15 @@ final class Skautis_Login {
 		return false;
 	}
 
+	/**
+	 * Handles a call to log the user into SkautIS.
+	 *
+	 * This function also handles calls to login just to SkautIS, usually the user is already logged into WordPress and is trying to access functionality that needs SkautIS info. This functionality can be triggered by the "noWpLogin" GET parameter.
+	 *
+	 * Also, the login procedure can be forced to log the user out before the login by the "logoutFromSkautis" GET parameter.
+	 *
+	 * @see Actions::auth_actions_router() for more details about how this function gets called.
+	 */
 	public function login() {
 		$return_url = Helpers::get_login_logout_redirect();
 
@@ -75,6 +87,9 @@ final class Skautis_Login {
 		}
 	}
 
+	/**
+	 * Fires upon redirect back from SkautIS login and processes the login.
+	 */
 	public function login_confirm() {
 		$return_url = Helpers::get_return_url();
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing
