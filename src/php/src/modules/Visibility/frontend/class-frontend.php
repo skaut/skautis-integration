@@ -39,6 +39,9 @@ final class Frontend {
 		add_action( 'posts_results', array( $this, 'filter_posts' ), 10, 2 );
 	}
 
+	/**
+	 * Returns HTML code for the frontend SkautIS login button.
+	 */
 	private function get_login_form( bool $force_logout_from_skautis = false ): string {
 		$login_url_args = add_query_arg( 'noWpLogin', true, Helpers::get_current_url() );
 		if ( $force_logout_from_skautis ) {
@@ -56,14 +59,23 @@ final class Frontend {
 		';
 	}
 
+	/**
+	 * Returns HTML code for the frontend message telling the user they need to log in to SkautIS to view the content.
+	 */
 	private function get_login_required_message(): string {
 		return '<p>' . __( 'To view this content you must be logged in skautIS', 'skautis-integration' ) . '</p>';
 	}
 
+	/**
+	 * Returns HTML code for the frontend message telling the user they didn't pass the visibility rules.
+	 */
 	private function get_unauthorized_message(): string {
 		return '<p>' . __( 'You do not have permission to access this content', 'skautis-integration' ) . '</p>';
 	}
 
+	/**
+	 * Returns a list of post ancestors.
+	 */
 	private function get_posts_hierarchy_tree_with_rules( int $post_id, $post_type ): array {
 		$ancestors = get_ancestors( $post_id, $post_type, 'post_type' );
 		$ancestors = array_map(
@@ -81,6 +93,9 @@ final class Frontend {
 		return array_reverse( $ancestors );
 	}
 
+	/**
+	 * Returns a list of post ancestors that have rules that should apply to the current post.
+	 */
 	private function get_rules_from_parent_posts_with_impact_by_child_post_id( int $child_post_id, $post_type ): array {
 		$ancestors = $this->get_posts_hierarchy_tree_with_rules( $child_post_id, $post_type );
 
@@ -100,6 +115,9 @@ final class Frontend {
 		return array_values( $ancestors );
 	}
 
+	/**
+	 * Hides post comments and replaces its excerpt and content.
+	 */
 	private function hide_content_excerpt_comments( int $post_id, string $new_content = '', string $new_excerpt = '' ) {
 		add_filter(
 			'the_content',
@@ -138,6 +156,11 @@ final class Frontend {
 		);
 	}
 
+	/**
+	 * Hides posts if the current user isn't logged in to SkautIS or doesn't pass the visibility rules
+	 *
+	 * TODO: This function modifies its parameters.
+	 */
 	private function process_rules_and_hide_posts( bool $user_is_logged_in_skautis, array $rule, array &$posts, int $post_key, \WP_Query $wp_query, string $post_type, &$posts_were_filtered = false ) {
 		if ( ! empty( $rules ) && isset( $rules[0][ SKAUTIS_INTEGRATION_NAME . '_rules' ] ) ) {
 			if ( ! $user_is_logged_in_skautis ||
@@ -152,6 +175,11 @@ final class Frontend {
 		}
 	}
 
+	/**
+	 * Hides posts' content if the current user isn't logged in to SkautIS or doesn't pass the visibility rules
+	 *
+	 * TODO: Deduplicate with the previous function.
+	 */
 	private function process_rules_and_hide_content( bool $user_is_logged_in_skautis, array $rules, int $post_id ) {
 		if ( ! empty( $rules ) && isset( $rules[0][ SKAUTIS_INTEGRATION_NAME . '_rules' ] ) ) {
 			if ( ! $user_is_logged_in_skautis ) {
@@ -170,6 +198,11 @@ final class Frontend {
 		wp_enqueue_style( SKAUTIS_INTEGRATION_NAME, SKAUTIS_INTEGRATION_URL . 'src/frontend/public/css/skautis-frontend.css', array(), SKAUTIS_INTEGRATION_VERSION, 'all' );
 	}
 
+	/**
+	 * Returns a list of post ancestors that have rules that should apply to the current post with said rules.
+	 *
+	 * TODO: How is this different from get_rules_from_parent_posts_with_impact_by_child_post_id?
+	 */
 	public function get_parent_posts_with_rules( int $child_post_id, string $child_post_type ): array {
 		$result = array();
 
@@ -189,6 +222,11 @@ final class Frontend {
 		return $result;
 	}
 
+	/**
+	 * Filters posts based on their visibility.
+	 *
+	 * Filters which posts are visible for the current user based on wheher they pass the visibility rules and whether whole posts should be hidden or just their contents
+	 */
 	public function filter_posts( array $posts, \WP_Query $wp_query ): array {
 		if ( empty( $posts ) ) {
 			return $posts;

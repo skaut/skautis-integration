@@ -184,6 +184,13 @@ final class WP_Register {
 		return 0;
 	}
 
+	/**
+	 * Returns the Register module version of the SkautIS login URL with all arguments initialized.
+	 *
+	 * This version runs this module's register action after the login.
+	 *
+	 * @see	Register::register() The action that fires after the login.
+	 */
 	public function get_register_url(): string {
 		$return_url = Helpers::get_login_logout_redirect();
 		$return_url = remove_query_arg( 'loggedout', urldecode( $return_url ) );

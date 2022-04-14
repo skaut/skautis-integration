@@ -39,6 +39,9 @@ final class Login_Form {
 		wp_enqueue_style( SKAUTIS_INTEGRATION_NAME . '_frontend' );
 	}
 
+	/**
+	 * Prints the Register module version of the "Log in with SkautIS" button as part of the login page.
+	 */
 	public function login_link_in_login_form() {
 		?>
 		<p style="margin-bottom: 0.3em;">
@@ -50,6 +53,11 @@ final class Login_Form {
 		<?php
 	}
 
+	/**
+	 * Returns the Register module version of the "Log in with SkautIS" button as part of the login page.
+	 *
+	 * TODO: Remove this function. Why is the button printed from 2 different hooks?
+	 */
 	public function login_link_in_login_form_return( string $html ): string {
 		return '
 				<p style="margin-bottom: 0.3em;">

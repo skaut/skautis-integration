@@ -55,7 +55,7 @@ final class Login_Form {
 	/**
 	 * Returns the "Log in with SkautIS" button HTML code.
 	 *
-	 * TODO: Remove this function.
+	 * TODO: Remove this function. Why is the button printed from 2 different hooks?
 	 */
 	public function login_link_in_login_form_return(): string {
 		return '

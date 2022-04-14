@@ -73,6 +73,13 @@ final class Register implements Module {
 		exit;
 	}
 
+	/**
+	 * Adds new actions to Actions.
+	 *
+	 * This function modifies the behaviour of Actions to add new possible redirects using SkautIS.
+	 *
+	 * @see Actions::auth_actions_router() for more details about how the actions are used.
+	 */
 	public function addActionsToRouter( array $actions = array() ): array {
 		$actions[ self::REGISTER_ACTION ]                  = array( $this, 'register' );
 		$actions[ self::MANUALLY_REGISTER_WP_USER_ACTION ] = array( $this, 'registerUserManually' );
