@@ -19,6 +19,11 @@ use Skautis_Integration\Modules\Register\Register;
  */
 final class WP_Login_Logout {
 
+	/**
+	 * A link to the Skautis_Gateway service instance.
+	 *
+	 * @var Skautis_Gateway
+	 */
 	private $skautis_gateway;
 
 	/**

@@ -18,6 +18,11 @@ use Skautis_Integration\Utils\Helpers;
  */
 final class Users {
 
+	/**
+	 * A link to the Connect_And_Disconnect_WP_Account service instance.
+	 *
+	 * @var Connect_And_Disconnect_WP_Account
+	 */
 	private $connect_wp_account;
 
 	/**

@@ -19,6 +19,11 @@ final class Rules_Init {
 	const RULES_TYPE_SINGULAR = 'skautis_rule';
 	const RULES_TYPE_SLUG     = 'skautis_rules';
 
+	/**
+	 * A link to the Revisions service instance.
+	 *
+	 * @var Revisions
+	 */
 	private $revisions;
 
 	/**

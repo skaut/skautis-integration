@@ -22,7 +22,18 @@ final class Settings {
 
 	const HELP_PAGE_URL = 'https://napoveda.skaut.cz/skautis/skautis-integration';
 
+	/**
+	 * A link to the Skautis_Gateway service instance.
+	 *
+	 * @var Skautis_Gateway
+	 */
 	private $skautis_gateway;
+
+	/**
+	 * A link to the Modules_Manager service instance.
+	 *
+	 * @var Modules_Manager
+	 */
 	private $modules_manager;
 	private $admin_dir_url = '';
 

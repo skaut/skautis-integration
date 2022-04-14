@@ -19,8 +19,25 @@ use Skautis_Integration\Utils\Helpers;
  */
 final class Frontend {
 
+	/**
+	 * A link to the Skautis_Login service instance.
+	 *
+	 * @var Skautis_Login
+	 */
 	private $skautis_login;
+
+	/**
+	 * A link to the Rules_Manager service instance.
+	 *
+	 * @var Rules_Manager
+	 */
 	private $rules_manager;
+
+	/**
+	 * A link to the WP_Login_Logout service instance.
+	 *
+	 * @var WP_Login_Logout
+	 */
 	private $wp_login_logout;
 
 	/**

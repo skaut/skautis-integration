@@ -17,7 +17,22 @@ use Skautis_Integration\Auth\Skautis_Login;
  */
 class Role_Changer {
 
+	/**
+	 * A link to the Skautis_Gateway service instance.
+	 *
+	 * TODO: Private?
+	 *
+	 * @var Skautis_Gateway
+	 */
 	protected $skautis_gateway;
+
+	/**
+	 * A link to the Skautis_Login service instance.
+	 *
+	 * TODO: Private?
+	 *
+	 * @var Skautis_Login
+	 */
 	protected $skautis_login;
 
 	/**

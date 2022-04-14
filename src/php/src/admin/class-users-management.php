@@ -25,12 +25,58 @@ use Skautis_Integration\Utils\Role_Changer;
  */
 class Users_Management {
 
-	// TODO: Make all of them private?
+	/**
+	 * A link to the Skautis_Gateway service instance.
+	 *
+	 * TODO: Private?
+	 *
+	 * @var Skautis_Gateway
+	 */
 	protected $skautis_gateway;
+
+	/**
+	 * A link to the WP_Login_Logout service instance.
+	 *
+	 * TODO: Private?
+	 *
+	 * @var WP_Login_Logout
+	 */
 	protected $wp_login_logout;
+
+	/**
+	 * A link to the Skautis_Login service instance.
+	 *
+	 * TODO: Private?
+	 *
+	 * @var Skautis_Login
+	 */
 	protected $skautis_login;
+
+	/**
+	 * A link to the Connect_And_Disconnect_WP_Account service instance.
+	 *
+	 * TODO: Private?
+	 *
+	 * @var Connect_And_Disconnect_WP_Account
+	 */
 	protected $connect_and_disconnect_wp_account;
+
+	/**
+	 * A link to the Users service instance.
+	 *
+	 * TODO: Private?
+	 *
+	 * @var Users
+	 */
 	protected $users_repository;
+
+	/**
+	 * A link to the Role_Changer service instance.
+	 *
+	 * TODO: Private?
+	 *
+	 * @var Role_Changer
+	 */
 	protected $role_changer;
 	// TODO: Unused?
 	protected $admin_dir_url = '';

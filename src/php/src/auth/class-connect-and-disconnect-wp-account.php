@@ -17,7 +17,18 @@ use Skautis_Integration\Utils\Helpers;
  */
 final class Connect_And_Disconnect_WP_Account {
 
+	/**
+	 * A link to the Skautis_Gateway service instance.
+	 *
+	 * @var Skautis_Gateway
+	 */
 	private $skautis_gateway;
+
+	/**
+	 * A link to the Skautis_Login service instance.
+	 *
+	 * @var Skautis_Login
+	 */
 	private $skautis_login;
 
 	/**

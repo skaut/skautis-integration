@@ -18,9 +18,27 @@ use Skautis_Integration\Utils\Helpers;
  */
 final class Frontend {
 
-	// TODO: Unused?
+	/**
+	 * A link to the Login_Form service instance.
+	 *
+	 * TODO: Unused?
+	 *
+	 * @var Login_Form
+	 */
 	private $login_form;
+
+	/**
+	 * A link to the WP_Login_Logout service instance.
+	 *
+	 * @var WP_Login_Logout
+	 */
 	private $wp_login_logout;
+
+	/**
+	 * A link to the Skautis_Gateway service instance.
+	 *
+	 * @var Skautis_Gateway
+	 */
 	private $skautis_gateway;
 	// TODO: Unused?
 	private $frontend_dir_url = '';

@@ -26,10 +26,34 @@ final class Actions {
 	const CONNECT_WP_USER_TO_SKAUTIS_ACTION = 'connect/users';
 	const DISCONNECT_ACTION                 = 'disconnect';
 
+	/**
+	 * A link to the Skautis_Gateway service instance.
+	 *
+	 * @var Skautis_Gateway
+	 */
 	private $skautis_gateway;
+
+	/**
+	 * A link to the Skautis_Login service instance.
+	 *
+	 * @var Skautis_Login
+	 */
 	private $skautis_login;
+
+	/**
+	 * A link to the WP_Login_Logout service instance.
+	 *
+	 * @var WP_Login_Logout
+	 */
 	private $wp_login_logout;
+
+	/**
+	 * A link to the Connect_And_Disconnect_WP_Account service instance.
+	 *
+	 * @var Connect_And_Disconnect_WP_Account
+	 */
 	private $connect_wp_account;
+
 	// TODO: Unused?
 	private $frontend_dir_url = '';
 

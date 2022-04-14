@@ -16,7 +16,18 @@ use Skautis_Integration\Utils\Helpers;
  */
 final class Skautis_Login {
 
+	/**
+	 * A link to the Skautis_Gateway service instance.
+	 *
+	 * @var Skautis_Gateway
+	 */
 	private $skautis_gateway;
+
+	/**
+	 * A link to the WP_Login_Logout service instance.
+	 *
+	 * @var WP_Login_Logout
+	 */
 	private $wp_login_logout;
 
 	/**

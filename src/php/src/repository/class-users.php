@@ -17,6 +17,11 @@ use Skautis_Integration\Utils\Helpers;
  */
 class Users {
 
+	/**
+	 * A link to the Skautis_Gateway service instance.
+	 *
+	 * @var Skautis_Gateway
+	 */
 	protected $skautis_gateway;
 
 	/**

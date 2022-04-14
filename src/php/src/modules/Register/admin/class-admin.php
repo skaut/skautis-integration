@@ -17,8 +17,18 @@ use Skautis_Integration\Utils\Helpers;
  */
 final class Admin {
 
+	/**
+	 * A link to the Rules_Manager service instance.
+	 *
+	 * @var Rules_Manager
+	 */
 	private $rules_manager;
-	// TODO: Unused?
+
+	/**
+	 * TODO: Unused?
+	 *
+	 * @var string
+	 */
 	private $admin_dir_url = '';
 
 	/**

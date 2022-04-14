@@ -23,11 +23,31 @@ final class Visibility implements Module {
 
 	const REGISTER_ACTION = 'visibility';
 
-	// TODO: Unused?
+	/**
+	 * A link to the Rules_Manager service instance.
+	 *
+	 * TODO: Unused?
+	 *
+	 * @var Rules_Manager
+	 */
 	private $rules_manager;
-	// TODO: Unused?
+
+	/**
+	 * A link to the Skautis_Login service instance.
+	 *
+	 * TODO: Unused?
+	 *
+	 * @var Skautis_Login
+	 */
 	private $skautis_login;
-	// TODO: Unused?
+
+	/**
+	 * A link to the Skautis_Gateway service instance.
+	 *
+	 * TODO: Unused?
+	 *
+	 * @var Skautis_Gateway
+	 */
 	private $wp_login_logout;
 	private $frontend;
 

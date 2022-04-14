@@ -18,6 +18,11 @@ use Skautis_Integration\Utils\Helpers;
  */
 final class Settings {
 
+	/**
+	 * A link to the Rules_Manager service instance.
+	 *
+	 * @var Rules_Manager
+	 */
 	private $rules_manager;
 
 	/**

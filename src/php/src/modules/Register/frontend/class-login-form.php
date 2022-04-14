@@ -18,6 +18,11 @@ use Skautis_Integration\Modules\Register\WP_Register;
  */
 final class Login_Form {
 
+	/**
+	 * A link to the WP_Register service instance.
+	 *
+	 * @var WP_Register
+	 */
 	private $wp_register;
 
 	/**

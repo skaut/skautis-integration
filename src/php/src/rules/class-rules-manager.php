@@ -17,8 +17,20 @@ use Skautis_Integration\Auth\WP_Login_Logout;
  */
 final class Rules_Manager {
 
+	/**
+	 * A link to the Skautis_Gateway service instance.
+	 *
+	 * @var Skautis_Gateway
+	 */
 	private $skautis_gateway;
-	// TODO: Unused?
+
+	/**
+	 * A link to the WP_Login_Logout service instance.
+	 *
+	 * TODO: Unused?
+	 *
+	 * @var WP_Login_Logout
+	 */
 	private $wp_login_logout;
 	private $rules = array();
 

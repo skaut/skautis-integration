@@ -19,7 +19,21 @@ use Skautis_Integration\Utils\Helpers;
 final class Admin {
 
 	private $post_types;
+
+	/**
+	 * A link to the Rules_Manager service instance.
+	 *
+	 * @var Rules_Manager
+	 */
 	private $rules_manager;
+
+	/**
+	 * A link to the Frontend service instance.
+	 *
+	 * TODO: Unused?
+	 *
+	 * @var Frontend
+	 */
 	private $frontend;
 	private $settings;
 	private $metabox;

@@ -30,12 +30,48 @@ final class Register implements Module {
 
 	public static $id = 'module_Register';
 
+	/**
+	 * A link to the Skautis_Gateway service instance.
+	 *
+	 * @var Skautis_Gateway
+	 */
 	private $skautis_gateway;
+
+	/**
+	 * A link to the Skautis_Login service instance.
+	 *
+	 * @var Skautis_Login
+	 */
 	private $skautis_login;
+
+	/**
+	 * A link to the WP_Login_Logout service instance.
+	 *
+	 * @var WP_Login_Logout
+	 */
 	private $wp_login_logout;
+
+	/**
+	 * A link to the Rules_Manager service instance.
+	 *
+	 * @var Rules_Manager
+	 */
 	private $rules_manager;
-	// TODO: Unused?
+
+	/**
+	 * A link to the Users service instance.
+	 *
+	 * TODO: Unused?
+	 *
+	 * @var Users
+	 */
 	private $users_repository;
+
+	/**
+	 * A link to the WP_Register service instance.
+	 *
+	 * @var WP_Register
+	 */
 	private $wp_register;
 
 	/**

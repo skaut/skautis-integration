@@ -18,6 +18,11 @@ use Skautis_Integration\Rules\Rules_Manager;
  */
 final class Admin {
 
+	/**
+	 * A link to the Rules_Manager service instance.
+	 *
+	 * @var Rules_Manager
+	 */
 	private $rules_manager;
 	private $settings;
 

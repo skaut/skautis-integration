@@ -20,7 +20,18 @@ use Skautis_Integration\Utils\Helpers;
  */
 final class WP_Register {
 
+	/**
+	 * A link to the Skautis_Gateway service instance.
+	 *
+	 * @var Skautis_Gateway
+	 */
 	private $skautis_gateway;
+
+	/**
+	 * A link to the Users service instance.
+	 *
+	 * @var Users
+	 */
 	private $users_repository;
 
 	/**

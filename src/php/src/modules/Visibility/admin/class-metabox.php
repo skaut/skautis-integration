@@ -18,7 +18,19 @@ use Skautis_Integration\Modules\Visibility\Frontend\Frontend;
 final class Metabox {
 
 	private $post_types;
+
+	/**
+	 * A link to the Rules_Manager service instance.
+	 *
+	 * @var Rules_Manager
+	 */
 	private $rules_manager;
+
+	/**
+	 * A link to the Frontend service instance.
+	 *
+	 * @var Frontend
+	 */
 	private $frontend;
 
 	/**
