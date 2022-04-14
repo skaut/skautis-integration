@@ -40,7 +40,12 @@ final class Frontend {
 	 * @var Skautis_Gateway
 	 */
 	private $skautis_gateway;
-	// TODO: Unused?
+
+	/**
+	 * TODO: Unused?
+	 *
+	 * @var string
+	 */
 	private $frontend_dir_url = '';
 
 	/**

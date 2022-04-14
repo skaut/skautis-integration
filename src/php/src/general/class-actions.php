@@ -54,7 +54,11 @@ final class Actions {
 	 */
 	private $connect_wp_account;
 
-	// TODO: Unused?
+	/**
+	 * TODO: Unused?
+	 *
+	 * @var string
+	 */
 	private $frontend_dir_url = '';
 
 	/**

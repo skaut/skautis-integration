@@ -23,11 +23,31 @@ final class Shortcodes implements Module {
 
 	const REGISTER_ACTION = 'shortcodes';
 
-	// TODO: Unused?
+	/**
+	 * A link to the Rules_Manager service instance.
+	 *
+	 * TODO: Unused?
+	 *
+	 * @var Rules_Manager
+	 */
 	private $rules_manager;
-	// TODO: Unused?
+
+	/**
+	 * A link to the Skautis_Login service instance.
+	 *
+	 * TODO: Unused?
+	 *
+	 * @var Skautis_Login
+	 */
 	private $skautis_login;
-	// TODO: Unused?
+
+	/**
+	 * A link to the WP_Login_Logout service instance.
+	 *
+	 * TODO: Unused?
+	 *
+	 * @var WP_Login_Logout
+	 */
 	private $wp_login_logout;
 
 	/**

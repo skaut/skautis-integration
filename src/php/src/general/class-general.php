@@ -16,9 +16,22 @@ use Skautis_Integration\Rules\Rules_Init;
  */
 final class General {
 
-	// TODO: Unused?
+	/**
+	 * A link to the Actions service instance.
+	 *
+	 * TODO: Unused?
+	 *
+	 * @var Actions
+	 */
 	private $actions;
-	// TODO: Unused?
+
+	/**
+	 * A link to the Rules_Init service instance.
+	 *
+	 * TODO: Unused?
+	 *
+	 * @var Rules_Init
+	 */
 	private $rules_init;
 
 	/**

@@ -69,7 +69,11 @@ final class Admin {
 	 */
 	private $users_management;
 
-	// TODO: Unused?
+	/**
+	 * TODO: Unused?
+	 *
+	 * @var string
+	 */
 	private $admin_dir_url = '';
 
 	/**

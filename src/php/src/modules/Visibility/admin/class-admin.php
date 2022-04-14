@@ -58,7 +58,12 @@ final class Admin {
 	 * @var Metabox
 	 */
 	private $metabox;
-	// TODO: Unused?
+
+	/**
+	 * TODO: Unused?
+	 *
+	 * @var string
+	 */
 	private $admin_dir_url = '';
 
 	/**

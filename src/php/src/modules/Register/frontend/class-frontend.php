@@ -14,7 +14,13 @@ namespace Skautis_Integration\Modules\Register\Frontend;
  */
 final class Frontend {
 
-	// TODO: Unused?
+	/**
+	 * A link to the Login_Form service instance.
+	 *
+	 * TODO: Unused?
+	 *
+	 * @var Login_Form
+	 */
 	private $login_form;
 
 	/**

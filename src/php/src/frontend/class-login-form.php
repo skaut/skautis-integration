@@ -25,7 +25,12 @@ final class Login_Form {
 	 * @var WP_Login_Logout
 	 */
 	private $wp_login_logout;
-	// TODO: Unused?
+
+	/**
+	 * TODO: Unused?
+	 *
+	 * @var string
+	 */
 	private $frontend_dir_url = '';
 
 	/**

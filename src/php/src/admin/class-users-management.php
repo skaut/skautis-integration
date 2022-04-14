@@ -78,7 +78,12 @@ class Users_Management {
 	 * @var Role_Changer
 	 */
 	protected $role_changer;
-	// TODO: Unused?
+
+	/**
+	 * TODO: Unused?
+	 *
+	 * @var string
+	 */
 	protected $admin_dir_url = '';
 
 	/**

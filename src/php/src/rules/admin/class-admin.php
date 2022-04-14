@@ -38,7 +38,12 @@ final class Admin {
 	 * @var Skautis_Gateway
 	 */
 	private $skautis_gateway;
-	// TODO: Unused?
+
+	/**
+	 * TODO: Unused?
+	 *
+	 * @var string
+	 */
 	private $admin_dir_url = '';
 
 	/**

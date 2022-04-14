@@ -20,8 +20,14 @@ class Skautis_Gateway {
 	const PROD_ENV = 'prod';
 	const TEST_ENV = 'test';
 
-	// TODO: Private?
-	// TODO: Unused?
+	/**
+	 * The SkautIS app ID.
+	 *
+	 * TODO: Private?
+	 * TODO: Unused?
+	 *
+	 * @var string
+	 */
 	protected $app_id = '';
 
 	/**
@@ -37,7 +43,12 @@ class Skautis_Gateway {
 	 * @var bool
 	 */
 	protected $skautis_initialized = false;
-	// TODO: Unused?
+
+	/**
+	 * Whether the current SkautIS environment is testing.
+	 *
+	 * @var boolean
+	 */
 	protected $test_mode = WP_DEBUG;
 
 	/**
