@@ -64,6 +64,8 @@ final class Frontend {
 
 	/**
 	 * Prints a login form to access the content in a shortcode.
+	 *
+	 * @param boolean $force_logout_from_skautis Whether to force a logout from SkautIS before logging in.
 	 */
 	private function get_login_form( bool $force_logout_from_skautis = false ): string {
 		$login_url_args = add_query_arg( 'noWpLogin', true, Helpers::get_current_url() );
@@ -108,6 +110,9 @@ final class Frontend {
 	 * Runs the shortcode.
 	 *
 	 * This is the function that gets called to process and return the shortcode content.
+	 *
+	 * @param array $atts The shortcode attributes.
+	 * @param array $content The shortcode content.
 	 */
 	public function process_shortcode( array $atts = array(), string $content = '' ): string {
 		if ( isset( $atts['rules'] ) && isset( $atts['content'] ) ) {

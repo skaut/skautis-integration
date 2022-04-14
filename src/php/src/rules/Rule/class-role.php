@@ -148,6 +148,8 @@ class Role implements Rule {
 	 * Removes special characters ("." and "-") from SkautIS unit IDs.
 	 *
 	 * TODO: Duplicated in Membership and Func.
+	 *
+	 * @param string $unit_id The raw unit ID.
 	 */
 	protected function clearUnitId( string $unit_id ): string {
 		return trim(
@@ -211,6 +213,8 @@ class Role implements Rule {
 	 * Checks whether the rule is fulfilled.
 	 *
 	 * @throws \Exception An operator is undefined.
+	 *
+	 * @param "equal"|"not_equal"|"in"|"not_in"|"less"|"less_or_equal"|"greater"|"greater_or_equal"|"between"|"not_between"|"begins_with"|"not_begins_with"|"contains"|"not_contains"|"ends_with"|"not_ends_with"|"is_empty"|"is_not_empty"|"is_null"|"is_not_null" $orperator The operator used with the role
 	 */
 	public function is_rule_passed( string $roles_operator, $data ): bool {
 		// Parse and prepare data from rules UI.

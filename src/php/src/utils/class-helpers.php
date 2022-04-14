@@ -40,6 +40,7 @@ class Helpers {
 	 * @param string        $handle A unique handle to identify the script with.
 	 * @param string        $src Path to the file, relative to the plugin directory.
 	 * @param array<string> $deps A list of dependencies of the script. These can be either system dependencies like jquery, or other registered scripts. Default [].
+	 * @param boolean       $in_footer Whether to enqueue the script in the page footer.
 	 *
 	 * @return void
 	 */
@@ -108,6 +109,10 @@ class Helpers {
 
 	/**
 	 * Shows a notice in the administration.
+	 *
+	 * @param string $message The notice text.
+	 * @param "error"|"warning"|"success"|"info" $type The type of the notice. Default "warning".
+	 * @param string $hide_notice_on_page An ID of a screen where the notice shouldn't get shown. Optional.
 	 */
 	public static function show_admin_notice( string $message, string $type = 'warning', string $hide_notice_on_page = '' ) {
 		add_action(
@@ -162,6 +167,9 @@ class Helpers {
 
 	/**
 	 * Parses a nonce from a URL and verifies it.
+	 *
+	 * @param string $url The URL to parse the nonce from.
+	 * @param string $nonce_name The name of the nonce.
 	 */
 	public static function validate_nonce_from_url( string $url, string $nonce_name ) {
 		if ( ! wp_verify_nonce( self::get_nonce_from_url( urldecode( $url ), $nonce_name ), $nonce_name ) ) {
@@ -171,6 +179,9 @@ class Helpers {
 
 	/**
 	 * Parses a GET variable from a URL.
+	 *
+	 * @param string $url The URL to parse the variable from.
+	 * @param string $variable_name The name of the variable.
 	 */
 	public static function get_variable_from_url( string $url, string $variable_name ): string {
 		$result = array();
@@ -186,6 +197,9 @@ class Helpers {
 
 	/**
 	 * Parses a nonce from a URL.
+	 *
+	 * @param string $url The URL to parse the nonce from.
+	 * @param string $nonce_name The name of the nonce.
 	 */
 	public static function get_nonce_from_url( string $url, string $nonce_name ): string {
 		return self::get_variable_from_url( $url, $nonce_name );

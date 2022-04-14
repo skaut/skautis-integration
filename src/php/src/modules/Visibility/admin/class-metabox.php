@@ -76,6 +76,8 @@ final class Metabox {
 
 	/**
 	 * Saves the data from the metabox to the post meta.
+	 *
+	 * @param int $post_id The ID of the post.
 	 */
 	public function save_rules_custom_field( int $post_id ) {
 		if ( ! isset( $_POST[ SKAUTIS_INTEGRATION_NAME . '_visibility_metabox_nonce' ] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ SKAUTIS_INTEGRATION_NAME . '_visibility_metabox_nonce' ] ) ), SKAUTIS_INTEGRATION_NAME . '_visibility_metabox' ) ) {
@@ -116,6 +118,8 @@ final class Metabox {
 
 	/**
 	 * Prints the rules metabox.
+	 *
+	 * @param \WP_Post $post The post for which the metabox is printed.
 	 */
 	public function rules_repeater( \WP_Post $post ) {
 		$post_type_object = get_post_type_object( $post->post_type );
