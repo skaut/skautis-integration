@@ -26,6 +26,9 @@ final class WP_Register {
 		$this->users_repository = $users_repository;
 	}
 
+	/**
+	 * Registers a new WordPress user and send appropriate notifications based on the module settings.
+	 */
 	private function resolve_notifications_and_register_user_to_wp( string $user_login, string $user_email ): int {
 		remove_action( 'register_new_user', 'wp_send_new_user_notifications' );
 		add_action(
@@ -63,6 +66,11 @@ final class WP_Register {
 		return $user_id;
 	}
 
+	/**
+	 * Retrieves information about a user from SkautIS.
+	 *
+	 * This function queries SkautIS for the information needed when registering a new WordPress user.
+	 */
 	private function prepare_user_data( $skautis_user ): array {
 		$skautis_user_detail = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->PersonDetail(
 			array(
@@ -84,6 +92,13 @@ final class WP_Register {
 		return $user;
 	}
 
+	/**
+	 * Registers a new WordPress user based on user data.
+	 *
+	 * This function performs checks around the user already being registed, user ID collisions and populates basic user info based on the user data.
+	 *
+	 * @see resolve_notifications_and_register_user_to_wp This function actually performs the registration.
+	 */
 	private function process_wp_user_registration( array $user, string $wp_role ): bool {
 		$return_url = Helpers::get_return_url();
 		if ( is_null( $return_url ) ) {
@@ -155,6 +170,9 @@ final class WP_Register {
 		return true;
 	}
 
+	/**
+	 * Returns the WordPress user ID of the current SkautIS user, or 0 if there is no such WordPress user.
+	 */
 	public function check_if_user_is_already_registered_and_get_his_user_id(): int {
 		$user_detail = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserDetail();
 
@@ -201,6 +219,9 @@ final class WP_Register {
 		return esc_url( $url );
 	}
 
+	/**
+	 * Registers the current SkautIS user into WordPress.
+	 */
 	public function register_to_wp( string $wp_role ): bool {
 		$user_detail = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserDetail();
 
@@ -213,6 +234,11 @@ final class WP_Register {
 		return false;
 	}
 
+	/**
+	 * Returns the URL used to register an existing SkautIS user as a new WordPress user.
+	 *
+	 * This function is used to register other users than the current user.
+	 */
 	public function get_manually_register_wp_user_url(): string {
 		$return_url = Helpers::get_login_logout_redirect();
 		$return_url = add_query_arg( SKAUTIS_INTEGRATION_NAME . '_registerToWpBySkautis', wp_create_nonce( SKAUTIS_INTEGRATION_NAME . '_registerToWpBySkautis' ), $return_url );
@@ -221,12 +247,20 @@ final class WP_Register {
 		return esc_url( wp_nonce_url( $url, SKAUTIS_INTEGRATION_NAME . '_register_user', SKAUTIS_INTEGRATION_NAME . '_register_user_nonce' ) );
 	}
 
+	/**
+	 * Registers a SkautIS user into WordPress.
+	 *
+	 * This function is used to register a user that is not the current SkautIS user.
+	 */
 	public function register_to_wp_manually( string $wp_role, int $skautis_user_id ): bool {
 		$user_detail = $this->users_repository->get_user_detail( $skautis_user_id );
 
 		return $this->process_wp_user_registration( $user_detail, $wp_role );
 	}
 
+	/**
+	 * Sanitizes SkautIS username to be a valid WordPress username.
+	 */
 	public function sanitize_username( string $username, string $raw_username, bool $strict ): string {
 		$username = wp_strip_all_tags( $raw_username );
 
