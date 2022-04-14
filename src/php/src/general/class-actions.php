@@ -110,7 +110,7 @@ final class Actions {
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		do_action( SKAUTIS_INTEGRATION_NAME . '_after_skautis_token_is_set', $_POST );
 
-		// TODO: What if I login to the profile page? (e. g. after a timeout...)
+		// TODO: What if I login to the profile page (e. g. after a timeout...)?
 		if ( strpos( Helpers::get_current_url(), 'profile.php' ) !== false ) {
 			$this->connect_wp_account->connect();
 		} else {

@@ -37,7 +37,7 @@ if ( ! function_exists( 'getSkautisRegisterUrl' ) ) {
 	 *
 	 * This version runs the module's register action after the login.
 	 *
-	 * @see	Register::register() The action that fires after the login.
+	 * @see Register::register() The action that fires after the login.
 	 */
 	function getSkautisRegisterUrl(): string {
 		if ( Services::get_modules_manager()->is_module_activated( Register::get_id() ) ) {

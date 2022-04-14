@@ -207,7 +207,7 @@ final class WP_Register {
 	 *
 	 * This version runs this module's register action after the login.
 	 *
-	 * @see	Register::register() The action that fires after the login.
+	 * @see Register::register() The action that fires after the login.
 	 */
 	public function get_register_url(): string {
 		$return_url = Helpers::get_login_logout_redirect();
