@@ -24,6 +24,14 @@ final class Admin {
 	 * @var Rules_Manager
 	 */
 	private $rules_manager;
+
+	/**
+	 * An instance of the module Settings service.
+	 *
+	 * TODO: Unused?
+	 *
+	 * @var Settings
+	 */
 	private $settings;
 
 	/**

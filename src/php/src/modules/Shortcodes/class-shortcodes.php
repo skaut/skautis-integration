@@ -30,6 +30,11 @@ final class Shortcodes implements Module {
 	// TODO: Unused?
 	private $wp_login_logout;
 
+	/**
+	 * The module ID.
+	 *
+	 * @var string
+	 */
 	public static $id = 'module_Shortcodes';
 
 	/**

@@ -28,6 +28,11 @@ final class Register implements Module {
 	const REGISTER_ACTION                  = 'register';
 	const MANUALLY_REGISTER_WP_USER_ACTION = 'registerManually';
 
+	/**
+	 * The module ID.
+	 *
+	 * @var string
+	 */
 	public static $id = 'module_Register';
 
 	/**

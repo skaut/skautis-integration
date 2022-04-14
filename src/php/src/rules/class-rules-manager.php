@@ -32,6 +32,12 @@ final class Rules_Manager {
 	 * @var WP_Login_Logout
 	 */
 	private $wp_login_logout;
+
+	/**
+	 * A list of all the avialable rule blocks.
+	 *
+	 * @var array<string, Rule>
+	 */
 	private $rules = array();
 
 	/**

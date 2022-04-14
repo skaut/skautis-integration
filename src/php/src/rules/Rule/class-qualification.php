@@ -17,12 +17,46 @@ use Skautis_Integration\Auth\Skautis_Gateway;
  */
 class Qualification implements Rule {
 
-	public static $id           = 'qualification';
-	protected static $type      = 'string';
-	protected static $input     = 'qualificationInput';
-	protected static $multiple  = true;
+	/**
+	 * The rule ID
+	 *
+	 * @var string
+	 */
+	public static $id = 'qualification';
+
+	/**
+	 * The rule value type.
+	 *
+	 * @var "string"|"integer"|"double"|"date"|"time"|"datetime"|"boolean"
+	 */
+	protected static $type = 'string';
+
+	/**
+	 * The rule input field type type.
+	 *
+	 * @var "roleInput"|"membershipInput"|"funcInput"|"qualificationInput"|"text"|"number"|"textarea"|"radio"|"checkbox"|"select"
+	 */
+	protected static $input = 'qualificationInput';
+
+	/**
+	 * Whether the rule accepts multiple values at once.
+	 *
+	 * @var boolean
+	 */
+	protected static $multiple = true;
+
+	/**
+	 * All the operators that are applicable for the rule.
+	 *
+	 * @var array<"equal"|"not_equal"|"in"|"not_in"|"less"|"less_or_equal"|"greater"|"greater_or_equal"|"between"|"not_between"|"begins_with"|"not_begins_with"|"contains"|"not_contains"|"ends_with"|"not_ends_with"|"is_empty"|"is_not_empty"|"is_null"|"is_not_null">
+	 */
 	protected static $operators = array( 'in' );
 
+	/**
+	 * A link to the Skautis_Gateway service instance.
+	 *
+	 * @var Skautis_Gateway
+	 */
 	protected $skautis_gateway;
 
 	/**

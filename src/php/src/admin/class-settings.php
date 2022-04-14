@@ -35,6 +35,12 @@ final class Settings {
 	 * @var Modules_Manager
 	 */
 	private $modules_manager;
+
+	/**
+	 * The location of the administration files for the module
+	 *
+	 * @var string
+	 */
 	private $admin_dir_url = '';
 
 	/**

@@ -16,7 +16,18 @@ use Skautis_Integration\Services\Services;
  */
 final class Modules_Manager {
 
-	private $modules           = array();
+	/**
+	 * A list of all available modules.
+	 *
+	 * @var array
+	 */
+	private $modules = array();
+
+	/**
+	 * A list of all active modules.
+	 *
+	 * @var array
+	 */
 	private $activated_modules = array();
 
 	/**

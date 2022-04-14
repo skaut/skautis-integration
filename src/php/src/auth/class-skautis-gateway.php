@@ -23,11 +23,29 @@ class Skautis_Gateway {
 	// TODO: Private?
 	// TODO: Unused?
 	protected $app_id = '';
+
+	/**
+	 * An instance of the SkautIS library.
+	 *
+	 * @var Skautis\Skautis
+	 */
 	protected $skautis;
+
+	/**
+	 * Whether the SkautIS library instance is initialized.
+	 *
+	 * @var bool
+	 */
 	protected $skautis_initialized = false;
 	// TODO: Unused?
 	protected $test_mode = WP_DEBUG;
-	protected $env       = '';
+
+	/**
+	 * The current SkautIS environment (testing or production).
+	 *
+	 * @var 'prod'|'test'
+	 */
+	protected $env = '';
 
 	/**
 	 * Constructs the service and saves all dependencies.

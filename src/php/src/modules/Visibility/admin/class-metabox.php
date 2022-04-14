@@ -17,6 +17,11 @@ use Skautis_Integration\Modules\Visibility\Frontend\Frontend;
  */
 final class Metabox {
 
+	/**
+	 * A list of post types to activate the Visibility module for.
+	 *
+	 * @var array
+	 */
 	private $post_types;
 
 	/**

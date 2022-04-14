@@ -18,6 +18,11 @@ use Skautis_Integration\Utils\Helpers;
  */
 final class Admin {
 
+	/**
+	 * A list of post types to activate the Visibility module for.
+	 *
+	 * @var array
+	 */
 	private $post_types;
 
 	/**
@@ -35,7 +40,23 @@ final class Admin {
 	 * @var Frontend
 	 */
 	private $frontend;
+
+	/**
+	 * An instance of the module Settings service.
+	 *
+	 * TODO: Unused?
+	 *
+	 * @var Settings
+	 */
 	private $settings;
+
+	/**
+	 * An instance of the module Metabox service.
+	 *
+	 * TODO: Unused?
+	 *
+	 * @var Metabox
+	 */
 	private $metabox;
 	// TODO: Unused?
 	private $admin_dir_url = '';

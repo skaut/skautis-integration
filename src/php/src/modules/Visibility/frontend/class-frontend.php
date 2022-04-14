@@ -19,6 +19,11 @@ use Skautis_Integration\Utils\Helpers;
  */
 final class Frontend {
 
+	/**
+	 * A list of post types to activate the Visibility module for.
+	 *
+	 * @var array
+	 */
 	private $post_types;
 
 	/**

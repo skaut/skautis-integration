@@ -49,8 +49,19 @@ final class Visibility implements Module {
 	 * @var Skautis_Gateway
 	 */
 	private $wp_login_logout;
+
+	/**
+	 * An instance of the module Frontend service.
+	 *
+	 * @var Frontend
+	 */
 	private $frontend;
 
+	/**
+	 * The module ID.
+	 *
+	 * @var string
+	 */
 	public static $id = 'module_Visibility';
 
 	/**
