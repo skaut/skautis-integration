@@ -141,7 +141,11 @@ class Qualification implements Rule {
 		return $user_qualifications;
 	}
 
-	// TODO: Unused first parameter?
+	/**
+	 * Checks whether the rule is fulfilled.
+	 *
+	 * TODO: Unused first parameter?
+	 */
 	public function is_rule_passed( string $roles_operator, $data ): bool {
 		// Parse and prepare data from rules UI.
 		$output = array();

@@ -100,7 +100,11 @@ class Skautis_Gateway {
 		return false;
 	}
 
-	// TODO: Unused?
+	/**
+	 * Checks whether there is a SkautIS outage due to maintenance.
+	 *
+	 * TODO: Unused?
+	 */
 	public function is_maintenance(): bool {
 		return $this->skautis->isMaintenance();
 	}

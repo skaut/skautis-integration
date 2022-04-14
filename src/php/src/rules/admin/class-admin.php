@@ -92,20 +92,27 @@ final class Admin {
 		<?php
 	}
 
-	// TODO: Unused?
+	/**
+	 * TODO: Unused?
+	 */
 	public function add_rules_field_to_revisions( array $fields ): array {
 		$fields[ SKAUTIS_INTEGRATION_NAME . '_rules_data' ] = __( 'skautIS Pravidla', 'skautis-integration' );
 
 		return $fields;
 	}
 
-	// TODO: Unused?
-	// TODO: Unused first parameter?
+	/**
+	 * TODO: Unused?
+	 *
+	 * TODO: Unused first parameter?
+	 */
 	public function get_rules_field_value( $value, $field_name, \WP_Post $post ) {
 		return get_metadata( 'post', $post->ID, SKAUTIS_INTEGRATION_NAME . '_rules_data', true );
 	}
 
-	// TODO: Unused?
+	/**
+	 * TODO: Unused?
+	 */
 	public function restore_revision_for_rules_field( int $post_id, int $revision_id ) {
 		$post     = get_post( $post_id );
 		$revision = get_post( $revision_id );

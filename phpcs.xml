@@ -22,7 +22,6 @@
 		<exclude name="Squiz.Commenting.ClassComment.Missing"/>
 		<exclude name="Squiz.Commenting.ClassComment.WrongStyle"/>
 		<exclude name="Squiz.Commenting.FunctionComment.MissingParamTag"/>
-		<exclude name="Squiz.Commenting.FunctionComment.WrongStyle"/>
 		<exclude name="Squiz.Commenting.VariableComment.Missing"/>
 		<exclude name="Squiz.Commenting.VariableComment.WrongStyle"/>
 		<exclude name="WordPress.DB.SlowDBQuery.slow_db_query_meta_query"/>
