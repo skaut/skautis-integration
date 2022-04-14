@@ -120,6 +120,8 @@ final class Actions {
 
 	/**
 	 * Fires upon redirect to SkautIS authentication and fires the correct action.
+	 *
+	 * @throws \Exception The requested action doesn't exist.
 	 */
 	public function auth_actions_router( \WP_Query $wp_query ) {
 		if ( ! $wp_query->get( 'skautis_auth' ) ) {
