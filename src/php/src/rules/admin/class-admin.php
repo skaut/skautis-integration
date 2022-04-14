@@ -13,6 +13,9 @@ use Skautis_Integration\Auth\Skautis_Gateway;
 use Skautis_Integration\Auth\WP_Login_Logout;
 use Skautis_Integration\Utils\Helpers;
 
+/**
+ * Adds the UI for rules management.
+ */
 final class Admin {
 
 	private $rules_manager;

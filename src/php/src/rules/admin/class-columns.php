@@ -9,6 +9,9 @@ declare( strict_types=1 );
 
 namespace Skautis_Integration\Rules;
 
+/**
+ * Adds the "Last modified" column to the rule table view.
+ */
 class Columns {
 
 	/**

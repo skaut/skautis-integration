@@ -13,6 +13,9 @@ use Skautis_Integration\Rules\Rules_Manager;
 use Skautis_Integration\Modules\Visibility\Frontend\Frontend;
 use Skautis_Integration\Utils\Helpers;
 
+/**
+ * Enqueues all scripts and styles for the Visibility module.
+ */
 final class Admin {
 
 	private $post_types;

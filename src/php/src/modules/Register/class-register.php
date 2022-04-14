@@ -20,6 +20,9 @@ use Skautis_Integration\Modules\Register\Frontend\Frontend;
 use Skautis_Integration\Modules\Register\Frontend\Login_Form;
 use Skautis_Integration\Utils\Helpers;
 
+/**
+ * Adds the functionality to register new WordPress users based on SkautIS.
+ */
 final class Register implements Module {
 
 	const REGISTER_ACTION                  = 'register';

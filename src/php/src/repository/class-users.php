@@ -12,6 +12,9 @@ namespace Skautis_Integration\Repository;
 use Skautis_Integration\Auth\Skautis_Gateway;
 use Skautis_Integration\Utils\Helpers;
 
+/**
+ * Contains helper functions for management of SkautIS users.
+ */
 class Users {
 
 	protected $skautis_gateway;

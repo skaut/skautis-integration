@@ -13,6 +13,9 @@ use Skautis_Integration\Rules\Rules_Init;
 use Skautis_Integration\Rules\Rules_Manager;
 use Skautis_Integration\Utils\Helpers;
 
+/**
+ * Registers, handles and shows all settings for the Register module.
+ */
 final class Settings {
 
 	private $rules_manager;

@@ -16,6 +16,9 @@ use Skautis_Integration\Auth\Skautis_Login;
 use Skautis_Integration\Modules\Visibility\Admin\Admin;
 use Skautis_Integration\Modules\Visibility\Frontend\Frontend;
 
+/**
+ * The main class of the Visibility module.
+ */
 final class Visibility implements Module {
 
 	const REGISTER_ACTION = 'visibility';

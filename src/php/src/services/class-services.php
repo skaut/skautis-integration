@@ -32,6 +32,9 @@ use Skautis_Integration\Rules\Rules_Init;
 use Skautis_Integration\Rules\Rules_Manager;
 use Skautis_Integration\Utils\Role_Changer;
 
+/**
+ * A dependency injection container for all the services of the plugin.
+ */
 class Services {
 
 	/**

@@ -12,6 +12,9 @@ namespace Skautis_Integration\Modules\Visibility\Admin;
 use Skautis_Integration\Rules\Rules_Manager;
 use Skautis_Integration\Modules\Visibility\Frontend\Frontend;
 
+/**
+ * Adds the visibility metabox to the post editor.
+ */
 final class Metabox {
 
 	private $post_types;

@@ -11,6 +11,9 @@ namespace Skautis_Integration\Modules\Visibility\Admin;
 
 use Skautis_Integration\Utils\Helpers;
 
+/**
+ * Registers, handles and shows all settings for the Visibility module.
+ */
 final class Settings {
 
 	/**

@@ -20,6 +20,9 @@ use Skautis_Integration\Modules\Register\Register;
 use Skautis_Integration\Utils\Helpers;
 use Skautis_Integration\Utils\Role_Changer;
 
+/**
+ * Adds an administration page for management of SkautIS users.
+ */
 class Users_Management {
 
 	// TODO: Make all of them private?

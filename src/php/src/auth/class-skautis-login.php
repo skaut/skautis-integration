@@ -11,6 +11,9 @@ namespace Skautis_Integration\Auth;
 
 use Skautis_Integration\Utils\Helpers;
 
+/**
+ * Enables the "Log in with SkautIS" functionality of the plugin.
+ */
 final class Skautis_Login {
 
 	private $skautis_gateway;

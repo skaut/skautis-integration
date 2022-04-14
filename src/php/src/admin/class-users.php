@@ -13,6 +13,9 @@ use Skautis_Integration\Auth\Connect_And_Disconnect_WP_Account;
 use Skautis_Integration\Auth\Skautis_Gateway;
 use Skautis_Integration\Utils\Helpers;
 
+/**
+ * Adds SkautIS info to the WordPress user table as well as user profile screen.
+ */
 final class Users {
 
 	private $connect_wp_account;

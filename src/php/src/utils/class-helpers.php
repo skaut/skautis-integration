@@ -9,6 +9,9 @@ declare( strict_types=1 );
 
 namespace Skautis_Integration\Utils;
 
+/**
+ * Helper functions for the plugin.
+ */
 class Helpers {
 
 	/**

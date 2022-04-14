@@ -12,6 +12,9 @@ namespace Skautis_Integration\Utils;
 use Skautis_Integration\Auth\Skautis_Gateway;
 use Skautis_Integration\Auth\Skautis_Login;
 
+/**
+ * Adds a SkautIS role changer to the SkautIS user management admin page.
+ */
 class Role_Changer {
 
 	protected $skautis_gateway;

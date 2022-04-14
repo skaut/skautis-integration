@@ -12,6 +12,9 @@ namespace Skautis_Integration\Rules\Rule;
 use Skautis_Integration\Rules\Rule;
 use Skautis_Integration\Auth\Skautis_Gateway;
 
+/**
+ * Rule operator for filtering users based on their SkautIS qualifications.
+ */
 class Qualification implements Rule {
 
 	public static $id           = 'qualification';

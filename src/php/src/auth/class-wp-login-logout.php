@@ -14,6 +14,9 @@ use Skautis_Integration\Utils\Helpers;
 use Skautis_Integration\Services\Services;
 use Skautis_Integration\Modules\Register\Register;
 
+/**
+ * Handles the WordPress part of logging in with SkautIS.
+ */
 final class WP_Login_Logout {
 
 	private $skautis_gateway;

@@ -15,6 +15,9 @@ use Skautis_Integration\Auth\Skautis_Login;
 use Skautis_Integration\Auth\WP_Login_Logout;
 use Skautis_Integration\Utils\Helpers;
 
+/**
+ * Handles redirects to and from SkautIS.
+ */
 final class Actions {
 
 	const LOGIN_ACTION                      = 'login';

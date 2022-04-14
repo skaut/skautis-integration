@@ -11,6 +11,9 @@ namespace Skautis_Integration\Modules;
 
 use Skautis_Integration\Services\Services;
 
+/**
+ * Manages all the plugin modules.
+ */
 final class Modules_Manager {
 
 	private $modules           = array();

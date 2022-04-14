@@ -11,6 +11,9 @@ namespace Skautis_Integration\Rules;
 
 use Skautis_Integration\Utils\Helpers;
 
+/**
+ * Adds the rule custom post type to WordPress.
+ */
 final class Rules_Init {
 
 	const RULES_TYPE_SINGULAR = 'skautis_rule';

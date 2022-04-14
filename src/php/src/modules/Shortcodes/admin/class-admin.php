@@ -11,6 +11,11 @@ namespace Skautis_Integration\Modules\Shortcodes\Admin;
 
 use Skautis_Integration\Rules\Rules_Manager;
 
+/**
+ * Adds the TinyMCE shortcode button to the post editor.
+ *
+ * This class only handles the classic editor, not Gutenberg.
+ */
 final class Admin {
 
 	private $rules_manager;

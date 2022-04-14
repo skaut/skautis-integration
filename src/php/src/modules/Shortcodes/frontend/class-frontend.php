@@ -14,6 +14,9 @@ use Skautis_Integration\Rules\Rules_Manager;
 use Skautis_Integration\Auth\WP_Login_Logout;
 use Skautis_Integration\Utils\Helpers;
 
+/**
+ * Handles the frontend part of the shortcodes - runs the shortcode, shows notices and a login form.
+ */
 final class Frontend {
 
 	private $skautis_login;

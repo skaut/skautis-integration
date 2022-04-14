@@ -12,6 +12,9 @@ namespace Skautis_Integration\Auth;
 use Skautis_Integration\General\Actions;
 use Skautis_Integration\Utils\Helpers;
 
+/**
+ * Handles connecting or disconnecting WordPress and SkautIS users.
+ */
 final class Connect_And_Disconnect_WP_Account {
 
 	private $skautis_gateway;

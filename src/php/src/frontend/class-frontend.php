@@ -13,6 +13,9 @@ use Skautis_Integration\Auth\Skautis_Gateway;
 use Skautis_Integration\Auth\WP_Login_Logout;
 use Skautis_Integration\Utils\Helpers;
 
+/**
+ * Enqueues frontend scripts and styles.
+ */
 final class Frontend {
 
 	// TODO: Unused?

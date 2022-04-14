@@ -14,6 +14,9 @@ use Skautis_Integration\Auth\Skautis_Login;
 use Skautis_Integration\Auth\WP_Login_Logout;
 use Skautis_Integration\Utils\Helpers;
 
+/**
+ * Handles the frontend part of the visibility rules - hides posts or their contents, shows notices and a login form.
+ */
 final class Frontend {
 
 	private $post_types;

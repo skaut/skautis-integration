@@ -14,6 +14,9 @@ use Skautis_Integration\Services\Services;
 use Skautis_Integration\Modules\Register\Register;
 use Skautis_Integration\Utils\Helpers;
 
+/**
+ * Adds the "Log in with SkautIS" button to the login form.
+ */
 final class Login_Form {
 
 	private $wp_login_logout;

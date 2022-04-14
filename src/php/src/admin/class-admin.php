@@ -14,6 +14,9 @@ use Skautis_Integration\Auth\WP_Login_Logout;
 use Skautis_Integration\Rules\Rules_Manager;
 use Skautis_Integration\Utils\Helpers;
 
+/**
+ * Enqueues administration scripts and styles and adds a button to log the user out of both WordPress and SkautIS simultaneously to the admin bar.
+ */
 final class Admin {
 
 	private $settings;

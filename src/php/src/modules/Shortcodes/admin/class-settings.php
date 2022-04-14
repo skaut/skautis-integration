@@ -11,6 +11,9 @@ namespace Skautis_Integration\Modules\Shortcodes\Admin;
 
 use Skautis_Integration\Utils\Helpers;
 
+/**
+ * Registers, handles and shows all settings for the Shortcodes module.
+ */
 final class Settings {
 
 	/**

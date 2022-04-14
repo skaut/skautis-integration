@@ -12,6 +12,9 @@ namespace Skautis_Integration\Modules\Register\Admin;
 use Skautis_Integration\Rules\Rules_Manager;
 use Skautis_Integration\Utils\Helpers;
 
+/**
+ * Handles administration scripts and styles for the Register module.
+ */
 final class Admin {
 
 	private $rules_manager;

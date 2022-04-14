@@ -12,6 +12,9 @@ namespace Skautis_Integration\Auth;
 use Skautis_Integration\Utils\Helpers;
 use Skautis_Integration\Vendor\Skautis;
 
+/**
+ * An adapter for the SkautIS library.
+ */
 class Skautis_Gateway {
 
 	const PROD_ENV = 'prod';

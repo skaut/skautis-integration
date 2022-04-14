@@ -12,6 +12,9 @@ namespace Skautis_Integration\Rules;
 use Skautis_Integration\Auth\Skautis_Gateway;
 use Skautis_Integration\Auth\WP_Login_Logout;
 
+/**
+ * Contains functions for checking whether a user passes rules.
+ */
 final class Rules_Manager {
 
 	private $skautis_gateway;

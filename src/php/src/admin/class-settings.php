@@ -15,6 +15,9 @@ use Skautis_Integration\Utils\Helpers;
 use Skautis_Integration\Services\Services;
 use Skautis_Integration\Modules\Register\Register;
 
+/**
+ * Registers, handles and shows plugin settings.
+ */
 final class Settings {
 
 	const HELP_PAGE_URL = 'https://napoveda.skaut.cz/skautis/skautis-integration';

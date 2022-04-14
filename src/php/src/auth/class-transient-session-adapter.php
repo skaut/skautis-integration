@@ -11,6 +11,9 @@ namespace Skautis_Integration\Auth;
 
 use Skautis_Integration\Vendor\Skautis\SessionAdapter\AdapterInterface;
 
+/**
+ * Enables the SkautIS library to use WordPress transiens for user session management.
+ */
 class Transient_Session_Adapter implements AdapterInterface {
 	/**
 	 * A helper function generating random string and saving it in a cookie.

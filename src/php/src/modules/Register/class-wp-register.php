@@ -13,6 +13,11 @@ use Skautis_Integration\Auth\Skautis_Gateway;
 use Skautis_Integration\Repository\Users as UsersRepository;
 use Skautis_Integration\Utils\Helpers;
 
+/**
+ * Adds the functionality to register new WordPress users based on SkautIS.
+ *
+ * This class handles the WordPress part of the process.
+ */
 final class WP_Register {
 
 	private $skautis_gateway;

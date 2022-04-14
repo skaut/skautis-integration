@@ -16,6 +16,9 @@ use Skautis_Integration\Modules\Shortcodes\Frontend\Frontend;
 use Skautis_Integration\Rules\Rules_Manager;
 use Skautis_Integration\Auth\WP_Login_Logout;
 
+/**
+ * The main class of the Shortcodes module.
+ */
 final class Shortcodes implements Module {
 
 	const REGISTER_ACTION = 'shortcodes';
