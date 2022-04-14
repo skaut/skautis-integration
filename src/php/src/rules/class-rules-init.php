@@ -28,6 +28,8 @@ final class Rules_Init {
 
 	/**
 	 * Constructs the service and saves all dependencies.
+	 *
+	 * @param Revisions $revisions An injected Revisions service instance.
 	 */
 	public function __construct( Revisions $revisions ) {
 		$this->revisions = $revisions;

@@ -33,6 +33,8 @@ final class Admin {
 
 	/**
 	 * Constructs the service and saves all dependencies.
+	 *
+	 * @param Rules_Manager $rules_manager An injected Rules_Manager service instance.
 	 */
 	public function __construct( Rules_Manager $rules_manager ) {
 		$this->rules_manager = $rules_manager;

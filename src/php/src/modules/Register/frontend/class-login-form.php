@@ -27,6 +27,8 @@ final class Login_Form {
 
 	/**
 	 * Constructs the service and saves all dependencies.
+	 *
+	 * @param WP_Register $wp_register An injected WP_Register service instance.
 	 */
 	public function __construct( WP_Register $wp_register ) {
 		$this->wp_register = $wp_register;

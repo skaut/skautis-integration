@@ -33,6 +33,9 @@ final class Connect_And_Disconnect_WP_Account {
 
 	/**
 	 * Constructs the service and saves all dependencies.
+	 *
+	 * @param Skautis_Gateway $skautis_gateway An injected Skautis_Gateway service instance.
+	 * @param Skautis_Login   $skautis_login An injected Skautis_Login service instance.
 	 */
 	public function __construct( Skautis_Gateway $skautis_gateway, Skautis_Login $skautis_login ) {
 		$this->skautis_gateway = $skautis_gateway;

@@ -32,6 +32,8 @@ final class Modules_Manager {
 
 	/**
 	 * Constructs the service and saves all dependencies.
+	 *
+	 * @param array $modules A list of all available modules.
 	 */
 	public function __construct( array $modules = array() ) {
 		$this->modules           = apply_filters( SKAUTIS_INTEGRATION_NAME . '_modules', $modules );

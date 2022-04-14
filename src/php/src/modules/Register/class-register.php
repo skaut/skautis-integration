@@ -81,6 +81,12 @@ final class Register implements Module {
 
 	/**
 	 * Constructs the module and saves all dependencies.
+	 *
+	 * @param Skautis_Gateway $skautis_gateway An injected Skautis_Gateway service instance.
+	 * @param Skautis_Login   $skautis_login An injected Skautis_Login service instance.
+	 * @param WP_Login_Logout $wp_login_logout An injected WP_Login_Logout service instance.
+	 * @param Rules_Manager   $rules_manager An injected Rules_Manager service instance.
+	 * @param Users           $users_repository An injected Users service instance.
 	 */
 	public function __construct( Skautis_Gateway $skautis_gateway, Skautis_Login $skautis_login, WP_Login_Logout $wp_login_logout, Rules_Manager $rules_manager, UsersRepository $users_repository ) {
 		$this->skautis_gateway  = $skautis_gateway;

@@ -49,6 +49,11 @@ final class Frontend {
 
 	/**
 	 * Constructs the service and saves all dependencies.
+	 *
+	 * @param array           $post_types A list of post types to activate the Visibility module for.
+	 * @param Rules_Manager   $rules_manager An injected Rules_Manager service instance.
+	 * @param Skautis_Login   $skautis_login An injected Skautis_Login service instance.
+	 * @param WP_Login_Logout $wp_login_logout An injected WP_Login_Logout service instance.
 	 */
 	public function __construct( array $post_types, Rules_Manager $rules_manager, Skautis_Login $skautis_login, WP_Login_Logout $wp_login_logout ) {
 		$this->post_types      = $post_types;

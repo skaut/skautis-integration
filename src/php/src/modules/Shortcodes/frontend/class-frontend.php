@@ -42,6 +42,10 @@ final class Frontend {
 
 	/**
 	 * Constructs the service and saves all dependencies.
+	 *
+	 * @param Skautis_Login   $skautis_login An injected Skautis_Login service instance.
+	 * @param Rules_Manager   $rules_manager An injected Rules_Manager service instance.
+	 * @param WP_Login_Logout $wp_login_logout An injected WP_Login_Logout service instance.
 	 */
 	public function __construct( Skautis_Login $skautis_login, Rules_Manager $rules_manager, WP_Login_Logout $wp_login_logout ) {
 		$this->skautis_login   = $skautis_login;

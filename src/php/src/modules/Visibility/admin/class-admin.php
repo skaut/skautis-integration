@@ -68,6 +68,10 @@ final class Admin {
 
 	/**
 	 * Constructs the service and saves all dependencies.
+	 *
+	 * @param array         $post_types A list of post types to activate the Visibility module for.
+	 * @param Rules_Manager $rules_manager An injected Rules_Manager service instance.
+	 * @param Frontend      $frontend An injected Frontend service instance.
 	 */
 	public function __construct( array $post_types, Rules_Manager $rules_manager, Frontend $frontend ) {
 		$this->post_types    = $post_types;

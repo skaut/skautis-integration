@@ -25,6 +25,8 @@ final class Frontend {
 
 	/**
 	 * Constructs the service and saves all dependencies.
+	 *
+	 * @param Login_Form $login_form An injected Login_Form service instance.
 	 */
 	public function __construct( Login_Form $login_form ) {
 		$this->login_form = $login_form;

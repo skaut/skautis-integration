@@ -63,6 +63,11 @@ final class Actions {
 
 	/**
 	 * Constructs the service and saves all dependencies.
+	 *
+	 * @param Skautis_Login                     $skautis_login An injected Skautis_Login service instance.
+	 * @param WP_Login_Logout                   $wp_login_logout An injected WP_Login_Logout service instance.
+	 * @param Connect_And_Disconnect_WP_Account $connect_wp_account An injected Connect_And_Disconnect_WP_Account service instance.
+	 * @param Skautis_Gateway                   $skautis_gateway An injected Skautis_Gateway service instance.
 	 */
 	public function __construct( Skautis_Login $skautis_login, WP_Login_Logout $wp_login_logout, Connect_And_Disconnect_WP_Account $connect_wp_account, Skautis_Gateway $skautis_gateway ) {
 		$this->skautis_gateway    = $skautis_gateway;

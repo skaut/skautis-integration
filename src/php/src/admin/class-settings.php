@@ -45,6 +45,9 @@ final class Settings {
 
 	/**
 	 * Constructs the service and saves all dependencies.
+	 *
+	 * @param Skautis_Gateway $skautis_gateway An injected Skautis_Gateway service instance.
+	 * @param Modules_Manager $modules_manager An injected Modules_Manager service instance.
 	 */
 	public function __construct( Skautis_Gateway $skautis_gateway, Modules_Manager $modules_manager ) {
 		$this->skautis_gateway = $skautis_gateway;

@@ -35,6 +35,8 @@ final class Login_Form {
 
 	/**
 	 * Constructs the service and saves all dependencies.
+	 *
+	 * @param WP_Login_Logout $wp_login_logout An injected WP_Login_Logout service instance.
 	 */
 	public function __construct( WP_Login_Logout $wp_login_logout ) {
 		$this->wp_login_logout  = $wp_login_logout;

@@ -27,6 +27,8 @@ final class Users {
 
 	/**
 	 * Constructs the service and saves all dependencies.
+	 *
+	 * @param Connect_And_Disconnect_WP_Account $connect_wp_account An injected Connect_And_Disconnect_WP_Account service instance.
 	 */
 	public function __construct( Connect_And_Disconnect_WP_Account $connect_wp_account ) {
 		$this->connect_wp_account = $connect_wp_account;

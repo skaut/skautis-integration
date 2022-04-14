@@ -78,6 +78,13 @@ final class Admin {
 
 	/**
 	 * Constructs the service and saves all dependencies.
+	 *
+	 * @param Settings         $settings An injected Settings service instance.
+	 * @param Users            $users An injected Users service instance.
+	 * @param Rules_Manager    $rules_manager An injected Rules_Manager service instance.
+	 * @param Users_Management $users_management An injected Users_Management service instance.
+	 * @param WP_Login_Logout  $wp_login_logout An injected WP_Login_Logout service instance.
+	 * @param Skautis_Gateway  $skautis_gateway An injected Skautis_Gateway service instance.
 	 */
 	public function __construct( Settings $settings, Users $users, Rules_Manager $rules_manager, Users_Management $users_management, WP_Login_Logout $wp_login_logout, Skautis_Gateway $skautis_gateway ) {
 		$this->settings         = $settings;

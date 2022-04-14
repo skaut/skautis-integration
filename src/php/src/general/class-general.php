@@ -36,6 +36,9 @@ final class General {
 
 	/**
 	 * Constructs the service and saves all dependencies.
+	 *
+	 * @param Actions    $actions An injected Actions service instance.
+	 * @param Rules_Init $rules_init An injected Rules_Init service instance.
 	 */
 	public function __construct( Actions $actions, Rules_Init $rules_init ) {
 		$this->actions    = $actions;

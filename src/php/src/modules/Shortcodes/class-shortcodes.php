@@ -59,6 +59,10 @@ final class Shortcodes implements Module {
 
 	/**
 	 * Constructs the module and saves all dependencies.
+	 *
+	 * @param Rules_Manager   $rules_manager An injected Rules_Manager service instance.
+	 * @param Skautis_Login   $skautis_login An injected Skautis_Login service instance.
+	 * @param WP_Login_Logout $wp_login_logout An injected WP_Login_Logout service instance.
 	 */
 	public function __construct( Rules_Manager $rules_manager, Skautis_Login $skautis_login, WP_Login_Logout $wp_login_logout ) {
 		$this->rules_manager   = $rules_manager;
