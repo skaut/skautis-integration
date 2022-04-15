@@ -44,6 +44,9 @@ final class Modules_Manager {
 
 	/**
 	 * Initializes all activated modules.
+	 *
+	 * @param array $modules A list of all available modules.
+	 * @param array $modules A list of all active modules.
 	 */
 	private function register_activated_modules( array $modules = array(), array $activated_modules = array() ) {
 		foreach ( $modules as $module_id => $module_label ) {
@@ -62,6 +65,8 @@ final class Modules_Manager {
 
 	/**
 	 * Checks whether a module is activated.
+	 *
+	 * @param string $module_name The ID of the module to check.
 	 */
 	public function is_module_activated( string $module_name ): bool {
 		return in_array( $module_name, $this->activated_modules, true );

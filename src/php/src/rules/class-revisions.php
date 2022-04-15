@@ -37,6 +37,8 @@ class Revisions {
 
 	/**
 	 * Removes all hidden fields from a post metadata.
+	 *
+	 * @param array $meta The metadata to filter.
 	 */
 	public function filter_meta( $meta ): array {
 		$meta_filtered = array();
@@ -51,6 +53,8 @@ class Revisions {
 
 	/**
 	 * Returns the post metadata, without hidden fields.
+	 *
+	 * @param int $post_id The post for which to get the metadata.
 	 */
 	public function get_meta( int $post_id ): array {
 		$meta = get_metadata( 'post', $post_id );
@@ -61,6 +65,9 @@ class Revisions {
 
 	/**
 	 * Adds metadata to a post.
+	 *
+	 * @param int $post_id The post in question.
+	 * @param array $meta The metadata to add.
 	 */
 	public function insert_meta( int $post_id, $meta ) {
 		foreach ( $meta as $meta_key => $meta_value ) {
@@ -76,6 +83,8 @@ class Revisions {
 
 	/**
 	 * Deletes all metadata from a post.
+	 *
+	 * @param int $post_id The post in question.
 	 */
 	public function delete_meta( int $post_id ) {
 		$meta = $this->get_meta( $post_id );
@@ -89,6 +98,10 @@ class Revisions {
 	 * Returns the "custom_fields" field value transformed for comparison.
 	 *
 	 * This function is used when comparing between revisions and serves to transform the field before comaprison.
+	 *
+	 * @param never $value Unused.
+	 * @param never $field Unused.
+	 * @param array $revision The revision to transform the field for.
 	 */
 	public function field( $value, $field, $revision ) {
 		$revision_id = $revision->ID;
@@ -105,6 +118,8 @@ class Revisions {
 
 	/**
 	 * Adds the field "custom_fields" to post revisions.
+	 *
+	 * @param array<string> A list of post revision fields.
 	 */
 	public function fields( array $fields = array() ): array {
 		$fields['custom_fields'] = __( 'Další pole', 'skautis-integration' );
@@ -114,6 +129,9 @@ class Revisions {
 
 	/**
 	 * Restores metadata when restoring a previous revision.
+	 *
+	 * @param int $post_id The ID of the post in question.
+	 * @param int $post_id The ID of the revision being restored.
 	 */
 	public function restore_revision( int $post_id, int $revision_id ) {
 		$meta = $this->get_meta( $revision_id );
@@ -130,9 +148,11 @@ class Revisions {
 	}
 
 	/**
-	 * Resets metadata on revision save.
+	 * Resets metadata whan saving a posr revision.
 	 *
 	 * TODO: Why is this done?
+	 *
+	 * @param int $post_id The ID of the post in question.
 	 */
 	public function save_post( int $post_id ) {
 		if ( wp_is_post_revision( $post_id ) ) {
@@ -149,6 +169,10 @@ class Revisions {
 	 * Checks whether the post metadata has changed from the last revision.
 	 *
 	 * This function gets called when deciding whether to save a new revision - a new revision is saved only when the post has changed since the last revision.
+	 *
+	 * @param boolean $post_has_changed Whether the post is marked as changed because of some other reason (e.g. different content).
+	 * @param \WP_Post $last_revision The last revision of the post.
+	 * @param \WP_Post $post The current version of the post.
 	 */
 	public function post_has_changed( bool $post_has_changed, \WP_Post $last_revision, \WP_Post $post ): bool {
 		if ( ! $post_has_changed ) {

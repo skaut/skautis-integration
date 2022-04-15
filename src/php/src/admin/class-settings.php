@@ -105,6 +105,8 @@ final class Settings {
 
 	/**
 	 * Adds a link to the plugin settings to the plugin management table.
+	 *
+	 * @param array $links A list of links already present for the plugin.
 	 */
 	public function add_settings_link_to_plugins_table( array $links = array() ): array {
 		$mylinks = array(
@@ -116,6 +118,8 @@ final class Settings {
 
 	/**
 	 * Adds a link to the plugin help to the plugin management table.
+	 *
+	 * @param array $links A list of links already present for the plugin.
 	 */
 	public function add_help_link_to_plugins_table( array $links = array() ): array {
 		$mylinks = array(
@@ -191,6 +195,8 @@ final class Settings {
 
 	/**
 	 * Checks that the App ID works with SkautIS.
+	 *
+	 * @param string $value The App ID.
 	 */
 	public function test_app_id( $value ) {
 		if ( ! $this->skautis_gateway->test_active_app_id() ) {

@@ -75,6 +75,8 @@ final class Rules_Manager {
 	 * Checks whether a user passed a rule.
 	 *
 	 * @throws \Exception An undefined rule was passed to the function.
+	 *
+	 * @param array $rule The rule to check against.
 	 */
 	private function process_rule( $rule ): bool {
 		if ( ! isset( $rule->field ) ) {
@@ -98,6 +100,9 @@ final class Rules_Manager {
 
 	/**
 	 * Checks whether a user passed a rule group.
+	 *
+	 * @param "AND"|"OR" $condition The logical operator used by the group.
+	 * @param array $rules A list of rules in the group.
 	 */
 	private function parse_rules_groups( string $condition, array $rules ): bool {
 		$result = 0;
@@ -188,6 +193,8 @@ final class Rules_Manager {
 	 * Checks whether a user passed plugin rules
 	 *
 	 * TODO: Deduplicate with the other method in this class.
+	 *
+	 * @param array $rules_ids A list of IDs of rules or rule groups to check.
 	 */
 	public function check_if_user_passed_rules( array $rules_ids ): bool {
 		static $rules_groups = null;

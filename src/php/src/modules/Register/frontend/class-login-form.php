@@ -69,6 +69,8 @@ final class Login_Form {
 	 * Returns the Register module version of the "Log in with SkautIS" button as part of the login page.
 	 *
 	 * TODO: Remove this function. Why is the button printed from 2 different hooks?
+	 *
+	 * @param string $html Unused.
 	 */
 	public function login_link_in_login_form_return( string $html ): string {
 		return '

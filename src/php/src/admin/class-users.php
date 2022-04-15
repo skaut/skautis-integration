@@ -50,6 +50,8 @@ final class Users {
 
 	/**
 	 * Adds the header for the SkautIS column in the user table view.
+	 *
+	 * @param array<string> $columns A list of column headers.
 	 */
 	public function add_column_header_to_users_table( array $columns = array() ): array {
 		$columns[ SKAUTIS_INTEGRATION_NAME ] = __( 'skautIS', 'skautis-integration' );
@@ -59,6 +61,12 @@ final class Users {
 
 	/**
 	 * Adds the SkautIS column to the user table view.
+	 *
+	 * This function is called for all columns, so it needs to check when to overwrite the value.
+	 *
+	 * @param string $value The value of the current cell.
+	 * @param string $column_name The current column.
+	 * @param int $user_id The ID of the user.
 	 */
 	public function add_column_to_users_table( $value, string $column_name, int $user_id ) {
 		if ( SKAUTIS_INTEGRATION_NAME === $column_name ) {
@@ -81,6 +89,8 @@ final class Users {
 
 	/**
 	 * Shows the SkautIS section in the user profile both for the current user as well as when managing other users.
+	 *
+	 * @param \WP_User $user The user in question.
 	 */
 	public function skautis_user_id_field( \WP_User $user ) {
 		// TODO: SkautIS, not skautIS.
@@ -127,6 +137,8 @@ final class Users {
 
 	/**
 	 * Saves settings from the SkautIS section of the user profile.
+	 *
+	 * @param int $user_id The ID of the user.
 	 */
 	public function manage_skautis_user_id_field( int $user_id ): bool {
 		if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ), 'update-user_' . $user_id ) ) {

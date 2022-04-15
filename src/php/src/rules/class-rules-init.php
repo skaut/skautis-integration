@@ -122,6 +122,10 @@ final class Rules_Init {
 
 	/**
 	 * Registers the default content for the rules post types.
+	 *
+	 * This function gets called for all post types, so it needs to check before modifying the content.
+	 *
+	 * @param string $content The default content of the current post type.
 	 */
 	public function default_content( string $content ): string {
 		global $post_type;
@@ -134,6 +138,10 @@ final class Rules_Init {
 
 	/**
 	 * Registers the title placeholder for the rules post types.
+	 *
+	 * This function gets called for all post types, so it needs to check before modifying the title.
+	 *
+	 * @param string $title The title placeholder for the current post type.
 	 */
 	public function title_placeholder( string $title ): string {
 		global $post_type;
@@ -146,6 +154,8 @@ final class Rules_Init {
 
 	/**
 	 * Registers messages to use on post update for the rule post type.
+	 *
+	 * @param array<string, array<string>> $messages A list of messages for each post type.
 	 */
 	public function updated_messages( array $messages = array() ): array {
 		$post                              = get_post();

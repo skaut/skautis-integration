@@ -84,6 +84,8 @@ final class Frontend {
 
 	/**
 	 * Adds query variables that WordPress is allowed to use when redirecting.
+	 *
+	 * @param array<string> $vars A list of allowed query variables.
 	 */
 	public function register_query_vars( array $vars = array() ): array {
 		$vars[] = 'skautis_login';
@@ -93,6 +95,8 @@ final class Frontend {
 
 	/**
 	 * Shows the SkautIS login template when the "skautis_login" query variable is present.
+	 *
+	 * @param string $path The path of the template to include. Unmodified when not showing the SkautIS login.
 	 */
 	public function register_templates( string $path = '' ): string {
 		$query_value = get_query_var( 'skautis_login' );
@@ -133,6 +137,8 @@ final class Frontend {
 	 * Adds a link to admin bar right-hand-side menu to log out from both WordPress and SkautIS at once.
 	 *
 	 * TODO: Duplicated code?
+	 *
+	 * @param \WP_Admin_Bar $wp_admin_bar The WordPress administration bar.
 	 */
 	public function add_logout_link_to_admin_bar( \WP_Admin_Bar $wp_admin_bar ) {
 		if ( ! function_exists( 'is_admin_bar_showing' ) ) {

@@ -44,6 +44,9 @@ final class Connect_And_Disconnect_WP_Account {
 
 	/**
 	 * Adds a SkautIS user id to a specified WordPress user. Respects the SkautIS environment (testing or production).
+	 *
+	 * @param int $wp_user_id The ID of the WordPress user.
+	 * @param int $skautis_user_id The SkautIS user ID.
 	 */
 	private function set_skautis_user_id_to_wp_account( int $wp_user_id, int $skautis_user_id ) {
 		$return_url = Helpers::get_return_url();
@@ -63,6 +66,8 @@ final class Connect_And_Disconnect_WP_Account {
 	 * It doesn't make sense to connect another user.
 	 *
 	 * Used when viewing own or another user's account.
+	 *
+	 * @param int $wp_user_id The WordPress user ID of the user (current or other).
 	 */
 	public function print_connect_and_disconnect_button( int $wp_user_id ) {
 		$skautis_user_id = get_user_meta( $wp_user_id, 'skautisUserId_' . $this->skautis_gateway->get_env(), true );
