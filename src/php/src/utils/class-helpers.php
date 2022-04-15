@@ -110,9 +110,9 @@ class Helpers {
 	/**
 	 * Shows a notice in the administration.
 	 *
-	 * @param string $message The notice text.
+	 * @param string                             $message The notice text.
 	 * @param "error"|"warning"|"success"|"info" $type The type of the notice. Default "warning".
-	 * @param string $hide_notice_on_page An ID of a screen where the notice shouldn't get shown. Optional.
+	 * @param string                             $hide_notice_on_page An ID of a screen where the notice shouldn't get shown. Optional.
 	 */
 	public static function show_admin_notice( string $message, string $type = 'warning', string $hide_notice_on_page = '' ) {
 		add_action(

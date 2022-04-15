@@ -66,7 +66,7 @@ final class Users {
 	 *
 	 * @param string $value The value of the current cell.
 	 * @param string $column_name The current column.
-	 * @param int $user_id The ID of the user.
+	 * @param int    $user_id The ID of the user.
 	 */
 	public function add_column_to_users_table( $value, string $column_name, int $user_id ) {
 		if ( SKAUTIS_INTEGRATION_NAME === $column_name ) {

@@ -109,7 +109,7 @@ final class Frontend {
 	/**
 	 * Returns a list of post ancestors.
 	 *
-	 * @param int $post_id The ID of the root post.
+	 * @param int    $post_id The ID of the root post.
 	 * @param string $post_type The type of the root post.
 	 */
 	private function get_posts_hierarchy_tree_with_rules( int $post_id, $post_type ): array {
@@ -132,7 +132,7 @@ final class Frontend {
 	/**
 	 * Returns a list of post ancestors that have rules that should apply to the current post.
 	 *
-	 * @param int $child_post_id The ID of the root post.
+	 * @param int    $child_post_id The ID of the root post.
 	 * @param string $post_type The type of the root post.
 	 */
 	private function get_rules_from_parent_posts_with_impact_by_child_post_id( int $child_post_id, $post_type ): array {
@@ -157,7 +157,7 @@ final class Frontend {
 	/**
 	 * Hides post comments and replaces its excerpt and content.
 	 *
-	 * @param int $post_id The ID of the post to modify.
+	 * @param int    $post_id The ID of the post to modify.
 	 * @param string $new_content The replacement post content.
 	 * @param string $new_excerpt The replacement post excerpt.
 	 */
@@ -204,13 +204,13 @@ final class Frontend {
 	 *
 	 * TODO: This function modifies its parameters.
 	 *
-	 * @param boolean $user_is_logged_in_skautis Whether the current user is logged in to SkautIS
-	 * @param array $rule Unused.
-	 * @param array& $posts A list of posts to filter. This parameter is modified by the function.
-	 * @param int $post_key The ID of the post to hide.
+	 * @param boolean   $user_is_logged_in_skautis Whether the current user is logged in to SkautIS.
+	 * @param array     $rule Unused.
+	 * @param array     $posts A list of posts to filter. This parameter is modified by the function.
+	 * @param int       $post_key The ID of the post to hide.
 	 * @param \WP_Query $wp_query The WordPress request.
-	 * @param string $post_type Unused.
-	 * @param boolean $posts_were_filtered Whether the posts were already filtered.
+	 * @param string    $post_type Unused.
+	 * @param boolean   $posts_were_filtered Whether the posts were already filtered.
 	 */
 	private function process_rules_and_hide_posts( bool $user_is_logged_in_skautis, array $rule, array &$posts, int $post_key, \WP_Query $wp_query, string $post_type, &$posts_were_filtered = false ) {
 		if ( ! empty( $rules ) && isset( $rules[0][ SKAUTIS_INTEGRATION_NAME . '_rules' ] ) ) {
@@ -231,9 +231,9 @@ final class Frontend {
 	 *
 	 * TODO: Deduplicate with the previous function.
 	 *
-	 * @param boolean $user_is_logged_in_skautis Whether the current user is logged in to SkautIS
-	 * @param array $rules A list of visibility rules to check.
-	 * @param int $post_id The ID of the post to show or hide.
+	 * @param boolean $user_is_logged_in_skautis Whether the current user is logged in to SkautIS.
+	 * @param array   $rules A list of visibility rules to check.
+	 * @param int     $post_id The ID of the post to show or hide.
 	 */
 	private function process_rules_and_hide_content( bool $user_is_logged_in_skautis, array $rules, int $post_id ) {
 		if ( ! empty( $rules ) && isset( $rules[0][ SKAUTIS_INTEGRATION_NAME . '_rules' ] ) ) {
@@ -258,7 +258,7 @@ final class Frontend {
 	 *
 	 * TODO: How is this different from get_rules_from_parent_posts_with_impact_by_child_post_id?
 	 *
-	 * @param int $child_post_id The ID of the root post
+	 * @param int    $child_post_id The ID of the root post.
 	 * @param string $child_post_type The type of the root post.
 	 */
 	public function get_parent_posts_with_rules( int $child_post_id, string $child_post_type ): array {
@@ -285,7 +285,7 @@ final class Frontend {
 	 *
 	 * Filters which posts are visible for the current user based on wheher they pass the visibility rules and whether whole posts should be hidden or just their contents
 	 *
-	 * @param array $posts A list of posts to show.
+	 * @param array     $posts A list of posts to show.
 	 * @param \WP_Query $wp_query The WordPress request.
 	 */
 	public function filter_posts( array $posts, \WP_Query $wp_query ): array {

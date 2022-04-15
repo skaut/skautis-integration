@@ -74,7 +74,7 @@ class Columns {
 	 * This function gets called for each cell of the table, so it needs to check before printing the value.
 	 *
 	 * @param string $column_name The current column name.
-	 * @param string $post_id The current post ID (the current row).
+	 * @param int    $post_id The current post ID (the current row).
 	 */
 	public function last_modified_admin_column_content( string $column_name, int $post_id ) {
 		if ( 'modified_last' !== $column_name ) {

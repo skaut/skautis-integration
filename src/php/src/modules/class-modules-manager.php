@@ -46,7 +46,7 @@ final class Modules_Manager {
 	 * Initializes all activated modules.
 	 *
 	 * @param array $modules A list of all available modules.
-	 * @param array $modules A list of all active modules.
+	 * @param array $activated_modules A list of all active modules.
 	 */
 	private function register_activated_modules( array $modules = array(), array $activated_modules = array() ) {
 		foreach ( $modules as $module_id => $module_label ) {

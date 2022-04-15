@@ -93,7 +93,7 @@ class Users_Management {
 	 * @param WP_Login_Logout                   $wp_login_logout An injected WP_Login_Logout service instance.
 	 * @param Skautis_Login                     $skautis_login An injected Skautis_Login service instance.
 	 * @param Connect_And_Disconnect_WP_Account $connect_and_disconnect_wp_account An injected Connect_And_Disconnect_WP_Account service instance.
-	 * @param Users                             $users_repository An injected Users service instance.
+	 * @param UsersRepository                   $users_repository An injected Users service instance.
 	 * @param Role_Changer                      $role_changer An injected Role_Changer service instance.
 	 */
 	public function __construct( Skautis_Gateway $skautis_gateway, WP_Login_Logout $wp_login_logout, Skautis_Login $skautis_login, Connect_And_Disconnect_WP_Account $connect_and_disconnect_wp_account, UsersRepository $users_repository, Role_Changer $role_changer ) {

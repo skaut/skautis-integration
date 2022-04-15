@@ -36,8 +36,8 @@ class Transient_Session_Adapter implements AdapterInterface {
 	/**
 	 * Saves the SkautIS login object in a WordPress transient.
 	 *
-	 * @param string $name The key
-	 * @param mixed $object The value
+	 * @param string $name The key.
+	 * @param mixed  $object The value.
 	 */
 	public function set( $name, $object ) {
 		set_transient( SKAUTIS_INTEGRATION_NAME . '_session_' . $this->get_cookie_id() . '_' . $name, $object, 40 * \MINUTE_IN_SECONDS );
@@ -46,7 +46,7 @@ class Transient_Session_Adapter implements AdapterInterface {
 	/**
 	 * Checks whether the SkautIS login object is present in a WordPress transient.
 	 *
-	 * @param string $name The key
+	 * @param string $name The key.
 	 */
 	public function has( $name ): bool {
 		return $this->get( $name ) !== false;
@@ -55,7 +55,7 @@ class Transient_Session_Adapter implements AdapterInterface {
 	/**
 	 * Retrieves the SkautIS login object from a WordPress transient.
 	 *
-	 * @param string $name The key
+	 * @param string $name The key.
 	 */
 	public function get( $name ) {
 		return get_transient( SKAUTIS_INTEGRATION_NAME . '_session_' . $this->get_cookie_id() . '_' . $name );

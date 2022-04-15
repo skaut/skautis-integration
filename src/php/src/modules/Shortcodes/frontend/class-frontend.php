@@ -111,8 +111,8 @@ final class Frontend {
 	 *
 	 * This is the function that gets called to process and return the shortcode content.
 	 *
-	 * @param array $atts The shortcode attributes.
-	 * @param array $content The shortcode content.
+	 * @param array  $atts The shortcode attributes.
+	 * @param string $content The shortcode content.
 	 */
 	public function process_shortcode( array $atts = array(), string $content = '' ): string {
 		if ( isset( $atts['rules'] ) && isset( $atts['content'] ) ) {

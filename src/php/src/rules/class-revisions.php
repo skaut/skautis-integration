@@ -66,7 +66,7 @@ class Revisions {
 	/**
 	 * Adds metadata to a post.
 	 *
-	 * @param int $post_id The post in question.
+	 * @param int   $post_id The post in question.
 	 * @param array $meta The metadata to add.
 	 */
 	public function insert_meta( int $post_id, $meta ) {
@@ -119,7 +119,7 @@ class Revisions {
 	/**
 	 * Adds the field "custom_fields" to post revisions.
 	 *
-	 * @param array<string> A list of post revision fields.
+	 * @param array<string> $fields A list of post revision fields.
 	 */
 	public function fields( array $fields = array() ): array {
 		$fields['custom_fields'] = __( 'Další pole', 'skautis-integration' );
@@ -131,7 +131,7 @@ class Revisions {
 	 * Restores metadata when restoring a previous revision.
 	 *
 	 * @param int $post_id The ID of the post in question.
-	 * @param int $post_id The ID of the revision being restored.
+	 * @param int $revision_id The ID of the revision being restored.
 	 */
 	public function restore_revision( int $post_id, int $revision_id ) {
 		$meta = $this->get_meta( $revision_id );
@@ -170,7 +170,7 @@ class Revisions {
 	 *
 	 * This function gets called when deciding whether to save a new revision - a new revision is saved only when the post has changed since the last revision.
 	 *
-	 * @param boolean $post_has_changed Whether the post is marked as changed because of some other reason (e.g. different content).
+	 * @param boolean  $post_has_changed Whether the post is marked as changed because of some other reason (e.g. different content).
 	 * @param \WP_Post $last_revision The last revision of the post.
 	 * @param \WP_Post $post The current version of the post.
 	 */

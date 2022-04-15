@@ -38,7 +38,7 @@ final class WP_Register {
 	 * Constructs the service and saves all dependencies.
 	 *
 	 * @param Skautis_Gateway $skautis_gateway An injected Skautis_Gateway service instance.
-	 * @param Users           $users_repository An injected Users service instance.
+	 * @param UsersRepository $users_repository An injected Users service instance.
 	 */
 	public function __construct( Skautis_Gateway $skautis_gateway, UsersRepository $users_repository ) {
 		$this->skautis_gateway  = $skautis_gateway;
@@ -49,7 +49,7 @@ final class WP_Register {
 	 * Registers a new WordPress user and send appropriate notifications based on the module settings.
 	 *
 	 * @param string $user_login The WordPress username to use for the new user.
-	 * @param string $user_email The new user's e-mail address
+	 * @param string $user_email The new user's e-mail address.
 	 */
 	private function resolve_notifications_and_register_user_to_wp( string $user_login, string $user_email ): int {
 		remove_action( 'register_new_user', 'wp_send_new_user_notifications' );
@@ -93,7 +93,7 @@ final class WP_Register {
 	 *
 	 * This function queries SkautIS for the information needed when registering a new WordPress user.
 	 *
-	 * @param Skautis\User $user The SkautIS user.
+	 * @param Skautis\User $skautis_user The SkautIS user.
 	 */
 	private function prepare_user_data( $skautis_user ): array {
 		$skautis_user_detail = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->PersonDetail(
@@ -123,7 +123,7 @@ final class WP_Register {
 	 *
 	 * @see resolve_notifications_and_register_user_to_wp This function actually performs the registration.
 	 *
-	 * @param array $user Information about the user.
+	 * @param array  $user Information about the user.
 	 * @param string $wp_role The WordPress role to assign to the new user.
 	 */
 	private function process_wp_user_registration( array $user, string $wp_role ): bool {
@@ -282,7 +282,7 @@ final class WP_Register {
 	 * This function is used to register a user that is not the current SkautIS user.
 	 *
 	 * @param string $wp_role The WordPress role to assign to the new user.
-	 * @param int $skautis_user_id The ID of the SkautIS user.
+	 * @param int    $skautis_user_id The ID of the SkautIS user.
 	 */
 	public function register_to_wp_manually( string $wp_role, int $skautis_user_id ): bool {
 		$user_detail = $this->users_repository->get_user_detail( $skautis_user_id );
@@ -293,8 +293,8 @@ final class WP_Register {
 	/**
 	 * Sanitizes SkautIS username to be a valid WordPress username.
 	 *
-	 * @param string $username The sanitized username.
-	 * @param string $raw_username The raw username before sanitizing.
+	 * @param string  $username The sanitized username.
+	 * @param string  $raw_username The raw username before sanitizing.
 	 * @param boolean $strict Whether to limit the username to Latin, Cyrillic and a few special characters.
 	 */
 	public function sanitize_username( string $username, string $raw_username, bool $strict ): string {

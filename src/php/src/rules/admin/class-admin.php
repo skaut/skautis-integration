@@ -143,8 +143,8 @@ final class Admin {
 	/**
 	 * TODO: Unused?
 	 *
-	 * @param never $value Unused.
-	 * @param never $field_name Unused.
+	 * @param never    $value Unused.
+	 * @param never    $field_name Unused.
 	 * @param \WP_Post $post The post to get the metadata from.
 	 */
 	public function get_rules_field_value( $value, $field_name, \WP_Post $post ) {
