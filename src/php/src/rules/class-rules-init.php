@@ -40,19 +40,19 @@ final class Rules_Init {
 	 * Intializes all hooks used by the object.
 	 */
 	private function init_hooks() {
-		add_action( 'init', array( $this, 'register_post_type' ) );
+		add_action( 'init', array( self::class, 'register_post_type' ) );
 
 		if ( is_admin() ) {
-			add_filter( 'default_content', array( $this, 'default_content' ) );
-			add_filter( 'enter_title_here', array( $this, 'title_placeholder' ) );
-			add_filter( 'post_updated_messages', array( $this, 'updated_messages' ) );
+			add_filter( 'default_content', array( self::class, 'default_content' ) );
+			add_filter( 'enter_title_here', array( self::class, 'title_placeholder' ) );
+			add_filter( 'post_updated_messages', array( self::class, 'updated_messages' ) );
 		}
 	}
 
 	/**
 	 * Registers the rule post type with WordPress.
 	 */
-	public function register_post_type() {
+	public static function register_post_type() {
 		$labels       = array(
 			'name'                  => _x( 'Správa pravidel', 'Post Type General Name', 'skautis-integration' ),
 			'singular_name'         => _x( 'Pravidlo', 'Post Type Singular Name', 'skautis-integration' ),
@@ -127,7 +127,7 @@ final class Rules_Init {
 	 *
 	 * @param string $content The default content of the current post type.
 	 */
-	public function default_content( string $content ): string {
+	public static function default_content( string $content ): string {
 		global $post_type;
 		if ( self::RULES_TYPE_SLUG === $post_type ) {
 			$content = '';
@@ -143,7 +143,7 @@ final class Rules_Init {
 	 *
 	 * @param string $title The title placeholder for the current post type.
 	 */
-	public function title_placeholder( string $title ): string {
+	public static function title_placeholder( string $title ): string {
 		global $post_type;
 		if ( self::RULES_TYPE_SLUG === $post_type ) {
 			$title = __( 'Zadejte název pravidla', 'skautis-integration' );
@@ -157,7 +157,7 @@ final class Rules_Init {
 	 *
 	 * @param array<string, array<string>> $messages A list of messages for each post type.
 	 */
-	public function updated_messages( array $messages = array() ): array {
+	public static function updated_messages( array $messages = array() ): array {
 		$post                              = get_post();
 		$messages[ self::RULES_TYPE_SLUG ] = array(
 			0  => '', // Unused. Messages start at index 1.
@@ -184,6 +184,8 @@ final class Rules_Init {
 
 	/**
 	 * Returns all rules.
+	 *
+	 * TODO: Unused?
 	 */
 	public function get_all_rules(): array {
 		$rules_wp_query = new \WP_Query(

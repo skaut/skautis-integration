@@ -117,7 +117,7 @@ class Helpers {
 	public static function show_admin_notice( string $message, string $type = 'warning', string $hide_notice_on_page = '' ) {
 		add_action(
 			'admin_notices',
-			function () use ( $message, $type, $hide_notice_on_page ) {
+			static function () use ( $message, $type, $hide_notice_on_page ) {
 				if ( ! $hide_notice_on_page || get_current_screen()->id !== $hide_notice_on_page ) {
 					$class = 'notice notice-' . $type . ' is-dismissible';
 					printf(

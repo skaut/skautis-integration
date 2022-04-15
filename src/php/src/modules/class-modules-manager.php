@@ -39,7 +39,7 @@ final class Modules_Manager {
 		$this->modules           = apply_filters( SKAUTIS_INTEGRATION_NAME . '_modules', $modules );
 		$this->activated_modules = (array) get_option( 'skautis_integration_activated_modules' );
 		apply_filters_ref_array( SKAUTIS_INTEGRATION_NAME . '_activated_modules', $this->activated_modules );
-		$this->register_activated_modules( $this->modules, $this->activated_modules );
+		self::register_activated_modules( $this->modules, $this->activated_modules );
 	}
 
 	/**
@@ -48,7 +48,7 @@ final class Modules_Manager {
 	 * @param array $modules A list of all available modules.
 	 * @param array $activated_modules A list of all active modules.
 	 */
-	private function register_activated_modules( array $modules = array(), array $activated_modules = array() ) {
+	private static function register_activated_modules( array $modules = array(), array $activated_modules = array() ) {
 		foreach ( $modules as $module_id => $module_label ) {
 			if ( in_array( $module_id, $activated_modules, true ) ) {
 				Services::get_module( $module_id );

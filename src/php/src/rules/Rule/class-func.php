@@ -151,7 +151,7 @@ class Func implements Rule {
 	 *
 	 * @param string $unit_id The raw unit ID.
 	 */
-	protected function clearUnitId( string $unit_id ): string {
+	protected static function clearUnitId( string $unit_id ): string {
 		return trim(
 			str_replace(
 				array(
@@ -223,7 +223,7 @@ class Func implements Rule {
 		if ( isset( $output[0], $output[0][0], $output[0][1], $output[0][2] ) ) {
 			list( $funcs, $unit_operator, $unit_id ) = $output[0];
 			$funcs                                   = explode( ',', $funcs );
-			$unit_id                                 = $this->clearUnitId( $unit_id );
+			$unit_id                                 = self::clearUnitId( $unit_id );
 		} else {
 			return false;
 		}
@@ -251,7 +251,7 @@ class Func implements Rule {
 			// in / not_in range check.
 			if ( ( $in_not_in_negation + array_key_exists( $func, $user_funcs ) ) === 1 ) {
 				foreach ( $user_funcs[ $func ] as $user_func_unit_id ) {
-					$user_func_unit_id = $this->clearUnitId( $user_func_unit_id );
+					$user_func_unit_id = self::clearUnitId( $user_func_unit_id );
 
 					switch ( $unit_operator ) {
 						case 'equal':

@@ -45,14 +45,14 @@ final class Settings {
 			__( 'Shortcodes', 'skautis-integration' ),
 			Helpers::get_skautis_manager_capability(),
 			SKAUTIS_INTEGRATION_NAME . '_modules_shortcodes',
-			array( $this, 'print_setting_page' )
+			array( self::class, 'print_setting_page' )
 		);
 	}
 
 	/**
 	 * Prints the admin settings page for the Shortcodes module.
 	 */
-	public function print_setting_page() {
+	public static function print_setting_page() {
 		if ( ! Helpers::user_is_skautis_manager() ) {
 			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'skautis-integration' ) );
 		}
@@ -79,7 +79,7 @@ final class Settings {
 		add_settings_section(
 			SKAUTIS_INTEGRATION_NAME . '_modules_shortcodes',
 			'',
-			function () {
+			static function () {
 				echo '';
 			},
 			SKAUTIS_INTEGRATION_NAME . '_modules_shortcodes'
@@ -88,7 +88,7 @@ final class Settings {
 		add_settings_field(
 			SKAUTIS_INTEGRATION_NAME . '_modules_shortcodes_visibilityMode',
 			__( 'Výchozí způsob skrytí', 'skautis-integration' ),
-			array( $this, 'field_visibility_mode' ),
+			array( self::class, 'field_visibility_mode' ),
 			SKAUTIS_INTEGRATION_NAME . '_modules_shortcodes',
 			SKAUTIS_INTEGRATION_NAME . '_modules_shortcodes'
 		);
@@ -106,7 +106,7 @@ final class Settings {
 	/**
 	 * Prints the settings field for choosing whether to show a login prompt or hide the content outright.
 	 */
-	public function field_visibility_mode() {
+	public static function field_visibility_mode() {
 		$visibility_mode = get_option( SKAUTIS_INTEGRATION_NAME . '_modules_shortcodes_visibilityMode', 'hide' );
 		?>
 		<label><input type="radio" name="<?php echo esc_attr( SKAUTIS_INTEGRATION_NAME ); ?>_modules_shortcodes_visibilityMode"

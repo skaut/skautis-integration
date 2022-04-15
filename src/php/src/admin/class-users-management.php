@@ -121,7 +121,7 @@ class Users_Management {
 			10
 		);
 
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts_and_styles' ) );
+		add_action( 'admin_enqueue_scripts', array( self::class, 'enqueue_scripts_and_styles' ) );
 	}
 
 	/**
@@ -150,7 +150,7 @@ class Users_Management {
 	 *
 	 * @param string $hook_suffix The current admin page.
 	 */
-	public function enqueue_scripts_and_styles( $hook_suffix ) {
+	public static function enqueue_scripts_and_styles( $hook_suffix ) {
 		if ( ! str_ends_with( $hook_suffix, SKAUTIS_INTEGRATION_NAME . '_usersManagement' ) ) {
 			return;
 		}

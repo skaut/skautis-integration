@@ -25,18 +25,18 @@ class Columns {
 	 * Intializes all hooks used by the object.
 	 */
 	protected function init_hooks() {
-		add_filter( 'manage_edit-' . Rules_Init::RULES_TYPE_SLUG . '_columns', array( $this, 'last_modified_admin_column' ) );
+		add_filter( 'manage_edit-' . Rules_Init::RULES_TYPE_SLUG . '_columns', array( self::class, 'last_modified_admin_column' ) );
 		add_filter(
 			'manage_edit-' . Rules_Init::RULES_TYPE_SLUG . '_sortable_columns',
 			array(
-				$this,
+				self::class,
 				'sortable_last_modified_column',
 			)
 		);
 		add_action(
 			'manage_' . Rules_Init::RULES_TYPE_SLUG . '_posts_custom_column',
 			array(
-				$this,
+				self::class,
 				'last_modified_admin_column_content',
 			),
 			10,
@@ -49,7 +49,7 @@ class Columns {
 	 *
 	 * @param array<string, string> $columns A list of already present column headers, keyed by their ID.
 	 */
-	public function last_modified_admin_column( array $columns = array() ): array {
+	public static function last_modified_admin_column( array $columns = array() ): array {
 		$columns['modified_last'] = __( 'Naposledy upraveno', 'skautis-integration' );
 
 		return $columns;
@@ -62,7 +62,7 @@ class Columns {
 	 *
 	 * @param array<string, string> $columns A list of already present columns.
 	 */
-	public function sortable_last_modified_column( array $columns = array() ): array {
+	public static function sortable_last_modified_column( array $columns = array() ): array {
 		$columns['modified_last'] = 'modified';
 
 		return $columns;
@@ -76,7 +76,7 @@ class Columns {
 	 * @param string $column_name The current column name.
 	 * @param int    $post_id The current post ID (the current row).
 	 */
-	public function last_modified_admin_column_content( string $column_name, int $post_id ) {
+	public static function last_modified_admin_column_content( string $column_name, int $post_id ) {
 		if ( 'modified_last' !== $column_name ) {
 			return;
 		}

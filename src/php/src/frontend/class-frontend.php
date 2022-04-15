@@ -69,12 +69,12 @@ final class Frontend {
 	 */
 	private function init_hooks() {
 		if ( get_option( SKAUTIS_INTEGRATION_NAME . '_login_page_url' ) ) {
-			add_filter( 'query_vars', array( $this, 'register_query_vars' ) );
+			add_filter( 'query_vars', array( self::class, 'register_query_vars' ) );
 			add_filter( 'template_include', array( $this, 'register_templates' ) );
 		}
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ) );
-		add_action( 'login_enqueue_scripts', array( $this, 'enqueue_login_styles' ) );
+		add_action( 'login_enqueue_scripts', array( self::class, 'enqueue_login_styles' ) );
 		if ( $this->skautis_gateway->is_initialized() ) {
 			if ( $this->skautis_gateway->get_skautis_instance()->getUser()->isLoggedIn() ) {
 				add_action( 'admin_bar_menu', array( $this, 'add_logout_link_to_admin_bar' ), 20 );
@@ -87,7 +87,7 @@ final class Frontend {
 	 *
 	 * @param array<string> $vars A list of allowed query variables.
 	 */
-	public function register_query_vars( array $vars = array() ): array {
+	public static function register_query_vars( array $vars = array() ): array {
 		$vars[] = 'skautis_login';
 
 		return $vars;
@@ -129,7 +129,7 @@ final class Frontend {
 	/**
 	 * Enqueues login styles.
 	 */
-	public function enqueue_login_styles() {
+	public static function enqueue_login_styles() {
 		Helpers::enqueue_style( 'frontend', 'frontend/css/skautis-frontend.min.css' );
 	}
 

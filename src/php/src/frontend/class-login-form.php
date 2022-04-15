@@ -59,7 +59,7 @@ final class Login_Form {
 	 *
 	 * TODO: Unused?
 	 */
-	public function enqueue_styles() {
+	public static function enqueue_styles() {
 		Helpers::enqueue_style( 'frontend', 'frontend/css/skautis-frontened.min.css' );
 	}
 

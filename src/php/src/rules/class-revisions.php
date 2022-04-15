@@ -31,7 +31,7 @@ class Revisions {
 		add_action( 'wp_restore_post_revision', array( $this, 'restore_revision' ), 10, 2 );
 		add_filter( 'wp_save_post_revision_post_has_changed', array( $this, 'post_has_changed' ), 10, 3 );
 
-		add_filter( '_wp_post_revision_fields', array( $this, 'fields' ), 10, 1 );
+		add_filter( '_wp_post_revision_fields', array( self::class, 'fields' ), 10, 1 );
 		add_filter( '_wp_post_revision_field_custom_fields', array( $this, 'field' ), 10, 3 );
 	}
 
@@ -40,7 +40,7 @@ class Revisions {
 	 *
 	 * @param array $meta The metadata to filter.
 	 */
-	public function filter_meta( $meta ): array {
+	private static function filter_meta( $meta ): array {
 		$meta_filtered = array();
 		foreach ( $meta as $key => $value ) {
 			if ( '_' !== $key[0] ) {
@@ -58,7 +58,7 @@ class Revisions {
 	 */
 	public function get_meta( int $post_id ): array {
 		$meta = get_metadata( 'post', $post_id );
-		$meta = $this->filter_meta( $meta );
+		$meta = self::filter_meta( $meta );
 
 		return $meta;
 	}
@@ -69,7 +69,7 @@ class Revisions {
 	 * @param int   $post_id The post in question.
 	 * @param array $meta The metadata to add.
 	 */
-	public function insert_meta( int $post_id, $meta ) {
+	private static function insert_meta( int $post_id, $meta ) {
 		foreach ( $meta as $meta_key => $meta_value ) {
 			if ( is_array( $meta_value ) ) {
 				foreach ( $meta_value as $single_meta_value ) {
@@ -121,7 +121,7 @@ class Revisions {
 	 *
 	 * @param array<string> $fields A list of post revision fields.
 	 */
-	public function fields( array $fields = array() ): array {
+	public static function fields( array $fields = array() ): array {
 		$fields['custom_fields'] = __( 'Další pole', 'skautis-integration' );
 
 		return $fields;
@@ -136,14 +136,14 @@ class Revisions {
 	public function restore_revision( int $post_id, int $revision_id ) {
 		$meta = $this->get_meta( $revision_id );
 		$this->delete_meta( $post_id );
-		$this->insert_meta( $post_id, $meta );
+		self::insert_meta( $post_id, $meta );
 
 		// also update last revision custom fields.
 		$revisions = wp_get_post_revisions( $post_id );
 		if ( count( $revisions ) > 0 ) {
 			$last_revision = current( $revisions );
 			$this->delete_meta( $last_revision->ID );
-			$this->insert_meta( $last_revision->ID, $meta );
+			self::insert_meta( $last_revision->ID, $meta );
 		}
 	}
 
@@ -161,7 +161,7 @@ class Revisions {
 				return;
 			}
 
-			$this->insert_meta( $post_id, $meta );
+			self::insert_meta( $post_id, $meta );
 		}
 	}
 

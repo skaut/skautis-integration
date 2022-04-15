@@ -18,7 +18,7 @@ class Transient_Session_Adapter implements AdapterInterface {
 	/**
 	 * A helper function generating random string and saving it in a cookie.
 	 */
-	private function get_cookie_id(): string {
+	private static function get_cookie_id(): string {
 		if ( isset( $_COOKIE[ SKAUTIS_INTEGRATION_NAME . '-skautis-session' ] ) ) {
 			return sanitize_text_field( wp_unslash( $_COOKIE[ SKAUTIS_INTEGRATION_NAME . '-skautis-session' ] ) );
 		} else {
@@ -40,7 +40,7 @@ class Transient_Session_Adapter implements AdapterInterface {
 	 * @param mixed  $object The value.
 	 */
 	public function set( $name, $object ) {
-		set_transient( SKAUTIS_INTEGRATION_NAME . '_session_' . $this->get_cookie_id() . '_' . $name, $object, 40 * \MINUTE_IN_SECONDS );
+		set_transient( SKAUTIS_INTEGRATION_NAME . '_session_' . self::get_cookie_id() . '_' . $name, $object, 40 * \MINUTE_IN_SECONDS );
 	}
 
 	/**
@@ -58,6 +58,6 @@ class Transient_Session_Adapter implements AdapterInterface {
 	 * @param string $name The key.
 	 */
 	public function get( $name ) {
-		return get_transient( SKAUTIS_INTEGRATION_NAME . '_session_' . $this->get_cookie_id() . '_' . $name );
+		return get_transient( SKAUTIS_INTEGRATION_NAME . '_session_' . self::get_cookie_id() . '_' . $name );
 	}
 }

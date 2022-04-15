@@ -66,7 +66,7 @@ final class Frontend {
 	 * Intializes all hooks used by the object.
 	 */
 	public function init_hooks() {
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ) );
+		add_action( 'wp_enqueue_scripts', array( self::class, 'enqueue_styles' ) );
 		add_action( 'posts_results', array( $this, 'filter_posts' ), 10, 2 );
 	}
 
@@ -95,7 +95,7 @@ final class Frontend {
 	/**
 	 * Returns HTML code for the frontend message telling the user they need to log in to SkautIS to view the content.
 	 */
-	private function get_login_required_message(): string {
+	private static function get_login_required_message(): string {
 		return '<p>' . __( 'To view this content you must be logged in skautIS', 'skautis-integration' ) . '</p>';
 	}
 
@@ -112,10 +112,10 @@ final class Frontend {
 	 * @param int    $post_id The ID of the root post.
 	 * @param string $post_type The type of the root post.
 	 */
-	private function get_posts_hierarchy_tree_with_rules( int $post_id, $post_type ): array {
+	private static function get_posts_hierarchy_tree_with_rules( int $post_id, $post_type ): array {
 		$ancestors = get_ancestors( $post_id, $post_type, 'post_type' );
 		$ancestors = array_map(
-			function ( $ancestor_post_id ) {
+			static function ( $ancestor_post_id ) {
 				return array(
 					'id'              => $ancestor_post_id,
 					'rules'           => (array) get_post_meta( $ancestor_post_id, SKAUTIS_INTEGRATION_NAME . '_rules', true ),
@@ -136,11 +136,11 @@ final class Frontend {
 	 * @param string $post_type The type of the root post.
 	 */
 	private function get_rules_from_parent_posts_with_impact_by_child_post_id( int $child_post_id, $post_type ): array {
-		$ancestors = $this->get_posts_hierarchy_tree_with_rules( $child_post_id, $post_type );
+		$ancestors = self::get_posts_hierarchy_tree_with_rules( $child_post_id, $post_type );
 
 		$ancestors = array_filter(
 			$ancestors,
-			function ( $ancestor ) {
+			static function ( $ancestor ) {
 				if ( ! empty( $ancestor['rules'] ) && isset( $ancestor['rules'][0][ SKAUTIS_INTEGRATION_NAME . '_rules' ] ) ) {
 					if ( '1' === $ancestor['includeChildren'] ) {
 						return true;
@@ -161,10 +161,10 @@ final class Frontend {
 	 * @param string $new_content The replacement post content.
 	 * @param string $new_excerpt The replacement post excerpt.
 	 */
-	private function hide_content_excerpt_comments( int $post_id, string $new_content = '', string $new_excerpt = '' ) {
+	private static function hide_content_excerpt_comments( int $post_id, string $new_content = '', string $new_excerpt = '' ) {
 		add_filter(
 			'the_content',
-			function ( string $content = '' ) use ( $post_id, $new_content ) {
+			static function ( string $content = '' ) use ( $post_id, $new_content ) {
 				if ( get_the_ID() === $post_id ) {
 					return $new_content;
 				}
@@ -175,7 +175,7 @@ final class Frontend {
 
 		add_filter(
 			'the_excerpt',
-			function ( string $excerpt = '' ) use ( $post_id, $new_excerpt ) {
+			static function ( string $excerpt = '' ) use ( $post_id, $new_excerpt ) {
 				if ( get_the_ID() === $post_id ) {
 					return $new_excerpt;
 				}
@@ -186,7 +186,7 @@ final class Frontend {
 
 		add_action(
 			'pre_get_comments',
-			function ( \WP_Comment_Query $wp_comment_query ) use ( $post_id ) {
+			static function ( \WP_Comment_Query $wp_comment_query ) use ( $post_id ) {
 				if ( $wp_comment_query->query_vars['post_id'] === $post_id ) {
 					if ( ! isset( $wp_comment_query->query_vars['post__not_in'] ) || empty( $wp_comment_query->query_vars['post__not_in'] ) ) {
 						$wp_comment_query->query_vars['post__not_in'] = array();
@@ -238,9 +238,9 @@ final class Frontend {
 	private function process_rules_and_hide_content( bool $user_is_logged_in_skautis, array $rules, int $post_id ) {
 		if ( ! empty( $rules ) && isset( $rules[0][ SKAUTIS_INTEGRATION_NAME . '_rules' ] ) ) {
 			if ( ! $user_is_logged_in_skautis ) {
-				$this->hide_content_excerpt_comments( $post_id, $this->get_login_required_message() . $this->get_login_form(), $this->get_login_required_message() );
+				self::hide_content_excerpt_comments( $post_id, self::get_login_required_message() . $this->get_login_form(), self::get_login_required_message() );
 			} elseif ( ! $this->rules_manager->check_if_user_passed_rules( $rules ) ) {
-				$this->hide_content_excerpt_comments( $post_id, $this->get_unauthorized_message() . $this->get_login_form( true ), $this->get_unauthorized_message() );
+				self::hide_content_excerpt_comments( $post_id, self::get_unauthorized_message() . $this->get_login_form( true ), $this->get_unauthorized_message() );
 			}
 		}
 	}
@@ -248,7 +248,7 @@ final class Frontend {
 	/**
 	 * Enqueues styles for the frontend part of the Visibility module.
 	 */
-	public function enqueue_styles() {
+	public static function enqueue_styles() {
 		wp_enqueue_style( 'buttons' );
 		wp_enqueue_style( SKAUTIS_INTEGRATION_NAME, SKAUTIS_INTEGRATION_URL . 'src/frontend/public/css/skautis-frontend.css', array(), SKAUTIS_INTEGRATION_VERSION, 'all' );
 	}

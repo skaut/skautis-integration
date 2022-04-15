@@ -55,7 +55,7 @@ final class WP_Register {
 		remove_action( 'register_new_user', 'wp_send_new_user_notifications' );
 		add_action(
 			'register_new_user',
-			function ( $user_id ) {
+			static function ( $user_id ) {
 				// TODO: Unused filter?
 				$notify = apply_filters( SKAUTIS_INTEGRATION_NAME . '_modules_register_new_user_notifications', get_option( SKAUTIS_INTEGRATION_NAME . '_modules_register_notifications', 'none' ) );
 				if ( 'none' !== $notify ) {
@@ -70,9 +70,9 @@ final class WP_Register {
 			}
 		);
 
-		add_filter( 'sanitize_user', array( $this, 'sanitize_username' ), 10, 3 );
+		add_filter( 'sanitize_user', array( self::class, 'sanitize_username' ), 10, 3 );
 		$user_id = register_new_user( $user_login, $user_email );
-		remove_filter( 'sanitize_user', array( $this, 'sanitize_username' ), 10 );
+		remove_filter( 'sanitize_user', array( self::class, 'sanitize_username' ), 10 );
 
 		add_action( 'register_new_user', 'wp_send_new_user_notifications' );
 
@@ -299,7 +299,7 @@ final class WP_Register {
 	 * @param string  $raw_username The raw username before sanitizing.
 	 * @param boolean $strict Whether to limit the username to Latin, Cyrillic and a few special characters.
 	 */
-	public function sanitize_username( string $username, string $raw_username, bool $strict ): string {
+	public static function sanitize_username( string $username, string $raw_username, bool $strict ): string {
 		$username = wp_strip_all_tags( $raw_username );
 
 		// Kill octets.

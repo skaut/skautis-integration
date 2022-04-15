@@ -151,7 +151,7 @@ class Membership implements Rule {
 	 *
 	 * @param string $unit_id The raw unit ID.
 	 */
-	protected function clearUnitId( string $unit_id ): string {
+	protected static function clearUnitId( string $unit_id ): string {
 		return trim(
 			str_replace(
 				array(
@@ -262,7 +262,7 @@ class Membership implements Rule {
 		if ( isset( $output[0], $output[0][0], $output[0][1], $output[0][2] ) ) {
 			list( $memberships, $membership_operator, $unit_id ) = $output[0];
 			$memberships = explode( ',', $memberships );
-			$unit_id     = $this->clearUnitId( $unit_id );
+			$unit_id     = self::clearUnitId( $unit_id );
 		} else {
 			return false;
 		}
@@ -273,7 +273,7 @@ class Membership implements Rule {
 			// in / not_in range check.
 			if ( array_key_exists( $membership, $user_memberships ) ) {
 				foreach ( $user_memberships[ $membership ] as $user_membership_unit_id ) {
-					$user_membership_unit_id = $this->clearUnitId( $user_membership_unit_id );
+					$user_membership_unit_id = self::clearUnitId( $user_membership_unit_id );
 
 					switch ( $membership_operator ) {
 						case 'equal':

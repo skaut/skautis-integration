@@ -45,14 +45,14 @@ final class Settings {
 			__( 'Viditelnost obsahu', 'skautis-integration' ),
 			Helpers::get_skautis_manager_capability(),
 			SKAUTIS_INTEGRATION_NAME . '_modules_visibility',
-			array( $this, 'print_setting_page' )
+			array( self::class, 'print_setting_page' )
 		);
 	}
 
 	/**
 	 * Prints the admin settings page for the Visibility module.
 	 */
-	public function print_setting_page() {
+	public static function print_setting_page() {
 		if ( ! Helpers::user_is_skautis_manager() ) {
 			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'skautis-integration' ) );
 		}
@@ -79,7 +79,7 @@ final class Settings {
 		add_settings_section(
 			SKAUTIS_INTEGRATION_NAME . '_modules_visibility',
 			'',
-			function () {
+			static function () {
 				echo '';
 			},
 			SKAUTIS_INTEGRATION_NAME . '_modules_visibility'
@@ -88,7 +88,7 @@ final class Settings {
 		add_settings_field(
 			SKAUTIS_INTEGRATION_NAME . '_modules_visibility_postTypes',
 			__( 'Typy obsahu', 'skautis-integration' ),
-			array( $this, 'field_post_types' ),
+			array( self::class, 'field_post_types' ),
 			SKAUTIS_INTEGRATION_NAME . '_modules_visibility',
 			SKAUTIS_INTEGRATION_NAME . '_modules_visibility'
 		);
@@ -96,7 +96,7 @@ final class Settings {
 		add_settings_field(
 			SKAUTIS_INTEGRATION_NAME . '_modules_visibility_visibilityMode',
 			__( 'Způsob skrytí', 'skautis-integration' ),
-			array( $this, 'field_visibility_mode' ),
+			array( self::class, 'field_visibility_mode' ),
 			SKAUTIS_INTEGRATION_NAME . '_modules_visibility',
 			SKAUTIS_INTEGRATION_NAME . '_modules_visibility'
 		);
@@ -104,7 +104,7 @@ final class Settings {
 		add_settings_field(
 			SKAUTIS_INTEGRATION_NAME . '_modules_visibility_includeChildren',
 			__( 'Podřízený obsah', 'skautis-integration' ),
-			array( $this, 'field_include_children' ),
+			array( self::class, 'field_include_children' ),
 			SKAUTIS_INTEGRATION_NAME . '_modules_visibility',
 			SKAUTIS_INTEGRATION_NAME . '_modules_visibility'
 		);
@@ -140,7 +140,7 @@ final class Settings {
 	/**
 	 * Prints the settings field for choosing which post types to apply the Visibility module to.
 	 */
-	public function field_post_types() {
+	public static function field_post_types() {
 		$available_post_types = get_post_types(
 			array(
 				'public' => true,
@@ -166,7 +166,7 @@ final class Settings {
 	/**
 	 * Prints the settings field for choosing between hiding the whole post or page, or just its content.
 	 */
-	public function field_visibility_mode() {
+	public static function field_visibility_mode() {
 		$visibility_mode = get_option( SKAUTIS_INTEGRATION_NAME . '_modules_visibility_visibilityMode', 'full' );
 		?>
 		<label><input type="radio" name="<?php echo esc_attr( SKAUTIS_INTEGRATION_NAME ); ?>_modules_visibility_visibilityMode"
@@ -183,7 +183,7 @@ final class Settings {
 	/**
 	 * Prints the settings field for choosing whether to apply visibility rules to child posts and pages.
 	 */
-	public function field_include_children() {
+	public static function field_include_children() {
 		$include_children = get_option( SKAUTIS_INTEGRATION_NAME . '_modules_visibility_includeChildren', 0 );
 		?>
 		<label><input type="checkbox" name="<?php echo esc_attr( SKAUTIS_INTEGRATION_NAME ); ?>_modules_visibility_includeChildren"

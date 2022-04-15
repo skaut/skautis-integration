@@ -101,8 +101,8 @@ final class Admin {
 	 * Intializes all hooks used by the object.
 	 */
 	private function init_hooks() {
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts_and_styles' ) );
-		add_action( 'admin_print_scripts', array( $this, 'print_inline_js' ) );
+		add_action( 'admin_enqueue_scripts', array( self::class, 'enqueue_scripts_and_styles' ) );
+		add_action( 'admin_print_scripts', array( self::class, 'print_inline_js' ) );
 
 		if ( $this->skautis_gateway->is_initialized() ) {
 			if ( $this->skautis_gateway->get_skautis_instance()->getUser()->isLoggedIn() ) {
@@ -114,7 +114,7 @@ final class Admin {
 	/**
 	 * Enqueues administration scripts and styles.
 	 */
-	public function enqueue_scripts_and_styles() {
+	public static function enqueue_scripts_and_styles() {
 		wp_enqueue_style(
 			SKAUTIS_INTEGRATION_NAME . '_select2',
 			SKAUTIS_INTEGRATION_URL . 'bundled/select2.min.css',
@@ -139,7 +139,7 @@ final class Admin {
 	 *
 	 * TODO: Is this really needed?
 	 */
-	public function print_inline_js() {
+	public static function print_inline_js() {
 		?>
 		<script type="text/javascript">
 			//<![CDATA[

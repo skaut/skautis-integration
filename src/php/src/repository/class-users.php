@@ -36,7 +36,7 @@ class Users {
 	/**
 	 * Parses the "skautisSearchUsers" GET variable from the URL.
 	 */
-	protected function get_search_user_string(): string {
+	protected static function get_search_user_string(): string {
 		$search_user_string = '';
 
 		$return_url = Helpers::get_return_url();
@@ -182,7 +182,7 @@ class Users {
 
 			if ( is_array( $participants ) ) {
 				$users = array_map(
-					function ( $participant ) {
+					static function ( $participant ) {
 						$user = new \stdClass();
 
 						$user->id        = $participant->ID;
@@ -221,7 +221,7 @@ class Users {
 
 		// Standard get all users procedure.
 		if ( empty( $users ) ) {
-			$search_user_string = $this->get_search_user_string();
+			$search_user_string = self::get_search_user_string();
 
 			$skautis_users = $this->skautis_gateway->get_skautis_instance()->UserManagement->userAll(
 				array(
@@ -231,7 +231,7 @@ class Users {
 
 			if ( is_array( $skautis_users ) ) {
 				$users = array_map(
-					function ( $skautis_user ) {
+					static function ( $skautis_user ) {
 						$user = new \stdClass();
 
 						$user->id        = $skautis_user->ID;
