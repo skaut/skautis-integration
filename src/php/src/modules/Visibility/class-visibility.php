@@ -42,11 +42,11 @@ final class Visibility implements Module {
 	private $skautis_login;
 
 	/**
-	 * A link to the Skautis_Gateway service instance.
+	 * A link to the WP_Login_Logout service instance.
 	 *
 	 * TODO: Unused?
 	 *
-	 * @var Skautis_Gateway
+	 * @var WP_Login_Logout
 	 */
 	private $wp_login_logout;
 

@@ -141,7 +141,7 @@ final class Users {
 	 * @param int $user_id The ID of the user.
 	 */
 	public static function manage_skautis_user_id_field( int $user_id ): bool {
-		if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ), 'update-user_' . $user_id ) ) {
+		if ( ! isset( $_POST['_wpnonce'] ) || false === wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ), 'update-user_' . $user_id ) ) {
 			return false;
 		}
 

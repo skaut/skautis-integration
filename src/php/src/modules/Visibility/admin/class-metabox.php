@@ -80,7 +80,7 @@ final class Metabox {
 	 * @param int $post_id The ID of the post.
 	 */
 	public static function save_rules_custom_field( int $post_id ) {
-		if ( ! isset( $_POST[ SKAUTIS_INTEGRATION_NAME . '_visibility_metabox_nonce' ] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ SKAUTIS_INTEGRATION_NAME . '_visibility_metabox_nonce' ] ) ), SKAUTIS_INTEGRATION_NAME . '_visibility_metabox' ) ) {
+		if ( ! isset( $_POST[ SKAUTIS_INTEGRATION_NAME . '_visibility_metabox_nonce' ] ) || false === wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ SKAUTIS_INTEGRATION_NAME . '_visibility_metabox_nonce' ] ) ), SKAUTIS_INTEGRATION_NAME . '_visibility_metabox' ) ) {
 			return;
 		}
 
@@ -174,7 +174,7 @@ final class Metabox {
 
 					<select name="<?php echo esc_attr( SKAUTIS_INTEGRATION_NAME ); ?>_rules" class="rule select2">
 						<?php
-						foreach ( (array) $this->rules_manager->get_all_rules() as $rule ) {
+						foreach ( $this->rules_manager->get_all_rules() as $rule ) {
 							echo '<option value="' . esc_attr( $rule->ID ) . '">' . esc_html( $rule->post_title ) . '</option>';
 						}
 						?>

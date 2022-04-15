@@ -111,7 +111,7 @@ final class WP_Login_Logout {
 	/**
 	 * Returns the SkautIS login URL with all arguments initialized.
 	 *
-	 * @param string $return_url The URL to return back to after the login.
+	 * @param string|null $return_url The URL to return back to after the login.
 	 */
 	public function get_login_url( string $return_url = '' ): string {
 		if ( ! $return_url ) {
@@ -132,7 +132,7 @@ final class WP_Login_Logout {
 	/**
 	 * Returns the SkautIS logout URL with all arguments and nonces initialized.
 	 *
-	 * @param string $return_url The URL to return back to after the logout.
+	 * @param string|null $return_url The URL to return back to after the logout.
 	 */
 	public function get_logout_url( string $return_url = '' ): string {
 		if ( ! $return_url ) {

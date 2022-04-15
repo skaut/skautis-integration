@@ -118,7 +118,7 @@ class Helpers {
 		add_action(
 			'admin_notices',
 			static function () use ( $message, $type, $hide_notice_on_page ) {
-				if ( ! $hide_notice_on_page || get_current_screen()->id !== $hide_notice_on_page ) {
+				if ( '' === $hide_notice_on_page || get_current_screen()->id !== $hide_notice_on_page ) {
 					$class = 'notice notice-' . $type . ' is-dismissible';
 					printf(
 						'<div class="%1$s"><p>%2$s</p><button type="button" class="notice-dismiss">
@@ -172,7 +172,7 @@ class Helpers {
 	 * @param string $nonce_name The name of the nonce.
 	 */
 	public static function validate_nonce_from_url( string $url, string $nonce_name ) {
-		if ( ! wp_verify_nonce( self::get_nonce_from_url( urldecode( $url ), $nonce_name ), $nonce_name ) ) {
+		if ( false === wp_verify_nonce( self::get_nonce_from_url( urldecode( $url ), $nonce_name ), $nonce_name ) ) {
 			wp_nonce_ays( $nonce_name );
 		}
 	}
@@ -186,7 +186,7 @@ class Helpers {
 	public static function get_variable_from_url( string $url, string $variable_name ): string {
 		$result = array();
 		$url    = esc_url_raw( $url );
-		if ( preg_match( '~' . $variable_name . '=([^\&,\s,\/,\#,\%,\?]*)~', $url, $result ) ) {
+		if ( 1 === preg_match( '~' . $variable_name . '=([^\&,\s,\/,\#,\%,\?]*)~', $url, $result ) ) {
 			if ( is_array( $result ) && isset( $result[1] ) && $result[1] ) {
 				return sanitize_text_field( $result[1] );
 			}

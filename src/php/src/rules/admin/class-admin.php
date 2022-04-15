@@ -101,7 +101,7 @@ final class Admin {
 	 * @param int $post_id The ID of the rule post.
 	 */
 	public static function save_rules_custom_field( int $post_id ) {
-		if ( ! isset( $_POST[ SKAUTIS_INTEGRATION_NAME . '_rules_metabox_nonce' ] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ SKAUTIS_INTEGRATION_NAME . '_rules_metabox_nonce' ] ) ), SKAUTIS_INTEGRATION_NAME . '_rules_metabox' ) ) {
+		if ( ! isset( $_POST[ SKAUTIS_INTEGRATION_NAME . '_rules_metabox_nonce' ] ) || false === wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ SKAUTIS_INTEGRATION_NAME . '_rules_metabox_nonce' ] ) ), SKAUTIS_INTEGRATION_NAME . '_rules_metabox' ) ) {
 			return;
 		}
 
@@ -341,7 +341,7 @@ final class Admin {
 
 			var data = {};
 			<?php
-			foreach ( (array) $this->rules_manager->get_rules() as $rule ) {
+			foreach ( $this->rules_manager->get_rules() as $rule ) {
 				$data = array(
 					'id'          => $rule->get_id(),
 					'label'       => $rule->get_label(),

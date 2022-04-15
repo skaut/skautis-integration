@@ -27,7 +27,7 @@ class All implements Rule {
 	/**
 	 * The rule value type.
 	 *
-	 * @var "string"|"integer"|"double"|"date"|"time"|"datetime"|"boolean"
+	 * @var 'string'|'integer'|'double'|'date'|'time'|'datetime'|'boolean'
 	 */
 	protected static $type = 'integer';
 

@@ -292,11 +292,11 @@ final class Settings {
 
 		$activated_modules = (array) get_option( 'skautis_integration_activated_modules' );
 
-		foreach ( (array) $this->modules_manager->get_all_modules() as $module_id => $module_label ) {
+		foreach ( $this->modules_manager->get_all_modules() as $module_id => $module_label ) {
 			add_settings_field(
 				SKAUTIS_INTEGRATION_NAME . '_modules_' . $module_id,
 				$module_label,
-				static function () use ( $module_id, $module_label, $activated_modules ) {
+				static function () use ( $module_id, $activated_modules ) {
 					$checked = in_array( $module_id, $activated_modules, true );
 					echo '
 					<label for="' . esc_attr( $module_id ) . '"><input name="skautis_integration_activated_modules[]" type="checkbox" id="' . esc_attr( $module_id ) . '" value="' . esc_attr( $module_id ) . '" ' . ( $checked ? 'checked="checked"' : '' ) . '></label>

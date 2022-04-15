@@ -66,7 +66,7 @@ class Users_Management {
 	 *
 	 * TODO: Private?
 	 *
-	 * @var Users
+	 * @var UsersRepository
 	 */
 	protected $users_repository;
 

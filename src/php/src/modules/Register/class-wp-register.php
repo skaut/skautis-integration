@@ -30,7 +30,7 @@ final class WP_Register {
 	/**
 	 * A link to the Users service instance.
 	 *
-	 * @var Users
+	 * @var UsersRepository
 	 */
 	private $users_repository;
 
@@ -51,7 +51,7 @@ final class WP_Register {
 	 * @param string $user_login The WordPress username to use for the new user.
 	 * @param string $user_email The new user's e-mail address.
 	 */
-	private function resolve_notifications_and_register_user_to_wp( string $user_login, string $user_email ): int {
+	private function resolve_notifications_and_register_user_to_wp( string $user_login, string $user_email ) {
 		remove_action( 'register_new_user', 'wp_send_new_user_notifications' );
 		add_action(
 			'register_new_user',

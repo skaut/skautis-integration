@@ -232,7 +232,7 @@ final class Settings {
 					</label>
 					<select name="rule" class="rule select2">
 						<?php
-						foreach ( (array) $this->rules_manager->get_all_rules() as $rule ) {
+						foreach ( $this->rules_manager->get_all_rules() as $rule ) {
 							echo '<option value="' . esc_attr( $rule->ID ) . '">' . esc_html( $rule->post_title ) . '</option>';
 						}
 						?>

@@ -111,16 +111,16 @@ final class Rules_Manager {
 			$result = 1;
 			foreach ( $rules as $rule ) {
 				if ( isset( $rule->rules ) ) {
-					$result = $result * $this->parse_rules_groups( $rule->condition, $rule->rules );
+					$result *= $this->parse_rules_groups( $rule->condition, $rule->rules );
 				}
-				$result = $result * $this->process_rule( $rule );
+				$result *= $this->process_rule( $rule );
 			}
 		} else { // OR.
 			foreach ( $rules as $rule ) {
 				if ( isset( $rule->rules ) ) {
-					$result = $result + $this->parse_rules_groups( $rule->condition, $rule->rules );
+					$result += $this->parse_rules_groups( $rule->condition, $rule->rules );
 				}
-				$result = $result + $this->process_rule( $rule );
+				$result += $this->process_rule( $rule );
 			}
 		}
 
@@ -147,7 +147,7 @@ final class Rules_Manager {
 		$result = '';
 
 		$rules = get_option( SKAUTIS_INTEGRATION_NAME . '_modules_register_rules' );
-		if ( ! $rules ) {
+		if ( empty( $rules ) ) {
 			return (string) get_option( SKAUTIS_INTEGRATION_NAME . '_modules_register_defaultwpRole' );
 		}
 

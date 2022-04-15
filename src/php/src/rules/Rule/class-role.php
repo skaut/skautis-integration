@@ -194,7 +194,7 @@ class Role implements Rule {
 						}
 						$result[ $user_role->ID_Role ][] = $unit_detail->RegistrationNumber;
 					}
-				} catch ( \Exception $e ) {
+				} catch ( \Exception $_ ) {
 					continue;
 				}
 			}
@@ -230,7 +230,6 @@ class Role implements Rule {
 		}
 
 		// Logic to determine in / not_in range.
-		$in_not_in_negation = 2;
 		switch ( $roles_operator ) {
 			case 'in':
 				$in_not_in_negation = 0;

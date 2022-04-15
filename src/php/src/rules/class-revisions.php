@@ -99,9 +99,9 @@ class Revisions {
 	 *
 	 * This function is used when comparing between revisions and serves to transform the field before comaprison.
 	 *
-	 * @param never $value Unused.
-	 * @param never $field Unused.
-	 * @param array $revision The revision to transform the field for.
+	 * @param never    $value Unused.
+	 * @param never    $field Unused.
+	 * @param \WP_Post $revision The revision to transform the field for.
 	 */
 	public function field( $value, $field, $revision ) {
 		$revision_id = $revision->ID;

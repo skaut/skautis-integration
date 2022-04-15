@@ -103,7 +103,7 @@ final class Admin {
 			}
 
 			$rules = array();
-			foreach ( (array) $this->rules_manager->get_all_rules() as $rule ) {
+			foreach ( $this->rules_manager->get_all_rules() as $rule ) {
 				$rules[ $rule->ID ] = $rule->post_title;
 			}
 			?>

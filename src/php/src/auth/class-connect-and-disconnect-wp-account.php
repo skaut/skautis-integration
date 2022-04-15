@@ -126,7 +126,7 @@ final class Connect_And_Disconnect_WP_Account {
 	 */
 	public function connect_wp_user_to_skautis() {
 		if ( ! isset( $_GET[ SKAUTIS_INTEGRATION_NAME . '_connect_user_nonce' ] ) ||
-			! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET[ SKAUTIS_INTEGRATION_NAME . '_connect_user_nonce' ] ) ), SKAUTIS_INTEGRATION_NAME . '_connect_user' ) ||
+			false === wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET[ SKAUTIS_INTEGRATION_NAME . '_connect_user_nonce' ] ) ), SKAUTIS_INTEGRATION_NAME . '_connect_user' ) ||
 			! $this->skautis_login->is_user_logged_in_skautis() ||
 			! Helpers::user_is_skautis_manager() ||
 			is_null( Helpers::get_return_url() )
@@ -179,7 +179,7 @@ final class Connect_And_Disconnect_WP_Account {
 				} elseif ( ( strpos( $return_url, 'user-edit_php' ) !== false ||
 							strpos( $return_url, 'user-edit.php' ) !== false ) &&
 							strpos( $return_url, 'user_id=' ) !== false ) {
-					if ( ! preg_match( '~user_id=(\d+)~', $return_url, $result ) ) {
+					if ( 1 !== preg_match( '~user_id=(\d+)~', $return_url, $result ) ) {
 						return;
 					}
 					if ( is_array( $result ) && isset( $result[1] ) && $result[1] > 0 ) {

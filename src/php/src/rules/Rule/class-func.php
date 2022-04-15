@@ -229,7 +229,6 @@ class Func implements Rule {
 		}
 
 		// Logic to determine in / not_in range.
-		$in_not_in_negation = 2;
 		switch ( $funcs_operator ) {
 			case 'in':
 				$in_not_in_negation = 0;
