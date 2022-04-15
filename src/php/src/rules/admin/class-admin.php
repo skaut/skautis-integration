@@ -79,6 +79,10 @@ final class Admin {
 
 	/**
 	 * Adds the rules metabox to WordPress.
+	 *
+	 * This function gets called for all post types, so it needs to check before adding the metabox.
+	 *
+	 * @param string $post_type The current post type.
 	 */
 	public function add_metabox_for_rules_field( string $post_type ) {
 		if ( Rules_Init::RULES_TYPE_SLUG === $post_type ) {
@@ -93,6 +97,8 @@ final class Admin {
 
 	/**
 	 * Saves the rules data.
+	 *
+	 * @param int $post_id The ID of the rule post.
 	 */
 	public function save_rules_custom_field( int $post_id ) {
 		if ( ! isset( $_POST[ SKAUTIS_INTEGRATION_NAME . '_rules_metabox_nonce' ] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ SKAUTIS_INTEGRATION_NAME . '_rules_metabox_nonce' ] ) ), SKAUTIS_INTEGRATION_NAME . '_rules_metabox' ) ) {
@@ -112,6 +118,8 @@ final class Admin {
 	 * Prints the rules metabox.
 	 *
 	 * TODO: This box is hidden, why is it here?
+	 *
+	 * @param \WP_Post $post The post to print the metabox for.
 	 */
 	public function rules_field_content( \WP_Post $post ) {
 		wp_nonce_field( SKAUTIS_INTEGRATION_NAME . '_rules_metabox', SKAUTIS_INTEGRATION_NAME . '_rules_metabox_nonce' );
@@ -123,6 +131,8 @@ final class Admin {
 
 	/**
 	 * TODO: Unused?
+	 *
+	 * @param array $fields A list of already registered fields.
 	 */
 	public function add_rules_field_to_revisions( array $fields ): array {
 		$fields[ SKAUTIS_INTEGRATION_NAME . '_rules_data' ] = __( 'skautIS Pravidla', 'skautis-integration' );
@@ -133,7 +143,9 @@ final class Admin {
 	/**
 	 * TODO: Unused?
 	 *
-	 * TODO: Unused first parameter?
+	 * @param never $value Unused.
+	 * @param never $field_name Unused.
+	 * @param \WP_Post $post The post to get the metadata from.
 	 */
 	public function get_rules_field_value( $value, $field_name, \WP_Post $post ) {
 		return get_metadata( 'post', $post->ID, SKAUTIS_INTEGRATION_NAME . '_rules_data', true );
@@ -141,6 +153,9 @@ final class Admin {
 
 	/**
 	 * TODO: Unused?
+	 *
+	 * @param int $post_id The ID of the post in question.
+	 * @param int $revision_id The ID of the revision to restore.
 	 */
 	public function restore_revision_for_rules_field( int $post_id, int $revision_id ) {
 		$post     = get_post( $post_id );
@@ -155,6 +170,8 @@ final class Admin {
 
 	/**
 	 * Prints the rules query builder UI.
+	 *
+	 * @param \WP_Post $post Unused.
 	 */
 	public function add_rules_ui( \WP_Post $post ) {
 		if ( get_current_screen()->id !== Rules_Init::RULES_TYPE_SLUG || get_post_type() !== Rules_Init::RULES_TYPE_SLUG ) {
