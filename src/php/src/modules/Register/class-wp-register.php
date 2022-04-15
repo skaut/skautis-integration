@@ -134,6 +134,7 @@ final class WP_Register {
 
 		Helpers::validate_nonce_from_url( $return_url, SKAUTIS_INTEGRATION_NAME . '_registerToWpBySkautis' );
 
+		// TODO: Replace with a call to get_users()?
 		// Check for skautIS User ID collision with existing users.
 		$users_wp_query = new \WP_User_Query(
 			array(
@@ -207,6 +208,7 @@ final class WP_Register {
 			return 0;
 		}
 
+		// TODO: Replace with a call to get_users()?
 		// Check for skautIS User ID collision with existing users.
 		$users_wp_query = new \WP_User_Query(
 			array(

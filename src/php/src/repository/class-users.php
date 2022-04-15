@@ -60,6 +60,7 @@ class Users {
 	public function get_connected_wp_users(): array {
 		$users_data = array();
 
+		// TODO: Replace with a call to get_users()?
 		$connected_wp_users = new \WP_User_Query(
 			array(
 				'meta_query'  => array(
@@ -88,6 +89,7 @@ class Users {
 	 * Lists all users without a connected SkautIS account under the current environment (testing or production).
 	 */
 	public function get_connectable_wp_users() {
+		// TODO: Replace with a call to get_users()?
 		$connectable_wp_users = new \WP_User_Query(
 			array(
 				'meta_query'  => array(
