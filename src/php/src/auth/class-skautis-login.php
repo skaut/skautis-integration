@@ -54,6 +54,8 @@ final class Skautis_Login {
 
 	/**
 	 * Takes the data returned from SkautIS login and passes it to the SkautIS library.
+	 *
+	 * @param array $data The SkautIS login data.
 	 */
 	public function set_login_data_to_local_skautis_instance( array $data = array() ): bool {
 		$data = apply_filters( SKAUTIS_INTEGRATION_NAME . '_login_data_for_skautis_instance', $data );
@@ -131,6 +133,8 @@ final class Skautis_Login {
 
 	/**
 	 * Changes the user's role in SkautIS.
+	 *
+	 * @param int $role_id The ID of the new role.
 	 */
 	public function change_user_role_in_skautis( int $role_id ) {
 		if ( $role_id > 0 ) {

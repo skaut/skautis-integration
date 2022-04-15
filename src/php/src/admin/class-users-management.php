@@ -147,6 +147,8 @@ class Users_Management {
 
 	/**
 	 * Enqueues scripts and styles used for the user management table.
+	 *
+	 * @param string $hook_suffix The current admin page.
 	 */
 	public function enqueue_scripts_and_styles( $hook_suffix ) {
 		if ( ! str_ends_with( $hook_suffix, SKAUTIS_INTEGRATION_NAME . '_usersManagement' ) ) {

@@ -95,6 +95,8 @@ final class Actions {
 
 	/**
 	 * Adds both test and live SkautIS to host that WordPress is allowed to redirect to.
+	 *
+	 * @param array<string> $hosts A list of already allowed redirect hosts.
 	 */
 	public function add_redirect_hosts( $hosts ) {
 		$hosts[] = 'test-is.skaut.cz';
@@ -117,6 +119,8 @@ final class Actions {
 
 	/**
 	 * Adds query variables that WordPress is allowed to use when redirecting.
+	 *
+	 * @param array<string> $vars A list of already allowed query variables.
 	 */
 	public function register_auth_query_vars( array $vars = array() ): array {
 		$vars[] = 'skautis_auth';
@@ -158,6 +162,8 @@ final class Actions {
 	 * Fires upon redirect to SkautIS authentication and fires the correct action.
 	 *
 	 * @throws \Exception The requested action doesn't exist.
+	 *
+	 * @param \WP_Query The request query.
 	 */
 	public function auth_actions_router( \WP_Query $wp_query ) {
 		if ( ! $wp_query->get( 'skautis_auth' ) ) {

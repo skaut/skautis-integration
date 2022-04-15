@@ -64,6 +64,8 @@ final class Admin {
 
 	/**
 	 * Registers the TinyMCE shortcode button code.
+	 *
+	 * @param array<string, string> $plugins A list of button script source URLs keyed by the button ID.
 	 */
 	public function register_tinymce_plugin( array $plugins = array() ): array {
 		$plugins['skautis_rules'] = plugin_dir_url( dirname( __FILE__, 4 ) ) . 'modules/Shortcodes/admin/js/skautis-modules-shortcodes-tinymceRulesButton.min.js';
@@ -73,6 +75,8 @@ final class Admin {
 
 	/**
 	 * Adds the TinyMCE shortcode button to the UI.
+	 *
+	 * @param array<string> $buttons A list of button IDs.
 	 */
 	public function add_tinymce_button( array $buttons = array() ): array {
 		$buttons[] = 'skautis_rules';

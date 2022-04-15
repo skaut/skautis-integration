@@ -203,6 +203,8 @@ class Services {
 	/**
 	 * Gets an instance of a module.
 	 *
+	 * @param string $module_id The ID of the module.
+	 *
 	 * @return Module The initialized modules instance.
 	 */
 	public static function get_module( $module_id ) {

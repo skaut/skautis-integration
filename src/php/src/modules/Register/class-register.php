@@ -132,6 +132,8 @@ final class Register implements Module {
 	 * This function modifies the behaviour of Actions to add new possible redirects using SkautIS.
 	 *
 	 * @see Actions::auth_actions_router() for more details about how the actions are used.
+	 *
+	 * @param array<string, callable> $actions A list of already registered actions.
 	 */
 	public function addActionsToRouter( array $actions = array() ): array {
 		$actions[ self::REGISTER_ACTION ]                  = array( $this, 'register' );
@@ -142,6 +144,8 @@ final class Register implements Module {
 
 	/**
 	 * Fires upon redirect back from SkautIS after login and handles the user login and potential registration.
+	 *
+	 * @param array $data SkautIS login data.
 	 */
 	public function registerConfirm( array $data = array() ) {
 		// TODO: Why is this not one conditional?

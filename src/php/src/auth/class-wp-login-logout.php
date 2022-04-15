@@ -37,6 +37,8 @@ final class WP_Login_Logout {
 
 	/**
 	 * Logs a user into WordPress based on their SkautIS user ID.
+	 *
+	 * @param int $skautis_user_id The SkautIS user ID.
 	 */
 	private function login_wp_user_by_skautis_user_id( int $skautis_user_id, $try = false ) {
 		$return_url = Helpers::get_return_url();
@@ -106,6 +108,8 @@ final class WP_Login_Logout {
 
 	/**
 	 * Returns the SkautIS login URL with all arguments initialized.
+	 *
+	 * @param string $return_url The URL to return back to after the login.
 	 */
 	public function get_login_url( string $return_url = '' ): string {
 		if ( ! $return_url ) {
@@ -125,6 +129,8 @@ final class WP_Login_Logout {
 
 	/**
 	 * Returns the SkautIS logout URL with all arguments and nonces initialized.
+	 *
+	 * @param string $return_url The URL to return back to after the logout.
 	 */
 	public function get_logout_url( string $return_url = '' ): string {
 		if ( ! $return_url ) {
