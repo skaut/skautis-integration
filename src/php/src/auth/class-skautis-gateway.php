@@ -1,4 +1,9 @@
 <?php
+/**
+ * Contains the Skautis_Gateway class.
+ *
+ * @package skautis-integration
+ */
 
 declare( strict_types=1 );
 
@@ -7,20 +12,55 @@ namespace Skautis_Integration\Auth;
 use Skautis_Integration\Utils\Helpers;
 use Skautis_Integration\Vendor\Skautis;
 
+/**
+ * An adapter for the SkautIS library.
+ */
 class Skautis_Gateway {
 
 	const PROD_ENV = 'prod';
 	const TEST_ENV = 'test';
 
-	// TODO: Private?
-	// TODO: Unused?
+	/**
+	 * The SkautIS app ID.
+	 *
+	 * TODO: Private?
+	 * TODO: Unused?
+	 *
+	 * @var string
+	 */
 	protected $app_id = '';
-	protected $skautis;
-	protected $skautis_initialized = false;
-	// TODO: Unused?
-	protected $test_mode = WP_DEBUG;
-	protected $env       = '';
 
+	/**
+	 * An instance of the SkautIS library.
+	 *
+	 * @var Skautis\Skautis
+	 */
+	protected $skautis;
+
+	/**
+	 * Whether the SkautIS library instance is initialized.
+	 *
+	 * @var bool
+	 */
+	protected $skautis_initialized = false;
+
+	/**
+	 * Whether the current SkautIS environment is testing.
+	 *
+	 * @var boolean
+	 */
+	protected $test_mode = WP_DEBUG;
+
+	/**
+	 * The current SkautIS environment (testing or production).
+	 *
+	 * @var 'prod'|'test'
+	 */
+	protected $env = '';
+
+	/**
+	 * Constructs the service and saves all dependencies.
+	 */
 	public function __construct() {
 		$env_type = get_option( 'skautis_integration_appid_type' );
 		if ( self::PROD_ENV === $env_type ) {
@@ -46,23 +86,38 @@ class Skautis_Gateway {
 		}
 	}
 
+	/**
+	 * Returns the current SkautIS environment (testing or production).
+	 */
 	public function get_env(): string {
 		return $this->env;
 	}
 
+	/**
+	 * Returns the raw SkauIS library instance
+	 */
 	public function get_skautis_instance(): Skautis\Skautis {
 		return $this->skautis;
 	}
 
+	/**
+	 * Checks whether the SkautIS library instance is initialized.
+	 */
 	public function is_initialized(): bool {
 		return $this->skautis_initialized;
 	}
 
+	/**
+	 * Logs the user out of SkautIS.
+	 */
 	public function logout() {
 		$this->skautis->setLoginData( array() );
 		wp_remote_get( esc_url_raw( $this->get_skautis_instance()->getLogoutUrl() ) );
 	}
 
+	/**
+	 * Performs a dummy request to SkautIS to check whether the library is initialized correctly.
+	 */
 	public function test_active_app_id() {
 		try {
 			if ( isset( $this->skautis ) ) {
@@ -77,7 +132,11 @@ class Skautis_Gateway {
 		return false;
 	}
 
-	// TODO: Unused?
+	/**
+	 * Checks whether there is a SkautIS outage due to maintenance.
+	 *
+	 * TODO: Unused?
+	 */
 	public function is_maintenance(): bool {
 		return $this->skautis->isMaintenance();
 	}

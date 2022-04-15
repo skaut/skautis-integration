@@ -1,4 +1,9 @@
 <?php
+/**
+ * Contains the Settings class.
+ *
+ * @package skautis-integration
+ */
 
 declare( strict_types=1 );
 
@@ -8,15 +13,31 @@ use Skautis_Integration\Rules\Rules_Init;
 use Skautis_Integration\Rules\Rules_Manager;
 use Skautis_Integration\Utils\Helpers;
 
+/**
+ * Registers, handles and shows all settings for the Register module.
+ */
 final class Settings {
 
+	/**
+	 * A link to the Rules_Manager service instance.
+	 *
+	 * @var Rules_Manager
+	 */
 	private $rules_manager;
 
+	/**
+	 * Constructs the service and saves all dependencies.
+	 *
+	 * @param Rules_Manager $rules_manager An injected Rules_Manager service instance.
+	 */
 	public function __construct( Rules_Manager $rules_manager ) {
 		$this->rules_manager = $rules_manager;
 		$this->init_hooks();
 	}
 
+	/**
+	 * Intializes all hooks used by the object.
+	 */
 	private function init_hooks() {
 		if ( ! is_admin() ) {
 			return;
@@ -26,6 +47,9 @@ final class Settings {
 		add_action( 'admin_init', array( $this, 'setup_setting_fields' ) );
 	}
 
+	/**
+	 * Adds an admin settings page for the Register module.
+	 */
 	public function setup_setting_page() {
 		add_submenu_page(
 			SKAUTIS_INTEGRATION_NAME,
@@ -37,6 +61,9 @@ final class Settings {
 		);
 	}
 
+	/**
+	 * Prints the admin settings page for the Register module.
+	 */
 	public function print_setting_page() {
 		if ( ! Helpers::user_is_skautis_manager() ) {
 			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'skautis-integration' ) );
@@ -57,6 +84,9 @@ final class Settings {
 		<?php
 	}
 
+	/**
+	 * Adds Register module seetings to WordPress.
+	 */
 	public function setup_setting_fields() {
 		add_settings_section(
 			SKAUTIS_INTEGRATION_NAME . '_modules_register',
@@ -119,6 +149,9 @@ final class Settings {
 		);
 	}
 
+	/**
+	 * Prints the settings field for choosing the default WordPress role for newly registered users
+	 */
 	public function field_wp_role() {
 		?>
 		<select name="<?php echo esc_attr( SKAUTIS_INTEGRATION_NAME ); ?>_modules_register_defaultwpRole"
@@ -126,6 +159,9 @@ final class Settings {
 		<?php
 	}
 
+	/**
+	 * Prints the settings field for choosing whom to send an e-mail upon sucessfull user registration.
+	 */
 	public function field_new_user_notifications() {
 		$notification_option = get_option( SKAUTIS_INTEGRATION_NAME . '_modules_register_notifications', 'none' );
 		?>
@@ -159,6 +195,9 @@ final class Settings {
 		<?php
 	}
 
+	/**
+	 * Prints the settings field for selecting user registration rules.
+	 */
 	public function field_rules() {
 		?>
 		<div>

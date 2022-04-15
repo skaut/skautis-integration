@@ -1,4 +1,9 @@
 <?php
+/**
+ * Contains the Users class.
+ *
+ * @package skautis-integration
+ */
 
 declare( strict_types=1 );
 
@@ -8,15 +13,31 @@ use Skautis_Integration\Auth\Connect_And_Disconnect_WP_Account;
 use Skautis_Integration\Auth\Skautis_Gateway;
 use Skautis_Integration\Utils\Helpers;
 
+/**
+ * Adds SkautIS info to the WordPress user table as well as user profile screen.
+ */
 final class Users {
 
+	/**
+	 * A link to the Connect_And_Disconnect_WP_Account service instance.
+	 *
+	 * @var Connect_And_Disconnect_WP_Account
+	 */
 	private $connect_wp_account;
 
+	/**
+	 * Constructs the service and saves all dependencies.
+	 *
+	 * @param Connect_And_Disconnect_WP_Account $connect_wp_account An injected Connect_And_Disconnect_WP_Account service instance.
+	 */
 	public function __construct( Connect_And_Disconnect_WP_Account $connect_wp_account ) {
 		$this->connect_wp_account = $connect_wp_account;
 		$this->init_hooks();
 	}
 
+	/**
+	 * Intializes all hooks used by the object.
+	 */
 	private function init_hooks() {
 		add_filter( 'manage_users_columns', array( $this, 'add_column_header_to_users_table' ) );
 		add_filter( 'manage_users_custom_column', array( $this, 'add_column_to_users_table' ), 10, 3 );
@@ -27,12 +48,26 @@ final class Users {
 		add_action( 'edit_user_profile_update', array( $this, 'manage_skautis_user_id_field' ) );
 	}
 
+	/**
+	 * Adds the header for the SkautIS column in the user table view.
+	 *
+	 * @param array<string> $columns A list of column headers.
+	 */
 	public function add_column_header_to_users_table( array $columns = array() ): array {
 		$columns[ SKAUTIS_INTEGRATION_NAME ] = __( 'skautIS', 'skautis-integration' );
 
 		return $columns;
 	}
 
+	/**
+	 * Adds the SkautIS column to the user table view.
+	 *
+	 * This function is called for all columns, so it needs to check when to overwrite the value.
+	 *
+	 * @param string $value The value of the current cell.
+	 * @param string $column_name The current column.
+	 * @param int    $user_id The ID of the user.
+	 */
 	public function add_column_to_users_table( $value, string $column_name, int $user_id ) {
 		if ( SKAUTIS_INTEGRATION_NAME === $column_name ) {
 			$env_type = get_option( 'skautis_integration_appid_type' );
@@ -52,7 +87,13 @@ final class Users {
 		return $value;
 	}
 
+	/**
+	 * Shows the SkautIS section in the user profile both for the current user as well as when managing other users.
+	 *
+	 * @param \WP_User $user The user in question.
+	 */
 	public function skautis_user_id_field( \WP_User $user ) {
+		// TODO: SkautIS, not skautIS.
 		?>
 		<h3><?php esc_html_e( 'skautIS', 'skautis-integration' ); ?></h3>
 		<?php
@@ -94,6 +135,11 @@ final class Users {
 		do_action( SKAUTIS_INTEGRATION_NAME . '_user_screen_user_ids_after' );
 	}
 
+	/**
+	 * Saves settings from the SkautIS section of the user profile.
+	 *
+	 * @param int $user_id The ID of the user.
+	 */
 	public function manage_skautis_user_id_field( int $user_id ): bool {
 		if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ), 'update-user_' . $user_id ) ) {
 			return false;

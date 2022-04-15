@@ -1,4 +1,9 @@
 <?php
+/**
+ * Contains the Frontend class.
+ *
+ * @package skautis-integration
+ */
 
 declare( strict_types=1 );
 
@@ -9,13 +14,47 @@ use Skautis_Integration\Auth\Skautis_Login;
 use Skautis_Integration\Auth\WP_Login_Logout;
 use Skautis_Integration\Utils\Helpers;
 
+/**
+ * Handles the frontend part of the visibility rules - hides posts or their contents, shows notices and a login form.
+ */
 final class Frontend {
 
+	/**
+	 * A list of post types to activate the Visibility module for.
+	 *
+	 * @var array
+	 */
 	private $post_types;
+
+	/**
+	 * A link to the Rules_Manager service instance.
+	 *
+	 * @var Rules_Manager
+	 */
 	private $rules_manager;
+
+	/**
+	 * A link to the Skautis_Login service instance.
+	 *
+	 * @var Skautis_Login
+	 */
 	private $skautis_login;
+
+	/**
+	 * A link to the WP_Login_Logout service instance.
+	 *
+	 * @var WP_Login_Logout
+	 */
 	private $wp_login_logout;
 
+	/**
+	 * Constructs the service and saves all dependencies.
+	 *
+	 * @param array           $post_types A list of post types to activate the Visibility module for.
+	 * @param Rules_Manager   $rules_manager An injected Rules_Manager service instance.
+	 * @param Skautis_Login   $skautis_login An injected Skautis_Login service instance.
+	 * @param WP_Login_Logout $wp_login_logout An injected WP_Login_Logout service instance.
+	 */
 	public function __construct( array $post_types, Rules_Manager $rules_manager, Skautis_Login $skautis_login, WP_Login_Logout $wp_login_logout ) {
 		$this->post_types      = $post_types;
 		$this->rules_manager   = $rules_manager;
@@ -23,11 +62,19 @@ final class Frontend {
 		$this->wp_login_logout = $wp_login_logout;
 	}
 
+	/**
+	 * Intializes all hooks used by the object.
+	 */
 	public function init_hooks() {
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ) );
 		add_action( 'posts_results', array( $this, 'filter_posts' ), 10, 2 );
 	}
 
+	/**
+	 * Returns HTML code for the frontend SkautIS login button.
+	 *
+	 * @param boolean $force_logout_from_skautis Whether to log the user out of SkautIS before attempting to log them in.
+	 */
 	private function get_login_form( bool $force_logout_from_skautis = false ): string {
 		$login_url_args = add_query_arg( 'noWpLogin', true, Helpers::get_current_url() );
 		if ( $force_logout_from_skautis ) {
@@ -45,14 +92,26 @@ final class Frontend {
 		';
 	}
 
+	/**
+	 * Returns HTML code for the frontend message telling the user they need to log in to SkautIS to view the content.
+	 */
 	private function get_login_required_message(): string {
 		return '<p>' . __( 'To view this content you must be logged in skautIS', 'skautis-integration' ) . '</p>';
 	}
 
+	/**
+	 * Returns HTML code for the frontend message telling the user they didn't pass the visibility rules.
+	 */
 	private function get_unauthorized_message(): string {
 		return '<p>' . __( 'You do not have permission to access this content', 'skautis-integration' ) . '</p>';
 	}
 
+	/**
+	 * Returns a list of post ancestors.
+	 *
+	 * @param int    $post_id The ID of the root post.
+	 * @param string $post_type The type of the root post.
+	 */
 	private function get_posts_hierarchy_tree_with_rules( int $post_id, $post_type ): array {
 		$ancestors = get_ancestors( $post_id, $post_type, 'post_type' );
 		$ancestors = array_map(
@@ -70,6 +129,12 @@ final class Frontend {
 		return array_reverse( $ancestors );
 	}
 
+	/**
+	 * Returns a list of post ancestors that have rules that should apply to the current post.
+	 *
+	 * @param int    $child_post_id The ID of the root post.
+	 * @param string $post_type The type of the root post.
+	 */
 	private function get_rules_from_parent_posts_with_impact_by_child_post_id( int $child_post_id, $post_type ): array {
 		$ancestors = $this->get_posts_hierarchy_tree_with_rules( $child_post_id, $post_type );
 
@@ -89,6 +154,13 @@ final class Frontend {
 		return array_values( $ancestors );
 	}
 
+	/**
+	 * Hides post comments and replaces its excerpt and content.
+	 *
+	 * @param int    $post_id The ID of the post to modify.
+	 * @param string $new_content The replacement post content.
+	 * @param string $new_excerpt The replacement post excerpt.
+	 */
 	private function hide_content_excerpt_comments( int $post_id, string $new_content = '', string $new_excerpt = '' ) {
 		add_filter(
 			'the_content',
@@ -127,6 +199,19 @@ final class Frontend {
 		);
 	}
 
+	/**
+	 * Hides posts if the current user isn't logged in to SkautIS or doesn't pass the visibility rules
+	 *
+	 * TODO: This function modifies its parameters.
+	 *
+	 * @param boolean   $user_is_logged_in_skautis Whether the current user is logged in to SkautIS.
+	 * @param array     $rule Unused.
+	 * @param array     $posts A list of posts to filter. This parameter is modified by the function.
+	 * @param int       $post_key The ID of the post to hide.
+	 * @param \WP_Query $wp_query The WordPress request.
+	 * @param string    $post_type Unused.
+	 * @param boolean   $posts_were_filtered Whether the posts were already filtered.
+	 */
 	private function process_rules_and_hide_posts( bool $user_is_logged_in_skautis, array $rule, array &$posts, int $post_key, \WP_Query $wp_query, string $post_type, &$posts_were_filtered = false ) {
 		if ( ! empty( $rules ) && isset( $rules[0][ SKAUTIS_INTEGRATION_NAME . '_rules' ] ) ) {
 			if ( ! $user_is_logged_in_skautis ||
@@ -141,6 +226,15 @@ final class Frontend {
 		}
 	}
 
+	/**
+	 * Hides posts' content if the current user isn't logged in to SkautIS or doesn't pass the visibility rules
+	 *
+	 * TODO: Deduplicate with the previous function.
+	 *
+	 * @param boolean $user_is_logged_in_skautis Whether the current user is logged in to SkautIS.
+	 * @param array   $rules A list of visibility rules to check.
+	 * @param int     $post_id The ID of the post to show or hide.
+	 */
 	private function process_rules_and_hide_content( bool $user_is_logged_in_skautis, array $rules, int $post_id ) {
 		if ( ! empty( $rules ) && isset( $rules[0][ SKAUTIS_INTEGRATION_NAME . '_rules' ] ) ) {
 			if ( ! $user_is_logged_in_skautis ) {
@@ -151,11 +245,22 @@ final class Frontend {
 		}
 	}
 
+	/**
+	 * Enqueues styles for the frontend part of the Visibility module.
+	 */
 	public function enqueue_styles() {
 		wp_enqueue_style( 'buttons' );
 		wp_enqueue_style( SKAUTIS_INTEGRATION_NAME, SKAUTIS_INTEGRATION_URL . 'src/frontend/public/css/skautis-frontend.css', array(), SKAUTIS_INTEGRATION_VERSION, 'all' );
 	}
 
+	/**
+	 * Returns a list of post ancestors that have rules that should apply to the current post with said rules.
+	 *
+	 * TODO: How is this different from get_rules_from_parent_posts_with_impact_by_child_post_id?
+	 *
+	 * @param int    $child_post_id The ID of the root post.
+	 * @param string $child_post_type The type of the root post.
+	 */
 	public function get_parent_posts_with_rules( int $child_post_id, string $child_post_type ): array {
 		$result = array();
 
@@ -175,6 +280,14 @@ final class Frontend {
 		return $result;
 	}
 
+	/**
+	 * Filters posts based on their visibility.
+	 *
+	 * Filters which posts are visible for the current user based on wheher they pass the visibility rules and whether whole posts should be hidden or just their contents
+	 *
+	 * @param array     $posts A list of posts to show.
+	 * @param \WP_Query $wp_query The WordPress request.
+	 */
 	public function filter_posts( array $posts, \WP_Query $wp_query ): array {
 		if ( empty( $posts ) ) {
 			return $posts;

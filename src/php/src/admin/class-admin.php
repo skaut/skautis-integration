@@ -1,4 +1,9 @@
 <?php
+/**
+ * Contains the Admin class.
+ *
+ * @package skautis-integration
+ */
 
 declare( strict_types=1 );
 
@@ -9,19 +14,78 @@ use Skautis_Integration\Auth\WP_Login_Logout;
 use Skautis_Integration\Rules\Rules_Manager;
 use Skautis_Integration\Utils\Helpers;
 
+/**
+ * Enqueues administration scripts and styles and adds a button to log the user out of both WordPress and SkautIS simultaneously to the admin bar.
+ */
 final class Admin {
 
+	/**
+	 * A link to the Settings service instance.
+	 *
+	 * TODO: Unused?
+	 *
+	 * @var Settings
+	 */
 	private $settings;
+
+	/**
+	 * A link to the Users service instance.
+	 *
+	 * TODO: Unused?
+	 *
+	 * @var Users
+	 */
 	private $users;
-	// TODO: Unused?
+
+	/**
+	 * A link to the Rules_Manager service instance.
+	 *
+	 * TODO: Unused?
+	 *
+	 * @var Rules_Manager
+	 */
 	private $rules_manager;
+
+	/**
+	 * A link to the WP_Login_Logout service instance.
+	 *
+	 * @var WP_Login_Logout
+	 */
 	private $wp_login_logout;
+
+	/**
+	 * A link to the Skautis_Gateway service instance.
+	 *
+	 * @var Skautis_Gateway
+	 */
 	private $skautis_gateway;
-	// TODO: Unused?
+
+	/**
+	 * A link to the Users_Management service instance.
+	 *
+	 * TODO: Unused?
+	 *
+	 * @var Users_Management
+	 */
 	private $users_management;
-	// TODO: Unused?
+
+	/**
+	 * TODO: Unused?
+	 *
+	 * @var string
+	 */
 	private $admin_dir_url = '';
 
+	/**
+	 * Constructs the service and saves all dependencies.
+	 *
+	 * @param Settings         $settings An injected Settings service instance.
+	 * @param Users            $users An injected Users service instance.
+	 * @param Rules_Manager    $rules_manager An injected Rules_Manager service instance.
+	 * @param Users_Management $users_management An injected Users_Management service instance.
+	 * @param WP_Login_Logout  $wp_login_logout An injected WP_Login_Logout service instance.
+	 * @param Skautis_Gateway  $skautis_gateway An injected Skautis_Gateway service instance.
+	 */
 	public function __construct( Settings $settings, Users $users, Rules_Manager $rules_manager, Users_Management $users_management, WP_Login_Logout $wp_login_logout, Skautis_Gateway $skautis_gateway ) {
 		$this->settings         = $settings;
 		$this->users            = $users;
@@ -33,6 +97,9 @@ final class Admin {
 		$this->init_hooks();
 	}
 
+	/**
+	 * Intializes all hooks used by the object.
+	 */
 	private function init_hooks() {
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts_and_styles' ) );
 		add_action( 'admin_print_scripts', array( $this, 'print_inline_js' ) );
@@ -44,6 +111,9 @@ final class Admin {
 		}
 	}
 
+	/**
+	 * Enqueues administration scripts and styles.
+	 */
 	public function enqueue_scripts_and_styles() {
 		wp_enqueue_style(
 			SKAUTIS_INTEGRATION_NAME . '_select2',
@@ -64,6 +134,11 @@ final class Admin {
 		Helpers::enqueue_style( 'admin', 'admin/css/skautis-admin.min.css' );
 	}
 
+	/**
+	 * Adds a default value to the JS `window.skautis` global.
+	 *
+	 * TODO: Is this really needed?
+	 */
 	public function print_inline_js() {
 		?>
 		<script type="text/javascript">
@@ -74,6 +149,13 @@ final class Admin {
 		<?php
 	}
 
+	/**
+	 * Adds a link to admin bar right-hand-side menu to log out from both WordPress and SkautIS at once.
+	 *
+	 * TODO: Duplicated code?
+	 *
+	 * @param \WP_Admin_Bar $wp_admin_bar The WordPress admin bar.
+	 */
 	public function add_logout_link_to_admin_bar( \WP_Admin_Bar $wp_admin_bar ) {
 		if ( ! function_exists( 'is_admin_bar_showing' ) ) {
 			return;

@@ -1,4 +1,9 @@
 <?php
+/**
+ * Contains the Metabox class.
+ *
+ * @package skautis-integration
+ */
 
 declare( strict_types=1 );
 
@@ -7,12 +12,39 @@ namespace Skautis_Integration\Modules\Visibility\Admin;
 use Skautis_Integration\Rules\Rules_Manager;
 use Skautis_Integration\Modules\Visibility\Frontend\Frontend;
 
+/**
+ * Adds the visibility metabox to the post editor.
+ */
 final class Metabox {
 
+	/**
+	 * A list of post types to activate the Visibility module for.
+	 *
+	 * @var array
+	 */
 	private $post_types;
+
+	/**
+	 * A link to the Rules_Manager service instance.
+	 *
+	 * @var Rules_Manager
+	 */
 	private $rules_manager;
+
+	/**
+	 * A link to the Frontend service instance.
+	 *
+	 * @var Frontend
+	 */
 	private $frontend;
 
+	/**
+	 * Constructs the service and saves all dependencies.
+	 *
+	 * @param array         $post_types A list of post types to activate the Visibility module for.
+	 * @param Rules_Manager $rules_manager An injected Rules_Manager service instance.
+	 * @param Frontend      $frontend An injected Frontend service instance.
+	 */
 	public function __construct( array $post_types, Rules_Manager $rules_manager, Frontend $frontend ) {
 		$this->post_types    = $post_types;
 		$this->rules_manager = $rules_manager;
@@ -20,11 +52,17 @@ final class Metabox {
 		$this->init_hooks();
 	}
 
+	/**
+	 * Intializes all hooks used by the object.
+	 */
 	private function init_hooks() {
 		add_action( 'add_meta_boxes', array( $this, 'add_metabox_for_rules_field' ) );
 		add_action( 'save_post', array( $this, 'save_rules_custom_field' ) );
 	}
 
+	/**
+	 * Adds the metabox to WordPress.
+	 */
 	public function add_metabox_for_rules_field() {
 		foreach ( $this->post_types as $post_type ) {
 			add_meta_box(
@@ -36,6 +74,11 @@ final class Metabox {
 		}
 	}
 
+	/**
+	 * Saves the data from the metabox to the post meta.
+	 *
+	 * @param int $post_id The ID of the post.
+	 */
 	public function save_rules_custom_field( int $post_id ) {
 		if ( ! isset( $_POST[ SKAUTIS_INTEGRATION_NAME . '_visibility_metabox_nonce' ] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ SKAUTIS_INTEGRATION_NAME . '_visibility_metabox_nonce' ] ) ), SKAUTIS_INTEGRATION_NAME . '_visibility_metabox' ) ) {
 			return;
@@ -73,6 +116,11 @@ final class Metabox {
 		}
 	}
 
+	/**
+	 * Prints the rules metabox.
+	 *
+	 * @param \WP_Post $post The post for which the metabox is printed.
+	 */
 	public function rules_repeater( \WP_Post $post ) {
 		$post_type_object = get_post_type_object( $post->post_type );
 		$include_children = get_post_meta( $post->ID, SKAUTIS_INTEGRATION_NAME . '_rules_includeChildren', true );

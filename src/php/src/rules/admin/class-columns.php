@@ -1,15 +1,29 @@
 <?php
+/**
+ * Contains the Columns class.
+ *
+ * @package skautis-integration
+ */
 
 declare( strict_types=1 );
 
 namespace Skautis_Integration\Rules;
 
+/**
+ * Adds the "Last modified" column to the rule table view.
+ */
 class Columns {
 
+	/**
+	 * Intializes all hooks used by the object.
+	 */
 	public function __construct() {
 		$this->init_hooks();
 	}
 
+	/**
+	 * Intializes all hooks used by the object.
+	 */
 	protected function init_hooks() {
 		add_filter( 'manage_edit-' . Rules_Init::RULES_TYPE_SLUG . '_columns', array( $this, 'last_modified_admin_column' ) );
 		add_filter(
@@ -30,18 +44,38 @@ class Columns {
 		);
 	}
 
+	/**
+	 * Adds the header for the "Last modified" column in the rules overview.
+	 *
+	 * @param array<string, string> $columns A list of already present column headers, keyed by their ID.
+	 */
 	public function last_modified_admin_column( array $columns = array() ): array {
 		$columns['modified_last'] = __( 'Naposledy upraveno', 'skautis-integration' );
 
 		return $columns;
 	}
 
+	/**
+	 * Adds the "Last modified" column to the rules overview.
+	 *
+	 * TODO: What are the parameter keys and values?
+	 *
+	 * @param array<string, string> $columns A list of already present columns.
+	 */
 	public function sortable_last_modified_column( array $columns = array() ): array {
 		$columns['modified_last'] = 'modified';
 
 		return $columns;
 	}
 
+	/**
+	 * Prints the content for the "Last modified" column in the rules overview.
+	 *
+	 * This function gets called for each cell of the table, so it needs to check before printing the value.
+	 *
+	 * @param string $column_name The current column name.
+	 * @param int    $post_id The current post ID (the current row).
+	 */
 	public function last_modified_admin_column_content( string $column_name, int $post_id ) {
 		if ( 'modified_last' !== $column_name ) {
 			return;

@@ -1,12 +1,22 @@
 <?php
 /**
- * Plugin Name:       skautIS integration
- * Plugin URI:        https://github.com/skaut/skautis-integration
- * Description:       Integrace WordPressu se skautISem
- * Version:           1.1.25
- * Author:            Junák - český skaut
- * Author URI:        https://github.com/skaut
- * Text Domain:       skautis-integration
+ * Main plugin file
+ *
+ * Contains plugin constants and instantiates the plugin.
+ *
+ * @package skautis-integration
+ */
+
+/*
+Plugin Name:       skautIS integration
+Plugin URI:        https://github.com/skaut/skautis-integration
+Description:       Integrace WordPressu se skautISem
+Version:           1.1.25
+Author:            Junák - český skaut
+Author URI:        https://github.com/skaut
+License:           GPLv3
+License URI:       https://github.com/skaut/skautis-integration/blob/master/LICENSE
+Text Domain:       skautis-integration
  */
 
 namespace Skautis_Integration;

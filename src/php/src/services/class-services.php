@@ -1,4 +1,9 @@
 <?php
+/**
+ * Contains the Services class.
+ *
+ * @package skautis-integration
+ */
 
 declare( strict_types=1 );
 
@@ -27,6 +32,9 @@ use Skautis_Integration\Rules\Rules_Init;
 use Skautis_Integration\Rules\Rules_Manager;
 use Skautis_Integration\Utils\Role_Changer;
 
+/**
+ * A dependency injection container for all the services of the plugin.
+ */
 class Services {
 
 	/**
@@ -195,6 +203,8 @@ class Services {
 	/**
 	 * Gets an instance of a module.
 	 *
+	 * @param string $module_id The ID of the module.
+	 *
 	 * @return Module The initialized modules instance.
 	 */
 	public static function get_module( $module_id ) {
@@ -342,7 +352,7 @@ class Services {
 	public static function get_modules_manager() {
 		if ( is_null( self::$modules_manager ) ) {
 			self::$modules_manager = new Modules_Manager(
-				array( // for hard modules activation/deactivation look to modules/Modules_Manager WP filters
+				array( // For hard modules activation/deactivation look to modules/Modules_Manager WP filters.
 					Register::get_id()   => Register::get_label(),
 					Visibility::get_id() => Visibility::get_label(),
 					Shortcodes::get_id() => Shortcodes::get_label(),

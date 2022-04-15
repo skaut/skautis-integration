@@ -1,4 +1,9 @@
 <?php
+/**
+ * Contains the Users class.
+ *
+ * @package skautis-integration
+ */
 
 declare( strict_types=1 );
 
@@ -7,14 +12,30 @@ namespace Skautis_Integration\Repository;
 use Skautis_Integration\Auth\Skautis_Gateway;
 use Skautis_Integration\Utils\Helpers;
 
+/**
+ * Contains helper functions for management of SkautIS users.
+ */
 class Users {
 
+	/**
+	 * A link to the Skautis_Gateway service instance.
+	 *
+	 * @var Skautis_Gateway
+	 */
 	protected $skautis_gateway;
 
+	/**
+	 * Constructs the service and saves all dependencies.
+	 *
+	 * @param Skautis_Gateway $skautis_gateway An injected Skautis_Gateway service instance.
+	 */
 	public function __construct( Skautis_Gateway $skautis_gateway ) {
 		$this->skautis_gateway = $skautis_gateway;
 	}
 
+	/**
+	 * Parses the "skautisSearchUsers" GET variable from the URL.
+	 */
 	protected function get_search_user_string(): string {
 		$search_user_string = '';
 
@@ -33,9 +54,13 @@ class Users {
 		return $search_user_string;
 	}
 
+	/**
+	 * Lists all users with a connected SkautIS account under the current environment (testing or production).
+	 */
 	public function get_connected_wp_users(): array {
 		$users_data = array();
 
+		// TODO: Replace with a call to get_users()?
 		$connected_wp_users = new \WP_User_Query(
 			array(
 				'meta_query'  => array(
@@ -60,7 +85,11 @@ class Users {
 		return $users_data;
 	}
 
+	/**
+	 * Lists all users without a connected SkautIS account under the current environment (testing or production).
+	 */
 	public function get_connectable_wp_users() {
+		// TODO: Replace with a call to get_users()?
 		$connectable_wp_users = new \WP_User_Query(
 			array(
 				'meta_query'  => array(
@@ -82,6 +111,9 @@ class Users {
 		return $connectable_wp_users->get_results();
 	}
 
+	/**
+	 * Returns all users for the current unit or event. Returns users whose name matches the "skautisSearchUsers" GET variable if it is present.
+	 */
 	public function get_users(): array {
 		$users      = array();
 		$event_type = '';
@@ -102,7 +134,7 @@ class Users {
 		);
 		$current_user_role  = $this->skautis_gateway->get_skautis_instance()->getUser()->getRoleId();
 
-		// different procedure for roles associated with events
+		// Different procedure for roles associated with events.
 		foreach ( $current_user_roles as $role ) {
 			if ( $role->ID === $current_user_role && isset( $role->Key ) ) {
 				$words = preg_split( '~(?=[A-Z])~', $role->Key );
@@ -135,7 +167,7 @@ class Users {
 			}
 		}
 
-		// different procedure for roles associated with events
+		// Different procedure for roles associated with events.
 		if ( $event_type && $event_id ) {
 			if ( 'Congress' === $event_type ) {
 				$participants = null;
@@ -187,7 +219,7 @@ class Users {
 			}
 		}
 
-		// standard get all users procedure
+		// Standard get all users procedure.
 		if ( empty( $users ) ) {
 			$search_user_string = $this->get_search_user_string();
 
@@ -234,6 +266,13 @@ class Users {
 		);
 	}
 
+	/**
+	 * Returns info about a SkautIS user.
+	 *
+	 * @throws \Exception Couldn't get the user info from SkautIS.
+	 *
+	 * @param int $skautis_user_id The SkautIS user ID.
+	 */
 	public function get_user_detail( int $skautis_user_id ): array {
 		$user_detail = array();
 

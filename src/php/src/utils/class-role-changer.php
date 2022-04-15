@@ -1,4 +1,9 @@
 <?php
+/**
+ * Contains the Role_Changer class.
+ *
+ * @package skautis-integration
+ */
 
 declare( strict_types=1 );
 
@@ -7,17 +12,47 @@ namespace Skautis_Integration\Utils;
 use Skautis_Integration\Auth\Skautis_Gateway;
 use Skautis_Integration\Auth\Skautis_Login;
 
+/**
+ * Adds a SkautIS role changer to the SkautIS user management admin page.
+ */
 class Role_Changer {
 
+	/**
+	 * A link to the Skautis_Gateway service instance.
+	 *
+	 * TODO: Private?
+	 *
+	 * @var Skautis_Gateway
+	 */
 	protected $skautis_gateway;
+
+	/**
+	 * A link to the Skautis_Login service instance.
+	 *
+	 * TODO: Private?
+	 *
+	 * @var Skautis_Login
+	 */
 	protected $skautis_login;
 
+	/**
+	 * Constructs the service and saves all dependencies.
+	 *
+	 * @param Skautis_Gateway $skautis_gateway An injected Skautis_Gateway service instance.
+	 * @param Skautis_Login   $skautis_login An injected Skautis_Login service instance.
+	 */
 	public function __construct( Skautis_Gateway $skautis_gateway, Skautis_Login $skautis_login ) {
 		$this->skautis_gateway = $skautis_gateway;
 		$this->skautis_login   = $skautis_login;
 		$this->check_if_user_change_skautis_role();
 	}
 
+	/**
+	 * On page load, changes the user's SkautIS role if requested by a POST variable.
+	 *
+	 * TODO: Find a more robust way to do this?
+	 * TODO: Duplicated in Users_Management.
+	 */
 	protected function check_if_user_change_skautis_role() {
 		add_action(
 			'init',
@@ -33,6 +68,9 @@ class Role_Changer {
 		);
 	}
 
+	/**
+	 * Prints the SkautIS role changer.
+	 */
 	public function print_change_roles_form() {
 		$current_user_roles = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserRoleAll(
 			array(

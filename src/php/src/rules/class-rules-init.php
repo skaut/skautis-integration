@@ -1,4 +1,9 @@
 <?php
+/**
+ * Contains the Rules_Init class.
+ *
+ * @package skautis-integration
+ */
 
 declare( strict_types=1 );
 
@@ -6,18 +11,34 @@ namespace Skautis_Integration\Rules;
 
 use Skautis_Integration\Utils\Helpers;
 
+/**
+ * Adds the rule custom post type to WordPress.
+ */
 final class Rules_Init {
 
 	const RULES_TYPE_SINGULAR = 'skautis_rule';
 	const RULES_TYPE_SLUG     = 'skautis_rules';
 
+	/**
+	 * A link to the Revisions service instance.
+	 *
+	 * @var Revisions
+	 */
 	private $revisions;
 
+	/**
+	 * Constructs the service and saves all dependencies.
+	 *
+	 * @param Revisions $revisions An injected Revisions service instance.
+	 */
 	public function __construct( Revisions $revisions ) {
 		$this->revisions = $revisions;
 		$this->init_hooks();
 	}
 
+	/**
+	 * Intializes all hooks used by the object.
+	 */
 	private function init_hooks() {
 		add_action( 'init', array( $this, 'register_post_type' ) );
 
@@ -28,6 +49,9 @@ final class Rules_Init {
 		}
 	}
 
+	/**
+	 * Registers the rule post type with WordPress.
+	 */
 	public function register_post_type() {
 		$labels       = array(
 			'name'                  => _x( 'Správa pravidel', 'Post Type General Name', 'skautis-integration' ),
@@ -96,6 +120,13 @@ final class Rules_Init {
 		register_post_type( self::RULES_TYPE_SLUG, $args );
 	}
 
+	/**
+	 * Registers the default content for the rules post types.
+	 *
+	 * This function gets called for all post types, so it needs to check before modifying the content.
+	 *
+	 * @param string $content The default content of the current post type.
+	 */
 	public function default_content( string $content ): string {
 		global $post_type;
 		if ( self::RULES_TYPE_SLUG === $post_type ) {
@@ -105,6 +136,13 @@ final class Rules_Init {
 		return $content;
 	}
 
+	/**
+	 * Registers the title placeholder for the rules post types.
+	 *
+	 * This function gets called for all post types, so it needs to check before modifying the title.
+	 *
+	 * @param string $title The title placeholder for the current post type.
+	 */
 	public function title_placeholder( string $title ): string {
 		global $post_type;
 		if ( self::RULES_TYPE_SLUG === $post_type ) {
@@ -114,6 +152,11 @@ final class Rules_Init {
 		return $title;
 	}
 
+	/**
+	 * Registers messages to use on post update for the rule post type.
+	 *
+	 * @param array<string, array<string>> $messages A list of messages for each post type.
+	 */
 	public function updated_messages( array $messages = array() ): array {
 		$post                              = get_post();
 		$messages[ self::RULES_TYPE_SLUG ] = array(
@@ -139,6 +182,9 @@ final class Rules_Init {
 		return $messages;
 	}
 
+	/**
+	 * Returns all rules.
+	 */
 	public function get_all_rules(): array {
 		$rules_wp_query = new \WP_Query(
 			array(

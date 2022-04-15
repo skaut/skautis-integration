@@ -1,11 +1,25 @@
 <?php
+/**
+ * Contains the Skautis_Integration class.
+ *
+ * @package skautis-integration
+ */
+
 namespace Skautis_Integration;
 
 use Skautis_Integration\Services\Services;
 use Skautis_Integration\Utils\Helpers;
 
+/**
+ * The plugin main class.
+ *
+ * TODO: Rename to Main?
+ */
 class Skautis_Integration {
 
+	/**
+	 * Initializes the plugin.
+	 */
 	public function __construct() {
 		$this->init_hooks();
 
@@ -69,6 +83,9 @@ class Skautis_Integration {
 		$this->init();
 	}
 
+	/**
+	 * Intializes all hooks used by the object.
+	 */
 	protected function init_hooks() {
 		add_action( 'admin_init', array( $this, 'check_version_and_possibly_deactivate_plugin' ) );
 
@@ -76,6 +93,9 @@ class Skautis_Integration {
 		register_deactivation_hook( __FILE__, array( $this, 'deactivation' ) );
 	}
 
+	/**
+	 * Intializes all services used by the object.
+	 */
 	protected function init() {
 		Services::get_general();
 		if ( is_admin() ) {
@@ -86,6 +106,9 @@ class Skautis_Integration {
 		Services::get_modules_manager();
 	}
 
+	/**
+	 * Checks whether the current version of WordPress is supported by the plugin.
+	 */
 	protected function is_compatible_version_of_wp() {
 		if ( isset( $GLOBALS['wp_version'] ) && version_compare( $GLOBALS['wp_version'], '4.9.6', '>=' ) ) {
 			return true;
@@ -94,6 +117,9 @@ class Skautis_Integration {
 		return false;
 	}
 
+	/**
+	 * Checks whether the current version of PHP is supported by the plugin.
+	 */
 	protected function is_compatible_version_of_php() {
 		if ( version_compare( PHP_VERSION, '7.4', '>=' ) ) {
 			return true;
@@ -102,6 +128,11 @@ class Skautis_Integration {
 		return false;
 	}
 
+	/**
+	 * Activation checks.
+	 *
+	 * This function runs on plugin activation. It deactivates the plugin if the current version of WordPress or PHP are not supported.
+	 */
 	public function activation() {
 		if ( ! $this->is_compatible_version_of_wp() ) {
 			deactivate_plugins( SKAUTIS_INTEGRATION_PLUGIN_BASENAME );
@@ -126,11 +157,19 @@ class Skautis_Integration {
 		}
 	}
 
+	/**
+	 * Updates rewrite rules on plugin deactivation.
+	 *
+	 * This function runs on plugin activation. It deactivates the plugin if the current version of WordPress or PHP are not supported.
+	 */
 	public function deactivation() {
 		delete_option( 'skautis_rewrite_rules_need_to_flush' );
 		flush_rewrite_rules();
 	}
 
+	/**
+	 * This function deactivates the plugin if the current version of WordPress or PHP are not supported.
+	 */
 	public function check_version_and_possibly_deactivate_plugin() {
 		if ( ! $this->is_compatible_version_of_wp() ) {
 			if ( is_plugin_active( SKAUTIS_INTEGRATION_PLUGIN_BASENAME ) ) {

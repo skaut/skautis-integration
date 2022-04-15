@@ -1,4 +1,9 @@
 <?php
+/**
+ * Contains the Func class.
+ *
+ * @package skautis-integration
+ */
 
 declare( strict_types=1 );
 
@@ -7,52 +12,127 @@ namespace Skautis_Integration\Rules\Rule;
 use Skautis_Integration\Rules\Rule;
 use Skautis_Integration\Auth\Skautis_Gateway;
 
+/**
+ * Rule operator for filtering users based on their SkautIS function.
+ */
 class Func implements Rule {
 
-	public static $id           = 'func';
-	protected static $type      = 'string';
-	protected static $input     = 'funcInput';
-	protected static $multiple  = true;
+	/**
+	 * The rule ID
+	 *
+	 * @var string
+	 */
+	public static $id = 'func';
+
+	/**
+	 * The rule value type.
+	 *
+	 * @var "string"|"integer"|"double"|"date"|"time"|"datetime"|"boolean"
+	 */
+	protected static $type = 'string';
+
+	/**
+	 * The rule input field type type.
+	 *
+	 * @var "roleInput"|"membershipInput"|"funcInput"|"qualificationInput"|"text"|"number"|"textarea"|"radio"|"checkbox"|"select"
+	 */
+	protected static $input = 'funcInput';
+
+	/**
+	 * Whether the rule accepts multiple values at once.
+	 *
+	 * @var boolean
+	 */
+	protected static $multiple = true;
+
+	/**
+	 * All the operators that are applicable for the rule.
+	 *
+	 * @var array<"equal"|"not_equal"|"in"|"not_in"|"less"|"less_or_equal"|"greater"|"greater_or_equal"|"between"|"not_between"|"begins_with"|"not_begins_with"|"contains"|"not_contains"|"ends_with"|"not_ends_with"|"is_empty"|"is_not_empty"|"is_null"|"is_not_null">
+	 */
 	protected static $operators = array( 'in', 'not_in' );
 
+	/**
+	 * A link to the Skautis_Gateway service instance.
+	 *
+	 * @var Skautis_Gateway
+	 */
 	protected $skautis_gateway;
 
+	/**
+	 * Constructs the service and saves all dependencies.
+	 *
+	 * @param Skautis_Gateway $skautis_gateway An injected Skautis_Gateway service instance.
+	 */
 	public function __construct( Skautis_Gateway $skautis_gateway ) {
 		$this->skautis_gateway = $skautis_gateway;
 	}
 
+	/**
+	 * Returns the rule ID.
+	 */
 	public function get_id(): string {
 		return self::$id;
 	}
 
+	/**
+	 * Returns the localized rule name.
+	 */
 	public function get_label(): string {
 		return __( 'Funkce', 'skautis-integration' );
 	}
 
+	/**
+	 * Returns the rule value type.
+	 *
+	 * @return "string"|"integer"|"double"|"date"|"time"|"datetime"|"boolean"
+	 */
 	public function get_type(): string {
 		return self::$type;
 	}
 
+	/**
+	 * Returns the rule input field type type.
+	 *
+	 * @return "roleInput"|"membershipInput"|"funcInput"|"qualificationInput"|"text"|"number"|"textarea"|"radio"|"checkbox"|"select"
+	 */
 	public function get_input(): string {
 		return self::$input;
 	}
 
+	/**
+	 * Returns whether the rule accepts multiple values at once.
+	 */
 	public function get_multiple(): bool {
 		return self::$multiple;
 	}
 
+	/**
+	 * Returns all the operators that are applicable for the rule.
+	 *
+	 * @return array<"equal"|"not_equal"|"in"|"not_in"|"less"|"less_or_equal"|"greater"|"greater_or_equal"|"between"|"not_between"|"begins_with"|"not_begins_with"|"contains"|"not_contains"|"ends_with"|"not_ends_with"|"is_empty"|"is_not_empty"|"is_null"|"is_not_null">
+	 */
 	public function get_operators(): array {
 		return self::$operators;
 	}
 
+	/**
+	 * Returns the placeholder value for the rule.
+	 */
 	public function get_placeholder(): string {
 		return '';
 	}
 
+	/**
+	 * Returns an optional additional description of the rule.
+	 */
 	public function get_description(): string {
 		return '';
 	}
 
+	/**
+	 * Returns the current values of the rule.
+	 */
 	public function get_values(): array {
 		$values = array();
 		$funcs  = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->FunctionTypeAll();
@@ -64,6 +144,13 @@ class Func implements Rule {
 		return $values;
 	}
 
+	/**
+	 * Removes special characters ("." and "-") from SkautIS unit IDs.
+	 *
+	 * TODO: Duplicated in Membership and Role.
+	 *
+	 * @param string $unit_id The raw unit ID.
+	 */
 	protected function clearUnitId( string $unit_id ): string {
 		return trim(
 			str_replace(
@@ -77,6 +164,9 @@ class Func implements Rule {
 		);
 	}
 
+	/**
+	 * Returns an array of arrays where for each user function ID, there are listed units asssociated with that function.
+	 */
 	protected function getUserFuncsWithUnitIds(): array {
 		static $user_funcs = null;
 
@@ -118,8 +208,16 @@ class Func implements Rule {
 		return $user_funcs;
 	}
 
+	/**
+	 * Checks whether the rule is fulfilled.
+	 *
+	 * @throws \Exception An operator is undefined.
+	 *
+	 * @param "equal"|"not_equal"|"in"|"not_in"|"less"|"less_or_equal"|"greater"|"greater_or_equal"|"between"|"not_between"|"begins_with"|"not_begins_with"|"contains"|"not_contains"|"ends_with"|"not_ends_with"|"is_empty"|"is_not_empty"|"is_null"|"is_not_null" $funcs_operator The operator used with the rule.
+	 * @param string                                                                                                                                                                                                                                                $data The rule data.
+	 */
 	public function is_rule_passed( string $funcs_operator, $data ): bool {
-		// parse and prepare data from rules UI
+		// Parse and prepare data from rules UI.
 		$output = array();
 		preg_match_all( '|[^~]+|', $data, $output );
 		if ( isset( $output[0], $output[0][0], $output[0][1], $output[0][2] ) ) {
@@ -130,7 +228,7 @@ class Func implements Rule {
 			return false;
 		}
 
-		// logic for determine in / not_in range
+		// Logic to determine in / not_in range.
 		$in_not_in_negation = 2;
 		switch ( $funcs_operator ) {
 			case 'in':
@@ -150,7 +248,7 @@ class Func implements Rule {
 		$user_funcs = $this->getUserFuncsWithUnitIds();
 		$user_pass  = 0;
 		foreach ( $funcs as $func ) {
-			// in / not_in range check
+			// in / not_in range check.
 			if ( ( $in_not_in_negation + array_key_exists( $func, $user_funcs ) ) === 1 ) {
 				foreach ( $user_funcs[ $func ] as $user_func_unit_id ) {
 					$user_func_unit_id = $this->clearUnitId( $user_func_unit_id );

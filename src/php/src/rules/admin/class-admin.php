@@ -1,4 +1,9 @@
 <?php
+/**
+ * Contains the Admin class.
+ *
+ * @package skautis-integration
+ */
 
 declare( strict_types=1 );
 
@@ -8,14 +13,46 @@ use Skautis_Integration\Auth\Skautis_Gateway;
 use Skautis_Integration\Auth\WP_Login_Logout;
 use Skautis_Integration\Utils\Helpers;
 
+/**
+ * Adds the UI for rules management.
+ */
 final class Admin {
 
+	/**
+	 * A link to the Rules_Manager service instance.
+	 *
+	 * @var Rules_Manager
+	 */
 	private $rules_manager;
+
+	/**
+	 * A link to the WP_Login_Logout service instance.
+	 *
+	 * @var WP_Login_Logout
+	 */
 	private $wp_login_logout;
+
+	/**
+	 * A link to the Skautis_Gateway service instance.
+	 *
+	 * @var Skautis_Gateway
+	 */
 	private $skautis_gateway;
-	// TODO: Unused?
+
+	/**
+	 * TODO: Unused?
+	 *
+	 * @var string
+	 */
 	private $admin_dir_url = '';
 
+	/**
+	 * Constructs the service and saves all dependencies.
+	 *
+	 * @param Rules_Manager   $rules_manager An injected Rules_Manager service instance.
+	 * @param WP_Login_Logout $wp_login_logout An injected WP_Login_Logout service instance.
+	 * @param Skautis_Gateway $skautis_gateway An injected Skautis_Gateway service instance.
+	 */
 	public function __construct( Rules_Manager $rules_manager, WP_Login_Logout $wp_login_logout, Skautis_Gateway $skautis_gateway ) {
 		$this->rules_manager   = $rules_manager;
 		$this->wp_login_logout = $wp_login_logout;
@@ -25,6 +62,9 @@ final class Admin {
 		$this->init_hooks();
 	}
 
+	/**
+	 * Intializes all hooks used by the object.
+	 */
 	private function init_hooks() {
 		add_action( 'add_meta_boxes', array( $this, 'add_metabox_for_rules_field' ) );
 		add_action( 'save_post', array( $this, 'save_rules_custom_field' ) );
@@ -37,6 +77,13 @@ final class Admin {
 		add_action( 'admin_footer', array( $this, 'init_rules_builder' ), 100 );
 	}
 
+	/**
+	 * Adds the rules metabox to WordPress.
+	 *
+	 * This function gets called for all post types, so it needs to check before adding the metabox.
+	 *
+	 * @param string $post_type The current post type.
+	 */
 	public function add_metabox_for_rules_field( string $post_type ) {
 		if ( Rules_Init::RULES_TYPE_SLUG === $post_type ) {
 			add_meta_box(
@@ -48,6 +95,11 @@ final class Admin {
 		}
 	}
 
+	/**
+	 * Saves the rules data.
+	 *
+	 * @param int $post_id The ID of the rule post.
+	 */
 	public function save_rules_custom_field( int $post_id ) {
 		if ( ! isset( $_POST[ SKAUTIS_INTEGRATION_NAME . '_rules_metabox_nonce' ] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ SKAUTIS_INTEGRATION_NAME . '_rules_metabox_nonce' ] ) ), SKAUTIS_INTEGRATION_NAME . '_rules_metabox' ) ) {
 			return;
@@ -62,6 +114,13 @@ final class Admin {
 		}
 	}
 
+	/**
+	 * Prints the rules metabox.
+	 *
+	 * TODO: This box is hidden, why is it here?
+	 *
+	 * @param \WP_Post $post The post to print the metabox for.
+	 */
 	public function rules_field_content( \WP_Post $post ) {
 		wp_nonce_field( SKAUTIS_INTEGRATION_NAME . '_rules_metabox', SKAUTIS_INTEGRATION_NAME . '_rules_metabox_nonce' );
 		?>
@@ -70,20 +129,34 @@ final class Admin {
 		<?php
 	}
 
-	// TODO: Unused?
+	/**
+	 * TODO: Unused?
+	 *
+	 * @param array $fields A list of already registered fields.
+	 */
 	public function add_rules_field_to_revisions( array $fields ): array {
 		$fields[ SKAUTIS_INTEGRATION_NAME . '_rules_data' ] = __( 'skautIS Pravidla', 'skautis-integration' );
 
 		return $fields;
 	}
 
-	// TODO: Unused?
-	// TODO: Unused first parameter?
+	/**
+	 * TODO: Unused?
+	 *
+	 * @param never    $value Unused.
+	 * @param never    $field_name Unused.
+	 * @param \WP_Post $post The post to get the metadata from.
+	 */
 	public function get_rules_field_value( $value, $field_name, \WP_Post $post ) {
 		return get_metadata( 'post', $post->ID, SKAUTIS_INTEGRATION_NAME . '_rules_data', true );
 	}
 
-	// TODO: Unused?
+	/**
+	 * TODO: Unused?
+	 *
+	 * @param int $post_id The ID of the post in question.
+	 * @param int $revision_id The ID of the revision to restore.
+	 */
 	public function restore_revision_for_rules_field( int $post_id, int $revision_id ) {
 		$post     = get_post( $post_id );
 		$revision = get_post( $revision_id );
@@ -95,6 +168,11 @@ final class Admin {
 		}
 	}
 
+	/**
+	 * Prints the rules query builder UI.
+	 *
+	 * @param \WP_Post $post Unused.
+	 */
 	public function add_rules_ui( \WP_Post $post ) {
 		if ( get_current_screen()->id !== Rules_Init::RULES_TYPE_SLUG || get_post_type() !== Rules_Init::RULES_TYPE_SLUG ) {
 			return;
@@ -127,6 +205,9 @@ final class Admin {
 		<?php
 	}
 
+	/**
+	 * Enqueues styles for rules management.
+	 */
 	public function enqueue_styles() {
 		if ( get_current_screen()->id !== Rules_Init::RULES_TYPE_SLUG || get_post_type() !== Rules_Init::RULES_TYPE_SLUG ) {
 			return;
@@ -151,6 +232,9 @@ final class Admin {
 		);
 	}
 
+	/**
+	 * Enqueues scripts for rules management.
+	 */
 	public function enqueue_scripts() {
 		if ( get_current_screen()->id !== Rules_Init::RULES_TYPE_SLUG || get_post_type() !== Rules_Init::RULES_TYPE_SLUG ) {
 			return;
@@ -239,6 +323,9 @@ final class Admin {
 		);
 	}
 
+	/**
+	 * Initializes dynamic options for the rules JS code.
+	 */
 	public function init_rules_builder() {
 		if ( get_current_screen()->id !== Rules_Init::RULES_TYPE_SLUG || get_post_type() !== Rules_Init::RULES_TYPE_SLUG ) {
 			return;

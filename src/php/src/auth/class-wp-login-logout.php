@@ -1,4 +1,9 @@
 <?php
+/**
+ * Contains the WP_Login_Logout class.
+ *
+ * @package skautis-integration
+ */
 
 declare( strict_types=1 );
 
@@ -9,17 +14,37 @@ use Skautis_Integration\Utils\Helpers;
 use Skautis_Integration\Services\Services;
 use Skautis_Integration\Modules\Register\Register;
 
+/**
+ * Handles the WordPress part of logging in with SkautIS.
+ */
 final class WP_Login_Logout {
 
+	/**
+	 * A link to the Skautis_Gateway service instance.
+	 *
+	 * @var Skautis_Gateway
+	 */
 	private $skautis_gateway;
 
+	/**
+	 * Constructs the service and saves all dependencies.
+	 *
+	 * @param Skautis_Gateway $skautis_gateway An injected Skautis_Gateway service instance.
+	 */
 	public function __construct( Skautis_Gateway $skautis_gateway ) {
 		$this->skautis_gateway = $skautis_gateway;
 	}
 
+	/**
+	 * Logs a user into WordPress based on their SkautIS user ID.
+	 *
+	 * @param int     $skautis_user_id The SkautIS user ID.
+	 * @param boolean $try If true, this function will not exit with an error if the login fails.
+	 */
 	private function login_wp_user_by_skautis_user_id( int $skautis_user_id, $try = false ) {
 		$return_url = Helpers::get_return_url();
 		if ( ! is_null( $return_url ) ) {
+			// TODO: Replace with a call to get_users()?
 			$users_wp_query = new \WP_User_Query(
 				array(
 					'number'     => 1,
@@ -83,6 +108,11 @@ final class WP_Login_Logout {
 		return false;
 	}
 
+	/**
+	 * Returns the SkautIS login URL with all arguments initialized.
+	 *
+	 * @param string $return_url The URL to return back to after the login.
+	 */
 	public function get_login_url( string $return_url = '' ): string {
 		if ( ! $return_url ) {
 			$return_url = Helpers::get_login_logout_redirect();
@@ -99,6 +129,11 @@ final class WP_Login_Logout {
 		return esc_url( $url );
 	}
 
+	/**
+	 * Returns the SkautIS logout URL with all arguments and nonces initialized.
+	 *
+	 * @param string $return_url The URL to return back to after the logout.
+	 */
 	public function get_logout_url( string $return_url = '' ): string {
 		if ( ! $return_url ) {
 			$return_url = Helpers::get_login_logout_redirect();
@@ -116,6 +151,9 @@ final class WP_Login_Logout {
 		return esc_url( $url );
 	}
 
+	/**
+	 * Logs the current SkautIS user into WordPress.
+	 */
 	public function login_to_wp() {
 		$user_detail = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserDetail();
 
@@ -124,6 +162,13 @@ final class WP_Login_Logout {
 		}
 	}
 
+	/**
+	 * Logs the current SkautIS user into WordPress.
+	 *
+	 * This version of the function doesn't produce an error if the login procedure fails.
+	 *
+	 * TODO: Deduplicate with login_to_wp().
+	 */
 	public function try_to_login_to_wp() {
 		$user_detail = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserDetail();
 
@@ -132,6 +177,11 @@ final class WP_Login_Logout {
 		}
 	}
 
+	/**
+	 * Handles a call to log the user out of SkautIS.
+	 *
+	 * @see Actions::auth_actions_router() for more details about how this function gets called.
+	 */
 	public function logout() {
 		$this->skautis_gateway->logout();
 

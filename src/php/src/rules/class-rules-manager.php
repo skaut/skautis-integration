@@ -1,4 +1,9 @@
 <?php
+/**
+ * Contains the Rules_Manager class.
+ *
+ * @package skautis-integration
+ */
 
 declare( strict_types=1 );
 
@@ -7,13 +12,40 @@ namespace Skautis_Integration\Rules;
 use Skautis_Integration\Auth\Skautis_Gateway;
 use Skautis_Integration\Auth\WP_Login_Logout;
 
+/**
+ * Contains functions for checking whether a user passes rules.
+ */
 final class Rules_Manager {
 
+	/**
+	 * A link to the Skautis_Gateway service instance.
+	 *
+	 * @var Skautis_Gateway
+	 */
 	private $skautis_gateway;
-	// TODO: Unused?
+
+	/**
+	 * A link to the WP_Login_Logout service instance.
+	 *
+	 * TODO: Unused?
+	 *
+	 * @var WP_Login_Logout
+	 */
 	private $wp_login_logout;
+
+	/**
+	 * A list of all the avialable rule blocks.
+	 *
+	 * @var array<string, Rule>
+	 */
 	private $rules = array();
 
+	/**
+	 * Constructs the service and saves all dependencies.
+	 *
+	 * @param Skautis_Gateway $skautis_gateway An injected Skautis_Gateway service instance.
+	 * @param WP_Login_Logout $wp_login_logout An injected WP_Login_Logout service instance.
+	 */
 	public function __construct( Skautis_Gateway $skautis_gateway, WP_Login_Logout $wp_login_logout ) {
 		$this->skautis_gateway = $skautis_gateway;
 		$this->wp_login_logout = $wp_login_logout;
@@ -23,6 +55,9 @@ final class Rules_Manager {
 		}
 	}
 
+	/**
+	 * Initializes all available rule blocks and stores them in this object.
+	 */
 	private function init_rules(): array {
 		return apply_filters(
 			SKAUTIS_INTEGRATION_NAME . '_rules',
@@ -36,6 +71,13 @@ final class Rules_Manager {
 		);
 	}
 
+	/**
+	 * Checks whether a user passed a rule.
+	 *
+	 * @throws \Exception An undefined rule was passed to the function.
+	 *
+	 * @param array $rule The rule to check against.
+	 */
 	private function process_rule( $rule ): bool {
 		if ( ! isset( $rule->field ) ) {
 			if ( isset( $rule->condition ) && isset( $rule->rules ) ) {
@@ -56,6 +98,12 @@ final class Rules_Manager {
 		return false;
 	}
 
+	/**
+	 * Checks whether a user passed a rule group.
+	 *
+	 * @param "AND"|"OR" $condition The logical operator used by the group.
+	 * @param array      $rules A list of rules in the group.
+	 */
 	private function parse_rules_groups( string $condition, array $rules ): bool {
 		$result = 0;
 
@@ -67,7 +115,7 @@ final class Rules_Manager {
 				}
 				$result = $result * $this->process_rule( $rule );
 			}
-		} else { // OR
+		} else { // OR.
 			foreach ( $rules as $rule ) {
 				if ( isset( $rule->rules ) ) {
 					$result = $result + $this->parse_rules_groups( $rule->condition, $rule->rules );
@@ -83,10 +131,18 @@ final class Rules_Manager {
 		return false;
 	}
 
+	/**
+	 * Returns a list of all available rule blocks.
+	 */
 	public function get_rules(): array {
 		return $this->rules;
 	}
 
+	/**
+	 * Checks whether a user passed plugin rules and returns their role if they did.
+	 *
+	 * TODO: Deduplicate with the other method in this class.
+	 */
 	public function check_if_user_passed_rules_and_get_his_role(): string {
 		$result = '';
 
@@ -114,6 +170,9 @@ final class Rules_Manager {
 		return '';
 	}
 
+	/**
+	 * Returns all rules (posts of type rule).
+	 */
 	public function get_all_rules(): array {
 		$rules_wp_query = new \WP_Query(
 			array(
@@ -130,6 +189,13 @@ final class Rules_Manager {
 		return array();
 	}
 
+	/**
+	 * Checks whether a user passed plugin rules
+	 *
+	 * TODO: Deduplicate with the other method in this class.
+	 *
+	 * @param array $rules_ids A list of IDs of rules or rule groups to check.
+	 */
 	public function check_if_user_passed_rules( array $rules_ids ): bool {
 		static $rules_groups = null;
 		$result              = false;
@@ -148,7 +214,7 @@ final class Rules_Manager {
 			}
 
 			if ( true === $result ) {
-				return $result;
+				return true;
 			}
 		}
 

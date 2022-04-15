@@ -1,4 +1,9 @@
 <?php
+/**
+ * Contains the Frontend class.
+ *
+ * @package skautis-integration
+ */
 
 declare( strict_types=1 );
 
@@ -8,15 +13,48 @@ use Skautis_Integration\Auth\Skautis_Gateway;
 use Skautis_Integration\Auth\WP_Login_Logout;
 use Skautis_Integration\Utils\Helpers;
 
+/**
+ * Enqueues frontend scripts and styles.
+ */
 final class Frontend {
 
-	// TODO: Unused?
+	/**
+	 * A link to the Login_Form service instance.
+	 *
+	 * TODO: Unused?
+	 *
+	 * @var Login_Form
+	 */
 	private $login_form;
+
+	/**
+	 * A link to the WP_Login_Logout service instance.
+	 *
+	 * @var WP_Login_Logout
+	 */
 	private $wp_login_logout;
+
+	/**
+	 * A link to the Skautis_Gateway service instance.
+	 *
+	 * @var Skautis_Gateway
+	 */
 	private $skautis_gateway;
-	// TODO: Unused?
+
+	/**
+	 * TODO: Unused?
+	 *
+	 * @var string
+	 */
 	private $frontend_dir_url = '';
 
+	/**
+	 * Constructs the service and saves all dependencies.
+	 *
+	 * @param Login_Form      $login_form An injected Login_Form service instance.
+	 * @param WP_Login_Logout $wp_login_logout An injected WP_Login_Logout service instance.
+	 * @param Skautis_Gateway $skautis_gateway An injected Skautis_Gateway service instance.
+	 */
 	public function __construct( Login_Form $login_form, WP_Login_Logout $wp_login_logout, Skautis_Gateway $skautis_gateway ) {
 		$this->login_form       = $login_form;
 		$this->wp_login_logout  = $wp_login_logout;
@@ -26,6 +64,9 @@ final class Frontend {
 		$this->init_hooks();
 	}
 
+	/**
+	 * Intializes all hooks used by the object.
+	 */
 	private function init_hooks() {
 		if ( get_option( SKAUTIS_INTEGRATION_NAME . '_login_page_url' ) ) {
 			add_filter( 'query_vars', array( $this, 'register_query_vars' ) );
@@ -41,12 +82,22 @@ final class Frontend {
 		}
 	}
 
+	/**
+	 * Adds query variables that WordPress is allowed to use when redirecting.
+	 *
+	 * @param array<string> $vars A list of allowed query variables.
+	 */
 	public function register_query_vars( array $vars = array() ): array {
 		$vars[] = 'skautis_login';
 
 		return $vars;
 	}
 
+	/**
+	 * Shows the SkautIS login template when the "skautis_login" query variable is present.
+	 *
+	 * @param string $path The path of the template to include. Unmodified when not showing the SkautIS login.
+	 */
 	public function register_templates( string $path = '' ): string {
 		$query_value = get_query_var( 'skautis_login' );
 		if ( $query_value && ! empty( $query_value ) ) {
@@ -64,6 +115,9 @@ final class Frontend {
 		return $path;
 	}
 
+	/**
+	 * Enqueues frontend styles.
+	 */
 	public function enqueue_styles() {
 		if ( $this->pluginLoginView ) {
 			wp_enqueue_style( 'buttons' );
@@ -72,10 +126,20 @@ final class Frontend {
 		Helpers::enqueue_style( 'frontend', 'frontend/css/skautis-frontend.min.css' );
 	}
 
+	/**
+	 * Enqueues login styles.
+	 */
 	public function enqueue_login_styles() {
 		Helpers::enqueue_style( 'frontend', 'frontend/css/skautis-frontend.min.css' );
 	}
 
+	/**
+	 * Adds a link to admin bar right-hand-side menu to log out from both WordPress and SkautIS at once.
+	 *
+	 * TODO: Duplicated code?
+	 *
+	 * @param \WP_Admin_Bar $wp_admin_bar The WordPress administration bar.
+	 */
 	public function add_logout_link_to_admin_bar( \WP_Admin_Bar $wp_admin_bar ) {
 		if ( ! function_exists( 'is_admin_bar_showing' ) ) {
 			return;

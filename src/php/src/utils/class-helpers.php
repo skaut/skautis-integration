@@ -1,9 +1,17 @@
 <?php
+/**
+ * Contains the Helpers class.
+ *
+ * @package skautis-integration
+ */
 
 declare( strict_types=1 );
 
 namespace Skautis_Integration\Utils;
 
+/**
+ * Helper functions for the plugin.
+ */
 class Helpers {
 
 	/**
@@ -32,6 +40,7 @@ class Helpers {
 	 * @param string        $handle A unique handle to identify the script with.
 	 * @param string        $src Path to the file, relative to the plugin directory.
 	 * @param array<string> $deps A list of dependencies of the script. These can be either system dependencies like jquery, or other registered scripts. Default [].
+	 * @param boolean       $in_footer Whether to enqueue the script in the page footer.
 	 *
 	 * @return void
 	 */
@@ -73,6 +82,9 @@ class Helpers {
 		wp_enqueue_style( SKAUTIS_INTEGRATION_NAME . '_' . $handle );
 	}
 
+	/**
+	 * Parses and sanitizes a login or logout redirect URL from GET variablea.
+	 */
 	public static function get_login_logout_redirect() {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( isset( $_GET['redirect_to'] ) && '' !== $_GET['redirect_to'] ) {
@@ -83,6 +95,9 @@ class Helpers {
 		return is_null( $return_url ) ? self::get_current_url() : $return_url;
 	}
 
+	/**
+	 * Parses and sanitizes the `ReturnUrl` GET variable.
+	 */
 	public static function get_return_url() {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( ! isset( $_GET['ReturnUrl'] ) || '' === $_GET['ReturnUrl'] ) {
@@ -92,6 +107,13 @@ class Helpers {
 		return esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) );
 	}
 
+	/**
+	 * Shows a notice in the administration.
+	 *
+	 * @param string                             $message The notice text.
+	 * @param "error"|"warning"|"success"|"info" $type The type of the notice. Default "warning".
+	 * @param string                             $hide_notice_on_page An ID of a screen where the notice shouldn't get shown. Optional.
+	 */
 	public static function show_admin_notice( string $message, string $type = 'warning', string $hide_notice_on_page = '' ) {
 		add_action(
 			'admin_notices',
@@ -110,20 +132,32 @@ class Helpers {
 		);
 	}
 
+	/**
+	 * Returns the capability level needed to manage SkautIS options.
+	 *
+	 * TODO: This function just returns "manage_options".
+	 */
 	public static function get_skautis_manager_capability(): string {
 		static $capability = '';
 
 		if ( '' === $capability ) {
+			// TODO: Unused hook?
 			$capability = apply_filters( SKAUTIS_INTEGRATION_NAME . '_manager_capability', 'manage_options' );
 		}
 
 		return $capability;
 	}
 
+	/**
+	 * Returns whether the current user has the capability level needed to manage SkautIS options.
+	 */
 	public static function user_is_skautis_manager(): bool {
 		return current_user_can( self::get_skautis_manager_capability() );
 	}
 
+	/**
+	 * Returns the current URL.
+	 */
 	public static function get_current_url(): string {
 		if ( isset( $_SERVER['HTTP_HOST'] ) && isset( $_SERVER['REQUEST_URI'] ) ) {
 			return esc_url_raw( ( isset( $_SERVER['HTTPS'] ) ? 'https' : 'http' ) . '://' . wp_unslash( $_SERVER['HTTP_HOST'] ) . wp_unslash( $_SERVER['REQUEST_URI'] ) );
@@ -131,12 +165,24 @@ class Helpers {
 		return '';
 	}
 
+	/**
+	 * Parses a nonce from a URL and verifies it.
+	 *
+	 * @param string $url The URL to parse the nonce from.
+	 * @param string $nonce_name The name of the nonce.
+	 */
 	public static function validate_nonce_from_url( string $url, string $nonce_name ) {
 		if ( ! wp_verify_nonce( self::get_nonce_from_url( urldecode( $url ), $nonce_name ), $nonce_name ) ) {
 			wp_nonce_ays( $nonce_name );
 		}
 	}
 
+	/**
+	 * Parses a GET variable from a URL.
+	 *
+	 * @param string $url The URL to parse the variable from.
+	 * @param string $variable_name The name of the variable.
+	 */
 	public static function get_variable_from_url( string $url, string $variable_name ): string {
 		$result = array();
 		$url    = esc_url_raw( $url );
@@ -149,6 +195,12 @@ class Helpers {
 		return '';
 	}
 
+	/**
+	 * Parses a nonce from a URL.
+	 *
+	 * @param string $url The URL to parse the nonce from.
+	 * @param string $nonce_name The name of the nonce.
+	 */
 	public static function get_nonce_from_url( string $url, string $nonce_name ): string {
 		return self::get_variable_from_url( $url, $nonce_name );
 	}

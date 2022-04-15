@@ -1,4 +1,9 @@
 <?php
+/**
+ * Contains the Connect_And_Disconnect_WP_Account class.
+ *
+ * @package skautis-integration
+ */
 
 declare( strict_types=1 );
 
@@ -7,16 +12,42 @@ namespace Skautis_Integration\Auth;
 use Skautis_Integration\General\Actions;
 use Skautis_Integration\Utils\Helpers;
 
+/**
+ * Handles connecting or disconnecting WordPress and SkautIS users.
+ */
 final class Connect_And_Disconnect_WP_Account {
 
+	/**
+	 * A link to the Skautis_Gateway service instance.
+	 *
+	 * @var Skautis_Gateway
+	 */
 	private $skautis_gateway;
+
+	/**
+	 * A link to the Skautis_Login service instance.
+	 *
+	 * @var Skautis_Login
+	 */
 	private $skautis_login;
 
+	/**
+	 * Constructs the service and saves all dependencies.
+	 *
+	 * @param Skautis_Gateway $skautis_gateway An injected Skautis_Gateway service instance.
+	 * @param Skautis_Login   $skautis_login An injected Skautis_Login service instance.
+	 */
 	public function __construct( Skautis_Gateway $skautis_gateway, Skautis_Login $skautis_login ) {
 		$this->skautis_gateway = $skautis_gateway;
 		$this->skautis_login   = $skautis_login;
 	}
 
+	/**
+	 * Adds a SkautIS user id to a specified WordPress user. Respects the SkautIS environment (testing or production).
+	 *
+	 * @param int $wp_user_id The ID of the WordPress user.
+	 * @param int $skautis_user_id The SkautIS user ID.
+	 */
 	private function set_skautis_user_id_to_wp_account( int $wp_user_id, int $skautis_user_id ) {
 		$return_url = Helpers::get_return_url();
 		if ( ! is_null( $return_url ) ) {
@@ -29,6 +60,15 @@ final class Connect_And_Disconnect_WP_Account {
 		}
 	}
 
+	/**
+	 * Prints a button to either connect or disconnect the current user, or disconnect other user.
+	 *
+	 * It doesn't make sense to connect another user.
+	 *
+	 * Used when viewing own or another user's account.
+	 *
+	 * @param int $wp_user_id The WordPress user ID of the user (current or other).
+	 */
 	public function print_connect_and_disconnect_button( int $wp_user_id ) {
 		$skautis_user_id = get_user_meta( $wp_user_id, 'skautisUserId_' . $this->skautis_gateway->get_env(), true );
 		if ( $skautis_user_id ) {
@@ -53,9 +93,16 @@ final class Connect_And_Disconnect_WP_Account {
 		}
 	}
 
+	/**
+	 * Handles a call to connect the current WordPress user with SkautIS.
+	 *
+	 * This function checks if the user is logged into SkautIS and connects them with the current WordPress user. If the user isn't connected, they get redirected to SkautIS login first.
+	 *
+	 * @see Actions::auth_actions_router() for more details about how this function gets called.
+	 */
 	public function connect() {
 		if ( ! $this->skautis_login->is_user_logged_in_skautis() ) {
-            // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 			if ( ! $this->skautis_login->set_login_data_to_local_skautis_instance( $_POST ) ) {
 				$return_url = Helpers::get_return_url() ?? Helpers::get_current_url();
 				wp_safe_redirect( esc_url_raw( $this->skautis_gateway->get_skautis_instance()->getLoginUrl( $return_url ) ), 302 );
@@ -70,6 +117,13 @@ final class Connect_And_Disconnect_WP_Account {
 		}
 	}
 
+	/**
+	 * Connects an existing SkautIS user with an existing WordPress user.
+	 *
+	 * This is used to connect a WordPress user that is not the current user.
+	 *
+	 * @see Actions::auth_actions_router() for more details about how this function gets called.
+	 */
 	public function connect_wp_user_to_skautis() {
 		if ( ! isset( $_GET[ SKAUTIS_INTEGRATION_NAME . '_connect_user_nonce' ] ) ||
 			! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET[ SKAUTIS_INTEGRATION_NAME . '_connect_user_nonce' ] ) ), SKAUTIS_INTEGRATION_NAME . '_connect_user' ) ||
@@ -92,6 +146,11 @@ final class Connect_And_Disconnect_WP_Account {
 		}
 	}
 
+	/**
+	 * Returns a link to connect an existing SkautIS user with an existing WordPress user.
+	 *
+	 * This link is used to connect a WordPress user that is not the current user.
+	 */
 	public function get_connect_wp_user_to_skautis_url(): string {
 		$return_url = Helpers::get_current_url();
 		$return_url = add_query_arg( SKAUTIS_INTEGRATION_NAME . '_connectWpAccountWithSkautis', wp_create_nonce( SKAUTIS_INTEGRATION_NAME . '_connectWpAccountWithSkautis' ), $return_url );
@@ -100,6 +159,15 @@ final class Connect_And_Disconnect_WP_Account {
 		return esc_url( wp_nonce_url( $url, SKAUTIS_INTEGRATION_NAME . '_connect_user', SKAUTIS_INTEGRATION_NAME . '_connect_user_nonce' ) );
 	}
 
+	/**
+	 * Disconnects a SkautIS user from a WordPress user.
+	 *
+	 * This function is used both to disconnect the current user as well as other users.
+	 *
+	 * TODO: Rework the horrible return URL logic to distinguish between current user and other user disconnecting.
+	 *
+	 * @see Actions::auth_actions_router() for more details about how this function gets called.
+	 */
 	public function disconnect() {
 		if ( is_user_logged_in() ) {
 			$return_url = Helpers::get_return_url();

@@ -1,4 +1,9 @@
 <?php
+/**
+ * Contains the Users_Management class.
+ *
+ * @package skautis-integration
+ */
 
 declare( strict_types=1 );
 
@@ -15,18 +20,82 @@ use Skautis_Integration\Modules\Register\Register;
 use Skautis_Integration\Utils\Helpers;
 use Skautis_Integration\Utils\Role_Changer;
 
+/**
+ * Adds an administration page for management of SkautIS users.
+ */
 class Users_Management {
 
-	// TODO: Make all of them private?
+	/**
+	 * A link to the Skautis_Gateway service instance.
+	 *
+	 * TODO: Private?
+	 *
+	 * @var Skautis_Gateway
+	 */
 	protected $skautis_gateway;
+
+	/**
+	 * A link to the WP_Login_Logout service instance.
+	 *
+	 * TODO: Private?
+	 *
+	 * @var WP_Login_Logout
+	 */
 	protected $wp_login_logout;
+
+	/**
+	 * A link to the Skautis_Login service instance.
+	 *
+	 * TODO: Private?
+	 *
+	 * @var Skautis_Login
+	 */
 	protected $skautis_login;
+
+	/**
+	 * A link to the Connect_And_Disconnect_WP_Account service instance.
+	 *
+	 * TODO: Private?
+	 *
+	 * @var Connect_And_Disconnect_WP_Account
+	 */
 	protected $connect_and_disconnect_wp_account;
+
+	/**
+	 * A link to the Users service instance.
+	 *
+	 * TODO: Private?
+	 *
+	 * @var Users
+	 */
 	protected $users_repository;
+
+	/**
+	 * A link to the Role_Changer service instance.
+	 *
+	 * TODO: Private?
+	 *
+	 * @var Role_Changer
+	 */
 	protected $role_changer;
-	// TODO: Unused?
+
+	/**
+	 * TODO: Unused?
+	 *
+	 * @var string
+	 */
 	protected $admin_dir_url = '';
 
+	/**
+	 * Constructs the service and saves all dependencies.
+	 *
+	 * @param Skautis_Gateway                   $skautis_gateway An injected Skautis_Gateway service instance.
+	 * @param WP_Login_Logout                   $wp_login_logout An injected WP_Login_Logout service instance.
+	 * @param Skautis_Login                     $skautis_login An injected Skautis_Login service instance.
+	 * @param Connect_And_Disconnect_WP_Account $connect_and_disconnect_wp_account An injected Connect_And_Disconnect_WP_Account service instance.
+	 * @param UsersRepository                   $users_repository An injected Users service instance.
+	 * @param Role_Changer                      $role_changer An injected Role_Changer service instance.
+	 */
 	public function __construct( Skautis_Gateway $skautis_gateway, WP_Login_Logout $wp_login_logout, Skautis_Login $skautis_login, Connect_And_Disconnect_WP_Account $connect_and_disconnect_wp_account, UsersRepository $users_repository, Role_Changer $role_changer ) {
 		$this->skautis_gateway                   = $skautis_gateway;
 		$this->wp_login_logout                   = $wp_login_logout;
@@ -39,6 +108,9 @@ class Users_Management {
 		$this->init_hooks();
 	}
 
+	/**
+	 * Intializes all hooks used by the object.
+	 */
 	protected function init_hooks() {
 		add_action(
 			'admin_menu',
@@ -52,6 +124,12 @@ class Users_Management {
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts_and_styles' ) );
 	}
 
+	/**
+	 * On page load, changes the user's SkautIS role if requested by a POST variable.
+	 *
+	 * TODO: Find a more robust way to do this?
+	 * TODO: Duplicated in Role_Changer.
+	 */
 	protected function check_if_user_change_skautis_role() {
 		add_action(
 			'init',
@@ -67,6 +145,11 @@ class Users_Management {
 		);
 	}
 
+	/**
+	 * Enqueues scripts and styles used for the user management table.
+	 *
+	 * @param string $hook_suffix The current admin page.
+	 */
 	public function enqueue_scripts_and_styles( $hook_suffix ) {
 		if ( ! str_ends_with( $hook_suffix, SKAUTIS_INTEGRATION_NAME . '_usersManagement' ) ) {
 			return;
@@ -113,6 +196,9 @@ class Users_Management {
 		);
 	}
 
+	/**
+	 * Registers the user management administration page with WordPress.
+	 */
 	public function setup_users_management_page() {
 		add_submenu_page(
 			SKAUTIS_INTEGRATION_NAME,
@@ -124,6 +210,9 @@ class Users_Management {
 		);
 	}
 
+	/**
+	 * Prints the user management administration page.
+	 */
 	public function print_child_users() {
 		if ( ! Helpers::user_is_skautis_manager() ) {
 			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'skautis-integration' ) );
