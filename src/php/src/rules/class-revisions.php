@@ -20,19 +20,19 @@ class Revisions {
 	 * Constructs the service and saves all dependencies.
 	 */
 	public function __construct() {
-		$this->init_hooks();
+		self::init_hooks();
 	}
 
 	/**
 	 * Intializes all hooks used by the object.
 	 */
-	protected function init_hooks() {
-		add_action( 'save_post', array( $this, 'save_post' ), 10 );
-		add_action( 'wp_restore_post_revision', array( $this, 'restore_revision' ), 10, 2 );
-		add_filter( 'wp_save_post_revision_post_has_changed', array( $this, 'post_has_changed' ), 10, 3 );
+	protected static function init_hooks() {
+		add_action( 'save_post', array( self::class, 'save_post' ), 10 );
+		add_action( 'wp_restore_post_revision', array( self::class, 'restore_revision' ), 10, 2 );
+		add_filter( 'wp_save_post_revision_post_has_changed', array( self::class, 'post_has_changed' ), 10, 3 );
 
 		add_filter( '_wp_post_revision_fields', array( self::class, 'fields' ), 10, 1 );
-		add_filter( '_wp_post_revision_field_custom_fields', array( $this, 'field' ), 10, 3 );
+		add_filter( '_wp_post_revision_field_custom_fields', array( self::class, 'field' ), 10, 3 );
 	}
 
 	/**
@@ -103,7 +103,7 @@ class Revisions {
 	 * @param never    $field Unused.
 	 * @param \WP_Post $revision The revision to transform the field for.
 	 */
-	public function field( $value, $field, $revision ) {
+	public static function field( $value, $field, $revision ) {
 		$revision_id = $revision->ID;
 		$meta        = self::get_meta( $revision_id );
 
@@ -133,7 +133,7 @@ class Revisions {
 	 * @param int $post_id The ID of the post in question.
 	 * @param int $revision_id The ID of the revision being restored.
 	 */
-	public function restore_revision( int $post_id, int $revision_id ) {
+	public static function restore_revision( int $post_id, int $revision_id ) {
 		$meta = self::get_meta( $revision_id );
 		self::delete_meta( $post_id );
 		self::insert_meta( $post_id, $meta );
@@ -154,7 +154,7 @@ class Revisions {
 	 *
 	 * @param int $post_id The ID of the post in question.
 	 */
-	public function save_post( int $post_id ) {
+	public static function save_post( int $post_id ) {
 		if ( wp_is_post_revision( $post_id ) ) {
 			$meta = self::get_meta( $post_id );
 			if ( false === $meta ) {
@@ -174,7 +174,7 @@ class Revisions {
 	 * @param \WP_Post $last_revision The last revision of the post.
 	 * @param \WP_Post $post The current version of the post.
 	 */
-	public function post_has_changed( bool $post_has_changed, \WP_Post $last_revision, \WP_Post $post ): bool {
+	public static function post_has_changed( bool $post_has_changed, \WP_Post $last_revision, \WP_Post $post ): bool {
 		if ( ! $post_has_changed ) {
 			$meta     = self::get_meta( $last_revision->ID );
 			$meta_new = self::get_meta( $post->ID );
