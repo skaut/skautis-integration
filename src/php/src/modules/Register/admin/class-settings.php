@@ -43,14 +43,14 @@ final class Settings {
 			return;
 		}
 
-		add_action( 'admin_menu', array( $this, 'setup_setting_page' ), 25 );
+		add_action( 'admin_menu', array( self::class, 'setup_setting_page' ), 25 );
 		add_action( 'admin_init', array( $this, 'setup_setting_fields' ) );
 	}
 
 	/**
 	 * Adds an admin settings page for the Register module.
 	 */
-	public function setup_setting_page() {
+	public static function setup_setting_page() {
 		add_submenu_page(
 			SKAUTIS_INTEGRATION_NAME,
 			__( 'Registrace', 'skautis-integration' ),

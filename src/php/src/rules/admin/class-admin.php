@@ -66,7 +66,7 @@ final class Admin {
 	 * Intializes all hooks used by the object.
 	 */
 	private function init_hooks() {
-		add_action( 'add_meta_boxes', array( $this, 'add_metabox_for_rules_field' ) );
+		add_action( 'add_meta_boxes', array( self::class, 'add_metabox_for_rules_field' ) );
 		add_action( 'save_post', array( self::class, 'save_rules_custom_field' ) );
 
 		add_action( 'edit_form_after_title', array( $this, 'add_rules_ui' ) );
@@ -84,7 +84,7 @@ final class Admin {
 	 *
 	 * @param string $post_type The current post type.
 	 */
-	public function add_metabox_for_rules_field( string $post_type ) {
+	public static function add_metabox_for_rules_field( string $post_type ) {
 		if ( Rules_Init::RULES_TYPE_SLUG === $post_type ) {
 			add_meta_box(
 				SKAUTIS_INTEGRATION_NAME . '_rules_metabox',

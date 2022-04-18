@@ -20,25 +20,25 @@ final class Settings {
 	 * Constructs the service and saves all dependencies.
 	 */
 	public function __construct() {
-		$this->init_hooks();
+		self::init_hooks();
 	}
 
 	/**
 	 * Intializes all hooks used by the object.
 	 */
-	private function init_hooks() {
+	private static function init_hooks() {
 		if ( ! is_admin() ) {
 			return;
 		}
 
-		add_action( 'admin_menu', array( $this, 'setup_setting_page' ), 25 );
-		add_action( 'admin_init', array( $this, 'setup_setting_fields' ) );
+		add_action( 'admin_menu', array( self::class, 'setup_setting_page' ), 25 );
+		add_action( 'admin_init', array( self::class, 'setup_setting_fields' ) );
 	}
 
 	/**
 	 * Adds an admin settings page for the Shortcodes module.
 	 */
-	public function setup_setting_page() {
+	public static function setup_setting_page() {
 		add_submenu_page(
 			SKAUTIS_INTEGRATION_NAME,
 			__( 'Shortcodes', 'skautis-integration' ),
@@ -75,7 +75,7 @@ final class Settings {
 	/**
 	 * Adds Shortcodes module seetings to WordPress.
 	 */
-	public function setup_setting_fields() {
+	public static function setup_setting_fields() {
 		add_settings_section(
 			SKAUTIS_INTEGRATION_NAME . '_modules_shortcodes',
 			'',

@@ -21,7 +21,7 @@ class Skautis_Integration {
 	 * Initializes the plugin.
 	 */
 	public function __construct() {
-		$this->init_hooks();
+		self::init_hooks();
 
 		require __DIR__ . '/vendor/scoper-autoload.php';
 		require __DIR__ . '/global-functions.php';
@@ -86,10 +86,10 @@ class Skautis_Integration {
 	/**
 	 * Intializes all hooks used by the object.
 	 */
-	protected function init_hooks() {
-		add_action( 'admin_init', array( $this, 'check_version_and_possibly_deactivate_plugin' ) );
+	protected static function init_hooks() {
+		add_action( 'admin_init', array( self::class, 'check_version_and_possibly_deactivate_plugin' ) );
 
-		register_activation_hook( __FILE__, array( $this, 'activation' ) );
+		register_activation_hook( __FILE__, array( self::class, 'activation' ) );
 		register_deactivation_hook( __FILE__, array( self::class, 'deactivation' ) );
 	}
 
@@ -133,7 +133,7 @@ class Skautis_Integration {
 	 *
 	 * This function runs on plugin activation. It deactivates the plugin if the current version of WordPress or PHP are not supported.
 	 */
-	public function activation() {
+	public static function activation() {
 		if ( ! self::is_compatible_version_of_wp() ) {
 			deactivate_plugins( SKAUTIS_INTEGRATION_PLUGIN_BASENAME );
 			wp_die( esc_html__( 'Plugin skautIS integrace vyžaduje verzi WordPress 4.9.6 nebo vyšší!', 'skautis-integration' ) );
@@ -170,7 +170,7 @@ class Skautis_Integration {
 	/**
 	 * This function deactivates the plugin if the current version of WordPress or PHP are not supported.
 	 */
-	public function check_version_and_possibly_deactivate_plugin() {
+	public static function check_version_and_possibly_deactivate_plugin() {
 		if ( ! self::is_compatible_version_of_wp() ) {
 			if ( is_plugin_active( SKAUTIS_INTEGRATION_PLUGIN_BASENAME ) ) {
 				deactivate_plugins( SKAUTIS_INTEGRATION_PLUGIN_BASENAME );

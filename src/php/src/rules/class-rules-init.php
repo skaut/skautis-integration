@@ -33,13 +33,13 @@ final class Rules_Init {
 	 */
 	public function __construct( Revisions $revisions ) {
 		$this->revisions = $revisions;
-		$this->init_hooks();
+		self::init_hooks();
 	}
 
 	/**
 	 * Intializes all hooks used by the object.
 	 */
-	private function init_hooks() {
+	private static function init_hooks() {
 		add_action( 'init', array( self::class, 'register_post_type' ) );
 
 		if ( is_admin() ) {
@@ -187,7 +187,7 @@ final class Rules_Init {
 	 *
 	 * TODO: Unused?
 	 */
-	public function get_all_rules(): array {
+	public static function get_all_rules(): array {
 		$rules_wp_query = new \WP_Query(
 			array(
 				'post_type'     => self::RULES_TYPE_SLUG,

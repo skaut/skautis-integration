@@ -343,7 +343,7 @@ final class Settings {
 	/**
 	 * Adds login settings to WordPress.
 	 */
-	public function setup_login_fields() {
+	public static function setup_login_fields() {
 		add_settings_section(
 			SKAUTIS_INTEGRATION_NAME . '_login',
 			'',

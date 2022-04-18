@@ -56,7 +56,7 @@ class Revisions {
 	 *
 	 * @param int $post_id The post for which to get the metadata.
 	 */
-	public function get_meta( int $post_id ): array {
+	public static function get_meta( int $post_id ): array {
 		$meta = get_metadata( 'post', $post_id );
 		$meta = self::filter_meta( $meta );
 
@@ -86,8 +86,8 @@ class Revisions {
 	 *
 	 * @param int $post_id The post in question.
 	 */
-	public function delete_meta( int $post_id ) {
-		$meta = $this->get_meta( $post_id );
+	public static function delete_meta( int $post_id ) {
+		$meta = self::get_meta( $post_id );
 
 		foreach ( $meta as $meta_key => $meta_value ) {
 			delete_metadata( 'post', $post_id, $meta_key );
@@ -105,7 +105,7 @@ class Revisions {
 	 */
 	public function field( $value, $field, $revision ) {
 		$revision_id = $revision->ID;
-		$meta        = $this->get_meta( $revision_id );
+		$meta        = self::get_meta( $revision_id );
 
 		// format response as single string with all custom fields / metadata.
 		$return = '';
@@ -134,15 +134,15 @@ class Revisions {
 	 * @param int $revision_id The ID of the revision being restored.
 	 */
 	public function restore_revision( int $post_id, int $revision_id ) {
-		$meta = $this->get_meta( $revision_id );
-		$this->delete_meta( $post_id );
+		$meta = self::get_meta( $revision_id );
+		self::delete_meta( $post_id );
 		self::insert_meta( $post_id, $meta );
 
 		// also update last revision custom fields.
 		$revisions = wp_get_post_revisions( $post_id );
 		if ( count( $revisions ) > 0 ) {
 			$last_revision = current( $revisions );
-			$this->delete_meta( $last_revision->ID );
+			self::delete_meta( $last_revision->ID );
 			self::insert_meta( $last_revision->ID, $meta );
 		}
 	}
@@ -156,7 +156,7 @@ class Revisions {
 	 */
 	public function save_post( int $post_id ) {
 		if ( wp_is_post_revision( $post_id ) ) {
-			$meta = $this->get_meta( $post_id );
+			$meta = self::get_meta( $post_id );
 			if ( false === $meta ) {
 				return;
 			}
@@ -176,8 +176,8 @@ class Revisions {
 	 */
 	public function post_has_changed( bool $post_has_changed, \WP_Post $last_revision, \WP_Post $post ): bool {
 		if ( ! $post_has_changed ) {
-			$meta     = $this->get_meta( $last_revision->ID );
-			$meta_new = $this->get_meta( $post->ID );
+			$meta     = self::get_meta( $last_revision->ID );
+			$meta_new = self::get_meta( $post->ID );
 
 			if ( $meta === $meta_new ) {
 				return $post_has_changed;

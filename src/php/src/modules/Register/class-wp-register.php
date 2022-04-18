@@ -51,7 +51,7 @@ final class WP_Register {
 	 * @param string $user_login The WordPress username to use for the new user.
 	 * @param string $user_email The new user's e-mail address.
 	 */
-	private function resolve_notifications_and_register_user_to_wp( string $user_login, string $user_email ) {
+	private static function resolve_notifications_and_register_user_to_wp( string $user_login, string $user_email ) {
 		remove_action( 'register_new_user', 'wp_send_new_user_notifications' );
 		add_action(
 			'register_new_user',
@@ -160,7 +160,7 @@ final class WP_Register {
 
 		$username = mb_strcut( $user['UserName'], 0, 60 );
 
-		$user_id = $this->resolve_notifications_and_register_user_to_wp( $username, $user['email'] );
+		$user_id = self::resolve_notifications_and_register_user_to_wp( $username, $user['email'] );
 
 		if ( 0 === $user_id ) {
 			return false;

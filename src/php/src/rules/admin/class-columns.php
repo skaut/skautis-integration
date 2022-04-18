@@ -18,13 +18,13 @@ class Columns {
 	 * Intializes all hooks used by the object.
 	 */
 	public function __construct() {
-		$this->init_hooks();
+		self::init_hooks();
 	}
 
 	/**
 	 * Intializes all hooks used by the object.
 	 */
-	protected function init_hooks() {
+	protected static function init_hooks() {
 		add_filter( 'manage_edit-' . Rules_Init::RULES_TYPE_SLUG . '_columns', array( self::class, 'last_modified_admin_column' ) );
 		add_filter(
 			'manage_edit-' . Rules_Init::RULES_TYPE_SLUG . '_sortable_columns',
