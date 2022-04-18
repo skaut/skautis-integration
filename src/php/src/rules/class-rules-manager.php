@@ -172,6 +172,8 @@ final class Rules_Manager {
 
 	/**
 	 * Returns all rules (posts of type rule).
+	 *
+	 * @suppress PhanPluginPossiblyStaticPublicMethod
 	 */
 	public function get_all_rules(): array {
 		$rules_wp_query = new \WP_Query(

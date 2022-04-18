@@ -237,6 +237,8 @@ final class WP_Register {
 	 * This version runs this module's register action after the login.
 	 *
 	 * @see Register::register() The action that fires after the login.
+	 *
+	 * @suppress PhanPluginPossiblyStaticPublicMethod
 	 */
 	public function get_register_url(): string {
 		$return_url = Helpers::get_login_logout_redirect();
@@ -269,6 +271,8 @@ final class WP_Register {
 	 * Returns the URL used to register an existing SkautIS user as a new WordPress user.
 	 *
 	 * This function is used to register other users than the current user.
+	 *
+	 * @suppress PhanPluginPossiblyStaticPublicMethod
 	 */
 	public function get_manually_register_wp_user_url(): string {
 		$return_url = Helpers::get_login_logout_redirect();

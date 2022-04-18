@@ -260,6 +260,8 @@ final class Frontend {
 	 *
 	 * @param int    $child_post_id The ID of the root post.
 	 * @param string $child_post_type The type of the root post.
+	 *
+	 * @suppress PhanPluginPossiblyStaticPublicMethod
 	 */
 	public function get_parent_posts_with_rules( int $child_post_id, string $child_post_type ): array {
 		$result = array();

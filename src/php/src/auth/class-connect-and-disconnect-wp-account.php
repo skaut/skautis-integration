@@ -150,6 +150,8 @@ final class Connect_And_Disconnect_WP_Account {
 	 * Returns a link to connect an existing SkautIS user with an existing WordPress user.
 	 *
 	 * This link is used to connect a WordPress user that is not the current user.
+	 *
+	 * @suppress PhanPluginPossiblyStaticPublicMethod
 	 */
 	public function get_connect_wp_user_to_skautis_url(): string {
 		$return_url = Helpers::get_current_url();
