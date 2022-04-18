@@ -77,7 +77,7 @@ final class Users {
 				$user_id = get_the_author_meta( 'skautisUserId_' . Skautis_Gateway::TEST_ENV, $user_id );
 			}
 
-			if ( $user_id ) {
+			if ( '' !== $user_id ) {
 				return '✓';
 			}
 

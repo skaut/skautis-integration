@@ -170,7 +170,7 @@ final class Admin {
 			} else {
 				return;
 			}
-		} elseif ( get_option( 'show_avatars' ) ) {
+		} elseif ( 1 === get_option( 'show_avatars' ) ) {
 			$parent = 'my-account-with-avatar';
 		} else {
 			$parent = 'my-account';

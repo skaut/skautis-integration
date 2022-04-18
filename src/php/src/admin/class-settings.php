@@ -88,12 +88,12 @@ final class Settings {
 	private static function check_if_app_id_is_set_and_show_notices() {
 		$env_type = get_option( 'skautis_integration_appid_type' );
 		if ( Skautis_Gateway::PROD_ENV === $env_type ) {
-			if ( ! get_option( 'skautis_integration_appid_prod' ) ) {
+			if ( false === get_option( 'skautis_integration_appid_prod' ) ) {
 				/* translators: 1: Start of a link to the settings 2: End of the link to the settings */
 				Helpers::show_admin_notice( sprintf( __( 'Zadejte v %1$snastavení%2$s pluginu APP ID produkční verze skautISu', 'skautis-integration' ), '<a href="' . esc_url( admin_url( 'admin.php?page=' . SKAUTIS_INTEGRATION_NAME ) ) . '">', '</a>' ), 'warning', 'toplevel-page-' . SKAUTIS_INTEGRATION_NAME );
 			}
 		} elseif ( Skautis_Gateway::TEST_ENV === $env_type ) {
-			if ( ! get_option( 'skautis_integration_appid_test' ) ) {
+			if ( false === get_option( 'skautis_integration_appid_test' ) ) {
 				/* translators: 1: Start of a link to the settings 2: End of the link to the settings */
 				Helpers::show_admin_notice( sprintf( __( 'Zadejte v %1$snastavení%2$s pluginu APP ID testovací verze skautISu', 'skautis-integration' ), '<a href="' . esc_url( admin_url( 'admin.php?page=' . SKAUTIS_INTEGRATION_NAME ) ) . '">', '</a>' ), 'warning', 'toplevel-page-' . SKAUTIS_INTEGRATION_NAME );
 			}

@@ -144,15 +144,15 @@ class Skautis_Integration {
 			wp_die( esc_html__( 'Plugin skautIS integrace vyžaduje verzi PHP 7.4 nebo vyšší!', 'skautis-integration' ) );
 		}
 
-		if ( ! get_option( 'skautis_rewrite_rules_need_to_flush' ) ) {
+		if ( true !== get_option( 'skautis_rewrite_rules_need_to_flush' ) ) {
 			add_option( 'skautis_rewrite_rules_need_to_flush', true );
 		}
 
-		if ( ! get_option( 'skautis_integration_login_page_url' ) ) {
+		if ( false === get_option( 'skautis_integration_login_page_url' ) ) {
 			update_option( 'skautis_integration_login_page_url', 'skautis/prihlaseni' );
 		}
 
-		if ( ! get_option( 'skautis_integration_appid_type' ) ) {
+		if ( false === get_option( 'skautis_integration_appid_type' ) ) {
 			update_option( 'skautis_integration_appid_type', 'prod' );
 		}
 	}
