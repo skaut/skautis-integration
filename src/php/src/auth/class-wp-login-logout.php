@@ -38,8 +38,8 @@ final class WP_Login_Logout {
 	/**
 	 * Logs a user into WordPress based on their SkautIS user ID.
 	 *
-	 * @param int     $skautis_user_id The SkautIS user ID.
-	 * @param boolean $try If true, this function will not exit with an error if the login fails.
+	 * @param int  $skautis_user_id The SkautIS user ID.
+	 * @param bool $try If true, this function will not exit with an error if the login fails.
 	 */
 	private function login_wp_user_by_skautis_user_id( int $skautis_user_id, $try = false ) {
 		$return_url = Helpers::get_return_url();

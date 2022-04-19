@@ -170,7 +170,7 @@ class Revisions {
 	 *
 	 * This function gets called when deciding whether to save a new revision - a new revision is saved only when the post has changed since the last revision.
 	 *
-	 * @param boolean  $post_has_changed Whether the post is marked as changed because of some other reason (e.g. different content).
+	 * @param bool     $post_has_changed Whether the post is marked as changed because of some other reason (e.g. different content).
 	 * @param \WP_Post $last_revision The last revision of the post.
 	 * @param \WP_Post $post The current version of the post.
 	 */

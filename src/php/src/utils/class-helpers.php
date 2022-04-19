@@ -22,7 +22,7 @@ class Helpers {
 	 * @param string        $handle A unique handle to identify the script with. This handle should be passed to `wp_enqueue_script()`.
 	 * @param string        $src Path to the file, relative to the plugin directory.
 	 * @param array<string> $deps A list of dependencies of the script. These can be either system dependencies like jquery, or other registered scripts. Default [].
-	 * @param boolean       $in_footer  Whether to enqueue the script before </body> instead of in the <head>. Default 'true'.
+	 * @param bool          $in_footer  Whether to enqueue the script before </body> instead of in the <head>. Default 'true'.
 	 *
 	 * @return void
 	 */
@@ -40,7 +40,7 @@ class Helpers {
 	 * @param string        $handle A unique handle to identify the script with.
 	 * @param string        $src Path to the file, relative to the plugin directory.
 	 * @param array<string> $deps A list of dependencies of the script. These can be either system dependencies like jquery, or other registered scripts. Default [].
-	 * @param boolean       $in_footer Whether to enqueue the script in the page footer.
+	 * @param bool          $in_footer Whether to enqueue the script in the page footer.
 	 *
 	 * @return void
 	 */

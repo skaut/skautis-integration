@@ -46,7 +46,7 @@ class Skautis_Gateway {
 	/**
 	 * Whether the current SkautIS environment is testing.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $test_mode = WP_DEBUG;
 

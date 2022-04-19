@@ -299,9 +299,9 @@ final class WP_Register {
 	/**
 	 * Sanitizes SkautIS username to be a valid WordPress username.
 	 *
-	 * @param string  $username The sanitized username.
-	 * @param string  $raw_username The raw username before sanitizing.
-	 * @param boolean $strict Whether to limit the username to Latin, Cyrillic and a few special characters.
+	 * @param string $username The sanitized username.
+	 * @param string $raw_username The raw username before sanitizing.
+	 * @param bool   $strict Whether to limit the username to Latin, Cyrillic and a few special characters.
 	 */
 	public static function sanitize_username( string $username, string $raw_username, bool $strict ): string {
 		$username = wp_strip_all_tags( $raw_username );

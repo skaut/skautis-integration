@@ -41,7 +41,7 @@ class Membership implements Rule {
 	/**
 	 * Whether the rule accepts multiple values at once.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected static $multiple = true;
 

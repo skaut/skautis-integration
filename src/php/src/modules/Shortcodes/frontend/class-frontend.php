@@ -65,7 +65,7 @@ final class Frontend {
 	/**
 	 * Prints a login form to access the content in a shortcode.
 	 *
-	 * @param boolean $force_logout_from_skautis Whether to force a logout from SkautIS before logging in.
+	 * @param bool $force_logout_from_skautis Whether to force a logout from SkautIS before logging in.
 	 */
 	private function get_login_form( bool $force_logout_from_skautis = false ): string {
 		$login_url_args = add_query_arg( 'noWpLogin', true, Helpers::get_current_url() );
