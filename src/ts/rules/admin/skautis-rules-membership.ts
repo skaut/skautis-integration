@@ -1,10 +1,10 @@
 /* exported Membership */
 
 class Membership {
-	private readonly memberships: Record< string, string >;
-	private unitOperators: Record< string, string >;
+	private readonly memberships: Record<string, string>;
+	private unitOperators: Record<string, string>;
 
-	public constructor( memberships: Record< string, string > ) {
+	public constructor(memberships: Record<string, string>) {
 		this.memberships = memberships;
 		this.unitOperators = {};
 		this.unitOperators.equal = 'equal';
@@ -12,7 +12,7 @@ class Membership {
 		this.unitOperators.any = 'any';
 	}
 
-	public input( _: QueryBuilderRule, inputName: string ): string {
+	public input(_: QueryBuilderRule, inputName: string): string {
 		this.unitOperators.equal =
 			jQuery.fn.queryBuilder.regional.cs.operators.equal;
 		this.unitOperators.begins_with =
@@ -25,15 +25,13 @@ class Membership {
 			inputName +
 			'_1" multiple="multiple">';
 
-		for ( const key in this.memberships ) {
-			if (
-				Object.prototype.hasOwnProperty.call( this.memberships, key )
-			) {
+		for (const key in this.memberships) {
+			if (Object.prototype.hasOwnProperty.call(this.memberships, key)) {
 				html +=
 					'<option value="' +
 					key +
 					'">' +
-					this.memberships[ key ] +
+					this.memberships[key] +
 					'</option>';
 			}
 		}
@@ -46,15 +44,13 @@ class Membership {
 			inputName +
 			'_2">';
 
-		for ( const key in this.unitOperators ) {
-			if (
-				Object.prototype.hasOwnProperty.call( this.unitOperators, key )
-			) {
+		for (const key in this.unitOperators) {
+			if (Object.prototype.hasOwnProperty.call(this.unitOperators, key)) {
 				html +=
 					'<option value="' +
 					key +
 					'">' +
-					this.unitOperators[ key ] +
+					this.unitOperators[key] +
 					'</option>';
 			}
 		}
@@ -76,46 +72,46 @@ class Membership {
 		};
 	}
 
-	public valueGetter( rule: QueryBuilderRule ): string {
+	public valueGetter(rule: QueryBuilderRule): string {
 		return (
-			( rule.$el
-				.find( '.rule-value-container [name$=_1]' )
-				.val() as Array< string > ).toString() +
+			(
+				rule.$el
+					.find('.rule-value-container [name$=_1]')
+					.val() as Array<string>
+			).toString() +
 			'~' +
-			( rule.$el
-				.find( '.rule-value-container [name$=_2]' )
-				.val() as string ) +
+			(rule.$el
+				.find('.rule-value-container [name$=_2]')
+				.val() as string) +
 			'~' +
-			( rule.$el
-				.find( '.rule-value-container [name$=_3]' )
-				.val() as string )
+			(rule.$el.find('.rule-value-container [name$=_3]').val() as string)
 		);
 	}
 
-	public valueSetter( rule: QueryBuilderRule, value: string ): void {
-		if ( rule.operator.nb_inputs > 0 ) {
-			const val = value.split( '~' );
+	public valueSetter(rule: QueryBuilderRule, value: string): void {
+		if (rule.operator.nb_inputs > 0) {
+			const val = value.split('~');
 
-			const val0 = val[ 0 ].split( ',' );
+			const val0 = val[0].split(',');
 
-			for ( const item of val0 ) {
+			for (const item of val0) {
 				rule.$el
 					.find(
 						'.rule-value-container [name$=_1] option[value="' +
 							item +
 							'"]'
 					)
-					.prop( 'selected', true );
+					.prop('selected', true);
 			}
 
 			rule.$el
-				.find( '.rule-value-container [name$=_2]' )
-				.val( val[ 1 ] )
-				.trigger( 'change' );
+				.find('.rule-value-container [name$=_2]')
+				.val(val[1])
+				.trigger('change');
 			rule.$el
-				.find( '.rule-value-container [name$=_3]' )
-				.val( val[ 2 ] )
-				.trigger( 'change' );
+				.find('.rule-value-container [name$=_3]')
+				.val(val[2])
+				.trigger('change');
 		}
 	}
 }
