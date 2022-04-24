@@ -72,4 +72,4 @@ QueryBuilder.regional.cs = {
 	},
 };
 
-QueryBuilder.defaults( { lang_code: 'cs' } );
+QueryBuilder.defaults({ lang_code: 'cs' });
