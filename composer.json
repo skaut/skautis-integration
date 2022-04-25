@@ -37,6 +37,6 @@
     "phpcompatibility/phpcompatibility-wp": "^2.1",
     "wp-coding-standards/wpcs": "^2.3",
     "humbug/php-scoper": "^0.17.0",
-    "skaut/phan-wordpress-stubs": "^1.22"
+    "skaut/wordpress-stubs": "^2.1"
   }
 }
