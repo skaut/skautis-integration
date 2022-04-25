@@ -42,6 +42,13 @@ final class Frontend {
 	private $skautis_gateway;
 
 	/**
+	 * Whether the current view is the default plugin login view.
+	 *
+	 * @var bool
+	 */
+	private $pluginLoginView;
+
+	/**
 	 * TODO: Unused?
 	 *
 	 * @var string

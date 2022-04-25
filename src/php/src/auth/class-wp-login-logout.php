@@ -111,7 +111,7 @@ final class WP_Login_Logout {
 	/**
 	 * Returns the SkautIS login URL with all arguments initialized.
 	 *
-	 * @param string|null $return_url The URL to return back to after the login.
+	 * @param string $return_url The URL to return back to after the login.
 	 *
 	 * @suppress PhanPluginPossiblyStaticPublicMethod
 	 */
@@ -134,7 +134,7 @@ final class WP_Login_Logout {
 	/**
 	 * Returns the SkautIS logout URL with all arguments and nonces initialized.
 	 *
-	 * @param string|null $return_url The URL to return back to after the logout.
+	 * @param string $return_url The URL to return back to after the logout.
 	 *
 	 * @suppress PhanPluginPossiblyStaticPublicMethod
 	 */

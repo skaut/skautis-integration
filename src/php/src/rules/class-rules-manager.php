@@ -79,7 +79,7 @@ final class Rules_Manager {
 	 * @param array $rule The rule to check against.
 	 */
 	private function process_rule( $rule ): bool {
-		if ( ! isset( $rule->field ) ) {
+		if ( ! isset( $rule['field'] ) ) {
 			if ( isset( $rule->condition ) && isset( $rule->rules ) ) {
 				return $this->parse_rules_groups( $rule->condition, $rule->rules );
 			}

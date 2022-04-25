@@ -39,6 +39,8 @@ class Revisions {
 	 * Removes all hidden fields from a post metadata.
 	 *
 	 * @param array $meta The metadata to filter.
+	 *
+	 * @return array
 	 */
 	private static function filter_meta( $meta ): array {
 		$meta_filtered = array();
@@ -157,10 +159,6 @@ class Revisions {
 	public static function save_post( int $post_id ) {
 		if ( wp_is_post_revision( $post_id ) ) {
 			$meta = self::get_meta( $post_id );
-			if ( false === $meta ) {
-				return;
-			}
-
 			self::insert_meta( $post_id, $meta );
 		}
 	}
