@@ -80,19 +80,19 @@ final class Rules_Manager {
 	 */
 	private function process_rule( $rule ): bool {
 		if ( ! isset( $rule['field'] ) ) {
-			if ( isset( $rule->condition ) && isset( $rule->rules ) ) {
-				return $this->parse_rules_groups( $rule->condition, $rule->rules );
+			if ( isset( $rule['condition'] ) && isset( $rule['rules'] ) ) {
+				return $this->parse_rules_groups( $rule['condition'], $rule['rules'] );
 			}
 
 			return false;
 		}
 
-		if ( isset( $this->rules[ $rule->field ] ) ) {
-			return $this->rules[ $rule->field ]->is_rule_passed( $rule->operator, $rule->value );
+		if ( isset( $this->rules[ $rule['field'] ] ) ) {
+			return $this->rules[ $rule['field'] ]->is_rule_passed( $rule['operator'], $rule['value'] );
 		}
 
 		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-			throw new \Exception( 'Rule: "' . $rule->field . '" is not declared.' );
+			throw new \Exception( 'Rule: "' . $rule['field'] . '" is not declared.' );
 		}
 
 		return false;
