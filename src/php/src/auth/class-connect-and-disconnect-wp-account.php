@@ -71,7 +71,7 @@ final class Connect_And_Disconnect_WP_Account {
 	 */
 	public function print_connect_and_disconnect_button( int $wp_user_id ) {
 		$skautis_user_id = get_user_meta( $wp_user_id, 'skautisUserId_' . $this->skautis_gateway->get_env(), true );
-		if ( false === $skautis_user_id or '' === $skautis_user_id ) {
+		if ( false === $skautis_user_id || '' === $skautis_user_id ) {
 			if ( ! Helpers::user_is_skautis_manager() && get_option( SKAUTIS_INTEGRATION_NAME . '_allowUsersDisconnectFromSkautis' ) !== '1' ) {
 				return;
 			}

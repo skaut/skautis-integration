@@ -27,14 +27,14 @@ class Qualification implements Rule {
 	/**
 	 * The rule value type.
 	 *
-	 * @var "string"|"integer"|"double"|"date"|"time"|"datetime"|"boolean"
+	 * @var string
 	 */
 	protected static $type = 'string';
 
 	/**
 	 * The rule input field type type.
 	 *
-	 * @var "roleInput"|"membershipInput"|"funcInput"|"qualificationInput"|"text"|"number"|"textarea"|"radio"|"checkbox"|"select"
+	 * @var string
 	 */
 	protected static $input = 'qualificationInput';
 
@@ -48,7 +48,7 @@ class Qualification implements Rule {
 	/**
 	 * All the operators that are applicable for the rule.
 	 *
-	 * @var array<"equal"|"not_equal"|"in"|"not_in"|"less"|"less_or_equal"|"greater"|"greater_or_equal"|"between"|"not_between"|"begins_with"|"not_begins_with"|"contains"|"not_contains"|"ends_with"|"not_ends_with"|"is_empty"|"is_not_empty"|"is_null"|"is_not_null">
+	 * @var array<string>
 	 */
 	protected static $operators = array( 'in' );
 
@@ -85,7 +85,7 @@ class Qualification implements Rule {
 	/**
 	 * Returns the rule value type.
 	 *
-	 * @return "string"|"integer"|"double"|"date"|"time"|"datetime"|"boolean"
+	 * @return string
 	 */
 	public function get_type(): string {
 		return self::$type;
@@ -94,7 +94,7 @@ class Qualification implements Rule {
 	/**
 	 * Returns the rule input field type type.
 	 *
-	 * @return "roleInput"|"membershipInput"|"funcInput"|"qualificationInput"|"text"|"number"|"textarea"|"radio"|"checkbox"|"select"
+	 * @return string
 	 */
 	public function get_input(): string {
 		return self::$input;
@@ -110,7 +110,7 @@ class Qualification implements Rule {
 	/**
 	 * Returns all the operators that are applicable for the rule.
 	 *
-	 * @return array<"equal"|"not_equal"|"in"|"not_in"|"less"|"less_or_equal"|"greater"|"greater_or_equal"|"between"|"not_between"|"begins_with"|"not_begins_with"|"contains"|"not_contains"|"ends_with"|"not_ends_with"|"is_empty"|"is_not_empty"|"is_null"|"is_not_null">
+	 * @return array<string>
 	 */
 	public function get_operators(): array {
 		return self::$operators;
@@ -185,8 +185,8 @@ class Qualification implements Rule {
 	 *
 	 * TODO: Unused first parameter?
 	 *
-	 * @param "equal"|"not_equal"|"in"|"not_in"|"less"|"less_or_equal"|"greater"|"greater_or_equal"|"between"|"not_between"|"begins_with"|"not_begins_with"|"contains"|"not_contains"|"ends_with"|"not_ends_with"|"is_empty"|"is_not_empty"|"is_null"|"is_not_null" $operator The operator used with the rule.
-	 * @param string                                                                                                                                                                                                                                                $data The rule data.
+	 * @param string $operator The operator used with the rule.
+	 * @param string $data The rule data.
 	 */
 	public function is_rule_passed( string $operator, $data ): bool {
 		// Parse and prepare data from rules UI.
