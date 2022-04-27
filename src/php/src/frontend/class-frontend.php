@@ -46,7 +46,7 @@ final class Frontend {
 	 *
 	 * @var bool
 	 */
-	private $pluginLoginView;
+	private $plugin_login_view;
 
 	/**
 	 * TODO: Unused?
@@ -63,11 +63,11 @@ final class Frontend {
 	 * @param Skautis_Gateway $skautis_gateway An injected Skautis_Gateway service instance.
 	 */
 	public function __construct( Login_Form $login_form, WP_Login_Logout $wp_login_logout, Skautis_Gateway $skautis_gateway ) {
-		$this->login_form       = $login_form;
-		$this->wp_login_logout  = $wp_login_logout;
-		$this->skautis_gateway  = $skautis_gateway;
-		$this->frontend_dir_url = plugin_dir_url( __FILE__ ) . 'public/';
-		$this->pluginLoginView  = false;
+		$this->login_form        = $login_form;
+		$this->wp_login_logout   = $wp_login_logout;
+		$this->skautis_gateway   = $skautis_gateway;
+		$this->frontend_dir_url  = plugin_dir_url( __FILE__ ) . 'public/';
+		$this->plugin_login_view = false;
 		$this->init_hooks();
 	}
 
@@ -113,7 +113,7 @@ final class Frontend {
 			} elseif ( file_exists( get_template_directory() . '/skautis/login.php' ) ) {
 				return get_template_directory() . '/skautis/login.php';
 			} else {
-				$this->pluginLoginView = true;
+				$this->plugin_login_view = true;
 
 				return plugin_dir_path( __FILE__ ) . 'public/views/login.php';
 			}
@@ -126,7 +126,7 @@ final class Frontend {
 	 * Enqueues frontend styles.
 	 */
 	public function enqueue_styles() {
-		if ( $this->pluginLoginView ) {
+		if ( $this->plugin_login_view ) {
 			wp_enqueue_style( 'buttons' );
 		}
 
