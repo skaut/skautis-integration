@@ -15,6 +15,8 @@ use Skautis_Integration\Utils\Helpers;
 
 /**
  * Registers, handles and shows all settings for the Register module.
+ *
+ * @phan-constructor-used-for-side-effects
  */
 final class Settings {
 

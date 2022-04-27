@@ -15,6 +15,8 @@ use Skautis_Integration\Utils\Helpers;
 
 /**
  * Enqueues all scripts and styles for the Visibility module.
+ *
+ * @phan-constructor-used-for-side-effects
  */
 final class Admin {
 

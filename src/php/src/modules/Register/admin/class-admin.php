@@ -14,6 +14,8 @@ use Skautis_Integration\Utils\Helpers;
 
 /**
  * Handles administration scripts and styles for the Register module.
+ *
+ * @phan-constructor-used-for-side-effects
  */
 final class Admin {
 
@@ -39,7 +41,7 @@ final class Admin {
 	public function __construct( Rules_Manager $rules_manager ) {
 		$this->rules_manager = $rules_manager;
 		$this->admin_dir_url = plugin_dir_url( __FILE__ ) . 'public/';
-		( new Settings( $this->rules_manager ) );
+		new Settings( $this->rules_manager );
 		$this->init_hooks();
 	}
 

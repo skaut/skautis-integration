@@ -16,6 +16,8 @@ use Skautis_Integration\Utils\Helpers;
 
 /**
  * Handles the frontend part of the shortcodes - runs the shortcode, shows notices and a login form.
+ *
+ * @phan-constructor-used-for-side-effects
  */
 final class Frontend {
 

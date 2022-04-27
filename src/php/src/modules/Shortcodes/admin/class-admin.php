@@ -15,6 +15,8 @@ use Skautis_Integration\Rules\Rules_Manager;
  * Adds the TinyMCE shortcode button to the post editor.
  *
  * This class only handles the classic editor, not Gutenberg.
+ *
+ * @phan-constructor-used-for-side-effects
  */
 final class Admin {
 

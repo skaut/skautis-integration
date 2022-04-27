@@ -11,6 +11,8 @@ namespace Skautis_Integration\Modules\Register\Frontend;
 
 /**
  * TODO: An unused service?
+ *
+ * @phan-constructor-used-for-side-effects
  */
 final class Frontend {
 

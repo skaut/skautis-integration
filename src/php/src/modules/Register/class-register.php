@@ -96,9 +96,9 @@ final class Register implements Module {
 		$this->users_repository = $users_repository;
 		$this->wp_register      = new WP_Register( $this->skautis_gateway, $this->users_repository );
 		if ( is_admin() ) {
-			( new Admin( $this->rules_manager ) );
+			new Admin( $this->rules_manager );
 		} else {
-			( new Frontend( new Login_Form( $this->wp_register ) ) );
+			new Frontend( new Login_Form( $this->wp_register ) );
 		}
 		$this->init_hooks();
 	}

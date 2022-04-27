@@ -69,9 +69,9 @@ final class Shortcodes implements Module {
 		$this->skautis_login   = $skautis_login;
 		$this->wp_login_logout = $wp_login_logout;
 		if ( is_admin() ) {
-			( new Admin( $this->rules_manager ) );
+			new Admin( $this->rules_manager );
 		} else {
-			( new Frontend( $this->skautis_login, $this->rules_manager, $this->wp_login_logout ) );
+			new Frontend( $this->skautis_login, $this->rules_manager, $this->wp_login_logout );
 		}
 	}
 

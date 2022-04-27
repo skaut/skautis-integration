@@ -11,6 +11,8 @@ namespace Skautis_Integration\Rules;
 
 /**
  * Adds the "Last modified" column to the rule table view.
+ *
+ * @phan-constructor-used-for-side-effects
  */
 class Columns {
 

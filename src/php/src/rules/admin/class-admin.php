@@ -15,6 +15,8 @@ use Skautis_Integration\Utils\Helpers;
 
 /**
  * Adds the UI for rules management.
+ *
+ * @phan-constructor-used-for-side-effects
  */
 final class Admin {
 
@@ -58,7 +60,7 @@ final class Admin {
 		$this->wp_login_logout = $wp_login_logout;
 		$this->skautis_gateway = $skautis_gateway;
 		$this->admin_dir_url   = plugin_dir_url( __FILE__ ) . 'public/';
-		( new Columns() );
+		new Columns();
 		$this->init_hooks();
 	}
 

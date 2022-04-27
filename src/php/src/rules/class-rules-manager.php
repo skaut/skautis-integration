@@ -51,7 +51,7 @@ final class Rules_Manager {
 		$this->wp_login_logout = $wp_login_logout;
 		$this->rules           = $this->init_rules();
 		if ( is_admin() ) {
-			( new Admin( $this, $wp_login_logout, $this->skautis_gateway ) );
+			new Admin( $this, $wp_login_logout, $this->skautis_gateway );
 		}
 	}
 
