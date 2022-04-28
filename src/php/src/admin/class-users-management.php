@@ -156,9 +156,6 @@ class Users_Management {
 		}
 		wp_enqueue_script( 'thickbox' );
 		wp_enqueue_style( 'thickbox' );
-		if ( is_network_admin() ) {
-			add_action( 'admin_head', '_thickbox_path_admin_subfolder' );
-		}
 
 		wp_enqueue_style(
 			SKAUTIS_INTEGRATION_NAME . '_datatables',
