@@ -125,7 +125,7 @@ final class WP_Register {
 	 * @see resolve_notifications_and_register_user_to_wp This function actually performs the registration.
 	 *
 	 * @param array{id: int, UserName: string, email: string, firstName: string, lastName: string, nickName: string} $user Information about the user.
-	 * @param string $wp_role The WordPress role to assign to the new user.
+	 * @param string                                                                                                 $wp_role The WordPress role to assign to the new user.
 	 */
 	private function process_wp_user_registration( array $user, string $wp_role ): bool {
 		$return_url = Helpers::get_return_url();

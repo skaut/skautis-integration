@@ -241,14 +241,13 @@ class Func implements Rule {
 					throw new \Exception( 'Function operator: "' . $funcs_operator . '" is not declared.' );
 				}
 				return false;
-				break;
 		}
 
 		$user_funcs = $this->getUserFuncsWithUnitIds();
 		$user_pass  = 0;
 		foreach ( $funcs as $func ) {
 			// in / not_in range check.
-			if ( $assume_in === array_key_exists( $func, $user_funcs )) {
+			if ( array_key_exists( $func, $user_funcs ) === $assume_in ) {
 				foreach ( $user_funcs[ $func ] as $user_func_unit_id ) {
 					$user_func_unit_id = self::clearUnitId( $user_func_unit_id );
 
