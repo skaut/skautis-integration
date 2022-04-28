@@ -315,7 +315,7 @@ class Users_Management {
 					</label>
 					<p>
 						<a id="connectUserToSkautisModal_registerLink" class="button button-primary"
-							href="<?php echo esc_url( Services::get_module( Register::get_id() )->getWpRegister()->get_manually_register_wp_user_url() ); ?>"><?php esc_html_e( 'Vytvořit nový účet', 'skautis-integration' ); ?></a>
+							href="<?php echo esc_url( Services::get_modules_manager()->get_register_module()->getWpRegister()->get_manually_register_wp_user_url() ); ?>"><?php esc_html_e( 'Vytvořit nový účet', 'skautis-integration' ); ?></a>
 					</p>
 					<?php
 				}
