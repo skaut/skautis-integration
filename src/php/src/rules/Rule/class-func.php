@@ -231,16 +231,16 @@ class Func implements Rule {
 		// Logic to determine in / not_in range.
 		switch ( $funcs_operator ) {
 			case 'in':
-				$in_not_in_negation = 0;
+				$assume_in = true;
 				break;
 			case 'not_in':
-				$in_not_in_negation = 1;
+				$assume_in = false;
 				break;
 			default:
-				$in_not_in_negation = 2;
 				if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 					throw new \Exception( 'Function operator: "' . $funcs_operator . '" is not declared.' );
 				}
+				return false;
 				break;
 		}
 
@@ -248,7 +248,7 @@ class Func implements Rule {
 		$user_pass  = 0;
 		foreach ( $funcs as $func ) {
 			// in / not_in range check.
-			if ( ( $in_not_in_negation + array_key_exists( $func, $user_funcs ) ) === 1 ) {
+			if ( $assume_in === array_key_exists( $func, $user_funcs )) {
 				foreach ( $user_funcs[ $func ] as $user_func_unit_id ) {
 					$user_func_unit_id = self::clearUnitId( $user_func_unit_id );
 
