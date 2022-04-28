@@ -12,6 +12,7 @@ namespace Skautis_Integration\Modules\Register;
 use Skautis_Integration\Auth\Skautis_Gateway;
 use Skautis_Integration\Repository\Users as UsersRepository;
 use Skautis_Integration\Utils\Helpers;
+use Skautis_Integration\Vendor\Skautis\User;
 
 /**
  * Adds the functionality to register new WordPress users based on SkautIS.
@@ -93,7 +94,7 @@ final class WP_Register {
 	 *
 	 * This function queries SkautIS for the information needed when registering a new WordPress user.
 	 *
-	 * @param Skautis\User $skautis_user The SkautIS user.
+	 * @param User $skautis_user The SkautIS user.
 	 */
 	private function prepare_user_data( $skautis_user ): array {
 		$skautis_user_detail = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->PersonDetail(
@@ -123,7 +124,7 @@ final class WP_Register {
 	 *
 	 * @see resolve_notifications_and_register_user_to_wp This function actually performs the registration.
 	 *
-	 * @param array  $user Information about the user.
+	 * @param array{id: int, UserName: string, email: string, firstName: string, lastName: string, nickName: string} $user Information about the user.
 	 * @param string $wp_role The WordPress role to assign to the new user.
 	 */
 	private function process_wp_user_registration( array $user, string $wp_role ): bool {
@@ -162,7 +163,7 @@ final class WP_Register {
 
 		$user_id = self::resolve_notifications_and_register_user_to_wp( $username, $user['email'] );
 
-		if ( 0 === $user_id ) {
+		if ( 0 === $user_id || ! is_int( $user_id ) ) {
 			return false;
 		}
 
