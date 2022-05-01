@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b70357ebfe1792dfc4a5ecf1e447eb1e",
+    "content-hash": "d1f92aff80802a50b69b30074a3856ee",
     "packages": [
         {
             "name": "skautis/skautis",
-            "version": "v2.2.0",
+            "version": "2.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/skaut/Skautis.git",
-                "reference": "e770502c4478bf6255b94cadfe83e9b5cb2ce0c2"
+                "reference": "60cf2c6f06c9d10bdc92a05e6e669518c2b8a571"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/skaut/Skautis/zipball/e770502c4478bf6255b94cadfe83e9b5cb2ce0c2",
-                "reference": "e770502c4478bf6255b94cadfe83e9b5cb2ce0c2",
+                "url": "https://api.github.com/repos/skaut/Skautis/zipball/60cf2c6f06c9d10bdc92a05e6e669518c2b8a571",
+                "reference": "60cf2c6f06c9d10bdc92a05e6e669518c2b8a571",
                 "shasum": ""
             },
             "require": {
@@ -33,13 +33,18 @@
                 "skautis/nette": "Integrace Skautis do Nette",
                 "skautis/skautis-bundle": "Integrace Skautis do Symfony"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
                     "Skautis\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "scripts": {
+                "post-install-cmd": [
+                    "ln -s ../../fix_syle.sh .git/hooks/pre-commit"
+                ]
+            },
             "license": [
                 "BSD-3-Clause"
             ],
@@ -63,11 +68,11 @@
                 "wsdl"
             ],
             "support": {
-                "issues": "https://github.com/skaut/Skautis/issues",
+                "wiki": "http://is.skaut.cz/napoveda/",
                 "source": "https://github.com/skaut/Skautis",
-                "wiki": "http://is.skaut.cz/napoveda/"
+                "issues": "https://github.com/skaut/Skautis/issues"
             },
-            "time": "2019-09-12T12:19:19+00:00"
+            "time": "2022-04-27T12:16:44+00:00"
         }
     ],
     "packages-dev": [
@@ -1523,16 +1528,16 @@
         },
         {
             "name": "skaut/wordpress-stubs",
-            "version": "2.1.0",
+            "version": "2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/skaut/wordpress-stubs.git",
-                "reference": "9a3d08ea88a62de8e81b4942d0b3cc30399cbad9"
+                "reference": "268f70f9126eb384ee0d4be39cbeeadd6f2edf22"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/skaut/wordpress-stubs/zipball/9a3d08ea88a62de8e81b4942d0b3cc30399cbad9",
-                "reference": "9a3d08ea88a62de8e81b4942d0b3cc30399cbad9",
+                "url": "https://api.github.com/repos/skaut/wordpress-stubs/zipball/268f70f9126eb384ee0d4be39cbeeadd6f2edf22",
+                "reference": "268f70f9126eb384ee0d4be39cbeeadd6f2edf22",
                 "shasum": ""
             },
             "require": {
@@ -1576,7 +1581,7 @@
                 "source": "https://github.com/skaut/wordpress-stubs",
                 "wiki": "https://github.com/skaut/wordpress-stubs/wiki"
             },
-            "time": "2022-04-25T10:45:46+00:00"
+            "time": "2022-04-26T11:23:17+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
@@ -1636,16 +1641,16 @@
         },
         {
             "name": "symfony/config",
-            "version": "v6.0.7",
+            "version": "v6.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/config.git",
-                "reference": "22850bfdd2b6090568ad05dece6843c859d933b7"
+                "reference": "6ac50d559aa64c8e7b5b17640c46241e4accb487"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/config/zipball/22850bfdd2b6090568ad05dece6843c859d933b7",
-                "reference": "22850bfdd2b6090568ad05dece6843c859d933b7",
+                "url": "https://api.github.com/repos/symfony/config/zipball/6ac50d559aa64c8e7b5b17640c46241e4accb487",
+                "reference": "6ac50d559aa64c8e7b5b17640c46241e4accb487",
                 "shasum": ""
             },
             "require": {
@@ -1694,7 +1699,7 @@
             "description": "Helps you find, load, combine, autofill and validate configuration values of any kind",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/config/tree/v6.0.7"
+                "source": "https://github.com/symfony/config/tree/v6.0.8"
             },
             "funding": [
                 {
@@ -1710,20 +1715,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-03-22T16:12:04+00:00"
+            "time": "2022-04-12T16:11:42+00:00"
         },
         {
             "name": "symfony/console",
-            "version": "v5.4.7",
+            "version": "v5.4.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "900275254f0a1a2afff1ab0e11abd5587a10e1d6"
+                "reference": "ffe3aed36c4d60da2cf1b0a1cee6b8f2e5fa881b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/900275254f0a1a2afff1ab0e11abd5587a10e1d6",
-                "reference": "900275254f0a1a2afff1ab0e11abd5587a10e1d6",
+                "url": "https://api.github.com/repos/symfony/console/zipball/ffe3aed36c4d60da2cf1b0a1cee6b8f2e5fa881b",
+                "reference": "ffe3aed36c4d60da2cf1b0a1cee6b8f2e5fa881b",
                 "shasum": ""
             },
             "require": {
@@ -1793,7 +1798,7 @@
                 "terminal"
             ],
             "support": {
-                "source": "https://github.com/symfony/console/tree/v5.4.7"
+                "source": "https://github.com/symfony/console/tree/v5.4.8"
             },
             "funding": [
                 {
@@ -1809,20 +1814,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-03-31T17:09:19+00:00"
+            "time": "2022-04-12T16:02:29+00:00"
         },
         {
             "name": "symfony/dependency-injection",
-            "version": "v6.0.7",
+            "version": "v6.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dependency-injection.git",
-                "reference": "3e8a405fcc2eaf4eadb25b5e259ad9bf90499848"
+                "reference": "571041cd7e765664cc527b461ee41be3013aa08e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/3e8a405fcc2eaf4eadb25b5e259ad9bf90499848",
-                "reference": "3e8a405fcc2eaf4eadb25b5e259ad9bf90499848",
+                "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/571041cd7e765664cc527b461ee41be3013aa08e",
+                "reference": "571041cd7e765664cc527b461ee41be3013aa08e",
                 "shasum": ""
             },
             "require": {
@@ -1881,7 +1886,7 @@
             "description": "Allows you to standardize and centralize the way objects are constructed in your application",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/dependency-injection/tree/v6.0.7"
+                "source": "https://github.com/symfony/dependency-injection/tree/v6.0.8"
             },
             "funding": [
                 {
@@ -1897,7 +1902,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-03-08T15:43:52+00:00"
+            "time": "2022-04-26T13:22:23+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",
@@ -2110,16 +2115,16 @@
         },
         {
             "name": "symfony/finder",
-            "version": "v6.0.3",
+            "version": "v6.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/finder.git",
-                "reference": "8661b74dbabc23223f38c9b99d3f8ade71170430"
+                "reference": "af7edab28d17caecd1f40a9219fc646ae751c21f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/finder/zipball/8661b74dbabc23223f38c9b99d3f8ade71170430",
-                "reference": "8661b74dbabc23223f38c9b99d3f8ade71170430",
+                "url": "https://api.github.com/repos/symfony/finder/zipball/af7edab28d17caecd1f40a9219fc646ae751c21f",
+                "reference": "af7edab28d17caecd1f40a9219fc646ae751c21f",
                 "shasum": ""
             },
             "require": {
@@ -2151,7 +2156,7 @@
             "description": "Finds files and directories via an intuitive fluent interface",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/finder/tree/v6.0.3"
+                "source": "https://github.com/symfony/finder/tree/v6.0.8"
             },
             "funding": [
                 {
@@ -2167,7 +2172,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-01-26T17:23:29+00:00"
+            "time": "2022-04-15T08:07:58+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
@@ -2746,16 +2751,16 @@
         },
         {
             "name": "symfony/string",
-            "version": "v6.0.3",
+            "version": "v6.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/string.git",
-                "reference": "522144f0c4c004c80d56fa47e40e17028e2eefc2"
+                "reference": "ac0aa5c2282e0de624c175b68d13f2c8f2e2649d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/string/zipball/522144f0c4c004c80d56fa47e40e17028e2eefc2",
-                "reference": "522144f0c4c004c80d56fa47e40e17028e2eefc2",
+                "url": "https://api.github.com/repos/symfony/string/zipball/ac0aa5c2282e0de624c175b68d13f2c8f2e2649d",
+                "reference": "ac0aa5c2282e0de624c175b68d13f2c8f2e2649d",
                 "shasum": ""
             },
             "require": {
@@ -2811,7 +2816,7 @@
                 "utf8"
             ],
             "support": {
-                "source": "https://github.com/symfony/string/tree/v6.0.3"
+                "source": "https://github.com/symfony/string/tree/v6.0.8"
             },
             "funding": [
                 {
@@ -2827,7 +2832,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-01-02T09:55:41+00:00"
+            "time": "2022-04-22T08:18:02+00:00"
         },
         {
             "name": "thecodingmachine/safe",
@@ -3134,7 +3139,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "skautis/skautis": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
