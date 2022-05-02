@@ -107,7 +107,7 @@ final class Frontend {
 	 */
 	public function register_templates( string $path = '' ): string {
 		$query_value = get_query_var( 'skautis_login' );
-		if ( $query_value && ! empty( $query_value ) ) {
+		if ( $query_value ) {
 			if ( file_exists( get_stylesheet_directory() . '/skautis/login.php' ) ) {
 				return get_stylesheet_directory() . '/skautis/login.php';
 			} elseif ( file_exists( get_template_directory() . '/skautis/login.php' ) ) {
