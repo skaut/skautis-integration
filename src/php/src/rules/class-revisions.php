@@ -89,9 +89,9 @@ class Revisions {
 	 * @param int $post_id The post in question.
 	 */
 	public static function delete_meta( int $post_id ) {
-		$meta = self::get_meta( $post_id );
+		$meta_keys = array_keys( self::get_meta( $post_id ) );
 
-		foreach ( $meta as $meta_key => $meta_value ) {
+		foreach ( $meta_keys as $meta_key ) {
 			delete_metadata( 'post', $post_id, $meta_key );
 		}
 	}
