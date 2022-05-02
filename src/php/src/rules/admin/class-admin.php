@@ -145,17 +145,6 @@ final class Admin {
 	/**
 	 * TODO: Unused?
 	 *
-	 * @param never    $value Unused.
-	 * @param never    $field_name Unused.
-	 * @param \WP_Post $post The post to get the metadata from.
-	 */
-	public static function get_rules_field_value( $value, $field_name, \WP_Post $post ) {
-		return get_metadata( 'post', $post->ID, SKAUTIS_INTEGRATION_NAME . '_rules_data', true );
-	}
-
-	/**
-	 * TODO: Unused?
-	 *
 	 * @param int $post_id The ID of the post in question.
 	 * @param int $revision_id The ID of the revision to restore.
 	 */
