@@ -76,7 +76,7 @@ final class WP_Register {
 
 		add_action( 'register_new_user', 'wp_send_new_user_notifications' );
 
-		if ( is_wp_error( $user_id ) ) {
+		if ($user_id instanceof \WP_Error ) {
 			if ( isset( $user_id->errors ) && ( isset( $user_id->errors['username_exists'] ) || isset( $user_id->errors['email_exists'] ) ) ) {
 				/* translators: The user's e-mail address */
 				wp_die( sprintf( esc_html__( 'Vás email %s je již na webu registrován, ale není propojen se skautIS účtem.', 'skautis-integration' ), esc_html( $user_email ) ), esc_html__( 'Chyba při registraci', 'skautis-integration' ) );
