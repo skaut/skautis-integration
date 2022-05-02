@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d1f92aff80802a50b69b30074a3856ee",
+    "content-hash": "b70357ebfe1792dfc4a5ecf1e447eb1e",
     "packages": [
         {
             "name": "skautis/skautis",
-            "version": "2.x-dev",
+            "version": "v2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/skaut/Skautis.git",
-                "reference": "60cf2c6f06c9d10bdc92a05e6e669518c2b8a571"
+                "reference": "e770502c4478bf6255b94cadfe83e9b5cb2ce0c2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/skaut/Skautis/zipball/60cf2c6f06c9d10bdc92a05e6e669518c2b8a571",
-                "reference": "60cf2c6f06c9d10bdc92a05e6e669518c2b8a571",
+                "url": "https://api.github.com/repos/skaut/Skautis/zipball/e770502c4478bf6255b94cadfe83e9b5cb2ce0c2",
+                "reference": "e770502c4478bf6255b94cadfe83e9b5cb2ce0c2",
                 "shasum": ""
             },
             "require": {
@@ -33,18 +33,13 @@
                 "skautis/nette": "Integrace Skautis do Nette",
                 "skautis/skautis-bundle": "Integrace Skautis do Symfony"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
                     "Skautis\\": "src/"
                 }
             },
-            "scripts": {
-                "post-install-cmd": [
-                    "ln -s ../../fix_syle.sh .git/hooks/pre-commit"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
@@ -68,11 +63,11 @@
                 "wsdl"
             ],
             "support": {
-                "wiki": "http://is.skaut.cz/napoveda/",
+                "issues": "https://github.com/skaut/Skautis/issues",
                 "source": "https://github.com/skaut/Skautis",
-                "issues": "https://github.com/skaut/Skautis/issues"
+                "wiki": "http://is.skaut.cz/napoveda/"
             },
-            "time": "2022-04-27T12:16:44+00:00"
+            "time": "2019-09-12T12:19:19+00:00"
         }
     ],
     "packages-dev": [
@@ -3139,9 +3134,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "skautis/skautis": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
