@@ -15,7 +15,7 @@ return array(
 	//'strict_property_checking'                  => true,
 	//'strict_return_checking'                    => true,
 	'constant_variable_detection'               => true,
-	//'redundant_condition_detection'             => true,
+	'redundant_condition_detection'             => true,
 	'unused_variable_detection'                 => true,
 	'warn_about_redundant_use_namespaced_class' => true,
 	'directory_list'                            => array(
