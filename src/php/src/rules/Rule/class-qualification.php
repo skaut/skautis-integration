@@ -150,33 +150,30 @@ class Qualification implements Rule {
 	protected function getUserQualifications(): array {
 		static $user_qualifications = null;
 
-		if ( is_null( $user_qualifications ) ) {
-			$user_detail         = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserDetail();
-			$user_qualifications = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->QualificationAll(
-				array(
-					'ID_Person'   => $user_detail->ID_Person,
-					'ShowHistory' => true,
-					'isValid'     => true,
-				)
-			);
-
-			$result = array();
-
-			if ( ! is_array( $user_qualifications ) || empty( $user_qualifications ) ) {
-				return array();
-			}
-
-			foreach ( $user_qualifications as $user_qualification ) {
-				$result[] = $user_qualification->ID_QualificationType;
-			}
-
-			$user_qualifications = $result;
+		if ( ! is_null( $user_qualifications ) ) {
+			return $user_qualifications;
 		}
 
-		if ( ! is_array( $user_qualifications ) ) {
+		$user_detail         = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserDetail();
+		$user_qualifications = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->QualificationAll(
+			array(
+				'ID_Person'   => $user_detail->ID_Person,
+				'ShowHistory' => true,
+				'isValid'     => true,
+			)
+		);
+
+		if ( ! is_array( $user_qualifications ) || empty( $user_qualifications ) ) {
 			return array();
 		}
 
+		$result = array();
+
+		foreach ( $user_qualifications as $user_qualification ) {
+			$result[] = $user_qualification->ID_QualificationType;
+		}
+
+		$user_qualifications = $result;
 		return $user_qualifications;
 	}
 
