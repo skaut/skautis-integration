@@ -299,7 +299,7 @@ final class WP_Register {
 	/**
 	 * Sanitizes SkautIS username to be a valid WordPress username.
 	 *
-	 * @param string $username The sanitized username.
+	 * @param string $username The sanitized username. @unused-param
 	 * @param string $raw_username The raw username before sanitizing.
 	 * @param bool   $strict Whether to limit the username to Latin, Cyrillic and a few special characters.
 	 */

@@ -70,7 +70,7 @@ final class Login_Form {
 	 *
 	 * TODO: Remove this function. Why is the button printed from 2 different hooks?
 	 *
-	 * @param string $html Unused.
+	 * @param string $html Unused. @unused-param
 	 */
 	public function login_link_in_login_form_return( string $html ): string {
 		return '

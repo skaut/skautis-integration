@@ -206,14 +206,12 @@ final class Frontend {
 	 * TODO: This function modifies its parameters.
 	 *
 	 * @param bool      $user_is_logged_in_skautis Whether the current user is logged in to SkautIS.
-	 * @param array     $rule Unused.
 	 * @param array     $posts A list of posts to filter. This parameter is modified by the function.
 	 * @param int       $post_key The ID of the post to hide.
 	 * @param \WP_Query $wp_query The WordPress request.
-	 * @param string    $post_type Unused.
 	 * @param bool      $posts_were_filtered Whether the posts were already filtered.
 	 */
-	private function process_rules_and_hide_posts( bool $user_is_logged_in_skautis, array $rule, array &$posts, int $post_key, \WP_Query $wp_query, string $post_type, &$posts_were_filtered = false ) {
+	private function process_rules_and_hide_posts( bool $user_is_logged_in_skautis, array &$posts, int $post_key, \WP_Query $wp_query, &$posts_were_filtered = false ) {
 		if ( ! empty( $rules ) && isset( $rules[0][ SKAUTIS_INTEGRATION_NAME . '_rules' ] ) ) {
 			if ( ! $user_is_logged_in_skautis ||
 				! $this->rules_manager->check_if_user_passed_rules( $rules ) ) {
@@ -330,7 +328,7 @@ final class Frontend {
 						if ( 'content' === $rules_group['visibilityMode'] ) {
 							$this->process_rules_and_hide_content( $user_is_logged_in_skautis, $rules_group['rules'], $wp_post->ID );
 						} else {
-							$this->process_rules_and_hide_posts( $user_is_logged_in_skautis, $rules_group['rules'], $posts, $key, $wp_query, $wp_post->post_type, $posts_were_filtered );
+							$this->process_rules_and_hide_posts( $user_is_logged_in_skautis, $posts, $key, $wp_query, $posts_were_filtered );
 						}
 					}
 				}
