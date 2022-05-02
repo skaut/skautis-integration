@@ -185,7 +185,7 @@ class Qualification implements Rule {
 	 *
 	 * TODO: Unused first parameter?
 	 *
-	 * @param string $operator The operator used with the rule.
+	 * @param string $operator The operator used with the rule. @unused-param
 	 * @param string $data The rule data.
 	 */
 	public function is_rule_passed( string $operator, $data ): bool {

@@ -15,6 +15,8 @@ use Skautis_Integration\Vendor\Skautis\SessionAdapter\AdapterInterface;
  * Enables the SkautIS library to use WordPress transiens for user session management.
  */
 class Transient_Session_Adapter implements AdapterInterface {
+	const COOKIE_CHARACTERS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+	
 	/**
 	 * A helper function generating random string and saving it in a cookie.
 	 */
@@ -22,11 +24,10 @@ class Transient_Session_Adapter implements AdapterInterface {
 		if ( isset( $_COOKIE[ SKAUTIS_INTEGRATION_NAME . '-skautis-session' ] ) ) {
 			return sanitize_text_field( wp_unslash( $_COOKIE[ SKAUTIS_INTEGRATION_NAME . '-skautis-session' ] ) );
 		} else {
-			$chars     = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 			$cookie_id = '';
 			for ( $i = 0; $i < 32; $i++ ) {
 				// phpcs:ignore WordPress.WP.AlternativeFunctions.rand_rand
-				$cookie_id .= substr( $chars, rand( 0, strlen( $chars ) - 1 ), 1 );
+				$cookie_id .= substr( self::COOKIE_CHARACTERS, rand( 0, strlen( self::COOKIE_CHARACTERS ) - 1 ), 1 );
 			}
 			setcookie( SKAUTIS_INTEGRATION_NAME . '-skautis-session', $cookie_id, time() + 40 * \MINUTE_IN_SECONDS, '/', '', true, true );
 			return $cookie_id;
