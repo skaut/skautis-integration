@@ -222,24 +222,19 @@ class Membership implements Rule {
 			$user_memberships = $result;
 		}
 
-		if ( ! is_array( $user_memberships ) ) {
-			if ( is_a( $user_memberships, '\stdClass' ) ) {
-				wp_die(
-					sprintf(
-						/* translators: 1: Start of a link to the documentation 2: End of the link to the documentation */
-						esc_html__(
-							'Pravděpodobně nemáte propojený skautIS účet se svojí osobou. %1$sPostupujte podle tohoto návodu%2$s',
-							'skautis-integration'
-						),
-						'<a href="https://napoveda.skaut.cz/skautis/informacni-system/uzivatel/propojeni-uctu">',
-						'</a>'
-					)
-				);
-			} else {
-				if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-					throw new \Exception( __( 'Nastala neočekávaná chyba.', 'skautis-integration' ) );
-				}
-			}
+		// @phan-suppress-next-line PhanTypeMismatchArgumentInternalProbablyReal
+		if ( is_a( $user_memberships, '\stdClass' ) ) {
+			wp_die(
+				sprintf(
+					/* translators: 1: Start of a link to the documentation 2: End of the link to the documentation */
+					esc_html__(
+						'Pravděpodobně nemáte propojený skautIS účet se svojí osobou. %1$sPostupujte podle tohoto návodu%2$s',
+						'skautis-integration'
+					),
+					'<a href="https://napoveda.skaut.cz/skautis/informacni-system/uzivatel/propojeni-uctu">',
+					'</a>'
+				)
+			);
 		}
 
 		return $user_memberships;
