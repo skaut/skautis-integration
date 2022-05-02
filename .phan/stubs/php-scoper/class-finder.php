@@ -7,7 +7,6 @@
  * @phan-file-suppress PhanPluginAlwaysReturnMethod
  * @phan-file-suppress PhanPluginPossiblyStaticPublicMethod
  * @phan-file-suppress PhanTypeMissingReturn
- * @phan-file-suppress PhanUnusedPublicNoOverrideMethodParameter
  *
  * phpcs:disable Generic.Commenting.DocComment.Empty
  * phpcs:disable Generic.Commenting.DocComment.MissingShort
