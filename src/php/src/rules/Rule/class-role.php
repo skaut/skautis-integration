@@ -170,42 +170,39 @@ class Role implements Rule {
 	protected function getUserRolesWithUnitIds(): array {
 		static $user_roles = null;
 
-		if ( is_null( $user_roles ) ) {
-			$user_roles = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserRoleAll(
-				array(
-					'ID_Login' => $this->skautis_gateway->get_skautis_instance()->getUser()->getLoginId(),
-					'ID_User'  => $this->skautis_gateway->get_skautis_instance()->UserManagement->UserDetail()->ID,
-					'IsActive' => true,
-				)
-			);
+		if ( ! is_null( $user_roles ) ) {
+			return $user_roles;
+		}
 
-			$result = array();
-			foreach ( $user_roles as $user_role ) {
-				try {
-					$unit_detail = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->UnitDetail(
-						array(
-							'ID' => $user_role->ID_Unit,
-						)
-					);
+		$user_roles = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserRoleAll(
+			array(
+				'ID_Login' => $this->skautis_gateway->get_skautis_instance()->getUser()->getLoginId(),
+				'ID_User'  => $this->skautis_gateway->get_skautis_instance()->UserManagement->UserDetail()->ID,
+				'IsActive' => true,
+			)
+		);
 
-					if ( $unit_detail ) {
-						if ( ! isset( $result[ $user_role->ID_Role ] ) ) {
-							$result[ $user_role->ID_Role ] = array();
-						}
-						$result[ $user_role->ID_Role ][] = $unit_detail->RegistrationNumber;
+		$result = array();
+		foreach ( $user_roles as $user_role ) {
+			try {
+				$unit_detail = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->UnitDetail(
+					array(
+						'ID' => $user_role->ID_Unit,
+					)
+				);
+
+				if ( $unit_detail ) {
+					if ( ! isset( $result[ $user_role->ID_Role ] ) ) {
+						$result[ $user_role->ID_Role ] = array();
 					}
-				} catch ( \Exception $_ ) {
-					continue;
+					$result[ $user_role->ID_Role ][] = $unit_detail->RegistrationNumber;
 				}
+			} catch ( \Exception $_ ) {
+				continue;
 			}
-
-			$user_roles = $result;
 		}
 
-		if ( ! is_array( $user_roles ) ) {
-			return array();
-		}
-
+		$user_roles = $result;
 		return $user_roles;
 	}
 
