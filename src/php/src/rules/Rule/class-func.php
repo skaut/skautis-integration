@@ -170,42 +170,37 @@ class Func implements Rule {
 	protected function getUserFuncsWithUnitIds(): array {
 		static $user_funcs = null;
 
-		if ( is_null( $user_funcs ) ) {
-			$user_detail = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserDetail();
-			$user_funcs  = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->FunctionAllPerson(
-				array(
-					'ID_Person' => $user_detail->ID_Person,
-				)
-			);
-
-			$result = array();
-
-			if ( ! $user_funcs || ! property_exists( $user_funcs, 'FunctionAllOutput' ) || empty( $user_funcs->FunctionAllOutput ) || ! is_array( $user_funcs->FunctionAllOutput ) || empty( $user_funcs->FunctionAllOutput[0] ) ) {
-				return $result;
-			}
-
-			foreach ( $user_funcs->FunctionAllOutput as $user_func ) {
-				$unit_detail = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->UnitDetail(
-					array(
-						'ID' => $user_func->ID_Unit,
-					)
-				);
-				if ( $unit_detail ) {
-					if ( ! isset( $result[ $user_func->ID_FunctionType ] ) ) {
-						$result[ $user_func->ID_FunctionType ] = array();
-					}
-					$result[ $user_func->ID_FunctionType ][] = $unit_detail->RegistrationNumber;
-				}
-			}
-
-			$user_funcs = $result;
+		if ( ! is_null( $user_funcs ) ) {
+			return $user_funcs;
 		}
+		$user_detail = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserDetail();
+		$user_funcs  = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->FunctionAllPerson(
+			array(
+				'ID_Person' => $user_detail->ID_Person,
+			)
+		);
 
-		if ( ! is_array( $user_funcs ) ) {
+		if ( ! $user_funcs || ! property_exists( $user_funcs, 'FunctionAllOutput' ) || empty( $user_funcs->FunctionAllOutput ) || ! is_array( $user_funcs->FunctionAllOutput ) || empty( $user_funcs->FunctionAllOutput[0] ) ) {
 			return array();
 		}
 
-		return $user_funcs;
+		$result = array();
+
+		foreach ( $user_funcs->FunctionAllOutput as $user_func ) {
+			$unit_detail = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->UnitDetail(
+				array(
+					'ID' => $user_func->ID_Unit,
+				)
+			);
+			if ( $unit_detail ) {
+				if ( ! isset( $result[ $user_func->ID_FunctionType ] ) ) {
+					$result[ $user_func->ID_FunctionType ] = array();
+				}
+				$result[ $user_func->ID_FunctionType ][] = $unit_detail->RegistrationNumber;
+			}
+		}
+
+		$user_funcs = $result;
 	}
 
 	/**
