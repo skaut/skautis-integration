@@ -12,7 +12,6 @@ namespace Skautis_Integration\Modules\Register;
 use Skautis_Integration\Auth\Skautis_Gateway;
 use Skautis_Integration\Repository\Users as UsersRepository;
 use Skautis_Integration\Utils\Helpers;
-use Skautis_Integration\Vendor\Skautis\User;
 
 /**
  * Adds the functionality to register new WordPress users based on SkautIS.
@@ -94,7 +93,7 @@ final class WP_Register {
 	 *
 	 * This function queries SkautIS for the information needed when registering a new WordPress user.
 	 *
-	 * @param User $skautis_user The SkautIS user.
+	 * @param \stdClass $skautis_user The SkautIS user.
 	 */
 	private function prepare_user_data( $skautis_user ): array {
 		$skautis_user_detail = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->PersonDetail(
