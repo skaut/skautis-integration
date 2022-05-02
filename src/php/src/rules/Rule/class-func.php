@@ -201,6 +201,7 @@ class Func implements Rule {
 		}
 
 		$user_funcs = $result;
+		return $user_funcs;
 	}
 
 	/**
