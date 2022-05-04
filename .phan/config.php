@@ -44,7 +44,7 @@ return array(
 		'EmptyStatementListPlugin',
 		'InvalidVariableIssetPlugin',
 		'NoAssertPlugin',
-		//'NonBoolBranchPlugin',
+		'NonBoolBranchPlugin',
 		//'NonBoolInLogicalArithPlugin',
 		'PossiblyStaticMethodPlugin',
 		'PreferNamespaceUsePlugin',
