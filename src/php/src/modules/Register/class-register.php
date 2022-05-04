@@ -226,7 +226,7 @@ final class Register implements Module {
 		} else {
 			$wp_user_id = $this->wp_register->check_if_user_is_already_registered_and_get_his_user_id();
 			if ( $wp_user_id > 0 ) {
-				if ( get_option( SKAUTIS_INTEGRATION_NAME . '_checkUserPrivilegesIfLoginBySkautis' ) ) {
+				if ( false !== get_option( SKAUTIS_INTEGRATION_NAME . '_checkUserPrivilegesIfLoginBySkautis' ) ) {
 					if ( user_can( $wp_user_id, Helpers::get_skautis_manager_capability() ) ) {
 						$this->loginUserAfterRegistration();
 					}

@@ -56,7 +56,7 @@ final class Admin {
 		add_action(
 			'admin_init',
 			static function () {
-				if ( get_user_option( 'rich_editing' ) ) {
+				if ( false !== get_user_option( 'rich_editing' ) ) {
 					add_filter( 'mce_external_plugins', array( self::class, 'register_tinymce_plugin' ) );
 					add_filter( 'mce_buttons', array( self::class, 'add_tinymce_button' ) );
 				}

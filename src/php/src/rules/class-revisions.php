@@ -157,7 +157,7 @@ class Revisions {
 	 * @param int $post_id The ID of the post in question.
 	 */
 	public static function save_post( int $post_id ) {
-		if ( wp_is_post_revision( $post_id ) ) {
+		if ( false !== wp_is_post_revision( $post_id ) ) {
 			$meta = self::get_meta( $post_id );
 			self::insert_meta( $post_id, $meta );
 		}

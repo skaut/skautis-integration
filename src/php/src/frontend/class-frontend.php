@@ -75,7 +75,7 @@ final class Frontend {
 	 * Intializes all hooks used by the object.
 	 */
 	private function init_hooks() {
-		if ( get_option( SKAUTIS_INTEGRATION_NAME . '_login_page_url' ) ) {
+		if ( false !== get_option( SKAUTIS_INTEGRATION_NAME . '_login_page_url' ) ) {
 			add_filter( 'query_vars', array( self::class, 'register_query_vars' ) );
 			add_filter( 'template_include', array( $this, 'register_templates' ) );
 		}
@@ -156,7 +156,7 @@ final class Frontend {
 		}
 
 		if ( method_exists( $wp_admin_bar, 'get_node' ) ) {
-			if ( $wp_admin_bar->get_node( 'user-actions' ) ) {
+			if ( ! is_null( $wp_admin_bar->get_node( 'user-actions' ) ) ) {
 				$parent = 'user-actions';
 			} else {
 				return;

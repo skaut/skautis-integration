@@ -165,7 +165,7 @@ final class Admin {
 		}
 
 		if ( method_exists( $wp_admin_bar, 'get_node' ) ) {
-			if ( $wp_admin_bar->get_node( 'user-actions' ) ) {
+			if ( ! is_null( $wp_admin_bar->get_node( 'user-actions' ) ) ) {
 				$parent = 'user-actions';
 			} else {
 				return;

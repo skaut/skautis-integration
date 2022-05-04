@@ -166,7 +166,7 @@ final class WP_Register {
 			return false;
 		}
 
-		if ( ! add_user_meta( $user_id, 'skautisUserId_' . $this->skautis_gateway->get_env(), absint( $user['id'] ) ) ) {
+		if ( false === add_user_meta( $user_id, 'skautisUserId_' . $this->skautis_gateway->get_env(), absint( $user['id'] ) ) ) {
 			return false;
 		}
 

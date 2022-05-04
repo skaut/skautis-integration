@@ -70,7 +70,7 @@ final class WP_Login_Logout {
 					if ( Services::get_modules_manager()->is_module_activated( Register::get_id() ) &&
 						! user_can( $wp_user->ID, Helpers::get_skautis_manager_capability() ) &&
 						get_option( SKAUTIS_INTEGRATION_NAME . '_checkUserPrivilegesIfLoginBySkautis' ) ) {
-						if ( ! Services::get_modules_manager()->get_register_module()->getRulesManager()->check_if_user_passed_rules_and_get_his_role() ) {
+						if ( '' === Services::get_modules_manager()->get_register_module()->getRulesManager()->check_if_user_passed_rules_and_get_his_role() ) {
 							/* translators: 1: Start of a link to SkautIS login 2: End of the link to SkautIS login */
 							wp_die( sprintf( esc_html__( 'Je nám líto, ale již nemáte oprávnění k přístupu. %1$sZkuste se znovu zaregistrovat%2$s', 'skautis-integration' ), '<a href = "' . esc_url( Services::get_modules_manager()->get_register_module()->getWpRegister()->get_register_url() ) . '">', '</a>' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
 						}
@@ -116,7 +116,7 @@ final class WP_Login_Logout {
 	 * @suppress PhanPluginPossiblyStaticPublicMethod
 	 */
 	public function get_login_url( string $return_url = '' ): string {
-		if ( ! $return_url ) {
+		if ( '' === $return_url ) {
 			$return_url = Helpers::get_login_logout_redirect();
 		}
 
@@ -139,7 +139,7 @@ final class WP_Login_Logout {
 	 * @suppress PhanPluginPossiblyStaticPublicMethod
 	 */
 	public function get_logout_url( string $return_url = '' ): string {
-		if ( ! $return_url ) {
+		if ( '' === $return_url ) {
 			$return_url = Helpers::get_login_logout_redirect();
 		}
 

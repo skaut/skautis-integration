@@ -168,7 +168,7 @@ class Users {
 		}
 
 		// Different procedure for roles associated with events.
-		if ( $event_type && $event_id ) {
+		if ( '' !== $event_type && 0 !== $event_id ) {
 			if ( 'Congress' === $event_type ) {
 				$participants = null;
 			} else {
