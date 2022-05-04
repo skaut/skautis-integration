@@ -173,7 +173,7 @@ final class WP_Register {
 		$first_name = $user['firstName'];
 		$last_name  = $user['lastName'];
 		$nick_name  = $user['nickName'];
-		if ( $nick_name ) {
+		if ( '' !== $nick_name ) {
 			$display_name = $nick_name;
 		} else {
 			$nick_name    = '';

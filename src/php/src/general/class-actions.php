@@ -112,7 +112,7 @@ final class Actions {
 	public static function register_auth_rewrite_rules() {
 		add_rewrite_rule( '^skautis/auth/(.*?)$', 'index.php?skautis_auth=$matches[1]', 'top' );
 		$login_page_url = get_option( SKAUTIS_INTEGRATION_NAME . '_login_page_url' );
-		if ( $login_page_url ) {
+		if ( false !== $login_page_url ) {
 			add_rewrite_rule( '^' . $login_page_url . '$', 'index.php?skautis_login=1', 'top' );
 		}
 	}
@@ -132,7 +132,7 @@ final class Actions {
 	 * Makes WordPress update rewrite rules if it is needed.
 	 */
 	public static function flush_rewrite_rules_if_necessary() {
-		if ( get_option( 'skautis_rewrite_rules_need_to_flush' ) ) {
+		if ( false !== get_option( 'skautis_rewrite_rules_need_to_flush' ) ) {
 			flush_rewrite_rules();
 			delete_option( 'skautis_rewrite_rules_need_to_flush' );
 		}
@@ -166,7 +166,7 @@ final class Actions {
 	 * @param \WP_Query $wp_query The request query.
 	 */
 	public function auth_actions_router( \WP_Query $wp_query ) {
-		if ( ! $wp_query->get( 'skautis_auth' ) ) {
+		if ( '' === $wp_query->get( 'skautis_auth' ) ) {
 			return $wp_query;
 		}
 

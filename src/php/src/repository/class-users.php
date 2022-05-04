@@ -278,7 +278,7 @@ class Users {
 
 		$users = $this->get_users();
 
-		if ( $users['eventType'] ) {
+		if ( '' !== $users['eventType'] ) {
 			foreach ( (array) $users['users'] as $user ) {
 				if ( $user->id === $skautis_user_id ) {
 					$user_detail = array(
