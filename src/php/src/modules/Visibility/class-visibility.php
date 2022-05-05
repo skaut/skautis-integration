@@ -42,11 +42,11 @@ final class Visibility implements Module {
 	private $skautis_login;
 
 	/**
-	 * A link to the Skautis_Gateway service instance.
+	 * A link to the WP_Login_Logout service instance.
 	 *
 	 * TODO: Unused?
 	 *
-	 * @var Skautis_Gateway
+	 * @var WP_Login_Logout
 	 */
 	private $wp_login_logout;
 
@@ -78,7 +78,7 @@ final class Visibility implements Module {
 		$post_types            = (array) get_option( SKAUTIS_INTEGRATION_NAME . '_modules_visibility_postTypes', array() );
 		$this->frontend        = new Frontend( $post_types, $this->rules_manager, $this->skautis_login, $this->wp_login_logout );
 		if ( is_admin() ) {
-			( new Admin( $post_types, $this->rules_manager, $this->frontend ) );
+			new Admin( $post_types, $this->rules_manager, $this->frontend );
 		} else {
 			$this->frontend->init_hooks();
 		}

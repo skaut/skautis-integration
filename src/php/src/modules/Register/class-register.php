@@ -68,7 +68,7 @@ final class Register implements Module {
 	 *
 	 * TODO: Unused?
 	 *
-	 * @var Users
+	 * @var UsersRepository
 	 */
 	private $users_repository;
 
@@ -96,9 +96,9 @@ final class Register implements Module {
 		$this->users_repository = $users_repository;
 		$this->wp_register      = new WP_Register( $this->skautis_gateway, $this->users_repository );
 		if ( is_admin() ) {
-			( new Admin( $this->rules_manager ) );
+			new Admin( $this->rules_manager );
 		} else {
-			( new Frontend( new Login_Form( $this->wp_register ) ) );
+			new Frontend( new Login_Form( $this->wp_register ) );
 		}
 		$this->init_hooks();
 	}
@@ -110,7 +110,7 @@ final class Register implements Module {
 		add_filter( SKAUTIS_INTEGRATION_NAME . '_frontend_actions_router', array( $this, 'addActionsToRouter' ) );
 		$return_url = Helpers::get_return_url();
 		if ( ! is_null( $return_url ) ) {
-			if ( Helpers::get_nonce_from_url( $return_url, SKAUTIS_INTEGRATION_NAME . '_registerToWpBySkautis' ) ) {
+			if ( '' !== Helpers::get_nonce_from_url( $return_url, SKAUTIS_INTEGRATION_NAME . '_registerToWpBySkautis' ) ) {
 				add_action( SKAUTIS_INTEGRATION_NAME . '_after_skautis_token_is_set', array( $this, 'registerConfirm' ) );
 			}
 		}
@@ -219,14 +219,14 @@ final class Register implements Module {
 	 */
 	public function registerUser() {
 		$wp_role = $this->rules_manager->check_if_user_passed_rules_and_get_his_role();
-		if ( $wp_role ) {
+		if ( '' !== $wp_role ) {
 			if ( $this->wp_register->register_to_wp( $wp_role ) ) {
 				$this->loginUserAfterRegistration();
 			}
 		} else {
 			$wp_user_id = $this->wp_register->check_if_user_is_already_registered_and_get_his_user_id();
 			if ( $wp_user_id > 0 ) {
-				if ( get_option( SKAUTIS_INTEGRATION_NAME . '_checkUserPrivilegesIfLoginBySkautis' ) ) {
+				if ( false !== get_option( SKAUTIS_INTEGRATION_NAME . '_checkUserPrivilegesIfLoginBySkautis' ) ) {
 					if ( user_can( $wp_user_id, Helpers::get_skautis_manager_capability() ) ) {
 						$this->loginUserAfterRegistration();
 					}
@@ -254,7 +254,7 @@ final class Register implements Module {
 	public function registerUserManually() {
 		$return_url = Helpers::get_return_url();
 		if ( ! isset( $_GET[ SKAUTIS_INTEGRATION_NAME . '_register_user_nonce' ] ) ||
-			! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET[ SKAUTIS_INTEGRATION_NAME . '_register_user_nonce' ] ) ), SKAUTIS_INTEGRATION_NAME . '_register_user' ) ||
+			false === wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET[ SKAUTIS_INTEGRATION_NAME . '_register_user_nonce' ] ) ), SKAUTIS_INTEGRATION_NAME . '_register_user' ) ||
 			! $this->skautis_login->is_user_logged_in_skautis() ||
 			! Helpers::user_is_skautis_manager() ||
 			! current_user_can( 'create_users' ) ||

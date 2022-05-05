@@ -27,28 +27,28 @@ class Role implements Rule {
 	/**
 	 * The rule value type.
 	 *
-	 * @var "string"|"integer"|"double"|"date"|"time"|"datetime"|"boolean"
+	 * @var string
 	 */
 	protected static $type = 'string';
 
 	/**
 	 * The rule input field type type.
 	 *
-	 * @var "roleInput"|"membershipInput"|"funcInput"|"qualificationInput"|"text"|"number"|"textarea"|"radio"|"checkbox"|"select"
+	 * @var string
 	 */
 	protected static $input = 'roleInput';
 
 	/**
 	 * Whether the rule accepts multiple values at once.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected static $multiple = true;
 
 	/**
 	 * All the operators that are applicable for the rule.
 	 *
-	 * @var array<"equal"|"not_equal"|"in"|"not_in"|"less"|"less_or_equal"|"greater"|"greater_or_equal"|"between"|"not_between"|"begins_with"|"not_begins_with"|"contains"|"not_contains"|"ends_with"|"not_ends_with"|"is_empty"|"is_not_empty"|"is_null"|"is_not_null">
+	 * @var array<string>
 	 */
 	protected static $operators = array( 'in', 'not_in' );
 
@@ -85,7 +85,7 @@ class Role implements Rule {
 	/**
 	 * Returns the rule value type.
 	 *
-	 * @return "string"|"integer"|"double"|"date"|"time"|"datetime"|"boolean"
+	 * @return string
 	 */
 	public function get_type(): string {
 		return self::$type;
@@ -94,7 +94,7 @@ class Role implements Rule {
 	/**
 	 * Returns the rule input field type type.
 	 *
-	 * @return "roleInput"|"membershipInput"|"funcInput"|"qualificationInput"|"text"|"number"|"textarea"|"radio"|"checkbox"|"select"
+	 * @return string
 	 */
 	public function get_input(): string {
 		return self::$input;
@@ -110,7 +110,7 @@ class Role implements Rule {
 	/**
 	 * Returns all the operators that are applicable for the rule.
 	 *
-	 * @return array<"equal"|"not_equal"|"in"|"not_in"|"less"|"less_or_equal"|"greater"|"greater_or_equal"|"between"|"not_between"|"begins_with"|"not_begins_with"|"contains"|"not_contains"|"ends_with"|"not_ends_with"|"is_empty"|"is_not_empty"|"is_null"|"is_not_null">
+	 * @return array<string>
 	 */
 	public function get_operators(): array {
 		return self::$operators;
@@ -151,7 +151,7 @@ class Role implements Rule {
 	 *
 	 * @param string $unit_id The raw unit ID.
 	 */
-	protected function clearUnitId( string $unit_id ): string {
+	protected static function clearUnitId( string $unit_id ): string {
 		return trim(
 			str_replace(
 				array(
@@ -170,42 +170,39 @@ class Role implements Rule {
 	protected function getUserRolesWithUnitIds(): array {
 		static $user_roles = null;
 
-		if ( is_null( $user_roles ) ) {
-			$user_roles = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserRoleAll(
-				array(
-					'ID_Login' => $this->skautis_gateway->get_skautis_instance()->getUser()->getLoginId(),
-					'ID_User'  => $this->skautis_gateway->get_skautis_instance()->UserManagement->UserDetail()->ID,
-					'IsActive' => true,
-				)
-			);
+		if ( ! is_null( $user_roles ) ) {
+			return $user_roles;
+		}
 
-			$result = array();
-			foreach ( $user_roles as $user_role ) {
-				try {
-					$unit_detail = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->UnitDetail(
-						array(
-							'ID' => $user_role->ID_Unit,
-						)
-					);
+		$user_roles = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserRoleAll(
+			array(
+				'ID_Login' => $this->skautis_gateway->get_skautis_instance()->getUser()->getLoginId(),
+				'ID_User'  => $this->skautis_gateway->get_skautis_instance()->UserManagement->UserDetail()->ID,
+				'IsActive' => true,
+			)
+		);
 
-					if ( $unit_detail ) {
-						if ( ! isset( $result[ $user_role->ID_Role ] ) ) {
-							$result[ $user_role->ID_Role ] = array();
-						}
-						$result[ $user_role->ID_Role ][] = $unit_detail->RegistrationNumber;
+		$result = array();
+		foreach ( $user_roles as $user_role ) {
+			try {
+				$unit_detail = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->UnitDetail(
+					array(
+						'ID' => $user_role->ID_Unit,
+					)
+				);
+
+				if ( $unit_detail ) {
+					if ( ! isset( $result[ $user_role->ID_Role ] ) ) {
+						$result[ $user_role->ID_Role ] = array();
 					}
-				} catch ( \Exception $e ) {
-					continue;
+					$result[ $user_role->ID_Role ][] = $unit_detail->RegistrationNumber;
 				}
+			} catch ( \Exception $_ ) {
+				continue;
 			}
-
-			$user_roles = $result;
 		}
 
-		if ( ! is_array( $user_roles ) ) {
-			return array();
-		}
-
+		$user_roles = $result;
 		return $user_roles;
 	}
 
@@ -214,8 +211,8 @@ class Role implements Rule {
 	 *
 	 * @throws \Exception An operator is undefined.
 	 *
-	 * @param "equal"|"not_equal"|"in"|"not_in"|"less"|"less_or_equal"|"greater"|"greater_or_equal"|"between"|"not_between"|"begins_with"|"not_begins_with"|"contains"|"not_contains"|"ends_with"|"not_ends_with"|"is_empty"|"is_not_empty"|"is_null"|"is_not_null" $roles_operator The operator used with the rule.
-	 * @param string                                                                                                                                                                                                                                                $data The rule data.
+	 * @param string $roles_operator The operator used with the rule.
+	 * @param string $data The rule data.
 	 */
 	public function is_rule_passed( string $roles_operator, $data ): bool {
 		// Parse and prepare data from rules UI.
@@ -224,35 +221,33 @@ class Role implements Rule {
 		if ( isset( $output[0], $output[0][0], $output[0][1], $output[0][2] ) ) {
 			list( $roles, $unit_operator, $unit_id ) = $output[0];
 			$roles                                   = explode( ',', $roles );
-			$unit_id                                 = $this->clearUnitId( $unit_id );
+			$unit_id                                 = self::clearUnitId( $unit_id );
 		} else {
 			return false;
 		}
 
 		// Logic to determine in / not_in range.
-		$in_not_in_negation = 2;
 		switch ( $roles_operator ) {
 			case 'in':
-				$in_not_in_negation = 0;
+				$assume_in = true;
 				break;
 			case 'not_in':
-				$in_not_in_negation = 1;
+				$assume_in = false;
 				break;
 			default:
-				$in_not_in_negation = 2;
 				if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 					throw new \Exception( 'Roles operator: "' . $roles_operator . '" is not declared.' );
 				}
-				break;
+				return false;
 		}
 
 		$user_roles = $this->getUserRolesWithUnitIds();
 		$user_pass  = 0;
 		foreach ( $roles as $role ) {
 			// in / not_in range check.
-			if ( ( $in_not_in_negation + array_key_exists( $role, $user_roles ) ) === 1 ) {
+			if ( array_key_exists( $role, $user_roles ) === $assume_in ) {
 				foreach ( $user_roles[ $role ] as $user_role_unit_id ) {
-					$user_role_unit_id = $this->clearUnitId( $user_role_unit_id );
+					$user_role_unit_id = self::clearUnitId( $user_role_unit_id );
 
 					switch ( $unit_operator ) {
 						case 'equal':

@@ -66,7 +66,7 @@ class Users_Management {
 	 *
 	 * TODO: Private?
 	 *
-	 * @var Users
+	 * @var UsersRepository
 	 */
 	protected $users_repository;
 
@@ -121,7 +121,7 @@ class Users_Management {
 			10
 		);
 
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts_and_styles' ) );
+		add_action( 'admin_enqueue_scripts', array( self::class, 'enqueue_scripts_and_styles' ) );
 	}
 
 	/**
@@ -135,7 +135,7 @@ class Users_Management {
 			'init',
 			function () {
 				if ( isset( $_POST['changeSkautisUserRole'], $_POST['_wpnonce'], $_POST['_wp_http_referer'] ) ) {
-					if ( check_admin_referer( SKAUTIS_INTEGRATION_NAME . '_changeSkautisUserRole', '_wpnonce' ) ) {
+					if ( false !== check_admin_referer( SKAUTIS_INTEGRATION_NAME . '_changeSkautisUserRole', '_wpnonce' ) ) {
 						if ( $this->skautis_login->is_user_logged_in_skautis() ) {
 							$this->skautis_login->change_user_role_in_skautis( absint( $_POST['changeSkautisUserRole'] ) );
 						}
@@ -150,15 +150,12 @@ class Users_Management {
 	 *
 	 * @param string $hook_suffix The current admin page.
 	 */
-	public function enqueue_scripts_and_styles( $hook_suffix ) {
+	public static function enqueue_scripts_and_styles( $hook_suffix ) {
 		if ( ! str_ends_with( $hook_suffix, SKAUTIS_INTEGRATION_NAME . '_usersManagement' ) ) {
 			return;
 		}
 		wp_enqueue_script( 'thickbox' );
 		wp_enqueue_style( 'thickbox' );
-		if ( is_network_admin() ) {
-			add_action( 'admin_head', '_thickbox_path_admin_subfolder' );
-		}
 
 		wp_enqueue_style(
 			SKAUTIS_INTEGRATION_NAME . '_datatables',
@@ -318,7 +315,7 @@ class Users_Management {
 					</label>
 					<p>
 						<a id="connectUserToSkautisModal_registerLink" class="button button-primary"
-							href="<?php echo esc_url( Services::get_module( Register::get_id() )->getWpRegister()->get_manually_register_wp_user_url() ); ?>"><?php esc_html_e( 'Vytvořit nový účet', 'skautis-integration' ); ?></a>
+							href="<?php echo esc_url( Services::get_modules_manager()->get_register_module()->getWpRegister()->get_manually_register_wp_user_url() ); ?>"><?php esc_html_e( 'Vytvořit nový účet', 'skautis-integration' ); ?></a>
 					</p>
 					<?php
 				}

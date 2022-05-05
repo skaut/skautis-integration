@@ -14,6 +14,8 @@ use Skautis_Integration\Utils\Helpers;
 
 /**
  * Handles administration scripts and styles for the Register module.
+ *
+ * @phan-constructor-used-for-side-effects
  */
 final class Admin {
 
@@ -39,7 +41,7 @@ final class Admin {
 	public function __construct( Rules_Manager $rules_manager ) {
 		$this->rules_manager = $rules_manager;
 		$this->admin_dir_url = plugin_dir_url( __FILE__ ) . 'public/';
-		( new Settings( $this->rules_manager ) );
+		new Settings( $this->rules_manager );
 		$this->init_hooks();
 	}
 
@@ -47,16 +49,16 @@ final class Admin {
 	 * Intializes all hooks used by the object.
 	 */
 	private function init_hooks() {
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+		add_action( 'admin_enqueue_scripts', array( self::class, 'enqueue_styles' ) );
+		add_action( 'admin_enqueue_scripts', array( self::class, 'enqueue_scripts' ) );
 		add_action( 'admin_footer', array( $this, 'init_rules_options' ) );
-		add_action( 'admin_footer', array( $this, 'init_rules_data' ) );
+		add_action( 'admin_footer', array( self::class, 'init_rules_data' ) );
 	}
 
 	/**
 	 * Enqueues all styles needed for the user registration admin page.
 	 */
-	public function enqueue_styles() {
+	public static function enqueue_styles() {
 		if ( get_current_screen()->id === 'skautis_page_skautis-integration_modules_register' ) {
 			Helpers::enqueue_style( 'modules_register', 'modules/Register/admin/css/skautis-modules-register-admin.min.css' );
 		}
@@ -65,7 +67,7 @@ final class Admin {
 	/**
 	 * Enqueues all scripts needed for the user registration admin page.
 	 */
-	public function enqueue_scripts() {
+	public static function enqueue_scripts() {
 		if ( get_current_screen()->id === 'skautis_page_skautis-integration_modules_register' ) {
 			wp_enqueue_script( 'jquery-ui-sortable' );
 
@@ -91,7 +93,7 @@ final class Admin {
 	public function init_rules_options() {
 		if ( get_current_screen()->id === 'skautis_page_skautis-integration_modules_register' ) {
 			$rules = array();
-			foreach ( (array) $this->rules_manager->get_all_rules() as $rule ) {
+			foreach ( $this->rules_manager->get_all_rules() as $rule ) {
 				$rules[ $rule->ID ] = $rule->post_title;
 			}
 			?>
@@ -105,7 +107,7 @@ final class Admin {
 	/**
 	 * Initializes dynamic data for the register JS code.
 	 */
-	public function init_rules_data() {
+	public static function init_rules_data() {
 		if ( get_current_screen()->id === 'skautis_page_skautis-integration_modules_register' ) {
 			$data = get_option( SKAUTIS_INTEGRATION_NAME . '_modules_register_rules' );
 			?>

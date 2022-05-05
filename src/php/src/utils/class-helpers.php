@@ -22,7 +22,7 @@ class Helpers {
 	 * @param string        $handle A unique handle to identify the script with. This handle should be passed to `wp_enqueue_script()`.
 	 * @param string        $src Path to the file, relative to the plugin directory.
 	 * @param array<string> $deps A list of dependencies of the script. These can be either system dependencies like jquery, or other registered scripts. Default [].
-	 * @param boolean       $in_footer  Whether to enqueue the script before </body> instead of in the <head>. Default 'true'.
+	 * @param bool          $in_footer  Whether to enqueue the script before </body> instead of in the <head>. Default 'true'.
 	 *
 	 * @return void
 	 */
@@ -40,7 +40,7 @@ class Helpers {
 	 * @param string        $handle A unique handle to identify the script with.
 	 * @param string        $src Path to the file, relative to the plugin directory.
 	 * @param array<string> $deps A list of dependencies of the script. These can be either system dependencies like jquery, or other registered scripts. Default [].
-	 * @param boolean       $in_footer Whether to enqueue the script in the page footer.
+	 * @param bool          $in_footer Whether to enqueue the script in the page footer.
 	 *
 	 * @return void
 	 */
@@ -110,15 +110,15 @@ class Helpers {
 	/**
 	 * Shows a notice in the administration.
 	 *
-	 * @param string                             $message The notice text.
-	 * @param "error"|"warning"|"success"|"info" $type The type of the notice. Default "warning".
-	 * @param string                             $hide_notice_on_page An ID of a screen where the notice shouldn't get shown. Optional.
+	 * @param string $message The notice text.
+	 * @param string $type The type of the notice. Accepted values are "error", "warning", "success", "info". Default "warning".
+	 * @param string $hide_notice_on_page An ID of a screen where the notice shouldn't get shown. Optional.
 	 */
 	public static function show_admin_notice( string $message, string $type = 'warning', string $hide_notice_on_page = '' ) {
 		add_action(
 			'admin_notices',
-			function () use ( $message, $type, $hide_notice_on_page ) {
-				if ( ! $hide_notice_on_page || get_current_screen()->id !== $hide_notice_on_page ) {
+			static function () use ( $message, $type, $hide_notice_on_page ) {
+				if ( '' === $hide_notice_on_page || get_current_screen()->id !== $hide_notice_on_page ) {
 					$class = 'notice notice-' . $type . ' is-dismissible';
 					printf(
 						'<div class="%1$s"><p>%2$s</p><button type="button" class="notice-dismiss">
@@ -172,7 +172,7 @@ class Helpers {
 	 * @param string $nonce_name The name of the nonce.
 	 */
 	public static function validate_nonce_from_url( string $url, string $nonce_name ) {
-		if ( ! wp_verify_nonce( self::get_nonce_from_url( urldecode( $url ), $nonce_name ), $nonce_name ) ) {
+		if ( false === wp_verify_nonce( self::get_nonce_from_url( urldecode( $url ), $nonce_name ), $nonce_name ) ) {
 			wp_nonce_ays( $nonce_name );
 		}
 	}
@@ -186,8 +186,8 @@ class Helpers {
 	public static function get_variable_from_url( string $url, string $variable_name ): string {
 		$result = array();
 		$url    = esc_url_raw( $url );
-		if ( preg_match( '~' . $variable_name . '=([^\&,\s,\/,\#,\%,\?]*)~', $url, $result ) ) {
-			if ( is_array( $result ) && isset( $result[1] ) && $result[1] ) {
+		if ( 1 === preg_match( '~' . $variable_name . '=([^\&,\s,\/,\#,\%,\?]*)~', $url, $result ) ) {
+			if ( is_array( $result ) && isset( $result[1] ) && '' !== $result[1] ) {
 				return sanitize_text_field( $result[1] );
 			}
 		}

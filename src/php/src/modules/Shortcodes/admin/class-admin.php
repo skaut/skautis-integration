@@ -15,6 +15,8 @@ use Skautis_Integration\Rules\Rules_Manager;
  * Adds the TinyMCE shortcode button to the post editor.
  *
  * This class only handles the classic editor, not Gutenberg.
+ *
+ * @phan-constructor-used-for-side-effects
  */
 final class Admin {
 
@@ -53,10 +55,10 @@ final class Admin {
 
 		add_action(
 			'admin_init',
-			function () {
-				if ( get_user_option( 'rich_editing' ) ) {
-					add_filter( 'mce_external_plugins', array( $this, 'register_tinymce_plugin' ) );
-					add_filter( 'mce_buttons', array( $this, 'add_tinymce_button' ) );
+			static function () {
+				if ( false !== get_user_option( 'rich_editing' ) ) {
+					add_filter( 'mce_external_plugins', array( self::class, 'register_tinymce_plugin' ) );
+					add_filter( 'mce_buttons', array( self::class, 'add_tinymce_button' ) );
 				}
 			}
 		);
@@ -67,7 +69,7 @@ final class Admin {
 	 *
 	 * @param array<string, string> $plugins A list of button script source URLs keyed by the button ID.
 	 */
-	public function register_tinymce_plugin( array $plugins = array() ): array {
+	public static function register_tinymce_plugin( array $plugins = array() ): array {
 		$plugins['skautis_rules'] = plugin_dir_url( dirname( __FILE__, 4 ) ) . 'modules/Shortcodes/admin/js/skautis-modules-shortcodes-tinymceRulesButton.min.js';
 
 		return $plugins;
@@ -78,7 +80,7 @@ final class Admin {
 	 *
 	 * @param array<string> $buttons A list of button IDs.
 	 */
-	public function add_tinymce_button( array $buttons = array() ): array {
+	public static function add_tinymce_button( array $buttons = array() ): array {
 		$buttons[] = 'skautis_rules';
 
 		return $buttons;
@@ -103,7 +105,7 @@ final class Admin {
 			}
 
 			$rules = array();
-			foreach ( (array) $this->rules_manager->get_all_rules() as $rule ) {
+			foreach ( $this->rules_manager->get_all_rules() as $rule ) {
 				$rules[ $rule->ID ] = $rule->post_title;
 			}
 			?>

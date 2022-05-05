@@ -201,35 +201,11 @@ class Services {
 	private static $frontend = null;
 
 	/**
-	 * Gets an instance of a module.
-	 *
-	 * @param string $module_id The ID of the module.
-	 *
-	 * @return Module The initialized modules instance.
-	 */
-	public static function get_module( $module_id ) {
-		if ( ! array_key_exists( $module_id, self::$modules ) ) {
-			switch ( $module_id ) {
-				case Register::get_id():
-					self::$modules[ $module_id ] = new Register( self::get_skautis_gateway(), self::get_skautis_login(), self::get_wp_login_logout(), self::get_rules_manager(), self::get_repository_users() );
-					break;
-				case Shortcodes::get_id():
-					self::$modules[ $module_id ] = new Shortcodes( self::get_rules_manager(), self::get_skautis_login(), self::get_wp_login_logout() );
-					break;
-				case Visibility::get_id():
-					self::$modules[ $module_id ] = new Visibility( self::get_rules_manager(), self::get_skautis_login(), self::get_wp_login_logout() );
-					break;
-			}
-		}
-		return self::$modules[ $module_id ];
-	}
-
-	/**
 	 * Gets the Skautis_Gateway service.
 	 *
 	 * @return Skautis_Gateway The initialized service object.
 	 */
-	private static function get_skautis_gateway() {
+	public static function get_skautis_gateway() {
 		if ( is_null( self::$skautis_gateway ) ) {
 			self::$skautis_gateway = new Skautis_Gateway();
 		}
@@ -325,7 +301,7 @@ class Services {
 	 *
 	 * @return Repository_Users The initialized service object.
 	 */
-	private static function get_repository_users() {
+	public static function get_repository_users() {
 		if ( is_null( self::$repository_users ) ) {
 			self::$repository_users = new Repository_Users( self::get_skautis_gateway() );
 		}

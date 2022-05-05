@@ -51,7 +51,7 @@ final class Rules_Manager {
 		$this->wp_login_logout = $wp_login_logout;
 		$this->rules           = $this->init_rules();
 		if ( is_admin() ) {
-			( new Admin( $this, $wp_login_logout, $this->skautis_gateway ) );
+			new Admin( $this, $wp_login_logout, $this->skautis_gateway );
 		}
 	}
 
@@ -79,20 +79,20 @@ final class Rules_Manager {
 	 * @param array $rule The rule to check against.
 	 */
 	private function process_rule( $rule ): bool {
-		if ( ! isset( $rule->field ) ) {
-			if ( isset( $rule->condition ) && isset( $rule->rules ) ) {
-				return $this->parse_rules_groups( $rule->condition, $rule->rules );
+		if ( ! isset( $rule['field'] ) ) {
+			if ( isset( $rule['condition'] ) && isset( $rule['rules'] ) ) {
+				return $this->parse_rules_groups( $rule['condition'], $rule['rules'] );
 			}
 
 			return false;
 		}
 
-		if ( isset( $this->rules[ $rule->field ] ) ) {
-			return $this->rules[ $rule->field ]->is_rule_passed( $rule->operator, $rule->value );
+		if ( isset( $this->rules[ $rule['field'] ] ) ) {
+			return $this->rules[ $rule['field'] ]->is_rule_passed( $rule['operator'], $rule['value'] );
 		}
 
 		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-			throw new \Exception( 'Rule: "' . $rule->field . '" is not declared.' );
+			throw new \Exception( 'Rule: "' . $rule['field'] . '" is not declared.' );
 		}
 
 		return false;
@@ -101,8 +101,8 @@ final class Rules_Manager {
 	/**
 	 * Checks whether a user passed a rule group.
 	 *
-	 * @param "AND"|"OR" $condition The logical operator used by the group.
-	 * @param array      $rules A list of rules in the group.
+	 * @param string $condition The logical operator used by the group. Accepted values: "AND", OR".
+	 * @param array  $rules A list of rules in the group.
 	 */
 	private function parse_rules_groups( string $condition, array $rules ): bool {
 		$result = 0;
@@ -111,16 +111,16 @@ final class Rules_Manager {
 			$result = 1;
 			foreach ( $rules as $rule ) {
 				if ( isset( $rule->rules ) ) {
-					$result = $result * $this->parse_rules_groups( $rule->condition, $rule->rules );
+					$result *= $this->parse_rules_groups( $rule->condition, $rule->rules );
 				}
-				$result = $result * $this->process_rule( $rule );
+				$result *= $this->process_rule( $rule );
 			}
 		} else { // OR.
 			foreach ( $rules as $rule ) {
 				if ( isset( $rule->rules ) ) {
-					$result = $result + $this->parse_rules_groups( $rule->condition, $rule->rules );
+					$result += $this->parse_rules_groups( $rule->condition, $rule->rules );
 				}
-				$result = $result + $this->process_rule( $rule );
+				$result += $this->process_rule( $rule );
 			}
 		}
 
@@ -147,7 +147,7 @@ final class Rules_Manager {
 		$result = '';
 
 		$rules = get_option( SKAUTIS_INTEGRATION_NAME . '_modules_register_rules' );
-		if ( ! $rules ) {
+		if ( empty( $rules ) ) {
 			return (string) get_option( SKAUTIS_INTEGRATION_NAME . '_modules_register_defaultwpRole' );
 		}
 
@@ -172,6 +172,8 @@ final class Rules_Manager {
 
 	/**
 	 * Returns all rules (posts of type rule).
+	 *
+	 * @suppress PhanPluginPossiblyStaticPublicMethod
 	 */
 	public function get_all_rules(): array {
 		$rules_wp_query = new \WP_Query(

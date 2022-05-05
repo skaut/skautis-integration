@@ -30,7 +30,7 @@ final class WP_Register {
 	/**
 	 * A link to the Users service instance.
 	 *
-	 * @var Users
+	 * @var UsersRepository
 	 */
 	private $users_repository;
 
@@ -51,11 +51,11 @@ final class WP_Register {
 	 * @param string $user_login The WordPress username to use for the new user.
 	 * @param string $user_email The new user's e-mail address.
 	 */
-	private function resolve_notifications_and_register_user_to_wp( string $user_login, string $user_email ): int {
+	private static function resolve_notifications_and_register_user_to_wp( string $user_login, string $user_email ) {
 		remove_action( 'register_new_user', 'wp_send_new_user_notifications' );
 		add_action(
 			'register_new_user',
-			function ( $user_id ) {
+			static function ( $user_id ) {
 				// TODO: Unused filter?
 				$notify = apply_filters( SKAUTIS_INTEGRATION_NAME . '_modules_register_new_user_notifications', get_option( SKAUTIS_INTEGRATION_NAME . '_modules_register_notifications', 'none' ) );
 				if ( 'none' !== $notify ) {
@@ -70,13 +70,13 @@ final class WP_Register {
 			}
 		);
 
-		add_filter( 'sanitize_user', array( $this, 'sanitize_username' ), 10, 3 );
+		add_filter( 'sanitize_user', array( self::class, 'sanitize_username' ), 10, 3 );
 		$user_id = register_new_user( $user_login, $user_email );
-		remove_filter( 'sanitize_user', array( $this, 'sanitize_username' ), 10 );
+		remove_filter( 'sanitize_user', array( self::class, 'sanitize_username' ), 10 );
 
 		add_action( 'register_new_user', 'wp_send_new_user_notifications' );
 
-		if ( is_wp_error( $user_id ) ) {
+		if ( $user_id instanceof \WP_Error ) {
 			if ( isset( $user_id->errors ) && ( isset( $user_id->errors['username_exists'] ) || isset( $user_id->errors['email_exists'] ) ) ) {
 				/* translators: The user's e-mail address */
 				wp_die( sprintf( esc_html__( 'Vás email %s je již na webu registrován, ale není propojen se skautIS účtem.', 'skautis-integration' ), esc_html( $user_email ) ), esc_html__( 'Chyba při registraci', 'skautis-integration' ) );
@@ -93,7 +93,7 @@ final class WP_Register {
 	 *
 	 * This function queries SkautIS for the information needed when registering a new WordPress user.
 	 *
-	 * @param Skautis\User $skautis_user The SkautIS user.
+	 * @param \stdClass $skautis_user The SkautIS user.
 	 */
 	private function prepare_user_data( $skautis_user ): array {
 		$skautis_user_detail = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->PersonDetail(
@@ -123,8 +123,8 @@ final class WP_Register {
 	 *
 	 * @see resolve_notifications_and_register_user_to_wp This function actually performs the registration.
 	 *
-	 * @param array  $user Information about the user.
-	 * @param string $wp_role The WordPress role to assign to the new user.
+	 * @param array{id: int, UserName: string, email: string, firstName: string, lastName: string, nickName: string} $user Information about the user.
+	 * @param string                                                                                                 $wp_role The WordPress role to assign to the new user.
 	 */
 	private function process_wp_user_registration( array $user, string $wp_role ): bool {
 		$return_url = Helpers::get_return_url();
@@ -160,20 +160,20 @@ final class WP_Register {
 
 		$username = mb_strcut( $user['UserName'], 0, 60 );
 
-		$user_id = $this->resolve_notifications_and_register_user_to_wp( $username, $user['email'] );
+		$user_id = self::resolve_notifications_and_register_user_to_wp( $username, $user['email'] );
 
-		if ( 0 === $user_id ) {
+		if ( 0 === $user_id || ! is_int( $user_id ) ) {
 			return false;
 		}
 
-		if ( ! add_user_meta( $user_id, 'skautisUserId_' . $this->skautis_gateway->get_env(), absint( $user['id'] ) ) ) {
+		if ( false === add_user_meta( $user_id, 'skautisUserId_' . $this->skautis_gateway->get_env(), absint( $user['id'] ) ) ) {
 			return false;
 		}
 
 		$first_name = $user['firstName'];
 		$last_name  = $user['lastName'];
 		$nick_name  = $user['nickName'];
-		if ( $nick_name ) {
+		if ( '' !== $nick_name ) {
 			$display_name = $nick_name;
 		} else {
 			$nick_name    = '';
@@ -204,7 +204,7 @@ final class WP_Register {
 	public function check_if_user_is_already_registered_and_get_his_user_id(): int {
 		$user_detail = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserDetail();
 
-		if ( ! $user_detail || ! isset( $user_detail->ID ) || ! $user_detail->ID > 0 ) {
+		if ( is_null( $user_detail ) || ! isset( $user_detail->ID ) || ! $user_detail->ID > 0 ) {
 			return 0;
 		}
 
@@ -237,6 +237,8 @@ final class WP_Register {
 	 * This version runs this module's register action after the login.
 	 *
 	 * @see Register::register() The action that fires after the login.
+	 *
+	 * @suppress PhanPluginPossiblyStaticPublicMethod
 	 */
 	public function get_register_url(): string {
 		$return_url = Helpers::get_login_logout_redirect();
@@ -269,6 +271,8 @@ final class WP_Register {
 	 * Returns the URL used to register an existing SkautIS user as a new WordPress user.
 	 *
 	 * This function is used to register other users than the current user.
+	 *
+	 * @suppress PhanPluginPossiblyStaticPublicMethod
 	 */
 	public function get_manually_register_wp_user_url(): string {
 		$return_url = Helpers::get_login_logout_redirect();
@@ -295,11 +299,11 @@ final class WP_Register {
 	/**
 	 * Sanitizes SkautIS username to be a valid WordPress username.
 	 *
-	 * @param string  $username The sanitized username.
-	 * @param string  $raw_username The raw username before sanitizing.
-	 * @param boolean $strict Whether to limit the username to Latin, Cyrillic and a few special characters.
+	 * @param string $username The sanitized username @unused-param.
+	 * @param string $raw_username The raw username before sanitizing.
+	 * @param bool   $strict Whether to limit the username to Latin, Cyrillic and a few special characters.
 	 */
-	public function sanitize_username( string $username, string $raw_username, bool $strict ): string {
+	public static function sanitize_username( string $username, string $raw_username, bool $strict ): string {
 		$username = wp_strip_all_tags( $raw_username );
 
 		// Kill octets.

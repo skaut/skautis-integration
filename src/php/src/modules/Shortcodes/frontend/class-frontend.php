@@ -16,6 +16,8 @@ use Skautis_Integration\Utils\Helpers;
 
 /**
  * Handles the frontend part of the shortcodes - runs the shortcode, shows notices and a login form.
+ *
+ * @phan-constructor-used-for-side-effects
  */
 final class Frontend {
 
@@ -58,14 +60,14 @@ final class Frontend {
 	 * Intializes all hooks used by the object.
 	 */
 	private function init_hooks() {
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ) );
+		add_action( 'wp_enqueue_scripts', array( self::class, 'enqueue_styles' ) );
 		add_shortcode( 'skautis', array( $this, 'process_shortcode' ) );
 	}
 
 	/**
 	 * Prints a login form to access the content in a shortcode.
 	 *
-	 * @param boolean $force_logout_from_skautis Whether to force a logout from SkautIS before logging in.
+	 * @param bool $force_logout_from_skautis Whether to force a logout from SkautIS before logging in.
 	 */
 	private function get_login_form( bool $force_logout_from_skautis = false ): string {
 		$login_url_args = add_query_arg( 'noWpLogin', true, Helpers::get_current_url() );
@@ -87,21 +89,21 @@ final class Frontend {
 	/**
 	 * Return a localized message about the user needing to log in.
 	 */
-	private function get_login_required_message(): string {
+	private static function get_login_required_message(): string {
 		return '<p>' . __( 'To view this content you must be logged in skautIS', 'skautis-integration' ) . '</p>';
 	}
 
 	/**
 	 * Return a localized message about the user not having permission to access the content.
 	 */
-	private function get_unauthorized_message(): string {
+	private static function get_unauthorized_message(): string {
 		return '<p>' . __( 'You do not have permission to access this content', 'skautis-integration' ) . '</p>';
 	}
 
 	/**
 	 * Enqueues all styles needed for the shortcode frontend view.
 	 */
-	public function enqueue_styles() {
+	public static function enqueue_styles() {
 		wp_enqueue_style( 'buttons' );
 		Helpers::enqueue_style( 'frontend', 'frontend/css/skautis-frontend.min.css' );
 	}
@@ -122,7 +124,7 @@ final class Frontend {
 
 			if ( ! $this->skautis_login->is_user_logged_in_skautis() ) {
 				if ( 'showLogin' === $atts['content'] ) {
-					return $this->get_login_required_message() . $this->get_login_form();
+					return self::get_login_required_message() . $this->get_login_form();
 				} else {
 					return '';
 				}
@@ -132,7 +134,7 @@ final class Frontend {
 				return $content;
 			} else {
 				if ( 'showLogin' === $atts['content'] ) {
-					return $this->get_unauthorized_message() . $this->get_login_form( true );
+					return self::get_unauthorized_message() . $this->get_login_form( true );
 				} else {
 					return '';
 				}

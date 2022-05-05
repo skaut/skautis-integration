@@ -41,7 +41,7 @@ if ( ! function_exists( 'getSkautisRegisterUrl' ) ) {
 	 */
 	function getSkautisRegisterUrl(): string {
 		if ( Services::get_modules_manager()->is_module_activated( Register::get_id() ) ) {
-			return Services::get_module( Register::get_id() )->getWpRegister()->get_register_url();
+			return Services::get_modules_manager()->get_register_module()->getWpRegister()->get_register_url();
 		} else {
 			return '';
 		}

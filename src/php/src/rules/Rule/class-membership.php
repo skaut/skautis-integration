@@ -27,28 +27,28 @@ class Membership implements Rule {
 	/**
 	 * The rule value type.
 	 *
-	 * @var "string"|"integer"|"double"|"date"|"time"|"datetime"|"boolean"
+	 * @var string
 	 */
 	protected static $type = 'string';
 
 	/**
 	 * The rule input field type type.
 	 *
-	 * @var "roleInput"|"membershipInput"|"funcInput"|"qualificationInput"|"text"|"number"|"textarea"|"radio"|"checkbox"|"select"
+	 * @var string
 	 */
 	protected static $input = 'membershipInput';
 
 	/**
 	 * Whether the rule accepts multiple values at once.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected static $multiple = true;
 
 	/**
 	 * All the operators that are applicable for the rule.
 	 *
-	 * @var array<"equal"|"not_equal"|"in"|"not_in"|"less"|"less_or_equal"|"greater"|"greater_or_equal"|"between"|"not_between"|"begins_with"|"not_begins_with"|"contains"|"not_contains"|"ends_with"|"not_ends_with"|"is_empty"|"is_not_empty"|"is_null"|"is_not_null">
+	 * @var array<string>
 	 */
 	protected static $operators = array( 'in' );
 
@@ -85,7 +85,7 @@ class Membership implements Rule {
 	/**
 	 * Returns the rule value type.
 	 *
-	 * @return "string"|"integer"|"double"|"date"|"time"|"datetime"|"boolean"
+	 * @return string
 	 */
 	public function get_type(): string {
 		return self::$type;
@@ -94,7 +94,7 @@ class Membership implements Rule {
 	/**
 	 * Returns the rule input field type type.
 	 *
-	 * @return "roleInput"|"membershipInput"|"funcInput"|"qualificationInput"|"text"|"number"|"textarea"|"radio"|"checkbox"|"select"
+	 * @return string
 	 */
 	public function get_input(): string {
 		return self::$input;
@@ -110,7 +110,7 @@ class Membership implements Rule {
 	/**
 	 * Returns all the operators that are applicable for the rule.
 	 *
-	 * @return array<"equal"|"not_equal"|"in"|"not_in"|"less"|"less_or_equal"|"greater"|"greater_or_equal"|"between"|"not_between"|"begins_with"|"not_begins_with"|"contains"|"not_contains"|"ends_with"|"not_ends_with"|"is_empty"|"is_not_empty"|"is_null"|"is_not_null">
+	 * @return array<string>
 	 */
 	public function get_operators(): array {
 		return self::$operators;
@@ -151,7 +151,7 @@ class Membership implements Rule {
 	 *
 	 * @param string $unit_id The raw unit ID.
 	 */
-	protected function clearUnitId( string $unit_id ): string {
+	protected static function clearUnitId( string $unit_id ): string {
 		return trim(
 			str_replace(
 				array(
@@ -222,24 +222,19 @@ class Membership implements Rule {
 			$user_memberships = $result;
 		}
 
-		if ( ! is_array( $user_memberships ) ) {
-			if ( is_a( $user_memberships, '\stdClass' ) ) {
-				wp_die(
-					sprintf(
-						/* translators: 1: Start of a link to the documentation 2: End of the link to the documentation */
-						esc_html__(
-							'Pravděpodobně nemáte propojený skautIS účet se svojí osobou. %1$sPostupujte podle tohoto návodu%2$s',
-							'skautis-integration'
-						),
-						'<a href="https://napoveda.skaut.cz/skautis/informacni-system/uzivatel/propojeni-uctu">',
-						'</a>'
-					)
-				);
-			} else {
-				if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-					throw new \Exception( __( 'Nastala neočekávaná chyba.', 'skautis-integration' ) );
-				}
-			}
+		// @phan-suppress-next-line PhanTypeMismatchArgumentInternalProbablyReal
+		if ( is_a( $user_memberships, '\stdClass' ) ) {
+			wp_die(
+				sprintf(
+					/* translators: 1: Start of a link to the documentation 2: End of the link to the documentation */
+					esc_html__(
+						'Pravděpodobně nemáte propojený skautIS účet se svojí osobou. %1$sPostupujte podle tohoto návodu%2$s',
+						'skautis-integration'
+					),
+					'<a href="https://napoveda.skaut.cz/skautis/informacni-system/uzivatel/propojeni-uctu">',
+					'</a>'
+				)
+			);
 		}
 
 		return $user_memberships;
@@ -252,8 +247,8 @@ class Membership implements Rule {
 	 *
 	 * @throws \Exception An operator is undefined.
 	 *
-	 * @param "equal"|"not_equal"|"in"|"not_in"|"less"|"less_or_equal"|"greater"|"greater_or_equal"|"between"|"not_between"|"begins_with"|"not_begins_with"|"contains"|"not_contains"|"ends_with"|"not_ends_with"|"is_empty"|"is_not_empty"|"is_null"|"is_not_null" $operator The operator used with the rule.
-	 * @param string                                                                                                                                                                                                                                                $data The rule data.
+	 * @param string $operator The operator used with the rule @unused-param.
+	 * @param string $data The rule data.
 	 */
 	public function is_rule_passed( string $operator, $data ): bool {
 		// Parse and prepare data from rules UI.
@@ -262,7 +257,7 @@ class Membership implements Rule {
 		if ( isset( $output[0], $output[0][0], $output[0][1], $output[0][2] ) ) {
 			list( $memberships, $membership_operator, $unit_id ) = $output[0];
 			$memberships = explode( ',', $memberships );
-			$unit_id     = $this->clearUnitId( $unit_id );
+			$unit_id     = self::clearUnitId( $unit_id );
 		} else {
 			return false;
 		}
@@ -273,7 +268,7 @@ class Membership implements Rule {
 			// in / not_in range check.
 			if ( array_key_exists( $membership, $user_memberships ) ) {
 				foreach ( $user_memberships[ $membership ] as $user_membership_unit_id ) {
-					$user_membership_unit_id = $this->clearUnitId( $user_membership_unit_id );
+					$user_membership_unit_id = self::clearUnitId( $user_membership_unit_id );
 
 					switch ( $membership_operator ) {
 						case 'equal':

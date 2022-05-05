@@ -15,6 +15,8 @@ use Skautis_Integration\Utils\Helpers;
 
 /**
  * Registers, handles and shows all settings for the Register module.
+ *
+ * @phan-constructor-used-for-side-effects
  */
 final class Settings {
 
@@ -43,28 +45,28 @@ final class Settings {
 			return;
 		}
 
-		add_action( 'admin_menu', array( $this, 'setup_setting_page' ), 25 );
+		add_action( 'admin_menu', array( self::class, 'setup_setting_page' ), 25 );
 		add_action( 'admin_init', array( $this, 'setup_setting_fields' ) );
 	}
 
 	/**
 	 * Adds an admin settings page for the Register module.
 	 */
-	public function setup_setting_page() {
+	public static function setup_setting_page() {
 		add_submenu_page(
 			SKAUTIS_INTEGRATION_NAME,
 			__( 'Registrace', 'skautis-integration' ),
 			__( 'Registrace', 'skautis-integration' ),
 			Helpers::get_skautis_manager_capability(),
 			SKAUTIS_INTEGRATION_NAME . '_modules_register',
-			array( $this, 'print_setting_page' )
+			array( self::class, 'print_setting_page' )
 		);
 	}
 
 	/**
 	 * Prints the admin settings page for the Register module.
 	 */
-	public function print_setting_page() {
+	public static function print_setting_page() {
 		if ( ! Helpers::user_is_skautis_manager() ) {
 			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'skautis-integration' ) );
 		}
@@ -91,7 +93,7 @@ final class Settings {
 		add_settings_section(
 			SKAUTIS_INTEGRATION_NAME . '_modules_register',
 			'',
-			function () {
+			static function () {
 				echo '';
 			},
 			SKAUTIS_INTEGRATION_NAME . '_modules_register'
@@ -100,7 +102,7 @@ final class Settings {
 		add_settings_field(
 			SKAUTIS_INTEGRATION_NAME . '_modules_register_defaultwpRole',
 			__( 'Výchozí úroveň po registraci uživatele přes skautIS', 'skautis-integration' ),
-			array( $this, 'field_wp_role' ),
+			array( self::class, 'field_wp_role' ),
 			SKAUTIS_INTEGRATION_NAME . '_modules_register',
 			SKAUTIS_INTEGRATION_NAME . '_modules_register'
 		);
@@ -108,7 +110,7 @@ final class Settings {
 		add_settings_field(
 			SKAUTIS_INTEGRATION_NAME . '_modules_register_notifications',
 			__( 'Po úspěšné registraci uživatele poslat emaily:', 'skautis-integration' ),
-			array( $this, 'field_new_user_notifications' ),
+			array( self::class, 'field_new_user_notifications' ),
 			SKAUTIS_INTEGRATION_NAME . '_modules_register',
 			SKAUTIS_INTEGRATION_NAME . '_modules_register'
 		);
@@ -152,7 +154,7 @@ final class Settings {
 	/**
 	 * Prints the settings field for choosing the default WordPress role for newly registered users
 	 */
-	public function field_wp_role() {
+	public static function field_wp_role() {
 		?>
 		<select name="<?php echo esc_attr( SKAUTIS_INTEGRATION_NAME ); ?>_modules_register_defaultwpRole"
 				id="skautis_integration_modules_register_rules_wpRole"><?php wp_dropdown_roles( get_option( SKAUTIS_INTEGRATION_NAME . '_modules_register_defaultwpRole' ) ); ?></select>
@@ -162,7 +164,7 @@ final class Settings {
 	/**
 	 * Prints the settings field for choosing whom to send an e-mail upon sucessfull user registration.
 	 */
-	public function field_new_user_notifications() {
+	public static function field_new_user_notifications() {
 		$notification_option = get_option( SKAUTIS_INTEGRATION_NAME . '_modules_register_notifications', 'none' );
 		?>
 		<label>
@@ -232,7 +234,7 @@ final class Settings {
 					</label>
 					<select name="rule" class="rule select2">
 						<?php
-						foreach ( (array) $this->rules_manager->get_all_rules() as $rule ) {
+						foreach ( $this->rules_manager->get_all_rules() as $rule ) {
 							echo '<option value="' . esc_attr( $rule->ID ) . '">' . esc_html( $rule->post_title ) . '</option>';
 						}
 						?>

@@ -36,13 +36,13 @@ class Users {
 	/**
 	 * Parses the "skautisSearchUsers" GET variable from the URL.
 	 */
-	protected function get_search_user_string(): string {
+	protected static function get_search_user_string(): string {
 		$search_user_string = '';
 
 		$return_url = Helpers::get_return_url();
 		if (
 			isset( $_GET[ SKAUTIS_INTEGRATION_NAME . '_skautis_search_user_nonce' ] ) &&
-			wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET[ SKAUTIS_INTEGRATION_NAME . '_skautis_search_user_nonce' ] ) ), SKAUTIS_INTEGRATION_NAME . '_skautis_search_user' ) &&
+			false !== wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET[ SKAUTIS_INTEGRATION_NAME . '_skautis_search_user_nonce' ] ) ), SKAUTIS_INTEGRATION_NAME . '_skautis_search_user' ) &&
 			isset( $_GET['skautisSearchUsers'] ) &&
 			'' !== $_GET['skautisSearchUsers']
 		) {
@@ -156,8 +156,9 @@ class Users {
 								)
 							);
 							if ( isset( $event_url->UrlDetail ) ) {
+								$reg_result = array();
 								preg_match( '~ID=(\d+)$~', $event_url->UrlDetail, $reg_result );
-								if ( $reg_result && isset( $reg_result[1] ) ) {
+								if ( isset( $reg_result[1] ) ) {
 									$event_id = $reg_result[1];
 								}
 							}
@@ -168,7 +169,7 @@ class Users {
 		}
 
 		// Different procedure for roles associated with events.
-		if ( $event_type && $event_id ) {
+		if ( '' !== $event_type && 0 !== $event_id ) {
 			if ( 'Congress' === $event_type ) {
 				$participants = null;
 			} else {
@@ -182,7 +183,7 @@ class Users {
 
 			if ( is_array( $participants ) ) {
 				$users = array_map(
-					function ( $participant ) {
+					static function ( $participant ) {
 						$user = new \stdClass();
 
 						$user->id        = $participant->ID;
@@ -191,12 +192,13 @@ class Users {
 						$user->lastName  = '';
 						$user->nickName  = '';
 
+						$reg_result = array();
 						preg_match( '~([^\s]+)\s([^\s]+)(\s\((.*)\))~', $participant->Person, $reg_result );
 
-						if ( $reg_result && isset( $reg_result[1], $reg_result[2] ) ) {
+						if ( isset( $reg_result[1], $reg_result[2] ) ) {
 							$user->firstName = $reg_result[2];
 							$user->lastName  = $reg_result[1];
-							if ( isset( $reg_result[4] ) && $reg_result[4] ) {
+							if ( isset( $reg_result[4] ) && '' !== $reg_result[4] ) {
 								$user->nickName = $reg_result[4];
 							}
 						}
@@ -221,7 +223,7 @@ class Users {
 
 		// Standard get all users procedure.
 		if ( empty( $users ) ) {
-			$search_user_string = $this->get_search_user_string();
+			$search_user_string = self::get_search_user_string();
 
 			$skautis_users = $this->skautis_gateway->get_skautis_instance()->UserManagement->userAll(
 				array(
@@ -231,7 +233,7 @@ class Users {
 
 			if ( is_array( $skautis_users ) ) {
 				$users = array_map(
-					function ( $skautis_user ) {
+					static function ( $skautis_user ) {
 						$user = new \stdClass();
 
 						$user->id        = $skautis_user->ID;
@@ -241,13 +243,14 @@ class Users {
 						$user->lastName  = '';
 						$user->nickName  = '';
 
+						$reg_result = array();
 						preg_match( '~([^\s]+)\s([^\s]+)(\s\((.*)\))~', $skautis_user->DisplayName, $reg_result );
 
-						if ( $reg_result && isset( $reg_result[1], $reg_result[2] ) ) {
+						if ( isset( $reg_result[1], $reg_result[2] ) ) {
 							$user->firstName = $reg_result[2];
 							$user->lastName  = $reg_result[1];
 						}
-						if ( isset( $reg_result[4] ) && $reg_result[4] ) {
+						if ( isset( $reg_result[4] ) && '' !== $reg_result[4] ) {
 							$user->nickName = $reg_result[4];
 						}
 
@@ -278,7 +281,7 @@ class Users {
 
 		$users = $this->get_users();
 
-		if ( $users['eventType'] ) {
+		if ( '' !== $users['eventType'] ) {
 			foreach ( (array) $users['users'] as $user ) {
 				if ( $user->id === $skautis_user_id ) {
 					$user_detail = array(

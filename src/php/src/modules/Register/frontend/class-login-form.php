@@ -40,14 +40,14 @@ final class Login_Form {
 	 */
 	private function init_hooks() {
 		add_action( 'login_form', array( $this, 'login_link_in_login_form' ) );
-		add_action( 'login_enqueue_scripts', array( $this, 'enqueue_login_styles' ) );
+		add_action( 'login_enqueue_scripts', array( self::class, 'enqueue_login_styles' ) );
 		add_filter( 'login_form_bottom', array( $this, 'login_link_in_login_form_return' ) );
 	}
 
 	/**
 	 * Enqueues login page styles.
 	 */
-	public function enqueue_login_styles() {
+	public static function enqueue_login_styles() {
 		wp_enqueue_style( SKAUTIS_INTEGRATION_NAME . '_frontend' );
 	}
 
@@ -70,7 +70,7 @@ final class Login_Form {
 	 *
 	 * TODO: Remove this function. Why is the button printed from 2 different hooks?
 	 *
-	 * @param string $html Unused.
+	 * @param string $html Unused @unused-param.
 	 */
 	public function login_link_in_login_form_return( string $html ): string {
 		return '

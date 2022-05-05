@@ -15,6 +15,8 @@ use Skautis_Integration\Utils\Helpers;
 
 /**
  * Enqueues all scripts and styles for the Visibility module.
+ *
+ * @phan-constructor-used-for-side-effects
  */
 final class Admin {
 
@@ -125,7 +127,7 @@ final class Admin {
 		if ( in_array( get_current_screen()->id, $this->post_types, true ) ) {
 			$rules = array();
 
-			foreach ( (array) $this->rules_manager->get_all_rules() as $rule ) {
+			foreach ( $this->rules_manager->get_all_rules() as $rule ) {
 				$rules[ $rule->ID ] = $rule->post_title;
 			}
 			?>

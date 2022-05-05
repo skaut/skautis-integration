@@ -71,7 +71,7 @@ final class Connect_And_Disconnect_WP_Account {
 	 */
 	public function print_connect_and_disconnect_button( int $wp_user_id ) {
 		$skautis_user_id = get_user_meta( $wp_user_id, 'skautisUserId_' . $this->skautis_gateway->get_env(), true );
-		if ( $skautis_user_id ) {
+		if ( false === $skautis_user_id || '' === $skautis_user_id ) {
 			if ( ! Helpers::user_is_skautis_manager() && get_option( SKAUTIS_INTEGRATION_NAME . '_allowUsersDisconnectFromSkautis' ) !== '1' ) {
 				return;
 			}
@@ -126,7 +126,7 @@ final class Connect_And_Disconnect_WP_Account {
 	 */
 	public function connect_wp_user_to_skautis() {
 		if ( ! isset( $_GET[ SKAUTIS_INTEGRATION_NAME . '_connect_user_nonce' ] ) ||
-			! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET[ SKAUTIS_INTEGRATION_NAME . '_connect_user_nonce' ] ) ), SKAUTIS_INTEGRATION_NAME . '_connect_user' ) ||
+			false === wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET[ SKAUTIS_INTEGRATION_NAME . '_connect_user_nonce' ] ) ), SKAUTIS_INTEGRATION_NAME . '_connect_user' ) ||
 			! $this->skautis_login->is_user_logged_in_skautis() ||
 			! Helpers::user_is_skautis_manager() ||
 			is_null( Helpers::get_return_url() )
@@ -150,6 +150,8 @@ final class Connect_And_Disconnect_WP_Account {
 	 * Returns a link to connect an existing SkautIS user with an existing WordPress user.
 	 *
 	 * This link is used to connect a WordPress user that is not the current user.
+	 *
+	 * @suppress PhanPluginPossiblyStaticPublicMethod
 	 */
 	public function get_connect_wp_user_to_skautis_url(): string {
 		$return_url = Helpers::get_current_url();
@@ -179,7 +181,7 @@ final class Connect_And_Disconnect_WP_Account {
 				} elseif ( ( strpos( $return_url, 'user-edit_php' ) !== false ||
 							strpos( $return_url, 'user-edit.php' ) !== false ) &&
 							strpos( $return_url, 'user_id=' ) !== false ) {
-					if ( ! preg_match( '~user_id=(\d+)~', $return_url, $result ) ) {
+					if ( 1 !== preg_match( '~user_id=(\d+)~', $return_url, $result ) ) {
 						return;
 					}
 					if ( is_array( $result ) && isset( $result[1] ) && $result[1] > 0 ) {

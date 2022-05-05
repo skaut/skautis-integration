@@ -39,13 +39,13 @@ final class Users {
 	 * Intializes all hooks used by the object.
 	 */
 	private function init_hooks() {
-		add_filter( 'manage_users_columns', array( $this, 'add_column_header_to_users_table' ) );
-		add_filter( 'manage_users_custom_column', array( $this, 'add_column_to_users_table' ), 10, 3 );
+		add_filter( 'manage_users_columns', array( self::class, 'add_column_header_to_users_table' ) );
+		add_filter( 'manage_users_custom_column', array( self::class, 'add_column_to_users_table' ), 10, 3 );
 
 		add_action( 'show_user_profile', array( $this, 'skautis_user_id_field' ) );
 		add_action( 'edit_user_profile', array( $this, 'skautis_user_id_field' ) );
-		add_action( 'personal_options_update', array( $this, 'manage_skautis_user_id_field' ) );
-		add_action( 'edit_user_profile_update', array( $this, 'manage_skautis_user_id_field' ) );
+		add_action( 'personal_options_update', array( self::class, 'manage_skautis_user_id_field' ) );
+		add_action( 'edit_user_profile_update', array( self::class, 'manage_skautis_user_id_field' ) );
 	}
 
 	/**
@@ -53,7 +53,7 @@ final class Users {
 	 *
 	 * @param array<string> $columns A list of column headers.
 	 */
-	public function add_column_header_to_users_table( array $columns = array() ): array {
+	public static function add_column_header_to_users_table( array $columns = array() ): array {
 		$columns[ SKAUTIS_INTEGRATION_NAME ] = __( 'skautIS', 'skautis-integration' );
 
 		return $columns;
@@ -68,7 +68,7 @@ final class Users {
 	 * @param string $column_name The current column.
 	 * @param int    $user_id The ID of the user.
 	 */
-	public function add_column_to_users_table( $value, string $column_name, int $user_id ) {
+	public static function add_column_to_users_table( $value, string $column_name, int $user_id ) {
 		if ( SKAUTIS_INTEGRATION_NAME === $column_name ) {
 			$env_type = get_option( 'skautis_integration_appid_type' );
 			if ( Skautis_Gateway::PROD_ENV === $env_type ) {
@@ -77,7 +77,7 @@ final class Users {
 				$user_id = get_the_author_meta( 'skautisUserId_' . Skautis_Gateway::TEST_ENV, $user_id );
 			}
 
-			if ( $user_id ) {
+			if ( '' !== $user_id ) {
 				return '✓';
 			}
 
@@ -140,8 +140,8 @@ final class Users {
 	 *
 	 * @param int $user_id The ID of the user.
 	 */
-	public function manage_skautis_user_id_field( int $user_id ): bool {
-		if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ), 'update-user_' . $user_id ) ) {
+	public static function manage_skautis_user_id_field( int $user_id ): bool {
+		if ( ! isset( $_POST['_wpnonce'] ) || false === wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ), 'update-user_' . $user_id ) ) {
 			return false;
 		}
 

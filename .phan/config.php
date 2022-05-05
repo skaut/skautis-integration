@@ -11,9 +11,9 @@ return array(
 	'backward_compatibility_checks'             => false, // Covered by PHPCS.
 	'warn_about_undocumented_throw_statements'  => true,
 	'strict_method_checking'                    => true,
-	'strict_object_checking'                    => true,
-	'strict_property_checking'                  => true,
-	'strict_return_checking'                    => true,
+	'strict_object_checking'                    => false, // TODO: Enable.
+	'strict_property_checking'                  => false, // TODO: Enable.
+	'strict_return_checking'                    => false, // TODO: Enable.
 	'constant_variable_detection'               => true,
 	'redundant_condition_detection'             => true,
 	'unused_variable_detection'                 => true,
@@ -23,14 +23,14 @@ return array(
 		// 'tests',
 		'.phan',
 		'dist/vendor',
-		// 'vendor/skaut/phan-wordpress-stubs/stubs',
+		'vendor/skaut/wordpress-stubs/stubs',
 	),
 	'file_list'                                 => array(
 		'scoper.inc.php',
 	),
 	'exclude_analysis_directory_list'           => array(
 		'dist/vendor/',
-		// 'vendor/skaut/phan-wordpress-stubs/stubs',
+		'vendor/skaut/wordpress-stubs/stubs',
 	),
 	'suppress_issue_types'                      => array(
 		'PhanPluginDuplicateConditionalNullCoalescing',

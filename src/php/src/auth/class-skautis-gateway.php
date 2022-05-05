@@ -9,7 +9,6 @@ declare( strict_types=1 );
 
 namespace Skautis_Integration\Auth;
 
-use Skautis_Integration\Utils\Helpers;
 use Skautis_Integration\Vendor\Skautis;
 
 /**
@@ -47,9 +46,9 @@ class Skautis_Gateway {
 	/**
 	 * Whether the current SkautIS environment is testing.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
-	protected $test_mode = WP_DEBUG;
+	protected $test_mode;
 
 	/**
 	 * The current SkautIS environment (testing or production).
@@ -73,7 +72,7 @@ class Skautis_Gateway {
 			$this->test_mode = true;
 		}
 
-		if ( $this->app_id && $env_type ) {
+		if ( '' !== $this->app_id && '' !== $env_type ) {
 			$session_adapter           = new Transient_Session_Adapter();
 			$wsdl_manager              = new Skautis\Wsdl\WsdlManager( new Skautis\Wsdl\WebServiceFactory(), new Skautis\Config( $this->app_id, $this->test_mode ) );
 			$user                      = new Skautis\User( $wsdl_manager, $session_adapter );
@@ -125,7 +124,7 @@ class Skautis_Gateway {
 					return true;
 				}
 			}
-		} catch ( \Exception $e ) {
+		} catch ( \Exception $_ ) {
 			return false;
 		}
 

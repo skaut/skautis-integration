@@ -27,28 +27,28 @@ class Func implements Rule {
 	/**
 	 * The rule value type.
 	 *
-	 * @var "string"|"integer"|"double"|"date"|"time"|"datetime"|"boolean"
+	 * @var string
 	 */
 	protected static $type = 'string';
 
 	/**
 	 * The rule input field type type.
 	 *
-	 * @var "roleInput"|"membershipInput"|"funcInput"|"qualificationInput"|"text"|"number"|"textarea"|"radio"|"checkbox"|"select"
+	 * @var string
 	 */
 	protected static $input = 'funcInput';
 
 	/**
 	 * Whether the rule accepts multiple values at once.
 	 *
-	 * @var boolean
+	 * @var bool
 	 */
 	protected static $multiple = true;
 
 	/**
 	 * All the operators that are applicable for the rule.
 	 *
-	 * @var array<"equal"|"not_equal"|"in"|"not_in"|"less"|"less_or_equal"|"greater"|"greater_or_equal"|"between"|"not_between"|"begins_with"|"not_begins_with"|"contains"|"not_contains"|"ends_with"|"not_ends_with"|"is_empty"|"is_not_empty"|"is_null"|"is_not_null">
+	 * @var array<string>
 	 */
 	protected static $operators = array( 'in', 'not_in' );
 
@@ -85,7 +85,7 @@ class Func implements Rule {
 	/**
 	 * Returns the rule value type.
 	 *
-	 * @return "string"|"integer"|"double"|"date"|"time"|"datetime"|"boolean"
+	 * @return string
 	 */
 	public function get_type(): string {
 		return self::$type;
@@ -94,7 +94,7 @@ class Func implements Rule {
 	/**
 	 * Returns the rule input field type type.
 	 *
-	 * @return "roleInput"|"membershipInput"|"funcInput"|"qualificationInput"|"text"|"number"|"textarea"|"radio"|"checkbox"|"select"
+	 * @return string
 	 */
 	public function get_input(): string {
 		return self::$input;
@@ -110,7 +110,7 @@ class Func implements Rule {
 	/**
 	 * Returns all the operators that are applicable for the rule.
 	 *
-	 * @return array<"equal"|"not_equal"|"in"|"not_in"|"less"|"less_or_equal"|"greater"|"greater_or_equal"|"between"|"not_between"|"begins_with"|"not_begins_with"|"contains"|"not_contains"|"ends_with"|"not_ends_with"|"is_empty"|"is_not_empty"|"is_null"|"is_not_null">
+	 * @return array<string>
 	 */
 	public function get_operators(): array {
 		return self::$operators;
@@ -151,7 +151,7 @@ class Func implements Rule {
 	 *
 	 * @param string $unit_id The raw unit ID.
 	 */
-	protected function clearUnitId( string $unit_id ): string {
+	protected static function clearUnitId( string $unit_id ): string {
 		return trim(
 			str_replace(
 				array(
@@ -170,41 +170,37 @@ class Func implements Rule {
 	protected function getUserFuncsWithUnitIds(): array {
 		static $user_funcs = null;
 
-		if ( is_null( $user_funcs ) ) {
-			$user_detail = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserDetail();
-			$user_funcs  = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->FunctionAllPerson(
-				array(
-					'ID_Person' => $user_detail->ID_Person,
-				)
-			);
-
-			$result = array();
-
-			if ( ! $user_funcs || ! property_exists( $user_funcs, 'FunctionAllOutput' ) || empty( $user_funcs->FunctionAllOutput ) || ! is_array( $user_funcs->FunctionAllOutput ) || empty( $user_funcs->FunctionAllOutput[0] ) ) {
-				return $result;
-			}
-
-			foreach ( $user_funcs->FunctionAllOutput as $user_func ) {
-				$unit_detail = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->UnitDetail(
-					array(
-						'ID' => $user_func->ID_Unit,
-					)
-				);
-				if ( $unit_detail ) {
-					if ( ! isset( $result[ $user_func->ID_FunctionType ] ) ) {
-						$result[ $user_func->ID_FunctionType ] = array();
-					}
-					$result[ $user_func->ID_FunctionType ][] = $unit_detail->RegistrationNumber;
-				}
-			}
-
-			$user_funcs = $result;
+		if ( ! is_null( $user_funcs ) ) {
+			return $user_funcs;
 		}
+		$user_detail = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserDetail();
+		$user_funcs  = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->FunctionAllPerson(
+			array(
+				'ID_Person' => $user_detail->ID_Person,
+			)
+		);
 
-		if ( ! is_array( $user_funcs ) ) {
+		if ( is_null( $user_funcs ) || ! property_exists( $user_funcs, 'FunctionAllOutput' ) || empty( $user_funcs->FunctionAllOutput ) || ! is_array( $user_funcs->FunctionAllOutput ) || empty( $user_funcs->FunctionAllOutput[0] ) ) {
 			return array();
 		}
 
+		$result = array();
+
+		foreach ( $user_funcs->FunctionAllOutput as $user_func ) {
+			$unit_detail = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->UnitDetail(
+				array(
+					'ID' => $user_func->ID_Unit,
+				)
+			);
+			if ( $unit_detail ) {
+				if ( ! isset( $result[ $user_func->ID_FunctionType ] ) ) {
+					$result[ $user_func->ID_FunctionType ] = array();
+				}
+				$result[ $user_func->ID_FunctionType ][] = $unit_detail->RegistrationNumber;
+			}
+		}
+
+		$user_funcs = $result;
 		return $user_funcs;
 	}
 
@@ -213,8 +209,8 @@ class Func implements Rule {
 	 *
 	 * @throws \Exception An operator is undefined.
 	 *
-	 * @param "equal"|"not_equal"|"in"|"not_in"|"less"|"less_or_equal"|"greater"|"greater_or_equal"|"between"|"not_between"|"begins_with"|"not_begins_with"|"contains"|"not_contains"|"ends_with"|"not_ends_with"|"is_empty"|"is_not_empty"|"is_null"|"is_not_null" $funcs_operator The operator used with the rule.
-	 * @param string                                                                                                                                                                                                                                                $data The rule data.
+	 * @param string $funcs_operator The operator used with the rule.
+	 * @param string $data The rule data.
 	 */
 	public function is_rule_passed( string $funcs_operator, $data ): bool {
 		// Parse and prepare data from rules UI.
@@ -223,35 +219,33 @@ class Func implements Rule {
 		if ( isset( $output[0], $output[0][0], $output[0][1], $output[0][2] ) ) {
 			list( $funcs, $unit_operator, $unit_id ) = $output[0];
 			$funcs                                   = explode( ',', $funcs );
-			$unit_id                                 = $this->clearUnitId( $unit_id );
+			$unit_id                                 = self::clearUnitId( $unit_id );
 		} else {
 			return false;
 		}
 
 		// Logic to determine in / not_in range.
-		$in_not_in_negation = 2;
 		switch ( $funcs_operator ) {
 			case 'in':
-				$in_not_in_negation = 0;
+				$assume_in = true;
 				break;
 			case 'not_in':
-				$in_not_in_negation = 1;
+				$assume_in = false;
 				break;
 			default:
-				$in_not_in_negation = 2;
 				if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 					throw new \Exception( 'Function operator: "' . $funcs_operator . '" is not declared.' );
 				}
-				break;
+				return false;
 		}
 
 		$user_funcs = $this->getUserFuncsWithUnitIds();
 		$user_pass  = 0;
 		foreach ( $funcs as $func ) {
 			// in / not_in range check.
-			if ( ( $in_not_in_negation + array_key_exists( $func, $user_funcs ) ) === 1 ) {
+			if ( array_key_exists( $func, $user_funcs ) === $assume_in ) {
 				foreach ( $user_funcs[ $func ] as $user_func_unit_id ) {
-					$user_func_unit_id = $this->clearUnitId( $user_func_unit_id );
+					$user_func_unit_id = self::clearUnitId( $user_func_unit_id );
 
 					switch ( $unit_operator ) {
 						case 'equal':
