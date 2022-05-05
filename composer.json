@@ -26,9 +26,15 @@
     "issues": "https://github.com/skaut/skautis-integration/issues",
     "source": "https://github.com/skaut/skautis-integration"
   },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/skaut/Skautis.git"
+    }
+  ],
   "require": {
     "php": "^7.4 || ^8.0",
-    "skautis/skautis": "^2.2"
+    "skautis/skautis": "2.x-dev#60cf2c6f06c9d10bdc92a05e6e669518c2b8a571"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.6",
