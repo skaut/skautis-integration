@@ -71,6 +71,8 @@ final class Login_Form {
 	 * TODO: Remove this function. Why is the button printed from 2 different hooks?
 	 *
 	 * @param string $html Unused @unused-param.
+	 *
+	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
 	 */
 	public function login_link_in_login_form_return( string $html ): string {
 		return '

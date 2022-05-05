@@ -18,7 +18,5 @@
 		<exclude name="LongVariable"/>
 		<exclude name="ShortVariable"/>
 	</rule>
-	<rule ref="rulesets/unusedcode.xml">
-		<exclude name="UnusedFormalParameter"/>
-	</rule>
+	<rule ref="rulesets/unusedcode.xml"/>
 </ruleset>
