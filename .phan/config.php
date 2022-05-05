@@ -45,7 +45,7 @@ return array(
 		'InvalidVariableIssetPlugin',
 		'NoAssertPlugin',
 		'NonBoolBranchPlugin',
-		//'NonBoolInLogicalArithPlugin',
+		'NonBoolInLogicalArithPlugin',
 		'PossiblyStaticMethodPlugin',
 		'PreferNamespaceUsePlugin',
 		'PregRegexCheckerPlugin',
