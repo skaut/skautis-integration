@@ -144,7 +144,7 @@ class All implements Rule {
 	/**
 	 * Checks whether the rule is fulfilled.
 	 *
-	 * @param string $operator The operator used with the rule. @unused-param
+	 * @param string $operator The operator used with the rule @unused-param.
 	 * @param string $data The rule data.
 	 */
 	public function is_rule_passed( string $operator, $data ): bool {

@@ -16,7 +16,7 @@ use Skautis_Integration\Vendor\Skautis\SessionAdapter\AdapterInterface;
  */
 class Transient_Session_Adapter implements AdapterInterface {
 	const COOKIE_CHARACTERS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-	
+
 	/**
 	 * A helper function generating random string and saving it in a cookie.
 	 */

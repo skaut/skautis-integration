@@ -247,7 +247,7 @@ class Membership implements Rule {
 	 *
 	 * @throws \Exception An operator is undefined.
 	 *
-	 * @param string $operator The operator used with the rule. @unused-param
+	 * @param string $operator The operator used with the rule @unused-param.
 	 * @param string $data The rule data.
 	 */
 	public function is_rule_passed( string $operator, $data ): bool {

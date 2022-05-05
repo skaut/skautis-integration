@@ -162,7 +162,7 @@ final class Admin {
 	/**
 	 * Prints the rules query builder UI.
 	 *
-	 * @param \WP_Post $post Unused. @unused-param
+	 * @param \WP_Post $post Unused @unused-param.
 	 */
 	public function add_rules_ui( \WP_Post $post ) {
 		if ( get_current_screen()->id !== Rules_Init::RULES_TYPE_SLUG || get_post_type() !== Rules_Init::RULES_TYPE_SLUG ) {
