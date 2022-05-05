@@ -27,6 +27,7 @@ return array(
 	),
 	'file_list'                                 => array(
 		'scoper.inc.php',
+		'phpstan-bootstrap.php',
 	),
 	'exclude_analysis_directory_list'           => array(
 		'dist/vendor/',
