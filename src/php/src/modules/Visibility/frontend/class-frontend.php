@@ -188,7 +188,8 @@ final class Frontend {
 			'pre_get_comments',
 			static function ( \WP_Comment_Query $wp_comment_query ) use ( $post_id ) {
 				$query_vars = $wp_comment_query->query_vars;
-				if ( array_key_exists( 'post_id', $query_vars ) && $query_vars['post_id'] === $post_id ) {
+				// @phan-suppress-next-line PhanTypePossiblyInvalidDimOffset
+				if ( isset( $query_vars['post_id'] ) && $post_id === $query_vars['post_id'] ) {
 					if ( ! isset( $query_vars['post__not_in'] ) || empty( $query_vars['post__not_in'] ) ) {
 						$query_vars['post__not_in'] = array();
 					} elseif ( ! is_array( $query_vars['post__not_in'] ) ) {

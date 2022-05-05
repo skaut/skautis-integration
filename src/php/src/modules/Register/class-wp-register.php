@@ -204,7 +204,7 @@ final class WP_Register {
 	public function check_if_user_is_already_registered_and_get_his_user_id(): int {
 		$user_detail = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserDetail();
 
-		if ( ! $user_detail || ! isset( $user_detail->ID ) || ! $user_detail->ID > 0 ) {
+		if ( is_null( $user_detail ) || ! isset( $user_detail->ID ) || ! $user_detail->ID > 0 ) {
 			return 0;
 		}
 

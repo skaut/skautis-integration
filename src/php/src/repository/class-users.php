@@ -156,8 +156,9 @@ class Users {
 								)
 							);
 							if ( isset( $event_url->UrlDetail ) ) {
+								$reg_result = array();
 								preg_match( '~ID=(\d+)$~', $event_url->UrlDetail, $reg_result );
-								if ( $reg_result && isset( $reg_result[1] ) ) {
+								if ( isset( $reg_result[1] ) ) {
 									$event_id = $reg_result[1];
 								}
 							}
@@ -191,12 +192,13 @@ class Users {
 						$user->lastName  = '';
 						$user->nickName  = '';
 
+						$reg_result = array();
 						preg_match( '~([^\s]+)\s([^\s]+)(\s\((.*)\))~', $participant->Person, $reg_result );
 
-						if ( $reg_result && isset( $reg_result[1], $reg_result[2] ) ) {
+						if ( isset( $reg_result[1], $reg_result[2] ) ) {
 							$user->firstName = $reg_result[2];
 							$user->lastName  = $reg_result[1];
-							if ( isset( $reg_result[4] ) && $reg_result[4] ) {
+							if ( isset( $reg_result[4] ) && '' !== $reg_result[4] ) {
 								$user->nickName = $reg_result[4];
 							}
 						}
@@ -241,13 +243,14 @@ class Users {
 						$user->lastName  = '';
 						$user->nickName  = '';
 
+						$reg_result = array();
 						preg_match( '~([^\s]+)\s([^\s]+)(\s\((.*)\))~', $skautis_user->DisplayName, $reg_result );
 
-						if ( $reg_result && isset( $reg_result[1], $reg_result[2] ) ) {
+						if ( isset( $reg_result[1], $reg_result[2] ) ) {
 							$user->firstName = $reg_result[2];
 							$user->lastName  = $reg_result[1];
 						}
-						if ( isset( $reg_result[4] ) && $reg_result[4] ) {
+						if ( isset( $reg_result[4] ) && '' !== $reg_result[4] ) {
 							$user->nickName = $reg_result[4];
 						}
 

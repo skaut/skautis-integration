@@ -143,7 +143,7 @@ final class Skautis_Login {
 				)
 			);
 
-			if ( ! $result || ! isset( $result->ID_Unit ) ) {
+			if ( is_null( $result ) || ! isset( $result->ID_Unit ) ) {
 				return;
 			}
 

@@ -187,7 +187,7 @@ class Helpers {
 		$result = array();
 		$url    = esc_url_raw( $url );
 		if ( 1 === preg_match( '~' . $variable_name . '=([^\&,\s,\/,\#,\%,\?]*)~', $url, $result ) ) {
-			if ( is_array( $result ) && isset( $result[1] ) && $result[1] ) {
+			if ( is_array( $result ) && isset( $result[1] ) && '' !== $result[1] ) {
 				return sanitize_text_field( $result[1] );
 			}
 		}
