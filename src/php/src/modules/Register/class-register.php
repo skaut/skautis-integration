@@ -33,7 +33,7 @@ final class Register implements Module {
 	 *
 	 * @var string
 	 */
-	public static $id = 'module_Register';
+	public static $module_id = 'module_Register';
 
 	/**
 	 * A link to the Skautis_Gateway service instance.
@@ -160,7 +160,7 @@ final class Register implements Module {
 	 * Returns the module ID.
 	 */
 	public static function get_id(): string {
-		return self::$id;
+		return self::$module_id;
 	}
 
 	/**
