@@ -22,7 +22,7 @@ class Membership implements Rule {
 	 *
 	 * @var string
 	 */
-	public static $id = 'membership';
+	private static $rule_id = 'membership';
 
 	/**
 	 * The rule value type.
@@ -71,8 +71,8 @@ class Membership implements Rule {
 	/**
 	 * Returns the rule ID.
 	 */
-	public function get_id(): string {
-		return self::$id;
+	public static function get_id(): string {
+		return self::$rule_id;
 	}
 
 	/**

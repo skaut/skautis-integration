@@ -21,7 +21,6 @@ use Skautis_Integration\Frontend\Login_Form;
 use Skautis_Integration\Admin\Admin;
 use Skautis_Integration\Admin\Settings;
 use Skautis_Integration\Admin\Users;
-use Skautis_Integration\Modules\Module;
 use Skautis_Integration\Modules\Modules_Manager;
 use Skautis_Integration\Modules\Register\Register;
 use Skautis_Integration\Modules\Shortcodes\Shortcodes;
@@ -36,13 +35,6 @@ use Skautis_Integration\Utils\Role_Changer;
  * A dependency injection container for all the services of the plugin.
  */
 class Services {
-
-	/**
-	 * All the plugin modules.
-	 *
-	 * @var array<Module>
-	 */
-	private static $modules = array();
 
 	/**
 	 * A Skautis_Gateway service instance.

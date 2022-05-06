@@ -62,7 +62,7 @@ final class Visibility implements Module {
 	 *
 	 * @var string
 	 */
-	public static $id = 'module_Visibility';
+	public static $module_id = 'module_Visibility';
 
 	/**
 	 * Constructs the module and saves all dependencies.
@@ -88,7 +88,7 @@ final class Visibility implements Module {
 	 * Returns the module ID.
 	 */
 	public static function get_id(): string {
-		return self::$id;
+		return self::$module_id;
 	}
 
 	/**

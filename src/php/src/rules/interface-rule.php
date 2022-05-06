@@ -13,7 +13,7 @@ interface Rule {
 	/**
 	 * Returns the rule ID.
 	 */
-	public function get_id(): string;
+	public static function get_id(): string;
 
 	/**
 	 * Returns the localized rule name.

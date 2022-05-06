@@ -91,11 +91,11 @@ final class Modules_Manager {
 	 * @return Register The initialized module.
 	 */
 	public function get_register_module() {
-		$id = Register::get_id();
-		if ( ! array_key_exists( $id, $this->instantiated_modules ) ) {
-				$this->instantiated_modules[ $id ] = new Register( Services::get_skautis_gateway(), Services::get_skautis_login(), Services::get_wp_login_logout(), Services::get_rules_manager(), Services::get_repository_users() );
+		$module_id = Register::get_id();
+		if ( ! array_key_exists( $module_id, $this->instantiated_modules ) ) {
+				$this->instantiated_modules[ $module_id ] = new Register( Services::get_skautis_gateway(), Services::get_skautis_login(), Services::get_wp_login_logout(), Services::get_rules_manager(), Services::get_repository_users() );
 		}
-		return $this->instantiated_modules[ $id ];
+		return $this->instantiated_modules[ $module_id ];
 	}
 
 	/**
@@ -104,11 +104,11 @@ final class Modules_Manager {
 	 * @return Shortcodes The initialized module.
 	 */
 	public function get_shortcodes_module() {
-		$id = Shortcodes::get_id();
-		if ( ! array_key_exists( $id, $this->instantiated_modules ) ) {
-				$this->instantiated_modules[ $id ] = new Shortcodes( Services::get_rules_manager(), Services::get_skautis_login(), Services::get_wp_login_logout() );
+		$module_id = Shortcodes::get_id();
+		if ( ! array_key_exists( $module_id, $this->instantiated_modules ) ) {
+				$this->instantiated_modules[ $module_id ] = new Shortcodes( Services::get_rules_manager(), Services::get_skautis_login(), Services::get_wp_login_logout() );
 		}
-		return $this->instantiated_modules[ $id ];
+		return $this->instantiated_modules[ $module_id ];
 	}
 
 	/**
@@ -117,10 +117,10 @@ final class Modules_Manager {
 	 * @return Visibility The initialized module.
 	 */
 	public function get_visibility_module() {
-		$id = Visibility::get_id();
-		if ( ! array_key_exists( $id, $this->instantiated_modules ) ) {
-				$this->instantiated_modules[ $id ] = new Visibility( Services::get_rules_manager(), Services::get_skautis_login(), Services::get_wp_login_logout() );
+		$module_id = Visibility::get_id();
+		if ( ! array_key_exists( $module_id, $this->instantiated_modules ) ) {
+				$this->instantiated_modules[ $module_id ] = new Visibility( Services::get_rules_manager(), Services::get_skautis_login(), Services::get_wp_login_logout() );
 		}
-		return $this->instantiated_modules[ $id ];
+		return $this->instantiated_modules[ $module_id ];
 	}
 }
