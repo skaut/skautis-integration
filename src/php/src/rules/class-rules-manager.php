@@ -62,11 +62,11 @@ final class Rules_Manager {
 		return apply_filters(
 			SKAUTIS_INTEGRATION_NAME . '_rules',
 			array(
-				Rule\Role::$id          => new Rule\Role( $this->skautis_gateway ),
-				Rule\Membership::$id    => new Rule\Membership( $this->skautis_gateway ),
-				Rule\Func::$id          => new Rule\Func( $this->skautis_gateway ),
-				Rule\Qualification::$id => new Rule\Qualification( $this->skautis_gateway ),
-				Rule\All::$id           => new Rule\All( $this->skautis_gateway ),
+				Rule\Role::get_id()          => new Rule\Role( $this->skautis_gateway ),
+				Rule\Membership::get_id()    => new Rule\Membership( $this->skautis_gateway ),
+				Rule\Func::get_id()          => new Rule\Func( $this->skautis_gateway ),
+				Rule\Qualification::get_id() => new Rule\Qualification( $this->skautis_gateway ),
+				Rule\All::get_id()           => new Rule\All( $this->skautis_gateway ),
 			)
 		);
 	}

@@ -22,7 +22,7 @@ class All implements Rule {
 	 *
 	 * @var string
 	 */
-	public static $rule_id = 'all';
+	private static $rule_id = 'all';
 
 	/**
 	 * The rule value type.
@@ -71,7 +71,7 @@ class All implements Rule {
 	/**
 	 * Returns the rule ID.
 	 */
-	public function get_id(): string {
+	public static function get_id(): string {
 		return self::$rule_id;
 	}
 
