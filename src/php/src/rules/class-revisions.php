@@ -104,6 +104,8 @@ class Revisions {
 	 * @param never    $value Unused @unused-param.
 	 * @param never    $field Unused @unused-param.
 	 * @param \WP_Post $revision The revision to transform the field for.
+	 *
+	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
 	 */
 	public static function field( $value, $field, $revision ) {
 		$revision_id = $revision->ID;

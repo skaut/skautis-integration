@@ -55,7 +55,7 @@ final class Shortcodes implements Module {
 	 *
 	 * @var string
 	 */
-	public static $id = 'module_Shortcodes';
+	public static $module_id = 'module_Shortcodes';
 
 	/**
 	 * Constructs the module and saves all dependencies.
@@ -79,7 +79,7 @@ final class Shortcodes implements Module {
 	 * Returns the module ID.
 	 */
 	public static function get_id(): string {
-		return self::$id;
+		return self::$module_id;
 	}
 
 	/**

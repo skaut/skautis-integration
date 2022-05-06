@@ -22,7 +22,7 @@ class Role implements Rule {
 	 *
 	 * @var string
 	 */
-	public static $id = 'role';
+	private static $rule_id = 'role';
 
 	/**
 	 * The rule value type.
@@ -71,8 +71,8 @@ class Role implements Rule {
 	/**
 	 * Returns the rule ID.
 	 */
-	public function get_id(): string {
-		return self::$id;
+	public static function get_id(): string {
+		return self::$rule_id;
 	}
 
 	/**

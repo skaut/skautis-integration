@@ -22,7 +22,7 @@ class Qualification implements Rule {
 	 *
 	 * @var string
 	 */
-	public static $id = 'qualification';
+	private static $rule_id = 'qualification';
 
 	/**
 	 * The rule value type.
@@ -71,8 +71,8 @@ class Qualification implements Rule {
 	/**
 	 * Returns the rule ID.
 	 */
-	public function get_id(): string {
-		return self::$id;
+	public static function get_id(): string {
+		return self::$rule_id;
 	}
 
 	/**
