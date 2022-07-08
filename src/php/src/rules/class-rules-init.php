@@ -20,19 +20,9 @@ final class Rules_Init {
 	const RULES_TYPE_SLUG     = 'skautis_rules';
 
 	/**
-	 * A link to the Revisions service instance.
-	 *
-	 * @var Revisions
-	 */
-	private $revisions;
-
-	/**
 	 * Constructs the service and saves all dependencies.
-	 *
-	 * @param Revisions $revisions An injected Revisions service instance.
 	 */
-	public function __construct( Revisions $revisions ) {
-		$this->revisions = $revisions;
+	public function __construct() {
 		self::init_hooks();
 	}
 

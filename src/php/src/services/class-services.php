@@ -271,7 +271,8 @@ class Services {
 	 */
 	private static function get_rules_init() {
 		if ( is_null( self::$rules_init ) ) {
-			self::$rules_init = new Rules_Init( self::get_revisions() );
+			self::get_revisions();
+			self::$rules_init = new Rules_Init();
 		}
 		return self::$rules_init;
 	}
