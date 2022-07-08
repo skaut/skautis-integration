@@ -42,13 +42,6 @@ final class Admin {
 	private $skautis_gateway;
 
 	/**
-	 * TODO: Unused?
-	 *
-	 * @var string
-	 */
-	private $admin_dir_url = '';
-
-	/**
 	 * Constructs the service and saves all dependencies.
 	 *
 	 * @param Rules_Manager   $rules_manager An injected Rules_Manager service instance.
@@ -59,7 +52,6 @@ final class Admin {
 		$this->rules_manager   = $rules_manager;
 		$this->wp_login_logout = $wp_login_logout;
 		$this->skautis_gateway = $skautis_gateway;
-		$this->admin_dir_url   = plugin_dir_url( __FILE__ ) . 'public/';
 		new Columns();
 		$this->init_hooks();
 	}
