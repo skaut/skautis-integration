@@ -149,6 +149,7 @@ class Users {
 					);
 
 					foreach ( $current_user_events as $event ) {
+						// @phpstan-ignore-next-line
 						if ( $event->ID_Group === $role->ID_Group ) {
 							$event_url = $this->skautis_gateway->get_skautis_instance()->Events->EventDetail(
 								array(

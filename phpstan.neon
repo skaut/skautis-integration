@@ -12,3 +12,5 @@ parameters:
     - vendor/skaut/wordpress-stubs/stubs/WordPress/functions.php
   bootstrapFiles:
     - phpstan-bootstrap.php
+  ignoreErrors:
+    - '#Access to an undefined property Skautis_Integration\\Vendor\\Skautis\\Skautis::\$#'
