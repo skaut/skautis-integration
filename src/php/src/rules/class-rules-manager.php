@@ -92,7 +92,7 @@ final class Rules_Manager {
 	 * Checks whether a user passed a rule group.
 	 *
 	 * @param string $condition The logical operator used by the group. Accepted values: "AND", OR".
-	 * @param array<array{condition: string, rules: array}> $rules A list of rules in the group.
+	 * @param array<array{condition: string, rules?: array}> $rules A list of rules in the group.
 	 */
 	private function parse_rules_groups( string $condition, array $rules ): bool {
 		$result = 0;
