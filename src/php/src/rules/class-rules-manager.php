@@ -25,15 +25,6 @@ final class Rules_Manager {
 	private $skautis_gateway;
 
 	/**
-	 * A link to the WP_Login_Logout service instance.
-	 *
-	 * TODO: Unused?
-	 *
-	 * @var WP_Login_Logout
-	 */
-	private $wp_login_logout;
-
-	/**
 	 * A list of all the avialable rule blocks.
 	 *
 	 * @var array<string, Rule>
@@ -48,7 +39,6 @@ final class Rules_Manager {
 	 */
 	public function __construct( Skautis_Gateway $skautis_gateway, WP_Login_Logout $wp_login_logout ) {
 		$this->skautis_gateway = $skautis_gateway;
-		$this->wp_login_logout = $wp_login_logout;
 		$this->rules           = $this->init_rules();
 		if ( is_admin() ) {
 			new Admin( $this, $wp_login_logout, $this->skautis_gateway );
