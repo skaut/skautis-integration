@@ -55,7 +55,7 @@ class Skautis_Gateway {
 	 *
 	 * @var 'prod'|'test'
 	 */
-	protected $env = '';
+	protected $env;
 
 	/**
 	 * Constructs the service and saves all dependencies.
