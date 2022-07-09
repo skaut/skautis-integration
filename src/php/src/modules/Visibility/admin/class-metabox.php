@@ -14,6 +14,8 @@ use Skautis_Integration\Modules\Visibility\Frontend\Frontend;
 
 /**
  * Adds the visibility metabox to the post editor.
+ *
+ * @phan-constructor-used-for-side-effects
  */
 final class Metabox {
 
