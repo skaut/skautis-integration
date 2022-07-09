@@ -164,6 +164,8 @@ final class Actions {
 	 * @throws \Exception The requested action doesn't exist.
 	 *
 	 * @param \WP_Query $wp_query The request query.
+	 *
+	 * @SuppressWarnings(PHPMD.ExitExpression)
 	 */
 	public function auth_actions_router( \WP_Query $wp_query ) {
 		if ( '' === $wp_query->get( 'skautis_auth' ) ) {
@@ -178,7 +180,7 @@ final class Actions {
 					wp_die( sprintf( esc_html__( 'Pro správné fungování pluginu skautIS integrace, je potřeba %1$snastavit APP ID%2$s', 'skautis-integration' ), '<a href="' . esc_url( admin_url( 'admin.php?page=' . SKAUTIS_INTEGRATION_NAME ) ) . '">', '</a>' ), esc_html__( 'Chyba v konfiguraci pluginu', 'skautis-integration' ) );
 				} else {
 					wp_safe_redirect( get_home_url(), 302 );
-					wp_die();
+					die();
 				}
 			}
 		}
