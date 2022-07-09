@@ -393,11 +393,11 @@ class Services {
 	 */
 	public static function get_admin() {
 		if ( is_null( self::$admin ) ) {
+			self::get_admin_settings();
+			self::get_admin_users();
+			self::get_rules_manager();
+			self::get_users_management();
 			self::$admin = new Admin(
-				self::get_admin_settings(),
-				self::get_admin_users(),
-				self::get_rules_manager(),
-				self::get_users_management(),
 				self::get_wp_login_logout(),
 				self::get_skautis_gateway()
 			);

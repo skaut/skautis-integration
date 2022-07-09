@@ -20,33 +20,6 @@ use Skautis_Integration\Utils\Helpers;
 final class Admin {
 
 	/**
-	 * A link to the Settings service instance.
-	 *
-	 * TODO: Unused?
-	 *
-	 * @var Settings
-	 */
-	private $settings;
-
-	/**
-	 * A link to the Users service instance.
-	 *
-	 * TODO: Unused?
-	 *
-	 * @var Users
-	 */
-	private $users;
-
-	/**
-	 * A link to the Rules_Manager service instance.
-	 *
-	 * TODO: Unused?
-	 *
-	 * @var Rules_Manager
-	 */
-	private $rules_manager;
-
-	/**
 	 * A link to the WP_Login_Logout service instance.
 	 *
 	 * @var WP_Login_Logout
@@ -61,39 +34,14 @@ final class Admin {
 	private $skautis_gateway;
 
 	/**
-	 * A link to the Users_Management service instance.
-	 *
-	 * TODO: Unused?
-	 *
-	 * @var Users_Management
-	 */
-	private $users_management;
-
-	/**
-	 * TODO: Unused?
-	 *
-	 * @var string
-	 */
-	private $admin_dir_url = '';
-
-	/**
 	 * Constructs the service and saves all dependencies.
 	 *
-	 * @param Settings         $settings An injected Settings service instance.
-	 * @param Users            $users An injected Users service instance.
-	 * @param Rules_Manager    $rules_manager An injected Rules_Manager service instance.
-	 * @param Users_Management $users_management An injected Users_Management service instance.
 	 * @param WP_Login_Logout  $wp_login_logout An injected WP_Login_Logout service instance.
 	 * @param Skautis_Gateway  $skautis_gateway An injected Skautis_Gateway service instance.
 	 */
-	public function __construct( Settings $settings, Users $users, Rules_Manager $rules_manager, Users_Management $users_management, WP_Login_Logout $wp_login_logout, Skautis_Gateway $skautis_gateway ) {
-		$this->settings         = $settings;
-		$this->users            = $users;
-		$this->rules_manager    = $rules_manager;
-		$this->users_management = $users_management;
+	public function __construct( WP_Login_Logout $wp_login_logout, Skautis_Gateway $skautis_gateway ) {
 		$this->wp_login_logout  = $wp_login_logout;
 		$this->skautis_gateway  = $skautis_gateway;
-		$this->admin_dir_url    = plugin_dir_url( __FILE__ ) . 'public/';
 		$this->init_hooks();
 	}
 
