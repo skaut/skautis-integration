@@ -1593,16 +1593,16 @@
         },
         {
             "name": "skaut/wordpress-stubs",
-            "version": "2.3.0",
+            "version": "2.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/skaut/wordpress-stubs.git",
-                "reference": "c9aa9d9952d96bce616b83369fbdf462f7f9f80b"
+                "reference": "60b9bd0ae2594174d41f3cb832d5b64b9a278f4a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/skaut/wordpress-stubs/zipball/c9aa9d9952d96bce616b83369fbdf462f7f9f80b",
-                "reference": "c9aa9d9952d96bce616b83369fbdf462f7f9f80b",
+                "url": "https://api.github.com/repos/skaut/wordpress-stubs/zipball/60b9bd0ae2594174d41f3cb832d5b64b9a278f4a",
+                "reference": "60b9bd0ae2594174d41f3cb832d5b64b9a278f4a",
                 "shasum": ""
             },
             "require": {
@@ -1646,7 +1646,7 @@
                 "source": "https://github.com/skaut/wordpress-stubs",
                 "wiki": "https://github.com/skaut/wordpress-stubs/wiki"
             },
-            "time": "2022-07-08T18:32:00+00:00"
+            "time": "2022-07-09T12:03:36+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
