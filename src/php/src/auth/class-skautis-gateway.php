@@ -32,7 +32,7 @@ class Skautis_Gateway {
 	/**
 	 * An instance of the SkautIS library.
 	 *
-	 * @var Skautis\Skautis
+	 * @var Skautis\Skautis|null
 	 */
 	protected $skautis;
 
@@ -59,6 +59,8 @@ class Skautis_Gateway {
 
 	/**
 	 * Constructs the service and saves all dependencies.
+	 *
+	 * TODO: Replace elseif with else and remove useless checks
 	 */
 	public function __construct() {
 		$env_type = get_option( 'skautis_integration_appid_type' );
