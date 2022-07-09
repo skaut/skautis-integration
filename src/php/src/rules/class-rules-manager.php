@@ -66,23 +66,23 @@ final class Rules_Manager {
 	 *
 	 * @throws \Exception An undefined rule was passed to the function.
 	 *
-	 * @param array $rule The rule to check against.
+	 * @param \stdClass $rule The rule to check against.
 	 */
 	private function process_rule( $rule ): bool {
-		if ( ! isset( $rule['field'] ) ) {
-			if ( isset( $rule['condition'] ) && isset( $rule['rules'] ) ) {
-				return $this->parse_rules_groups( $rule['condition'], $rule['rules'] );
+		if ( ! isset( $rule->field ) ) {
+			if ( isset( $rule->condition ) && isset( $rule->rules ) ) {
+				return $this->parse_rules_groups( $rule->condition, $rule->rules );
 			}
 
 			return false;
 		}
 
-		if ( isset( $this->rules[ $rule['field'] ] ) ) {
-			return $this->rules[ $rule['field'] ]->is_rule_passed( $rule['operator'], $rule['value'] );
+		if ( isset( $this->rules[ $rule->field ] ) ) {
+			return $this->rules[ $rule->field ]->is_rule_passed( $rule->operator, $rule->value );
 		}
 
 		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-			throw new \Exception( 'Rule: "' . $rule['field'] . '" is not declared.' );
+			throw new \Exception( 'Rule: "' . $rule->field . '" is not declared.' );
 		}
 
 		return false;
@@ -91,8 +91,8 @@ final class Rules_Manager {
 	/**
 	 * Checks whether a user passed a rule group.
 	 *
-	 * @param string $condition The logical operator used by the group. Accepted values: "AND", OR".
-	 * @param array<array{condition: string, rules?: array}> $rules A list of rules in the group.
+	 * @param string           $condition The logical operator used by the group. Accepted values: "AND", OR".
+	 * @param array<\stdClass> $rules A list of rules in the group.
 	 */
 	private function parse_rules_groups( string $condition, array $rules ): bool {
 		$result = 0;
@@ -100,15 +100,15 @@ final class Rules_Manager {
 		if ( 'AND' === $condition ) {
 			$result = 1;
 			foreach ( $rules as $rule ) {
-				if ( isset( $rule['rules'] ) ) {
-					$result *= $this->parse_rules_groups( $rule['condition'], $rule['rules'] );
+				if ( isset( $rule->rules ) ) {
+					$result *= $this->parse_rules_groups( $rule->condition, $rule->rules );
 				}
 				$result *= $this->process_rule( $rule );
 			}
 		} else { // OR.
 			foreach ( $rules as $rule ) {
-				if ( isset( $rule['rules'] ) ) {
-					$result += $this->parse_rules_groups( $rule['condition'], $rule['rules'] );
+				if ( isset( $rule->rules ) ) {
+					$result += $this->parse_rules_groups( $rule->condition, $rule->rules );
 				}
 				$result += $this->process_rule( $rule );
 			}
