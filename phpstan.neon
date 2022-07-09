@@ -12,5 +12,7 @@ parameters:
     - vendor/skaut/wordpress-stubs/stubs/WordPress/functions.php
   bootstrapFiles:
     - phpstan-bootstrap.php
+  dynamicConstantNames:
+    - WP_DEBUG
   ignoreErrors:
     - '#Access to an undefined property Skautis_Integration\\Vendor\\Skautis\\Skautis::\$#'
