@@ -27,20 +27,12 @@ final class Login_Form {
 	private $wp_login_logout;
 
 	/**
-	 * TODO: Unused?
-	 *
-	 * @var string
-	 */
-	private $frontend_dir_url = '';
-
-	/**
 	 * Constructs the service and saves all dependencies.
 	 *
 	 * @param WP_Login_Logout $wp_login_logout An injected WP_Login_Logout service instance.
 	 */
 	public function __construct( WP_Login_Logout $wp_login_logout ) {
 		$this->wp_login_logout  = $wp_login_logout;
-		$this->frontend_dir_url = plugin_dir_url( __FILE__ ) . 'public/';
 		$this->init_hooks();
 	}
 

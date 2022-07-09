@@ -55,13 +55,6 @@ final class Actions {
 	private $connect_wp_account;
 
 	/**
-	 * TODO: Unused?
-	 *
-	 * @var string
-	 */
-	private $frontend_dir_url = '';
-
-	/**
 	 * Constructs the service and saves all dependencies.
 	 *
 	 * @param Skautis_Login                     $skautis_login An injected Skautis_Login service instance.
@@ -74,7 +67,6 @@ final class Actions {
 		$this->skautis_login      = $skautis_login;
 		$this->wp_login_logout    = $wp_login_logout;
 		$this->connect_wp_account = $connect_wp_account;
-		$this->frontend_dir_url   = plugin_dir_url( __FILE__ ) . 'public/';
 		$this->init_hooks();
 	}
 
