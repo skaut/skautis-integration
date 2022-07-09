@@ -35,40 +35,6 @@ final class Admin {
 	private $rules_manager;
 
 	/**
-	 * A link to the Frontend service instance.
-	 *
-	 * TODO: Unused?
-	 *
-	 * @var Frontend
-	 */
-	private $frontend;
-
-	/**
-	 * An instance of the module Settings service.
-	 *
-	 * TODO: Unused?
-	 *
-	 * @var Settings
-	 */
-	private $settings;
-
-	/**
-	 * An instance of the module Metabox service.
-	 *
-	 * TODO: Unused?
-	 *
-	 * @var Metabox
-	 */
-	private $metabox;
-
-	/**
-	 * TODO: Unused?
-	 *
-	 * @var string
-	 */
-	private $admin_dir_url = '';
-
-	/**
 	 * Constructs the service and saves all dependencies.
 	 *
 	 * @param array         $post_types A list of post types to activate the Visibility module for.
@@ -78,10 +44,8 @@ final class Admin {
 	public function __construct( array $post_types, Rules_Manager $rules_manager, Frontend $frontend ) {
 		$this->post_types    = $post_types;
 		$this->rules_manager = $rules_manager;
-		$this->frontend      = $frontend;
-		$this->settings      = new Settings();
-		$this->metabox       = new Metabox( $this->post_types, $this->rules_manager, $frontend );
-		$this->admin_dir_url = plugin_dir_url( __FILE__ ) . 'public/';
+		new Settings();
+		new Metabox( $this->post_types, $this->rules_manager, $frontend );
 		$this->init_hooks();
 	}
 
