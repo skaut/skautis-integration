@@ -112,7 +112,9 @@ class Skautis_Gateway {
 	 * Logs the user out of SkautIS.
 	 */
 	public function logout() {
-		$this->skautis->setLoginData( array() );
+		if ( ! is_null( $this->skautis ) ) {
+			$this->skautis->setLoginData( array() );
+		}
 		wp_remote_get( esc_url_raw( $this->get_skautis_instance()->getLogoutUrl() ) );
 	}
 
