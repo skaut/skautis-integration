@@ -27,20 +27,12 @@ final class Admin {
 	private $rules_manager;
 
 	/**
-	 * TODO: Unused?
-	 *
-	 * @var string
-	 */
-	private $admin_dir_url = '';
-
-	/**
 	 * Constructs the service and saves all dependencies.
 	 *
 	 * @param Rules_Manager $rules_manager An injected Rules_Manager service instance.
 	 */
 	public function __construct( Rules_Manager $rules_manager ) {
 		$this->rules_manager = $rules_manager;
-		$this->admin_dir_url = plugin_dir_url( __FILE__ ) . 'public/';
 		new Settings( $this->rules_manager );
 		$this->init_hooks();
 	}
