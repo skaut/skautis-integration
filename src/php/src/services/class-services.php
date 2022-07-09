@@ -424,7 +424,8 @@ class Services {
 	 */
 	public static function get_frontend() {
 		if ( is_null( self::$frontend ) ) {
-			self::$frontend = new Frontend( self::get_login_form(), self::get_wp_login_logout(), self::get_skautis_gateway() );
+			self::get_login_form();
+			self::$frontend = new Frontend( self::get_wp_login_logout(), self::get_skautis_gateway() );
 		}
 		return self::$frontend;
 	}

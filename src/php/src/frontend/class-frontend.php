@@ -19,15 +19,6 @@ use Skautis_Integration\Utils\Helpers;
 final class Frontend {
 
 	/**
-	 * A link to the Login_Form service instance.
-	 *
-	 * TODO: Unused?
-	 *
-	 * @var Login_Form
-	 */
-	private $login_form;
-
-	/**
 	 * A link to the WP_Login_Logout service instance.
 	 *
 	 * @var WP_Login_Logout
@@ -49,24 +40,14 @@ final class Frontend {
 	private $plugin_login_view;
 
 	/**
-	 * TODO: Unused?
-	 *
-	 * @var string
-	 */
-	private $frontend_dir_url = '';
-
-	/**
 	 * Constructs the service and saves all dependencies.
 	 *
-	 * @param Login_Form      $login_form An injected Login_Form service instance.
 	 * @param WP_Login_Logout $wp_login_logout An injected WP_Login_Logout service instance.
 	 * @param Skautis_Gateway $skautis_gateway An injected Skautis_Gateway service instance.
 	 */
-	public function __construct( Login_Form $login_form, WP_Login_Logout $wp_login_logout, Skautis_Gateway $skautis_gateway ) {
-		$this->login_form        = $login_form;
+	public function __construct( WP_Login_Logout $wp_login_logout, Skautis_Gateway $skautis_gateway ) {
 		$this->wp_login_logout   = $wp_login_logout;
 		$this->skautis_gateway   = $skautis_gateway;
-		$this->frontend_dir_url  = plugin_dir_url( __FILE__ ) . 'public/';
 		$this->plugin_login_view = false;
 		$this->init_hooks();
 	}
