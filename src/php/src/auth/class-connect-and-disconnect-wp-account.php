@@ -56,7 +56,7 @@ final class Connect_And_Disconnect_WP_Account {
 			update_user_meta( $wp_user_id, 'skautisUserId_' . $this->skautis_gateway->get_env(), absint( $skautis_user_id ) );
 
 			wp_safe_redirect( $return_url, 302 );
-			wp_die();
+			die();
 		}
 	}
 
@@ -106,7 +106,7 @@ final class Connect_And_Disconnect_WP_Account {
 			if ( ! $this->skautis_login->set_login_data_to_local_skautis_instance( $_POST ) ) {
 				$return_url = Helpers::get_return_url() ?? Helpers::get_current_url();
 				wp_safe_redirect( esc_url_raw( $this->skautis_gateway->get_skautis_instance()->getLoginUrl( $return_url ) ), 302 );
-				wp_die();
+				die();
 			}
 		}
 
@@ -197,10 +197,10 @@ final class Connect_And_Disconnect_WP_Account {
 		$return_url = Helpers::get_return_url();
 		if ( ! is_null( $return_url ) ) {
 			wp_safe_redirect( $return_url, 302 );
-			wp_die();
+			die();
 		} else {
 			wp_safe_redirect( get_home_url(), 302 );
-			wp_die();
+			die();
 		}
 	}
 

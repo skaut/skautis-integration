@@ -79,7 +79,7 @@ final class WP_Login_Logout {
 
 				if ( is_user_logged_in() && get_current_user_id() === $wp_user->ID ) {
 					wp_safe_redirect( $return_url, 302 );
-					wp_die();
+					die();
 				}
 
 				wp_destroy_current_session();
@@ -91,7 +91,7 @@ final class WP_Login_Logout {
 				do_action( 'wp_login', $wp_user->user_login, $wp_user );
 
 				wp_safe_redirect( $return_url, 302 );
-				wp_die();
+				die();
 			}
 		}
 
@@ -194,7 +194,7 @@ final class WP_Login_Logout {
 
 		$return_url = Helpers::get_login_logout_redirect();
 		wp_safe_redirect( esc_url_raw( $return_url ), 302 );
-		wp_die();
+		die();
 	}
 
 }

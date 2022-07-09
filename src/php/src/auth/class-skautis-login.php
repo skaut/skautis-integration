@@ -94,13 +94,13 @@ final class Skautis_Login {
 
 		if ( ! $this->is_user_logged_in_skautis() ) {
 			wp_safe_redirect( esc_url_raw( $this->skautis_gateway->get_skautis_instance()->getLoginUrl( $return_url ) ), 302 );
-			wp_die();
+			die();
 		}
 
 		if ( strpos( $return_url, 'noWpLogin' ) !== false ) {
 			$this->wp_login_logout->try_to_login_to_wp();
 			wp_safe_redirect( esc_url_raw( $return_url ), 302 );
-			wp_die();
+			die();
 		} else {
 			$this->wp_login_logout->login_to_wp();
 		}
@@ -118,14 +118,14 @@ final class Skautis_Login {
 			}
 			$this->wp_login_logout->try_to_login_to_wp();
 			wp_safe_redirect( $return_url, 302 );
-			wp_die();
+			die();
 		} elseif ( $this->is_user_logged_in_skautis() ) {
 			if ( strpos( $return_url, 'noWpLogin' ) === false ) {
 				$this->wp_login_logout->login_to_wp();
 			}
 			$this->wp_login_logout->try_to_login_to_wp();
 			wp_safe_redirect( $return_url, 302 );
-			wp_die();
+			die();
 		}
 	}
 
