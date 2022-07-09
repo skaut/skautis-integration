@@ -118,6 +118,8 @@ final class Register implements Module {
 
 	/**
 	 * Redirects the user to login with SkautIS.
+	 *
+	 * @SuppressWarnings(PHPMD.ExitExpression)
 	 */
 	private function loginUserAfterRegistration() {
 		$return_url = Helpers::get_login_logout_redirect();
@@ -203,6 +205,8 @@ final class Register implements Module {
 	 *
 	 * @see Actions::auth_actions_router() for more details about how this function gets called.
 	 * @see Register::addActionsToRouter() for more details about how this function gets called.
+	 *
+	 * @SuppressWarnings(PHPMD.ExitExpression)
 	 */
 	public function register() {
 		if ( ! $this->skautis_login->is_user_logged_in_skautis() ) {
@@ -250,6 +254,8 @@ final class Register implements Module {
 	 * Registers an existing SkautIS user as a new WordPress user.
 	 *
 	 * This function is used to register other users than the current user.
+	 *
+	 * @SuppressWarnings(PHPMD.ExitExpression)
 	 */
 	public function registerUserManually() {
 		$return_url = Helpers::get_return_url();

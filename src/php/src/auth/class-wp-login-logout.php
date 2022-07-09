@@ -40,6 +40,8 @@ final class WP_Login_Logout {
 	 *
 	 * @param int  $skautis_user_id The SkautIS user ID.
 	 * @param bool $try If true, this function will not exit with an error if the login fails.
+	 *
+	 * @SuppressWarnings(PHPMD.ExitExpression)
 	 */
 	private function login_wp_user_by_skautis_user_id( int $skautis_user_id, $try = false ) {
 		$return_url = Helpers::get_return_url();
@@ -185,6 +187,8 @@ final class WP_Login_Logout {
 	 * Handles a call to log the user out of SkautIS.
 	 *
 	 * @see Actions::auth_actions_router() for more details about how this function gets called.
+	 *
+	 * @SuppressWarnings(PHPMD.ExitExpression)
 	 */
 	public function logout() {
 		$this->skautis_gateway->logout();

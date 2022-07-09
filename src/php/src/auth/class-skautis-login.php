@@ -83,6 +83,8 @@ final class Skautis_Login {
 	 * Also, the login procedure can be forced to log the user out before the login by the "logoutFromSkautis" GET parameter.
 	 *
 	 * @see Actions::auth_actions_router() for more details about how this function gets called.
+	 *
+	 * @SuppressWarnings(PHPMD.ExitExpression)
 	 */
 	public function login() {
 		$return_url = Helpers::get_login_logout_redirect();
@@ -108,6 +110,8 @@ final class Skautis_Login {
 
 	/**
 	 * Fires upon redirect back from SkautIS login and processes the login.
+	 *
+	 * @SuppressWarnings(PHPMD.ExitExpression)
 	 */
 	public function login_confirm() {
 		$return_url = Helpers::get_return_url();

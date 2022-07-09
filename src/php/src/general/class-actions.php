@@ -164,6 +164,8 @@ final class Actions {
 	 * @throws \Exception The requested action doesn't exist.
 	 *
 	 * @param \WP_Query $wp_query The request query.
+	 *
+	 * @SuppressWarnings(PHPMD.ExitExpression)
 	 */
 	public function auth_actions_router( \WP_Query $wp_query ) {
 		if ( '' === $wp_query->get( 'skautis_auth' ) ) {

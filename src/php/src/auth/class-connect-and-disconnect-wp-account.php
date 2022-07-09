@@ -47,6 +47,8 @@ final class Connect_And_Disconnect_WP_Account {
 	 *
 	 * @param int $wp_user_id The ID of the WordPress user.
 	 * @param int $skautis_user_id The SkautIS user ID.
+	 *
+	 * @SuppressWarnings(PHPMD.ExitExpression)
 	 */
 	private function set_skautis_user_id_to_wp_account( int $wp_user_id, int $skautis_user_id ) {
 		$return_url = Helpers::get_return_url();
@@ -99,6 +101,8 @@ final class Connect_And_Disconnect_WP_Account {
 	 * This function checks if the user is logged into SkautIS and connects them with the current WordPress user. If the user isn't connected, they get redirected to SkautIS login first.
 	 *
 	 * @see Actions::auth_actions_router() for more details about how this function gets called.
+	 *
+	 * @SuppressWarnings(PHPMD.ExitExpression)
 	 */
 	public function connect() {
 		if ( ! $this->skautis_login->is_user_logged_in_skautis() ) {
@@ -169,6 +173,8 @@ final class Connect_And_Disconnect_WP_Account {
 	 * TODO: Rework the horrible return URL logic to distinguish between current user and other user disconnecting.
 	 *
 	 * @see Actions::auth_actions_router() for more details about how this function gets called.
+	 *
+	 * @SuppressWarnings(PHPMD.ExitExpression)
 	 */
 	public function disconnect() {
 		if ( is_user_logged_in() ) {
