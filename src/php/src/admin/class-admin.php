@@ -36,12 +36,12 @@ final class Admin {
 	/**
 	 * Constructs the service and saves all dependencies.
 	 *
-	 * @param WP_Login_Logout  $wp_login_logout An injected WP_Login_Logout service instance.
-	 * @param Skautis_Gateway  $skautis_gateway An injected Skautis_Gateway service instance.
+	 * @param WP_Login_Logout $wp_login_logout An injected WP_Login_Logout service instance.
+	 * @param Skautis_Gateway $skautis_gateway An injected Skautis_Gateway service instance.
 	 */
 	public function __construct( WP_Login_Logout $wp_login_logout, Skautis_Gateway $skautis_gateway ) {
-		$this->wp_login_logout  = $wp_login_logout;
-		$this->skautis_gateway  = $skautis_gateway;
+		$this->wp_login_logout = $wp_login_logout;
+		$this->skautis_gateway = $skautis_gateway;
 		$this->init_hooks();
 	}
 
