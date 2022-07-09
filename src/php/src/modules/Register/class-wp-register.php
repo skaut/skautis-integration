@@ -154,7 +154,7 @@ final class WP_Register {
 			return true;
 		}
 
-		if ( ! isset( $user['UserName'] ) || mb_strlen( $user['UserName'] ) === 0 ) {
+		if ( mb_strlen( $user['UserName'] ) === 0 ) {
 			return false;
 		}
 
