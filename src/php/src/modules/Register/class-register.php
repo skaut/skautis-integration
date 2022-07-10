@@ -16,7 +16,6 @@ use Skautis_Integration\Rules\Rules_Manager;
 use Skautis_Integration\Repository\Users as UsersRepository;
 use Skautis_Integration\Modules\Module;
 use Skautis_Integration\Modules\Register\Admin\Admin;
-use Skautis_Integration\Modules\Register\Frontend\Frontend;
 use Skautis_Integration\Modules\Register\Frontend\Login_Form;
 use Skautis_Integration\Utils\Helpers;
 
@@ -98,7 +97,7 @@ final class Register implements Module {
 		if ( is_admin() ) {
 			new Admin( $this->rules_manager );
 		} else {
-			new Frontend( new Login_Form( $this->wp_register ) );
+			new Login_Form( $this->wp_register );
 		}
 		$this->init_hooks();
 	}
