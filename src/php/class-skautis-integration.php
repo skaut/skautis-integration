@@ -41,13 +41,11 @@ class Skautis_Integration {
 		require __DIR__ . '/src/frontend/class-login-form.php';
 
 		require __DIR__ . '/src/general/class-actions.php';
-		require __DIR__ . '/src/general/class-general.php';
 
 		require __DIR__ . '/src/modules/interface-module.php';
 		require __DIR__ . '/src/modules/class-modules-manager.php';
 		require __DIR__ . '/src/modules/Register/admin/class-admin.php';
 		require __DIR__ . '/src/modules/Register/admin/class-settings.php';
-		require __DIR__ . '/src/modules/Register/frontend/class-frontend.php';
 		require __DIR__ . '/src/modules/Register/frontend/class-login-form.php';
 		require __DIR__ . '/src/modules/Register/class-register.php';
 		require __DIR__ . '/src/modules/Register/class-wp-register.php';
