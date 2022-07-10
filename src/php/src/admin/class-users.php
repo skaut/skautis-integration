@@ -37,6 +37,8 @@ final class Users {
 
 	/**
 	 * Intializes all hooks used by the object.
+	 *
+	 * @return void
 	 */
 	private function init_hooks() {
 		add_filter( 'manage_users_columns', array( self::class, 'add_column_header_to_users_table' ) );
@@ -52,6 +54,8 @@ final class Users {
 	 * Adds the header for the SkautIS column in the user table view.
 	 *
 	 * @param array<string> $columns A list of column headers.
+	 *
+	 * @return array<string> The updated list.
 	 */
 	public static function add_column_header_to_users_table( array $columns = array() ): array {
 		$columns[ SKAUTIS_INTEGRATION_NAME ] = __( 'skautIS', 'skautis-integration' );
@@ -67,6 +71,8 @@ final class Users {
 	 * @param string $value The value of the current cell.
 	 * @param string $column_name The current column.
 	 * @param int    $user_id The ID of the user.
+	 *
+	 * @return string The cell value.
 	 */
 	public static function add_column_to_users_table( $value, string $column_name, int $user_id ) {
 		if ( SKAUTIS_INTEGRATION_NAME === $column_name ) {
@@ -91,6 +97,8 @@ final class Users {
 	 * Shows the SkautIS section in the user profile both for the current user as well as when managing other users.
 	 *
 	 * @param \WP_User $user The user in question.
+	 *
+	 * @return void
 	 */
 	public function skautis_user_id_field( \WP_User $user ) {
 		// TODO: SkautIS, not skautIS.

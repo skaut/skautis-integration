@@ -25,6 +25,8 @@ class Columns {
 
 	/**
 	 * Intializes all hooks used by the object.
+	 *
+	 * @return void
 	 */
 	protected static function init_hooks() {
 		add_filter( 'manage_edit-' . Rules_Init::RULES_TYPE_SLUG . '_columns', array( self::class, 'last_modified_admin_column' ) );
@@ -77,6 +79,8 @@ class Columns {
 	 *
 	 * @param string $column_name The current column name.
 	 * @param int    $post_id The current post ID (the current row).
+	 *
+	 * @return void
 	 */
 	public static function last_modified_admin_column_content( string $column_name, int $post_id ) {
 		if ( 'modified_last' !== $column_name ) {

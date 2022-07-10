@@ -87,6 +87,8 @@ class Users {
 
 	/**
 	 * Lists all users without a connected SkautIS account under the current environment (testing or production).
+	 *
+	 * @return array<\WP_User> The list of users
 	 */
 	public function get_connectable_wp_users() {
 		// TODO: Replace with a call to get_users()?
@@ -108,6 +110,7 @@ class Users {
 			)
 		);
 
+		// @phpstan-ignore-next-line
 		return $connectable_wp_users->get_results();
 	}
 

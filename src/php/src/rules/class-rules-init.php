@@ -28,6 +28,8 @@ final class Rules_Init {
 
 	/**
 	 * Intializes all hooks used by the object.
+	 *
+	 * @return void
 	 */
 	private static function init_hooks() {
 		add_action( 'init', array( self::class, 'register_post_type' ) );
@@ -41,6 +43,8 @@ final class Rules_Init {
 
 	/**
 	 * Registers the rule post type with WordPress.
+	 *
+	 * @return void
 	 */
 	public static function register_post_type() {
 		$labels       = array(

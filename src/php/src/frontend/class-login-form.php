@@ -38,6 +38,8 @@ final class Login_Form {
 
 	/**
 	 * Intializes all hooks used by the object.
+	 *
+	 * @return void
 	 */
 	private function init_hooks() {
 		if ( ! Services::get_modules_manager()->is_module_activated( Register::get_id() ) ) {
@@ -50,6 +52,8 @@ final class Login_Form {
 	 * Enqueues frontend styles.
 	 *
 	 * TODO: Unused?
+	 *
+	 * @return void
 	 */
 	public static function enqueue_styles() {
 		Helpers::enqueue_style( 'frontend', 'frontend/css/skautis-frontened.min.css' );
@@ -57,6 +61,8 @@ final class Login_Form {
 
 	/**
 	 * Prints the "Log in with SkautIS" button as part of the login page.
+	 *
+	 * @return void
 	 */
 	public function login_link_in_login_form() {
 		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped

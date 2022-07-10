@@ -39,6 +39,8 @@ final class Login_Form {
 
 	/**
 	 * Intializes all hooks used by the object.
+	 *
+	 * @return void
 	 */
 	private function init_hooks() {
 		add_action( 'login_form', array( $this, 'login_link_in_login_form' ) );
@@ -48,6 +50,8 @@ final class Login_Form {
 
 	/**
 	 * Enqueues login page styles.
+	 *
+	 * @return void
 	 */
 	public static function enqueue_login_styles() {
 		wp_enqueue_style( SKAUTIS_INTEGRATION_NAME . '_frontend' );
@@ -55,6 +59,8 @@ final class Login_Form {
 
 	/**
 	 * Prints the Register module version of the "Log in with SkautIS" button as part of the login page.
+	 *
+	 * @return void
 	 */
 	public function login_link_in_login_form() {
 		?>

@@ -25,6 +25,8 @@ class Revisions {
 
 	/**
 	 * Intializes all hooks used by the object.
+	 *
+	 * @return void
 	 */
 	protected static function init_hooks() {
 		add_action( 'save_post', array( self::class, 'save_post' ), 10 );
@@ -70,6 +72,8 @@ class Revisions {
 	 *
 	 * @param int   $post_id The post in question.
 	 * @param array $meta The metadata to add.
+	 *
+	 * @return void
 	 */
 	private static function insert_meta( int $post_id, $meta ) {
 		foreach ( $meta as $meta_key => $meta_value ) {
@@ -87,6 +91,8 @@ class Revisions {
 	 * Deletes all metadata from a post.
 	 *
 	 * @param int $post_id The post in question.
+	 *
+	 * @return void
 	 */
 	public static function delete_meta( int $post_id ) {
 		$meta_keys = array_keys( self::get_meta( $post_id ) );
@@ -104,6 +110,8 @@ class Revisions {
 	 * @param never    $value Unused @unused-param.
 	 * @param never    $field Unused @unused-param.
 	 * @param \WP_Post $revision The revision to transform the field for.
+	 *
+	 * @return string The field value.
 	 *
 	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
 	 */
@@ -136,6 +144,8 @@ class Revisions {
 	 *
 	 * @param int $post_id The ID of the post in question.
 	 * @param int $revision_id The ID of the revision being restored.
+	 *
+	 * @return void
 	 */
 	public static function restore_revision( int $post_id, int $revision_id ) {
 		$meta = self::get_meta( $revision_id );
@@ -157,6 +167,8 @@ class Revisions {
 	 * TODO: Why is this done?
 	 *
 	 * @param int $post_id The ID of the post in question.
+	 *
+	 * @return void
 	 */
 	public static function save_post( int $post_id ) {
 		if ( false !== wp_is_post_revision( $post_id ) ) {

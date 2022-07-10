@@ -84,6 +84,8 @@ final class Skautis_Login {
 	 *
 	 * @see Actions::auth_actions_router() for more details about how this function gets called.
 	 *
+	 * @return void
+	 *
 	 * @SuppressWarnings(PHPMD.ExitExpression)
 	 */
 	public function login() {
@@ -111,6 +113,8 @@ final class Skautis_Login {
 	/**
 	 * Fires upon redirect back from SkautIS login and processes the login.
 	 *
+	 * @return void
+	 *
 	 * @SuppressWarnings(PHPMD.ExitExpression)
 	 */
 	public function login_confirm() {
@@ -137,6 +141,8 @@ final class Skautis_Login {
 	 * Changes the user's role in SkautIS.
 	 *
 	 * @param int $role_id The ID of the new role.
+	 *
+	 * @return void
 	 */
 	public function change_user_role_in_skautis( int $role_id ) {
 		if ( $role_id > 0 ) {

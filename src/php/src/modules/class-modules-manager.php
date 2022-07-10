@@ -56,6 +56,8 @@ final class Modules_Manager {
 	 * Initializes all activated modules.
 	 *
 	 * @param array $activated_modules A list of all active modules.
+	 *
+	 * @return void
 	 */
 	private function register_activated_modules( array $activated_modules = array() ) {
 		if ( in_array( Register::get_id(), $activated_modules, true ) ) {

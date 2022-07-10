@@ -51,6 +51,8 @@ final class Admin {
 
 	/**
 	 * Intializes all hooks used by the object.
+	 *
+	 * @return void
 	 */
 	private function init_hooks() {
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts_and_styles' ) );
@@ -60,6 +62,8 @@ final class Admin {
 
 	/**
 	 * Enqueues all scripts and styles needed for the visibility module.
+	 *
+	 * @return void
 	 */
 	public function enqueue_scripts_and_styles() {
 		if ( in_array( get_current_screen()->id, $this->post_types, true ) ||
@@ -86,6 +90,8 @@ final class Admin {
 
 	/**
 	 * Initializes dynamic options for the visibility JS code.
+	 *
+	 * @return void
 	 */
 	public function init_rules_options() {
 		if ( in_array( get_current_screen()->id, $this->post_types, true ) ) {
@@ -104,6 +110,8 @@ final class Admin {
 
 	/**
 	 * Initializes dynamic options for the visibility JS code.
+	 *
+	 * @return void
 	 */
 	public function init_rules_data() {
 		if ( in_array( get_current_screen()->id, $this->post_types, true ) ) {

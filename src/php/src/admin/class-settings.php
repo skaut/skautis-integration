@@ -58,6 +58,8 @@ final class Settings {
 
 	/**
 	 * Intializes all hooks used by the object.
+	 *
+	 * @return void
 	 */
 	private function init_hooks() {
 		add_filter(
@@ -84,6 +86,8 @@ final class Settings {
 
 	/**
 	 * Shows a notice in the administration if the app id is not set.
+	 *
+	 * @return void
 	 */
 	private static function check_if_app_id_is_set_and_show_notices() {
 		$env_type = get_option( 'skautis_integration_appid_type' );
@@ -131,6 +135,8 @@ final class Settings {
 
 	/**
 	 * Adds the settings pages to the administration.
+	 *
+	 * @return void
 	 */
 	public function setup_setting_page() {
 		add_menu_page(
@@ -172,6 +178,8 @@ final class Settings {
 
 	/**
 	 * Prints the basic settings page.
+	 *
+	 * @return void
 	 */
 	public static function print_setting_page() {
 		if ( ! current_user_can( Helpers::get_skautis_manager_capability() ) ) {
@@ -197,6 +205,8 @@ final class Settings {
 	 * Checks that the App ID works with SkautIS.
 	 *
 	 * @param string $value The App ID.
+	 *
+	 * @return string The sanitized App ID.
 	 */
 	public function test_app_id( $value ) {
 		if ( ! $this->skautis_gateway->test_active_app_id() ) {
@@ -207,6 +217,8 @@ final class Settings {
 
 	/**
 	 * Adds basic settings to WordPress.
+	 *
+	 * @return void
 	 */
 	public function setup_setting_fields() {
 		add_settings_section(
@@ -319,6 +331,8 @@ final class Settings {
 
 	/**
 	 * Prints the login settings page.
+	 *
+	 * @return void
 	 */
 	public static function print_login_page() {
 		if ( ! current_user_can( Helpers::get_skautis_manager_capability() ) ) {
@@ -342,6 +356,8 @@ final class Settings {
 
 	/**
 	 * Adds login settings to WordPress.
+	 *
+	 * @return void
 	 */
 	public static function setup_login_fields() {
 		add_settings_section(
@@ -421,6 +437,8 @@ final class Settings {
 
 	/**
 	 * Prints the settings field for the production app id.
+	 *
+	 * @return void
 	 */
 	public static function field_app_id_prod() {
 		echo '<input name="skautis_integration_appid_prod" id="skautis_integration_appid_prod" type="text" value="' . esc_attr( get_option( 'skautis_integration_appid_prod' ) ) . '" class="regular-text" />';
@@ -428,6 +446,8 @@ final class Settings {
 
 	/**
 	 * Prints the settings field for the testing app id.
+	 *
+	 * @return void
 	 */
 	public static function field_app_id_test() {
 		echo '<input name="skautis_integration_appid_test" id="skautis_integration_appid_test" type="text" value="' . esc_attr( get_option( 'skautis_integration_appid_test' ) ) . '" class="regular-text" />';
@@ -435,6 +455,8 @@ final class Settings {
 
 	/**
 	 * Prints the settings field for choosing between testing and production environment.
+	 *
+	 * @return void
 	 */
 	public static function field_app_id_type() {
 		$app_id_type = get_option( 'skautis_integration_appid_type' );
@@ -455,6 +477,8 @@ final class Settings {
 
 	/**
 	 * Prints the settings field for custom login URL.
+	 *
+	 * @return void
 	 */
 	public static function field_login_page_url() {
 		echo esc_html( get_home_url() ) . '/<input name="' . esc_attr( SKAUTIS_INTEGRATION_NAME ) . '_login_page_url" id="' . esc_attr( SKAUTIS_INTEGRATION_NAME ) . '_login_page_url" type="text" value="' . esc_attr( get_option( SKAUTIS_INTEGRATION_NAME . '_login_page_url' ) ) . '" class="regular-text" placeholder="skautis/prihlaseni" />';
@@ -519,6 +543,8 @@ if ( ! isUserLoggedInSkautis() ) {
 
 	/**
 	 * Prints the settings field for dis/allowing users to disconnect their SkautIS account from their WordPress account.
+	 *
+	 * @return void
 	 */
 	public static function field_allow_users_disconnect_from_skautis() {
 		?>
@@ -533,6 +559,8 @@ if ( ! isUserLoggedInSkautis() ) {
 
 	/**
 	 * Prints the settings field for checking user rules on each login.
+	 *
+	 * @return void
 	 */
 	public static function field_check_user_privileges_if_login_by_skautis() {
 		?>
@@ -547,6 +575,8 @@ if ( ! isUserLoggedInSkautis() ) {
 
 	/**
 	 * Prints the module settings page.
+	 *
+	 * @return void
 	 */
 	public static function print_modules_page() {
 		if ( ! Helpers::user_is_skautis_manager() ) {

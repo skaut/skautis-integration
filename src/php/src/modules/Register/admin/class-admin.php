@@ -39,6 +39,8 @@ final class Admin {
 
 	/**
 	 * Intializes all hooks used by the object.
+	 *
+	 * @return void
 	 */
 	private function init_hooks() {
 		add_action( 'admin_enqueue_scripts', array( self::class, 'enqueue_styles' ) );
@@ -49,6 +51,8 @@ final class Admin {
 
 	/**
 	 * Enqueues all styles needed for the user registration admin page.
+	 *
+	 * @return void
 	 */
 	public static function enqueue_styles() {
 		if ( get_current_screen()->id === 'skautis_page_skautis-integration_modules_register' ) {
@@ -58,6 +62,8 @@ final class Admin {
 
 	/**
 	 * Enqueues all scripts needed for the user registration admin page.
+	 *
+	 * @return void
 	 */
 	public static function enqueue_scripts() {
 		if ( get_current_screen()->id === 'skautis_page_skautis-integration_modules_register' ) {
@@ -81,6 +87,8 @@ final class Admin {
 
 	/**
 	 * Initializes dynamic options for the register JS code.
+	 *
+	 * @return void
 	 */
 	public function init_rules_options() {
 		if ( get_current_screen()->id === 'skautis_page_skautis-integration_modules_register' ) {
@@ -98,6 +106,8 @@ final class Admin {
 
 	/**
 	 * Initializes dynamic data for the register JS code.
+	 *
+	 * @return void
 	 */
 	public static function init_rules_data() {
 		if ( get_current_screen()->id === 'skautis_page_skautis-integration_modules_register' ) {

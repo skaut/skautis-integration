@@ -52,6 +52,8 @@ class Role_Changer {
 	 *
 	 * TODO: Find a more robust way to do this?
 	 * TODO: Duplicated in Users_Management.
+	 *
+	 * @return void
 	 */
 	protected function check_if_user_change_skautis_role() {
 		add_action(
@@ -70,6 +72,8 @@ class Role_Changer {
 
 	/**
 	 * Prints the SkautIS role changer.
+	 *
+	 * @return void
 	 */
 	public function print_change_roles_form() {
 		$current_user_roles = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserRoleAll(

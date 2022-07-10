@@ -64,6 +64,8 @@ final class Frontend {
 
 	/**
 	 * Intializes all hooks used by the object.
+	 *
+	 * @return void
 	 */
 	public function init_hooks() {
 		add_action( 'wp_enqueue_scripts', array( self::class, 'enqueue_styles' ) );
@@ -160,6 +162,8 @@ final class Frontend {
 	 * @param int    $post_id The ID of the post to modify.
 	 * @param string $new_content The replacement post content.
 	 * @param string $new_excerpt The replacement post excerpt.
+	 *
+	 * @return void
 	 */
 	private static function hide_content_excerpt_comments( int $post_id, string $new_content = '', string $new_excerpt = '' ) {
 		add_filter(
@@ -212,6 +216,8 @@ final class Frontend {
 	 * @param int       $post_key The ID of the post to hide.
 	 * @param \WP_Query $wp_query The WordPress request.
 	 * @param bool      $posts_were_filtered Whether the posts were already filtered.
+	 *
+	 * @return void
 	 */
 	private function process_rules_and_hide_posts( bool $user_is_logged_in_skautis, array $rules, array &$posts, int $post_key, \WP_Query $wp_query, &$posts_were_filtered = false ) {
 		if ( ! empty( $rules ) && isset( $rules[0][ SKAUTIS_INTEGRATION_NAME . '_rules' ] ) ) {
@@ -235,6 +241,8 @@ final class Frontend {
 	 * @param bool  $user_is_logged_in_skautis Whether the current user is logged in to SkautIS.
 	 * @param array $rules A list of visibility rules to check.
 	 * @param int   $post_id The ID of the post to show or hide.
+	 *
+	 * @return void
 	 */
 	private function process_rules_and_hide_content( bool $user_is_logged_in_skautis, array $rules, int $post_id ) {
 		if ( ! empty( $rules ) && isset( $rules[0][ SKAUTIS_INTEGRATION_NAME . '_rules' ] ) ) {
@@ -248,6 +256,8 @@ final class Frontend {
 
 	/**
 	 * Enqueues styles for the frontend part of the Visibility module.
+	 *
+	 * @return void
 	 */
 	public static function enqueue_styles() {
 		wp_enqueue_style( 'buttons' );

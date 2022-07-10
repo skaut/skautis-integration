@@ -56,6 +56,8 @@ final class Metabox {
 
 	/**
 	 * Intializes all hooks used by the object.
+	 *
+	 * @return void
 	 */
 	private function init_hooks() {
 		add_action( 'add_meta_boxes', array( $this, 'add_metabox_for_rules_field' ) );
@@ -64,6 +66,8 @@ final class Metabox {
 
 	/**
 	 * Adds the metabox to WordPress.
+	 *
+	 * @return void
 	 */
 	public function add_metabox_for_rules_field() {
 		foreach ( $this->post_types as $post_type ) {
@@ -80,6 +84,8 @@ final class Metabox {
 	 * Saves the data from the metabox to the post meta.
 	 *
 	 * @param int $post_id The ID of the post.
+	 *
+	 * @return void
 	 */
 	public static function save_rules_custom_field( int $post_id ) {
 		if ( ! isset( $_POST[ SKAUTIS_INTEGRATION_NAME . '_visibility_metabox_nonce' ] ) || false === wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ SKAUTIS_INTEGRATION_NAME . '_visibility_metabox_nonce' ] ) ), SKAUTIS_INTEGRATION_NAME . '_visibility_metabox' ) ) {
@@ -122,6 +128,8 @@ final class Metabox {
 	 * Prints the rules metabox.
 	 *
 	 * @param \WP_Post $post The post for which the metabox is printed.
+	 *
+	 * @return void
 	 */
 	public function rules_repeater( \WP_Post $post ) {
 		$post_type_object = get_post_type_object( $post->post_type );

@@ -58,6 +58,8 @@ final class Frontend {
 
 	/**
 	 * Intializes all hooks used by the object.
+	 *
+	 * @return void
 	 */
 	private function init_hooks() {
 		add_action( 'wp_enqueue_scripts', array( self::class, 'enqueue_styles' ) );
@@ -102,6 +104,8 @@ final class Frontend {
 
 	/**
 	 * Enqueues all styles needed for the shortcode frontend view.
+	 *
+	 * @return void
 	 */
 	public static function enqueue_styles() {
 		wp_enqueue_style( 'buttons' );

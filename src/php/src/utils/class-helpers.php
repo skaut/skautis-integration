@@ -83,7 +83,9 @@ class Helpers {
 	}
 
 	/**
-	 * Parses and sanitizes a login or logout redirect URL from GET variablea.
+	 * Parses and sanitizes a login or logout redirect URL from GET variable.
+	 *
+	 * @return string|null The URL or `null` if the it isn't set in the URL.
 	 */
 	public static function get_login_logout_redirect() {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
@@ -97,6 +99,8 @@ class Helpers {
 
 	/**
 	 * Parses and sanitizes the `ReturnUrl` GET variable.
+	 *
+	 * @return string|null The variable value or `null` if it isn't set.
 	 */
 	public static function get_return_url() {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
@@ -113,6 +117,8 @@ class Helpers {
 	 * @param string $message The notice text.
 	 * @param string $type The type of the notice. Accepted values are "error", "warning", "success", "info". Default "warning".
 	 * @param string $hide_notice_on_page An ID of a screen where the notice shouldn't get shown. Optional.
+	 *
+	 * @return void
 	 */
 	public static function show_admin_notice( string $message, string $type = 'warning', string $hide_notice_on_page = '' ) {
 		add_action(
@@ -170,6 +176,8 @@ class Helpers {
 	 *
 	 * @param string $url The URL to parse the nonce from.
 	 * @param string $nonce_name The name of the nonce.
+	 *
+	 * @return void
 	 */
 	public static function validate_nonce_from_url( string $url, string $nonce_name ) {
 		if ( false === wp_verify_nonce( self::get_nonce_from_url( urldecode( $url ), $nonce_name ), $nonce_name ) ) {

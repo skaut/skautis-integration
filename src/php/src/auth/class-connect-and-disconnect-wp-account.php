@@ -48,6 +48,8 @@ final class Connect_And_Disconnect_WP_Account {
 	 * @param int $wp_user_id The ID of the WordPress user.
 	 * @param int $skautis_user_id The SkautIS user ID.
 	 *
+	 * @return void
+	 *
 	 * @SuppressWarnings(PHPMD.ExitExpression)
 	 */
 	private function set_skautis_user_id_to_wp_account( int $wp_user_id, int $skautis_user_id ) {
@@ -70,6 +72,8 @@ final class Connect_And_Disconnect_WP_Account {
 	 * Used when viewing own or another user's account.
 	 *
 	 * @param int $wp_user_id The WordPress user ID of the user (current or other).
+	 *
+	 * @return void
 	 */
 	public function print_connect_and_disconnect_button( int $wp_user_id ) {
 		$skautis_user_id = get_user_meta( $wp_user_id, 'skautisUserId_' . $this->skautis_gateway->get_env(), true );
@@ -102,6 +106,8 @@ final class Connect_And_Disconnect_WP_Account {
 	 *
 	 * @see Actions::auth_actions_router() for more details about how this function gets called.
 	 *
+	 * @return void
+	 *
 	 * @SuppressWarnings(PHPMD.ExitExpression)
 	 */
 	public function connect() {
@@ -127,6 +133,8 @@ final class Connect_And_Disconnect_WP_Account {
 	 * This is used to connect a WordPress user that is not the current user.
 	 *
 	 * @see Actions::auth_actions_router() for more details about how this function gets called.
+	 *
+	 * @return void
 	 */
 	public function connect_wp_user_to_skautis() {
 		if ( ! isset( $_GET[ SKAUTIS_INTEGRATION_NAME . '_connect_user_nonce' ] ) ||
@@ -173,6 +181,8 @@ final class Connect_And_Disconnect_WP_Account {
 	 * TODO: Rework the horrible return URL logic to distinguish between current user and other user disconnecting.
 	 *
 	 * @see Actions::auth_actions_router() for more details about how this function gets called.
+	 *
+	 * @return void
 	 *
 	 * @SuppressWarnings(PHPMD.ExitExpression)
 	 */

@@ -40,6 +40,8 @@ final class Admin {
 
 	/**
 	 * Intializes all hooks used by the object.
+	 *
+	 * @return void
 	 */
 	private function init_hooks() {
 		add_action( 'admin_footer', array( $this, 'init_available_rules' ) );
@@ -59,6 +61,8 @@ final class Admin {
 	 * Registers the TinyMCE shortcode button code.
 	 *
 	 * @param array<string, string> $plugins A list of button script source URLs keyed by the button ID.
+	 *
+	 * @retur array<string, string> The updated list.
 	 */
 	public static function register_tinymce_plugin( array $plugins = array() ): array {
 		$plugins['skautis_rules'] = plugin_dir_url( dirname( __FILE__, 4 ) ) . 'modules/Shortcodes/admin/js/skautis-modules-shortcodes-tinymceRulesButton.min.js';
@@ -70,6 +74,8 @@ final class Admin {
 	 * Adds the TinyMCE shortcode button to the UI.
 	 *
 	 * @param array<string> $buttons A list of button IDs.
+	 *
+	 * @return array<string> The updated ID list.
 	 */
 	public static function add_tinymce_button( array $buttons = array() ): array {
 		$buttons[] = 'skautis_rules';
@@ -79,6 +85,8 @@ final class Admin {
 
 	/**
 	 * Initializes dynamic options for the shortcode button JS code.
+	 *
+	 * @return void
 	 */
 	public function init_available_rules() {
 		?>

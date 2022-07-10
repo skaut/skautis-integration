@@ -72,6 +72,8 @@ final class Actions {
 
 	/**
 	 * Intializes all hooks used by the object.
+	 *
+	 * @return void
 	 */
 	private function init_hooks() {
 		add_action( 'init', array( self::class, 'register_auth_rewrite_rules' ) );
@@ -89,6 +91,8 @@ final class Actions {
 	 * Adds both test and live SkautIS to host that WordPress is allowed to redirect to.
 	 *
 	 * @param array<string> $hosts A list of already allowed redirect hosts.
+	 *
+	 * @return array<string> The updated list.
 	 */
 	public static function add_redirect_hosts( $hosts ) {
 		$hosts[] = 'test-is.skaut.cz';
@@ -100,6 +104,8 @@ final class Actions {
 	 * Registers redirect/rewrite for SkautIS authentication.
 	 *
 	 * @see Actions::auth_actions_router() for more details about how the redirect is used.
+	 *
+	 * @return void
 	 */
 	public static function register_auth_rewrite_rules() {
 		add_rewrite_rule( '^skautis/auth/(.*?)$', 'index.php?skautis_auth=$matches[1]', 'top' );
@@ -122,6 +128,8 @@ final class Actions {
 
 	/**
 	 * Makes WordPress update rewrite rules if it is needed.
+	 *
+	 * @return void
 	 */
 	public static function flush_rewrite_rules_if_necessary() {
 		if ( false !== get_option( 'skautis_rewrite_rules_need_to_flush' ) ) {
@@ -132,6 +140,8 @@ final class Actions {
 
 	/**
 	 * Fires upon redirect back from SkautIS and based on the current page finishes either the login or account linking.
+	 *
+	 * @return void
 	 */
 	public function auth_in_process() {
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing

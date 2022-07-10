@@ -54,6 +54,8 @@ final class Frontend {
 
 	/**
 	 * Intializes all hooks used by the object.
+	 *
+	 * @return void
 	 */
 	private function init_hooks() {
 		if ( false !== get_option( SKAUTIS_INTEGRATION_NAME . '_login_page_url' ) ) {
@@ -105,6 +107,8 @@ final class Frontend {
 
 	/**
 	 * Enqueues frontend styles.
+	 *
+	 * @return void
 	 */
 	public function enqueue_styles() {
 		if ( $this->plugin_login_view ) {
@@ -116,6 +120,8 @@ final class Frontend {
 
 	/**
 	 * Enqueues login styles.
+	 *
+	 * @return void
 	 */
 	public static function enqueue_login_styles() {
 		Helpers::enqueue_style( 'frontend', 'frontend/css/skautis-frontend.min.css' );
@@ -127,6 +133,8 @@ final class Frontend {
 	 * TODO: Duplicated code?
 	 *
 	 * @param \WP_Admin_Bar $wp_admin_bar The WordPress administration bar.
+	 *
+	 * @return void
 	 */
 	public function add_logout_link_to_admin_bar( \WP_Admin_Bar $wp_admin_bar ) {
 		if ( ! function_exists( 'is_admin_bar_showing' ) ) {

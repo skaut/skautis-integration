@@ -46,6 +46,8 @@ final class Admin {
 
 	/**
 	 * Intializes all hooks used by the object.
+	 *
+	 * @return void
 	 */
 	private function init_hooks() {
 		add_action( 'admin_enqueue_scripts', array( self::class, 'enqueue_scripts_and_styles' ) );
@@ -60,6 +62,8 @@ final class Admin {
 
 	/**
 	 * Enqueues administration scripts and styles.
+	 *
+	 * @return void
 	 */
 	public static function enqueue_scripts_and_styles() {
 		wp_enqueue_style(
@@ -85,6 +89,8 @@ final class Admin {
 	 * Adds a default value to the JS `window.skautis` global.
 	 *
 	 * TODO: Is this really needed?
+	 *
+	 * @return void
 	 */
 	public static function print_inline_js() {
 		?>
@@ -102,6 +108,8 @@ final class Admin {
 	 * TODO: Duplicated code?
 	 *
 	 * @param \WP_Admin_Bar $wp_admin_bar The WordPress admin bar.
+	 *
+	 * @return void
 	 */
 	public function add_logout_link_to_admin_bar( \WP_Admin_Bar $wp_admin_bar ) {
 		if ( ! function_exists( 'is_admin_bar_showing' ) ) {

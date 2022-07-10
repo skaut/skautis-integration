@@ -58,6 +58,8 @@ final class Admin {
 
 	/**
 	 * Intializes all hooks used by the object.
+	 *
+	 * @return void
 	 */
 	private function init_hooks() {
 		add_action( 'add_meta_boxes', array( self::class, 'add_metabox_for_rules_field' ) );
@@ -77,6 +79,8 @@ final class Admin {
 	 * This function gets called for all post types, so it needs to check before adding the metabox.
 	 *
 	 * @param string $post_type The current post type.
+	 *
+	 * @return void
 	 */
 	public static function add_metabox_for_rules_field( string $post_type ) {
 		if ( Rules_Init::RULES_TYPE_SLUG === $post_type ) {
@@ -93,6 +97,8 @@ final class Admin {
 	 * Saves the rules data.
 	 *
 	 * @param int $post_id The ID of the rule post.
+	 *
+	 * @return void
 	 */
 	public static function save_rules_custom_field( int $post_id ) {
 		if ( ! isset( $_POST[ SKAUTIS_INTEGRATION_NAME . '_rules_metabox_nonce' ] ) || false === wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ SKAUTIS_INTEGRATION_NAME . '_rules_metabox_nonce' ] ) ), SKAUTIS_INTEGRATION_NAME . '_rules_metabox' ) ) {
@@ -114,6 +120,8 @@ final class Admin {
 	 * TODO: This box is hidden, why is it here?
 	 *
 	 * @param \WP_Post $post The post to print the metabox for.
+	 *
+	 * @return void
 	 */
 	public static function rules_field_content( \WP_Post $post ) {
 		wp_nonce_field( SKAUTIS_INTEGRATION_NAME . '_rules_metabox', SKAUTIS_INTEGRATION_NAME . '_rules_metabox_nonce' );
@@ -139,6 +147,8 @@ final class Admin {
 	 *
 	 * @param int $post_id The ID of the post in question.
 	 * @param int $revision_id The ID of the revision to restore.
+	 *
+	 * @return void
 	 */
 	public static function restore_revision_for_rules_field( int $post_id, int $revision_id ) {
 		$post     = get_post( $post_id );
@@ -155,6 +165,8 @@ final class Admin {
 	 * Prints the rules query builder UI.
 	 *
 	 * @param \WP_Post $post Unused @unused-param.
+	 *
+	 * @return void
 	 *
 	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
 	 */
@@ -192,6 +204,8 @@ final class Admin {
 
 	/**
 	 * Enqueues styles for rules management.
+	 *
+	 * @return void
 	 */
 	public static function enqueue_styles() {
 		if ( get_current_screen()->id !== Rules_Init::RULES_TYPE_SLUG || get_post_type() !== Rules_Init::RULES_TYPE_SLUG ) {
@@ -219,6 +233,8 @@ final class Admin {
 
 	/**
 	 * Enqueues scripts for rules management.
+	 *
+	 * @return void
 	 */
 	public static function enqueue_scripts() {
 		if ( get_current_screen()->id !== Rules_Init::RULES_TYPE_SLUG || get_post_type() !== Rules_Init::RULES_TYPE_SLUG ) {
@@ -310,6 +326,8 @@ final class Admin {
 
 	/**
 	 * Initializes dynamic options for the rules JS code.
+	 *
+	 * @return void
 	 */
 	public function init_rules_builder() {
 		if ( get_current_screen()->id !== Rules_Init::RULES_TYPE_SLUG || get_post_type() !== Rules_Init::RULES_TYPE_SLUG ) {

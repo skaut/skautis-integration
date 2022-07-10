@@ -110,6 +110,8 @@ class Skautis_Gateway {
 
 	/**
 	 * Logs the user out of SkautIS.
+	 *
+	 * @return void
 	 */
 	public function logout() {
 		if ( ! is_null( $this->skautis ) ) {
@@ -120,6 +122,8 @@ class Skautis_Gateway {
 
 	/**
 	 * Performs a dummy request to SkautIS to check whether the library is initialized correctly.
+	 *
+	 * @return bool
 	 */
 	public function test_active_app_id() {
 		try {

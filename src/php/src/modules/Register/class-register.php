@@ -104,6 +104,8 @@ final class Register implements Module {
 
 	/**
 	 * Intializes all hooks used by the object.
+	 *
+	 * @return void
 	 */
 	private function init_hooks() {
 		add_filter( SKAUTIS_INTEGRATION_NAME . '_frontend_actions_router', array( $this, 'addActionsToRouter' ) );
@@ -117,6 +119,8 @@ final class Register implements Module {
 
 	/**
 	 * Redirects the user to login with SkautIS.
+	 *
+	 * @return never
 	 *
 	 * @SuppressWarnings(PHPMD.ExitExpression)
 	 */
@@ -147,6 +151,8 @@ final class Register implements Module {
 	 * Fires upon redirect back from SkautIS after login and handles the user login and potential registration.
 	 *
 	 * @param array $data SkautIS login data.
+	 *
+	 * @return void
 	 */
 	public function registerConfirm( array $data = array() ) {
 		// TODO: Why is this not one conditional?
@@ -205,6 +211,8 @@ final class Register implements Module {
 	 * @see Actions::auth_actions_router() for more details about how this function gets called.
 	 * @see Register::addActionsToRouter() for more details about how this function gets called.
 	 *
+	 * @return never
+	 *
 	 * @SuppressWarnings(PHPMD.ExitExpression)
 	 */
 	public function register() {
@@ -219,6 +227,8 @@ final class Register implements Module {
 
 	/**
 	 * This function actually handles the user login and potential registration.
+	 *
+	 * @return void
 	 */
 	public function registerUser() {
 		$wp_role = $this->rules_manager->check_if_user_passed_rules_and_get_his_role();
@@ -253,6 +263,8 @@ final class Register implements Module {
 	 * Registers an existing SkautIS user as a new WordPress user.
 	 *
 	 * This function is used to register other users than the current user.
+	 *
+	 * @return void
 	 *
 	 * @SuppressWarnings(PHPMD.ExitExpression)
 	 */

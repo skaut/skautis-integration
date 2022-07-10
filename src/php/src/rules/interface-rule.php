@@ -58,6 +58,8 @@ interface Rule {
 
 	/**
 	 * Returns the current values of the rule.
+	 *
+	 * @return array The current values.
 	 */
 	public function get_values(): array;
 

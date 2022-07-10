@@ -27,6 +27,8 @@ final class Settings {
 
 	/**
 	 * Intializes all hooks used by the object.
+	 *
+	 * @return void
 	 */
 	private static function init_hooks() {
 		if ( ! is_admin() ) {
@@ -39,6 +41,8 @@ final class Settings {
 
 	/**
 	 * Adds an admin settings page for the Shortcodes module.
+	 *
+	 * @return void
 	 */
 	public static function setup_setting_page() {
 		add_submenu_page(
@@ -53,6 +57,8 @@ final class Settings {
 
 	/**
 	 * Prints the admin settings page for the Shortcodes module.
+	 *
+	 * @return void
 	 */
 	public static function print_setting_page() {
 		if ( ! Helpers::user_is_skautis_manager() ) {
@@ -76,6 +82,8 @@ final class Settings {
 
 	/**
 	 * Adds Shortcodes module seetings to WordPress.
+	 *
+	 * @return void
 	 */
 	public static function setup_setting_fields() {
 		add_settings_section(
@@ -107,6 +115,8 @@ final class Settings {
 
 	/**
 	 * Prints the settings field for choosing whether to show a login prompt or hide the content outright.
+	 *
+	 * @return void
 	 */
 	public static function field_visibility_mode() {
 		$visibility_mode = get_option( SKAUTIS_INTEGRATION_NAME . '_modules_shortcodes_visibilityMode', 'hide' );
