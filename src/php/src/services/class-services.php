@@ -14,7 +14,6 @@ use Skautis_Integration\Auth\Skautis_Gateway;
 use Skautis_Integration\Auth\Skautis_Login;
 use Skautis_Integration\Auth\WP_Login_Logout;
 use Skautis_Integration\Auth\Connect_And_Disconnect_WP_Account;
-use Skautis_Integration\General\General;
 use Skautis_Integration\General\Actions;
 use Skautis_Integration\Frontend\Frontend;
 use Skautis_Integration\Frontend\Login_Form;
@@ -94,15 +93,6 @@ class Services {
 	 * @var Rules_Init|null
 	 */
 	private static $rules_init = null;
-
-	/**
-	 * A General service instance.
-	 *
-	 * Depends on $revisions.
-	 *
-	 * @var General|null
-	 */
-	private static $general = null;
 
 	/**
 	 * A Repository\Users service instance.
@@ -278,15 +268,15 @@ class Services {
 	}
 
 	/**
-	 * Gets the General service.
+	 * Sets up general services
 	 *
-	 * @return General The initialized service object.
+	 * TODO: Remove this function
+	 *
+	 * @return void
 	 */
 	public static function get_general() {
-		if ( is_null( self::$general ) ) {
-			self::$general = new General( self::get_actions(), self::get_rules_init() );
-		}
-		return self::$general;
+		self::get_actions();
+		self::get_rules_init();
 	}
 
 	/**
