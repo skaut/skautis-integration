@@ -2,7 +2,6 @@
 	$('#skautis-integration_rules_metabox').hide();
 	$('#postdivrich').hide();
 
-	const $form = $('#post');
 	const $queryBuilderValues = $('#query_builder_values');
 
 	if ($('#query_builder').length) {
@@ -12,7 +11,7 @@
 			rules = JSON.parse(values) as QueryBuilderExport;
 		}
 
-		const $queryBuilder = $('#query_builder').queryBuilder({
+		$('#query_builder').queryBuilder({
 			plugins: {
 				sortable: {
 					icon: 'fa fa-arrows-alt',
@@ -58,8 +57,8 @@
 			$('#query_builder').trigger('change');
 		}, 100);
 
-		$form.on('submit', function () {
-			const result = $queryBuilder.getRules();
+		$('#post').on('submit', function () {
+			const result = $('#query_builder').get(0)!.queryBuilder.getRules();
 
 			if (!$.isEmptyObject(result)) {
 				$queryBuilderValues.val(JSON.stringify(result, null, 2));
