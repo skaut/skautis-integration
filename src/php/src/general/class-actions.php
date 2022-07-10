@@ -119,6 +119,8 @@ final class Actions {
 	 * Adds query variables that WordPress is allowed to use when redirecting.
 	 *
 	 * @param array<string> $vars A list of already allowed query variables.
+	 *
+	 * @return array<string> The updated list.
 	 */
 	public static function register_auth_query_vars( array $vars = array() ): array {
 		$vars[] = 'skautis_auth';
@@ -168,6 +170,8 @@ final class Actions {
 	 * @param \WP_Query $wp_query The request query.
 	 *
 	 * @SuppressWarnings(PHPMD.ExitExpression)
+	 *
+	 * @return void
 	 */
 	public function auth_actions_router( \WP_Query $wp_query ) {
 		if ( '' === $wp_query->get( 'skautis_auth' ) ) {

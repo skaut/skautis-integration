@@ -62,7 +62,7 @@ final class Admin {
 	 *
 	 * @param array<string, string> $plugins A list of button script source URLs keyed by the button ID.
 	 *
-	 * @retur array<string, string> The updated list.
+	 * @return array<string, string> The updated list.
 	 */
 	public static function register_tinymce_plugin( array $plugins = array() ): array {
 		$plugins['skautis_rules'] = plugin_dir_url( dirname( __FILE__, 4 ) ) . 'modules/Shortcodes/admin/js/skautis-modules-shortcodes-tinymceRulesButton.min.js';

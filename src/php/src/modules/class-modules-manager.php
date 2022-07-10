@@ -20,30 +20,30 @@ use Skautis_Integration\Services\Services;
 final class Modules_Manager {
 
 	/**
-	 * A list of all available modules.
+	 * A list of all available modules in the form `id => label`, where label is already localized.
 	 *
-	 * @var array
+	 * @var array<string, string>
 	 */
 	private $modules = array();
 
 	/**
 	 * A list of all active modules.
 	 *
-	 * @var array
+	 * @var array<string>
 	 */
 	private $activated_modules = array();
 
 	/**
-	 * A list of initialized module instances
+	 * A list of initialized module instances.
 	 *
-	 * @var array
+	 * @var array<string, Module>
 	 */
 	private $instantiated_modules = array();
 
 	/**
 	 * Constructs the service and saves all dependencies.
 	 *
-	 * @param array $modules A list of all available modules.
+	 * @param array<string, string> $modules A list of all available modules in the form `id => label`, where label is already localized.
 	 */
 	public function __construct( array $modules = array() ) {
 		$this->modules           = apply_filters( SKAUTIS_INTEGRATION_NAME . '_modules', $modules );
@@ -55,7 +55,7 @@ final class Modules_Manager {
 	/**
 	 * Initializes all activated modules.
 	 *
-	 * @param array $activated_modules A list of all active modules.
+	 * @param array<string> $activated_modules A list of all active modules.
 	 *
 	 * @return void
 	 */
@@ -72,7 +72,9 @@ final class Modules_Manager {
 	}
 
 	/**
-	 * Returns a list of all modules (even inactive ones).
+	 * Returns a list of all modules (even inactive ones) in the form `id => label`, where label is already localized.
+	 *
+	 * @return array<string, string> The modules
 	 */
 	public function get_all_modules(): array {
 		return $this->modules;

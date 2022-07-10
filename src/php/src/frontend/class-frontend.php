@@ -76,6 +76,8 @@ final class Frontend {
 	 * Adds query variables that WordPress is allowed to use when redirecting.
 	 *
 	 * @param array<string> $vars A list of allowed query variables.
+	 *
+	 * @return array<string> The updated list.
 	 */
 	public static function register_query_vars( array $vars = array() ): array {
 		$vars[] = 'skautis_login';

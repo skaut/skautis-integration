@@ -113,6 +113,8 @@ final class Frontend {
 	 *
 	 * @param int    $post_id The ID of the root post.
 	 * @param string $post_type The type of the root post.
+	 *
+	 * @return array The post ancestors.
 	 */
 	private static function get_posts_hierarchy_tree_with_rules( int $post_id, $post_type ): array {
 		$ancestors = get_ancestors( $post_id, $post_type, 'post_type' );
@@ -136,6 +138,8 @@ final class Frontend {
 	 *
 	 * @param int    $child_post_id The ID of the root post.
 	 * @param string $post_type The type of the root post.
+	 *
+	 * @return array The post ancestors.
 	 */
 	private static function get_rules_from_parent_posts_with_impact_by_child_post_id( int $child_post_id, $post_type ): array {
 		$ancestors = self::get_posts_hierarchy_tree_with_rules( $child_post_id, $post_type );
@@ -210,12 +214,12 @@ final class Frontend {
 	 *
 	 * TODO: This function modifies its parameters.
 	 *
-	 * @param bool      $user_is_logged_in_skautis Whether the current user is logged in to SkautIS.
-	 * @param array     $rules A list of visibility rules to check.
-	 * @param array     $posts A list of posts to filter. This parameter is modified by the function.
-	 * @param int       $post_key The ID of the post to hide.
-	 * @param \WP_Query $wp_query The WordPress request.
-	 * @param bool      $posts_were_filtered Whether the posts were already filtered.
+	 * @param bool            $user_is_logged_in_skautis Whether the current user is logged in to SkautIS.
+	 * @param array           $rules A list of visibility rules to check.
+	 * @param array<\WP_Post> $posts A list of posts to filter. This parameter is modified by the function.
+	 * @param int             $post_key The ID of the post to hide.
+	 * @param \WP_Query       $wp_query The WordPress request.
+	 * @param bool            $posts_were_filtered Whether the posts were already filtered.
 	 *
 	 * @return void
 	 */
@@ -272,6 +276,8 @@ final class Frontend {
 	 * @param int    $child_post_id The ID of the root post.
 	 * @param string $child_post_type The type of the root post.
 	 *
+	 * @return array<int, array{parentPostTitle: string, rules: array<int, string>}> The post ancestors.
+	 *
 	 * @suppress PhanPluginPossiblyStaticPublicMethod
 	 */
 	public function get_parent_posts_with_rules( int $child_post_id, string $child_post_type ): array {
@@ -298,8 +304,10 @@ final class Frontend {
 	 *
 	 * Filters which posts are visible for the current user based on wheher they pass the visibility rules and whether whole posts should be hidden or just their contents
 	 *
-	 * @param array     $posts A list of posts to show.
-	 * @param \WP_Query $wp_query The WordPress request.
+	 * @param array<\WP_Post> $posts A list of posts to show.
+	 * @param \WP_Query       $wp_query The WordPress request.
+	 *
+	 * @return array<\WP_Post> The filtered post list.
 	 */
 	public function filter_posts( array $posts, \WP_Query $wp_query ): array {
 		if ( empty( $posts ) ) {

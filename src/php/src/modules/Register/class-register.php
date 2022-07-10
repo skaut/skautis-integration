@@ -139,6 +139,8 @@ final class Register implements Module {
 	 * @see Actions::auth_actions_router() for more details about how the actions are used.
 	 *
 	 * @param array<string, callable> $actions A list of already registered actions.
+	 *
+	 * @return array<string, callable> The updated action list.
 	 */
 	public function addActionsToRouter( array $actions = array() ): array {
 		$actions[ self::REGISTER_ACTION ]                  = array( $this, 'register' );
