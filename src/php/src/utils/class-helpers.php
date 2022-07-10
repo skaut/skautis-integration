@@ -85,7 +85,7 @@ class Helpers {
 	/**
 	 * Parses and sanitizes a login or logout redirect URL from GET variable.
 	 *
-	 * @return string|null The URL or `null` if the it isn't set in the URL.
+	 * @return string The URL or empty string if the it isn't set in the URL.
 	 */
 	public static function get_login_logout_redirect() {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
