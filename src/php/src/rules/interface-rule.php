@@ -64,8 +64,8 @@ interface Rule {
 	/**
 	 * Checks whether the rule is fulfilled.
 	 *
-	 * @param string $operator The operator used with the rule.
-	 * @param string $data The rule data.
+	 * @param string               $operator The operator used with the rule.
+	 * @param string|array{0: int} $data The rule data.
 	 */
 	public function is_rule_passed( string $operator, $data ): bool;
 }

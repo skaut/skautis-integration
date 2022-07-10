@@ -144,8 +144,8 @@ class All implements Rule {
 	/**
 	 * Checks whether the rule is fulfilled.
 	 *
-	 * @param string $operator The operator used with the rule @unused-param.
-	 * @param string $data The rule data.
+	 * @param string        $operator The operator used with the rule @unused-param.
+	 * @param array{0: int} $data The rule data.
 	 */
 	public function is_rule_passed( string $operator, $data ): bool {
 		if ( ! empty( $data[0] ) && 1 === $data[0] && $this->skautis_gateway->get_skautis_instance()->UserManagement->UserDetail()->ID > 0 ) {
