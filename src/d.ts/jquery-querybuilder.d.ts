@@ -132,18 +132,25 @@ interface QueryBuilderExport extends QueryBuilderExportGroup {
 	valid: boolean;
 }
 
-interface JQueryQueryBuilderInstance {
+interface QueryBuilderJQuery {
+	(options: QueryBuilderOptions): JQuery;
+	regional: Record<string, QueryBuilderRegional>;
+	defaults(options: QueryBuilderOptions): void;
+
+	// Methods from QueryBuilderElement
+	(methodName: "getRules"): QueryBuilderExport;
+	// TODO
+}
+
+interface QueryBuilderElement {
 	getRules(): QueryBuilderExport;
 	// TODO
 }
 
-interface JQueryQueryBuilder {
-	(options: QueryBuilderOptions): JQueryQueryBuilderInstance;
-	regional: Record<string, QueryBuilderRegional>;
-	defaults(options: QueryBuilderOptions): void;
-	// TODO
+interface JQuery {
+	queryBuilder: QueryBuilderJQuery;
 }
 
-interface JQuery {
-	queryBuilder: JQueryQueryBuilder;
+interface HTMLElement {
+	queryBuilder: QueryBuilderElement;
 }
