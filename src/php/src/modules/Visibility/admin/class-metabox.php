@@ -160,7 +160,7 @@ final class Metabox {
 								<?php
 								foreach ( $parent_rule['rules'] as $rule_id => $rule ) {
 									?>
-									<li data-rule="<?php echo esc_attr( $rule_id ); ?>"><?php echo esc_html( $rule ); ?></li>
+									<li data-rule="<?php echo esc_attr( strval( $rule_id ) ); ?>"><?php echo esc_html( $rule ); ?></li>
 									<?php
 								}
 								?>
@@ -185,7 +185,7 @@ final class Metabox {
 					<select name="<?php echo esc_attr( SKAUTIS_INTEGRATION_NAME ); ?>_rules" class="rule select2">
 						<?php
 						foreach ( $this->rules_manager->get_all_rules() as $rule ) {
-							echo '<option value="' . esc_attr( $rule->ID ) . '">' . esc_html( $rule->post_title ) . '</option>';
+							echo '<option value="' . esc_attr( strval( $rule->ID ) ) . '">' . esc_html( $rule->post_title ) . '</option>';
 						}
 						?>
 					</select>

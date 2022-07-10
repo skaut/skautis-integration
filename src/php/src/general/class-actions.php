@@ -171,7 +171,7 @@ final class Actions {
 	 *
 	 * @SuppressWarnings(PHPMD.ExitExpression)
 	 *
-	 * @return void
+	 * @return \WP_Query|void
 	 */
 	public function auth_actions_router( \WP_Query $wp_query ) {
 		if ( '' === $wp_query->get( 'skautis_auth' ) ) {

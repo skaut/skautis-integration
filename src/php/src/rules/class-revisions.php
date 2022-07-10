@@ -73,7 +73,7 @@ class Revisions {
 	/**
 	 * Adds metadata to a post.
 	 *
-	 * @param int   $post_id The post in question.
+	 * @param int                  $post_id The post in question.
 	 * @param array<string, mixed> $meta The metadata to add.
 	 *
 	 * @return void
