@@ -15,6 +15,8 @@ use Skautis_Integration\Modules\Register\WP_Register;
  * Adds the "Log in with SkautIS" button to the login form.
  *
  * This class handles the version of the form that also supports registering new users on first login.
+ *
+ * @phan-constructor-used-for-side-effects
  */
 final class Login_Form {
 
