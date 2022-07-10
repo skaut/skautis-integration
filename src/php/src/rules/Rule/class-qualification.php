@@ -164,6 +164,7 @@ class Qualification implements Rule {
 		);
 
 		if ( ! is_array( $user_qualifications ) || empty( $user_qualifications ) ) {
+			$user_qualifications = array();
 			return array();
 		}
 
