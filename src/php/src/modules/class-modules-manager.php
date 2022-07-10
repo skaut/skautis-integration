@@ -99,6 +99,7 @@ final class Modules_Manager {
 		if ( ! array_key_exists( $module_id, $this->instantiated_modules ) ) {
 				$this->instantiated_modules[ $module_id ] = new Register( Services::get_skautis_gateway(), Services::get_skautis_login(), Services::get_wp_login_logout(), Services::get_rules_manager(), Services::get_repository_users() );
 		}
+		// @phpstan-ignore-next-line
 		return $this->instantiated_modules[ $module_id ];
 	}
 
@@ -112,6 +113,7 @@ final class Modules_Manager {
 		if ( ! array_key_exists( $module_id, $this->instantiated_modules ) ) {
 				$this->instantiated_modules[ $module_id ] = new Shortcodes( Services::get_rules_manager(), Services::get_skautis_login(), Services::get_wp_login_logout() );
 		}
+		// @phpstan-ignore-next-line
 		return $this->instantiated_modules[ $module_id ];
 	}
 
@@ -125,6 +127,7 @@ final class Modules_Manager {
 		if ( ! array_key_exists( $module_id, $this->instantiated_modules ) ) {
 				$this->instantiated_modules[ $module_id ] = new Visibility( Services::get_rules_manager(), Services::get_skautis_login(), Services::get_wp_login_logout() );
 		}
+		// @phpstan-ignore-next-line
 		return $this->instantiated_modules[ $module_id ];
 	}
 }
