@@ -132,6 +132,8 @@ class Func implements Rule {
 
 	/**
 	 * Returns the current values of the rule.
+	 *
+	 * @return array<string, string> The current values.
 	 */
 	public function get_values(): array {
 		$values = array();
@@ -166,6 +168,8 @@ class Func implements Rule {
 
 	/**
 	 * Returns an array of arrays where for each user function ID, there are listed units asssociated with that function.
+	 *
+	 * @return array The function IDs.
 	 */
 	protected function getUserFuncsWithUnitIds(): array {
 		static $user_funcs = null;

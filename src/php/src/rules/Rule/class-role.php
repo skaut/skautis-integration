@@ -132,6 +132,8 @@ class Role implements Rule {
 
 	/**
 	 * Returns the current values of the rule.
+	 *
+	 * @return array<string, string> The current values.
 	 */
 	public function get_values(): array {
 		$values = array();
@@ -166,6 +168,8 @@ class Role implements Rule {
 
 	/**
 	 * Returns an array of arrays where for each user role ID, there are listed units asssociated with that role.
+	 *
+	 * @return array The unit list.
 	 */
 	protected function getUserRolesWithUnitIds(): array {
 		static $user_roles = null;

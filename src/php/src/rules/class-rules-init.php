@@ -150,6 +150,8 @@ final class Rules_Init {
 	 * Registers messages to use on post update for the rule post type.
 	 *
 	 * @param array<string, array<string>> $messages A list of messages for each post type.
+	 *
+	 * @return array<string, array<string>> The list with added rule post type messages.
 	 */
 	public static function updated_messages( array $messages = array() ): array {
 		$post                              = get_post();
@@ -180,6 +182,8 @@ final class Rules_Init {
 	 * Returns all rules.
 	 *
 	 * TODO: Unused?
+	 *
+	 * @return array<\WP_Post> The rules.
 	 */
 	public static function get_all_rules(): array {
 		$rules_wp_query = new \WP_Query(

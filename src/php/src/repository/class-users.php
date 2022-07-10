@@ -56,6 +56,8 @@ class Users {
 
 	/**
 	 * Lists all users with a connected SkautIS account under the current environment (testing or production).
+	 *
+	 * @return array The users.
 	 */
 	public function get_connected_wp_users(): array {
 		$users_data = array();
@@ -110,12 +112,13 @@ class Users {
 			)
 		);
 
-		// @phpstan-ignore-next-line
 		return $connectable_wp_users->get_results();
 	}
 
 	/**
 	 * Returns all users for the current unit or event. Returns users whose name matches the "skautisSearchUsers" GET variable if it is present.
+	 *
+	 * @return array The users.
 	 */
 	public function get_users(): array {
 		$users      = array();
@@ -279,6 +282,8 @@ class Users {
 	 * @throws \Exception Couldn't get the user info from SkautIS.
 	 *
 	 * @param int $skautis_user_id The SkautIS user ID.
+	 *
+	 * @return array The information about a user.
 	 */
 	public function get_user_detail( int $skautis_user_id ): array {
 		$user_detail = array();

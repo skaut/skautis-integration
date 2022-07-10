@@ -134,7 +134,9 @@ final class Admin {
 	/**
 	 * TODO: Unused?
 	 *
-	 * @param array $fields A list of already registered fields.
+	 * @param array<string, string> $fields A list of already registered fields.
+	 *
+	 * @return array<string, string> The updated list.
 	 */
 	public static function add_rules_field_to_revisions( array $fields ): array {
 		$fields[ SKAUTIS_INTEGRATION_NAME . '_rules_data' ] = __( 'skautIS Pravidla', 'skautis-integration' );

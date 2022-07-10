@@ -52,6 +52,8 @@ class Columns {
 	 * Adds the header for the "Last modified" column in the rules overview.
 	 *
 	 * @param array<string, string> $columns A list of already present column headers, keyed by their ID.
+	 *
+	 * @return array<string, string> The updated list.
 	 */
 	public static function last_modified_admin_column( array $columns = array() ): array {
 		$columns['modified_last'] = __( 'Naposledy upraveno', 'skautis-integration' );
@@ -65,6 +67,8 @@ class Columns {
 	 * TODO: What are the parameter keys and values?
 	 *
 	 * @param array<string, string> $columns A list of already present columns.
+	 *
+	 * @return array<string, string> The updated list.
 	 */
 	public static function sortable_last_modified_column( array $columns = array() ): array {
 		$columns['modified_last'] = 'modified';

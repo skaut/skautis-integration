@@ -132,6 +132,8 @@ class All implements Rule {
 
 	/**
 	 * Returns the current values of the rule.
+	 *
+	 * @return array<int, string> The current values.
 	 */
 	public function get_values(): array {
 		$result = array(

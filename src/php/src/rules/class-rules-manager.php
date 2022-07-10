@@ -47,6 +47,8 @@ final class Rules_Manager {
 
 	/**
 	 * Initializes all available rule blocks and stores them in this object.
+	 *
+	 * @return array<string, Rule> The available rule blocks.
 	 */
 	private function init_rules(): array {
 		return apply_filters(
@@ -123,6 +125,8 @@ final class Rules_Manager {
 
 	/**
 	 * Returns a list of all available rule blocks.
+	 *
+	 * @return array<string, Rule> The rule blocks.
 	 */
 	public function get_rules(): array {
 		return $this->rules;
@@ -162,6 +166,8 @@ final class Rules_Manager {
 
 	/**
 	 * Returns all rules (posts of type rule).
+	 *
+	 * @return array<\WP_Post> The rules.
 	 *
 	 * @suppress PhanPluginPossiblyStaticPublicMethod
 	 */

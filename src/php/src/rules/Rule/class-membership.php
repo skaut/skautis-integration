@@ -132,6 +132,8 @@ class Membership implements Rule {
 
 	/**
 	 * Returns the current values of the rule.
+	 *
+	 * @return array<string, string> The current values.
 	 */
 	public function get_values(): array {
 		$result      = array();
@@ -168,6 +170,8 @@ class Membership implements Rule {
 	 * Returns an array of arrays where for each user unit membership ID, there are listed units asssociated with that membership.
 	 *
 	 * @throws \Exception The SkautIS API returned an unexpected value.
+	 *
+	 * @return array The membership IDs.
 	 */
 	protected function getUserMembershipsWithUnitIds(): array {
 		static $user_memberships = null;

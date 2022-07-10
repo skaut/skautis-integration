@@ -40,9 +40,10 @@ class Revisions {
 	/**
 	 * Removes all hidden fields from a post metadata.
 	 *
-	 * @param array $meta The metadata to filter.
+	 * @template T
+	 * @param array<string, T> $meta The metadata to filter.
 	 *
-	 * @return array
+	 * @return array<string, T>
 	 */
 	private static function filter_meta( $meta ): array {
 		$meta_filtered = array();
@@ -59,6 +60,8 @@ class Revisions {
 	 * Returns the post metadata, without hidden fields.
 	 *
 	 * @param int $post_id The post for which to get the metadata.
+	 *
+	 * @return array<string, mixed> The filtered post metadata.
 	 */
 	public static function get_meta( int $post_id ): array {
 		$meta = get_metadata( 'post', $post_id );
@@ -71,7 +74,7 @@ class Revisions {
 	 * Adds metadata to a post.
 	 *
 	 * @param int   $post_id The post in question.
-	 * @param array $meta The metadata to add.
+	 * @param array<string, mixed> $meta The metadata to add.
 	 *
 	 * @return void
 	 */
@@ -132,6 +135,8 @@ class Revisions {
 	 * Adds the field "custom_fields" to post revisions.
 	 *
 	 * @param array<string> $fields A list of post revision fields.
+	 *
+	 * @return array<string> The updated list.
 	 */
 	public static function fields( array $fields = array() ): array {
 		$fields['custom_fields'] = __( 'Další pole', 'skautis-integration' );
