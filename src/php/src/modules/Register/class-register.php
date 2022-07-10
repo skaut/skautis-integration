@@ -278,6 +278,7 @@ final class Register implements Module {
 			is_null( $return_url ) ||
 			! isset( $_GET['wpRole'], $_GET['skautisUserId'] ) ) {
 			wp_die( esc_html__( 'Nemáte oprávnění k registraci nových uživatelů.', 'skautis-integration' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
+			return;
 		}
 
 		$wp_role = sanitize_text_field( wp_unslash( $_GET['wpRole'] ) );
