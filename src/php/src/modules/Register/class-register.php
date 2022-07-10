@@ -120,7 +120,7 @@ final class Register implements Module {
 	/**
 	 * Redirects the user to login with SkautIS.
 	 *
-	 * @return never
+	 * @return void
 	 *
 	 * @SuppressWarnings(PHPMD.ExitExpression)
 	 */
@@ -211,7 +211,7 @@ final class Register implements Module {
 	 * @see Actions::auth_actions_router() for more details about how this function gets called.
 	 * @see Register::addActionsToRouter() for more details about how this function gets called.
 	 *
-	 * @return never
+	 * @return void
 	 *
 	 * @SuppressWarnings(PHPMD.ExitExpression)
 	 */

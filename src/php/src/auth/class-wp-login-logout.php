@@ -194,7 +194,7 @@ final class WP_Login_Logout {
 	 *
 	 * @see Actions::auth_actions_router() for more details about how this function gets called.
 	 *
-	 * @return never
+	 * @return void
 	 *
 	 * @SuppressWarnings(PHPMD.ExitExpression)
 	 */
