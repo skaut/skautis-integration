@@ -11,6 +11,7 @@ namespace Skautis_Integration\Modules\Visibility\Admin;
 
 use Skautis_Integration\Rules\Rules_Manager;
 use Skautis_Integration\Modules\Visibility\Frontend\Frontend;
+use Skautis_Integration\Utils\Request_Parameter_Helpers;
 
 /**
  * Adds the visibility metabox to the post editor.
@@ -88,7 +89,7 @@ final class Metabox {
 	 * @return void
 	 */
 	public static function save_rules_custom_field( int $post_id ) {
-		if ( ! isset( $_POST[ SKAUTIS_INTEGRATION_NAME . '_visibility_metabox_nonce' ] ) || false === wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ SKAUTIS_INTEGRATION_NAME . '_visibility_metabox_nonce' ] ) ), SKAUTIS_INTEGRATION_NAME . '_visibility_metabox' ) ) {
+		if ( false === wp_verify_nonce( Request_Parameter_Helpers::post_string_variable( SKAUTIS_INTEGRATION_NAME . '_visibility_metabox_nonce' ), SKAUTIS_INTEGRATION_NAME . '_visibility_metabox' ) ) {
 			return;
 		}
 

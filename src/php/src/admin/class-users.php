@@ -12,6 +12,7 @@ namespace Skautis_Integration\Admin;
 use Skautis_Integration\Auth\Connect_And_Disconnect_WP_Account;
 use Skautis_Integration\Auth\Skautis_Gateway;
 use Skautis_Integration\Utils\Helpers;
+use Skautis_Integration\Utils\Request_Parameter_Helpers;
 
 /**
  * Adds SkautIS info to the WordPress user table as well as user profile screen.
@@ -146,10 +147,12 @@ final class Users {
 	/**
 	 * Saves settings from the SkautIS section of the user profile.
 	 *
+	 * TODO: Custom nonce name.
+	 *
 	 * @param int $user_id The ID of the user.
 	 */
 	public static function manage_skautis_user_id_field( int $user_id ): bool {
-		if ( ! isset( $_POST['_wpnonce'] ) || false === wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ), 'update-user_' . $user_id ) ) {
+		if ( false === wp_verify_nonce( Request_Parameter_Helpers::post_string_variable( '_wpnonce' ), 'update-user_' . $user_id ) ) {
 			return false;
 		}
 

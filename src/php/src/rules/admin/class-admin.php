@@ -12,6 +12,7 @@ namespace Skautis_Integration\Rules;
 use Skautis_Integration\Auth\Skautis_Gateway;
 use Skautis_Integration\Auth\WP_Login_Logout;
 use Skautis_Integration\Utils\Helpers;
+use Skautis_Integration\Utils\Request_Parameter_Helpers;
 
 /**
  * Adds the UI for rules management.
@@ -101,7 +102,7 @@ final class Admin {
 	 * @return void
 	 */
 	public static function save_rules_custom_field( int $post_id ) {
-		if ( ! isset( $_POST[ SKAUTIS_INTEGRATION_NAME . '_rules_metabox_nonce' ] ) || false === wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ SKAUTIS_INTEGRATION_NAME . '_rules_metabox_nonce' ] ) ), SKAUTIS_INTEGRATION_NAME . '_rules_metabox' ) ) {
+		if ( false === wp_verify_nonce( Request_Parameter_Helpers::post_string_variable( SKAUTIS_INTEGRATION_NAME . '_rules_metabox_nonce' ), SKAUTIS_INTEGRATION_NAME . '_rules_metabox' ) ) {
 			return;
 		}
 

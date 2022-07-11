@@ -42,4 +42,19 @@ class Request_Parameter_Helpers {
 		$string_value = self::get_string_variable( $name );
 		return '' !== $string_value ? intval( $string_value ) : $default;
 	}
+
+	/**
+	 * Safely loads a string POST variable
+	 *
+	 * This function loads a POST variable, runs it through all the required WordPress sanitization and returns it.
+	 *
+	 * @param string $name The name of the POST variable.
+	 * @param string $default The default value to use if the POST variable doesn't exist. Default empty string.
+	 *
+	 * @return string The POST variable value
+	 */
+	public static function post_string_variable( $name, $default = '' ) {
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.NonceVerification.Recommended
+		return isset( $_POST[ $name ] ) ? sanitize_text_field( wp_unslash( strval( $_POST[ $name ] ) ) ) : $default;
+	}
 }
