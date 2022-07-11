@@ -192,7 +192,7 @@ final class Rules_Manager {
 	 *
 	 * TODO: Deduplicate with the other method in this class.
 	 *
-	 * @param array<array{skautis-integration_rules: string}> $rules_ids A list of IDs of rules or rule groups to check.
+	 * @param array<int|array{skautis-integration_rules: string}> $rules_ids A list of IDs of rules or rule groups to check.
 	 */
 	public function check_if_user_passed_rules( array $rules_ids ): bool {
 		static $rules_groups = null;

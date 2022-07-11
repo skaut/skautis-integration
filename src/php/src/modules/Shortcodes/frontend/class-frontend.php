@@ -134,7 +134,7 @@ final class Frontend {
 				}
 			}
 
-			if ( $this->rules_manager->check_if_user_passed_rules( explode( ',', $atts['rules'] ) ) ) {
+			if ( $this->rules_manager->check_if_user_passed_rules( array_map('intval', explode( ',', $atts['rules'] ) ) ) ) {
 				return $content;
 			} else {
 				if ( 'showLogin' === $atts['content'] ) {
