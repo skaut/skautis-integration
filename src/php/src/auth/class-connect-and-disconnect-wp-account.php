@@ -11,6 +11,7 @@ namespace Skautis_Integration\Auth;
 
 use Skautis_Integration\General\Actions;
 use Skautis_Integration\Utils\Helpers;
+use Skautis_Integration\Utils\Request_Parameter_Helpers;
 
 /**
  * Handles connecting or disconnecting WordPress and SkautIS users.
@@ -137,8 +138,8 @@ final class Connect_And_Disconnect_WP_Account {
 	 * @return void
 	 */
 	public function connect_wp_user_to_skautis() {
-		if ( ! isset( $_GET[ SKAUTIS_INTEGRATION_NAME . '_connect_user_nonce' ] ) ||
-			false === wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET[ SKAUTIS_INTEGRATION_NAME . '_connect_user_nonce' ] ) ), SKAUTIS_INTEGRATION_NAME . '_connect_user' ) ||
+		$nonce = Request_Parameter_Helpers::get_string_variable( SKAUTIS_INTEGRATION_NAME . '_connect_user_nonce' );
+		if ( false === wp_verify_nonce( $nonce, SKAUTIS_INTEGRATION_NAME . '_connect_user' ) ||
 			! $this->skautis_login->is_user_logged_in_skautis() ||
 			! Helpers::user_is_skautis_manager() ||
 			is_null( Helpers::get_return_url() )
@@ -146,12 +147,12 @@ final class Connect_And_Disconnect_WP_Account {
 			wp_die( esc_html__( 'Nemáte oprávnění k propojování uživatelů.', 'skautis-integration' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
 		}
 
-		if ( ! isset( $_GET['wpUserId'], $_GET['skautisUserId'] ) ) {
+		$wp_user_id = Request_Parameter_Helpers::get_int_variable( 'wpUserId' );
+		$skautis_user_id = Request_Parameter_Helpers::get_int_variable( 'skautisUserId' );
+
+		if ( -1 === $wp_user_id || -1 === $skautis_user_id ) {
 			return;
 		}
-
-		$wp_user_id      = absint( $_GET['wpUserId'] );
-		$skautis_user_id = absint( $_GET['skautisUserId'] );
 
 		if ( $wp_user_id > 0 && $skautis_user_id > 0 ) {
 			$this->set_skautis_user_id_to_wp_account( $wp_user_id, $skautis_user_id );
