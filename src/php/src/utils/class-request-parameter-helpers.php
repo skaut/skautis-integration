@@ -80,7 +80,7 @@ class Request_Parameter_Helpers {
 	 *
 	 * @param string $name The name of the POST variable.
 	 * @param string $meta_name The name of the meta.
-	 * @param mixed $default The default value to use if the POST variable doesn't exist. Default empty string.
+	 * @param mixed  $default The default value to use if the POST variable doesn't exist. Default empty string.
 	 *
 	 * @return mixed The POST variable value
 	 */

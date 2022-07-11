@@ -147,7 +147,7 @@ final class Connect_And_Disconnect_WP_Account {
 			wp_die( esc_html__( 'Nemáte oprávnění k propojování uživatelů.', 'skautis-integration' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
 		}
 
-		$wp_user_id = Request_Parameter_Helpers::get_int_variable( 'wpUserId' );
+		$wp_user_id      = Request_Parameter_Helpers::get_int_variable( 'wpUserId' );
 		$skautis_user_id = Request_Parameter_Helpers::get_int_variable( 'skautisUserId' );
 
 		if ( -1 === $wp_user_id || -1 === $skautis_user_id ) {

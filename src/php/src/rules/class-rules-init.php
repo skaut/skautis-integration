@@ -156,7 +156,7 @@ final class Rules_Init {
 	 */
 	public static function updated_messages( array $messages = array() ): array {
 		$post                              = get_post();
-		$revision = Request_Parameter_Helpers::get_int_variable( 'revision' );
+		$revision                          = Request_Parameter_Helpers::get_int_variable( 'revision' );
 		$messages[ self::RULES_TYPE_SLUG ] = array(
 			0  => '', // Unused. Messages start at index 1.
 			1  => __( 'Hotovo', 'skautis-integration' ), // My Post Type updated.

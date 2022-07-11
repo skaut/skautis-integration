@@ -272,9 +272,9 @@ final class Register implements Module {
 	 * @SuppressWarnings(PHPMD.ExitExpression)
 	 */
 	public function registerUserManually() {
-		$return_url = Helpers::get_return_url();
-		$nonce = Request_Parameter_Helpers::get_string_variable( SKAUTIS_INTEGRATION_NAME . '_register_user_nonce' );
-		$wp_role = Request_Parameter_Helpers::get_string_variable( 'wpRole' );
+		$return_url      = Helpers::get_return_url();
+		$nonce           = Request_Parameter_Helpers::get_string_variable( SKAUTIS_INTEGRATION_NAME . '_register_user_nonce' );
+		$wp_role         = Request_Parameter_Helpers::get_string_variable( 'wpRole' );
 		$skautis_user_id = Request_Parameter_Helpers::get_int_variable( 'skautisUserId' );
 		if ( false === wp_verify_nonce( $nonce, SKAUTIS_INTEGRATION_NAME . '_register_user' ) ||
 			! $this->skautis_login->is_user_logged_in_skautis() ||

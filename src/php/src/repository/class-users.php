@@ -43,7 +43,7 @@ class Users {
 			return '';
 		}
 
-		$return_url = Helpers::get_return_url();
+		$return_url         = Helpers::get_return_url();
 		$search_user_string = Request_Parameter_Helpers::get_string_variable( 'skautisSearchUsers' );
 		if ( '' === $search_user_string && ! is_null( $return_url ) ) {
 			$search_user_string = Helpers::get_variable_from_url( $return_url, 'skautisSearchUsers' );
