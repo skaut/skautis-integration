@@ -10,6 +10,7 @@ declare( strict_types=1 );
 namespace Skautis_Integration\Rules;
 
 use Skautis_Integration\Utils\Helpers;
+use Skautis_Integration\Utils\Request_Parameter_Helpers;
 
 /**
  * Adds the rule custom post type to WordPress.
@@ -155,6 +156,7 @@ final class Rules_Init {
 	 */
 	public static function updated_messages( array $messages = array() ): array {
 		$post                              = get_post();
+		$revision = Request_Parameter_Helpers::get_int_variable( 'revision' );
 		$messages[ self::RULES_TYPE_SLUG ] = array(
 			0  => '', // Unused. Messages start at index 1.
 			1  => __( 'Hotovo', 'skautis-integration' ), // My Post Type updated.
@@ -162,7 +164,7 @@ final class Rules_Init {
 			3  => __( 'Hotovo', 'skautis-integration' ), // Custom field deleted.
 			4  => __( 'Hotovo', 'skautis-integration' ), // My Post Type updated.
 			/* translators: The time of the previous version */
-			5  => isset( $_GET['revision'] ) ? sprintf( __( 'Pravidlo bylo obnoveno na starší verzi z %s', 'skautis-integration' ), wp_post_revision_title( absint( $_GET['revision'] ), false ) ) : false, // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			5  => ( -1 !== $revision ) ? sprintf( __( 'Pravidlo bylo obnoveno na starší verzi z %s', 'skautis-integration' ), wp_post_revision_title( $revision, false ) ) : false,
 			6  => __( 'Hotovo', 'skautis-integration' ), // My Post Type published.
 			7  => __( 'Pravidlo bylo uloženo', 'skautis-integration' ), // My Post Type saved.
 			8  => __( 'Hotovo', 'skautis-integration' ), // My Post Type submitted.
