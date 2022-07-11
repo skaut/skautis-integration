@@ -22,7 +22,7 @@ final class Frontend {
 	/**
 	 * A list of post types to activate the Visibility module for.
 	 *
-	 * @var array
+	 * @var array<string>
 	 */
 	private $post_types;
 
@@ -50,7 +50,7 @@ final class Frontend {
 	/**
 	 * Constructs the service and saves all dependencies.
 	 *
-	 * @param array           $post_types A list of post types to activate the Visibility module for.
+	 * @param array<string>   $post_types A list of post types to activate the Visibility module for.
 	 * @param Rules_Manager   $rules_manager An injected Rules_Manager service instance.
 	 * @param Skautis_Login   $skautis_login An injected Skautis_Login service instance.
 	 * @param WP_Login_Logout $wp_login_logout An injected WP_Login_Logout service instance.
@@ -114,7 +114,7 @@ final class Frontend {
 	 * @param int    $post_id The ID of the root post.
 	 * @param string $post_type The type of the root post.
 	 *
-	 * @return array The post ancestors.
+	 * @return array<array{id: int, rules: array<array{skautis-integration_rules?: string}>, includeChildren: string, visibilityMode: string}> The post ancestors.
 	 */
 	private static function get_posts_hierarchy_tree_with_rules( int $post_id, $post_type ): array {
 		$ancestors = get_ancestors( $post_id, $post_type, 'post_type' );
@@ -139,7 +139,7 @@ final class Frontend {
 	 * @param int    $child_post_id The ID of the root post.
 	 * @param string $post_type The type of the root post.
 	 *
-	 * @return array The post ancestors.
+	 * @return array<array{id: int, rules: array<array{skautis-integration_rules?: string}>, includeChildren: string, visibilityMode: string}> The post ancestors.
 	 */
 	private static function get_rules_from_parent_posts_with_impact_by_child_post_id( int $child_post_id, $post_type ): array {
 		$ancestors = self::get_posts_hierarchy_tree_with_rules( $child_post_id, $post_type );
@@ -147,7 +147,7 @@ final class Frontend {
 		$ancestors = array_filter(
 			$ancestors,
 			static function ( $ancestor ) {
-				if ( ! empty( $ancestor['rules'] ) && isset( $ancestor['rules'][0][ SKAUTIS_INTEGRATION_NAME . '_rules' ] ) ) {
+				if ( ! empty( $ancestor['rules'] ) && isset( $ancestor['rules'][0][ 'skautis-integration_rules' ] ) ) {
 					if ( '1' === $ancestor['includeChildren'] ) {
 						return true;
 					}
@@ -214,17 +214,17 @@ final class Frontend {
 	 *
 	 * TODO: This function modifies its parameters.
 	 *
-	 * @param bool            $user_is_logged_in_skautis Whether the current user is logged in to SkautIS.
-	 * @param array           $rules A list of visibility rules to check.
-	 * @param array<\WP_Post> $posts A list of posts to filter. This parameter is modified by the function.
-	 * @param int             $post_key The ID of the post to hide.
-	 * @param \WP_Query       $wp_query The WordPress request.
-	 * @param bool            $posts_were_filtered Whether the posts were already filtered.
+	 * @param bool                                             $user_is_logged_in_skautis Whether the current user is logged in to SkautIS.
+	 * @param array<array{skautis-integration_rules?: string}> $rules A list of visibility rules to check.
+	 * @param array<\WP_Post>                                  $posts A list of posts to filter. This parameter is modified by the function.
+	 * @param int                                              $post_key The ID of the post to hide.
+	 * @param \WP_Query                                        $wp_query The WordPress request.
+	 * @param bool                                             $posts_were_filtered Whether the posts were already filtered.
 	 *
 	 * @return void
 	 */
 	private function process_rules_and_hide_posts( bool $user_is_logged_in_skautis, array $rules, array &$posts, int $post_key, \WP_Query $wp_query, &$posts_were_filtered = false ) {
-		if ( ! empty( $rules ) && isset( $rules[0][ SKAUTIS_INTEGRATION_NAME . '_rules' ] ) ) {
+		if ( ! empty( $rules ) && isset( $rules[0][ 'skautis-integration_rules' ] ) ) {
 			if ( ! $user_is_logged_in_skautis ||
 				! $this->rules_manager->check_if_user_passed_rules( $rules ) ) {
 				unset( $posts[ $post_key ] );
@@ -242,14 +242,14 @@ final class Frontend {
 	 *
 	 * TODO: Deduplicate with the previous function.
 	 *
-	 * @param bool  $user_is_logged_in_skautis Whether the current user is logged in to SkautIS.
-	 * @param array $rules A list of visibility rules to check.
-	 * @param int   $post_id The ID of the post to show or hide.
+	 * @param bool                                             $user_is_logged_in_skautis Whether the current user is logged in to SkautIS.
+	 * @param array<array{skautis-integration_rules?: string}> $rules A list of visibility rules to check.
+	 * @param int                                              $post_id The ID of the post to show or hide.
 	 *
 	 * @return void
 	 */
 	private function process_rules_and_hide_content( bool $user_is_logged_in_skautis, array $rules, int $post_id ) {
-		if ( ! empty( $rules ) && isset( $rules[0][ SKAUTIS_INTEGRATION_NAME . '_rules' ] ) ) {
+		if ( ! empty( $rules ) && isset( $rules[0][ 'skautis-integration_rules' ] ) ) {
 			if ( ! $user_is_logged_in_skautis ) {
 				self::hide_content_excerpt_comments( $post_id, self::get_login_required_message() . $this->get_login_form(), self::get_login_required_message() );
 			} elseif ( ! $this->rules_manager->check_if_user_passed_rules( $rules ) ) {

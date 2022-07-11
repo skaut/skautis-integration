@@ -149,7 +149,7 @@ class Qualification implements Rule {
 	/**
 	 * Returns an array of user qualification IDs.
 	 *
-	 * @return array The qualification IDs.
+	 * @return array<string> The qualification IDs.
 	 */
 	protected function getUserQualifications(): array {
 		static $user_qualifications = null;

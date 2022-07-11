@@ -57,7 +57,7 @@ class Users {
 	/**
 	 * Lists all users with a connected SkautIS account under the current environment (testing or production).
 	 *
-	 * @return array The users.
+	 * @return array<int, array{id: int, name: string}> The users as an associative array, where the array key is the SkautIS user ID and the value contains the WordPress user ID.
 	 */
 	public function get_connected_wp_users(): array {
 		$users_data = array();
@@ -118,7 +118,7 @@ class Users {
 	/**
 	 * Returns all users for the current unit or event. Returns users whose name matches the "skautisSearchUsers" GET variable if it is present.
 	 *
-	 * @return array The users.
+	 * @return array{users: array<\stdClass>, eventType: string} The users.
 	 */
 	public function get_users(): array {
 		$users      = array();
@@ -283,7 +283,7 @@ class Users {
 	 *
 	 * @param int $skautis_user_id The SkautIS user ID.
 	 *
-	 * @return array The information about a user.
+	 * @return array{id: int, UserName: string, personId: int, email: string, firstName: string, lastName: string, nickName: string} The information about a user.
 	 */
 	public function get_user_detail( int $skautis_user_id ): array {
 		$user_detail = array();

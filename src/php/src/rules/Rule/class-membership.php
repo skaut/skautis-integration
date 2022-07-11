@@ -171,7 +171,7 @@ class Membership implements Rule {
 	 *
 	 * @throws \Exception The SkautIS API returned an unexpected value.
 	 *
-	 * @return array The membership IDs.
+	 * @return array<string, array<string>> The membership IDs.
 	 */
 	protected function getUserMembershipsWithUnitIds(): array {
 		static $user_memberships = null;

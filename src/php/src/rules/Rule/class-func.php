@@ -169,7 +169,7 @@ class Func implements Rule {
 	/**
 	 * Returns an array of arrays where for each user function ID, there are listed units asssociated with that function.
 	 *
-	 * @return array The function IDs.
+	 * @return array<int, array<string>> The function IDs.
 	 */
 	protected function getUserFuncsWithUnitIds(): array {
 		static $user_funcs = null;

@@ -169,7 +169,7 @@ class Role implements Rule {
 	/**
 	 * Returns an array of arrays where for each user role ID, there are listed units asssociated with that role.
 	 *
-	 * @return array The unit list.
+	 * @return array<int, array<string>> The unit list.
 	 */
 	protected function getUserRolesWithUnitIds(): array {
 		static $user_roles = null;
