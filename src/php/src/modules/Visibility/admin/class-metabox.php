@@ -22,7 +22,7 @@ final class Metabox {
 	/**
 	 * A list of post types to activate the Visibility module for.
 	 *
-	 * @var array
+	 * @var array<string>
 	 */
 	private $post_types;
 
@@ -43,7 +43,7 @@ final class Metabox {
 	/**
 	 * Constructs the service and saves all dependencies.
 	 *
-	 * @param array         $post_types A list of post types to activate the Visibility module for.
+	 * @param array<string> $post_types A list of post types to activate the Visibility module for.
 	 * @param Rules_Manager $rules_manager An injected Rules_Manager service instance.
 	 * @param Frontend      $frontend An injected Frontend service instance.
 	 */

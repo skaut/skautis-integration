@@ -61,7 +61,7 @@ if ( ! function_exists( 'userPassedRules' ) ) {
 	/**
 	 * Checks whether the current user passed plugin rules
 	 *
-	 * @param array $rules_ids A list of IDs of rules or rule groups to check.
+	 * @param array<array{skautis-integration_rules: string}> $rules_ids A list of IDs of rules or rule groups to check.
 	 */
 	function userPassedRules( array $rules_ids ): bool {
 		return Services::get_rules_manager()->check_if_user_passed_rules( $rules_ids );

@@ -152,7 +152,7 @@ final class Register implements Module {
 	/**
 	 * Fires upon redirect back from SkautIS after login and handles the user login and potential registration.
 	 *
-	 * @param array $data SkautIS login data.
+	 * @param array{skautIS_Token?: string, skautIS_IDRole?: string, skautIS_IDUnit?: string, skautIS_DateLogout?: string} $data SkautIS login data.
 	 *
 	 * @return void
 	 */

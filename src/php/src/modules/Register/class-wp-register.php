@@ -95,7 +95,11 @@ final class WP_Register {
 	 *
 	 * This function queries SkautIS for the information needed when registering a new WordPress user.
 	 *
+	 * TODO: Deduplicate with Repository\Users::get_user_detail()
+	 *
 	 * @param \stdClass $skautis_user The SkautIS user.
+	 *
+	 * @return array{id: int, UserName: string, personId: int, email: string, firstName: string, lastName: string, nickName: string} The information about a user.
 	 */
 	private function prepare_user_data( $skautis_user ): array {
 		$skautis_user_detail = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->PersonDetail(

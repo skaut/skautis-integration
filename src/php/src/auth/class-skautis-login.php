@@ -55,7 +55,7 @@ final class Skautis_Login {
 	/**
 	 * Takes the data returned from SkautIS login and passes it to the SkautIS library.
 	 *
-	 * @param array $data The SkautIS login data.
+	 * @param array{skautIS_Token?: string, skautIS_IDRole?: string, skautIS_IDUnit?: string, skautIS_DateLogout?: string} $data The SkautIS login data.
 	 */
 	public function set_login_data_to_local_skautis_instance( array $data = array() ): bool {
 		$data = apply_filters( SKAUTIS_INTEGRATION_NAME . '_login_data_for_skautis_instance', $data );

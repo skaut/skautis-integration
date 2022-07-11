@@ -110,11 +110,13 @@ final class Settings {
 	/**
 	 * Adds a link to the plugin settings to the plugin management table.
 	 *
-	 * @param array $links A list of links already present for the plugin.
+	 * @param array<string, string> $links A list of links already present for the plugin.
+	 *
+	 * @return array<string, string> The updated list.
 	 */
 	public static function add_settings_link_to_plugins_table( array $links = array() ): array {
 		$mylinks = array(
-			'<a href="' . admin_url( 'admin.php?page=' . SKAUTIS_INTEGRATION_NAME, 'skautis-integration' ) . '">' . __( 'Settings', 'skautis-integration' ) . '</a>',
+			'settings' => '<a href="' . admin_url( 'admin.php?page=' . SKAUTIS_INTEGRATION_NAME, 'skautis-integration' ) . '">' . __( 'Settings', 'skautis-integration' ) . '</a>',
 		);
 
 		return array_merge( $links, $mylinks );
@@ -123,11 +125,13 @@ final class Settings {
 	/**
 	 * Adds a link to the plugin help to the plugin management table.
 	 *
-	 * @param array $links A list of links already present for the plugin.
+	 * @param array<string, string> $links A list of links already present for the plugin.
+	 *
+	 * @return array<string, string> The updated list.
 	 */
 	public static function add_help_link_to_plugins_table( array $links = array() ): array {
 		$mylinks = array(
-			'<a href="' . self::HELP_PAGE_URL . '" target="_blank">' . __( 'Help', 'skautis-integration' ) . '</a>',
+			'help' => '<a href="' . self::HELP_PAGE_URL . '" target="_blank">' . __( 'Help', 'skautis-integration' ) . '</a>',
 		);
 
 		return array_merge( $links, $mylinks );
