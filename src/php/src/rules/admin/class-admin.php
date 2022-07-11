@@ -106,11 +106,12 @@ final class Admin {
 			return;
 		}
 
-		if ( array_key_exists( SKAUTIS_INTEGRATION_NAME . '_rules_data', $_POST ) ) {
+		$data = Request_Parameter_Helpers::post_meta_variable( SKAUTIS_INTEGRATION_NAME . '_rules_data', SKAUTIS_INTEGRATION_NAME . '_rules_data' );
+		if ( '' !== $data ) {
 			update_post_meta(
 				$post_id,
 				SKAUTIS_INTEGRATION_NAME . '_rules_data',
-				sanitize_meta( SKAUTIS_INTEGRATION_NAME . '_rules_data', wp_unslash( $_POST[ SKAUTIS_INTEGRATION_NAME . '_rules_data' ] ), 'post' )
+				$data
 			);
 		}
 	}
