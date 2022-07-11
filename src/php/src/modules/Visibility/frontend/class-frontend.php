@@ -147,7 +147,7 @@ final class Frontend {
 		$ancestors = array_filter(
 			$ancestors,
 			static function ( $ancestor ) {
-				if ( ! empty( $ancestor['rules'] ) && isset( $ancestor['rules'][0][ 'skautis-integration_rules' ] ) ) {
+				if ( ! empty( $ancestor['rules'] ) && isset( $ancestor['rules'][0]['skautis-integration_rules'] ) ) {
 					if ( '1' === $ancestor['includeChildren'] ) {
 						return true;
 					}
@@ -224,7 +224,7 @@ final class Frontend {
 	 * @return void
 	 */
 	private function process_rules_and_hide_posts( bool $user_is_logged_in_skautis, array $rules, array &$posts, int $post_key, \WP_Query $wp_query, &$posts_were_filtered = false ) {
-		if ( ! empty( $rules ) && isset( $rules[0][ 'skautis-integration_rules' ] ) ) {
+		if ( ! empty( $rules ) && isset( $rules[0]['skautis-integration_rules'] ) ) {
 			if ( ! $user_is_logged_in_skautis ||
 				! $this->rules_manager->check_if_user_passed_rules( $rules ) ) {
 				unset( $posts[ $post_key ] );
@@ -249,7 +249,7 @@ final class Frontend {
 	 * @return void
 	 */
 	private function process_rules_and_hide_content( bool $user_is_logged_in_skautis, array $rules, int $post_id ) {
-		if ( ! empty( $rules ) && isset( $rules[0][ 'skautis-integration_rules' ] ) ) {
+		if ( ! empty( $rules ) && isset( $rules[0]['skautis-integration_rules'] ) ) {
 			if ( ! $user_is_logged_in_skautis ) {
 				self::hide_content_excerpt_comments( $post_id, self::get_login_required_message() . $this->get_login_form(), self::get_login_required_message() );
 			} elseif ( ! $this->rules_manager->check_if_user_passed_rules( $rules ) ) {
@@ -292,7 +292,7 @@ final class Frontend {
 			);
 
 			foreach ( $parent_post_with_rules['rules'] as $rule ) {
-				$result[ $parent_post_with_rules['id'] ]['rules'][ intval( $rule['skautis-integration_rules'] ) ] = get_the_title( intval($rule['skautis-integration_rules'] ) );
+				$result[ $parent_post_with_rules['id'] ]['rules'][ intval( $rule['skautis-integration_rules'] ) ] = get_the_title( intval( $rule['skautis-integration_rules'] ) );
 			}
 		}
 
