@@ -18,6 +18,7 @@ use Skautis_Integration\Modules\Module;
 use Skautis_Integration\Modules\Register\Admin\Admin;
 use Skautis_Integration\Modules\Register\Frontend\Login_Form;
 use Skautis_Integration\Utils\Helpers;
+use Skautis_Integration\Utils\Request_Parameter_Helpers;
 
 /**
  * Adds the functionality to register new WordPress users based on SkautIS.
@@ -272,22 +273,23 @@ final class Register implements Module {
 	 */
 	public function registerUserManually() {
 		$return_url = Helpers::get_return_url();
-		if ( ! isset( $_GET[ SKAUTIS_INTEGRATION_NAME . '_register_user_nonce' ] ) ||
-			false === wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET[ SKAUTIS_INTEGRATION_NAME . '_register_user_nonce' ] ) ), SKAUTIS_INTEGRATION_NAME . '_register_user' ) ||
+		$nonce = Request_Parameter_Helpers::get_string_variable( SKAUTIS_INTEGRATION_NAME . '_register_user_nonce' );
+		$wp_role = Request_Parameter_Helpers::get_string_variable( 'wpRole' );
+		$skautis_user_id = Request_Parameter_Helpers::get_int_variable( 'skautisUserId' );
+		if ( false === wp_verify_nonce( $nonce, SKAUTIS_INTEGRATION_NAME . '_register_user' ) ||
 			! $this->skautis_login->is_user_logged_in_skautis() ||
 			! Helpers::user_is_skautis_manager() ||
 			! current_user_can( 'create_users' ) ||
 			is_null( $return_url ) ||
-			! isset( $_GET['wpRole'], $_GET['skautisUserId'] ) ) {
+			'' === $wp_role ||
+			-1 === $skautis_user_id ) {
 			wp_die( esc_html__( 'Nemáte oprávnění k registraci nových uživatelů.', 'skautis-integration' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
 			return;
 		}
 
-		$wp_role = sanitize_text_field( wp_unslash( $_GET['wpRole'] ) );
 		if ( ! wp_roles()->is_role( $wp_role ) ) {
 			wp_die( esc_html__( 'Uživatele se nepodařilo zaregistrovat - role neexistuje.', 'skautis-integration' ), esc_html__( 'Chyba při registraci uživatele', 'skautis-integration' ) );
 		}
-		$skautis_user_id = absint( $_GET['skautisUserId'] );
 
 		if ( $this->wp_register->register_to_wp_manually( $wp_role, $skautis_user_id ) ) {
 			wp_safe_redirect( $return_url, 302 );
