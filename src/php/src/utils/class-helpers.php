@@ -88,10 +88,9 @@ class Helpers {
 	 * @return string The URL or empty string if the it isn't set in the URL.
 	 */
 	public static function get_login_logout_redirect() {
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		if ( isset( $_GET['redirect_to'] ) && '' !== $_GET['redirect_to'] ) {
-			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			return esc_url_raw( wp_unslash( $_GET['redirect_to'] ) );
+		$redirect_to = Request_Parameter_Helpers::get_string_variable( 'redirect_to' );
+		if ( '' !== $redirect_to ) {
+			return esc_url_raw( $redirect_to );
 		}
 		$return_url = self::get_return_url();
 		return is_null( $return_url ) ? self::get_current_url() : $return_url;
@@ -103,12 +102,11 @@ class Helpers {
 	 * @return string|null The variable value or `null` if it isn't set.
 	 */
 	public static function get_return_url() {
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		if ( ! isset( $_GET['ReturnUrl'] ) || '' === $_GET['ReturnUrl'] ) {
+		$return_url = Request_Parameter_Helpers::get_string_variable( 'ReturnUrl' );
+		if ( '' === $return_url ) {
 			return null;
 		}
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		return esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) );
+		return esc_url_raw( $return_url );
 	}
 
 	/**
