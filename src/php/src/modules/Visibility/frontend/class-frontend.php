@@ -139,7 +139,7 @@ final class Frontend {
 	 * @param int    $child_post_id The ID of the root post.
 	 * @param string $post_type The type of the root post.
 	 *
-	 * @return array<array{id: int, rules: array<array{skautis-integration_rules?: string}>, includeChildren: string, visibilityMode: string}> The post ancestors.
+	 * @return array<array{id: int, rules: array<array{skautis-integration_rules: string}>, includeChildren: string, visibilityMode: string}> The post ancestors.
 	 */
 	private static function get_rules_from_parent_posts_with_impact_by_child_post_id( int $child_post_id, $post_type ): array {
 		$ancestors = self::get_posts_hierarchy_tree_with_rules( $child_post_id, $post_type );
