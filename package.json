@@ -71,7 +71,7 @@
     "datatables.net-dt": "^1.12.1",
     "datatables.net-plugins": "^1.11.5",
     "font-awesome": "^4.7.0",
-    "interactjs": "^1.10.14",
+    "interactjs": "^1.10.17",
     "jQuery-QueryBuilder": "^2.6.2",
     "jquery.repeater": "^1.2.1",
     "select2": "^4.1.0-rc.0"
