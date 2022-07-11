@@ -93,30 +93,22 @@ final class Metabox {
 			return;
 		}
 
-		if ( isset( $_POST[ SKAUTIS_INTEGRATION_NAME . '_rules_visibilityMode' ] ) ) {
-			if ( isset( $_POST[ SKAUTIS_INTEGRATION_NAME . '_rules' ] ) ) {
-				$rules = sanitize_meta( SKAUTIS_INTEGRATION_NAME . '_rules', wp_unslash( $_POST[ SKAUTIS_INTEGRATION_NAME . '_rules' ] ), 'post' );
-			} else {
-				$rules = array();
-			}
+		$visibility_mode = Request_Parameter_Helpers::post_meta_variable( SKAUTIS_INTEGRATION_NAME . '_rules_visibilityMode', SKAUTIS_INTEGRATION_NAME . '_rules_visibilityMode' );
+		if ( '' !== $visibility_mode ) {
+			$rules = Request_Parameter_Helpers::post_meta_variable( SKAUTIS_INTEGRATION_NAME . '_rules', SKAUTIS_INTEGRATION_NAME . '_rules', array() );
 			update_post_meta(
 				$post_id,
 				SKAUTIS_INTEGRATION_NAME . '_rules',
 				$rules
 			);
 
-			if ( isset( $_POST[ SKAUTIS_INTEGRATION_NAME . '_rules_includeChildren' ] ) ) {
-				$include_children = sanitize_meta( SKAUTIS_INTEGRATION_NAME . '_rules_includeChildren', wp_unslash( $_POST[ SKAUTIS_INTEGRATION_NAME . '_rules_includeChildren' ] ), 'post' );
-			} else {
-				$include_children = 0;
-			}
+			$include_children = Request_Parameter_Helpers::post_meta_variable( SKAUTIS_INTEGRATION_NAME . '_rules_includeChildren', SKAUTIS_INTEGRATION_NAME . '_rules_includeChildren', 0 );
 			update_post_meta(
 				$post_id,
 				SKAUTIS_INTEGRATION_NAME . '_rules_includeChildren',
 				$include_children
 			);
 
-			$visibility_mode = sanitize_meta( SKAUTIS_INTEGRATION_NAME . '_rules_visibilityMode', wp_unslash( $_POST[ SKAUTIS_INTEGRATION_NAME . '_rules_visibilityMode' ] ), 'post' );
 			update_post_meta(
 				$post_id,
 				SKAUTIS_INTEGRATION_NAME . '_rules_visibilityMode',

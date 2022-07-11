@@ -57,4 +57,20 @@ class Request_Parameter_Helpers {
 		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.NonceVerification.Recommended
 		return isset( $_POST[ $name ] ) ? sanitize_text_field( wp_unslash( strval( $_POST[ $name ] ) ) ) : $default;
 	}
+
+	/**
+	 * Safely loads a POST variable containing a meta value
+	 *
+	 * This function loads a POST variable, runs it through all the required WordPress sanitization and returns it.
+	 *
+	 * @param string $name The name of the POST variable.
+	 * @param string $meta_name The name of the meta.
+	 * @param mixed $default The default value to use if the POST variable doesn't exist. Default empty string.
+	 *
+	 * @return mixed The POST variable value
+	 */
+	public static function post_meta_variable( $name, $meta_name, $default = '' ) {
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.NonceVerification.Recommended
+		return isset( $_POST[ $name ] ) ? sanitize_meta( $meta_name, wp_unslash( strval( $_POST[ $name ] ) ), 'post' ) : $default;
+	}
 }
