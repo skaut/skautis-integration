@@ -59,6 +59,21 @@ class Request_Parameter_Helpers {
 	}
 
 	/**
+	 * Safely loads an integer POST variable
+	 *
+	 * This function loads a POST variable, runs it through all the required WordPress sanitization and returns it.
+	 *
+	 * @param string $name The name of the POST variable.
+	 * @param int    $default The default value to use if the POST variable doesn't exist.
+	 *
+	 * @return int The POST variable value
+	 */
+	public static function post_int_variable( $name, $default = -1 ) {
+		$string_value = self::get_string_variable( $name );
+		return '' !== $string_value ? intval( $string_value ) : $default;
+	}
+
+	/**
 	 * Safely loads a POST variable containing a meta value
 	 *
 	 * This function loads a POST variable, runs it through all the required WordPress sanitization and returns it.

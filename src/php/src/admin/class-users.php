@@ -159,7 +159,7 @@ final class Users {
 		$saved = false;
 		if ( Helpers::user_is_skautis_manager() ) {
 			if ( isset( $_POST['skautisUserId_prod'] ) ) {
-				$skautis_user_id = absint( $_POST['skautisUserId_prod'] );
+				$skautis_user_id = Request_Parameter_Helpers::post_int_variable( 'skautisUserId_prod', 0 );
 				if ( 0 === $skautis_user_id ) {
 					$skautis_user_id = '';
 				}
@@ -167,7 +167,7 @@ final class Users {
 				$saved = true;
 			}
 			if ( isset( $_POST['skautisUserId_test'] ) ) {
-				$skautis_user_id = absint( $_POST['skautisUserId_test'] );
+				$skautis_user_id = Request_Parameter_Helpers::post_int_variable( 'skautisUserId_test', 0 );
 				if ( 0 === $skautis_user_id ) {
 					$skautis_user_id = '';
 				}
