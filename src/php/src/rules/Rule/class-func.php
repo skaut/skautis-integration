@@ -248,8 +248,8 @@ class Func implements Rule {
 		$user_pass  = 0;
 		foreach ( $funcs as $func ) {
 			// in / not_in range check.
-			if ( array_key_exists( $func, $user_funcs ) === $assume_in ) {
-				foreach ( $user_funcs[ $func ] as $user_func_unit_id ) {
+			if ( array_key_exists( intval( $func ), $user_funcs ) === $assume_in ) {
+				foreach ( $user_funcs[ intval( $func ) ] as $user_func_unit_id ) {
 					$user_func_unit_id = self::clearUnitId( $user_func_unit_id );
 
 					switch ( $unit_operator ) {

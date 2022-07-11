@@ -249,8 +249,8 @@ class Role implements Rule {
 		$user_pass  = 0;
 		foreach ( $roles as $role ) {
 			// in / not_in range check.
-			if ( array_key_exists( $role, $user_roles ) === $assume_in ) {
-				foreach ( $user_roles[ $role ] as $user_role_unit_id ) {
+			if ( array_key_exists( intval( $role ), $user_roles ) === $assume_in ) {
+				foreach ( $user_roles[ intval( $role ) ] as $user_role_unit_id ) {
 					$user_role_unit_id = self::clearUnitId( $user_role_unit_id );
 
 					switch ( $unit_operator ) {
