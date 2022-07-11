@@ -108,10 +108,7 @@ final class Admin {
 				$rules[ $rule->ID ] = $rule->post_title;
 			}
 			?>
-			<script>
-				window.rulesOptions = <?php wp_json_encode( $rules ); ?>;
-			</script>
-			?>
+			window.rulesOptions = <?php echo wp_json_encode( $rules ); ?>;
 		</script>
 		<?php
 	}

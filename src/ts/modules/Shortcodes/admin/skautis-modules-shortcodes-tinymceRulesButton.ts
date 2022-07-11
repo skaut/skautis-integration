@@ -44,8 +44,8 @@ interface ModalData {
 					for (const key in rules) {
 						if (Object.prototype.hasOwnProperty.call(rules, key)) {
 							rulesOptions.push({
-								text: key,
-								value: rules[key],
+								text: rules[key],
+								value: key,
 							});
 						}
 					}
