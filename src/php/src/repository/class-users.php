@@ -11,6 +11,7 @@ namespace Skautis_Integration\Repository;
 
 use Skautis_Integration\Auth\Skautis_Gateway;
 use Skautis_Integration\Utils\Helpers;
+use Skautis_Integration\Utils\Request_Parameter_Helpers;
 
 /**
  * Contains helper functions for management of SkautIS users.
@@ -37,17 +38,14 @@ class Users {
 	 * Parses the "skautisSearchUsers" GET variable from the URL.
 	 */
 	protected static function get_search_user_string(): string {
-		$search_user_string = '';
+		$nonce = Request_Parameter_Helpers::get_string_variable( SKAUTIS_INTEGRATION_NAME . '_skautis_search_user_nonce' );
+		if ( false === wp_verify_nonce( $nonce, SKAUTIS_INTEGRATION_NAME . '_skautis_search_user' ) ) {
+			return '';
+		}
 
 		$return_url = Helpers::get_return_url();
-		if (
-			isset( $_GET[ SKAUTIS_INTEGRATION_NAME . '_skautis_search_user_nonce' ] ) &&
-			false !== wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET[ SKAUTIS_INTEGRATION_NAME . '_skautis_search_user_nonce' ] ) ), SKAUTIS_INTEGRATION_NAME . '_skautis_search_user' ) &&
-			isset( $_GET['skautisSearchUsers'] ) &&
-			'' !== $_GET['skautisSearchUsers']
-		) {
-			$search_user_string = sanitize_text_field( wp_unslash( $_GET['skautisSearchUsers'] ) );
-		} elseif ( ! is_null( $return_url ) ) {
+		$search_user_string = Request_Parameter_Helpers::get_string_variable( 'skautisSearchUsers' );
+		if ( '' === $search_user_string && ! is_null( $return_url ) ) {
 			$search_user_string = Helpers::get_variable_from_url( $return_url, 'skautisSearchUsers' );
 		}
 
