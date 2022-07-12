@@ -40,10 +40,9 @@ class Revisions {
 	/**
 	 * Removes all hidden fields from a post metadata.
 	 *
-	 * @template T
-	 * @param array<string, T> $meta The metadata to filter.
+	 * @param array<string, mixed> $meta The metadata to filter.
 	 *
-	 * @return array<string, T>
+	 * @return array<string, mixed>
 	 */
 	private static function filter_meta( $meta ): array {
 		$meta_filtered = array();
