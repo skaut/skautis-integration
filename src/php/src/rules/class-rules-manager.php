@@ -181,6 +181,7 @@ final class Rules_Manager {
 		);
 
 		if ( $rules_wp_query->have_posts() ) {
+			// @phpstan-ignore-next-line
 			return $rules_wp_query->posts;
 		}
 

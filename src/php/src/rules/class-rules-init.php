@@ -164,7 +164,7 @@ final class Rules_Init {
 			3  => __( 'Hotovo', 'skautis-integration' ), // Custom field deleted.
 			4  => __( 'Hotovo', 'skautis-integration' ), // My Post Type updated.
 			/* translators: The time of the previous version */
-			5  => ( -1 !== $revision ) ? sprintf( __( 'Pravidlo bylo obnoveno na starší verzi z %s', 'skautis-integration' ), wp_post_revision_title( $revision, false ) ) : false,
+			5  => ( -1 !== $revision ) ? sprintf( __( 'Pravidlo bylo obnoveno na starší verzi z %s', 'skautis-integration' ), wp_post_revision_title( $revision, false ) ) : '',
 			6  => __( 'Hotovo', 'skautis-integration' ), // My Post Type published.
 			7  => __( 'Pravidlo bylo uloženo', 'skautis-integration' ), // My Post Type saved.
 			8  => __( 'Hotovo', 'skautis-integration' ), // My Post Type submitted.
@@ -197,6 +197,7 @@ final class Rules_Init {
 		);
 
 		if ( $rules_wp_query->have_posts() ) {
+			// @phpstan-ignore-next-line
 			return $rules_wp_query->posts;
 		}
 
