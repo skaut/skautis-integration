@@ -408,6 +408,9 @@ final class Settings {
 				'sanitize_callback' => static function ( $url ) {
 					$url = str_replace( ' ', '%20', $url );
 					$url = preg_replace( '|[^a-z0-9-~+_.?=!&;,/:%@$\|*\'()\[\]\\x80-\\xff]|i', '', $url );
+					if ( ! is_string( $url ) ) {
+						$url = '';
+					}
 					$url = wp_kses_normalize_entities( $url );
 					$url = str_replace( '&amp;', '&#038;', $url );
 					$url = str_replace( "'", '&#039;', $url );

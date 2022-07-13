@@ -115,7 +115,11 @@ final class Admin {
 	 */
 	public function init_rules_data() {
 		if ( in_array( get_current_screen()->id, $this->post_types, true ) ) {
-			$data = get_post_meta( get_the_ID(), SKAUTIS_INTEGRATION_NAME . '_rules', true );
+			$id = get_the_ID();
+			if ( false === $id ) {
+				return;
+			}
+			$data = get_post_meta( $id, SKAUTIS_INTEGRATION_NAME . '_rules', true );
 			?>
 			<script>
 				window.rulesData = <?php echo wp_json_encode( $data ); ?>;

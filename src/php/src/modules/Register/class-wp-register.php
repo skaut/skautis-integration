@@ -85,6 +85,7 @@ final class WP_Register {
 			}
 				/* translators: The error message */
 			wp_die( sprintf( esc_html__( 'Při registraci nastala neočekávaná chyba: %s', 'skautis-integration' ), esc_html( $user_id->get_error_message() ) ), esc_html__( 'Chyba při registraci', 'skautis-integration' ) );
+			die();
 		}
 
 		return $user_id;
@@ -231,7 +232,10 @@ final class WP_Register {
 		$users          = $users_wp_query->get_results();
 
 		if ( ! empty( $users ) ) {
-			return $users[0]->ID;
+			$user = $users[0];
+			if ( $user instanceof \WP_User ) {
+				return $user->ID;
+			}
 		}
 
 		return 0;
@@ -264,7 +268,7 @@ final class WP_Register {
 	public function register_to_wp( string $wp_role ): bool {
 		$user_detail = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserDetail();
 
-		if ( $user_detail && isset( $user_detail->ID ) && $user_detail->ID > 0 ) {
+		if ( $user_detail instanceof \stdClass && isset( $user_detail->ID ) && $user_detail->ID > 0 ) {
 			$user = $this->prepare_user_data( $user_detail );
 
 			return $this->process_wp_user_registration( $user, $wp_role );
