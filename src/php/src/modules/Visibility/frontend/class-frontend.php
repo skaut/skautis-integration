@@ -216,7 +216,7 @@ final class Frontend {
 	 * TODO: This function modifies its parameters.
 	 *
 	 * @param bool                                             $user_is_logged_in_skautis Whether the current user is logged in to SkautIS.
-	 * @param array<array{skautis-integration_rules?: string}> $rules A list of visibility rules to check.
+	 * @param array<array{skautis-integration_rules: string}> $rules A list of visibility rules to check.
 	 * @param array<\WP_Post>                                  $posts A list of posts to filter. This parameter is modified by the function.
 	 * @param int                                              $post_key The ID of the post to hide.
 	 * @param \WP_Query                                        $wp_query The WordPress request.
@@ -244,7 +244,7 @@ final class Frontend {
 	 * TODO: Deduplicate with the previous function.
 	 *
 	 * @param bool                                             $user_is_logged_in_skautis Whether the current user is logged in to SkautIS.
-	 * @param array<array{skautis-integration_rules?: string}> $rules A list of visibility rules to check.
+	 * @param array<array{skautis-integration_rules: string}> $rules A list of visibility rules to check.
 	 * @param int                                              $post_id The ID of the post to show or hide.
 	 *
 	 * @return void
