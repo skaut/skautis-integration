@@ -140,7 +140,7 @@ class Qualification implements Rule {
 		$qualifications = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->QualificationTypeAll();
 
 		foreach ( $qualifications as $qualification ) {
-			$result[ $qualification->ID ] = $qualification->DisplayName;
+			$result[ strval( $qualification->ID ) ] = $qualification->DisplayName;
 		}
 
 		return $result;

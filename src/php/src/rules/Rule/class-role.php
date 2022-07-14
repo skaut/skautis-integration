@@ -140,7 +140,7 @@ class Role implements Rule {
 		$roles  = $this->skautis_gateway->get_skautis_instance()->UserManagement->RoleAll();
 
 		foreach ( $roles as $role ) {
-			$values[ $role->ID ] = $role->DisplayName;
+			$values[ strval( $role->ID ) ] = $role->DisplayName;
 		}
 
 		return $values;
@@ -197,9 +197,9 @@ class Role implements Rule {
 
 				if ( $unit_detail ) {
 					if ( ! isset( $result[ $user_role->ID_Role ] ) ) {
-						$result[ $user_role->ID_Role ] = array();
+						$result[ intval( $user_role->ID_Role ) ] = array();
 					}
-					$result[ $user_role->ID_Role ][] = $unit_detail->RegistrationNumber;
+					$result[ intval( $user_role->ID_Role ) ][] = $unit_detail->RegistrationNumber;
 				}
 			} catch ( \Exception $_ ) {
 				continue;

@@ -140,7 +140,7 @@ class Func implements Rule {
 		$funcs  = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->FunctionTypeAll();
 
 		foreach ( $funcs as $func ) {
-			$values[ $func->ID ] = $func->ShortName;
+			$values[ strval( $func->ID ) ] = $func->ShortName;
 		}
 
 		return $values;
@@ -199,9 +199,9 @@ class Func implements Rule {
 			);
 			if ( $unit_detail ) {
 				if ( ! isset( $result[ $user_func->ID_FunctionType ] ) ) {
-					$result[ $user_func->ID_FunctionType ] = array();
+					$result[ intval( $user_func->ID_FunctionType ) ] = array();
 				}
-				$result[ $user_func->ID_FunctionType ][] = $unit_detail->RegistrationNumber;
+				$result[ intval( $user_func->ID_FunctionType ) ][] = $unit_detail->RegistrationNumber;
 			}
 		}
 

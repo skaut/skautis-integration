@@ -140,7 +140,7 @@ class Membership implements Rule {
 		$memberships = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->MembershipTypeAll();
 
 		foreach ( $memberships as $membership ) {
-			$result[ $membership->ID ] = $membership->DisplayName;
+			$result[ strval( $membership->ID ) ] = $membership->DisplayName;
 		}
 
 		return $result;

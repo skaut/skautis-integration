@@ -76,6 +76,9 @@ class Users {
 		);
 
 		foreach ( $connected_wp_users->get_results() as $user ) {
+			if ( ! ( $user instanceof \WP_User ) ) {
+				continue;
+			}
 			$users_data[ get_user_meta( $user->ID, 'skautisUserId_' . $this->skautis_gateway->get_env(), true ) ] = array(
 				'id'   => $user->ID,
 				'name' => $user->display_name,
