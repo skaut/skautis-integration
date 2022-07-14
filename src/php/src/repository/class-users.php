@@ -81,7 +81,7 @@ class Users {
 			}
 			$users_data[ intval( get_user_meta( $user->ID, 'skautisUserId_' . $this->skautis_gateway->get_env(), true ) ) ] = array(
 				'id'   => $user->ID,
-				'name' => $user->display_name,
+				'name' => $user->display_name ?? '',
 			);
 		}
 
@@ -113,6 +113,7 @@ class Users {
 			)
 		);
 
+		// @phpstan-ignore-next-line
 		return $connectable_wp_users->get_results();
 	}
 
