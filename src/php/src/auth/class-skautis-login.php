@@ -119,6 +119,10 @@ final class Skautis_Login {
 	 */
 	public function login_confirm() {
 		$return_url = Helpers::get_return_url();
+		if ( null === $return_url ) {
+			wp_die( esc_html__( "Couldn't find return URL.", 'skautis-integration' ) );
+			die();
+		}
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		if ( $this->set_login_data_to_local_skautis_instance( $_POST ) ) {
 			if ( strpos( $return_url, 'noWpLogin' ) === false ) {

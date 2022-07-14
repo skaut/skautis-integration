@@ -320,19 +320,31 @@ final class WP_Register {
 
 		// Kill octets.
 		$username = preg_replace( '|%([a-fA-F0-9][a-fA-F0-9])|', '', $username );
+		if ( null === $username ) {
+			return '';
+		}
 
 		// Kill entities.
 		$username = preg_replace( '/&.+?;/', '', $username );
+		if ( null === $username ) {
+			return '';
+		}
 
 		// If strict, reduce to ASCII, Latin and Cyrillic characters for max portability.
 		if ( $strict ) {
 			$username = preg_replace( '|[^a-z\p{Latin}\p{Cyrillic}0-9 _.\-@]|iu', '', $username );
+			if ( null === $username ) {
+				return '';
+			}
 		}
 
 		$username = trim( $username );
 
 		// Consolidate contiguous whitespace.
 		$username = preg_replace( '|\s+|', ' ', $username );
+		if ( null === $username ) {
+			return '';
+		}
 
 		return $username;
 	}
