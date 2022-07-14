@@ -122,7 +122,8 @@ class Helpers {
 		add_action(
 			'admin_notices',
 			static function () use ( $message, $type, $hide_notice_on_page ) {
-				if ( '' === $hide_notice_on_page || get_current_screen()->id !== $hide_notice_on_page ) {
+				$screen = get_current_screen();
+				if ( '' === $hide_notice_on_page || null === $screen || $screen->id !== $hide_notice_on_page ) {
 					$class = 'notice notice-' . $type . ' is-dismissible';
 					printf(
 						'<div class="%1$s"><p>%2$s</p><button type="button" class="notice-dismiss">

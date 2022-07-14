@@ -55,9 +55,11 @@ final class Admin {
 	 * @return void
 	 */
 	public static function enqueue_styles() {
-		if ( get_current_screen()->id === 'skautis_page_skautis-integration_modules_register' ) {
-			Helpers::enqueue_style( 'modules_register', 'modules/Register/admin/css/skautis-modules-register-admin.min.css' );
+		$screen = get_current_screen();
+		if ( null === $screen || $screen->id !== 'skautis_page_skautis-integration_modules_register' ) {
+			return;
 		}
+		Helpers::enqueue_style( 'modules_register', 'modules/Register/admin/css/skautis-modules-register-admin.min.css' );
 	}
 
 	/**
@@ -66,23 +68,25 @@ final class Admin {
 	 * @return void
 	 */
 	public static function enqueue_scripts() {
-		if ( get_current_screen()->id === 'skautis_page_skautis-integration_modules_register' ) {
-			wp_enqueue_script( 'jquery-ui-sortable' );
-
-			wp_enqueue_script(
-				SKAUTIS_INTEGRATION_NAME . '_jquery.repeater',
-				SKAUTIS_INTEGRATION_URL . 'bundled/jquery.repeater.min.js',
-				array( 'jquery' ),
-				SKAUTIS_INTEGRATION_VERSION,
-				true
-			);
-
-			Helpers::enqueue_script(
-				'modules_register',
-				'modules/Register/admin/js/skautis-modules-register-admin.min.js',
-				array( SKAUTIS_INTEGRATION_NAME . '_jquery.repeater' ),
-			);
+		$screen = get_current_screen();
+		if ( null === $screen || $screen->id !== 'skautis_page_skautis-integration_modules_register' ) {
+			return;
 		}
+		wp_enqueue_script( 'jquery-ui-sortable' );
+
+		wp_enqueue_script(
+			SKAUTIS_INTEGRATION_NAME . '_jquery.repeater',
+			SKAUTIS_INTEGRATION_URL . 'bundled/jquery.repeater.min.js',
+			array( 'jquery' ),
+			SKAUTIS_INTEGRATION_VERSION,
+			true
+		);
+
+		Helpers::enqueue_script(
+			'modules_register',
+			'modules/Register/admin/js/skautis-modules-register-admin.min.js',
+			array( SKAUTIS_INTEGRATION_NAME . '_jquery.repeater' ),
+		);
 	}
 
 	/**
@@ -91,17 +95,19 @@ final class Admin {
 	 * @return void
 	 */
 	public function init_rules_options() {
-		if ( get_current_screen()->id === 'skautis_page_skautis-integration_modules_register' ) {
-			$rules = array();
-			foreach ( $this->rules_manager->get_all_rules() as $rule ) {
-				$rules[ $rule->ID ] = $rule->post_title;
-			}
-			?>
-			<script>
-				window.rulesOptions = <?php echo wp_json_encode( $rules ); ?>;
-			</script>
-			<?php
+		$screen = get_current_screen();
+		if ( null === $screen || $screen->id !== 'skautis_page_skautis-integration_modules_register' ) {
+			return;
 		}
+		$rules = array();
+		foreach ( $this->rules_manager->get_all_rules() as $rule ) {
+			$rules[ $rule->ID ] = $rule->post_title;
+		}
+		?>
+		<script>
+			window.rulesOptions = <?php echo wp_json_encode( $rules ); ?>;
+		</script>
+		<?php
 	}
 
 	/**
@@ -110,14 +116,16 @@ final class Admin {
 	 * @return void
 	 */
 	public static function init_rules_data() {
-		if ( get_current_screen()->id === 'skautis_page_skautis-integration_modules_register' ) {
-			$data = get_option( SKAUTIS_INTEGRATION_NAME . '_modules_register_rules' );
-			?>
-			<script>
-				window.rulesData = <?php echo wp_json_encode( $data ); ?>;
-			</script>
-			<?php
+		$screen = get_current_screen();
+		if ( null === $screen || $screen->id !== 'skautis_page_skautis-integration_modules_register' ) {
+			return;
 		}
+		$data = get_option( SKAUTIS_INTEGRATION_NAME . '_modules_register_rules' );
+		?>
+		<script>
+			window.rulesData = <?php echo wp_json_encode( $data ); ?>;
+		</script>
+		<?php
 	}
 
 }

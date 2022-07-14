@@ -196,7 +196,7 @@ final class Metabox {
 				<input type="checkbox" name="<?php echo esc_attr( SKAUTIS_INTEGRATION_NAME ); ?>_rules_includeChildren"
 					value="1" <?php checked( 1, $include_children ); ?> /><span>
 												<?php
-												if ( $post_type_object->hierarchical ) {
+												if ( null !== $post_type_object && $post_type_object->hierarchical ) {
 													/* translators: the type of the SkautIS unit */
 													printf( esc_html__( 'Použít vybraná pravidla i na podřízené %s', 'skautis-integration' ), esc_html( lcfirst( $post_type_object->labels->name ) ) );
 												} else {

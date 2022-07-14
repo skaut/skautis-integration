@@ -178,7 +178,8 @@ final class Admin {
 	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
 	 */
 	public function add_rules_ui( \WP_Post $post ) {
-		if ( get_current_screen()->id !== Rules_Init::RULES_TYPE_SLUG || get_post_type() !== Rules_Init::RULES_TYPE_SLUG ) {
+		$screen = get_current_screen();
+		if ( null === $screen || $screen->id !== Rules_Init::RULES_TYPE_SLUG || get_post_type() !== Rules_Init::RULES_TYPE_SLUG ) {
 			return;
 		}
 		?>
@@ -215,7 +216,8 @@ final class Admin {
 	 * @return void
 	 */
 	public static function enqueue_styles() {
-		if ( get_current_screen()->id !== Rules_Init::RULES_TYPE_SLUG || get_post_type() !== Rules_Init::RULES_TYPE_SLUG ) {
+		$screen = get_current_screen();
+		if ( null === $screen || $screen->id !== Rules_Init::RULES_TYPE_SLUG || get_post_type() !== Rules_Init::RULES_TYPE_SLUG ) {
 			return;
 		}
 
@@ -244,7 +246,8 @@ final class Admin {
 	 * @return void
 	 */
 	public static function enqueue_scripts() {
-		if ( get_current_screen()->id !== Rules_Init::RULES_TYPE_SLUG || get_post_type() !== Rules_Init::RULES_TYPE_SLUG ) {
+		$screen = get_current_screen();
+		if ( null === $screen || $screen->id !== Rules_Init::RULES_TYPE_SLUG || get_post_type() !== Rules_Init::RULES_TYPE_SLUG ) {
 			return;
 		}
 
@@ -337,7 +340,8 @@ final class Admin {
 	 * @return void
 	 */
 	public function init_rules_builder() {
-		if ( get_current_screen()->id !== Rules_Init::RULES_TYPE_SLUG || get_post_type() !== Rules_Init::RULES_TYPE_SLUG ) {
+		$screen = get_current_screen();
+		if ( null === $screen || $screen->id !== Rules_Init::RULES_TYPE_SLUG || get_post_type() !== Rules_Init::RULES_TYPE_SLUG ) {
 			return;
 		}
 
