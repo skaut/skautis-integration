@@ -79,7 +79,7 @@ class Users {
 			if ( ! ( $user instanceof \WP_User ) ) {
 				continue;
 			}
-			$users_data[ get_user_meta( $user->ID, 'skautisUserId_' . $this->skautis_gateway->get_env(), true ) ] = array(
+			$users_data[ intval( get_user_meta( $user->ID, 'skautisUserId_' . $this->skautis_gateway->get_env(), true ) ) ] = array(
 				'id'   => $user->ID,
 				'name' => $user->display_name,
 			);

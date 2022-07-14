@@ -172,7 +172,7 @@ final class Rules_Init {
 				/* translators: 1: The time of the rule run */
 				__( 'Pravidlo naplánováno na: <strong>%1$s</strong>.', 'skautis-integration' ),
 				/* translators: Publish box date format, see http://php.net/date */
-				date_i18n( __( 'M j, Y @ G:i', 'skautis-integration' ), strtotime( $post->post_date ) )
+				date_i18n( __( 'M j, Y @ G:i', 'skautis-integration' ), $post instanceof \WP_Post ? strtotime( $post->post_date ) : false )
 			),
 			10 => __( 'Koncept pravidla aktualizován', 'skautis-integration' ), // My Post Type draft updated.
 		);

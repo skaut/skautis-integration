@@ -162,6 +162,9 @@ class Revisions {
 			return;
 		}
 		$last_revision = current( $revisions );
+		if ( ! ( $last_revision instanceof \WP_Post ) ) {
+			return;
+		}
 		self::delete_meta( $last_revision->ID );
 		self::insert_meta( $last_revision->ID, $meta );
 	}

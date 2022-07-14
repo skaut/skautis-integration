@@ -102,6 +102,9 @@ class Columns {
 		/* translators: human-readable time difference */
 		$modified_date   = sprintf( _x( 'Před %s', '%s = human-readable time difference', 'skautis-integration' ), human_time_diff( $time, time() ) );
 		$modified_author = get_the_modified_author();
+		if ( null === $modified_author ) {
+			return;
+		}
 
 		echo esc_html( $modified_date );
 		echo '<br>';

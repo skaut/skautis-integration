@@ -203,7 +203,7 @@ class Membership implements Rule {
 			// User has more valid memberships.
 			$result = array();
 			foreach ( $user_memberships->MembershipAllOutput as $user_membership ) {
-				if ( ! is_object( $user_membership ) ) {
+				if ( ! ( $user_membership instanceof \stdClass ) ) {
 					continue;
 				}
 
