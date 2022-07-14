@@ -157,6 +157,7 @@ final class Frontend {
 			}
 		);
 
+		// @phpstan-ignore-next-line Error about property being optional, however it is ensured to be present by the filter
 		return array_values( $ancestors );
 	}
 
@@ -319,10 +320,13 @@ final class Frontend {
 		$posts_were_filtered = false;
 
 		foreach ( $wp_query->posts as $key => $post ) {
-			if ( ! is_a( $post, 'WP_Post' ) ) {
-				$wp_post = get_post( $post );
-			} else {
+			if ( $post instanceof \WP_Post ) {
 				$wp_post = $post;
+			} else {
+				$wp_post = get_post( $post );
+				if ( ! ( $wp_post instanceof \WP_Post ) ) {
+					continue;
+				}
 			}
 
 			if ( in_array( $wp_post->post_type, $this->post_types, true ) ) {
