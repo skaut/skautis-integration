@@ -52,6 +52,8 @@ final class WP_Register {
 	 * @param string $user_email The new user's e-mail address.
 	 *
 	 * @return int The ID of the new user.
+	 *
+	 * @SuppressWarnings(PHPMD.ExitExpression)
 	 */
 	private static function resolve_notifications_and_register_user_to_wp( string $user_login, string $user_email ) {
 		remove_action( 'register_new_user', 'wp_send_new_user_notifications' );
