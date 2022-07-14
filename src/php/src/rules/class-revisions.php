@@ -158,11 +158,12 @@ class Revisions {
 
 		// also update last revision custom fields.
 		$revisions = wp_get_post_revisions( $post_id );
-		if ( count( $revisions ) > 0 ) {
-			$last_revision = current( $revisions );
-			self::delete_meta( $last_revision->ID );
-			self::insert_meta( $last_revision->ID, $meta );
+		if ( count( $revisions ) < 1 ) {
+			return;
 		}
+		$last_revision = current( $revisions );
+		self::delete_meta( $last_revision->ID );
+		self::insert_meta( $last_revision->ID, $meta );
 	}
 
 	/**

@@ -157,6 +157,9 @@ final class Admin {
 	public static function restore_revision_for_rules_field( int $post_id, int $revision_id ) {
 		$post     = get_post( $post_id );
 		$revision = get_post( $revision_id );
+		if ( ! ( $post instanceof \WP_Post ) || ! ( $revision instanceof \WP_Post ) ) {
+			return;
+		}
 		if ( Rules_Init::RULES_TYPE_SLUG === $post->post_type ) {
 			$meta = get_metadata( 'post', $revision->ID, SKAUTIS_INTEGRATION_NAME . '_rules_data', true );
 			if ( false !== $meta ) {

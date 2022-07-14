@@ -92,8 +92,15 @@ class Columns {
 		}
 
 		$post = get_post( $post_id );
+		if ( ! ( $post instanceof \WP_Post ) ) {
+			return;
+		}
+		$time = strtotime( $post->post_modified );
+		if ( false === $time ) {
+			return;
+		}
 		/* translators: human-readable time difference */
-		$modified_date   = sprintf( _x( 'Před %s', '%s = human-readable time difference', 'skautis-integration' ), human_time_diff( strtotime( $post->post_modified ), time() ) );
+		$modified_date   = sprintf( _x( 'Před %s', '%s = human-readable time difference', 'skautis-integration' ), human_time_diff( $time, time() ) );
 		$modified_author = get_the_modified_author();
 
 		echo esc_html( $modified_date );
