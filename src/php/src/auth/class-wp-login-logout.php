@@ -41,6 +41,8 @@ final class WP_Login_Logout {
 	 * @param int  $skautis_user_id The SkautIS user ID.
 	 * @param bool $try If true, this function will not exit with an error if the login fails.
 	 *
+	 * @return false
+	 *
 	 * @SuppressWarnings(PHPMD.ExitExpression)
 	 */
 	private function login_wp_user_by_skautis_user_id( int $skautis_user_id, $try = false ) {
@@ -159,6 +161,8 @@ final class WP_Login_Logout {
 
 	/**
 	 * Logs the current SkautIS user into WordPress.
+	 *
+	 * @return void
 	 */
 	public function login_to_wp() {
 		$user_detail = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserDetail();
@@ -174,6 +178,8 @@ final class WP_Login_Logout {
 	 * This version of the function doesn't produce an error if the login procedure fails.
 	 *
 	 * TODO: Deduplicate with login_to_wp().
+	 *
+	 * @return void
 	 */
 	public function try_to_login_to_wp() {
 		$user_detail = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserDetail();
@@ -187,6 +193,8 @@ final class WP_Login_Logout {
 	 * Handles a call to log the user out of SkautIS.
 	 *
 	 * @see Actions::auth_actions_router() for more details about how this function gets called.
+	 *
+	 * @return void
 	 *
 	 * @SuppressWarnings(PHPMD.ExitExpression)
 	 */

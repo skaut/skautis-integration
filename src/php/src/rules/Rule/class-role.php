@@ -132,13 +132,15 @@ class Role implements Rule {
 
 	/**
 	 * Returns the current values of the rule.
+	 *
+	 * @return array<string, string> The current values.
 	 */
 	public function get_values(): array {
 		$values = array();
 		$roles  = $this->skautis_gateway->get_skautis_instance()->UserManagement->RoleAll();
 
 		foreach ( $roles as $role ) {
-			$values[ $role->ID ] = $role->DisplayName;
+			$values[ strval( $role->ID ) ] = $role->DisplayName;
 		}
 
 		return $values;
@@ -166,6 +168,8 @@ class Role implements Rule {
 
 	/**
 	 * Returns an array of arrays where for each user role ID, there are listed units asssociated with that role.
+	 *
+	 * @return array<int, array<string>> The unit list.
 	 */
 	protected function getUserRolesWithUnitIds(): array {
 		static $user_roles = null;
@@ -193,9 +197,9 @@ class Role implements Rule {
 
 				if ( $unit_detail ) {
 					if ( ! isset( $result[ $user_role->ID_Role ] ) ) {
-						$result[ $user_role->ID_Role ] = array();
+						$result[ intval( $user_role->ID_Role ) ] = array();
 					}
-					$result[ $user_role->ID_Role ][] = $unit_detail->RegistrationNumber;
+					$result[ intval( $user_role->ID_Role ) ][] = $unit_detail->RegistrationNumber;
 				}
 			} catch ( \Exception $_ ) {
 				continue;
@@ -245,8 +249,8 @@ class Role implements Rule {
 		$user_pass  = 0;
 		foreach ( $roles as $role ) {
 			// in / not_in range check.
-			if ( array_key_exists( $role, $user_roles ) === $assume_in ) {
-				foreach ( $user_roles[ $role ] as $user_role_unit_id ) {
+			if ( array_key_exists( intval( $role ), $user_roles ) === $assume_in ) {
+				foreach ( $user_roles[ intval( $role ) ] as $user_role_unit_id ) {
 					$user_role_unit_id = self::clearUnitId( $user_role_unit_id );
 
 					switch ( $unit_operator ) {

@@ -22,7 +22,8 @@ class Transient_Session_Adapter implements AdapterInterface {
 	 */
 	private static function get_cookie_id(): string {
 		if ( isset( $_COOKIE[ SKAUTIS_INTEGRATION_NAME . '-skautis-session' ] ) ) {
-			return sanitize_text_field( wp_unslash( $_COOKIE[ SKAUTIS_INTEGRATION_NAME . '-skautis-session' ] ) );
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			return sanitize_text_field( wp_unslash( strval( $_COOKIE[ SKAUTIS_INTEGRATION_NAME . '-skautis-session' ] ) ) );
 		} else {
 			$cookie_id = '';
 			for ( $i = 0; $i < 32; $i++ ) {

@@ -39,6 +39,8 @@ final class Settings {
 
 	/**
 	 * Intializes all hooks used by the object.
+	 *
+	 * @return void
 	 */
 	private function init_hooks() {
 		if ( ! is_admin() ) {
@@ -51,6 +53,8 @@ final class Settings {
 
 	/**
 	 * Adds an admin settings page for the Register module.
+	 *
+	 * @return void
 	 */
 	public static function setup_setting_page() {
 		add_submenu_page(
@@ -65,6 +69,8 @@ final class Settings {
 
 	/**
 	 * Prints the admin settings page for the Register module.
+	 *
+	 * @return void
 	 */
 	public static function print_setting_page() {
 		if ( ! Helpers::user_is_skautis_manager() ) {
@@ -88,6 +94,8 @@ final class Settings {
 
 	/**
 	 * Adds Register module seetings to WordPress.
+	 *
+	 * @return void
 	 */
 	public function setup_setting_fields() {
 		add_settings_section(
@@ -153,6 +161,8 @@ final class Settings {
 
 	/**
 	 * Prints the settings field for choosing the default WordPress role for newly registered users
+	 *
+	 * @return void
 	 */
 	public static function field_wp_role() {
 		?>
@@ -163,6 +173,8 @@ final class Settings {
 
 	/**
 	 * Prints the settings field for choosing whom to send an e-mail upon sucessfull user registration.
+	 *
+	 * @return void
 	 */
 	public static function field_new_user_notifications() {
 		$notification_option = get_option( SKAUTIS_INTEGRATION_NAME . '_modules_register_notifications', 'none' );
@@ -199,6 +211,8 @@ final class Settings {
 
 	/**
 	 * Prints the settings field for selecting user registration rules.
+	 *
+	 * @return void
 	 */
 	public function field_rules() {
 		?>
@@ -235,7 +249,7 @@ final class Settings {
 					<select name="rule" class="rule select2">
 						<?php
 						foreach ( $this->rules_manager->get_all_rules() as $rule ) {
-							echo '<option value="' . esc_attr( $rule->ID ) . '">' . esc_html( $rule->post_title ) . '</option>';
+							echo '<option value="' . esc_attr( strval( $rule->ID ) ) . '">' . esc_html( $rule->post_title ) . '</option>';
 						}
 						?>
 					</select>

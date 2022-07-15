@@ -14,7 +14,6 @@ use Skautis_Integration\Auth\Skautis_Gateway;
 use Skautis_Integration\Auth\Skautis_Login;
 use Skautis_Integration\Auth\WP_Login_Logout;
 use Skautis_Integration\Auth\Connect_And_Disconnect_WP_Account;
-use Skautis_Integration\General\General;
 use Skautis_Integration\General\Actions;
 use Skautis_Integration\Frontend\Frontend;
 use Skautis_Integration\Frontend\Login_Form;
@@ -94,15 +93,6 @@ class Services {
 	 * @var Rules_Init|null
 	 */
 	private static $rules_init = null;
-
-	/**
-	 * A General service instance.
-	 *
-	 * Depends on $revisions.
-	 *
-	 * @var General|null
-	 */
-	private static $general = null;
 
 	/**
 	 * A Repository\Users service instance.
@@ -271,21 +261,22 @@ class Services {
 	 */
 	private static function get_rules_init() {
 		if ( is_null( self::$rules_init ) ) {
-			self::$rules_init = new Rules_Init( self::get_revisions() );
+			self::get_revisions();
+			self::$rules_init = new Rules_Init();
 		}
 		return self::$rules_init;
 	}
 
 	/**
-	 * Gets the General service.
+	 * Sets up general services
 	 *
-	 * @return General The initialized service object.
+	 * TODO: Remove this function
+	 *
+	 * @return void
 	 */
 	public static function get_general() {
-		if ( is_null( self::$general ) ) {
-			self::$general = new General( self::get_actions(), self::get_rules_init() );
-		}
-		return self::$general;
+		self::get_actions();
+		self::get_rules_init();
 	}
 
 	/**
@@ -392,11 +383,11 @@ class Services {
 	 */
 	public static function get_admin() {
 		if ( is_null( self::$admin ) ) {
+			self::get_admin_settings();
+			self::get_admin_users();
+			self::get_rules_manager();
+			self::get_users_management();
 			self::$admin = new Admin(
-				self::get_admin_settings(),
-				self::get_admin_users(),
-				self::get_rules_manager(),
-				self::get_users_management(),
 				self::get_wp_login_logout(),
 				self::get_skautis_gateway()
 			);
@@ -423,7 +414,8 @@ class Services {
 	 */
 	public static function get_frontend() {
 		if ( is_null( self::$frontend ) ) {
-			self::$frontend = new Frontend( self::get_login_form(), self::get_wp_login_logout(), self::get_skautis_gateway() );
+			self::get_login_form();
+			self::$frontend = new Frontend( self::get_wp_login_logout(), self::get_skautis_gateway() );
 		}
 		return self::$frontend;
 	}

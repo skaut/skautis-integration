@@ -11,6 +11,7 @@ namespace Skautis_Integration\Auth;
 
 use Skautis_Integration\General\Actions;
 use Skautis_Integration\Utils\Helpers;
+use Skautis_Integration\Utils\Request_Parameter_Helpers;
 
 /**
  * Handles connecting or disconnecting WordPress and SkautIS users.
@@ -48,6 +49,8 @@ final class Connect_And_Disconnect_WP_Account {
 	 * @param int $wp_user_id The ID of the WordPress user.
 	 * @param int $skautis_user_id The SkautIS user ID.
 	 *
+	 * @return void
+	 *
 	 * @SuppressWarnings(PHPMD.ExitExpression)
 	 */
 	private function set_skautis_user_id_to_wp_account( int $wp_user_id, int $skautis_user_id ) {
@@ -70,9 +73,12 @@ final class Connect_And_Disconnect_WP_Account {
 	 * Used when viewing own or another user's account.
 	 *
 	 * @param int $wp_user_id The WordPress user ID of the user (current or other).
+	 *
+	 * @return void
 	 */
 	public function print_connect_and_disconnect_button( int $wp_user_id ) {
 		$skautis_user_id = get_user_meta( $wp_user_id, 'skautisUserId_' . $this->skautis_gateway->get_env(), true );
+		$screen          = get_current_screen();
 		if ( false === $skautis_user_id || '' === $skautis_user_id ) {
 			if ( ! Helpers::user_is_skautis_manager() && get_option( SKAUTIS_INTEGRATION_NAME . '_allowUsersDisconnectFromSkautis' ) !== '1' ) {
 				return;
@@ -84,7 +90,7 @@ final class Connect_And_Disconnect_WP_Account {
 			<a href="' . esc_url( $url ) . '"
 			   class="button">' . esc_html__( 'Zrušit propojení účtu se skautISem', 'skautis-integration' ) . '</a>
 			';
-		} elseif ( get_current_screen()->id === 'profile' ) {
+		} elseif ( null !== $screen && 'profile' === $screen->id ) {
 			$return_url = add_query_arg( SKAUTIS_INTEGRATION_NAME . '_connectWpAccountWithSkautis', wp_create_nonce( SKAUTIS_INTEGRATION_NAME . '_connectWpAccountWithSkautis' ), Helpers::get_current_url() );
 			$url        = add_query_arg( 'ReturnUrl', rawurlencode( $return_url ), get_home_url( null, 'skautis/auth/' . Actions::CONNECT_ACTION ) );
 
@@ -101,6 +107,8 @@ final class Connect_And_Disconnect_WP_Account {
 	 * This function checks if the user is logged into SkautIS and connects them with the current WordPress user. If the user isn't connected, they get redirected to SkautIS login first.
 	 *
 	 * @see Actions::auth_actions_router() for more details about how this function gets called.
+	 *
+	 * @return void
 	 *
 	 * @SuppressWarnings(PHPMD.ExitExpression)
 	 */
@@ -127,10 +135,12 @@ final class Connect_And_Disconnect_WP_Account {
 	 * This is used to connect a WordPress user that is not the current user.
 	 *
 	 * @see Actions::auth_actions_router() for more details about how this function gets called.
+	 *
+	 * @return void
 	 */
 	public function connect_wp_user_to_skautis() {
-		if ( ! isset( $_GET[ SKAUTIS_INTEGRATION_NAME . '_connect_user_nonce' ] ) ||
-			false === wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET[ SKAUTIS_INTEGRATION_NAME . '_connect_user_nonce' ] ) ), SKAUTIS_INTEGRATION_NAME . '_connect_user' ) ||
+		$nonce = Request_Parameter_Helpers::get_string_variable( SKAUTIS_INTEGRATION_NAME . '_connect_user_nonce' );
+		if ( false === wp_verify_nonce( $nonce, SKAUTIS_INTEGRATION_NAME . '_connect_user' ) ||
 			! $this->skautis_login->is_user_logged_in_skautis() ||
 			! Helpers::user_is_skautis_manager() ||
 			is_null( Helpers::get_return_url() )
@@ -138,12 +148,12 @@ final class Connect_And_Disconnect_WP_Account {
 			wp_die( esc_html__( 'Nemáte oprávnění k propojování uživatelů.', 'skautis-integration' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
 		}
 
-		if ( ! isset( $_GET['wpUserId'], $_GET['skautisUserId'] ) ) {
+		$wp_user_id      = Request_Parameter_Helpers::get_int_variable( 'wpUserId' );
+		$skautis_user_id = Request_Parameter_Helpers::get_int_variable( 'skautisUserId' );
+
+		if ( -1 === $wp_user_id || -1 === $skautis_user_id ) {
 			return;
 		}
-
-		$wp_user_id      = absint( $_GET['wpUserId'] );
-		$skautis_user_id = absint( $_GET['skautisUserId'] );
 
 		if ( $wp_user_id > 0 && $skautis_user_id > 0 ) {
 			$this->set_skautis_user_id_to_wp_account( $wp_user_id, $skautis_user_id );
@@ -173,6 +183,8 @@ final class Connect_And_Disconnect_WP_Account {
 	 * TODO: Rework the horrible return URL logic to distinguish between current user and other user disconnecting.
 	 *
 	 * @see Actions::auth_actions_router() for more details about how this function gets called.
+	 *
+	 * @return void
 	 *
 	 * @SuppressWarnings(PHPMD.ExitExpression)
 	 */

@@ -13,6 +13,8 @@ use Skautis_Integration\Utils\Helpers;
 
 /**
  * Registers, handles and shows all settings for the Visibility module.
+ *
+ * @phan-constructor-used-for-side-effects
  */
 final class Settings {
 
@@ -25,6 +27,8 @@ final class Settings {
 
 	/**
 	 * Intializes all hooks used by the object.
+	 *
+	 * @return void
 	 */
 	private static function init_hooks() {
 		if ( ! is_admin() ) {
@@ -37,6 +41,8 @@ final class Settings {
 
 	/**
 	 * Adds an admin settings page for the Visibility module.
+	 *
+	 * @return void
 	 */
 	public static function setup_setting_page() {
 		add_submenu_page(
@@ -51,6 +57,8 @@ final class Settings {
 
 	/**
 	 * Prints the admin settings page for the Visibility module.
+	 *
+	 * @return void
 	 */
 	public static function print_setting_page() {
 		if ( ! Helpers::user_is_skautis_manager() ) {
@@ -74,6 +82,8 @@ final class Settings {
 
 	/**
 	 * Adds Visibility module seetings to WordPress.
+	 *
+	 * @return void
 	 */
 	public static function setup_setting_fields() {
 		add_settings_section(
@@ -139,6 +149,8 @@ final class Settings {
 
 	/**
 	 * Prints the settings field for choosing which post types to apply the Visibility module to.
+	 *
+	 * @return void
 	 */
 	public static function field_post_types() {
 		$available_post_types = get_post_types(
@@ -152,7 +164,9 @@ final class Settings {
 		?>
 		<?php
 		foreach ( $available_post_types as $post_type ) {
-			echo '<label><input type="checkbox" name="' . esc_attr( SKAUTIS_INTEGRATION_NAME ) . '_modules_visibility_postTypes[]" value="' . esc_attr( $post_type->name ) . '" ' . checked( true, in_array( $post_type->name, $post_types, true ), false ) . '/><span>' . esc_html( $post_type->label ) . '</span></label><br/>';
+			if ( $post_type instanceof \WP_Post_Type ) {
+				echo '<label><input type="checkbox" name="' . esc_attr( SKAUTIS_INTEGRATION_NAME ) . '_modules_visibility_postTypes[]" value="' . esc_attr( $post_type->name ) . '" ' . checked( true, in_array( $post_type->name, $post_types, true ), false ) . '/><span>' . esc_html( $post_type->label ) . '</span></label><br/>';
+			}
 		}
 		?>
 		<div>
@@ -165,6 +179,8 @@ final class Settings {
 
 	/**
 	 * Prints the settings field for choosing between hiding the whole post or page, or just its content.
+	 *
+	 * @return void
 	 */
 	public static function field_visibility_mode() {
 		$visibility_mode = get_option( SKAUTIS_INTEGRATION_NAME . '_modules_visibility_visibilityMode', 'full' );
@@ -182,6 +198,8 @@ final class Settings {
 
 	/**
 	 * Prints the settings field for choosing whether to apply visibility rules to child posts and pages.
+	 *
+	 * @return void
 	 */
 	public static function field_include_children() {
 		$include_children = get_option( SKAUTIS_INTEGRATION_NAME . '_modules_visibility_includeChildren', 0 );

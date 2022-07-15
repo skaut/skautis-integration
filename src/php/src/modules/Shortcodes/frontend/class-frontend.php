@@ -58,6 +58,8 @@ final class Frontend {
 
 	/**
 	 * Intializes all hooks used by the object.
+	 *
+	 * @return void
 	 */
 	private function init_hooks() {
 		add_action( 'wp_enqueue_scripts', array( self::class, 'enqueue_styles' ) );
@@ -102,6 +104,8 @@ final class Frontend {
 
 	/**
 	 * Enqueues all styles needed for the shortcode frontend view.
+	 *
+	 * @return void
 	 */
 	public static function enqueue_styles() {
 		wp_enqueue_style( 'buttons' );
@@ -113,8 +117,8 @@ final class Frontend {
 	 *
 	 * This is the function that gets called to process and return the shortcode content.
 	 *
-	 * @param array  $atts The shortcode attributes.
-	 * @param string $content The shortcode content.
+	 * @param array{rules?: string, content?: string} $atts The shortcode attributes.
+	 * @param string                                  $content The shortcode content.
 	 */
 	public function process_shortcode( array $atts = array(), string $content = '' ): string {
 		if ( isset( $atts['rules'] ) && isset( $atts['content'] ) ) {
@@ -130,7 +134,7 @@ final class Frontend {
 				}
 			}
 
-			if ( $this->rules_manager->check_if_user_passed_rules( explode( ',', $atts['rules'] ) ) ) {
+			if ( $this->rules_manager->check_if_user_passed_rules( array_map( 'intval', explode( ',', $atts['rules'] ) ) ) ) {
 				return $content;
 			} else {
 				if ( 'showLogin' === $atts['content'] ) {

@@ -52,15 +52,18 @@ class Role_Changer {
 	 *
 	 * TODO: Find a more robust way to do this?
 	 * TODO: Duplicated in Users_Management.
+	 *
+	 * @return void
 	 */
 	protected function check_if_user_change_skautis_role() {
 		add_action(
 			'init',
 			function () {
-				if ( isset( $_POST['changeSkautisUserRole'], $_POST['_wpnonce'], $_POST['_wp_http_referer'] ) ) {
+				$role = Request_Parameter_Helpers::post_int_variable( 'changeSkautisUserRole' );
+				if ( -1 !== $role && isset( $_POST['_wpnonce'], $_POST['_wp_http_referer'] ) ) {
 					if ( false !== check_admin_referer( SKAUTIS_INTEGRATION_NAME . '_changeSkautisUserRole', '_wpnonce' ) ) {
 						if ( $this->skautis_login->is_user_logged_in_skautis() ) {
-							$this->skautis_login->change_user_role_in_skautis( absint( $_POST['changeSkautisUserRole'] ) );
+							$this->skautis_login->change_user_role_in_skautis( $role );
 						}
 					}
 				}
@@ -70,6 +73,8 @@ class Role_Changer {
 
 	/**
 	 * Prints the SkautIS role changer.
+	 *
+	 * @return void
 	 */
 	public function print_change_roles_form() {
 		$current_user_roles = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserRoleAll(

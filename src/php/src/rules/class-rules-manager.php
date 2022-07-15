@@ -25,15 +25,6 @@ final class Rules_Manager {
 	private $skautis_gateway;
 
 	/**
-	 * A link to the WP_Login_Logout service instance.
-	 *
-	 * TODO: Unused?
-	 *
-	 * @var WP_Login_Logout
-	 */
-	private $wp_login_logout;
-
-	/**
 	 * A list of all the avialable rule blocks.
 	 *
 	 * @var array<string, Rule>
@@ -48,7 +39,6 @@ final class Rules_Manager {
 	 */
 	public function __construct( Skautis_Gateway $skautis_gateway, WP_Login_Logout $wp_login_logout ) {
 		$this->skautis_gateway = $skautis_gateway;
-		$this->wp_login_logout = $wp_login_logout;
 		$this->rules           = $this->init_rules();
 		if ( is_admin() ) {
 			new Admin( $this, $wp_login_logout, $this->skautis_gateway );
@@ -57,6 +47,8 @@ final class Rules_Manager {
 
 	/**
 	 * Initializes all available rule blocks and stores them in this object.
+	 *
+	 * @return array<string, Rule> The available rule blocks.
 	 */
 	private function init_rules(): array {
 		return apply_filters(
@@ -76,23 +68,23 @@ final class Rules_Manager {
 	 *
 	 * @throws \Exception An undefined rule was passed to the function.
 	 *
-	 * @param array $rule The rule to check against.
+	 * @param \stdClass $rule The rule to check against.
 	 */
 	private function process_rule( $rule ): bool {
-		if ( ! isset( $rule['field'] ) ) {
-			if ( isset( $rule['condition'] ) && isset( $rule['rules'] ) ) {
-				return $this->parse_rules_groups( $rule['condition'], $rule['rules'] );
+		if ( ! isset( $rule->field ) ) {
+			if ( isset( $rule->condition ) && isset( $rule->rules ) ) {
+				return $this->parse_rules_groups( $rule->condition, $rule->rules );
 			}
 
 			return false;
 		}
 
-		if ( isset( $this->rules[ $rule['field'] ] ) ) {
-			return $this->rules[ $rule['field'] ]->is_rule_passed( $rule['operator'], $rule['value'] );
+		if ( isset( $this->rules[ $rule->field ] ) ) {
+			return $this->rules[ $rule->field ]->is_rule_passed( $rule->operator, $rule->value );
 		}
 
 		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-			throw new \Exception( 'Rule: "' . $rule['field'] . '" is not declared.' );
+			throw new \Exception( 'Rule: "' . $rule->field . '" is not declared.' );
 		}
 
 		return false;
@@ -101,8 +93,8 @@ final class Rules_Manager {
 	/**
 	 * Checks whether a user passed a rule group.
 	 *
-	 * @param string $condition The logical operator used by the group. Accepted values: "AND", OR".
-	 * @param array  $rules A list of rules in the group.
+	 * @param string           $condition The logical operator used by the group. Accepted values: "AND", OR".
+	 * @param array<\stdClass> $rules A list of rules in the group.
 	 */
 	private function parse_rules_groups( string $condition, array $rules ): bool {
 		$result = 0;
@@ -133,6 +125,8 @@ final class Rules_Manager {
 
 	/**
 	 * Returns a list of all available rule blocks.
+	 *
+	 * @return array<string, Rule> The rule blocks.
 	 */
 	public function get_rules(): array {
 		return $this->rules;
@@ -173,6 +167,8 @@ final class Rules_Manager {
 	/**
 	 * Returns all rules (posts of type rule).
 	 *
+	 * @return array<\WP_Post> The rules.
+	 *
 	 * @suppress PhanPluginPossiblyStaticPublicMethod
 	 */
 	public function get_all_rules(): array {
@@ -185,6 +181,7 @@ final class Rules_Manager {
 		);
 
 		if ( $rules_wp_query->have_posts() ) {
+			// @phpstan-ignore-next-line
 			return $rules_wp_query->posts;
 		}
 
@@ -196,7 +193,7 @@ final class Rules_Manager {
 	 *
 	 * TODO: Deduplicate with the other method in this class.
 	 *
-	 * @param array $rules_ids A list of IDs of rules or rule groups to check.
+	 * @param array<int|array{skautis-integration_rules: string}> $rules_ids A list of IDs of rules or rule groups to check.
 	 */
 	public function check_if_user_passed_rules( array $rules_ids ): bool {
 		static $rules_groups = null;
@@ -204,7 +201,7 @@ final class Rules_Manager {
 
 		foreach ( $rules_ids as $rule_id ) {
 			if ( is_array( $rule_id ) ) {
-				$rule_id = reset( $rule_id );
+				$rule_id = intval( reset( $rule_id ) );
 			}
 
 			if ( is_null( $rules_groups ) ) {

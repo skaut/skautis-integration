@@ -55,13 +55,6 @@ final class Actions {
 	private $connect_wp_account;
 
 	/**
-	 * TODO: Unused?
-	 *
-	 * @var string
-	 */
-	private $frontend_dir_url = '';
-
-	/**
 	 * Constructs the service and saves all dependencies.
 	 *
 	 * @param Skautis_Login                     $skautis_login An injected Skautis_Login service instance.
@@ -74,12 +67,13 @@ final class Actions {
 		$this->skautis_login      = $skautis_login;
 		$this->wp_login_logout    = $wp_login_logout;
 		$this->connect_wp_account = $connect_wp_account;
-		$this->frontend_dir_url   = plugin_dir_url( __FILE__ ) . 'public/';
 		$this->init_hooks();
 	}
 
 	/**
 	 * Intializes all hooks used by the object.
+	 *
+	 * @return void
 	 */
 	private function init_hooks() {
 		add_action( 'init', array( self::class, 'register_auth_rewrite_rules' ) );
@@ -97,6 +91,8 @@ final class Actions {
 	 * Adds both test and live SkautIS to host that WordPress is allowed to redirect to.
 	 *
 	 * @param array<string> $hosts A list of already allowed redirect hosts.
+	 *
+	 * @return array<string> The updated list.
 	 */
 	public static function add_redirect_hosts( $hosts ) {
 		$hosts[] = 'test-is.skaut.cz';
@@ -108,6 +104,8 @@ final class Actions {
 	 * Registers redirect/rewrite for SkautIS authentication.
 	 *
 	 * @see Actions::auth_actions_router() for more details about how the redirect is used.
+	 *
+	 * @return void
 	 */
 	public static function register_auth_rewrite_rules() {
 		add_rewrite_rule( '^skautis/auth/(.*?)$', 'index.php?skautis_auth=$matches[1]', 'top' );
@@ -121,6 +119,8 @@ final class Actions {
 	 * Adds query variables that WordPress is allowed to use when redirecting.
 	 *
 	 * @param array<string> $vars A list of already allowed query variables.
+	 *
+	 * @return array<string> The updated list.
 	 */
 	public static function register_auth_query_vars( array $vars = array() ): array {
 		$vars[] = 'skautis_auth';
@@ -130,6 +130,8 @@ final class Actions {
 
 	/**
 	 * Makes WordPress update rewrite rules if it is needed.
+	 *
+	 * @return void
 	 */
 	public static function flush_rewrite_rules_if_necessary() {
 		if ( false !== get_option( 'skautis_rewrite_rules_need_to_flush' ) ) {
@@ -140,6 +142,8 @@ final class Actions {
 
 	/**
 	 * Fires upon redirect back from SkautIS and based on the current page finishes either the login or account linking.
+	 *
+	 * @return void
 	 */
 	public function auth_in_process() {
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing
@@ -166,6 +170,8 @@ final class Actions {
 	 * @param \WP_Query $wp_query The request query.
 	 *
 	 * @SuppressWarnings(PHPMD.ExitExpression)
+	 *
+	 * @return \WP_Query|void
 	 */
 	public function auth_actions_router( \WP_Query $wp_query ) {
 		if ( '' === $wp_query->get( 'skautis_auth' ) ) {

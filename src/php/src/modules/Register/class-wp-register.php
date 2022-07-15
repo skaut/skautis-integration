@@ -50,6 +50,10 @@ final class WP_Register {
 	 *
 	 * @param string $user_login The WordPress username to use for the new user.
 	 * @param string $user_email The new user's e-mail address.
+	 *
+	 * @return int The ID of the new user.
+	 *
+	 * @SuppressWarnings(PHPMD.ExitExpression)
 	 */
 	private static function resolve_notifications_and_register_user_to_wp( string $user_login, string $user_email ) {
 		remove_action( 'register_new_user', 'wp_send_new_user_notifications' );
@@ -77,12 +81,13 @@ final class WP_Register {
 		add_action( 'register_new_user', 'wp_send_new_user_notifications' );
 
 		if ( $user_id instanceof \WP_Error ) {
-			if ( isset( $user_id->errors ) && ( isset( $user_id->errors['username_exists'] ) || isset( $user_id->errors['email_exists'] ) ) ) {
+			if ( isset( $user_id->errors['username_exists'] ) || isset( $user_id->errors['email_exists'] ) ) {
 				/* translators: The user's e-mail address */
 				wp_die( sprintf( esc_html__( 'Vás email %s je již na webu registrován, ale není propojen se skautIS účtem.', 'skautis-integration' ), esc_html( $user_email ) ), esc_html__( 'Chyba při registraci', 'skautis-integration' ) );
 			}
 				/* translators: The error message */
 			wp_die( sprintf( esc_html__( 'Při registraci nastala neočekávaná chyba: %s', 'skautis-integration' ), esc_html( $user_id->get_error_message() ) ), esc_html__( 'Chyba při registraci', 'skautis-integration' ) );
+			die();
 		}
 
 		return $user_id;
@@ -93,7 +98,11 @@ final class WP_Register {
 	 *
 	 * This function queries SkautIS for the information needed when registering a new WordPress user.
 	 *
+	 * TODO: Deduplicate with Repository\Users::get_user_detail()
+	 *
 	 * @param \stdClass $skautis_user The SkautIS user.
+	 *
+	 * @return array{id: int, UserName: string, personId: int, email: string, firstName: string, lastName: string, nickName: string} The information about a user.
 	 */
 	private function prepare_user_data( $skautis_user ): array {
 		$skautis_user_detail = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->PersonDetail(
@@ -154,7 +163,7 @@ final class WP_Register {
 			return true;
 		}
 
-		if ( ! isset( $user['UserName'] ) || mb_strlen( $user['UserName'] ) === 0 ) {
+		if ( mb_strlen( $user['UserName'] ) === 0 ) {
 			return false;
 		}
 
@@ -225,7 +234,10 @@ final class WP_Register {
 		$users          = $users_wp_query->get_results();
 
 		if ( ! empty( $users ) ) {
-			return $users[0]->ID;
+			$user = $users[0];
+			if ( $user instanceof \WP_User ) {
+				return $user->ID;
+			}
 		}
 
 		return 0;
@@ -258,7 +270,7 @@ final class WP_Register {
 	public function register_to_wp( string $wp_role ): bool {
 		$user_detail = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserDetail();
 
-		if ( $user_detail && isset( $user_detail->ID ) && $user_detail->ID > 0 ) {
+		if ( $user_detail instanceof \stdClass && isset( $user_detail->ID ) && $user_detail->ID > 0 ) {
 			$user = $this->prepare_user_data( $user_detail );
 
 			return $this->process_wp_user_registration( $user, $wp_role );
@@ -308,19 +320,31 @@ final class WP_Register {
 
 		// Kill octets.
 		$username = preg_replace( '|%([a-fA-F0-9][a-fA-F0-9])|', '', $username );
+		if ( null === $username ) {
+			return '';
+		}
 
 		// Kill entities.
 		$username = preg_replace( '/&.+?;/', '', $username );
+		if ( null === $username ) {
+			return '';
+		}
 
 		// If strict, reduce to ASCII, Latin and Cyrillic characters for max portability.
 		if ( $strict ) {
 			$username = preg_replace( '|[^a-z\p{Latin}\p{Cyrillic}0-9 _.\-@]|iu', '', $username );
+			if ( null === $username ) {
+				return '';
+			}
 		}
 
 		$username = trim( $username );
 
 		// Consolidate contiguous whitespace.
 		$username = preg_replace( '|\s+|', ' ', $username );
+		if ( null === $username ) {
+			return '';
+		}
 
 		return $username;
 	}

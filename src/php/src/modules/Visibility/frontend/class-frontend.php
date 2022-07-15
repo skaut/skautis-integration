@@ -22,7 +22,7 @@ final class Frontend {
 	/**
 	 * A list of post types to activate the Visibility module for.
 	 *
-	 * @var array
+	 * @var array<string>
 	 */
 	private $post_types;
 
@@ -50,7 +50,7 @@ final class Frontend {
 	/**
 	 * Constructs the service and saves all dependencies.
 	 *
-	 * @param array           $post_types A list of post types to activate the Visibility module for.
+	 * @param array<string>   $post_types A list of post types to activate the Visibility module for.
 	 * @param Rules_Manager   $rules_manager An injected Rules_Manager service instance.
 	 * @param Skautis_Login   $skautis_login An injected Skautis_Login service instance.
 	 * @param WP_Login_Logout $wp_login_logout An injected WP_Login_Logout service instance.
@@ -64,6 +64,8 @@ final class Frontend {
 
 	/**
 	 * Intializes all hooks used by the object.
+	 *
+	 * @return void
 	 */
 	public function init_hooks() {
 		add_action( 'wp_enqueue_scripts', array( self::class, 'enqueue_styles' ) );
@@ -111,6 +113,8 @@ final class Frontend {
 	 *
 	 * @param int    $post_id The ID of the root post.
 	 * @param string $post_type The type of the root post.
+	 *
+	 * @return array<array{id: int, rules: array<array{skautis-integration_rules?: string}>, includeChildren: string, visibilityMode: string}> The post ancestors.
 	 */
 	private static function get_posts_hierarchy_tree_with_rules( int $post_id, $post_type ): array {
 		$ancestors = get_ancestors( $post_id, $post_type, 'post_type' );
@@ -134,6 +138,8 @@ final class Frontend {
 	 *
 	 * @param int    $child_post_id The ID of the root post.
 	 * @param string $post_type The type of the root post.
+	 *
+	 * @return array<array{id: int, rules: array<array{skautis-integration_rules: string}>, includeChildren: string, visibilityMode: string}> The post ancestors.
 	 */
 	private static function get_rules_from_parent_posts_with_impact_by_child_post_id( int $child_post_id, $post_type ): array {
 		$ancestors = self::get_posts_hierarchy_tree_with_rules( $child_post_id, $post_type );
@@ -141,7 +147,7 @@ final class Frontend {
 		$ancestors = array_filter(
 			$ancestors,
 			static function ( $ancestor ) {
-				if ( ! empty( $ancestor['rules'] ) && isset( $ancestor['rules'][0][ SKAUTIS_INTEGRATION_NAME . '_rules' ] ) ) {
+				if ( ! empty( $ancestor['rules'] ) && isset( $ancestor['rules'][0]['skautis-integration_rules'] ) ) {
 					if ( '1' === $ancestor['includeChildren'] ) {
 						return true;
 					}
@@ -151,6 +157,7 @@ final class Frontend {
 			}
 		);
 
+		// @phpstan-ignore-next-line Error about property being optional, however it is ensured to be present by the filter
 		return array_values( $ancestors );
 	}
 
@@ -160,6 +167,8 @@ final class Frontend {
 	 * @param int    $post_id The ID of the post to modify.
 	 * @param string $new_content The replacement post content.
 	 * @param string $new_excerpt The replacement post excerpt.
+	 *
+	 * @return void
 	 */
 	private static function hide_content_excerpt_comments( int $post_id, string $new_content = '', string $new_excerpt = '' ) {
 		add_filter(
@@ -206,15 +215,17 @@ final class Frontend {
 	 *
 	 * TODO: This function modifies its parameters.
 	 *
-	 * @param bool      $user_is_logged_in_skautis Whether the current user is logged in to SkautIS.
-	 * @param array     $rules A list of visibility rules to check.
-	 * @param array     $posts A list of posts to filter. This parameter is modified by the function.
-	 * @param int       $post_key The ID of the post to hide.
-	 * @param \WP_Query $wp_query The WordPress request.
-	 * @param bool      $posts_were_filtered Whether the posts were already filtered.
+	 * @param bool                                            $user_is_logged_in_skautis Whether the current user is logged in to SkautIS.
+	 * @param array<array{skautis-integration_rules: string}> $rules A list of visibility rules to check.
+	 * @param array<\WP_Post>                                 $posts A list of posts to filter. This parameter is modified by the function.
+	 * @param int                                             $post_key The ID of the post to hide.
+	 * @param \WP_Query                                       $wp_query The WordPress request.
+	 * @param bool                                            $posts_were_filtered Whether the posts were already filtered.
+	 *
+	 * @return void
 	 */
 	private function process_rules_and_hide_posts( bool $user_is_logged_in_skautis, array $rules, array &$posts, int $post_key, \WP_Query $wp_query, &$posts_were_filtered = false ) {
-		if ( ! empty( $rules ) && isset( $rules[0][ SKAUTIS_INTEGRATION_NAME . '_rules' ] ) ) {
+		if ( ! empty( $rules ) && isset( $rules[0]['skautis-integration_rules'] ) ) {
 			if ( ! $user_is_logged_in_skautis ||
 				! $this->rules_manager->check_if_user_passed_rules( $rules ) ) {
 				unset( $posts[ $post_key ] );
@@ -232,12 +243,14 @@ final class Frontend {
 	 *
 	 * TODO: Deduplicate with the previous function.
 	 *
-	 * @param bool  $user_is_logged_in_skautis Whether the current user is logged in to SkautIS.
-	 * @param array $rules A list of visibility rules to check.
-	 * @param int   $post_id The ID of the post to show or hide.
+	 * @param bool                                            $user_is_logged_in_skautis Whether the current user is logged in to SkautIS.
+	 * @param array<array{skautis-integration_rules: string}> $rules A list of visibility rules to check.
+	 * @param int                                             $post_id The ID of the post to show or hide.
+	 *
+	 * @return void
 	 */
 	private function process_rules_and_hide_content( bool $user_is_logged_in_skautis, array $rules, int $post_id ) {
-		if ( ! empty( $rules ) && isset( $rules[0][ SKAUTIS_INTEGRATION_NAME . '_rules' ] ) ) {
+		if ( ! empty( $rules ) && isset( $rules[0]['skautis-integration_rules'] ) ) {
 			if ( ! $user_is_logged_in_skautis ) {
 				self::hide_content_excerpt_comments( $post_id, self::get_login_required_message() . $this->get_login_form(), self::get_login_required_message() );
 			} elseif ( ! $this->rules_manager->check_if_user_passed_rules( $rules ) ) {
@@ -248,6 +261,8 @@ final class Frontend {
 
 	/**
 	 * Enqueues styles for the frontend part of the Visibility module.
+	 *
+	 * @return void
 	 */
 	public static function enqueue_styles() {
 		wp_enqueue_style( 'buttons' );
@@ -261,6 +276,8 @@ final class Frontend {
 	 *
 	 * @param int    $child_post_id The ID of the root post.
 	 * @param string $child_post_type The type of the root post.
+	 *
+	 * @return array<int, array{parentPostTitle: string, rules: array<int, string>}> The post ancestors.
 	 *
 	 * @suppress PhanPluginPossiblyStaticPublicMethod
 	 */
@@ -276,7 +293,7 @@ final class Frontend {
 			);
 
 			foreach ( $parent_post_with_rules['rules'] as $rule ) {
-				$result[ $parent_post_with_rules['id'] ]['rules'][ $rule['skautis-integration_rules'] ] = get_the_title( $rule['skautis-integration_rules'] );
+				$result[ $parent_post_with_rules['id'] ]['rules'][ intval( $rule['skautis-integration_rules'] ) ] = get_the_title( intval( $rule['skautis-integration_rules'] ) );
 			}
 		}
 
@@ -288,8 +305,10 @@ final class Frontend {
 	 *
 	 * Filters which posts are visible for the current user based on wheher they pass the visibility rules and whether whole posts should be hidden or just their contents
 	 *
-	 * @param array     $posts A list of posts to show.
-	 * @param \WP_Query $wp_query The WordPress request.
+	 * @param array<\WP_Post> $posts A list of posts to show.
+	 * @param \WP_Query       $wp_query The WordPress request.
+	 *
+	 * @return array<\WP_Post> The filtered post list.
 	 */
 	public function filter_posts( array $posts, \WP_Query $wp_query ): array {
 		if ( empty( $posts ) ) {
@@ -301,10 +320,13 @@ final class Frontend {
 		$posts_were_filtered = false;
 
 		foreach ( $wp_query->posts as $key => $post ) {
-			if ( ! is_a( $post, 'WP_Post' ) ) {
-				$wp_post = get_post( $post );
-			} else {
+			if ( $post instanceof \WP_Post ) {
 				$wp_post = $post;
+			} else {
+				$wp_post = get_post( $post );
+				if ( ! ( $wp_post instanceof \WP_Post ) ) {
+					continue;
+				}
 			}
 
 			if ( in_array( $wp_post->post_type, $this->post_types, true ) ) {

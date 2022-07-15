@@ -10,6 +10,7 @@ declare( strict_types=1 );
 namespace Skautis_Integration\Rules;
 
 use Skautis_Integration\Utils\Helpers;
+use Skautis_Integration\Utils\Request_Parameter_Helpers;
 
 /**
  * Adds the rule custom post type to WordPress.
@@ -20,24 +21,16 @@ final class Rules_Init {
 	const RULES_TYPE_SLUG     = 'skautis_rules';
 
 	/**
-	 * A link to the Revisions service instance.
-	 *
-	 * @var Revisions
-	 */
-	private $revisions;
-
-	/**
 	 * Constructs the service and saves all dependencies.
-	 *
-	 * @param Revisions $revisions An injected Revisions service instance.
 	 */
-	public function __construct( Revisions $revisions ) {
-		$this->revisions = $revisions;
+	public function __construct() {
 		self::init_hooks();
 	}
 
 	/**
 	 * Intializes all hooks used by the object.
+	 *
+	 * @return void
 	 */
 	private static function init_hooks() {
 		add_action( 'init', array( self::class, 'register_post_type' ) );
@@ -51,6 +44,8 @@ final class Rules_Init {
 
 	/**
 	 * Registers the rule post type with WordPress.
+	 *
+	 * @return void
 	 */
 	public static function register_post_type() {
 		$labels       = array(
@@ -156,9 +151,12 @@ final class Rules_Init {
 	 * Registers messages to use on post update for the rule post type.
 	 *
 	 * @param array<string, array<string>> $messages A list of messages for each post type.
+	 *
+	 * @return array<string, array<string>> The list with added rule post type messages.
 	 */
 	public static function updated_messages( array $messages = array() ): array {
 		$post                              = get_post();
+		$revision                          = Request_Parameter_Helpers::get_int_variable( 'revision' );
 		$messages[ self::RULES_TYPE_SLUG ] = array(
 			0  => '', // Unused. Messages start at index 1.
 			1  => __( 'Hotovo', 'skautis-integration' ), // My Post Type updated.
@@ -166,7 +164,7 @@ final class Rules_Init {
 			3  => __( 'Hotovo', 'skautis-integration' ), // Custom field deleted.
 			4  => __( 'Hotovo', 'skautis-integration' ), // My Post Type updated.
 			/* translators: The time of the previous version */
-			5  => isset( $_GET['revision'] ) ? sprintf( __( 'Pravidlo bylo obnoveno na starší verzi z %s', 'skautis-integration' ), wp_post_revision_title( absint( $_GET['revision'] ), false ) ) : false, // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			5  => ( -1 !== $revision ) ? sprintf( __( 'Pravidlo bylo obnoveno na starší verzi z %s', 'skautis-integration' ), wp_post_revision_title( $revision, false ) ) : '',
 			6  => __( 'Hotovo', 'skautis-integration' ), // My Post Type published.
 			7  => __( 'Pravidlo bylo uloženo', 'skautis-integration' ), // My Post Type saved.
 			8  => __( 'Hotovo', 'skautis-integration' ), // My Post Type submitted.
@@ -174,7 +172,7 @@ final class Rules_Init {
 				/* translators: 1: The time of the rule run */
 				__( 'Pravidlo naplánováno na: <strong>%1$s</strong>.', 'skautis-integration' ),
 				/* translators: Publish box date format, see http://php.net/date */
-				date_i18n( __( 'M j, Y @ G:i', 'skautis-integration' ), strtotime( $post->post_date ) )
+				date_i18n( __( 'M j, Y @ G:i', 'skautis-integration' ), $post instanceof \WP_Post ? strtotime( $post->post_date ) : false )
 			),
 			10 => __( 'Koncept pravidla aktualizován', 'skautis-integration' ), // My Post Type draft updated.
 		);
@@ -186,6 +184,8 @@ final class Rules_Init {
 	 * Returns all rules.
 	 *
 	 * TODO: Unused?
+	 *
+	 * @return array<\WP_Post> The rules.
 	 */
 	public static function get_all_rules(): array {
 		$rules_wp_query = new \WP_Query(
@@ -197,6 +197,7 @@ final class Rules_Init {
 		);
 
 		if ( $rules_wp_query->have_posts() ) {
+			// @phpstan-ignore-next-line
 			return $rules_wp_query->posts;
 		}
 

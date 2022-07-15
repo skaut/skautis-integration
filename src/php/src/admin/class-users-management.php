@@ -18,6 +18,7 @@ use Skautis_Integration\General\Actions;
 use Skautis_Integration\Services\Services;
 use Skautis_Integration\Modules\Register\Register;
 use Skautis_Integration\Utils\Helpers;
+use Skautis_Integration\Utils\Request_Parameter_Helpers;
 use Skautis_Integration\Utils\Role_Changer;
 
 /**
@@ -110,6 +111,8 @@ class Users_Management {
 
 	/**
 	 * Intializes all hooks used by the object.
+	 *
+	 * @return void
 	 */
 	protected function init_hooks() {
 		add_action(
@@ -129,15 +132,18 @@ class Users_Management {
 	 *
 	 * TODO: Find a more robust way to do this?
 	 * TODO: Duplicated in Role_Changer.
+	 *
+	 * @return void
 	 */
 	protected function check_if_user_change_skautis_role() {
 		add_action(
 			'init',
 			function () {
-				if ( isset( $_POST['changeSkautisUserRole'], $_POST['_wpnonce'], $_POST['_wp_http_referer'] ) ) {
+				$role = Request_Parameter_Helpers::post_int_variable( 'changeSkautisUserRole' );
+				if ( -1 !== $role && isset( $_POST['_wpnonce'], $_POST['_wp_http_referer'] ) ) {
 					if ( false !== check_admin_referer( SKAUTIS_INTEGRATION_NAME . '_changeSkautisUserRole', '_wpnonce' ) ) {
 						if ( $this->skautis_login->is_user_logged_in_skautis() ) {
-							$this->skautis_login->change_user_role_in_skautis( absint( $_POST['changeSkautisUserRole'] ) );
+							$this->skautis_login->change_user_role_in_skautis( $role );
 						}
 					}
 				}
@@ -149,6 +155,8 @@ class Users_Management {
 	 * Enqueues scripts and styles used for the user management table.
 	 *
 	 * @param string $hook_suffix The current admin page.
+	 *
+	 * @return void
 	 */
 	public static function enqueue_scripts_and_styles( $hook_suffix ) {
 		if ( ! str_ends_with( $hook_suffix, SKAUTIS_INTEGRATION_NAME . '_usersManagement' ) ) {
@@ -195,6 +203,8 @@ class Users_Management {
 
 	/**
 	 * Registers the user management administration page with WordPress.
+	 *
+	 * @return void
 	 */
 	public function setup_users_management_page() {
 		add_submenu_page(
@@ -209,6 +219,8 @@ class Users_Management {
 
 	/**
 	 * Prints the user management administration page.
+	 *
+	 * @return void
 	 */
 	public function print_child_users() {
 		if ( ! Helpers::user_is_skautis_manager() ) {

@@ -16,9 +16,9 @@ use Skautis_Integration\Rules\Rules_Manager;
 use Skautis_Integration\Repository\Users as UsersRepository;
 use Skautis_Integration\Modules\Module;
 use Skautis_Integration\Modules\Register\Admin\Admin;
-use Skautis_Integration\Modules\Register\Frontend\Frontend;
 use Skautis_Integration\Modules\Register\Frontend\Login_Form;
 use Skautis_Integration\Utils\Helpers;
+use Skautis_Integration\Utils\Request_Parameter_Helpers;
 
 /**
  * Adds the functionality to register new WordPress users based on SkautIS.
@@ -98,13 +98,15 @@ final class Register implements Module {
 		if ( is_admin() ) {
 			new Admin( $this->rules_manager );
 		} else {
-			new Frontend( new Login_Form( $this->wp_register ) );
+			new Login_Form( $this->wp_register );
 		}
 		$this->init_hooks();
 	}
 
 	/**
 	 * Intializes all hooks used by the object.
+	 *
+	 * @return void
 	 */
 	private function init_hooks() {
 		add_filter( SKAUTIS_INTEGRATION_NAME . '_frontend_actions_router', array( $this, 'addActionsToRouter' ) );
@@ -118,6 +120,8 @@ final class Register implements Module {
 
 	/**
 	 * Redirects the user to login with SkautIS.
+	 *
+	 * @return void
 	 *
 	 * @SuppressWarnings(PHPMD.ExitExpression)
 	 */
@@ -136,6 +140,8 @@ final class Register implements Module {
 	 * @see Actions::auth_actions_router() for more details about how the actions are used.
 	 *
 	 * @param array<string, callable> $actions A list of already registered actions.
+	 *
+	 * @return array<string, callable> The updated action list.
 	 */
 	public function addActionsToRouter( array $actions = array() ): array {
 		$actions[ self::REGISTER_ACTION ]                  = array( $this, 'register' );
@@ -147,7 +153,9 @@ final class Register implements Module {
 	/**
 	 * Fires upon redirect back from SkautIS after login and handles the user login and potential registration.
 	 *
-	 * @param array $data SkautIS login data.
+	 * @param array{skautIS_Token?: string, skautIS_IDRole?: string, skautIS_IDUnit?: string, skautIS_DateLogout?: string} $data SkautIS login data.
+	 *
+	 * @return void
 	 */
 	public function registerConfirm( array $data = array() ) {
 		// TODO: Why is this not one conditional?
@@ -206,6 +214,8 @@ final class Register implements Module {
 	 * @see Actions::auth_actions_router() for more details about how this function gets called.
 	 * @see Register::addActionsToRouter() for more details about how this function gets called.
 	 *
+	 * @return void
+	 *
 	 * @SuppressWarnings(PHPMD.ExitExpression)
 	 */
 	public function register() {
@@ -220,6 +230,8 @@ final class Register implements Module {
 
 	/**
 	 * This function actually handles the user login and potential registration.
+	 *
+	 * @return void
 	 */
 	public function registerUser() {
 		$wp_role = $this->rules_manager->check_if_user_passed_rules_and_get_his_role();
@@ -255,25 +267,29 @@ final class Register implements Module {
 	 *
 	 * This function is used to register other users than the current user.
 	 *
+	 * @return void
+	 *
 	 * @SuppressWarnings(PHPMD.ExitExpression)
 	 */
 	public function registerUserManually() {
-		$return_url = Helpers::get_return_url();
-		if ( ! isset( $_GET[ SKAUTIS_INTEGRATION_NAME . '_register_user_nonce' ] ) ||
-			false === wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET[ SKAUTIS_INTEGRATION_NAME . '_register_user_nonce' ] ) ), SKAUTIS_INTEGRATION_NAME . '_register_user' ) ||
+		$return_url      = Helpers::get_return_url();
+		$nonce           = Request_Parameter_Helpers::get_string_variable( SKAUTIS_INTEGRATION_NAME . '_register_user_nonce' );
+		$wp_role         = Request_Parameter_Helpers::get_string_variable( 'wpRole' );
+		$skautis_user_id = Request_Parameter_Helpers::get_int_variable( 'skautisUserId' );
+		if ( false === wp_verify_nonce( $nonce, SKAUTIS_INTEGRATION_NAME . '_register_user' ) ||
 			! $this->skautis_login->is_user_logged_in_skautis() ||
 			! Helpers::user_is_skautis_manager() ||
 			! current_user_can( 'create_users' ) ||
 			is_null( $return_url ) ||
-			! isset( $_GET['wpRole'], $_GET['skautisUserId'] ) ) {
+			'' === $wp_role ||
+			-1 === $skautis_user_id ) {
 			wp_die( esc_html__( 'Nemáte oprávnění k registraci nových uživatelů.', 'skautis-integration' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
+			return;
 		}
 
-		$wp_role = sanitize_text_field( wp_unslash( $_GET['wpRole'] ) );
 		if ( ! wp_roles()->is_role( $wp_role ) ) {
 			wp_die( esc_html__( 'Uživatele se nepodařilo zaregistrovat - role neexistuje.', 'skautis-integration' ), esc_html__( 'Chyba při registraci uživatele', 'skautis-integration' ) );
 		}
-		$skautis_user_id = absint( $_GET['skautisUserId'] );
 
 		if ( $this->wp_register->register_to_wp_manually( $wp_role, $skautis_user_id ) ) {
 			wp_safe_redirect( $return_url, 302 );

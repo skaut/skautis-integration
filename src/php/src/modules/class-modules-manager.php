@@ -20,30 +20,30 @@ use Skautis_Integration\Services\Services;
 final class Modules_Manager {
 
 	/**
-	 * A list of all available modules.
+	 * A list of all available modules in the form `id => label`, where label is already localized.
 	 *
-	 * @var array
+	 * @var array<string, string>
 	 */
 	private $modules = array();
 
 	/**
 	 * A list of all active modules.
 	 *
-	 * @var array
+	 * @var array<string>
 	 */
 	private $activated_modules = array();
 
 	/**
-	 * A list of initialized module instances
+	 * A list of initialized module instances.
 	 *
-	 * @var array
+	 * @var array<string, Module>
 	 */
 	private $instantiated_modules = array();
 
 	/**
 	 * Constructs the service and saves all dependencies.
 	 *
-	 * @param array $modules A list of all available modules.
+	 * @param array<string, string> $modules A list of all available modules in the form `id => label`, where label is already localized.
 	 */
 	public function __construct( array $modules = array() ) {
 		$this->modules           = apply_filters( SKAUTIS_INTEGRATION_NAME . '_modules', $modules );
@@ -55,7 +55,9 @@ final class Modules_Manager {
 	/**
 	 * Initializes all activated modules.
 	 *
-	 * @param array $activated_modules A list of all active modules.
+	 * @param array<string> $activated_modules A list of all active modules.
+	 *
+	 * @return void
 	 */
 	private function register_activated_modules( array $activated_modules = array() ) {
 		if ( in_array( Register::get_id(), $activated_modules, true ) ) {
@@ -70,7 +72,9 @@ final class Modules_Manager {
 	}
 
 	/**
-	 * Returns a list of all modules (even inactive ones).
+	 * Returns a list of all modules (even inactive ones) in the form `id => label`, where label is already localized.
+	 *
+	 * @return array<string, string> The modules
 	 */
 	public function get_all_modules(): array {
 		return $this->modules;
@@ -95,6 +99,7 @@ final class Modules_Manager {
 		if ( ! array_key_exists( $module_id, $this->instantiated_modules ) ) {
 				$this->instantiated_modules[ $module_id ] = new Register( Services::get_skautis_gateway(), Services::get_skautis_login(), Services::get_wp_login_logout(), Services::get_rules_manager(), Services::get_repository_users() );
 		}
+		// @phpstan-ignore-next-line
 		return $this->instantiated_modules[ $module_id ];
 	}
 
@@ -108,6 +113,7 @@ final class Modules_Manager {
 		if ( ! array_key_exists( $module_id, $this->instantiated_modules ) ) {
 				$this->instantiated_modules[ $module_id ] = new Shortcodes( Services::get_rules_manager(), Services::get_skautis_login(), Services::get_wp_login_logout() );
 		}
+		// @phpstan-ignore-next-line
 		return $this->instantiated_modules[ $module_id ];
 	}
 
@@ -121,6 +127,7 @@ final class Modules_Manager {
 		if ( ! array_key_exists( $module_id, $this->instantiated_modules ) ) {
 				$this->instantiated_modules[ $module_id ] = new Visibility( Services::get_rules_manager(), Services::get_skautis_login(), Services::get_wp_login_logout() );
 		}
+		// @phpstan-ignore-next-line
 		return $this->instantiated_modules[ $module_id ];
 	}
 }

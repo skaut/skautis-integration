@@ -12,6 +12,7 @@ namespace Skautis_Integration\Rules;
 use Skautis_Integration\Auth\Skautis_Gateway;
 use Skautis_Integration\Auth\WP_Login_Logout;
 use Skautis_Integration\Utils\Helpers;
+use Skautis_Integration\Utils\Request_Parameter_Helpers;
 
 /**
  * Adds the UI for rules management.
@@ -42,13 +43,6 @@ final class Admin {
 	private $skautis_gateway;
 
 	/**
-	 * TODO: Unused?
-	 *
-	 * @var string
-	 */
-	private $admin_dir_url = '';
-
-	/**
 	 * Constructs the service and saves all dependencies.
 	 *
 	 * @param Rules_Manager   $rules_manager An injected Rules_Manager service instance.
@@ -59,13 +53,14 @@ final class Admin {
 		$this->rules_manager   = $rules_manager;
 		$this->wp_login_logout = $wp_login_logout;
 		$this->skautis_gateway = $skautis_gateway;
-		$this->admin_dir_url   = plugin_dir_url( __FILE__ ) . 'public/';
 		new Columns();
 		$this->init_hooks();
 	}
 
 	/**
 	 * Intializes all hooks used by the object.
+	 *
+	 * @return void
 	 */
 	private function init_hooks() {
 		add_action( 'add_meta_boxes', array( self::class, 'add_metabox_for_rules_field' ) );
@@ -85,6 +80,8 @@ final class Admin {
 	 * This function gets called for all post types, so it needs to check before adding the metabox.
 	 *
 	 * @param string $post_type The current post type.
+	 *
+	 * @return void
 	 */
 	public static function add_metabox_for_rules_field( string $post_type ) {
 		if ( Rules_Init::RULES_TYPE_SLUG === $post_type ) {
@@ -101,17 +98,20 @@ final class Admin {
 	 * Saves the rules data.
 	 *
 	 * @param int $post_id The ID of the rule post.
+	 *
+	 * @return void
 	 */
 	public static function save_rules_custom_field( int $post_id ) {
-		if ( ! isset( $_POST[ SKAUTIS_INTEGRATION_NAME . '_rules_metabox_nonce' ] ) || false === wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ SKAUTIS_INTEGRATION_NAME . '_rules_metabox_nonce' ] ) ), SKAUTIS_INTEGRATION_NAME . '_rules_metabox' ) ) {
+		if ( false === wp_verify_nonce( Request_Parameter_Helpers::post_string_variable( SKAUTIS_INTEGRATION_NAME . '_rules_metabox_nonce' ), SKAUTIS_INTEGRATION_NAME . '_rules_metabox' ) ) {
 			return;
 		}
 
-		if ( array_key_exists( SKAUTIS_INTEGRATION_NAME . '_rules_data', $_POST ) ) {
+		$data = Request_Parameter_Helpers::post_meta_variable( SKAUTIS_INTEGRATION_NAME . '_rules_data', SKAUTIS_INTEGRATION_NAME . '_rules_data' );
+		if ( '' !== $data ) {
 			update_post_meta(
 				$post_id,
 				SKAUTIS_INTEGRATION_NAME . '_rules_data',
-				sanitize_meta( SKAUTIS_INTEGRATION_NAME . '_rules_data', wp_unslash( $_POST[ SKAUTIS_INTEGRATION_NAME . '_rules_data' ] ), 'post' )
+				$data
 			);
 		}
 	}
@@ -122,6 +122,8 @@ final class Admin {
 	 * TODO: This box is hidden, why is it here?
 	 *
 	 * @param \WP_Post $post The post to print the metabox for.
+	 *
+	 * @return void
 	 */
 	public static function rules_field_content( \WP_Post $post ) {
 		wp_nonce_field( SKAUTIS_INTEGRATION_NAME . '_rules_metabox', SKAUTIS_INTEGRATION_NAME . '_rules_metabox_nonce' );
@@ -134,7 +136,9 @@ final class Admin {
 	/**
 	 * TODO: Unused?
 	 *
-	 * @param array $fields A list of already registered fields.
+	 * @param array<string, string> $fields A list of already registered fields.
+	 *
+	 * @return array<string, string> The updated list.
 	 */
 	public static function add_rules_field_to_revisions( array $fields ): array {
 		$fields[ SKAUTIS_INTEGRATION_NAME . '_rules_data' ] = __( 'skautIS Pravidla', 'skautis-integration' );
@@ -147,10 +151,15 @@ final class Admin {
 	 *
 	 * @param int $post_id The ID of the post in question.
 	 * @param int $revision_id The ID of the revision to restore.
+	 *
+	 * @return void
 	 */
 	public static function restore_revision_for_rules_field( int $post_id, int $revision_id ) {
 		$post     = get_post( $post_id );
 		$revision = get_post( $revision_id );
+		if ( ! ( $post instanceof \WP_Post ) || ! ( $revision instanceof \WP_Post ) ) {
+			return;
+		}
 		if ( Rules_Init::RULES_TYPE_SLUG === $post->post_type ) {
 			$meta = get_metadata( 'post', $revision->ID, SKAUTIS_INTEGRATION_NAME . '_rules_data', true );
 			if ( false !== $meta ) {
@@ -164,10 +173,13 @@ final class Admin {
 	 *
 	 * @param \WP_Post $post Unused @unused-param.
 	 *
+	 * @return void
+	 *
 	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
 	 */
 	public function add_rules_ui( \WP_Post $post ) {
-		if ( get_current_screen()->id !== Rules_Init::RULES_TYPE_SLUG || get_post_type() !== Rules_Init::RULES_TYPE_SLUG ) {
+		$screen = get_current_screen();
+		if ( null === $screen || Rules_Init::RULES_TYPE_SLUG !== $screen->id || get_post_type() !== Rules_Init::RULES_TYPE_SLUG ) {
 			return;
 		}
 		?>
@@ -200,9 +212,12 @@ final class Admin {
 
 	/**
 	 * Enqueues styles for rules management.
+	 *
+	 * @return void
 	 */
 	public static function enqueue_styles() {
-		if ( get_current_screen()->id !== Rules_Init::RULES_TYPE_SLUG || get_post_type() !== Rules_Init::RULES_TYPE_SLUG ) {
+		$screen = get_current_screen();
+		if ( null === $screen || Rules_Init::RULES_TYPE_SLUG !== $screen->id || get_post_type() !== Rules_Init::RULES_TYPE_SLUG ) {
 			return;
 		}
 
@@ -227,9 +242,12 @@ final class Admin {
 
 	/**
 	 * Enqueues scripts for rules management.
+	 *
+	 * @return void
 	 */
 	public static function enqueue_scripts() {
-		if ( get_current_screen()->id !== Rules_Init::RULES_TYPE_SLUG || get_post_type() !== Rules_Init::RULES_TYPE_SLUG ) {
+		$screen = get_current_screen();
+		if ( null === $screen || Rules_Init::RULES_TYPE_SLUG !== $screen->id || get_post_type() !== Rules_Init::RULES_TYPE_SLUG ) {
 			return;
 		}
 
@@ -318,9 +336,12 @@ final class Admin {
 
 	/**
 	 * Initializes dynamic options for the rules JS code.
+	 *
+	 * @return void
 	 */
 	public function init_rules_builder() {
-		if ( get_current_screen()->id !== Rules_Init::RULES_TYPE_SLUG || get_post_type() !== Rules_Init::RULES_TYPE_SLUG ) {
+		$screen = get_current_screen();
+		if ( null === $screen || Rules_Init::RULES_TYPE_SLUG !== $screen->id || get_post_type() !== Rules_Init::RULES_TYPE_SLUG ) {
 			return;
 		}
 

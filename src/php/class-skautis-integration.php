@@ -41,13 +41,11 @@ class Skautis_Integration {
 		require __DIR__ . '/src/frontend/class-login-form.php';
 
 		require __DIR__ . '/src/general/class-actions.php';
-		require __DIR__ . '/src/general/class-general.php';
 
 		require __DIR__ . '/src/modules/interface-module.php';
 		require __DIR__ . '/src/modules/class-modules-manager.php';
 		require __DIR__ . '/src/modules/Register/admin/class-admin.php';
 		require __DIR__ . '/src/modules/Register/admin/class-settings.php';
-		require __DIR__ . '/src/modules/Register/frontend/class-frontend.php';
 		require __DIR__ . '/src/modules/Register/frontend/class-login-form.php';
 		require __DIR__ . '/src/modules/Register/class-register.php';
 		require __DIR__ . '/src/modules/Register/class-wp-register.php';
@@ -78,6 +76,7 @@ class Skautis_Integration {
 		require __DIR__ . '/src/services/class-services.php';
 
 		require __DIR__ . '/src/utils/class-helpers.php';
+		require __DIR__ . '/src/utils/class-request-parameter-helpers.php';
 		require __DIR__ . '/src/utils/class-role-changer.php';
 
 		self::init();
@@ -85,6 +84,8 @@ class Skautis_Integration {
 
 	/**
 	 * Intializes all hooks used by the object.
+	 *
+	 * @return void
 	 */
 	protected static function init_hooks() {
 		add_action( 'admin_init', array( self::class, 'check_version_and_possibly_deactivate_plugin' ) );
@@ -95,6 +96,8 @@ class Skautis_Integration {
 
 	/**
 	 * Intializes all services used by the object.
+	 *
+	 * @return void
 	 */
 	protected static function init() {
 		Services::get_general();
@@ -108,6 +111,8 @@ class Skautis_Integration {
 
 	/**
 	 * Checks whether the current version of WordPress is supported by the plugin.
+	 *
+	 * @return bool Whether the current version of WordPress is supported.
 	 */
 	protected static function is_compatible_version_of_wp() {
 		if ( isset( $GLOBALS['wp_version'] ) && version_compare( $GLOBALS['wp_version'], '4.9.6', '>=' ) ) {
@@ -119,6 +124,8 @@ class Skautis_Integration {
 
 	/**
 	 * Checks whether the current version of PHP is supported by the plugin.
+	 *
+	 * @return bool Whether the current version of PHP is supported.
 	 */
 	protected static function is_compatible_version_of_php() {
 		if ( version_compare( PHP_VERSION, '7.4', '>=' ) ) {
@@ -132,6 +139,8 @@ class Skautis_Integration {
 	 * Activation checks.
 	 *
 	 * This function runs on plugin activation. It deactivates the plugin if the current version of WordPress or PHP are not supported.
+	 *
+	 * @return void
 	 */
 	public static function activation() {
 		if ( ! self::is_compatible_version_of_wp() ) {
@@ -161,6 +170,8 @@ class Skautis_Integration {
 	 * Updates rewrite rules on plugin deactivation.
 	 *
 	 * This function runs on plugin activation. It deactivates the plugin if the current version of WordPress or PHP are not supported.
+	 *
+	 * @return void
 	 */
 	public static function deactivation() {
 		delete_option( 'skautis_rewrite_rules_need_to_flush' );
@@ -169,6 +180,8 @@ class Skautis_Integration {
 
 	/**
 	 * This function deactivates the plugin if the current version of WordPress or PHP are not supported.
+	 *
+	 * @return void
 	 */
 	public static function check_version_and_possibly_deactivate_plugin() {
 		if ( ! self::is_compatible_version_of_wp() ) {

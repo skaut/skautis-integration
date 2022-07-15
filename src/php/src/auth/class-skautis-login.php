@@ -55,7 +55,7 @@ final class Skautis_Login {
 	/**
 	 * Takes the data returned from SkautIS login and passes it to the SkautIS library.
 	 *
-	 * @param array $data The SkautIS login data.
+	 * @param array{skautIS_Token?: string, skautIS_IDRole?: string, skautIS_IDUnit?: string, skautIS_DateLogout?: string} $data The SkautIS login data.
 	 */
 	public function set_login_data_to_local_skautis_instance( array $data = array() ): bool {
 		$data = apply_filters( SKAUTIS_INTEGRATION_NAME . '_login_data_for_skautis_instance', $data );
@@ -84,6 +84,8 @@ final class Skautis_Login {
 	 *
 	 * @see Actions::auth_actions_router() for more details about how this function gets called.
 	 *
+	 * @return void
+	 *
 	 * @SuppressWarnings(PHPMD.ExitExpression)
 	 */
 	public function login() {
@@ -111,10 +113,16 @@ final class Skautis_Login {
 	/**
 	 * Fires upon redirect back from SkautIS login and processes the login.
 	 *
+	 * @return void
+	 *
 	 * @SuppressWarnings(PHPMD.ExitExpression)
 	 */
 	public function login_confirm() {
 		$return_url = Helpers::get_return_url();
+		if ( null === $return_url ) {
+			wp_die( esc_html__( "Couldn't find return URL.", 'skautis-integration' ) );
+			die();
+		}
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		if ( $this->set_login_data_to_local_skautis_instance( $_POST ) ) {
 			if ( strpos( $return_url, 'noWpLogin' ) === false ) {
@@ -137,6 +145,8 @@ final class Skautis_Login {
 	 * Changes the user's role in SkautIS.
 	 *
 	 * @param int $role_id The ID of the new role.
+	 *
+	 * @return void
 	 */
 	public function change_user_role_in_skautis( int $role_id ) {
 		if ( $role_id > 0 ) {

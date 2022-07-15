@@ -25,6 +25,8 @@ class Columns {
 
 	/**
 	 * Intializes all hooks used by the object.
+	 *
+	 * @return void
 	 */
 	protected static function init_hooks() {
 		add_filter( 'manage_edit-' . Rules_Init::RULES_TYPE_SLUG . '_columns', array( self::class, 'last_modified_admin_column' ) );
@@ -50,6 +52,8 @@ class Columns {
 	 * Adds the header for the "Last modified" column in the rules overview.
 	 *
 	 * @param array<string, string> $columns A list of already present column headers, keyed by their ID.
+	 *
+	 * @return array<string, string> The updated list.
 	 */
 	public static function last_modified_admin_column( array $columns = array() ): array {
 		$columns['modified_last'] = __( 'Naposledy upraveno', 'skautis-integration' );
@@ -63,6 +67,8 @@ class Columns {
 	 * TODO: What are the parameter keys and values?
 	 *
 	 * @param array<string, string> $columns A list of already present columns.
+	 *
+	 * @return array<string, string> The updated list.
 	 */
 	public static function sortable_last_modified_column( array $columns = array() ): array {
 		$columns['modified_last'] = 'modified';
@@ -77,6 +83,8 @@ class Columns {
 	 *
 	 * @param string $column_name The current column name.
 	 * @param int    $post_id The current post ID (the current row).
+	 *
+	 * @return void
 	 */
 	public static function last_modified_admin_column_content( string $column_name, int $post_id ) {
 		if ( 'modified_last' !== $column_name ) {
@@ -84,9 +92,19 @@ class Columns {
 		}
 
 		$post = get_post( $post_id );
+		if ( ! ( $post instanceof \WP_Post ) ) {
+			return;
+		}
+		$time = strtotime( $post->post_modified );
+		if ( false === $time ) {
+			return;
+		}
 		/* translators: human-readable time difference */
-		$modified_date   = sprintf( _x( 'Před %s', '%s = human-readable time difference', 'skautis-integration' ), human_time_diff( strtotime( $post->post_modified ), time() ) );
+		$modified_date   = sprintf( _x( 'Před %s', '%s = human-readable time difference', 'skautis-integration' ), human_time_diff( $time, time() ) );
 		$modified_author = get_the_modified_author();
+		if ( null === $modified_author ) {
+			return;
+		}
 
 		echo esc_html( $modified_date );
 		echo '<br>';

@@ -11,16 +11,19 @@ namespace Skautis_Integration\Modules\Visibility\Admin;
 
 use Skautis_Integration\Rules\Rules_Manager;
 use Skautis_Integration\Modules\Visibility\Frontend\Frontend;
+use Skautis_Integration\Utils\Request_Parameter_Helpers;
 
 /**
  * Adds the visibility metabox to the post editor.
+ *
+ * @phan-constructor-used-for-side-effects
  */
 final class Metabox {
 
 	/**
 	 * A list of post types to activate the Visibility module for.
 	 *
-	 * @var array
+	 * @var array<string>
 	 */
 	private $post_types;
 
@@ -41,7 +44,7 @@ final class Metabox {
 	/**
 	 * Constructs the service and saves all dependencies.
 	 *
-	 * @param array         $post_types A list of post types to activate the Visibility module for.
+	 * @param array<string> $post_types A list of post types to activate the Visibility module for.
 	 * @param Rules_Manager $rules_manager An injected Rules_Manager service instance.
 	 * @param Frontend      $frontend An injected Frontend service instance.
 	 */
@@ -54,6 +57,8 @@ final class Metabox {
 
 	/**
 	 * Intializes all hooks used by the object.
+	 *
+	 * @return void
 	 */
 	private function init_hooks() {
 		add_action( 'add_meta_boxes', array( $this, 'add_metabox_for_rules_field' ) );
@@ -62,6 +67,8 @@ final class Metabox {
 
 	/**
 	 * Adds the metabox to WordPress.
+	 *
+	 * @return void
 	 */
 	public function add_metabox_for_rules_field() {
 		foreach ( $this->post_types as $post_type ) {
@@ -78,36 +85,30 @@ final class Metabox {
 	 * Saves the data from the metabox to the post meta.
 	 *
 	 * @param int $post_id The ID of the post.
+	 *
+	 * @return void
 	 */
 	public static function save_rules_custom_field( int $post_id ) {
-		if ( ! isset( $_POST[ SKAUTIS_INTEGRATION_NAME . '_visibility_metabox_nonce' ] ) || false === wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST[ SKAUTIS_INTEGRATION_NAME . '_visibility_metabox_nonce' ] ) ), SKAUTIS_INTEGRATION_NAME . '_visibility_metabox' ) ) {
+		if ( false === wp_verify_nonce( Request_Parameter_Helpers::post_string_variable( SKAUTIS_INTEGRATION_NAME . '_visibility_metabox_nonce' ), SKAUTIS_INTEGRATION_NAME . '_visibility_metabox' ) ) {
 			return;
 		}
 
-		if ( isset( $_POST[ SKAUTIS_INTEGRATION_NAME . '_rules_visibilityMode' ] ) ) {
-			if ( isset( $_POST[ SKAUTIS_INTEGRATION_NAME . '_rules' ] ) ) {
-				$rules = sanitize_meta( SKAUTIS_INTEGRATION_NAME . '_rules', wp_unslash( $_POST[ SKAUTIS_INTEGRATION_NAME . '_rules' ] ), 'post' );
-			} else {
-				$rules = array();
-			}
+		$visibility_mode = Request_Parameter_Helpers::post_meta_variable( SKAUTIS_INTEGRATION_NAME . '_rules_visibilityMode', SKAUTIS_INTEGRATION_NAME . '_rules_visibilityMode' );
+		if ( '' !== $visibility_mode ) {
+			$rules = Request_Parameter_Helpers::post_meta_variable( SKAUTIS_INTEGRATION_NAME . '_rules', SKAUTIS_INTEGRATION_NAME . '_rules', array() );
 			update_post_meta(
 				$post_id,
 				SKAUTIS_INTEGRATION_NAME . '_rules',
 				$rules
 			);
 
-			if ( isset( $_POST[ SKAUTIS_INTEGRATION_NAME . '_rules_includeChildren' ] ) ) {
-				$include_children = sanitize_meta( SKAUTIS_INTEGRATION_NAME . '_rules_includeChildren', wp_unslash( $_POST[ SKAUTIS_INTEGRATION_NAME . '_rules_includeChildren' ] ), 'post' );
-			} else {
-				$include_children = 0;
-			}
+			$include_children = Request_Parameter_Helpers::post_meta_variable( SKAUTIS_INTEGRATION_NAME . '_rules_includeChildren', SKAUTIS_INTEGRATION_NAME . '_rules_includeChildren', 0 );
 			update_post_meta(
 				$post_id,
 				SKAUTIS_INTEGRATION_NAME . '_rules_includeChildren',
 				$include_children
 			);
 
-			$visibility_mode = sanitize_meta( SKAUTIS_INTEGRATION_NAME . '_rules_visibilityMode', wp_unslash( $_POST[ SKAUTIS_INTEGRATION_NAME . '_rules_visibilityMode' ] ), 'post' );
 			update_post_meta(
 				$post_id,
 				SKAUTIS_INTEGRATION_NAME . '_rules_visibilityMode',
@@ -120,6 +121,8 @@ final class Metabox {
 	 * Prints the rules metabox.
 	 *
 	 * @param \WP_Post $post The post for which the metabox is printed.
+	 *
+	 * @return void
 	 */
 	public function rules_repeater( \WP_Post $post ) {
 		$post_type_object = get_post_type_object( $post->post_type );
@@ -150,7 +153,7 @@ final class Metabox {
 								<?php
 								foreach ( $parent_rule['rules'] as $rule_id => $rule ) {
 									?>
-									<li data-rule="<?php echo esc_attr( $rule_id ); ?>"><?php echo esc_html( $rule ); ?></li>
+									<li data-rule="<?php echo esc_attr( strval( $rule_id ) ); ?>"><?php echo esc_html( $rule ); ?></li>
 									<?php
 								}
 								?>
@@ -175,7 +178,7 @@ final class Metabox {
 					<select name="<?php echo esc_attr( SKAUTIS_INTEGRATION_NAME ); ?>_rules" class="rule select2">
 						<?php
 						foreach ( $this->rules_manager->get_all_rules() as $rule ) {
-							echo '<option value="' . esc_attr( $rule->ID ) . '">' . esc_html( $rule->post_title ) . '</option>';
+							echo '<option value="' . esc_attr( strval( $rule->ID ) ) . '">' . esc_html( $rule->post_title ) . '</option>';
 						}
 						?>
 					</select>
@@ -193,7 +196,7 @@ final class Metabox {
 				<input type="checkbox" name="<?php echo esc_attr( SKAUTIS_INTEGRATION_NAME ); ?>_rules_includeChildren"
 					value="1" <?php checked( 1, $include_children ); ?> /><span>
 												<?php
-												if ( $post_type_object->hierarchical ) {
+												if ( null !== $post_type_object && $post_type_object->hierarchical ) {
 													/* translators: the type of the SkautIS unit */
 													printf( esc_html__( 'Použít vybraná pravidla i na podřízené %s', 'skautis-integration' ), esc_html( lcfirst( $post_type_object->labels->name ) ) );
 												} else {

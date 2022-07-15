@@ -83,13 +83,14 @@ class Helpers {
 	}
 
 	/**
-	 * Parses and sanitizes a login or logout redirect URL from GET variablea.
+	 * Parses and sanitizes a login or logout redirect URL from GET variable.
+	 *
+	 * @return string The URL or empty string if the it isn't set in the URL.
 	 */
 	public static function get_login_logout_redirect() {
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		if ( isset( $_GET['redirect_to'] ) && '' !== $_GET['redirect_to'] ) {
-			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			return esc_url_raw( wp_unslash( $_GET['redirect_to'] ) );
+		$redirect_to = Request_Parameter_Helpers::get_string_variable( 'redirect_to' );
+		if ( '' !== $redirect_to ) {
+			return esc_url_raw( $redirect_to );
 		}
 		$return_url = self::get_return_url();
 		return is_null( $return_url ) ? self::get_current_url() : $return_url;
@@ -97,14 +98,15 @@ class Helpers {
 
 	/**
 	 * Parses and sanitizes the `ReturnUrl` GET variable.
+	 *
+	 * @return string|null The variable value or `null` if it isn't set.
 	 */
 	public static function get_return_url() {
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		if ( ! isset( $_GET['ReturnUrl'] ) || '' === $_GET['ReturnUrl'] ) {
+		$return_url = Request_Parameter_Helpers::get_string_variable( 'ReturnUrl' );
+		if ( '' === $return_url ) {
 			return null;
 		}
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		return esc_url_raw( wp_unslash( $_GET['ReturnUrl'] ) );
+		return esc_url_raw( $return_url );
 	}
 
 	/**
@@ -113,12 +115,15 @@ class Helpers {
 	 * @param string $message The notice text.
 	 * @param string $type The type of the notice. Accepted values are "error", "warning", "success", "info". Default "warning".
 	 * @param string $hide_notice_on_page An ID of a screen where the notice shouldn't get shown. Optional.
+	 *
+	 * @return void
 	 */
 	public static function show_admin_notice( string $message, string $type = 'warning', string $hide_notice_on_page = '' ) {
 		add_action(
 			'admin_notices',
 			static function () use ( $message, $type, $hide_notice_on_page ) {
-				if ( '' === $hide_notice_on_page || get_current_screen()->id !== $hide_notice_on_page ) {
+				$screen = get_current_screen();
+				if ( '' === $hide_notice_on_page || null === $screen || $screen->id !== $hide_notice_on_page ) {
 					$class = 'notice notice-' . $type . ' is-dismissible';
 					printf(
 						'<div class="%1$s"><p>%2$s</p><button type="button" class="notice-dismiss">
@@ -160,7 +165,8 @@ class Helpers {
 	 */
 	public static function get_current_url(): string {
 		if ( isset( $_SERVER['HTTP_HOST'] ) && isset( $_SERVER['REQUEST_URI'] ) ) {
-			return esc_url_raw( ( isset( $_SERVER['HTTPS'] ) ? 'https' : 'http' ) . '://' . wp_unslash( $_SERVER['HTTP_HOST'] ) . wp_unslash( $_SERVER['REQUEST_URI'] ) );
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			return esc_url_raw( ( isset( $_SERVER['HTTPS'] ) ? 'https' : 'http' ) . '://' . wp_unslash( strval( $_SERVER['HTTP_HOST'] ) ) . wp_unslash( strval( $_SERVER['REQUEST_URI'] ) ) );
 		}
 		return '';
 	}
@@ -170,6 +176,8 @@ class Helpers {
 	 *
 	 * @param string $url The URL to parse the nonce from.
 	 * @param string $nonce_name The name of the nonce.
+	 *
+	 * @return void
 	 */
 	public static function validate_nonce_from_url( string $url, string $nonce_name ) {
 		if ( false === wp_verify_nonce( self::get_nonce_from_url( urldecode( $url ), $nonce_name ), $nonce_name ) ) {

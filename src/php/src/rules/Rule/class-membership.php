@@ -132,13 +132,15 @@ class Membership implements Rule {
 
 	/**
 	 * Returns the current values of the rule.
+	 *
+	 * @return array<string, string> The current values.
 	 */
 	public function get_values(): array {
 		$result      = array();
 		$memberships = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->MembershipTypeAll();
 
 		foreach ( $memberships as $membership ) {
-			$result[ $membership->ID ] = $membership->DisplayName;
+			$result[ strval( $membership->ID ) ] = $membership->DisplayName;
 		}
 
 		return $result;
@@ -168,6 +170,8 @@ class Membership implements Rule {
 	 * Returns an array of arrays where for each user unit membership ID, there are listed units asssociated with that membership.
 	 *
 	 * @throws \Exception The SkautIS API returned an unexpected value.
+	 *
+	 * @return array<string, array<string>> The membership IDs.
 	 */
 	protected function getUserMembershipsWithUnitIds(): array {
 		static $user_memberships = null;
@@ -199,7 +203,7 @@ class Membership implements Rule {
 			// User has more valid memberships.
 			$result = array();
 			foreach ( $user_memberships->MembershipAllOutput as $user_membership ) {
-				if ( ! is_object( $user_membership ) ) {
+				if ( ! ( $user_membership instanceof \stdClass ) ) {
 					continue;
 				}
 

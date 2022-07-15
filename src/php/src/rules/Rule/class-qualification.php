@@ -132,13 +132,15 @@ class Qualification implements Rule {
 
 	/**
 	 * Returns the current values of the rule.
+	 *
+	 * @return array<string, string> The current values.
 	 */
 	public function get_values(): array {
 		$result         = array();
 		$qualifications = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->QualificationTypeAll();
 
 		foreach ( $qualifications as $qualification ) {
-			$result[ $qualification->ID ] = $qualification->DisplayName;
+			$result[ strval( $qualification->ID ) ] = $qualification->DisplayName;
 		}
 
 		return $result;
@@ -146,6 +148,8 @@ class Qualification implements Rule {
 
 	/**
 	 * Returns an array of user qualification IDs.
+	 *
+	 * @return array<string> The qualification IDs.
 	 */
 	protected function getUserQualifications(): array {
 		static $user_qualifications = null;

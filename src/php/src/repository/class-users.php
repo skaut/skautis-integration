@@ -11,6 +11,7 @@ namespace Skautis_Integration\Repository;
 
 use Skautis_Integration\Auth\Skautis_Gateway;
 use Skautis_Integration\Utils\Helpers;
+use Skautis_Integration\Utils\Request_Parameter_Helpers;
 
 /**
  * Contains helper functions for management of SkautIS users.
@@ -37,17 +38,14 @@ class Users {
 	 * Parses the "skautisSearchUsers" GET variable from the URL.
 	 */
 	protected static function get_search_user_string(): string {
-		$search_user_string = '';
+		$nonce = Request_Parameter_Helpers::get_string_variable( SKAUTIS_INTEGRATION_NAME . '_skautis_search_user_nonce' );
+		if ( false === wp_verify_nonce( $nonce, SKAUTIS_INTEGRATION_NAME . '_skautis_search_user' ) ) {
+			return '';
+		}
 
-		$return_url = Helpers::get_return_url();
-		if (
-			isset( $_GET[ SKAUTIS_INTEGRATION_NAME . '_skautis_search_user_nonce' ] ) &&
-			false !== wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET[ SKAUTIS_INTEGRATION_NAME . '_skautis_search_user_nonce' ] ) ), SKAUTIS_INTEGRATION_NAME . '_skautis_search_user' ) &&
-			isset( $_GET['skautisSearchUsers'] ) &&
-			'' !== $_GET['skautisSearchUsers']
-		) {
-			$search_user_string = sanitize_text_field( wp_unslash( $_GET['skautisSearchUsers'] ) );
-		} elseif ( ! is_null( $return_url ) ) {
+		$return_url         = Helpers::get_return_url();
+		$search_user_string = Request_Parameter_Helpers::get_string_variable( 'skautisSearchUsers' );
+		if ( '' === $search_user_string && ! is_null( $return_url ) ) {
 			$search_user_string = Helpers::get_variable_from_url( $return_url, 'skautisSearchUsers' );
 		}
 
@@ -56,6 +54,8 @@ class Users {
 
 	/**
 	 * Lists all users with a connected SkautIS account under the current environment (testing or production).
+	 *
+	 * @return array<int, array{id: int, name: string}> The users as an associative array, where the array key is the SkautIS user ID and the value contains the WordPress user ID.
 	 */
 	public function get_connected_wp_users(): array {
 		$users_data = array();
@@ -76,9 +76,12 @@ class Users {
 		);
 
 		foreach ( $connected_wp_users->get_results() as $user ) {
-			$users_data[ get_user_meta( $user->ID, 'skautisUserId_' . $this->skautis_gateway->get_env(), true ) ] = array(
+			if ( ! ( $user instanceof \WP_User ) ) {
+				continue;
+			}
+			$users_data[ intval( get_user_meta( $user->ID, 'skautisUserId_' . $this->skautis_gateway->get_env(), true ) ) ] = array(
 				'id'   => $user->ID,
-				'name' => $user->display_name,
+				'name' => $user->display_name ?? '',
 			);
 		}
 
@@ -87,6 +90,8 @@ class Users {
 
 	/**
 	 * Lists all users without a connected SkautIS account under the current environment (testing or production).
+	 *
+	 * @return array<\WP_User> The list of users
 	 */
 	public function get_connectable_wp_users() {
 		// TODO: Replace with a call to get_users()?
@@ -108,11 +113,14 @@ class Users {
 			)
 		);
 
+		// @phpstan-ignore-next-line
 		return $connectable_wp_users->get_results();
 	}
 
 	/**
 	 * Returns all users for the current unit or event. Returns users whose name matches the "skautisSearchUsers" GET variable if it is present.
+	 *
+	 * @return array{users: array<\stdClass>, eventType: string} The users.
 	 */
 	public function get_users(): array {
 		$users      = array();
@@ -149,6 +157,7 @@ class Users {
 					);
 
 					foreach ( $current_user_events as $event ) {
+						// @phpstan-ignore-next-line
 						if ( $event->ID_Group === $role->ID_Group ) {
 							$event_url = $this->skautis_gateway->get_skautis_instance()->Events->EventDetail(
 								array(
@@ -275,6 +284,8 @@ class Users {
 	 * @throws \Exception Couldn't get the user info from SkautIS.
 	 *
 	 * @param int $skautis_user_id The SkautIS user ID.
+	 *
+	 * @return array{id: int, UserName: string, personId: int, email: string, firstName: string, lastName: string, nickName: string} The information about a user.
 	 */
 	public function get_user_detail( int $skautis_user_id ): array {
 		$user_detail = array();

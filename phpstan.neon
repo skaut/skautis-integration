@@ -1,0 +1,18 @@
+parameters:
+  level: 8
+  paths:
+    - src
+    - .phan/config.php
+    - scoper.inc.php
+  scanDirectories:
+    - .phan/stubs
+    - vendor/skaut/wordpress-stubs/stubs
+    - dist/vendor
+  scanFiles:
+    - vendor/skaut/wordpress-stubs/stubs/WordPress/functions.php
+  bootstrapFiles:
+    - phpstan-bootstrap.php
+  dynamicConstantNames:
+    - WP_DEBUG
+  ignoreErrors:
+    - '#Access to an undefined property Skautis_Integration\\Vendor\\Skautis\\Skautis::\$#'

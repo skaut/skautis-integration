@@ -12,6 +12,7 @@ namespace Skautis_Integration\Admin;
 use Skautis_Integration\Auth\Connect_And_Disconnect_WP_Account;
 use Skautis_Integration\Auth\Skautis_Gateway;
 use Skautis_Integration\Utils\Helpers;
+use Skautis_Integration\Utils\Request_Parameter_Helpers;
 
 /**
  * Adds SkautIS info to the WordPress user table as well as user profile screen.
@@ -37,6 +38,8 @@ final class Users {
 
 	/**
 	 * Intializes all hooks used by the object.
+	 *
+	 * @return void
 	 */
 	private function init_hooks() {
 		add_filter( 'manage_users_columns', array( self::class, 'add_column_header_to_users_table' ) );
@@ -52,6 +55,8 @@ final class Users {
 	 * Adds the header for the SkautIS column in the user table view.
 	 *
 	 * @param array<string> $columns A list of column headers.
+	 *
+	 * @return array<string> The updated list.
 	 */
 	public static function add_column_header_to_users_table( array $columns = array() ): array {
 		$columns[ SKAUTIS_INTEGRATION_NAME ] = __( 'skautIS', 'skautis-integration' );
@@ -67,6 +72,8 @@ final class Users {
 	 * @param string $value The value of the current cell.
 	 * @param string $column_name The current column.
 	 * @param int    $user_id The ID of the user.
+	 *
+	 * @return string The cell value.
 	 */
 	public static function add_column_to_users_table( $value, string $column_name, int $user_id ) {
 		if ( SKAUTIS_INTEGRATION_NAME === $column_name ) {
@@ -91,6 +98,8 @@ final class Users {
 	 * Shows the SkautIS section in the user profile both for the current user as well as when managing other users.
 	 *
 	 * @param \WP_User $user The user in question.
+	 *
+	 * @return void
 	 */
 	public function skautis_user_id_field( \WP_User $user ) {
 		// TODO: SkautIS, not skautIS.
@@ -138,17 +147,19 @@ final class Users {
 	/**
 	 * Saves settings from the SkautIS section of the user profile.
 	 *
+	 * TODO: Custom nonce name.
+	 *
 	 * @param int $user_id The ID of the user.
 	 */
 	public static function manage_skautis_user_id_field( int $user_id ): bool {
-		if ( ! isset( $_POST['_wpnonce'] ) || false === wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ), 'update-user_' . $user_id ) ) {
+		if ( false === wp_verify_nonce( Request_Parameter_Helpers::post_string_variable( '_wpnonce' ), 'update-user_' . $user_id ) ) {
 			return false;
 		}
 
 		$saved = false;
 		if ( Helpers::user_is_skautis_manager() ) {
 			if ( isset( $_POST['skautisUserId_prod'] ) ) {
-				$skautis_user_id = absint( $_POST['skautisUserId_prod'] );
+				$skautis_user_id = Request_Parameter_Helpers::post_int_variable( 'skautisUserId_prod', 0 );
 				if ( 0 === $skautis_user_id ) {
 					$skautis_user_id = '';
 				}
@@ -156,7 +167,7 @@ final class Users {
 				$saved = true;
 			}
 			if ( isset( $_POST['skautisUserId_test'] ) ) {
-				$skautis_user_id = absint( $_POST['skautisUserId_test'] );
+				$skautis_user_id = Request_Parameter_Helpers::post_int_variable( 'skautisUserId_test', 0 );
 				if ( 0 === $skautis_user_id ) {
 					$skautis_user_id = '';
 				}

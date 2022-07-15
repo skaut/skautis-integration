@@ -132,13 +132,15 @@ class Func implements Rule {
 
 	/**
 	 * Returns the current values of the rule.
+	 *
+	 * @return array<string, string> The current values.
 	 */
 	public function get_values(): array {
 		$values = array();
 		$funcs  = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->FunctionTypeAll();
 
 		foreach ( $funcs as $func ) {
-			$values[ $func->ID ] = $func->ShortName;
+			$values[ strval( $func->ID ) ] = $func->ShortName;
 		}
 
 		return $values;
@@ -166,6 +168,8 @@ class Func implements Rule {
 
 	/**
 	 * Returns an array of arrays where for each user function ID, there are listed units asssociated with that function.
+	 *
+	 * @return array<int, array<string>> The function IDs.
 	 */
 	protected function getUserFuncsWithUnitIds(): array {
 		static $user_funcs = null;
@@ -195,9 +199,9 @@ class Func implements Rule {
 			);
 			if ( $unit_detail ) {
 				if ( ! isset( $result[ $user_func->ID_FunctionType ] ) ) {
-					$result[ $user_func->ID_FunctionType ] = array();
+					$result[ intval( $user_func->ID_FunctionType ) ] = array();
 				}
-				$result[ $user_func->ID_FunctionType ][] = $unit_detail->RegistrationNumber;
+				$result[ intval( $user_func->ID_FunctionType ) ][] = $unit_detail->RegistrationNumber;
 			}
 		}
 
@@ -244,8 +248,8 @@ class Func implements Rule {
 		$user_pass  = 0;
 		foreach ( $funcs as $func ) {
 			// in / not_in range check.
-			if ( array_key_exists( $func, $user_funcs ) === $assume_in ) {
-				foreach ( $user_funcs[ $func ] as $user_func_unit_id ) {
+			if ( array_key_exists( intval( $func ), $user_funcs ) === $assume_in ) {
+				foreach ( $user_funcs[ intval( $func ) ] as $user_func_unit_id ) {
 					$user_func_unit_id = self::clearUnitId( $user_func_unit_id );
 
 					switch ( $unit_operator ) {
