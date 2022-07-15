@@ -22,7 +22,7 @@ Text Domain:       skautis-integration
 namespace Skautis_Integration;
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+	die();
 }
 
 define( 'SKAUTIS_INTEGRATION_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
