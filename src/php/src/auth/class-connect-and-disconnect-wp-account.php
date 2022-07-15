@@ -78,7 +78,7 @@ final class Connect_And_Disconnect_WP_Account {
 	 */
 	public function print_connect_and_disconnect_button( int $wp_user_id ) {
 		$skautis_user_id = get_user_meta( $wp_user_id, 'skautisUserId_' . $this->skautis_gateway->get_env(), true );
-		$screen = get_current_screen();
+		$screen          = get_current_screen();
 		if ( false === $skautis_user_id || '' === $skautis_user_id ) {
 			if ( ! Helpers::user_is_skautis_manager() && get_option( SKAUTIS_INTEGRATION_NAME . '_allowUsersDisconnectFromSkautis' ) !== '1' ) {
 				return;
@@ -90,7 +90,7 @@ final class Connect_And_Disconnect_WP_Account {
 			<a href="' . esc_url( $url ) . '"
 			   class="button">' . esc_html__( 'Zrušit propojení účtu se skautISem', 'skautis-integration' ) . '</a>
 			';
-		} elseif ( null !== $screen && $screen->id === 'profile' ) {
+		} elseif ( null !== $screen && 'profile' === $screen->id ) {
 			$return_url = add_query_arg( SKAUTIS_INTEGRATION_NAME . '_connectWpAccountWithSkautis', wp_create_nonce( SKAUTIS_INTEGRATION_NAME . '_connectWpAccountWithSkautis' ), Helpers::get_current_url() );
 			$url        = add_query_arg( 'ReturnUrl', rawurlencode( $return_url ), get_home_url( null, 'skautis/auth/' . Actions::CONNECT_ACTION ) );
 

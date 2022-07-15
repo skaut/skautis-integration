@@ -71,11 +71,11 @@ final class Admin {
 			null === $screen ||
 			(
 				! in_array( $screen->id, $this->post_types, true ) &&
-				$screen->id !== 'skautis_page_' . SKAUTIS_INTEGRATION_NAME . '_modules_visibility'
+				'skautis_page_' . SKAUTIS_INTEGRATION_NAME . '_modules_visibility' !== $screen->id
 			)
 		) {
 				return;
-			}
+		}
 		wp_enqueue_script( 'jquery-ui-sortable' );
 
 		Helpers::enqueue_style( 'modules_visibility', 'modules/Visibility/admin/css/skautis-modules-visibility-admin.min.css' );
