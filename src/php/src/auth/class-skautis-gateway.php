@@ -53,7 +53,7 @@ class Skautis_Gateway {
 	/**
 	 * The current SkautIS environment (testing or production).
 	 *
-	 * @var 'prod'|'test'
+	 * @var string
 	 */
 	protected $env;
 
@@ -63,18 +63,16 @@ class Skautis_Gateway {
 	 * TODO: Replace elseif with else and remove useless checks
 	 */
 	public function __construct() {
-		$env_type = get_option( 'skautis_integration_appid_type' );
-		if ( self::PROD_ENV === $env_type ) {
+		$this->env = get_option( 'skautis_integration_appid_type' );
+		if ( self::PROD_ENV === $this->env ) {
 			$this->app_id    = get_option( 'skautis_integration_appid_prod' );
-			$this->env       = $env_type;
 			$this->test_mode = false;
-		} elseif ( self::TEST_ENV === $env_type ) {
+		} elseif ( self::TEST_ENV === $this->env ) {
 			$this->app_id    = get_option( 'skautis_integration_appid_test' );
-			$this->env       = $env_type;
 			$this->test_mode = true;
 		}
 
-		if ( '' !== $this->app_id && '' !== $env_type ) {
+		if ( '' !== $this->app_id && '' !== $this->env ) {
 			$session_adapter           = new Transient_Session_Adapter();
 			$wsdl_manager              = new Skautis\Wsdl\WsdlManager( new Skautis\Wsdl\WebServiceFactory(), new Skautis\Config( $this->app_id, $this->test_mode ) );
 			$user                      = new Skautis\User( $wsdl_manager, $session_adapter );
@@ -98,6 +96,10 @@ class Skautis_Gateway {
 	 * Returns the raw SkauIS library instance
 	 */
 	public function get_skautis_instance(): Skautis\Skautis {
+		if ( ! ( $this->skautis instanceof Skautis\Skautis ) ) {
+			wp_die( esc_html__( 'The SkautIS integration plugin cannot be used without setting a valid App ID.', 'skautis-integration' ) );
+			die();
+		}
 		return $this->skautis;
 	}
 
