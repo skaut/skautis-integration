@@ -1593,16 +1593,16 @@
         },
         {
             "name": "skaut/wordpress-stubs",
-            "version": "2.6.0",
+            "version": "2.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/skaut/wordpress-stubs.git",
-                "reference": "9d3b881620a4c767ddafd62ad7dee4bb9a99e7ee"
+                "reference": "73b49c01b956eb0c5a295d31e95f20fb7db3807f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/skaut/wordpress-stubs/zipball/9d3b881620a4c767ddafd62ad7dee4bb9a99e7ee",
-                "reference": "9d3b881620a4c767ddafd62ad7dee4bb9a99e7ee",
+                "url": "https://api.github.com/repos/skaut/wordpress-stubs/zipball/73b49c01b956eb0c5a295d31e95f20fb7db3807f",
+                "reference": "73b49c01b956eb0c5a295d31e95f20fb7db3807f",
                 "shasum": ""
             },
             "require": {
@@ -1646,7 +1646,7 @@
                 "source": "https://github.com/skaut/wordpress-stubs",
                 "wiki": "https://github.com/skaut/wordpress-stubs/wiki"
             },
-            "time": "2022-07-14T16:31:39+00:00"
+            "time": "2022-07-16T08:44:14+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
@@ -3212,5 +3212,5 @@
         "php": "^7.4 || ^8.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.3.0"
 }
