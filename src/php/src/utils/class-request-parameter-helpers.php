@@ -69,7 +69,7 @@ class Request_Parameter_Helpers {
 	 * @return int The POST variable value
 	 */
 	public static function post_int_variable( $name, $default = -1 ) {
-		$string_value = self::get_string_variable( $name );
+		$string_value = self::post_string_variable( $name );
 		return '' !== $string_value ? intval( $string_value ) : $default;
 	}
 
