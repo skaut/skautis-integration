@@ -1,17 +1,15 @@
 /// <reference types="datatables.net"/>
 
 (function ($): void {
-	document.styleSheets[0].addRule(
-		'.skautis-user-management-table th span:after',
-		'background-image: url(' +
+	document.styleSheets[0].insertRule(
+		'.skautis-user-management-table th span:after { background-image: url(' +
 			skautisIntegrationAdminUsersManagementLocalize.datatablesFilesUrl +
-			'/sort_asc.png);'
+			'/sort_asc.png); }'
 	);
-	document.styleSheets[0].addRule(
-		'.skautis-user-management-table th.sorting_desc span:after',
-		'background-image: url(' +
+	document.styleSheets[0].insertRule(
+		'.skautis-user-management-table th.sorting_desc span:after { background-image: url(' +
 			skautisIntegrationAdminUsersManagementLocalize.datatablesFilesUrl +
-			'/sort_desc.png);'
+			'/sort_desc.png); }'
 	);
 
 	const $dataTable = $('.skautis-user-management-table').DataTable({
@@ -31,11 +29,11 @@
 			);
 
 			if ($dataTable.data().length >= 500) {
-				const $input = $('.dataTables_filter input').unbind(),
+				const $input = $('.dataTables_filter input').off(),
 					$searchButton = $('<button>')
 						.text($dataTable.i18n('search', 'Search'))
 						.addClass('button button-secondary')
-						.click(function () {
+						.on('click', function () {
 							const withNonce = updateQueryStringInUrl(
 								skautisIntegrationAdminUsersManagementLocalize.searchNonceName,
 								skautisIntegrationAdminUsersManagementLocalize.searchNonceValue,
@@ -49,7 +47,7 @@
 						});
 				$input.on('keyup', function (e) {
 					e.preventDefault();
-					if (e.keyCode === 13) {
+					if (e.key === 'Enter') {
 						$searchButton.trigger('click');
 					}
 				});
@@ -60,7 +58,7 @@
 				const $clearButton = $('<button>')
 					.text(skautisIntegrationAdminUsersManagementLocalize.cancel)
 					.addClass('button button-secondary')
-					.click(function () {
+					.on('click', function () {
 						$('.dataTables_filter input').val('');
 						window.location.href = updateQueryStringInUrl(
 							'skautisSearchUsers',
@@ -124,25 +122,17 @@
 		const $connectUserToSkautisModalConnectLink = $(
 			'#connectUserToSkautisModal_connectLink'
 		);
-		if ($.isNumeric($this.val())) {
-			$connectUserToSkautisModalConnectLink.attr(
-				'href',
-				updateQueryStringInUrl(
-					'wpUserId',
-					$this.val() as string,
-					$connectUserToSkautisModalConnectLink.attr('href')!
-				)
-			);
-		} else {
-			$connectUserToSkautisModalConnectLink.attr(
-				'href',
-				updateQueryStringInUrl(
-					'wpUserId',
-					'',
-					$connectUserToSkautisModalConnectLink.attr('href')!
-				)
-			);
-		}
+		const wpUserId = isNaN(Number($this.val()))
+			? ''
+			: ($this.val() as string);
+		$connectUserToSkautisModalConnectLink.attr(
+			'href',
+			updateQueryStringInUrl(
+				'wpUserId',
+				wpUserId,
+				$connectUserToSkautisModalConnectLink.attr('href')!
+			)
+		);
 	});
 
 	$('#connectUserToSkautisModal_defaultRole')
