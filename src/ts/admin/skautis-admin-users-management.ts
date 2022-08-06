@@ -31,11 +31,11 @@
 			);
 
 			if ($dataTable.data().length >= 500) {
-				const $input = $('.dataTables_filter input').unbind(),
+				const $input = $('.dataTables_filter input').off(),
 					$searchButton = $('<button>')
 						.text($dataTable.i18n('search', 'Search'))
 						.addClass('button button-secondary')
-						.click(function () {
+						.on('click', function () {
 							const withNonce = updateQueryStringInUrl(
 								skautisIntegrationAdminUsersManagementLocalize.searchNonceName,
 								skautisIntegrationAdminUsersManagementLocalize.searchNonceValue,
@@ -60,7 +60,7 @@
 				const $clearButton = $('<button>')
 					.text(skautisIntegrationAdminUsersManagementLocalize.cancel)
 					.addClass('button button-secondary')
-					.click(function () {
+					.on('click', function () {
 						$('.dataTables_filter input').val('');
 						window.location.href = updateQueryStringInUrl(
 							'skautisSearchUsers',
