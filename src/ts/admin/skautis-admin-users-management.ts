@@ -122,26 +122,17 @@
 		const $connectUserToSkautisModalConnectLink = $(
 			'#connectUserToSkautisModal_connectLink'
 		);
-		// TODO: Simplify
-		if (!isNaN(Number($this.val()))) {
-			$connectUserToSkautisModalConnectLink.attr(
-				'href',
-				updateQueryStringInUrl(
-					'wpUserId',
-					$this.val() as string,
-					$connectUserToSkautisModalConnectLink.attr('href')!
-				)
-			);
-		} else {
-			$connectUserToSkautisModalConnectLink.attr(
-				'href',
-				updateQueryStringInUrl(
-					'wpUserId',
-					'',
-					$connectUserToSkautisModalConnectLink.attr('href')!
-				)
-			);
-		}
+		const wpUserId = isNaN(Number($this.val()))
+			? ''
+			: ($this.val() as string);
+		$connectUserToSkautisModalConnectLink.attr(
+			'href',
+			updateQueryStringInUrl(
+				'wpUserId',
+				wpUserId,
+				$connectUserToSkautisModalConnectLink.attr('href')!
+			)
+		);
 	});
 
 	$('#connectUserToSkautisModal_defaultRole')
