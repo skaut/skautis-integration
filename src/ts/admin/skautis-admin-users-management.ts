@@ -1,17 +1,15 @@
 /// <reference types="datatables.net"/>
 
 (function ($): void {
-	document.styleSheets[0].addRule(
-		'.skautis-user-management-table th span:after',
-		'background-image: url(' +
+	document.styleSheets[0].insertRule(
+		'.skautis-user-management-table th span:after { background-image: url(' +
 			skautisIntegrationAdminUsersManagementLocalize.datatablesFilesUrl +
-			'/sort_asc.png);'
+			'/sort_asc.png); }'
 	);
-	document.styleSheets[0].addRule(
-		'.skautis-user-management-table th.sorting_desc span:after',
-		'background-image: url(' +
+	document.styleSheets[0].insertRule(
+		'.skautis-user-management-table th.sorting_desc span:after { background-image: url(' +
 			skautisIntegrationAdminUsersManagementLocalize.datatablesFilesUrl +
-			'/sort_desc.png);'
+			'/sort_desc.png); }'
 	);
 
 	const $dataTable = $('.skautis-user-management-table').DataTable({
