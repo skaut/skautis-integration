@@ -122,7 +122,8 @@
 		const $connectUserToSkautisModalConnectLink = $(
 			'#connectUserToSkautisModal_connectLink'
 		);
-		if ($.isNumeric($this.val())) {
+		// TODO: Simplify
+		if (!isNaN(Number($this.val()))) {
 			$connectUserToSkautisModalConnectLink.attr(
 				'href',
 				updateQueryStringInUrl(
