@@ -32,8 +32,11 @@ return array(
 
 			->path( '#^psr/container/#' )
 			->path( '#^skautis/skautis/#' )
-			->path( '#^composer/#' )
 			->in( 'vendor' ),
+		Finder::create()->files()
+			->name( array( '*.php', '/LICENSE(.txt)?/' ) )
+			->depth( 0 )
+			->in( 'vendor/composer' ),
 		Finder::create()->files()
 			->name( 'autoload.php' )
 			->depth( 0 )
