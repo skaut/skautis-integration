@@ -24,15 +24,27 @@ function safe_replace( $pattern, $replacement, $string ) { // phpcs:ignore WordP
 	return $replacement;
 }
 
+/**
+ * Constructs a finder for composer dependencies.
+ *
+ * @return Finder The initialized Finder.
+ */
+function dependency_finder() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
+	// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.system_calls_exec
+	exec( 'composer show --no-dev --name-only', $dependencies );
+	$finder = Finder::create()->files()->name( array( '*.php', '/LICENSE(.txt)?/' ) )->in( 'vendor' );
+
+	foreach ( $dependencies as $dependency ) {
+		$finder->path( '#^' . $dependency . '/#' );
+	}
+
+	return $finder;
+}
+
 return array(
 	'prefix'   => 'Skautis_Integration\\Vendor',
 	'finders'  => array(
-		Finder::create()->files()
-			->name( array( '*.php', '/LICENSE(.txt)?/' ) )
-
-			->path( '#^psr/container/#' )
-			->path( '#^skautis/skautis/#' )
-			->in( 'vendor' ),
+		dependency_finder(),
 		Finder::create()->files()
 			->name( array( '*.php', '/LICENSE(.txt)?/' ) )
 			->depth( 0 )
