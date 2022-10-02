@@ -159,7 +159,7 @@ class Users_Management {
 	 * @return void
 	 */
 	public static function enqueue_scripts_and_styles( $hook_suffix ) {
-		if ( ! str_ends_with( $hook_suffix, SKAUTIS_INTEGRATION_NAME . '_usersManagement' ) ) {
+		if ( 'skautis_page_skautis-integration_usersManagement' !== $hook_suffix ) {
 			return;
 		}
 		wp_enqueue_script( 'thickbox' );
