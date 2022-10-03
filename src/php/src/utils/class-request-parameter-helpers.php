@@ -85,7 +85,7 @@ class Request_Parameter_Helpers {
 	 * @return mixed The POST variable value
 	 */
 	public static function post_meta_variable( $name, $meta_name, $default = '' ) {
-		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.NonceVerification.Missing
-		return isset( $_POST[ $name ] ) ? sanitize_meta( $meta_name, wp_unslash( strval( $_POST[ $name ] ) ), 'post' ) : $default;
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
+		return isset( $_POST[ $name ] ) ? sanitize_meta( $meta_name, $_POST[ $name ], 'post' ) : $default;
 	}
 }
