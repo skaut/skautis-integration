@@ -13,7 +13,6 @@
 	);
 
 	const $dataTable = $('.skautis-user-management-table').DataTable({
-		responsive: true,
 		pageLength: 25,
 		stateSave: true,
 		language: {
