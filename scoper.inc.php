@@ -62,7 +62,6 @@ return array(
 		static function ( $file_path, $prefix, $contents ) {
 			$replace_prefix = mb_ereg_replace( '\\\\', '\\\\', $prefix );
 			if ( __DIR__ . '/vendor/composer/autoload_real.php' === $file_path ) {
-				$var_name_prefix = mb_ereg_replace( '\\\\', '_', $prefix );
 				$contents = safe_replace( "if \\('Composer\\\\\\\\Autoload\\\\\\\\ClassLoader' === \\\$class\\)", "if ('{$replace_prefix}\\\\Composer\\\\Autoload\\\\ClassLoader' === \$class)", $contents );
 				$contents = safe_replace( "\\\\spl_autoload_unregister\\(array\\('ComposerAutoloaderInit", "\\spl_autoload_unregister(array('{$replace_prefix}\\\\ComposerAutoloaderInit", $contents );
 			}
