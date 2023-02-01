@@ -2,7 +2,7 @@
 
 class Func {
 	private readonly funcs: Record<string, string>;
-	private unitOperators: Record<string, string>;
+	private readonly unitOperators: Record<string, string>;
 
 	public constructor(funcs: Record<string, string>) {
 		this.funcs = funcs;
