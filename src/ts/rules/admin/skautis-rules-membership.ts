@@ -2,7 +2,7 @@
 
 class Membership {
 	private readonly memberships: Record<string, string>;
-	private unitOperators: Record<string, string>;
+	private readonly unitOperators: Record<string, string>;
 
 	public constructor(memberships: Record<string, string>) {
 		this.memberships = memberships;

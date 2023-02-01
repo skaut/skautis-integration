@@ -2,7 +2,7 @@
 
 class Role {
 	private readonly roles: Record<string, string>;
-	private unitOperators: Record<string, string>;
+	private readonly unitOperators: Record<string, string>;
 
 	public constructor(roles: Record<string, string>) {
 		this.roles = roles;
