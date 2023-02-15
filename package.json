@@ -43,7 +43,7 @@
   "devDependencies": {
     "@types/jquery": "^3.5.16",
     "@types/jqueryui": "^1.12.16",
-    "@types/select2": "^4.0.56",
+    "@types/select2": "^4.0.57",
     "@types/tinymce": "^4.6.5",
     "@wordpress/browserslist-config": "^5.9.0",
     "@wordpress/eslint-plugin": "^13.10.0",
