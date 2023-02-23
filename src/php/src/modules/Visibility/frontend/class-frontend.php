@@ -201,8 +201,6 @@ final class Frontend {
 				if ( isset( $query_vars['post_id'] ) && $post_id === $query_vars['post_id'] ) {
 					if ( ! isset( $query_vars['post__not_in'] ) || empty( $query_vars['post__not_in'] ) ) {
 						$query_vars['post__not_in'] = array();
-					} elseif ( ! is_array( $query_vars['post__not_in'] ) ) {
-						$query_vars['post__not_in'] = array( $query_vars['post__not_in'] );
 					}
 					$query_vars['post__not_in'][] = $post_id;
 				}
