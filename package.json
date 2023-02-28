@@ -70,7 +70,7 @@
   ],
   "dependencies": {
     "datatables.net": "^1.13.2",
-    "datatables.net-dt": "^1.13.2",
+    "datatables.net-dt": "^1.13.3",
     "datatables.net-plugins": "^1.13.1",
     "font-awesome": "^4.7.0",
     "interactjs": "^1.10.17",
