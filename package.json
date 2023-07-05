@@ -50,7 +50,7 @@
     "@wordpress/browserslist-config": "^5.19.0",
     "@wordpress/eslint-plugin": "^14.9.0",
     "@wordpress/stylelint-config": "^21.19.0",
-    "eslint": "^8.43.0",
+    "eslint": "^8.44.0",
     "eslint-plugin-compat": "^4.1.4",
     "eslint-plugin-deprecation": "^1.4.1",
     "gulp": "^4.0.2",
@@ -72,9 +72,9 @@
     "extends @wordpress/browserslist-config"
   ],
   "dependencies": {
-    "datatables.net": "^1.13.4",
-    "datatables.net-dt": "^1.13.4",
-    "datatables.net-plugins": "^1.13.4",
+    "datatables.net": "^1.13.5",
+    "datatables.net-dt": "^1.13.5",
+    "datatables.net-plugins": "^1.13.5",
     "font-awesome": "^4.7.0",
     "interactjs": "^1.10.17",
     "jQuery-QueryBuilder": "^2.7.0",
