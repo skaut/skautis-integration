@@ -208,8 +208,8 @@ gulp.task('build:deps:npm:jquery.repeater', function () {
 gulp.task('build:deps:npm:jQuery-QueryBuilder', function () {
 	return gulp
 		.src([
-			'node_modules/jQuery-QueryBuilder/dist/css/query-builder.default.min.css',
-			'node_modules/jQuery-QueryBuilder/dist/js/query-builder.standalone.min.js',
+			'node_modules/jQuery-QueryBuilder/dist/css/query-builder.default.css',
+			'node_modules/jQuery-QueryBuilder/dist/js/query-builder.standalone.js',
 		])
 		.pipe(gulp.dest('dist/bundled/'));
 });
