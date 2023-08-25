@@ -84,7 +84,7 @@ final class Rules_Manager {
 		}
 
 		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-			throw new \Exception( 'Rule: "' . $rule->field . '" is not declared.' );
+			throw new \Exception( esc_html( 'Rule: "' . $rule->field . '" is not declared.' ) );
 		}
 
 		return false;

@@ -239,7 +239,7 @@ class Func implements Rule {
 				break;
 			default:
 				if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-					throw new \Exception( 'Function operator: "' . $funcs_operator . '" is not declared.' );
+					throw new \Exception( esc_html( 'Function operator: "' . $funcs_operator . '" is not declared.' ) );
 				}
 				return false;
 		}
@@ -264,7 +264,7 @@ class Func implements Rule {
 							break;
 						default:
 							if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-								throw new \Exception( 'Unit operator: "' . $unit_operator . '" is not declared.' );
+								throw new \Exception( esc_html( 'Unit operator: "' . $unit_operator . '" is not declared.' ) );
 							}
 							return false;
 					}
