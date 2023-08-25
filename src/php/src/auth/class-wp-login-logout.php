@@ -39,13 +39,13 @@ final class WP_Login_Logout {
 	 * Logs a user into WordPress based on their SkautIS user ID.
 	 *
 	 * @param int  $skautis_user_id The SkautIS user ID.
-	 * @param bool $try If true, this function will not exit with an error if the login fails.
+	 * @param bool $dont_die_on_error If true, this function will not exit with an error if the login fails.
 	 *
 	 * @return false
 	 *
 	 * @SuppressWarnings(PHPMD.ExitExpression)
 	 */
-	private function login_wp_user_by_skautis_user_id( int $skautis_user_id, $try = false ) {
+	private function login_wp_user_by_skautis_user_id( int $skautis_user_id, $dont_die_on_error = false ) {
 		$return_url = Helpers::get_return_url();
 		if ( ! is_null( $return_url ) ) {
 			// TODO: Replace with a call to get_users()?
@@ -70,7 +70,7 @@ final class WP_Login_Logout {
 			) {
 				$wp_user = $users[0];
 
-				if ( ! $try ) {
+				if ( ! $dont_die_on_error ) {
 					if ( Services::get_modules_manager()->is_module_activated( Register::get_id() ) &&
 						! user_can( $wp_user->ID, Helpers::get_skautis_manager_capability() ) &&
 						false !== get_option( SKAUTIS_INTEGRATION_NAME . '_checkUserPrivilegesIfLoginBySkautis' ) ) {
@@ -99,7 +99,7 @@ final class WP_Login_Logout {
 			}
 		}
 
-		if ( ! $try ) {
+		if ( ! $dont_die_on_error ) {
 			if ( Services::get_modules_manager()->is_module_activated( Register::get_id() ) ) {
 				/* translators: 1: Start of a link to SkautIS login 2: End of the link to SkautIS login */
 				wp_die( sprintf( esc_html__( 'Nemáte oprávnění k přístupu. %1$sZkuste se nejdříve zaregistrovat%2$s', 'skautis-integration' ), '<a href ="' . esc_url( Services::get_modules_manager()->get_register_module()->getWpRegister()->get_register_url() ) . '">', '</a>' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
