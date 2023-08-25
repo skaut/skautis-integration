@@ -32,6 +32,11 @@
       "url": "https://github.com/skaut/Skautis.git"
     }
   ],
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
+  },
   "require": {
     "php": "^7.4 || ^8.0",
     "skautis/skautis": "2.x-dev#60cf2c6f06c9d10bdc92a05e6e669518c2b8a571"
@@ -44,6 +49,7 @@
     "wp-coding-standards/wpcs": "^2.3",
     "humbug/php-scoper": "^0.18.1",
     "skaut/wordpress-stubs": "^2.1",
-    "phpstan/phpstan": "^1.6"
+    "phpstan/phpstan": "^1.6",
+    "dealerdirect/phpcodesniffer-composer-installer": "^1.0"
   }
 }
