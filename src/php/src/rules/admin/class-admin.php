@@ -171,13 +171,9 @@ final class Admin {
 	/**
 	 * Prints the rules query builder UI.
 	 *
-	 * @param \WP_Post $post Unused @unused-param.
-	 *
 	 * @return void
-	 *
-	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
 	 */
-	public function add_rules_ui( \WP_Post $post ) {
+	public function add_rules_ui() {
 		$screen = get_current_screen();
 		if ( null === $screen || Rules_Init::RULES_TYPE_SLUG !== $screen->id || get_post_type() !== Rules_Init::RULES_TYPE_SLUG ) {
 			return;
