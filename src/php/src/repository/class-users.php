@@ -329,10 +329,9 @@ class Users {
 		}
 
 		if ( empty( $user_detail ) ) {
-			throw new \Exception( __( 'Nepodařilo se získat informace o uživateli ze skautISu', 'skautis-integration' ) );
+			throw new \Exception( esc_html__( 'Nepodařilo se získat informace o uživateli ze skautISu', 'skautis-integration' ) );
 		}
 
 		return $user_detail;
 	}
-
 }

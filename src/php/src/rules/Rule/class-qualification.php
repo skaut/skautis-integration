@@ -215,5 +215,4 @@ class Qualification implements Rule {
 
 		return false;
 	}
-
 }

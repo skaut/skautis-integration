@@ -221,5 +221,4 @@ final class Connect_And_Disconnect_WP_Account {
 			die();
 		}
 	}
-
 }

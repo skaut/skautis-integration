@@ -28,7 +28,7 @@ class Helpers {
 	 */
 	public static function register_script( $handle, $src, $deps = array(), $in_footer = true ) {
 		$handle = SKAUTIS_INTEGRATION_NAME . '_' . $handle;
-		$src    = plugin_dir_url( dirname( __FILE__, 2 ) ) . $src;
+		$src    = plugin_dir_url( dirname( __DIR__ ) ) . $src;
 		wp_register_script( $handle, $src, $deps, SKAUTIS_INTEGRATION_VERSION, $in_footer );
 	}
 
@@ -62,7 +62,7 @@ class Helpers {
 	 */
 	public static function register_style( $handle, $src, $deps = array() ) {
 		$handle = SKAUTIS_INTEGRATION_NAME . '_' . $handle;
-		$src    = plugin_dir_url( dirname( __FILE__, 2 ) ) . $src;
+		$src    = plugin_dir_url( dirname( __DIR__ ) ) . $src;
 		wp_register_style( $handle, $src, $deps, SKAUTIS_INTEGRATION_VERSION );
 	}
 
@@ -212,5 +212,4 @@ class Helpers {
 	public static function get_nonce_from_url( string $url, string $nonce_name ): string {
 		return self::get_variable_from_url( $url, $nonce_name );
 	}
-
 }

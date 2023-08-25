@@ -336,5 +336,4 @@ class Users_Management {
 		</div>
 		<?php
 	}
-
 }

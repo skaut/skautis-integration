@@ -136,16 +136,13 @@ final class Frontend {
 
 			if ( $this->rules_manager->check_if_user_passed_rules( array_map( 'intval', explode( ',', $atts['rules'] ) ) ) ) {
 				return $content;
+			} elseif ( 'showLogin' === $atts['content'] ) {
+				return self::get_unauthorized_message() . $this->get_login_form( true );
 			} else {
-				if ( 'showLogin' === $atts['content'] ) {
-					return self::get_unauthorized_message() . $this->get_login_form( true );
-				} else {
-					return '';
-				}
+				return '';
 			}
 		}
 
 		return '';
 	}
-
 }

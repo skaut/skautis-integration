@@ -168,5 +168,4 @@ final class Skautis_Login {
 			);
 		}
 	}
-
 }

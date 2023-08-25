@@ -77,12 +77,8 @@ final class Login_Form {
 	 * Returns the Register module version of the "Log in with SkautIS" button as part of the login page.
 	 *
 	 * TODO: Remove this function. Why is the button printed from 2 different hooks?
-	 *
-	 * @param string $html Unused @unused-param.
-	 *
-	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
 	 */
-	public function login_link_in_login_form_return( string $html ): string {
+	public function login_link_in_login_form_return(): string {
 		return '
 				<p style="margin-bottom: 0.3em;">
 						<a class="button button-primary button-hero button-skautis" style="float: none; width: 100%; text-align: center;"
@@ -92,5 +88,4 @@ final class Login_Form {
 				<br/>
 				';
 	}
-
 }

@@ -40,6 +40,8 @@ class Transient_Session_Adapter implements AdapterInterface {
 	 *
 	 * @param string $name The key.
 	 * @param mixed  $object The value.
+	 *
+	 * phpcs:disable Universal.NamingConventions.NoReservedKeywordParameterNames.objectFound
 	 */
 	public function set( $name, $object ) {
 		set_transient( SKAUTIS_INTEGRATION_NAME . '_session_' . self::get_cookie_id() . '_' . $name, $object, 40 * \MINUTE_IN_SECONDS );

@@ -156,5 +156,4 @@ class All implements Rule {
 
 		return false;
 	}
-
 }

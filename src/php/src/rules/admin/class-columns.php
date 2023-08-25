@@ -110,5 +110,4 @@ class Columns {
 		echo '<br>';
 		echo '<strong>' . esc_html( $modified_author ) . '</strong>';
 	}
-
 }

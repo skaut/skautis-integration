@@ -142,5 +142,4 @@ class Skautis_Gateway {
 
 		return false;
 	}
-
 }

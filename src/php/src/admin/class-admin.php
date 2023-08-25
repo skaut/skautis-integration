@@ -140,5 +140,4 @@ final class Admin {
 			)
 		);
 	}
-
 }

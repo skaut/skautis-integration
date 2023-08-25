@@ -603,5 +603,4 @@ if ( ! isUserLoggedInSkautis() ) {
 		</div>
 		<?php
 	}
-
 }

@@ -214,5 +214,4 @@ final class Metabox {
 		</p>
 		<?php
 	}
-
 }

@@ -269,5 +269,4 @@ final class Settings {
 		</div>
 		<?php
 	}
-
 }

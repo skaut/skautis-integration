@@ -209,5 +209,4 @@ final class Actions {
 			throw new \Exception( 'skautIS Auth action "' . esc_html( $action ) . '" is not defined' );
 		}
 	}
-
 }
