@@ -147,5 +147,4 @@ final class Frontend {
 
 		return '';
 	}
-
 }

@@ -178,5 +178,4 @@ final class Users {
 
 		return $saved;
 	}
-
 }

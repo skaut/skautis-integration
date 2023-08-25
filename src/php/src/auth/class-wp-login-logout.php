@@ -208,5 +208,4 @@ final class WP_Login_Logout {
 		wp_safe_redirect( esc_url_raw( $return_url ), 302 );
 		die();
 	}
-
 }

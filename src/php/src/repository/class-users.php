@@ -334,5 +334,4 @@ class Users {
 
 		return $user_detail;
 	}
-
 }

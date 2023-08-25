@@ -212,5 +212,4 @@ class Helpers {
 	public static function get_nonce_from_url( string $url, string $nonce_name ): string {
 		return self::get_variable_from_url( $url, $nonce_name );
 	}
-
 }

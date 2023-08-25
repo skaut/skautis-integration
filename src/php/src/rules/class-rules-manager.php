@@ -219,5 +219,4 @@ final class Rules_Manager {
 
 		return false;
 	}
-
 }

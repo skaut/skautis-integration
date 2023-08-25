@@ -348,5 +348,4 @@ final class WP_Register {
 
 		return $username;
 	}
-
 }

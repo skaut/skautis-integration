@@ -92,5 +92,4 @@ final class Login_Form {
 				<br/>
 				';
 	}
-
 }

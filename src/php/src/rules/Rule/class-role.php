@@ -279,5 +279,4 @@ class Role implements Rule {
 
 		return false;
 	}
-
 }

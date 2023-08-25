@@ -203,5 +203,4 @@ final class Rules_Init {
 
 		return array();
 	}
-
 }

@@ -212,6 +212,4 @@ final class Settings {
 		</p>
 		<?php
 	}
-
-
 }

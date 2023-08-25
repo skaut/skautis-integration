@@ -126,5 +126,4 @@ setTimeout(function() {
 </script>
 ';
 	}
-
 }

@@ -300,5 +300,4 @@ class Membership implements Rule {
 
 		return false;
 	}
-
 }

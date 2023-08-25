@@ -127,5 +127,4 @@ final class Admin {
 		</script>
 		<?php
 	}
-
 }

@@ -167,5 +167,4 @@ final class Frontend {
 			)
 		);
 	}
-
 }

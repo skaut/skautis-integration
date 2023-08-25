@@ -209,5 +209,4 @@ class Revisions {
 
 		return $post_has_changed;
 	}
-
 }

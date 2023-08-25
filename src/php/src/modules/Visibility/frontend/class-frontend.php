@@ -364,5 +364,4 @@ final class Frontend {
 
 		return $posts;
 	}
-
 }

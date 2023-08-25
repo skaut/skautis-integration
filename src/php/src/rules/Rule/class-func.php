@@ -278,5 +278,4 @@ class Func implements Rule {
 
 		return false;
 	}
-
 }
