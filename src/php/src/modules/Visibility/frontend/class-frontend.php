@@ -229,7 +229,7 @@ final class Frontend {
 				unset( $posts[ $post_key ] );
 				unset( $wp_query->posts[ $post_key ] );
 				if ( $wp_query->found_posts > 0 ) {
-					$wp_query->found_posts --;
+					--$wp_query->found_posts;
 				}
 				$posts_were_filtered = true;
 			}
