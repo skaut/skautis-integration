@@ -43,7 +43,7 @@
     "lint": "run-p -c --aggregate-output lint:*"
   },
   "devDependencies": {
-    "@types/jquery": "^3.5.17",
+    "@types/jquery": "^3.5.18",
     "@types/jqueryui": "^1.12.17",
     "@types/select2": "^4.0.58",
     "@types/tinymce": "^4.6.5",
