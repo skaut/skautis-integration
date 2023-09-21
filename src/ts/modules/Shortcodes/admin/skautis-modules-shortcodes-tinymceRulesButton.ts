@@ -1,3 +1,5 @@
+import type * as TinyMCE from 'tinymce';
+
 interface ModalData {
 	content: string;
 	rules1: string | null;
@@ -20,7 +22,7 @@ interface ModalData {
 		hideContent: 'skrýt obsah',
 		showLogin: 'zobrazit přihlášení',
 	});
-	(tinymce as unknown as typeof import('tinymce')).PluginManager.add(
+	(tinymce as unknown as typeof TinyMCE).PluginManager.add(
 		'skautis_rules',
 		function (editor, url) {
 			editor.addButton('skautis_rules', {
