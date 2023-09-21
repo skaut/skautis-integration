@@ -49,7 +49,7 @@
     "@types/tinymce": "^4.6.6",
     "@wordpress/browserslist-config": "^5.24.0",
     "@wordpress/eslint-plugin": "^15.1.0",
-    "@wordpress/stylelint-config": "^21.24.0",
+    "@wordpress/stylelint-config": "^21.25.0",
     "eslint": "^8.49.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-compat": "^4.2.0",
