@@ -10,7 +10,8 @@
   "plugins": [
     "compat",
     "deprecation",
-    "@typescript-eslint"
+    "@typescript-eslint",
+    "simple-import-sort"
   ],
   "extends": [
     "eslint:recommended",
@@ -23,6 +24,8 @@
     "compat/compat": "warn",
     "deprecation/deprecation": "warn",
     "no-warning-comments": "warn",
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
     "strict": ["error", "never"],
     "@typescript-eslint/array-type": ["error", {"default": "generic"}],
     "@typescript-eslint/consistent-type-exports": "error",
