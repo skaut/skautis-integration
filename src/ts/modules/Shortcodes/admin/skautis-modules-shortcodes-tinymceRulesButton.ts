@@ -8,7 +8,7 @@ interface ModalData {
 	rules4: string | null;
 }
 
-(function (): void {
+((): void => {
 	tinymce.addI18n('cs', {
 		shortcode_options: 'Nastavení shortcode',
 		insert_skautis_rules: 'Vložit skautIS pravidlo',
@@ -24,7 +24,7 @@ interface ModalData {
 	});
 	(tinymce as unknown as typeof TinyMCE).PluginManager.add(
 		'skautis_rules',
-		function (editor, url) {
+		(editor, url) => {
 			editor.addButton('skautis_rules', {
 				title: 'insert_skautis_rules',
 				image:

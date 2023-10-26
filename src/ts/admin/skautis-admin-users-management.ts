@@ -21,7 +21,7 @@
 				'/cs.json',
 			search: 'Hledat',
 		},
-		initComplete() {
+		initComplete: () => {
 			const searchString = getQueryStringFromUrl(
 				'skautisSearchUsers',
 				window.location.href
@@ -32,7 +32,7 @@
 					$searchButton = $('<button>')
 						.text($dataTable.i18n('search', 'Search'))
 						.addClass('button button-secondary')
-						.on('click', function () {
+						.on('click', () => {
 							const withNonce = updateQueryStringInUrl(
 								skautisIntegrationAdminUsersManagementLocalize.searchNonceName,
 								skautisIntegrationAdminUsersManagementLocalize.searchNonceValue,
@@ -44,7 +44,7 @@
 								withNonce
 							);
 						});
-				$input.on('keyup', function (e) {
+				$input.on('keyup', (e) => {
 					e.preventDefault();
 					if (e.key === 'Enter') {
 						$searchButton.trigger('click');
@@ -57,7 +57,7 @@
 				const $clearButton = $('<button>')
 					.text(skautisIntegrationAdminUsersManagementLocalize.cancel)
 					.addClass('button button-secondary')
-					.on('click', function () {
+					.on('click', () => {
 						$('.dataTables_filter input').val('');
 						window.location.href = updateQueryStringInUrl(
 							'skautisSearchUsers',

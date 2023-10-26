@@ -17,11 +17,11 @@
 				},
 				hide(deleteElement) {
 					$(this).slideUp(150, deleteElement);
-					setTimeout(function () {
+					setTimeout(() => {
 						updateAvailableOptions();
 					}, 250);
 				},
-				ready() {
+				ready: () => {
 					reinitSelect2();
 				},
 				isFirstItemUndeletable: true,

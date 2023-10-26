@@ -42,7 +42,7 @@
 						placeholder:
 							skautisIntegrationRulesLocalize.select_placeholder,
 						sorter: (data) =>
-							data.sort(function (a, b) {
+							data.sort((a, b) => {
 								if (
 									typeof a.text.localeCompare === 'function'
 								) {
@@ -53,11 +53,11 @@
 					});
 				});
 		});
-		setTimeout(function () {
+		setTimeout(() => {
 			$('#query_builder').trigger('change');
 		}, 100);
 
-		$('#post').on('submit', function () {
+		$('#post').on('submit', () => {
 			const result = $('#query_builder').get(0)!.queryBuilder.getRules();
 
 			if (!$.isEmptyObject(result)) {
