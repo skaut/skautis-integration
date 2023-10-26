@@ -22,7 +22,7 @@
 		},
 		hide(deleteElement) {
 			$(this).slideUp(150, deleteElement);
-			setTimeout(function () {
+			setTimeout(() => {
 				if (!$('#repeater').find('[data-repeater-item]').length) {
 					$('.form-table')
 						.find('tr')
