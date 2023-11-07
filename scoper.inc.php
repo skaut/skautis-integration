@@ -42,12 +42,13 @@ function dependency_finder() { // phpcs:ignore WordPress.NamingConventions.Prefi
 }
 
 return array(
-	'prefix'                  => 'Skautis_Integration\\Vendor',
-	'output-dir'              => 'dist/vendor',
-	'expose-global-constants' => true,
-	'expose-global-classes'   => false,
-	'expose-global-functions' => false,
-	'finders'                 => array(
+	'prefix'                       => 'Skautis_Integration\\Vendor',
+	'output-dir'                   => 'dist/vendor',
+	'tag-declarations-as-internal' => false,
+	'expose-global-constants'      => true,
+	'expose-global-classes'        => false,
+	'expose-global-functions'      => false,
+	'finders'                      => array(
 		dependency_finder(),
 		Finder::create()->files()
 			->name( array( '*.php', '/LICENSE(.txt)?/' ) )
@@ -58,7 +59,7 @@ return array(
 			->depth( 0 )
 			->in( 'vendor' ),
 	),
-	'patchers'                => array(
+	'patchers'                     => array(
 		static function ( $file_path, $prefix, $contents ) {
 			$replace_prefix = mb_ereg_replace( '\\\\', '\\\\', $prefix );
 			if ( __DIR__ . '/vendor/composer/autoload_real.php' === $file_path ) {
