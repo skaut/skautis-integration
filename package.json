@@ -48,7 +48,7 @@
     "@types/select2": "^4.0.60",
     "@types/tinymce": "^4.6.7",
     "@typescript-eslint/eslint-plugin": "^6.9.1",
-    "@typescript-eslint/parser": "^6.9.1",
+    "@typescript-eslint/parser": "^6.10.0",
     "@wordpress/browserslist-config": "^5.28.0",
     "@wordpress/eslint-plugin": "^17.2.0",
     "@wordpress/stylelint-config": "^21.28.0",
