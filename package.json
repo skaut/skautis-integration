@@ -45,7 +45,7 @@
   "devDependencies": {
     "@types/jquery": "^3.5.27",
     "@types/jqueryui": "^1.12.20",
-    "@types/select2": "^4.0.61",
+    "@types/select2": "^4.0.62",
     "@types/tinymce": "^4.6.7",
     "@typescript-eslint/eslint-plugin": "^6.10.0",
     "@typescript-eslint/parser": "^6.10.0",
