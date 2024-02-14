@@ -1,47 +1,6 @@
 (function ($): void {
 	const $repeater = $('#repeater_post');
 
-	if ($repeater.length) {
-		$repeater
-			.repeater({
-				initEmpty: true,
-				defaultValues: {
-					role: $('select[name="skautis-integration_rules"]')
-						.first()
-						.find('option:selected')
-						.val(),
-				},
-				show() {
-					$(this).slideDown(150);
-					updateAvailableOptions();
-				},
-				hide(deleteElement) {
-					$(this).slideUp(150, deleteElement);
-					setTimeout(() => {
-						updateAvailableOptions();
-					}, 250);
-				},
-				ready: () => {
-					reinitSelect2();
-				},
-				isFirstItemUndeletable: true,
-			})
-			.setList(window.rulesData ?? []);
-	} else {
-		reinitSelect2();
-	}
-
-	function reinitSelect2(): void {
-		jQuery('select.select2')
-			.select2({
-				placeholder: 'Vyberte pravidlo...',
-			})
-			.on(
-				'change.skautis_modules_visibility_admin',
-				updateAvailableOptions
-			);
-	}
-
 	function updateAvailableOptions(): void {
 		const usedOptions: Array<string> = [];
 
@@ -74,7 +33,49 @@
 				jQuery(this).find('option:selected').removeAttr('disabled');
 			});
 
+			// eslint-disable-next-line @typescript-eslint/no-use-before-define -- Cyclical dependency
 			reinitSelect2();
 		}, 0);
+	}
+
+	function reinitSelect2(): void {
+		jQuery('select.select2')
+			.select2({
+				placeholder: 'Vyberte pravidlo...',
+			})
+			.on(
+				'change.skautis_modules_visibility_admin',
+				updateAvailableOptions
+			);
+	}
+
+	if ($repeater.length) {
+		$repeater
+			.repeater({
+				initEmpty: true,
+				defaultValues: {
+					role: $('select[name="skautis-integration_rules"]')
+						.first()
+						.find('option:selected')
+						.val(),
+				},
+				show() {
+					$(this).slideDown(150);
+					updateAvailableOptions();
+				},
+				hide(deleteElement) {
+					$(this).slideUp(150, deleteElement);
+					setTimeout(() => {
+						updateAvailableOptions();
+					}, 250);
+				},
+				ready: () => {
+					reinitSelect2();
+				},
+				isFirstItemUndeletable: true,
+			})
+			.setList(window.rulesData ?? []);
+	} else {
+		reinitSelect2();
 	}
 })(jQuery);

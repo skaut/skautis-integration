@@ -8,6 +8,19 @@ interface ModalData {
 	rules4: string | null;
 }
 
+function viewport(): { height: number; width: number } {
+	if ('innerWidth' in window) {
+		return {
+			width: window.innerWidth,
+			height: window.innerHeight,
+		};
+	}
+	return {
+		width: document.documentElement.clientWidth,
+		height: document.documentElement.clientHeight,
+	};
+}
+
 ((): void => {
 	tinymce.addI18n('cs', {
 		shortcode_options: 'Nastavení shortcode',
@@ -128,16 +141,3 @@ interface ModalData {
 		}
 	);
 })();
-
-function viewport(): { height: number; width: number } {
-	if ('innerWidth' in window) {
-		return {
-			width: window.innerWidth,
-			height: window.innerHeight,
-		};
-	}
-	return {
-		width: document.documentElement.clientWidth,
-		height: document.documentElement.clientHeight,
-	};
-}

@@ -1,4 +1,43 @@
 (function ($): void {
+	function updateAvailableOptions(): void {
+		const usedOptions: Array<string> = [];
+
+		setTimeout(function () {
+			const $selectRules = jQuery('.form-table').find('select.rule');
+
+			$selectRules.each(function () {
+				usedOptions.push(jQuery(this).val() as string);
+			});
+
+			$selectRules.find('option').removeAttr('disabled');
+
+			for (const item of usedOptions) {
+				$selectRules
+					.find('option[value="' + item + '"]')
+					.attr('disabled', 'disabled');
+			}
+
+			$selectRules.each(function () {
+				jQuery(this).find('option:selected').removeAttr('disabled');
+			});
+
+			// eslint-disable-next-line @typescript-eslint/no-use-before-define -- Cyclical dependency
+			reinitSelect2();
+		}, 0);
+	}
+
+	function reinitSelect2(): void {
+		jQuery('.form-table')
+			.find('select.select2')
+			.select2({
+				placeholder: 'Vyberte pravidlo...',
+			})
+			.on(
+				'change.skautis_modules_register_admin',
+				updateAvailableOptions
+			);
+	}
+
 	const $repeater = $('#repeater').repeater({
 		initEmpty: true,
 		defaultValues: {
@@ -56,42 +95,4 @@
 			$('#repeater').trigger('skautis_modules_register_SortableDrop');
 		},
 	});
-
-	function reinitSelect2(): void {
-		jQuery('.form-table')
-			.find('select.select2')
-			.select2({
-				placeholder: 'Vyberte pravidlo...',
-			})
-			.on(
-				'change.skautis_modules_register_admin',
-				updateAvailableOptions
-			);
-	}
-
-	function updateAvailableOptions(): void {
-		const usedOptions: Array<string> = [];
-
-		setTimeout(function () {
-			const $selectRules = jQuery('.form-table').find('select.rule');
-
-			$selectRules.each(function () {
-				usedOptions.push(jQuery(this).val() as string);
-			});
-
-			$selectRules.find('option').removeAttr('disabled');
-
-			for (const item of usedOptions) {
-				$selectRules
-					.find('option[value="' + item + '"]')
-					.attr('disabled', 'disabled');
-			}
-
-			$selectRules.each(function () {
-				jQuery(this).find('option:selected').removeAttr('disabled');
-			});
-
-			reinitSelect2();
-		}, 0);
-	}
 })(jQuery);
