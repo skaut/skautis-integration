@@ -1,5 +1,44 @@
 /// <reference types="datatables.net"/>
 
+function getQueryStringFromUrl(key: string, url: string): string {
+	key = key.replace(/[[]/, '\\[').replace(/[\]]/, '\\]');
+	const regex = new RegExp('[\\?&]' + key + '=([^&#]*)'),
+		results = regex.exec(url);
+	return results === null
+		? ''
+		: decodeURIComponent(results[1].replace(/\+/g, ' '));
+}
+
+function updateQueryStringInUrl(
+	key: string,
+	value: string,
+	url: string
+): string {
+	const re = new RegExp('([?&])' + key + '=.*?(&|#|$)(.*)', 'gi');
+
+	if (re.test(url)) {
+		if (typeof value !== 'undefined') {
+			return url.replace(re, '$1' + key + '=' + value + '$2$3');
+		}
+		const hash = url.split('#');
+		url = hash[0].replace(re, '$1$3').replace(/(&|\?)$/, '');
+		if (typeof hash[1] !== 'undefined') {
+			url += '#' + hash[1];
+		}
+		return url;
+	}
+	if (typeof value !== 'undefined') {
+		const separator = url.includes('?') ? '&' : '?';
+		const hash = url.split('#');
+		url = hash[0] + separator + key + '=' + value;
+		if (typeof hash[1] !== 'undefined') {
+			url += '#' + hash[1];
+		}
+		return url;
+	}
+	return url;
+}
+
 (function ($): void {
 	document.styleSheets[0].insertRule(
 		'.skautis-user-management-table th span:after { background-image: url(' +
@@ -151,42 +190,3 @@
 		})
 		.trigger('change');
 })(jQuery);
-
-function updateQueryStringInUrl(
-	key: string,
-	value: string,
-	url: string
-): string {
-	const re = new RegExp('([?&])' + key + '=.*?(&|#|$)(.*)', 'gi');
-
-	if (re.test(url)) {
-		if (typeof value !== 'undefined') {
-			return url.replace(re, '$1' + key + '=' + value + '$2$3');
-		}
-		const hash = url.split('#');
-		url = hash[0].replace(re, '$1$3').replace(/(&|\?)$/, '');
-		if (typeof hash[1] !== 'undefined') {
-			url += '#' + hash[1];
-		}
-		return url;
-	}
-	if (typeof value !== 'undefined') {
-		const separator = url.includes('?') ? '&' : '?';
-		const hash = url.split('#');
-		url = hash[0] + separator + key + '=' + value;
-		if (typeof hash[1] !== 'undefined') {
-			url += '#' + hash[1];
-		}
-		return url;
-	}
-	return url;
-}
-
-function getQueryStringFromUrl(key: string, url: string): string {
-	key = key.replace(/[[]/, '\\[').replace(/[\]]/, '\\]');
-	const regex = new RegExp('[\\?&]' + key + '=([^&#]*)'),
-		results = regex.exec(url);
-	return results === null
-		? ''
-		: decodeURIComponent(results[1].replace(/\+/g, ' '));
-}
