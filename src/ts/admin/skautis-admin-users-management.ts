@@ -40,17 +40,6 @@ function updateQueryStringInUrl(
 }
 
 (function ($): void {
-	document.styleSheets[0].insertRule(
-		'.skautis-user-management-table th span:after { background-image: url(' +
-			skautisIntegrationAdminUsersManagementLocalize.datatablesFilesUrl +
-			'/sort_asc.png); }'
-	);
-	document.styleSheets[0].insertRule(
-		'.skautis-user-management-table th.sorting_desc span:after { background-image: url(' +
-			skautisIntegrationAdminUsersManagementLocalize.datatablesFilesUrl +
-			'/sort_desc.png); }'
-	);
-
 	const $dataTable = $('.skautis-user-management-table').DataTable({
 		pageLength: 25,
 		stateSave: true,
@@ -67,7 +56,7 @@ function updateQueryStringInUrl(
 			);
 
 			if ($dataTable.data().length >= 500) {
-				const $input = $('.dataTables_filter input').off(),
+				const $input = $('.dt-search input').off(),
 					$searchButton = $('<button>')
 						.text($dataTable.i18n('search', 'Search'))
 						.addClass('button button-secondary')
@@ -89,7 +78,7 @@ function updateQueryStringInUrl(
 						$searchButton.trigger('click');
 					}
 				});
-				$('.dataTables_filter').append($searchButton);
+				$('.dt-search').append($searchButton);
 			}
 
 			if (searchString) {
@@ -97,26 +86,18 @@ function updateQueryStringInUrl(
 					.text(skautisIntegrationAdminUsersManagementLocalize.cancel)
 					.addClass('button button-secondary')
 					.on('click', () => {
-						$('.dataTables_filter input').val('');
+						$('.dt-search input').val('');
 						window.location.href = updateQueryStringInUrl(
 							'skautisSearchUsers',
 							'',
 							window.location.href
 						);
 					});
-				$('.dataTables_filter').append($clearButton);
+				$('.dt-search').append($clearButton);
 
-				$('.dataTables_filter input').val(searchString);
+				$('.dt-search input').val(searchString);
 			}
 		},
-	});
-
-	$('.skautis-user-management-table').on('init.dt', function () {
-		$(this)
-			.find('th')
-			.each(function () {
-				$(this).html('<span>' + $(this).html() + '</span>');
-			});
 	});
 
 	$('.thickbox').on('click', function () {
