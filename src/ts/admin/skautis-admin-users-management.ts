@@ -40,17 +40,6 @@ function updateQueryStringInUrl(
 }
 
 (function ($): void {
-	document.styleSheets[0].insertRule(
-		'.skautis-user-management-table th span:after { background-image: url(' +
-			skautisIntegrationAdminUsersManagementLocalize.datatablesFilesUrl +
-			'/sort_asc.png); }'
-	);
-	document.styleSheets[0].insertRule(
-		'.skautis-user-management-table th.sorting_desc span:after { background-image: url(' +
-			skautisIntegrationAdminUsersManagementLocalize.datatablesFilesUrl +
-			'/sort_desc.png); }'
-	);
-
 	const $dataTable = $('.skautis-user-management-table').DataTable({
 		pageLength: 25,
 		stateSave: true,
@@ -109,14 +98,6 @@ function updateQueryStringInUrl(
 				$('.dataTables_filter input').val(searchString);
 			}
 		},
-	});
-
-	$('.skautis-user-management-table').on('init.dt', function () {
-		$(this)
-			.find('th')
-			.each(function () {
-				$(this).html('<span>' + $(this).html() + '</span>');
-			});
 	});
 
 	$('.thickbox').on('click', function () {
