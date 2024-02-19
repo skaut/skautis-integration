@@ -56,7 +56,7 @@ function updateQueryStringInUrl(
 			);
 
 			if ($dataTable.data().length >= 500) {
-				const $input = $('.dataTables_filter input').off(),
+				const $input = $('.dt-search input').off(),
 					$searchButton = $('<button>')
 						.text($dataTable.i18n('search', 'Search'))
 						.addClass('button button-secondary')
@@ -78,7 +78,7 @@ function updateQueryStringInUrl(
 						$searchButton.trigger('click');
 					}
 				});
-				$('.dataTables_filter').append($searchButton);
+				$('.dt-search').append($searchButton);
 			}
 
 			if (searchString) {
@@ -86,16 +86,16 @@ function updateQueryStringInUrl(
 					.text(skautisIntegrationAdminUsersManagementLocalize.cancel)
 					.addClass('button button-secondary')
 					.on('click', () => {
-						$('.dataTables_filter input').val('');
+						$('.dt-search input').val('');
 						window.location.href = updateQueryStringInUrl(
 							'skautisSearchUsers',
 							'',
 							window.location.href
 						);
 					});
-				$('.dataTables_filter').append($clearButton);
+				$('.dt-search').append($clearButton);
 
-				$('.dataTables_filter input').val(searchString);
+				$('.dt-search input').val(searchString);
 			}
 		},
 	});
