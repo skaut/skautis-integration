@@ -167,7 +167,7 @@ class Users_Management {
 
 		wp_enqueue_style(
 			SKAUTIS_INTEGRATION_NAME . '_datatables',
-			SKAUTIS_INTEGRATION_URL . 'bundled/jquery.dataTables.min.css',
+			SKAUTIS_INTEGRATION_URL . 'bundled/dataTables.dataTables.min.css',
 			array(),
 			SKAUTIS_INTEGRATION_VERSION,
 			'all'
@@ -175,7 +175,7 @@ class Users_Management {
 
 		wp_enqueue_script(
 			SKAUTIS_INTEGRATION_NAME . '_datatables',
-			SKAUTIS_INTEGRATION_URL . 'bundled/jquery.dataTables.min.js',
+			SKAUTIS_INTEGRATION_URL . 'bundled/dataTables.min.js',
 			array( 'jquery' ),
 			SKAUTIS_INTEGRATION_VERSION,
 			true
