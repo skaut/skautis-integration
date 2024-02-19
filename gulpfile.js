@@ -146,11 +146,7 @@ gulp.task(
 
 gulp.task('build:deps:npm:datatables.net:files', () =>
 	gulp
-		.src([
-			'node_modules/datatables.net-dt/images/sort_asc.png',
-			'node_modules/datatables.net-dt/images/sort_desc.png',
-			'node_modules/datatables.net-plugins/i18n/cs.json',
-		])
+		.src(['node_modules/datatables.net-plugins/i18n/cs.json'])
 		.pipe(gulp.dest('dist/bundled/datatables-files'))
 );
 
@@ -159,8 +155,8 @@ gulp.task(
 	gulp.parallel('build:deps:npm:datatables.net:files', () =>
 		gulp
 			.src([
-				'node_modules/datatables.net-dt/css/jquery.dataTables.min.css',
-				'node_modules/datatables.net/js/jquery.dataTables.min.js',
+				'node_modules/datatables.net-dt/css/dataTables.dataTables.min.css',
+				'node_modules/datatables.net/js/dataTables.min.js',
 			])
 			.pipe(gulp.dest('dist/bundled/'))
 	)
