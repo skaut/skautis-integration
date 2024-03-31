@@ -1,14 +1,13 @@
 /* eslint-env node */
 
-const gulp = require('gulp');
-
-const cleanCSS = require('gulp-clean-css');
-const merge = require('merge-stream');
-const rename = require('gulp-rename');
-const replace = require('gulp-replace');
-const shell = require('gulp-shell');
-const terser = require('gulp-terser');
-const ts = require('gulp-typescript');
+import gulp from 'gulp';
+import cleanCSS from 'gulp-clean-css';
+import rename from 'gulp-rename';
+import replace from 'gulp-replace';
+import shell from 'gulp-shell';
+import terser from 'gulp-terser';
+import ts from 'gulp-typescript';
+import merge from 'merge-stream';
 
 gulp.task('build:css:admin', () =>
 	gulp

@@ -27,6 +27,7 @@
     "type": "git",
     "url": "git+https://github.com/skaut/skautis-integration.git"
   },
+  "type": "module",
   "scripts": {
     "clean": "rimraf dist/*",
     "prebuild": "npm run clean",
