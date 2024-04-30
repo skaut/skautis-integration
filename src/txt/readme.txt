@@ -1,6 +1,6 @@
 === skautIS integrace ===
 Contributors: skaut, davidulus, marekdedic, kalich5
-Tags: skaut, multisite, plugin, shortcode, skautIS, registrace
+Tags: skaut, multisite, shortcode, skautIS, registrace
 Requires at least: 5.0
 Tested up to: 6.5
 Requires PHP: 7.4
