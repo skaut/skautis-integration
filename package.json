@@ -50,7 +50,7 @@
     "@types/tinymce": "^4.6.9",
     "@typescript-eslint/eslint-plugin": "^7.8.0",
     "@typescript-eslint/parser": "^7.8.0",
-    "@wordpress/browserslist-config": "^5.39.0",
+    "@wordpress/browserslist-config": "^5.40.0",
     "@wordpress/eslint-plugin": "^17.13.0",
     "@wordpress/stylelint-config": "^21.39.0",
     "eslint": "^8.57.0",
