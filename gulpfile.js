@@ -7,7 +7,7 @@ import replace from 'gulp-replace';
 import shell from 'gulp-shell';
 import terser from 'gulp-terser';
 import ts from 'gulp-typescript';
-import merge from 'merge-stream';
+import ordered from 'ordered-read-streams';
 
 gulp.task('build:css:admin', () =>
 	gulp
@@ -106,7 +106,7 @@ gulp.task(
 				(process.env.NODE_ENV === 'production' ? ' -o' : '')
 		),
 		() =>
-			merge(
+			ordered([
 				gulp.src([
 					'vendor/composer/autoload_classmap.php',
 					//'vendor/composer/autoload_files.php',
@@ -132,8 +132,8 @@ gulp.task(
 							/'(.*)\\\\' => \n/g,
 							"'Skautis_Integration\\\\Vendor\\\\$1\\\\' => \n"
 						)
-					)
-			).pipe(gulp.dest('dist/vendor/composer/')),
+					),
+			]).pipe(gulp.dest('dist/vendor/composer/')),
 		shell.task('composer dump-autoload')
 	)
 );
