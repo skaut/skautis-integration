@@ -70,7 +70,7 @@
     "gulp-typescript": "^6.0.0-alpha.1",
     "npm-run-all": "^4.1.5",
     "ordered-read-streams": "^2.0.0",
-    "prettier": "^3.3.0",
+    "prettier": "^3.3.1",
     "rimraf": "^5.0.7",
     "stylelint": "^14.16.1",
     "stylelint-no-unsupported-browser-features": "^7.0.0",
