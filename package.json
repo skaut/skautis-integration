@@ -74,7 +74,7 @@
     "rimraf": "^5.0.7",
     "stylelint": "^14.16.1",
     "stylelint-no-unsupported-browser-features": "^7.0.0",
-    "typescript": "^5.4.5"
+    "typescript": "^5.5.2"
   },
   "browserslist": [
     "extends @wordpress/browserslist-config"
