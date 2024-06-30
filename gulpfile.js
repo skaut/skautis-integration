@@ -169,13 +169,16 @@ gulp.task('build:deps:npm:font-awesome:css', () =>
 
 gulp.task('build:deps:npm:font-awesome:fonts', () =>
 	gulp
-		.src([
-			'node_modules/font-awesome/fonts/fontawesome-webfont.eot',
-			'node_modules/font-awesome/fonts/fontawesome-webfont.woff2',
-			'node_modules/font-awesome/fonts/fontawesome-webfont.woff',
-			'node_modules/font-awesome/fonts/fontawesome-webfont.ttf',
-			'node_modules/font-awesome/fonts/fontawesome-webfont.svg',
-		])
+		.src(
+			[
+				'node_modules/font-awesome/fonts/fontawesome-webfont.eot',
+				'node_modules/font-awesome/fonts/fontawesome-webfont.woff2',
+				'node_modules/font-awesome/fonts/fontawesome-webfont.woff',
+				'node_modules/font-awesome/fonts/fontawesome-webfont.ttf',
+				'node_modules/font-awesome/fonts/fontawesome-webfont.svg',
+			],
+			{ encoding: false }
+		)
 		.pipe(gulp.dest('dist/bundled/font-awesome/fonts'))
 );
 
@@ -323,7 +326,9 @@ gulp.task('build:php:other', () =>
 gulp.task('build:php', gulp.parallel('build:php:base', 'build:php:other'));
 
 gulp.task('build:png', () =>
-	gulp.src(['src/png/**/*.png']).pipe(gulp.dest('dist/src/'))
+	gulp
+		.src(['src/png/**/*.png'], { encoding: false })
+		.pipe(gulp.dest('dist/src/'))
 );
 
 gulp.task('build:txt', () =>
