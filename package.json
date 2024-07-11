@@ -71,7 +71,7 @@
     "npm-run-all": "^4.1.5",
     "ordered-read-streams": "^2.0.0",
     "prettier": "^3.3.2",
-    "rimraf": "^6.0.0",
+    "rimraf": "^6.0.1",
     "stylelint": "^14.16.1",
     "stylelint-no-unsupported-browser-features": "^7.0.0",
     "typescript": "^5.5.3"
