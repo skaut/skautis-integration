@@ -2,7 +2,7 @@
 Contributors: skaut, davidulus, marekdedic, kalich5
 Tags: skaut, multisite, shortcode, skautIS, registrace
 Requires at least: 5.0
-Tested up to: 6.5
+Tested up to: 6.6
 Requires PHP: 7.4
 Stable tag: 1.1.28
 License: GPLv3 or later
