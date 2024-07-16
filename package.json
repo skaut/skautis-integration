@@ -48,7 +48,7 @@
     "@types/jqueryui": "^1.12.23",
     "@types/select2": "^4.0.63",
     "@types/tinymce": "^4.6.9",
-    "@typescript-eslint/eslint-plugin": "^7.16.0",
+    "@typescript-eslint/eslint-plugin": "^7.16.1",
     "@typescript-eslint/parser": "^7.16.1",
     "@wordpress/browserslist-config": "^6.2.0",
     "@wordpress/eslint-plugin": "^20.0.0",
