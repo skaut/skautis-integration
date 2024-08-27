@@ -221,7 +221,7 @@ class Func implements Rule {
 		// Parse and prepare data from rules UI.
 		$output = array();
 		preg_match_all( '|[^~]+|', $data, $output );
-		if ( isset( $output[0], $output[0][0], $output[0][1], $output[0][2] ) ) {
+		if ( isset( $output[0][0], $output[0][1], $output[0][2] ) ) {
 			list( $funcs, $unit_operator, $unit_id ) = $output[0];
 			$funcs                                   = explode( ',', $funcs );
 			$unit_id                                 = self::clearUnitId( $unit_id );

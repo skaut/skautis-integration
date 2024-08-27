@@ -202,7 +202,7 @@ final class Connect_And_Disconnect_WP_Account {
 					if ( 1 !== preg_match( '~user_id=(\d+)~', $return_url, $result ) ) {
 						return;
 					}
-					if ( is_array( $result ) && isset( $result[1] ) && $result[1] > 0 ) {
+					if ( is_array( $result ) && $result[1] > 0 ) {
 						$user_id = absint( $result[1] );
 						if ( Helpers::user_is_skautis_manager() ) {
 							delete_user_meta( $user_id, 'skautisUserId_' . $this->skautis_gateway->get_env() );

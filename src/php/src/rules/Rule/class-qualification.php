@@ -194,7 +194,7 @@ class Qualification implements Rule {
 		// Parse and prepare data from rules UI.
 		$output = array();
 		preg_match_all( '|[^~]+|', $data, $output );
-		if ( isset( $output[0], $output[0][0] ) ) {
+		if ( isset( $output[0][0] ) ) {
 			$qualifications = $output[0][0];
 			$qualifications = explode( ',', $qualifications );
 		} else {
