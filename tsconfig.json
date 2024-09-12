@@ -1,11 +1,17 @@
 {
   "compilerOptions": {
     "forceConsistentCasingInFileNames": true,
+    "target": "ES5",
+
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "exactOptionalPropertyTypes": true,
     "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
     "noImplicitReturns": true,
+    "noPropertyAccessFromIndexSignature": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "strict": true,
-    "target": "ES5",
+    "strict": true
   }
 }
