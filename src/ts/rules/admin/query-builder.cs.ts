@@ -6,7 +6,7 @@
  */
 const QueryBuilder = jQuery.fn.queryBuilder;
 
-QueryBuilder.regional.cs = {
+QueryBuilder.regional['cs'] = {
 	__locale: 'Čeština (cs)',
 	__author: 'David Odehnal',
 	add_rule: 'Přidat podmínku',
