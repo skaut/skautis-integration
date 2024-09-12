@@ -7,18 +7,18 @@ class Role {
 	public constructor(roles: Record<string, string>) {
 		this.roles = roles;
 		this.unitOperators = {};
-		this.unitOperators.equal = 'equal';
-		this.unitOperators.begins_with = 'begins_with';
-		this.unitOperators.any = 'any';
+		this.unitOperators['equal'] = 'equal';
+		this.unitOperators['begins_with'] = 'begins_with';
+		this.unitOperators['any'] = 'any';
 	}
 
 	public input(_: QueryBuilderRule, inputName: string): string {
-		this.unitOperators.equal =
-			jQuery.fn.queryBuilder.regional.cs.operators.equal;
-		this.unitOperators.begins_with =
-			jQuery.fn.queryBuilder.regional.cs.operators.begins_with;
-		this.unitOperators.any =
-			jQuery.fn.queryBuilder.regional.cs.operators.any;
+		this.unitOperators['equal'] =
+			jQuery.fn.queryBuilder.regional['cs'].operators.equal;
+		this.unitOperators['begins_with'] =
+			jQuery.fn.queryBuilder.regional['cs'].operators.begins_with;
+		this.unitOperators['any'] =
+			jQuery.fn.queryBuilder.regional['cs'].operators.any;
 
 		let html =
 			'<select class="form-control select2" name="' +
