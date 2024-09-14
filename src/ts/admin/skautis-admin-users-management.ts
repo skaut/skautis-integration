@@ -121,7 +121,7 @@ function updateQueryStringInUrl(
 			updateQueryStringInUrl(
 				'skautisUserId',
 				$this.parents('tr').find('.skautisUserId').html(),
-				$connectUserToSkautisModalConnectLink.attr('href')!
+				$connectUserToSkautisModalConnectLink.attr('href') ?? ''
 			)
 		);
 
@@ -131,7 +131,7 @@ function updateQueryStringInUrl(
 		const newHref = updateQueryStringInUrl(
 			'skautisUserId',
 			$this.parents('tr').find('.skautisUserId').html(),
-			$connectUserToSkautisModalRegisterLink.attr('href')!
+			$connectUserToSkautisModalRegisterLink.attr('href') ?? ''
 		);
 		$connectUserToSkautisModalRegisterLink.attr('href', newHref);
 	});
@@ -149,7 +149,7 @@ function updateQueryStringInUrl(
 			updateQueryStringInUrl(
 				'wpUserId',
 				wpUserId,
-				$connectUserToSkautisModalConnectLink.attr('href')!
+				$connectUserToSkautisModalConnectLink.attr('href') ?? ''
 			)
 		);
 	});
@@ -165,7 +165,7 @@ function updateQueryStringInUrl(
 				updateQueryStringInUrl(
 					'wpRole',
 					$this.val() as string,
-					$connectUserToSkautisModalRegisterLink.attr('href')!
+					$connectUserToSkautisModalRegisterLink.attr('href') ?? ''
 				)
 			);
 		})
