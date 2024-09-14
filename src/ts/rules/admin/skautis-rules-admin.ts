@@ -58,7 +58,7 @@
 		}, 100);
 
 		$('#post').on('submit', () => {
-			const result = $('#query_builder').get(0)!.queryBuilder.getRules();
+			const result = $('#query_builder').get(0)?.queryBuilder.getRules();
 
 			if (!$.isEmptyObject(result)) {
 				$queryBuilderValues.val(JSON.stringify(result, null, 2));
