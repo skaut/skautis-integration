@@ -53,7 +53,7 @@
     "@typescript-eslint/parser": "^7.18.0",
     "@wordpress/browserslist-config": "^6.8.0",
     "@wordpress/eslint-plugin": "^21.1.2",
-    "@wordpress/stylelint-config": "^22.7.0",
+    "@wordpress/stylelint-config": "^23.0.1",
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-compat": "^6.0.1",
@@ -72,8 +72,8 @@
     "ordered-read-streams": "^2.0.0",
     "prettier": "^3.3.3",
     "rimraf": "^6.0.1",
-    "stylelint": "^14.16.1",
-    "stylelint-no-unsupported-browser-features": "^7.0.0",
+    "stylelint": "^16.9.0",
+    "stylelint-no-unsupported-browser-features": "^8.0.1",
     "typescript": "^5.6.2"
   },
   "browserslist": [
