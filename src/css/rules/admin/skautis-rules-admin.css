@@ -24,7 +24,7 @@
 	margin-bottom: 0;
 	font-size: 14px;
 	font-weight: 400;
-	line-height: 1.42857;
+	line-height: 1.4286;
 	text-align: center;
 	white-space: nowrap;
 	vertical-align: middle;
@@ -47,7 +47,7 @@
 .query-builder .btn:active {
 	background-image: none;
 	outline: 0 none;
-	box-shadow: 0 3px 5px rgba(0, 0, 0, 0.125) inset;
+	box-shadow: 0 3px 5px rgba(0, 0, 0, 12.5%) inset;
 }
 
 .query-builder .btn-success {
