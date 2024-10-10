@@ -11,7 +11,7 @@
 Plugin Name:       skautIS integration
 Plugin URI:        https://github.com/skaut/skautis-integration
 Description:       Integrace WordPressu se skautISem
-Version:           1.1.28
+Version:           1.1.29
 Author:            Junák - český skaut
 Author URI:        https://github.com/skaut
 License:           GPLv3
@@ -30,7 +30,7 @@ define( 'SKAUTIS_INTEGRATION_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 define( 'SKAUTIS_INTEGRATION_PATH', plugin_dir_path( __FILE__ ) );
 define( 'SKAUTIS_INTEGRATION_URL', plugin_dir_url( __FILE__ ) );
 define( 'SKAUTIS_INTEGRATION_NAME', 'skautis-integration' );
-define( 'SKAUTIS_INTEGRATION_VERSION', '1.1.28' );
+define( 'SKAUTIS_INTEGRATION_VERSION', '1.1.29' );
 
 require __DIR__ . '/class-skautis-integration.php';
 
