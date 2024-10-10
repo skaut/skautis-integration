@@ -1,5 +1,7 @@
 /* eslint-env node */
 
+import { Transform } from 'node:stream';
+
 import gulp from 'gulp';
 import cleanCSS from 'gulp-clean-css';
 import rename from 'gulp-rename';
@@ -111,16 +113,40 @@ gulp.task(
 					)
 				)
 				.pipe(
-					replace(
-						'namespace Composer\\Autoload;',
-						'namespace Skautis_Integration\\Vendor\\Composer\\Autoload;'
-					)
-				)
-				.pipe(
-					replace(
-						/'(.*)\\\\' => \n/g,
-						"'Skautis_Integration\\\\Vendor\\\\$1\\\\' => \n"
-					)
+					new Transform({
+						objectMode: true,
+						transform: (chunk, encoding, callback) => {
+							let contents = String(chunk.contents).split('\n');
+							let mode = 'none';
+							contents = contents.map((line) => {
+								if (/^\s*\);$/g.exec(line)) {
+									mode = 'none';
+								} else if (
+									/^\s*public static \$classMap = array \($/.exec(
+										line
+									)
+								) {
+									mode = 'classMap';
+								} else if (mode === 'classMap') {
+									line = line.replace(
+										/^(\s*)'([^']*)' =>/,
+										"$1'Skautis_Integration\\\\Vendor\\\\$2' =>"
+									);
+								} else {
+									line = line.replace(
+										'namespace Composer\\Autoload;',
+										'namespace Skautis_Integration\\Vendor\\Composer\\Autoload;'
+									);
+								}
+								return line;
+							});
+							chunk.contents = Buffer.from(
+								contents.join('\n'),
+								encoding
+							);
+							callback(null, chunk);
+						},
+					})
 				)
 				.pipe(gulp.dest('dist/vendor/composer/')),
 		shell.task('composer dump-autoload')
