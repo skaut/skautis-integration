@@ -35,7 +35,8 @@
   "config": {
     "allow-plugins": {
       "dealerdirect/phpcodesniffer-composer-installer": true
-    }
+    },
+    "classmap-authoritative": true
   },
   "require": {
     "php": "^7.4 || ^8.0",
