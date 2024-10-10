@@ -1,5 +1,7 @@
 /* eslint-env node */
 
+import { Transform } from 'node:stream';
+
 import gulp from 'gulp';
 import cleanCSS from 'gulp-clean-css';
 import rename from 'gulp-rename';
@@ -7,7 +9,6 @@ import replace from 'gulp-replace';
 import shell from 'gulp-shell';
 import terser from 'gulp-terser';
 import ts from 'gulp-typescript';
-import ordered from 'ordered-read-streams';
 
 gulp.task('build:css:admin', () =>
 	gulp
@@ -95,45 +96,69 @@ gulp.task(
 
 gulp.task(
 	'build:deps:composer:scoper',
-	shell.task('vendor/bin/php-scoper add-prefix --force')
+	gulp.series(shell.task('vendor/bin/php-scoper add-prefix --force'), () =>
+		gulp
+			.src(['dist/vendor/scoper-autoload.php'])
+			.pipe(
+				replace(
+					"$GLOBALS['__composer_autoload_files']",
+					"$GLOBALS['__composer_autoload_files_Skautis_Integration_Vendor']"
+				)
+			)
+			.pipe(gulp.dest('dist/vendor/'))
+	)
 );
 
 gulp.task(
 	'build:deps:composer:autoloader',
 	gulp.series(
-		shell.task(
-			'composer dump-autoload --no-dev' +
-				(process.env.NODE_ENV === 'production' ? ' -o' : '')
-		),
+		shell.task('composer dump-autoload --no-dev'),
 		() =>
-			ordered([
-				gulp.src([
-					'vendor/composer/autoload_classmap.php',
-					//'vendor/composer/autoload_files.php',
-					'vendor/composer/autoload_namespaces.php',
-					'vendor/composer/autoload_psr4.php',
-				]),
-				gulp
-					.src(['vendor/composer/autoload_static.php'])
-					.pipe(
-						replace(
-							/class ComposerStaticInit(.*)\n{/,
-							'class ComposerStaticInit$1\n{\n    public static $files = array ();'
-						)
+			gulp
+				.src(['vendor/composer/autoload_static.php'])
+				.pipe(
+					replace(
+						/class ComposerStaticInit(.*)\n{/,
+						'class ComposerStaticInit$1\n{\n    public static $files = array ();'
 					)
-					.pipe(
-						replace(
-							'namespace Composer\\Autoload;',
-							'namespace Skautis_Integration\\Vendor\\Composer\\Autoload;'
-						)
-					)
-					.pipe(
-						replace(
-							/'(.*)\\\\' => \n/g,
-							"'Skautis_Integration\\\\Vendor\\\\$1\\\\' => \n"
-						)
-					),
-			]).pipe(gulp.dest('dist/vendor/composer/')),
+				)
+				.pipe(
+					new Transform({
+						objectMode: true,
+						transform: (chunk, encoding, callback) => {
+							let contents = String(chunk.contents).split('\n');
+							let mode = 'none';
+							contents = contents.map((line) => {
+								if (/^\s*\);$/g.exec(line)) {
+									mode = 'none';
+								} else if (
+									/^\s*public static \$classMap = array \($/.exec(
+										line
+									)
+								) {
+									mode = 'classMap';
+								} else if (mode === 'classMap') {
+									line = line.replace(
+										/^(\s*)'([^']*)' =>/,
+										"$1'Skautis_Integration\\\\Vendor\\\\$2' =>"
+									);
+								} else {
+									line = line.replace(
+										'namespace Composer\\Autoload;',
+										'namespace Skautis_Integration\\Vendor\\Composer\\Autoload;'
+									);
+								}
+								return line;
+							});
+							chunk.contents = Buffer.from(
+								contents.join('\n'),
+								encoding
+							);
+							callback(null, chunk);
+						},
+					})
+				)
+				.pipe(gulp.dest('dist/vendor/composer/')),
 		shell.task('composer dump-autoload')
 	)
 );
