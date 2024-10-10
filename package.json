@@ -39,7 +39,7 @@
     "lint:php:phpmd": "vendor/bin/phpmd src,.phan/config.php,scoper.inc.php,phpstan-bootstrap.php text phpmd.xml",
     "lint:php:phpstan": "vendor/bin/phpstan",
     "lint:php": "run-p -c --aggregate-output lint:php:*",
-    "lint:ts:eslint": "eslint --color 'src/**/*.ts' 'gulpfile.js' '*.config.{cjs,js,ts}'",
+    "lint:ts:eslint": "eslint --color 'src/**/*.ts' 'gulpfile.js' '*.config.{js,ts}'",
     "lint:ts": "run-p -c --aggregate-output lint:ts:*",
     "lint": "run-p -c --aggregate-output lint:*"
   },
