@@ -96,7 +96,17 @@ gulp.task(
 
 gulp.task(
 	'build:deps:composer:scoper',
-	shell.task('vendor/bin/php-scoper add-prefix --force')
+	gulp.series(shell.task('vendor/bin/php-scoper add-prefix --force'), () =>
+		gulp
+			.src(['dist/vendor/scoper-autoload.php'])
+			.pipe(
+				replace(
+					"$GLOBALS['__composer_autoload_files']",
+					"$GLOBALS['__composer_autoload_files_Skautis_Integration_Vendor']"
+				)
+			)
+			.pipe(gulp.dest('dist/vendor/'))
+	)
 );
 
 gulp.task(
