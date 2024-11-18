@@ -50,7 +50,7 @@
     "wp-coding-standards/wpcs": "^3.0",
     "humbug/php-scoper": "^0.18.1",
     "skaut/wordpress-stubs": "^2.1",
-    "phpstan/phpstan": "^1.6",
+    "phpstan/phpstan": "^2.0",
     "dealerdirect/phpcodesniffer-composer-installer": "^1.0"
   }
 }
