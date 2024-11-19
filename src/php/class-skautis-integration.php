@@ -128,10 +128,12 @@ class Skautis_Integration {
 	 * @return bool Whether the current version of PHP is supported.
 	 */
 	protected static function is_compatible_version_of_php() {
+		// @phpstan-ignore if.alwaysTrue
 		if ( version_compare( PHP_VERSION, '7.4', '>=' ) ) {
 			return true;
 		}
 
+		// @phpstan-ignore deadCode.unreachable
 		return false;
 	}
 

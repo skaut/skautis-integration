@@ -86,7 +86,7 @@ final class Skautis_Login {
 	 *
 	 * @return void
 	 *
-	 * @SuppressWarnings(PHPMD.ExitExpression)
+	 * @SuppressWarnings("PHPMD.ExitExpression")
 	 */
 	public function login() {
 		$return_url = Helpers::get_login_logout_redirect();
@@ -115,7 +115,7 @@ final class Skautis_Login {
 	 *
 	 * @return void
 	 *
-	 * @SuppressWarnings(PHPMD.ExitExpression)
+	 * @SuppressWarnings("PHPMD.ExitExpression")
 	 */
 	public function login_confirm() {
 		$return_url = Helpers::get_return_url();

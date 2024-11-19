@@ -273,7 +273,7 @@ class Role implements Rule {
 			}
 		}
 
-		if ( is_int( $user_pass ) && $user_pass > 0 ) {
+		if ( $user_pass > 0 ) {
 			return true;
 		}
 

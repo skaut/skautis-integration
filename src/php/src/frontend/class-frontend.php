@@ -145,22 +145,13 @@ final class Frontend {
 		if ( ! is_admin_bar_showing() ) {
 			return;
 		}
-
-		if ( method_exists( $wp_admin_bar, 'get_node' ) ) {
-			if ( ! is_null( $wp_admin_bar->get_node( 'user-actions' ) ) ) {
-				$parent = 'user-actions';
-			} else {
-				return;
-			}
-		} elseif ( 1 === get_option( 'show_avatars' ) ) {
-			$parent = 'my-account-with-avatar';
-		} else {
-			$parent = 'my-account';
+		if ( is_null( $wp_admin_bar->get_node( 'user-actions' ) ) ) {
+			return;
 		}
 
 		$wp_admin_bar->add_menu(
 			array(
-				'parent' => $parent,
+				'parent' => 'user-actions',
 				'id'     => SKAUTIS_INTEGRATION_NAME . '_adminBar_logout',
 				'title'  => esc_html__( 'Odhlásit se (i ze skautISu)', 'skautis-integration' ),
 				'href'   => $this->wp_login_logout->get_logout_url(),
