@@ -95,7 +95,7 @@ class Skautis_Gateway {
 	/**
 	 * Returns the raw SkauIS library instance
 	 *
-	 * @SuppressWarnings(PHPMD.ExitExpression)
+	 * @SuppressWarnings("PHPMD.ExitExpression")
 	 */
 	public function get_skautis_instance(): Skautis\Skautis {
 		if ( ! ( $this->skautis instanceof Skautis\Skautis ) ) {

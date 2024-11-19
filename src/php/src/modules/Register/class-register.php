@@ -123,7 +123,7 @@ final class Register implements Module {
 	 *
 	 * @return void
 	 *
-	 * @SuppressWarnings(PHPMD.ExitExpression)
+	 * @SuppressWarnings("PHPMD.ExitExpression")
 	 */
 	private function loginUserAfterRegistration() {
 		$return_url = Helpers::get_login_logout_redirect();
@@ -216,7 +216,7 @@ final class Register implements Module {
 	 *
 	 * @return void
 	 *
-	 * @SuppressWarnings(PHPMD.ExitExpression)
+	 * @SuppressWarnings("PHPMD.ExitExpression")
 	 */
 	public function register() {
 		if ( ! $this->skautis_login->is_user_logged_in_skautis() ) {
@@ -269,7 +269,7 @@ final class Register implements Module {
 	 *
 	 * @return void
 	 *
-	 * @SuppressWarnings(PHPMD.ExitExpression)
+	 * @SuppressWarnings("PHPMD.ExitExpression")
 	 */
 	public function registerUserManually() {
 		$return_url      = Helpers::get_return_url();

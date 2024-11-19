@@ -43,7 +43,7 @@ final class WP_Login_Logout {
 	 *
 	 * @return false
 	 *
-	 * @SuppressWarnings(PHPMD.ExitExpression)
+	 * @SuppressWarnings("PHPMD.ExitExpression")
 	 */
 	private function login_wp_user_by_skautis_user_id( int $skautis_user_id, $dont_die_on_error = false ) {
 		$return_url = Helpers::get_return_url();
@@ -196,7 +196,7 @@ final class WP_Login_Logout {
 	 *
 	 * @return void
 	 *
-	 * @SuppressWarnings(PHPMD.ExitExpression)
+	 * @SuppressWarnings("PHPMD.ExitExpression")
 	 */
 	public function logout() {
 		$this->skautis_gateway->logout();

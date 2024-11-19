@@ -51,7 +51,7 @@ final class Connect_And_Disconnect_WP_Account {
 	 *
 	 * @return void
 	 *
-	 * @SuppressWarnings(PHPMD.ExitExpression)
+	 * @SuppressWarnings("PHPMD.ExitExpression")
 	 */
 	private function set_skautis_user_id_to_wp_account( int $wp_user_id, int $skautis_user_id ) {
 		$return_url = Helpers::get_return_url();
@@ -110,7 +110,7 @@ final class Connect_And_Disconnect_WP_Account {
 	 *
 	 * @return void
 	 *
-	 * @SuppressWarnings(PHPMD.ExitExpression)
+	 * @SuppressWarnings("PHPMD.ExitExpression")
 	 */
 	public function connect() {
 		if ( ! $this->skautis_login->is_user_logged_in_skautis() ) {
@@ -186,7 +186,7 @@ final class Connect_And_Disconnect_WP_Account {
 	 *
 	 * @return void
 	 *
-	 * @SuppressWarnings(PHPMD.ExitExpression)
+	 * @SuppressWarnings("PHPMD.ExitExpression")
 	 */
 	public function disconnect() {
 		if ( is_user_logged_in() ) {
@@ -199,10 +199,11 @@ final class Connect_And_Disconnect_WP_Account {
 				} elseif ( ( strpos( $return_url, 'user-edit_php' ) !== false ||
 							strpos( $return_url, 'user-edit.php' ) !== false ) &&
 							strpos( $return_url, 'user_id=' ) !== false ) {
+					$result = array();
 					if ( 1 !== preg_match( '~user_id=(\d+)~', $return_url, $result ) ) {
 						return;
 					}
-					if ( is_array( $result ) && $result[1] > 0 ) {
+					if ( $result[1] > 0 ) {
 						$user_id = absint( $result[1] );
 						if ( Helpers::user_is_skautis_manager() ) {
 							delete_user_meta( $user_id, 'skautisUserId_' . $this->skautis_gateway->get_env() );

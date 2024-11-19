@@ -169,7 +169,7 @@ final class Actions {
 	 *
 	 * @param \WP_Query $wp_query The request query.
 	 *
-	 * @SuppressWarnings(PHPMD.ExitExpression)
+	 * @SuppressWarnings("PHPMD.ExitExpression")
 	 *
 	 * @return \WP_Query|void
 	 */

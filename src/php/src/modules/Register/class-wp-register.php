@@ -53,7 +53,7 @@ final class WP_Register {
 	 *
 	 * @return int The ID of the new user.
 	 *
-	 * @SuppressWarnings(PHPMD.ExitExpression)
+	 * @SuppressWarnings("PHPMD.ExitExpression")
 	 */
 	private static function resolve_notifications_and_register_user_to_wp( string $user_login, string $user_email ) {
 		remove_action( 'register_new_user', 'wp_send_new_user_notifications' );
@@ -171,7 +171,7 @@ final class WP_Register {
 
 		$user_id = self::resolve_notifications_and_register_user_to_wp( $username, $user['email'] );
 
-		if ( 0 === $user_id || ! is_int( $user_id ) ) {
+		if ( 0 === $user_id ) {
 			return false;
 		}
 

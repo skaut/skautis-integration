@@ -115,7 +115,7 @@ class Revisions {
 	 *
 	 * @return string The field value.
 	 *
-	 * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+	 * @SuppressWarnings("PHPMD.UnusedFormalParameter")
 	 */
 	public static function field( $value, $field, $revision ) {
 		$revision_id = $revision->ID;
