@@ -229,7 +229,7 @@ final class Admin {
 
 		wp_enqueue_style(
 			SKAUTIS_INTEGRATION_NAME . '_query-builder-main',
-			SKAUTIS_INTEGRATION_URL . 'bundled/query-builder.default.min.css',
+			SKAUTIS_INTEGRATION_URL . 'bundled/query-builder.default.css',
 			array(),
 			SKAUTIS_INTEGRATION_VERSION,
 			'all'
@@ -306,7 +306,7 @@ final class Admin {
 
 		wp_enqueue_script(
 			SKAUTIS_INTEGRATION_NAME . '_query-builder',
-			SKAUTIS_INTEGRATION_URL . 'bundled/query-builder.standalone.min.js',
+			SKAUTIS_INTEGRATION_URL . 'bundled/query-builder.standalone.js',
 			array( 'jquery' ),
 			SKAUTIS_INTEGRATION_VERSION,
 			true
