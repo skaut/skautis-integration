@@ -140,3 +140,19 @@ jobs:
       - name: "Lint"
         run: |
           npm run lint
+
+  plugin-check:
+    name: "Plugin check"
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: "Download build artifact"
+        uses: actions/download-artifact@v4
+        with:
+          name: "build-artifact"
+          path: skautis-integration
+
+      - name: "Run plugin check"
+        uses: wordpress/plugin-check-action@v1
+        with:
+          build-dir: skautis-integration
