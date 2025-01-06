@@ -24,14 +24,14 @@ Login, registration, user management and other features connecting SkautIS to Wo
 - PHP 7.4 or higher
 
 === GitHub ===
-All the sources for the plugin and the build process are detailed in our [Github repo](https://github.com/skaut/skautis-integration/).
+All the sources for the plugin and the build process are detailed in our [GitHub repo](https://github.com/skaut/skautis-integration/).
 
 == Installation ==
 1. Download and install the plugin from the WordPress plugin directory or from [GitHub](https://github.com/skaut/skaut-google-drive-gallery/releases)
 2. Activate the plugin
-3. Request an APP ID for SkautIS by following the [docs](https://napoveda.skaut.cz/skautis/skautis-integration) (only in Czech).
-3. In the admin interface, open the plugin settings, enter the providded APP ID and register the plugin.
-4. The plugin is now fully functional.
+3. Request an APP ID for SkautIS by following the [docs](https://napoveda.skaut.cz/skautis/skautis-integration) (only in Czech)
+4. In the admin interface, open the plugin settings, enter the provided APP ID and register the plugin
+5. The plugin is now fully functional
 
 == Frequently Asked Questions ==
 
