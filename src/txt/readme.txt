@@ -1,37 +1,42 @@
-=== skautIS integrace ===
+=== SkautIS integration ===
 Contributors: skaut, davidulus, marekdedic, kalich5
-Tags: skaut, multisite, shortcode, skautIS, registrace
+Tags: SkautIS, login, registration, skaut
 Requires at least: 5.0
 Tested up to: 6.7
 Requires PHP: 7.4
 Stable tag: 1.1.30
 License: GPLv3 or later
-License URI: http://www.gnu.org/licenses/gpl-3.0.html
+License URI: https://github.com/skaut/skautis-integration/blob/master/LICENSE
 
-Implementace přihlašování, registrace a dalších služeb z informačního systému skautIS do WordPressu.
+Login, registration, user management and other features connecting SkautIS to WordPress.
 
 == Description ==
 
-<h2> Minimální požadavky</h2>
-- WordPress 4.9.6 a vyšší
-- PHP 7.4 a vyšší
+Login, registration, user management and other features connecting SkautIS to WordPress.
 
-Implementace přihlašování, registrace a dalších služeb z informačního systému skautIS do WordPressu.
+=== Features ===
+* Login to WordPress with a SkautIS account
+* Manage SkautIS account connections and import users to your site
+* Enable registration of users to your site based on their SkautIS functions, memberships or other criteria
 
-Plugin po aktivaci bude vyžadovat APP ID, bez toho nebude plugin vůbec fungovat. Návod jak nastavit plugin a zístat APP ID  najdete v [nápovědě](https://napoveda.skaut.cz/skautis/skautis-integration)
+=== Minimal requirements ===
+- WordPress 4.9.6 or higher
+- PHP 7.4 or higher
 
-**Jsme na GitHubu**
-[https://github.com/skaut/skautis-integration/](https://github.com/skaut/skautis-integration/)
+=== GitHub ===
+All the sources for the plugin and the build process are detailed in our [Github repo](https://github.com/skaut/skautis-integration/).
 
 == Installation ==
-1. Stáhnout si plugin a aktivovat
-2. V levém menu se objeví položka skautIS
-3. Musíte si zažádat o APP ID návod je v [nápovědě](https://napoveda.skaut.cz/skautis/skautis-integration)
-4. Zadáte APP ID a plugin se plně aktivuje
+1. Download and install the plugin from the WordPress plugin directory or from [GitHub](https://github.com/skaut/skaut-google-drive-gallery/releases)
+2. Activate the plugin
+3. Request an APP ID for SkautIS by following the [docs](https://napoveda.skaut.cz/skautis/skautis-integration) (only in Czech).
+3. In the admin interface, open the plugin settings, enter the providded APP ID and register the plugin.
+4. The plugin is now fully functional.
 
 == Frequently Asked Questions ==
-**Jak plugin správně nastavit?**
-[Nápověda](https://napoveda.skaut.cz/skautis/skautis-integration)
+
+= How to configure this plugin? =
+See our [documentation](https://napoveda.skaut.cz/skautis/skautis-integration) (only in Czech).
 
 == Screenshots ==
 
