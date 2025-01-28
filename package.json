@@ -73,7 +73,7 @@
     "rimraf": "^6.0.1",
     "stylelint": "^16.14.0",
     "stylelint-config-standard": "^37.0.0",
-    "stylelint-no-unsupported-browser-features": "^8.0.2",
+    "stylelint-no-unsupported-browser-features": "^8.0.4",
     "typescript": "^5.7.3"
   },
   "browserslist": [
