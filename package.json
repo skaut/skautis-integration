@@ -80,7 +80,7 @@
     "extends @wordpress/browserslist-config"
   ],
   "dependencies": {
-    "datatables.net": "^2.3.0",
+    "datatables.net": "^2.3.2",
     "datatables.net-dt": "^2.3.1",
     "datatables.net-plugins": "^2.3.0",
     "font-awesome": "^4.7.0",
