@@ -100,7 +100,7 @@ class Skautis_Gateway {
 	public function get_skautis_instance(): Skautis\Skautis {
 		if ( ! ( $this->skautis instanceof Skautis\Skautis ) ) {
 			wp_die( esc_html__( 'The SkautIS integration plugin cannot be used without setting a valid App ID.', 'skautis-integration' ) );
-			die();
+			exit();
 		}
 		return $this->skautis;
 	}
