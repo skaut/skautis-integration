@@ -45,7 +45,7 @@
   },
   "devDependencies": {
     "@eslint-community/eslint-plugin-eslint-comments": "^4.5.0",
-    "@types/jquery": "^3.5.32",
+    "@types/jquery": "^3.5.33",
     "@types/jqueryui": "^1.12.24",
     "@types/select2": "^4.0.63",
     "@types/tinymce": "^4.6.9",
