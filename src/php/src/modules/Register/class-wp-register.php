@@ -87,7 +87,7 @@ final class WP_Register {
 			}
 				/* translators: The error message */
 			wp_die( sprintf( esc_html__( 'Při registraci nastala neočekávaná chyba: %s', 'skautis-integration' ), esc_html( $user_id->get_error_message() ) ), esc_html__( 'Chyba při registraci', 'skautis-integration' ) );
-			die();
+			exit();
 		}
 
 		return $user_id;

@@ -129,7 +129,7 @@ final class Register implements Module {
 		$return_url = Helpers::get_login_logout_redirect();
 		$return_url = remove_query_arg( SKAUTIS_INTEGRATION_NAME . '_registerToWpBySkautis', urldecode( $return_url ) );
 		wp_safe_redirect( esc_url_raw( $this->wp_login_logout->get_login_url( $return_url ) ), 302 );
-		die();
+		exit();
 	}
 
 	/**
@@ -222,7 +222,7 @@ final class Register implements Module {
 		if ( ! $this->skautis_login->is_user_logged_in_skautis() ) {
 			$return_url = Helpers::get_return_url() ?? Helpers::get_current_url();
 			wp_safe_redirect( esc_url_raw( $this->skautis_gateway->get_skautis_instance()->getLoginUrl( $return_url ) ), 302 );
-			die();
+			exit();
 		}
 
 		$this->registerUser();
@@ -293,7 +293,7 @@ final class Register implements Module {
 
 		if ( $this->wp_register->register_to_wp_manually( $wp_role, $skautis_user_id ) ) {
 			wp_safe_redirect( $return_url, 302 );
-			die();
+			exit();
 		} else {
 			wp_die( esc_html__( 'Uživatele se nepodařilo zaregistrovat', 'skautis-integration' ), esc_html__( 'Chyba při registraci uživatele', 'skautis-integration' ) );
 		}
