@@ -26,6 +26,8 @@ final class Settings {
 	 * A link to the Skautis_Gateway service instance.
 	 *
 	 * @var Skautis_Gateway
+	 *
+	 * @phpstan-ignore property.onlyWritten
 	 */
 	private $skautis_gateway;
 
@@ -211,11 +213,16 @@ final class Settings {
 	 * @param string $value The App ID.
 	 *
 	 * @return string The sanitized App ID.
+	 *
+	 * @suppress PhanPluginPossiblyStaticPublicMethod
 	 */
 	public function test_app_id( $value ) {
+		/* phpcs:ignore Squiz.PHP.CommentedOutCode.Found
+		 * Disabled on 2025-09 due to errors in SkautIS.
 		if ( ! $this->skautis_gateway->test_active_app_id() ) {
 			add_settings_error( 'general', 'api_invalid', esc_html__( 'Zadané APP ID není pro tento web platné.', 'skautis-integration' ), 'notice-error' );
 		}
+		*/
 		return sanitize_text_field( $value );
 	}
 
