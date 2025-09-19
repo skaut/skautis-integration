@@ -4,7 +4,7 @@ Tags: SkautIS, login, registration, skaut
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.1.30
+Stable tag: 1.1.31
 License: GPLv3 or later
 License URI: https://github.com/skaut/skautis-integration/blob/master/LICENSE
 
@@ -42,6 +42,9 @@ See our [documentation](https://napoveda.skaut.cz/skautis/skautis-integration) (
 
 
 == Changelog ==
+
+= 1.1.31 =
+* Disabled SkautIS ID check due to issues in SkautIS
 
 = 1.1.30 =
 * Fixed errors in rule editor

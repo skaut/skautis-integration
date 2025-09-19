@@ -284,7 +284,6 @@ final class Register implements Module {
 			'' === $wp_role ||
 			-1 === $skautis_user_id ) {
 			wp_die( esc_html__( 'Nemáte oprávnění k registraci nových uživatelů.', 'skautis-integration' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
-			return;
 		}
 
 		if ( ! wp_roles()->is_role( $wp_role ) ) {
