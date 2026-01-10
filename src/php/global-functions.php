@@ -7,6 +7,10 @@
 
 declare( strict_types=1 );
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 use Skautis_Integration\Services\Services;
 use Skautis_Integration\Modules\Register\Register;
 
