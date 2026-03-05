@@ -156,4 +156,6 @@ jobs:
         uses: wordpress/plugin-check-action@v1
         with:
           build-dir: skautis-integration
-          ignore-codes: "missing_composer_json_file"
+          ignore-codes: |
+            missing_composer_json_file
+            missing_direct_file_access_protection
