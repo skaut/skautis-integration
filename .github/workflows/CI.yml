@@ -158,4 +158,3 @@ jobs:
           build-dir: skautis-integration
           ignore-codes: |
             missing_composer_json_file
-            missing_direct_file_access_protection
