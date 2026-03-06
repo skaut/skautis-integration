@@ -5,6 +5,10 @@
  * @package skautis-integration
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 get_header(); ?>
 
 <?php

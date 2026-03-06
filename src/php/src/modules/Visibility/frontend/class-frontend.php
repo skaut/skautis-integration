@@ -193,6 +193,7 @@ final class Frontend {
 			}
 		);
 
+		// TODO: Replace with a PHP filter in the `the_comments` hook for better performance?
 		add_action(
 			'pre_get_comments',
 			static function ( \WP_Comment_Query $wp_comment_query ) use ( $post_id ) {

@@ -8,7 +8,7 @@
  */
 
 /*
-Plugin Name:       skautIS integration
+Plugin Name:       SkautIS integration
 Plugin URI:        https://github.com/skaut/skautis-integration
 Description:       Integrace WordPressu se skautISem
 Version:           1.1.31
