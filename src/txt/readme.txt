@@ -2,7 +2,7 @@
 Contributors: skaut, davidulus, marekdedic, kalich5
 Tags: SkautIS, login, registration, skaut
 Requires at least: 5.0
-Tested up to: 6.9
+Tested up to: 7.0
 Requires PHP: 7.4
 Stable tag: 1.1.31
 License: GPLv3 or later
