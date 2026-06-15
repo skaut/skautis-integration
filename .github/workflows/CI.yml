@@ -48,7 +48,7 @@ jobs:
 
       - name: "Install Composer dependencies"
         run: |
-          composer -n install
+          composer install -n --prefer-dist
 
       - name: "Cache NPM dependencies"
         uses: actions/cache@v5
@@ -158,4 +158,3 @@ jobs:
           build-dir: skautis-integration
           ignore-codes: |
             missing_composer_json_file
-            missing_direct_file_access_protection
