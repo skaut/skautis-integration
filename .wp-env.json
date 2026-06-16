@@ -1,0 +1,9 @@
+{
+	"plugins": [
+		"https://downloads.wordpress.org/plugin/plugin-check.latest-stable.zip"
+	],
+	"mappings": {
+		"wp-content/plugins/skautis-integration": "./dist"
+	},
+	"testsEnvironment": false
+}
