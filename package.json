@@ -41,7 +41,8 @@
     "lint:php": "run-p -c --aggregate-output lint:php:*",
     "lint:ts:eslint": "eslint --color 'src/**/*.ts' 'gulpfile.js' '*.config.{js,ts}'",
     "lint:ts": "run-p -c --aggregate-output lint:ts:*",
-    "lint": "run-p -c --aggregate-output lint:*"
+    "lint": "run-p -c --aggregate-output lint:*",
+    "plugin-check": "wp-env start && wp-env run cli wp plugin check skautis-integration --ignore-codes=missing_composer_json_file; CODE=$?; wp-env stop; exit $CODE"
   },
   "devDependencies": {
     "@eslint-community/eslint-plugin-eslint-comments": "^4.5.0",
@@ -52,6 +53,7 @@
     "@typescript-eslint/eslint-plugin": "^7.17.0",
     "@typescript-eslint/parser": "^7.18.0",
     "@wordpress/browserslist-config": "^6.35.0",
+    "@wordpress/env": "^11.8.1",
     "@wordpress/eslint-plugin": "^24.3.0",
     "@wordpress/stylelint-config": "^23.29.0",
     "eslint": "^8.57.1",
