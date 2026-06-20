@@ -4,7 +4,7 @@ on:
     branches: "*"
   pull_request:
 env:
-  php-version: 8.4
+  php-version: 8.5
   cache-version: 1
 jobs:
   platform-check:
