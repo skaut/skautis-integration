@@ -8,7 +8,6 @@ updates:
       interval: weekly
     assignees:
       - marekdedic
-      - davidulus
       - kalich5
   - package-ecosystem: npm
     directory: "/"
@@ -17,7 +16,6 @@ updates:
       interval: weekly
     assignees:
       - marekdedic
-      - davidulus
       - kalich5
   - package-ecosystem: composer
     directory: "/"
@@ -26,5 +24,4 @@ updates:
       interval: weekly
     assignees:
       - marekdedic
-      - davidulus
       - kalich5
