@@ -1,9 +1,11 @@
 {
   "compilerOptions": {
-    "forceConsistentCasingInFileNames": true,
-    "target": "ES5",
-    "module": "Preserve",
+    "target": "es2015",
+    "module": "esnext",
     "moduleResolution": "bundler",
+    "types": ["jqueryui", "select2"],
+
+    "strict": true,
 
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
@@ -13,7 +15,6 @@
     "noImplicitReturns": true,
     "noPropertyAccessFromIndexSignature": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "strict": true
+    "noUnusedParameters": true
   }
 }
