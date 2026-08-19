@@ -50,6 +50,7 @@ interface QueryBuilderValidation {
 	callback?: (value: any, rule: QueryBuilderRule) => true|string
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type -- TODO
 interface QueryBuilderOptions {
 	// TODO
 }
