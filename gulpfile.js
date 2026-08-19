@@ -1,5 +1,3 @@
-/* eslint-env node */
-
 import { Transform } from 'node:stream';
 
 import gulp from 'gulp';
