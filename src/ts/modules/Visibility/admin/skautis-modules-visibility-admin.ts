@@ -1,10 +1,10 @@
-(function ($): void {
+(($): void => {
 	const $repeater = $('#repeater_post');
 
 	function updateAvailableOptions(): void {
 		const usedOptions: Array<string> = [];
 
-		setTimeout(function () {
+		setTimeout(() => {
 			const $selectRules = jQuery('select.rule');
 
 			$selectRules.each(function () {
