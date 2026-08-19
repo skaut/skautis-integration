@@ -56,7 +56,7 @@
     "@wordpress/env": "^11.13.0",
     "@wordpress/eslint-plugin": "^24.5.0",
     "@wordpress/stylelint-config": "^24.2.0",
-    "eslint": "^8.57.1",
+    "eslint": "^10.8.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-compat": "^6.2.1",
     "eslint-plugin-prefer-arrow-functions": "^3.4.2 <3.11",
