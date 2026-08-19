@@ -52,16 +52,11 @@
 	if ($repeater.length) {
 		$repeater
 			.repeater({
-				initEmpty: true,
 				defaultValues: {
 					role: $('select[name="skautis-integration_rules"]')
 						.first()
 						.find('option:selected')
 						.val(),
-				},
-				show() {
-					$(this).slideDown(150);
-					updateAvailableOptions();
 				},
 				hide(deleteElement) {
 					$(this).slideUp(150, deleteElement);
@@ -69,10 +64,15 @@
 						updateAvailableOptions();
 					}, 250);
 				},
+				initEmpty: true,
+				isFirstItemUndeletable: true,
 				ready: () => {
 					reinitSelect2();
 				},
-				isFirstItemUndeletable: true,
+				show() {
+					$(this).slideDown(150);
+					updateAvailableOptions();
+				},
 			})
 			.setList(window.rulesData ?? []);
 	} else {

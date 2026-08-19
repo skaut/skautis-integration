@@ -41,14 +41,6 @@ function updateQueryStringInUrl(
 
 (($): void => {
 	const $dataTable = $('.skautis-user-management-table').DataTable({
-		pageLength: 25,
-		stateSave: true,
-		language: {
-			ajax:
-				skautisIntegrationAdminUsersManagementLocalize.datatablesFilesUrl +
-				'/cs.json',
-			search: 'Hledat',
-		},
 		initComplete: () => {
 			const searchString = getQueryStringFromUrl(
 				'skautisSearchUsers',
@@ -98,6 +90,14 @@ function updateQueryStringInUrl(
 				$('.dt-search input').val(searchString);
 			}
 		},
+		language: {
+			ajax:
+				skautisIntegrationAdminUsersManagementLocalize.datatablesFilesUrl +
+				'/cs.json',
+			search: 'Hledat',
+		},
+		pageLength: 25,
+		stateSave: true,
 	});
 
 	$('.thickbox').on('click', function () {
