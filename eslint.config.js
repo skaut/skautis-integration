@@ -113,7 +113,6 @@ export default tseslint.config(
 			'no-self-compare': 'error',
 			'no-sequences': 'error',
 			'no-template-curly-in-string': 'error',
-			//'no-undef': 'off', // TODO: Should be disabled by typescript-eslint
 			'no-unmodified-loop-condition': 'error',
 			'no-unneeded-ternary': 'error',
 			'no-unreachable-loop': 'error',
@@ -205,10 +204,7 @@ export default tseslint.config(
 				'error',
 			'@typescript-eslint/no-unnecessary-qualifier': 'error',
 			'@typescript-eslint/no-unused-vars': 'error',
-			'@typescript-eslint/no-use-before-define': [
-				'error',
-				//{ functions: false }, // TODO
-			],
+			'@typescript-eslint/no-use-before-define': 'error',
 			'@typescript-eslint/no-useless-default-assignment': 'off',
 			'@typescript-eslint/no-useless-empty-export': 'error',
 			'@typescript-eslint/parameter-properties': 'error',
