@@ -39,8 +39,7 @@
     "lint:php:phpmd": "vendor/bin/phpmd src,.phan/config.php,scoper.inc.php,phpstan-bootstrap.php text phpmd.xml",
     "lint:php:phpstan": "vendor/bin/phpstan",
     "lint:php": "run-p -c --aggregate-output lint:php:*",
-    "lint:ts:eslint": "eslint --color 'src/**/*.ts' 'gulpfile.js' '*.config.{js,ts}'",
-    "lint:ts": "run-p -c --aggregate-output lint:ts:*",
+    "lint:eslint": "eslint --color",
     "lint": "run-p -c --aggregate-output lint:*",
     "plugin-check": "wp-env start && wp-env run cli wp plugin check skautis-integration --ignore-codes=missing_composer_json_file; CODE=$?; wp-env stop; exit $CODE"
   },
