@@ -21,6 +21,9 @@ export default tseslint.config(
 		extends: [css.configs.recommended],
 		files: ['**/*.css'],
 		language: 'css/css',
+		rules: {
+			'css/no-important': 'off',
+		},
 	},
 	{
 		extends: [json.configs.recommended],
