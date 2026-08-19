@@ -1,10 +1,10 @@
 interface JQueryRepeaterOptions {
-	initEmpty?: boolean;
 	defaultValues?: Record<string, any>;
-	show?: () => void;
 	hide?: (deleteElement: () => void) => void;
-	ready?: (setIndexes: () => void) => void;
+	initEmpty?: boolean;
 	isFirstItemUndeletable?: boolean;
+	ready?: (setIndexes: () => void) => void;
+	show?: () => void;
 }
 
 interface JQueryRepeater {

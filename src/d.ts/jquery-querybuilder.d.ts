@@ -1,53 +1,53 @@
 interface QueryBuilderRuleOrGroup {
 	$el: JQuery;
-	parent: QueryBuilderGroup;
-	level: number;
-	id: string;
-	error: string;
 	data: object;
+	drop(): void;
+	error: string;
+	getPos(): number;
+	id: string;
 
 	isRoot(): boolean;
-	getPos(): number;
-	drop(): void;
+	level: number;
 	moveAfter(_1: QueryBuilderGroup|QueryBuilderRule): void;
 	moveAtBegin(_1: QueryBuilderGroup): void;
 	moveAtEnd(_1: QueryBuilderGroup): void;
+	parent: QueryBuilderGroup;
 }
 
 interface QueryBuilderRule extends QueryBuilderRuleOrGroup {
 	filter: object;
+	flags: object;
 	operator: QueryBuilderOperator;
 	value: any;
-	flags: object;
 }
 
 interface QueryBuilderOperator {
-	type: string;
-	optgroup: string;
-	nb_inputs: number;
-	multiple: boolean;
 	apply_to: Array<'boolean'|'datetime'|'number'|'string'>
+	multiple: boolean;
+	nb_inputs: number;
+	optgroup: string;
+	type: string;
 }
 
 interface QueryBuilderGroup extends QueryBuilderRuleOrGroup {
-	condition: string;
+	addGroup(_1: JQuery, _2: number): QueryBuilderGroup;
 
+	addRule(_1: JQuery, _2: number): QueryBuilderRule;
+	condition: string;
+	contains(_1: QueryBuilderGroup|QueryBuilderRule, _2: boolean): boolean;
+	each(..._1: any): void;
 	empty(): void;
 	length(): number;
-	addGroup(_1: JQuery, _2: number): QueryBuilderGroup;
-	addRule(_1: JQuery, _2: number): QueryBuilderRule;
-	each(..._1: any): void;
-	contains(_1: QueryBuilderGroup|QueryBuilderRule, _2: boolean): boolean;
 }
 
 interface QueryBuilderValidation {
-	format?: RegExp|string;
-	min?: number|string;
-	max?: number|string;
-	step?: number;
-	messages?: Record<keyof QueryBuilderValidation, string>
 	allow_empty_value?: boolean;
 	callback?: (value: any, rule: QueryBuilderRule) => true|string
+	format?: RegExp|string;
+	max?: number|string;
+	messages?: Record<keyof QueryBuilderValidation, string>
+	min?: number|string;
+	step?: number;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type -- TODO
@@ -56,38 +56,17 @@ interface QueryBuilderOptions {
 }
 
 interface QueryBuilderRegional {
-	"__locale": string;
 	"__author": string;
-	add_rule: string;
+	"__locale": string;
 	add_group: string;
-	delete_rule: string;
-	delete_group: string;
+	add_rule: string;
 	conditions: {
 		AND: string;
 		OR: string;
 	};
-	operators: {
-		equal: string;
-		not_equal: string;
-		in: string;
-		not_in: string;
-		less: string;
-		less_or_equal: string;
-		greater: string;
-		greater_or_equal: string;
-		between: string;
-		begins_with: string;
-		not_begins_with: string;
-		contains: string;
-		not_contains: string;
-		ends_with: string;
-		not_ends_with: string;
-		is_empty: string;
-		is_not_empty: string;
-		is_null: string;
-		is_not_null: string;
-		any: string;
-	};
+	custom: any; // TODO: Remove
+	delete_group: string;
+	delete_rule: string;
 	errors: {
 		no_filter: string;
 		empty_group: string;
@@ -112,15 +91,36 @@ interface QueryBuilderRegional {
 		operator_not_multiple: string;
 	};
 	invert: string;
-	custom: any; // TODO: Remove
+	operators: {
+		equal: string;
+		not_equal: string;
+		in: string;
+		not_in: string;
+		less: string;
+		less_or_equal: string;
+		greater: string;
+		greater_or_equal: string;
+		between: string;
+		begins_with: string;
+		not_begins_with: string;
+		contains: string;
+		not_contains: string;
+		ends_with: string;
+		not_ends_with: string;
+		is_empty: string;
+		is_not_empty: string;
+		is_null: string;
+		is_not_null: string;
+		any: string;
+	};
 }
 
 interface QueryBuilderExportRule {
-	id: string;
 	field: string;
-	type: string;
+	id: string;
 	input: string;
 	operator: string;
+	type: string;
 	value: any;
 }
 
@@ -134,8 +134,8 @@ interface QueryBuilderExport extends QueryBuilderExportGroup {
 }
 
 interface QueryBuilderJQuery {
-	regional: Record<string, QueryBuilderRegional>;
 	defaults(options: QueryBuilderOptions): void;
+	regional: Record<string, QueryBuilderRegional>;
 
 	(options: QueryBuilderOptions): JQuery;
 	// Methods from QueryBuilderElement
