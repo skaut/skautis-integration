@@ -11,37 +11,57 @@
   "bugs": {
     "url": "https://github.com/skaut/skautis-integration/issues"
   },
-  "license": "proprietary",
-  "author": {
-    "name": "David Odehnal",
-    "email": "info@davidodehnal.cz"
-  },
-  "contributors": [
-    {
-      "name": "Marek Dědič",
-      "email": "marek@dedic.eu",
-      "url": "https://dedic.eu"
-    }
-  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/skaut/skautis-integration.git"
   },
+  "license": "GPL-3.0-or-later",
+  "author": {
+    "name": "Marek Dědič",
+    "email": "marek@dedic.eu",
+    "url": "https://dedic.eu"
+  },
+  "contributors": [
+    {
+      "name": "David Odehnal",
+      "email": "info@davidodehnal.cz"
+    }
+  ],
   "type": "module",
+  "exports": {
+    ".": null
+  },
+  "sideEffects": true,
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "clean": "rimraf dist/*",
     "prebuild": "npm run clean",
     "build": "gulp build",
-    "lint:css:stylelint": "stylelint --color 'src/**/*.css'",
+    "clean": "rimraf dist/*",
+    "lint": "run-p -c --aggregate-output lint:*",
     "lint:css": "run-p -c --aggregate-output lint:css:*",
+    "lint:css:stylelint": "stylelint --color 'src/**/*.css'",
+    "lint:eslint": "eslint --color",
+    "lint:php": "run-p -c --aggregate-output lint:php:*",
     "lint:php:phan": "export PHAN_DISABLE_XDEBUG_WARN=1; vendor/bin/phan",
     "lint:php:phpcs": "vendor/bin/phpcs",
     "lint:php:phpmd": "vendor/bin/phpmd src,.phan/config.php,scoper.inc.php,phpstan-bootstrap.php text phpmd.xml",
     "lint:php:phpstan": "vendor/bin/phpstan",
-    "lint:php": "run-p -c --aggregate-output lint:php:*",
-    "lint:eslint": "eslint --color",
-    "lint": "run-p -c --aggregate-output lint:*",
     "plugin-check": "wp-env start && wp-env run cli wp plugin check skautis-integration --ignore-codes=missing_composer_json_file; CODE=$?; wp-env stop; exit $CODE"
+  },
+  "browserslist": [
+    "extends @wordpress/browserslist-config"
+  ],
+  "dependencies": {
+    "datatables.net": "^3.0.2",
+    "datatables.net-dt": "^3.0.2",
+    "datatables.net-plugins": "^3.0.2",
+    "font-awesome": "^4.7.0",
+    "interactjs": "^1.10.28",
+    "jQuery-QueryBuilder": "^3.0.0",
+    "jquery.repeater": "^1.2.1",
+    "select2": "^4.1.0"
   },
   "devDependencies": {
     "@eslint-community/eslint-plugin-eslint-comments": "^4.7.2",
@@ -80,18 +100,5 @@
     "stylelint-no-unsupported-browser-features": "^8.1.1",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.67.0"
-  },
-  "browserslist": [
-    "extends @wordpress/browserslist-config"
-  ],
-  "dependencies": {
-    "datatables.net": "^3.0.2",
-    "datatables.net-dt": "^3.0.2",
-    "datatables.net-plugins": "^3.0.2",
-    "font-awesome": "^4.7.0",
-    "interactjs": "^1.10.28",
-    "jQuery-QueryBuilder": "^3.0.0",
-    "jquery.repeater": "^1.2.1",
-    "select2": "^4.1.0"
   }
 }
