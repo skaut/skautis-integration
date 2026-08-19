@@ -186,7 +186,7 @@ class Users_Management {
 		Helpers::enqueue_script(
 			'admin-users-management',
 			'admin/js/skautis-admin-users-management.min.js',
-			array( 'jquery', SKAUTIS_INTEGRATION_NAME . '_select2' ),
+			array( 'jquery', SKAUTIS_INTEGRATION_NAME . '_datatables', SKAUTIS_INTEGRATION_NAME . '_select2' ),
 		);
 
 		wp_localize_script(
