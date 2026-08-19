@@ -9,7 +9,7 @@ interface QueryBuilderRuleOrGroup {
 	isRoot(): boolean;
 	getPos(): number;
 	drop(): void;
-	moveAfter(_1: QueryBuilderRule|QueryBuilderGroup): void;
+	moveAfter(_1: QueryBuilderGroup|QueryBuilderRule): void;
 	moveAtBegin(_1: QueryBuilderGroup): void;
 	moveAtEnd(_1: QueryBuilderGroup): void;
 }
@@ -26,7 +26,7 @@ interface QueryBuilderOperator {
 	optgroup: string;
 	nb_inputs: number;
 	multiple: boolean;
-	apply_to: Array<'string'|'number'|'datetime'|'boolean'>
+	apply_to: Array<'boolean'|'datetime'|'number'|'string'>
 }
 
 interface QueryBuilderGroup extends QueryBuilderRuleOrGroup {
@@ -37,11 +37,11 @@ interface QueryBuilderGroup extends QueryBuilderRuleOrGroup {
 	addGroup(_1: JQuery, _2: number): QueryBuilderGroup;
 	addRule(_1: JQuery, _2: number): QueryBuilderRule;
 	each(..._1: any): void;
-	contains(_1: QueryBuilderRule|QueryBuilderGroup, _2: boolean): boolean;
+	contains(_1: QueryBuilderGroup|QueryBuilderRule, _2: boolean): boolean;
 }
 
 interface QueryBuilderValidation {
-	format?: string|RegExp;
+	format?: RegExp|string;
 	min?: number|string;
 	max?: number|string;
 	step?: number;
@@ -125,7 +125,7 @@ interface QueryBuilderExportRule {
 
 interface QueryBuilderExportGroup {
 	condition: string;
-	rules: Array<QueryBuilderExportRule | QueryBuilderExportGroup>
+	rules: Array<QueryBuilderExportGroup|QueryBuilderExportRule>
 }
 
 interface QueryBuilderExport extends QueryBuilderExportGroup {
