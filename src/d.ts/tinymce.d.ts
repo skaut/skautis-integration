@@ -1,1 +1,5 @@
-declare const tinymce: import('tinymce').EditorManager;
+import type { EditorManager } from 'tinymce';
+
+declare global {
+	const tinymce: EditorManager;
+}

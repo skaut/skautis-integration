@@ -12,26 +12,26 @@
 		}
 
 		$('#query_builder').queryBuilder({
+			allow_empty: true,
+			filters: window.skautisQueryBuilderFilters,
+			icons: {
+				add_group: 'fa fa-plus-square',
+				add_rule: 'fa fa-plus-circle',
+				error: 'fa fa-exclamation-triangle',
+				remove_group: 'fa fa-minus-square',
+				remove_rule: 'fa fa-minus-circle',
+			},
 			plugins: {
-				sortable: {
-					icon: 'fa fa-arrows-alt',
-				},
 				'filter-description': {
 					icon: 'fa fa-info-circle',
 					mode: 'inline',
 				},
+				sortable: {
+					icon: 'fa fa-arrows-alt',
+				},
 				'unique-filter': null,
 			},
-			allow_empty: true,
 			rules,
-			icons: {
-				add_group: 'fa fa-plus-square',
-				add_rule: 'fa fa-plus-circle',
-				remove_group: 'fa fa-minus-square',
-				remove_rule: 'fa fa-minus-circle',
-				error: 'fa fa-exclamation-triangle',
-			},
-			filters: window.skautisQueryBuilderFilters,
 		});
 
 		$('#query_builder').on('change', function () {

@@ -11,38 +11,37 @@ interface ModalData {
 function viewport(): { height: number; width: number } {
 	if ('innerWidth' in window) {
 		return {
-			width: window.innerWidth,
 			height: window.innerHeight,
+			width: window.innerWidth,
 		};
 	}
 	return {
-		width: document.documentElement.clientWidth,
 		height: document.documentElement.clientHeight,
+		width: document.documentElement.clientWidth,
 	};
 }
 
 ((): void => {
 	tinymce.addI18n('cs', {
-		shortcode_options: 'Nastavení shortcode',
-		insert_skautis_rules: 'Vložit skautIS pravidlo',
-		select_rules: 'Vyberte pravidla',
 		hidden_content: 'Skrytý obsah',
+		hideContent: 'skrýt obsah',
+		insert_skautis_rules: 'Vložit skautIS pravidlo',
 		rule_1: 'Pravidlo 1',
 		rule_2: 'Pravidlo 2',
 		rule_3: 'Pravidlo 3',
 		rule_4: 'Pravidlo 4',
-		visibilityMode: 'Při nesplění pravidel:',
-		hideContent: 'skrýt obsah',
+		select_rules: 'Vyberte pravidla',
+		shortcode_options: 'Nastavení shortcode',
 		showLogin: 'zobrazit přihlášení',
+		visibilityMode: 'Při nesplění pravidel:',
 	});
 	(tinymce as unknown as typeof TinyMCE).PluginManager.add(
 		'skautis_rules',
 		(editor, url) => {
 			editor.addButton('skautis_rules', {
-				title: 'insert_skautis_rules',
-				image:
-					url +
-					'/../../../../src/modules/Shortcodes/admin/public/img/lilie.png',
+				image: `${
+					url
+				}/../../../../src/modules/Shortcodes/admin/public/img/lilie.png`,
 				onclick: () => {
 					const rules = window.rulesOptions ?? [];
 					const visibilityOptions = window.visibilityOptions;
@@ -50,9 +49,9 @@ function viewport(): { height: number; width: number } {
 					const body = [];
 
 					body.push({
-						type: 'listbox',
-						name: 'content',
 						label: 'visibilityMode',
+						name: 'content',
+						type: 'listbox',
 						values: visibilityOptions,
 					});
 
@@ -65,37 +64,36 @@ function viewport(): { height: number; width: number } {
 						}
 					}
 					body.push({
-						type: 'listbox',
-						name: 'rules1',
 						label: 'rule_1',
+						name: 'rules1',
+						type: 'listbox',
 						values: rulesOptions,
 					});
 					rulesOptions.unshift({ text: '------', value: null });
 					body.push({
-						type: 'listbox',
-						name: 'rules2',
 						label: 'rule_2',
+						name: 'rules2',
+						type: 'listbox',
 						values: rulesOptions,
 					});
 					body.push({
-						type: 'listbox',
-						name: 'rules3',
 						label: 'rule_3',
+						name: 'rules3',
+						type: 'listbox',
 						values: rulesOptions,
 					});
 					body.push({
-						type: 'listbox',
-						name: 'rules4',
 						label: 'rule_4',
+						name: 'rules4',
+						type: 'listbox',
 						values: rulesOptions,
 					});
 
 					editor.windowManager.open(
 						{
-							title: 'shortcode_options',
 							body,
-							minWidth: Math.min(viewport().width, 450),
 							minHeight: Math.min(viewport().height, 250),
+							minWidth: Math.min(viewport().width, 450),
 							onsubmit: (e: JQuery.SubmitEvent) => {
 								const newRules = [];
 								const eventData = e.data as ModalData;
@@ -115,28 +113,28 @@ function viewport(): { height: number; width: number } {
 
 								if (editor.selection.getContent()) {
 									editor.insertContent(
-										'[skautis rules="' +
-											newRules.join(',') +
-											'" content="' +
-											eventData.content +
-											'"]<div>' +
-											editor.selection.getContent() +
-											'</div>[/skautis]'
+										`[skautis rules="${newRules.join(
+											','
+										)}" content="${
+											eventData.content
+										}"]<div>${editor.selection.getContent()}</div>[/skautis]`
 									);
 								} else {
 									editor.insertContent(
-										'[skautis rules="' +
-											newRules.join(',') +
-											'" content="' +
-											eventData.content +
-											'"]<div>Skrytý obsah</div>[/skautis]'
+										`[skautis rules="${newRules.join(
+											','
+										)}" content="${
+											eventData.content
+										}"]<div>Skrytý obsah</div>[/skautis]`
 									);
 								}
 							},
+							title: 'shortcode_options',
 						},
 						{}
 					);
 				},
+				title: 'insert_skautis_rules',
 			});
 		}
 	);

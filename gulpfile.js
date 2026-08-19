@@ -1,7 +1,3 @@
-/* eslint-env node */
-
-import { Transform } from 'node:stream';
-
 import gulp from 'gulp';
 import cleanCSS from 'gulp-clean-css';
 import rename from 'gulp-rename';
@@ -9,6 +5,7 @@ import replace from 'gulp-replace';
 import shell from 'gulp-shell';
 import terser from 'gulp-terser';
 import ts from 'gulp-typescript';
+import { Transform } from 'node:stream';
 
 gulp.task('build:css:admin', () =>
 	gulp
@@ -129,26 +126,27 @@ gulp.task(
 							let contents = String(chunk.contents).split('\n');
 							let mode = 'none';
 							contents = contents.map((line) => {
-								if (/^\s*\);$/g.exec(line)) {
+								let transformedLine = line;
+								if (/^\s*\);$/g.exec(transformedLine)) {
 									mode = 'none';
 								} else if (
 									/^\s*public static \$classMap = array \($/.exec(
-										line
+										transformedLine
 									)
 								) {
 									mode = 'classMap';
 								} else if (mode === 'classMap') {
-									line = line.replace(
+									transformedLine = transformedLine.replace(
 										/^(\s*)'([^']*)' =>/,
 										"$1'Skautis_Integration\\\\Vendor\\\\$2' =>"
 									);
 								} else {
-									line = line.replace(
+									transformedLine = transformedLine.replace(
 										'namespace Composer\\Autoload;',
 										'namespace Skautis_Integration\\Vendor\\Composer\\Autoload;'
 									);
 								}
-								return line;
+								return transformedLine;
 							});
 							chunk.contents = Buffer.from(
 								contents.join('\n'),

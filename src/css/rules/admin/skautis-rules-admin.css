@@ -30,6 +30,8 @@
 	vertical-align: middle;
 	touch-action: manipulation;
 	cursor: pointer;
+
+	/* eslint-disable-next-line css/use-baseline -- no alternative */
 	user-select: none;
 	background-image: none;
 	border: 1px solid transparent;

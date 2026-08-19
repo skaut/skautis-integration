@@ -1,8 +1,9 @@
 /// <reference types="datatables.net"/>
 
 function getQueryStringFromUrl(key: string, url: string): string {
-	key = key.replace(/[[]/, '\\[').replace(/[\]]/, '\\]');
-	const regex = new RegExp('[\\?&]' + key + '=([^&#]*)'),
+	const regex = new RegExp(
+			`[\\?&]${key.replace(/[[]/, '\\[').replace(/[\]]/, '\\]')}=([^&#]*)`
+		),
 		results = regex.exec(url);
 	return results === null
 		? ''
@@ -14,41 +15,34 @@ function updateQueryStringInUrl(
 	value: string,
 	url: string
 ): string {
-	const re = new RegExp('([?&])' + key + '=.*?(&|#|$)(.*)', 'gi');
+	const re = new RegExp(`([?&])${key}=.*?(&|#|$)(.*)`, 'gi');
+	let updatedUrl = url;
 
-	if (re.test(url)) {
+	if (re.test(updatedUrl)) {
 		if (typeof value !== 'undefined') {
-			return url.replace(re, '$1' + key + '=' + value + '$2$3');
+			return updatedUrl.replace(re, `$1${key}=${value}$2$3`);
 		}
-		const hash = url.split('#');
-		url = hash[0].replace(re, '$1$3').replace(/(&|\?)$/, '');
+		const hash = updatedUrl.split('#');
+		updatedUrl = hash[0].replace(re, '$1$3').replace(/(&|\?)$/, '');
 		if (typeof hash[1] !== 'undefined') {
-			url += '#' + hash[1];
+			updatedUrl += `#${hash[1]}`;
 		}
-		return url;
+		return updatedUrl;
 	}
 	if (typeof value !== 'undefined') {
-		const separator = url.includes('?') ? '&' : '?';
-		const hash = url.split('#');
-		url = hash[0] + separator + key + '=' + value;
+		const separator = updatedUrl.includes('?') ? '&' : '?';
+		const hash = updatedUrl.split('#');
+		updatedUrl = `${hash[0] + separator + key}=${value}`;
 		if (typeof hash[1] !== 'undefined') {
-			url += '#' + hash[1];
+			updatedUrl += `#${hash[1]}`;
 		}
-		return url;
+		return updatedUrl;
 	}
-	return url;
+	return updatedUrl;
 }
 
 (($): void => {
 	const $dataTable = $('.skautis-user-management-table').DataTable({
-		pageLength: 25,
-		stateSave: true,
-		language: {
-			ajax:
-				skautisIntegrationAdminUsersManagementLocalize.datatablesFilesUrl +
-				'/cs.json',
-			search: 'Hledat',
-		},
 		initComplete: () => {
 			const searchString = getQueryStringFromUrl(
 				'skautisSearchUsers',
@@ -98,17 +92,25 @@ function updateQueryStringInUrl(
 				$('.dt-search input').val(searchString);
 			}
 		},
+		language: {
+			ajax: `${
+				skautisIntegrationAdminUsersManagementLocalize.datatablesFilesUrl
+			}/cs.json`,
+			search: 'Hledat',
+		},
+		pageLength: 25,
+		stateSave: true,
 	});
 
 	$('.thickbox').on('click', function () {
 		const $this = $(this);
-		let userName =
-			$this.parents('tr').find('.firstName').html() +
-			' ' +
-			$this.parents('tr').find('.lastName').html();
+		let userName = `${$this.parents('tr').find('.firstName').html()} ${$this
+			.parents('tr')
+			.find('.lastName')
+			.html()}`;
 		const nickName = $this.parents('tr').find('.nickName').html();
 		if (nickName) {
-			userName += ' (' + nickName + ')';
+			userName += ` (${nickName})`;
 		}
 
 		$('#connectUserToSkautisModal_username').html(userName);

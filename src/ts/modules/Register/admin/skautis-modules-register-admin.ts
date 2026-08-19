@@ -13,7 +13,7 @@
 
 			for (const item of usedOptions) {
 				$selectRules
-					.find('option[value="' + item + '"]')
+					.find(`option[value="${item}"]`)
 					.attr('disabled', 'disabled');
 			}
 
@@ -39,25 +39,11 @@
 	}
 
 	const $repeater = $('#repeater').repeater({
-		initEmpty: true,
 		defaultValues: {
 			role: $('select[name="role"]')
 				.first()
 				.find('option:selected')
 				.val(),
-		},
-		show() {
-			$(this).slideDown(150);
-			if ($('#repeater').find('[data-repeater-item]').length) {
-				$('.form-table').find('tr').first().find('*').slideUp(200);
-				$('#skautis_integration_modules_register_rulesNotSetHelp').hide(
-					400
-				);
-				$('#skautis_integration_modules_register_rulesSetHelp').show(
-					400
-				);
-			}
-			updateAvailableOptions();
 		},
 		hide(deleteElement) {
 			$(this).slideUp(150, deleteElement);
@@ -79,13 +65,27 @@
 				updateAvailableOptions();
 			}, 250);
 		},
+		initEmpty: true,
+		isFirstItemUndeletable: true,
 		ready: (setIndexes) => {
 			$('#repeater').on(
 				'skautis_modules_register_SortableDrop',
 				setIndexes
 			);
 		},
-		isFirstItemUndeletable: true,
+		show() {
+			$(this).slideDown(150);
+			if ($('#repeater').find('[data-repeater-item]').length) {
+				$('.form-table').find('tr').first().find('*').slideUp(200);
+				$('#skautis_integration_modules_register_rulesNotSetHelp').hide(
+					400
+				);
+				$('#skautis_integration_modules_register_rulesSetHelp').show(
+					400
+				);
+			}
+			updateAvailableOptions();
+		},
 	});
 	$repeater.setList(window.rulesData ?? []);
 

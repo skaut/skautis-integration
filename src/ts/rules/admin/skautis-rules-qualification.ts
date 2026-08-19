@@ -8,21 +8,17 @@ class Qualification {
 	}
 
 	public input(_: QueryBuilderRule, inputName: string): string {
-		let html =
-			'<select class="form-control select2" name="' +
-			inputName +
-			'_1" multiple="multiple">';
+		let html = `<select class="form-control select2" name="${
+			inputName
+		}_1" multiple="multiple">`;
 
 		for (const key in this.qualifications) {
 			if (
 				Object.prototype.hasOwnProperty.call(this.qualifications, key)
 			) {
-				html +=
-					'<option value="' +
-					key +
-					'">' +
-					this.qualifications[key] +
-					'</option>';
+				html += `<option value="${key}">${
+					this.qualifications[key]
+				}</option>`;
 			}
 		}
 
@@ -52,9 +48,9 @@ class Qualification {
 			for (const item of val0) {
 				rule.$el
 					.find(
-						'.rule-value-container [name$=_1] option[value="' +
-							item +
-							'"]'
+						`.rule-value-container [name$=_1] option[value="${
+							item
+						}"]`
 					)
 					.prop('selected', true);
 			}
