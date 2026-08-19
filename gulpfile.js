@@ -1,5 +1,3 @@
-import { Transform } from 'node:stream';
-
 import gulp from 'gulp';
 import cleanCSS from 'gulp-clean-css';
 import rename from 'gulp-rename';
@@ -7,6 +5,7 @@ import replace from 'gulp-replace';
 import shell from 'gulp-shell';
 import terser from 'gulp-terser';
 import ts from 'gulp-typescript';
+import { Transform } from 'node:stream';
 
 gulp.task('build:css:admin', () =>
 	gulp
