@@ -126,26 +126,27 @@ gulp.task(
 							let contents = String(chunk.contents).split('\n');
 							let mode = 'none';
 							contents = contents.map((line) => {
-								if (/^\s*\);$/g.exec(line)) {
+								let transformedLine = line;
+								if (/^\s*\);$/g.exec(transformedLine)) {
 									mode = 'none';
 								} else if (
 									/^\s*public static \$classMap = array \($/.exec(
-										line
+										transformedLine
 									)
 								) {
 									mode = 'classMap';
 								} else if (mode === 'classMap') {
-									line = line.replace(
+									transformedLine = transformedLine.replace(
 										/^(\s*)'([^']*)' =>/,
 										"$1'Skautis_Integration\\\\Vendor\\\\$2' =>"
 									);
 								} else {
-									line = line.replace(
+									transformedLine = transformedLine.replace(
 										'namespace Composer\\Autoload;',
 										'namespace Skautis_Integration\\Vendor\\Composer\\Autoload;'
 									);
 								}
-								return line;
+								return transformedLine;
 							});
 							chunk.contents = Buffer.from(
 								contents.join('\n'),

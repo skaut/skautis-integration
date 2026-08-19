@@ -1,8 +1,11 @@
 /// <reference types="datatables.net"/>
 
 function getQueryStringFromUrl(key: string, url: string): string {
-	key = key.replace(/[[]/, '\\[').replace(/[\]]/, '\\]');
-	const regex = new RegExp('[\\?&]' + key + '=([^&#]*)'),
+	const regex = new RegExp(
+			'[\\?&]' +
+				key.replace(/[[]/, '\\[').replace(/[\]]/, '\\]') +
+				'=([^&#]*)'
+		),
 		results = regex.exec(url);
 	return results === null
 		? ''
@@ -15,28 +18,29 @@ function updateQueryStringInUrl(
 	url: string
 ): string {
 	const re = new RegExp('([?&])' + key + '=.*?(&|#|$)(.*)', 'gi');
+	let updatedUrl = url;
 
-	if (re.test(url)) {
+	if (re.test(updatedUrl)) {
 		if (typeof value !== 'undefined') {
-			return url.replace(re, '$1' + key + '=' + value + '$2$3');
+			return updatedUrl.replace(re, '$1' + key + '=' + value + '$2$3');
 		}
-		const hash = url.split('#');
-		url = hash[0].replace(re, '$1$3').replace(/(&|\?)$/, '');
+		const hash = updatedUrl.split('#');
+		updatedUrl = hash[0].replace(re, '$1$3').replace(/(&|\?)$/, '');
 		if (typeof hash[1] !== 'undefined') {
-			url += '#' + hash[1];
+			updatedUrl += '#' + hash[1];
 		}
-		return url;
+		return updatedUrl;
 	}
 	if (typeof value !== 'undefined') {
-		const separator = url.includes('?') ? '&' : '?';
-		const hash = url.split('#');
-		url = hash[0] + separator + key + '=' + value;
+		const separator = updatedUrl.includes('?') ? '&' : '?';
+		const hash = updatedUrl.split('#');
+		updatedUrl = hash[0] + separator + key + '=' + value;
 		if (typeof hash[1] !== 'undefined') {
-			url += '#' + hash[1];
+			updatedUrl += '#' + hash[1];
 		}
-		return url;
+		return updatedUrl;
 	}
-	return url;
+	return updatedUrl;
 }
 
 (($): void => {
