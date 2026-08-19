@@ -1,11 +1,9 @@
 {
   "compilerOptions": {
-    "target": "es2015",
     "module": "esnext",
     "moduleResolution": "bundler",
+    "target": "es2015",
     "types": ["jqueryui", "select2"],
-
-    "strict": true,
 
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
