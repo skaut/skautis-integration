@@ -44,7 +44,7 @@ function updateQueryStringInUrl(
 		pageLength: 25,
 		stateSave: true,
 		language: {
-			url:
+			ajax:
 				skautisIntegrationAdminUsersManagementLocalize.datatablesFilesUrl +
 				'/cs.json',
 			search: 'Hledat',
