@@ -17,7 +17,7 @@ interface QueryBuilderExport extends QueryBuilderExportGroup {
 
 interface QueryBuilderExportGroup {
 	condition: string;
-	rules: Array<QueryBuilderExportGroup|QueryBuilderExportRule>
+	rules: Array<QueryBuilderExportGroup | QueryBuilderExportRule>;
 }
 
 interface QueryBuilderExportRule {
@@ -34,7 +34,7 @@ interface QueryBuilderGroup extends QueryBuilderRuleOrGroup {
 
 	addRule(_1: JQuery, _2: number): QueryBuilderRule;
 	condition: string;
-	contains(_1: QueryBuilderGroup|QueryBuilderRule, _2: boolean): boolean;
+	contains(_1: QueryBuilderGroup | QueryBuilderRule, _2: boolean): boolean;
 	each(..._1: any): void;
 	empty(): void;
 	length(): number;
@@ -46,12 +46,12 @@ interface QueryBuilderJQuery {
 
 	(options: QueryBuilderOptions): JQuery;
 	// Methods from QueryBuilderElement
-	(methodName: "getRules"): QueryBuilderExport;
+	(methodName: 'getRules'): QueryBuilderExport;
 	// TODO
 }
 
 interface QueryBuilderOperator {
-	apply_to: Array<'boolean'|'datetime'|'number'|'string'>
+	apply_to: Array<'boolean' | 'datetime' | 'number' | 'string'>;
 	multiple: boolean;
 	nb_inputs: number;
 	optgroup: string;
@@ -64,8 +64,8 @@ interface QueryBuilderOptions {
 }
 
 interface QueryBuilderRegional {
-	"__author": string;
-	"__locale": string;
+	__author: string;
+	__locale: string;
 	add_group: string;
 	add_rule: string;
 	conditions: {
@@ -140,7 +140,7 @@ interface QueryBuilderRuleOrGroup {
 
 	isRoot(): boolean;
 	level: number;
-	moveAfter(_1: QueryBuilderGroup|QueryBuilderRule): void;
+	moveAfter(_1: QueryBuilderGroup | QueryBuilderRule): void;
 	moveAtBegin(_1: QueryBuilderGroup): void;
 	moveAtEnd(_1: QueryBuilderGroup): void;
 	parent: QueryBuilderGroup;
@@ -148,10 +148,10 @@ interface QueryBuilderRuleOrGroup {
 
 interface QueryBuilderValidation {
 	allow_empty_value?: boolean;
-	callback?(value: any, rule: QueryBuilderRule): true|string
-	format?: RegExp|string;
-	max?: number|string;
-	messages?: Record<keyof QueryBuilderValidation, string>
-	min?: number|string;
+	callback?(value: any, rule: QueryBuilderRule): true | string;
+	format?: RegExp | string;
+	max?: number | string;
+	messages?: Record<keyof QueryBuilderValidation, string>;
+	min?: number | string;
 	step?: number;
 }
