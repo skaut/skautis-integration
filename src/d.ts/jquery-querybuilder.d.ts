@@ -134,10 +134,10 @@ interface QueryBuilderExport extends QueryBuilderExportGroup {
 }
 
 interface QueryBuilderJQuery {
-	(options: QueryBuilderOptions): JQuery;
 	regional: Record<string, QueryBuilderRegional>;
 	defaults(options: QueryBuilderOptions): void;
 
+	(options: QueryBuilderOptions): JQuery;
 	// Methods from QueryBuilderElement
 	(methodName: "getRules"): QueryBuilderExport;
 	// TODO
