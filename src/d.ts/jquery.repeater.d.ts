@@ -4,14 +4,14 @@ interface JQuery {
 
 interface JQueryRepeater {
 	(fig: JQueryRepeaterOptions): JQueryRepeater;
-	setList: (rows: Array<Record<string, any>>) => void;
+	setList(rows: Array<Record<string, any>>): void;
 }
 
 interface JQueryRepeaterOptions {
 	defaultValues?: Record<string, any>;
-	hide?: (deleteElement: () => void) => void;
+	hide?(deleteElement: () => void): void;
 	initEmpty?: boolean;
 	isFirstItemUndeletable?: boolean;
-	ready?: (setIndexes: () => void) => void;
-	show?: () => void;
+	ready?(setIndexes: () => void): void;
+	show?(): void;
 }

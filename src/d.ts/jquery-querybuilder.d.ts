@@ -148,7 +148,7 @@ interface QueryBuilderRuleOrGroup {
 
 interface QueryBuilderValidation {
 	allow_empty_value?: boolean;
-	callback?: (value: any, rule: QueryBuilderRule) => true|string
+	callback?(value: any, rule: QueryBuilderRule): true|string
 	format?: RegExp|string;
 	max?: number|string;
 	messages?: Record<keyof QueryBuilderValidation, string>
