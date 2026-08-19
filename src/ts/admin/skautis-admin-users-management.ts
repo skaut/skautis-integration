@@ -2,9 +2,7 @@
 
 function getQueryStringFromUrl(key: string, url: string): string {
 	const regex = new RegExp(
-			'[\\?&]' +
-				key.replace(/[[]/, '\\[').replace(/[\]]/, '\\]') +
-				'=([^&#]*)'
+			`[\\?&]${key.replace(/[[]/, '\\[').replace(/[\]]/, '\\]')}=([^&#]*)`
 		),
 		results = regex.exec(url);
 	return results === null
@@ -17,26 +15,26 @@ function updateQueryStringInUrl(
 	value: string,
 	url: string
 ): string {
-	const re = new RegExp('([?&])' + key + '=.*?(&|#|$)(.*)', 'gi');
+	const re = new RegExp(`([?&])${key}=.*?(&|#|$)(.*)`, 'gi');
 	let updatedUrl = url;
 
 	if (re.test(updatedUrl)) {
 		if (typeof value !== 'undefined') {
-			return updatedUrl.replace(re, '$1' + key + '=' + value + '$2$3');
+			return updatedUrl.replace(re, `$1${key}=${value}$2$3`);
 		}
 		const hash = updatedUrl.split('#');
 		updatedUrl = hash[0].replace(re, '$1$3').replace(/(&|\?)$/, '');
 		if (typeof hash[1] !== 'undefined') {
-			updatedUrl += '#' + hash[1];
+			updatedUrl += `#${hash[1]}`;
 		}
 		return updatedUrl;
 	}
 	if (typeof value !== 'undefined') {
 		const separator = updatedUrl.includes('?') ? '&' : '?';
 		const hash = updatedUrl.split('#');
-		updatedUrl = hash[0] + separator + key + '=' + value;
+		updatedUrl = `${hash[0] + separator + key}=${value}`;
 		if (typeof hash[1] !== 'undefined') {
-			updatedUrl += '#' + hash[1];
+			updatedUrl += `#${hash[1]}`;
 		}
 		return updatedUrl;
 	}
@@ -95,9 +93,9 @@ function updateQueryStringInUrl(
 			}
 		},
 		language: {
-			ajax:
-				skautisIntegrationAdminUsersManagementLocalize.datatablesFilesUrl +
-				'/cs.json',
+			ajax: `${
+				skautisIntegrationAdminUsersManagementLocalize.datatablesFilesUrl
+			}/cs.json`,
 			search: 'Hledat',
 		},
 		pageLength: 25,
@@ -106,13 +104,13 @@ function updateQueryStringInUrl(
 
 	$('.thickbox').on('click', function () {
 		const $this = $(this);
-		let userName =
-			$this.parents('tr').find('.firstName').html() +
-			' ' +
-			$this.parents('tr').find('.lastName').html();
+		let userName = `${$this.parents('tr').find('.firstName').html()} ${$this
+			.parents('tr')
+			.find('.lastName')
+			.html()}`;
 		const nickName = $this.parents('tr').find('.nickName').html();
 		if (nickName) {
-			userName += ' (' + nickName + ')';
+			userName += ` (${nickName})`;
 		}
 
 		$('#connectUserToSkautisModal_username').html(userName);

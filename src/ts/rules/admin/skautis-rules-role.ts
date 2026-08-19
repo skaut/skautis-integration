@@ -20,48 +20,37 @@ class Role {
 		this.unitOperators['any'] =
 			jQuery.fn.queryBuilder.regional['cs'].operators.any;
 
-		let html =
-			'<select class="form-control select2" name="' +
-			inputName +
-			'_1" multiple="multiple">';
+		let html = `<select class="form-control select2" name="${
+			inputName
+		}_1" multiple="multiple">`;
 
 		for (const key in this.roles) {
 			if (Object.prototype.hasOwnProperty.call(this.roles, key)) {
-				html +=
-					'<option value="' +
-					key +
-					'">' +
-					this.roles[key] +
-					'</option>';
+				html += `<option value="${key}">${this.roles[key]}</option>`;
 			}
 		}
 
-		html +=
-			'</select><div style="margin-top: 0.6em;">' +
-			skautisIntegrationRulesLocalize.inUnitWithNumber;
-		html +=
-			'<select class="multi-rules form-control skautis-rule-unitnumber-select" name="' +
-			inputName +
-			'_2">';
+		html += `</select><div style="margin-top: 0.6em;">${
+			skautisIntegrationRulesLocalize.inUnitWithNumber
+		}`;
+		html += `<select class="multi-rules form-control skautis-rule-unitnumber-select" name="${
+			inputName
+		}_2">`;
 
 		for (const key in this.unitOperators) {
 			if (Object.prototype.hasOwnProperty.call(this.unitOperators, key)) {
-				html +=
-					'<option value="' +
-					key +
-					'">' +
-					this.unitOperators[key] +
-					'</option>';
+				html += `<option value="${key}">${
+					this.unitOperators[key]
+				}</option>`;
 			}
 		}
 
 		html += '</select><div class="multi-rules input-container">';
-		html +=
-			'<input class="form-control skautis-rule-unitnumber-input" type="text" name="' +
-			inputName +
-			'_3" value="" placeholder="' +
-			skautisIntegrationRulesLocalize.unitNumber +
-			'" />';
+		html += `<input class="form-control skautis-rule-unitnumber-input" type="text" name="${
+			inputName
+		}_3" value="" placeholder="${
+			skautisIntegrationRulesLocalize.unitNumber
+		}" />`;
 		html += '</div></div>';
 		return html;
 	}
@@ -73,19 +62,13 @@ class Role {
 	}
 
 	public valueGetter(rule: QueryBuilderRule): string {
-		return (
-			(
-				rule.$el
-					.find('.rule-value-container [name$=_1]')
-					.val() as Array<string>
-			).toString() +
-			'~' +
-			(rule.$el
-				.find('.rule-value-container [name$=_2]')
-				.val() as string) +
-			'~' +
-			(rule.$el.find('.rule-value-container [name$=_3]').val() as string)
-		);
+		return `${(
+			rule.$el
+				.find('.rule-value-container [name$=_1]')
+				.val() as Array<string>
+		).toString()}~${
+			rule.$el.find('.rule-value-container [name$=_2]').val() as string
+		}~${rule.$el.find('.rule-value-container [name$=_3]').val() as string}`;
 	}
 
 	public valueSetter(rule: QueryBuilderRule, value: string): void {
@@ -97,9 +80,9 @@ class Role {
 			for (const item of val0) {
 				rule.$el
 					.find(
-						'.rule-value-container [name$=_1] option[value="' +
-							item +
-							'"]'
+						`.rule-value-container [name$=_1] option[value="${
+							item
+						}"]`
 					)
 					.prop('selected', true);
 			}

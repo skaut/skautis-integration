@@ -39,9 +39,9 @@ function viewport(): { height: number; width: number } {
 		'skautis_rules',
 		(editor, url) => {
 			editor.addButton('skautis_rules', {
-				image:
-					url +
-					'/../../../../src/modules/Shortcodes/admin/public/img/lilie.png',
+				image: `${
+					url
+				}/../../../../src/modules/Shortcodes/admin/public/img/lilie.png`,
 				onclick: () => {
 					const rules = window.rulesOptions ?? [];
 					const visibilityOptions = window.visibilityOptions;
@@ -113,21 +113,19 @@ function viewport(): { height: number; width: number } {
 
 								if (editor.selection.getContent()) {
 									editor.insertContent(
-										'[skautis rules="' +
-											newRules.join(',') +
-											'" content="' +
-											eventData.content +
-											'"]<div>' +
-											editor.selection.getContent() +
-											'</div>[/skautis]'
+										`[skautis rules="${newRules.join(
+											','
+										)}" content="${
+											eventData.content
+										}"]<div>${editor.selection.getContent()}</div>[/skautis]`
 									);
 								} else {
 									editor.insertContent(
-										'[skautis rules="' +
-											newRules.join(',') +
-											'" content="' +
-											eventData.content +
-											'"]<div>Skrytý obsah</div>[/skautis]'
+										`[skautis rules="${newRules.join(
+											','
+										)}" content="${
+											eventData.content
+										}"]<div>Skrytý obsah</div>[/skautis]`
 									);
 								}
 							},

@@ -13,7 +13,7 @@
 
 			for (const item of usedOptions) {
 				$selectRules
-					.find('option[value="' + item + '"]')
+					.find(`option[value="${item}"]`)
 					.attr('disabled', 'disabled');
 			}
 
