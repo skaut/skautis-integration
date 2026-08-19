@@ -1,8 +1,8 @@
-(function ($): void {
+(($): void => {
 	function updateAvailableOptions(): void {
 		const usedOptions: Array<string> = [];
 
-		setTimeout(function () {
+		setTimeout(() => {
 			const $selectRules = jQuery('.form-table').find('select.rule');
 
 			$selectRules.each(function () {

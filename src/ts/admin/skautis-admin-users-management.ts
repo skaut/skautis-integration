@@ -39,7 +39,7 @@ function updateQueryStringInUrl(
 	return url;
 }
 
-(function ($): void {
+(($): void => {
 	const $dataTable = $('.skautis-user-management-table').DataTable({
 		pageLength: 25,
 		stateSave: true,

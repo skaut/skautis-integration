@@ -1,4 +1,4 @@
-(function ($): void {
+(($): void => {
 	$('#skautis-integration_rules_metabox').hide();
 	$('#postdivrich').hide();
 
@@ -71,9 +71,9 @@
 			return !$('#query_builder').find('.has-error').length;
 		});
 
-		$('#query_builder').on('change.skautis_rules_ui_helper', function () {
+		$('#query_builder').on('change.skautis_rules_ui_helper', () => {
 			$('#query_builder').off('change.skautis_rules_ui_helper');
-			setTimeout(function () {
+			setTimeout(() => {
 				$('#query_builder').on(
 					'change.skautis_rule_unitnumber_select',
 					'.skautis-rule-unitnumber-select',
