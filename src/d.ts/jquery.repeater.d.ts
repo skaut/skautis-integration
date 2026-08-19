@@ -1,10 +1,5 @@
-interface JQueryRepeaterOptions {
-	defaultValues?: Record<string, any>;
-	hide?: (deleteElement: () => void) => void;
-	initEmpty?: boolean;
-	isFirstItemUndeletable?: boolean;
-	ready?: (setIndexes: () => void) => void;
-	show?: () => void;
+interface JQuery {
+	repeater: JQueryRepeater;
 }
 
 interface JQueryRepeater {
@@ -12,6 +7,11 @@ interface JQueryRepeater {
 	setList: (rows: Array<Record<string, any>>) => void;
 }
 
-interface JQuery {
-	repeater: JQueryRepeater;
+interface JQueryRepeaterOptions {
+	defaultValues?: Record<string, any>;
+	hide?: (deleteElement: () => void) => void;
+	initEmpty?: boolean;
+	isFirstItemUndeletable?: boolean;
+	ready?: (setIndexes: () => void) => void;
+	show?: () => void;
 }

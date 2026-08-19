@@ -1,32 +1,32 @@
-interface QueryBuilderRuleOrGroup {
-	$el: JQuery;
-	data: object;
-	drop(): void;
-	error: string;
-	getPos(): number;
+interface HTMLElement {
+	queryBuilder: QueryBuilderElement;
+}
+
+interface JQuery {
+	queryBuilder: QueryBuilderJQuery;
+}
+
+interface QueryBuilderElement {
+	getRules(): QueryBuilderExport;
+	// TODO
+}
+
+interface QueryBuilderExport extends QueryBuilderExportGroup {
+	valid: boolean;
+}
+
+interface QueryBuilderExportGroup {
+	condition: string;
+	rules: Array<QueryBuilderExportGroup|QueryBuilderExportRule>
+}
+
+interface QueryBuilderExportRule {
+	field: string;
 	id: string;
-
-	isRoot(): boolean;
-	level: number;
-	moveAfter(_1: QueryBuilderGroup|QueryBuilderRule): void;
-	moveAtBegin(_1: QueryBuilderGroup): void;
-	moveAtEnd(_1: QueryBuilderGroup): void;
-	parent: QueryBuilderGroup;
-}
-
-interface QueryBuilderRule extends QueryBuilderRuleOrGroup {
-	filter: object;
-	flags: object;
-	operator: QueryBuilderOperator;
-	value: any;
-}
-
-interface QueryBuilderOperator {
-	apply_to: Array<'boolean'|'datetime'|'number'|'string'>
-	multiple: boolean;
-	nb_inputs: number;
-	optgroup: string;
+	input: string;
+	operator: string;
 	type: string;
+	value: any;
 }
 
 interface QueryBuilderGroup extends QueryBuilderRuleOrGroup {
@@ -40,14 +40,22 @@ interface QueryBuilderGroup extends QueryBuilderRuleOrGroup {
 	length(): number;
 }
 
-interface QueryBuilderValidation {
-	allow_empty_value?: boolean;
-	callback?: (value: any, rule: QueryBuilderRule) => true|string
-	format?: RegExp|string;
-	max?: number|string;
-	messages?: Record<keyof QueryBuilderValidation, string>
-	min?: number|string;
-	step?: number;
+interface QueryBuilderJQuery {
+	defaults(options: QueryBuilderOptions): void;
+	regional: Record<string, QueryBuilderRegional>;
+
+	(options: QueryBuilderOptions): JQuery;
+	// Methods from QueryBuilderElement
+	(methodName: "getRules"): QueryBuilderExport;
+	// TODO
+}
+
+interface QueryBuilderOperator {
+	apply_to: Array<'boolean'|'datetime'|'number'|'string'>
+	multiple: boolean;
+	nb_inputs: number;
+	optgroup: string;
+	type: string;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type -- TODO
@@ -115,43 +123,35 @@ interface QueryBuilderRegional {
 	};
 }
 
-interface QueryBuilderExportRule {
-	field: string;
-	id: string;
-	input: string;
-	operator: string;
-	type: string;
+interface QueryBuilderRule extends QueryBuilderRuleOrGroup {
+	filter: object;
+	flags: object;
+	operator: QueryBuilderOperator;
 	value: any;
 }
 
-interface QueryBuilderExportGroup {
-	condition: string;
-	rules: Array<QueryBuilderExportGroup|QueryBuilderExportRule>
+interface QueryBuilderRuleOrGroup {
+	$el: JQuery;
+	data: object;
+	drop(): void;
+	error: string;
+	getPos(): number;
+	id: string;
+
+	isRoot(): boolean;
+	level: number;
+	moveAfter(_1: QueryBuilderGroup|QueryBuilderRule): void;
+	moveAtBegin(_1: QueryBuilderGroup): void;
+	moveAtEnd(_1: QueryBuilderGroup): void;
+	parent: QueryBuilderGroup;
 }
 
-interface QueryBuilderExport extends QueryBuilderExportGroup {
-	valid: boolean;
-}
-
-interface QueryBuilderJQuery {
-	defaults(options: QueryBuilderOptions): void;
-	regional: Record<string, QueryBuilderRegional>;
-
-	(options: QueryBuilderOptions): JQuery;
-	// Methods from QueryBuilderElement
-	(methodName: "getRules"): QueryBuilderExport;
-	// TODO
-}
-
-interface QueryBuilderElement {
-	getRules(): QueryBuilderExport;
-	// TODO
-}
-
-interface JQuery {
-	queryBuilder: QueryBuilderJQuery;
-}
-
-interface HTMLElement {
-	queryBuilder: QueryBuilderElement;
+interface QueryBuilderValidation {
+	allow_empty_value?: boolean;
+	callback?: (value: any, rule: QueryBuilderRule) => true|string
+	format?: RegExp|string;
+	max?: number|string;
+	messages?: Record<keyof QueryBuilderValidation, string>
+	min?: number|string;
+	step?: number;
 }
