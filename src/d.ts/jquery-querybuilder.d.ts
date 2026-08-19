@@ -26,7 +26,7 @@ interface QueryBuilderExportRule {
 	input: string;
 	operator: string;
 	type: string;
-	value: any;
+	value: QueryBuilderValue;
 }
 
 interface QueryBuilderGroup extends QueryBuilderRuleOrGroup {
@@ -35,10 +35,22 @@ interface QueryBuilderGroup extends QueryBuilderRuleOrGroup {
 	addRule(_1: JQuery, _2: number): QueryBuilderRule;
 	condition: string;
 	contains(_1: QueryBuilderGroup | QueryBuilderRule, _2: boolean): boolean;
-	each(..._1: any): void;
+	each(
+		cbRule: QueryBuilderIteratee<QueryBuilderRule>,
+		cbGroup?: QueryBuilderIteratee<QueryBuilderGroup>,
+		context?: object
+	): boolean;
+	each(
+		reverse: boolean,
+		cbRule: QueryBuilderIteratee<QueryBuilderRule>,
+		cbGroup?: QueryBuilderIteratee<QueryBuilderGroup>,
+		context?: object
+	): boolean;
 	empty(): void;
 	length(): number;
 }
+
+type QueryBuilderIteratee<T> = ((node: T) => unknown) | null;
 
 interface QueryBuilderJQuery {
 	defaults(options: QueryBuilderOptions): void;
@@ -72,7 +84,14 @@ interface QueryBuilderRegional {
 		AND: string;
 		OR: string;
 	};
-	custom: any; // TODO: Remove
+	// TODO: Remove
+	custom: {
+		select_placeholder: string;
+		units: {
+			inUnitWithNumber: string;
+			unitNumber: string;
+		};
+	};
 	delete_group: string;
 	delete_rule: string;
 	errors: {
@@ -127,7 +146,7 @@ interface QueryBuilderRule extends QueryBuilderRuleOrGroup {
 	filter: object;
 	flags: object;
 	operator: QueryBuilderOperator;
-	value: any;
+	value: QueryBuilderValue;
 }
 
 interface QueryBuilderRuleOrGroup {
@@ -148,10 +167,13 @@ interface QueryBuilderRuleOrGroup {
 
 interface QueryBuilderValidation {
 	allow_empty_value?: boolean;
-	callback?(value: any, rule: QueryBuilderRule): true | string;
+	callback?(value: QueryBuilderValue, rule: QueryBuilderRule): true | string;
 	format?: RegExp | string;
 	max?: number | string;
 	messages?: Record<keyof QueryBuilderValidation, string>;
 	min?: number | string;
 	step?: number;
 }
+
+type QueryBuilderValue =
+	Array<boolean | number | string> | boolean | number | string;
