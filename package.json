@@ -48,6 +48,7 @@
     "lint:php:phpcs": "vendor/bin/phpcs",
     "lint:php:phpmd": "vendor/bin/phpmd src,.phan/config.php,scoper.inc.php,phpstan-bootstrap.php text phpmd.xml",
     "lint:php:phpstan": "vendor/bin/phpstan",
+    "lint:typecheck": "tsc --noEmit",
     "plugin-check": "wp-env start && wp-env run cli wp plugin check skautis-integration --ignore-codes=missing_composer_json_file; CODE=$?; wp-env stop; exit $CODE"
   },
   "browserslist": [
