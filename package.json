@@ -52,7 +52,8 @@
     "plugin-check": "wp-env start && wp-env run cli wp plugin check skautis-integration --ignore-codes=missing_composer_json_file; CODE=$?; wp-env stop; exit $CODE"
   },
   "browserslist": [
-    "extends @wordpress/browserslist-config"
+    "baseline 2019",
+    "not edge 18"
   ],
   "dependencies": {
     "datatables.net": "^3.0.2",
@@ -74,7 +75,6 @@
     "@types/jqueryui": "^1.12.24",
     "@types/select2": "^4.0.63",
     "@types/tinymce": "^4.6.9",
-    "@wordpress/browserslist-config": "^6.53.0",
     "@wordpress/env": "^11.14.0",
     "@wordpress/eslint-plugin": "^25.9.0",
     "@wordpress/stylelint-config": "^24.2.0",
