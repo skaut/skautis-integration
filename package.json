@@ -41,7 +41,7 @@
     "clean": "rimraf dist/*",
     "lint": "run-p -c --aggregate-output lint:*",
     "lint:css": "run-p -c --aggregate-output lint:css:*",
-    "lint:css:stylelint": "stylelint --color 'src/**/*.css'",
+    "lint:css:stylelint": "stylelint --color --report-needless-disables 'src/**/*.css'",
     "lint:eslint": "eslint --color",
     "lint:php": "run-p -c --aggregate-output lint:php:*",
     "lint:php:phan": "export PHAN_DISABLE_XDEBUG_WARN=1; vendor/bin/phan",
