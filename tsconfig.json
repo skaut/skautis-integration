@@ -2,7 +2,7 @@
   "compilerOptions": {
     "module": "esnext",
     "moduleResolution": "bundler",
-    "target": "es2015",
+    "target": "es2017",
     "types": ["jqueryui", "select2"],
 
     "allowUnreachableCode": false,
