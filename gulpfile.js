@@ -1,16 +1,35 @@
+import browserslist from 'browserslist';
 import gulp from 'gulp';
-import cleanCSS from 'gulp-clean-css';
 import rename from 'gulp-rename';
 import replace from 'gulp-replace';
 import shell from 'gulp-shell';
 import terser from 'gulp-terser';
 import ts from 'gulp-typescript';
+import { browserslistToTargets, transform } from 'lightningcss';
 import { Transform } from 'node:stream';
+
+const cssTargets = browserslistToTargets(browserslist());
+
+// Minifies, and lowers modern syntax and adds prefixes for the browserslist floor.
+const lightningCSS = () =>
+	new Transform({
+		objectMode: true,
+		transform: (file, _encoding, callback) => {
+			const { code } = transform({
+				code: file.contents,
+				filename: file.path,
+				minify: true,
+				targets: cssTargets,
+			});
+			file.contents = Buffer.from(code);
+			callback(null, file);
+		},
+	});
 
 gulp.task('build:css:admin', () =>
 	gulp
 		.src(['src/css/admin/*.css'])
-		.pipe(cleanCSS())
+		.pipe(lightningCSS())
 		.pipe(rename({ suffix: '.min' }))
 		.pipe(gulp.dest('dist/admin/css/'))
 );
@@ -18,7 +37,7 @@ gulp.task('build:css:admin', () =>
 gulp.task('build:css:frontend', () =>
 	gulp
 		.src(['src/css/frontend/*.css'])
-		.pipe(cleanCSS())
+		.pipe(lightningCSS())
 		.pipe(rename({ suffix: '.min' }))
 		.pipe(gulp.dest('dist/frontend/css/'))
 );
@@ -26,7 +45,7 @@ gulp.task('build:css:frontend', () =>
 gulp.task('build:css:modules:Register:admin', () =>
 	gulp
 		.src(['src/css/modules/Register/admin/*.css'])
-		.pipe(cleanCSS())
+		.pipe(lightningCSS())
 		.pipe(rename({ suffix: '.min' }))
 		.pipe(gulp.dest('dist/modules/Register/admin/css/'))
 );
@@ -39,7 +58,7 @@ gulp.task(
 gulp.task('build:css:modules:Shortcodes:admin', () =>
 	gulp
 		.src(['src/css/modules/Shortcodes/admin/*.css'])
-		.pipe(cleanCSS())
+		.pipe(lightningCSS())
 		.pipe(rename({ suffix: '.min' }))
 		.pipe(gulp.dest('dist/modules/Shortcodes/admin/css/'))
 );
@@ -52,7 +71,7 @@ gulp.task(
 gulp.task('build:css:modules:Visibility:admin', () =>
 	gulp
 		.src(['src/css/modules/Visibility/admin/*.css'])
-		.pipe(cleanCSS())
+		.pipe(lightningCSS())
 		.pipe(rename({ suffix: '.min' }))
 		.pipe(gulp.dest('dist/modules/Visibility/admin/css/'))
 );
@@ -74,7 +93,7 @@ gulp.task(
 gulp.task('build:css:rules:admin', () =>
 	gulp
 		.src(['src/css/rules/admin/*.css'])
-		.pipe(cleanCSS())
+		.pipe(lightningCSS())
 		.pipe(rename({ suffix: '.min' }))
 		.pipe(gulp.dest('dist/rules/admin/css/'))
 );
