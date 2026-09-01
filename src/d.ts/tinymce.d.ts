@@ -1,5 +1,5 @@
-import type { EditorManager } from 'tinymce';
+import type * as TinyMCE from 'tinymce';
 
 declare global {
-	const tinymce: EditorManager;
+	const tinymce: TinyMCE.EditorManager & typeof TinyMCE;
 }
