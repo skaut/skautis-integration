@@ -224,5 +224,16 @@ export default tseslint.config(
 				...globals.node,
 			},
 		},
+	},
+	{
+		files: ['scripts/**/*.js'],
+		languageOptions: {
+			globals: {
+				...globals.node,
+			},
+		},
+		rules: {
+			'no-console': 'off', // These are CLI scripts, stdout is their interface
+		},
 	}
 );
