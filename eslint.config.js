@@ -175,7 +175,6 @@ export default tseslint.config(
 				projectService: true,
 				sourceType: 'script',
 			},
-			sourceType: 'script',
 		},
 		rules: {
 			'@typescript-eslint/array-type': ['error', { default: 'generic' }],
