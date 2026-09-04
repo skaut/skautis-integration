@@ -18,6 +18,12 @@ export default tseslint.config(
 	globalIgnores(['dist/', 'package-lock.json', 'vendor/']),
 	packageJson.configs.recommended,
 	{
+		linterOptions: {
+			reportUnusedDisableDirectives: 'error',
+			reportUnusedInlineConfigs: 'error',
+		},
+	},
+	{
 		extends: [css.configs.recommended],
 		files: ['**/*.css'],
 		language: 'css/css',
@@ -79,7 +85,6 @@ export default tseslint.config(
 			'default-case': 'error',
 			'default-case-last': 'error',
 			eqeqeq: 'error',
-			'eslint-comments/no-unused-disable': 'error',
 			'eslint-comments/require-description': [
 				'error',
 				{
@@ -88,6 +93,9 @@ export default tseslint.config(
 			],
 			'func-name-matching': 'error',
 			'guard-for-in': 'error',
+			'jsdoc/multiline-blocks': 'error',
+			'jsdoc/require-yields-check': 'error',
+			'jsdoc/tag-lines': 'error',
 			'logical-assignment-operators': 'error',
 			'new-cap': ['error', { properties: false }],
 			'no-alert': 'error',
