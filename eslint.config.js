@@ -197,7 +197,10 @@ export default tseslint.config(
 			'@typescript-eslint/no-unnecessary-parameter-property-assignment':
 				'error',
 			'@typescript-eslint/no-unnecessary-qualifier': 'error',
-			'@typescript-eslint/no-use-before-define': 'error',
+			'@typescript-eslint/no-use-before-define': [
+				'error',
+				{ functions: false },
+			],
 			'@typescript-eslint/no-useless-default-assignment': 'off',
 			'@typescript-eslint/no-useless-empty-export': 'error',
 			'@typescript-eslint/parameter-properties': 'error',
