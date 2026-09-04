@@ -21,7 +21,6 @@
 				jQuery(this).find('option:selected').removeAttr('disabled');
 			});
 
-			// eslint-disable-next-line @typescript-eslint/no-use-before-define -- Cyclical dependency
 			reinitSelect2();
 		}, 0);
 	}
