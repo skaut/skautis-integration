@@ -10,11 +10,11 @@ import packageJson from 'eslint-plugin-package-json';
 import perfectionist from 'eslint-plugin-perfectionist';
 import preferArrowFunctions from 'eslint-plugin-prefer-arrow-functions';
 import prettierRecommended from 'eslint-plugin-prettier/recommended';
-import { globalIgnores } from 'eslint/config';
+import { defineConfig, globalIgnores } from 'eslint/config';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
-export default tseslint.config(
+export default defineConfig(
 	globalIgnores(['dist/', 'package-lock.json', 'vendor/']),
 	packageJson.configs.recommended,
 	{
@@ -43,6 +43,7 @@ export default tseslint.config(
 		language: 'markdown/commonmark',
 	},
 	{
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- @wordpress/eslint-plugin's untyped recommended config makes this array any[]
 		extends: [
 			js.configs.recommended,
 			prettierRecommended,
@@ -51,6 +52,7 @@ export default tseslint.config(
 			tseslint.configs.strict,
 			tseslint.configs.stylistic,
 			perfectionist.configs['recommended-natural'],
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access -- @wordpress/eslint-plugin ships no types
 			wordpress.configs.recommended,
 		],
 		files: ['**/*.js', '**/*.ts'],
