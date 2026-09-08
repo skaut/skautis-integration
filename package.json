@@ -59,7 +59,7 @@
     "not edge 18"
   ],
   "dependencies": {
-    "datatables.net": "^3.0.2",
+    "datatables.net": "^3.0.3",
     "datatables.net-dt": "^3.0.2",
     "datatables.net-plugins": "^3.0.2",
     "font-awesome": "^4.7.0",
