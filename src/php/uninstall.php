@@ -36,7 +36,7 @@ delete_option( 'skautis-integration_modules_visibility_postTypes' );
 delete_option( 'skautis-integration_modules_visibility_visibilityMode' );
 delete_option( 'skautis-integration_modules_visibility_includeChildren' );
 
-// defined in src/rules/class-revisions.php.
+// defined in src/migrations/class-autosave-meta-cleanup.php.
 delete_option( 'skautis_integration_autosave_meta_cleaned' );
 
 flush_rewrite_rules();

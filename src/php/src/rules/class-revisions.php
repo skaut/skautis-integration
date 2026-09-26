@@ -29,8 +29,6 @@ class Revisions {
 	 * @return void
 	 */
 	protected static function init_hooks() {
-		add_action( 'admin_init', array( self::class, 'cleanup_duplicated_autosave_meta' ) );
-
 		add_action( 'wp_restore_post_revision', array( self::class, 'restore_revision' ), 10, 2 );
 		add_filter( 'wp_save_post_revision_post_has_changed', array( self::class, 'post_has_changed' ), 10, 3 );
 
@@ -228,52 +226,5 @@ class Revisions {
 		}
 
 		return $post_has_changed;
-	}
-
-	/**
-	 * Removes metadata duplicated on autosaves by older versions of the plugin.
-	 *
-	 * Older versions of the plugin re-added all the metadata of an autosave every time it was overwritten, doubling the number of rows each time. This removes rows that duplicate another row with the same key and value on the same autosave. It runs once.
-	 *
-	 * @see https://github.com/skaut/skautis-integration/issues/1568
-	 *
-	 * @return void
-	 */
-	public static function cleanup_duplicated_autosave_meta() {
-		if ( false !== get_option( 'skautis_integration_autosave_meta_cleaned' ) ) {
-			return;
-		}
-
-		global $wpdb;
-
-		// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-		$autosave_ids = $wpdb->get_col(
-			$wpdb->prepare(
-				"SELECT DISTINCT duplicate.post_id FROM {$wpdb->postmeta} AS duplicate
-				INNER JOIN {$wpdb->postmeta} AS original ON original.post_id = duplicate.post_id AND original.meta_key = duplicate.meta_key AND original.meta_value = duplicate.meta_value AND original.meta_id < duplicate.meta_id
-				INNER JOIN {$wpdb->posts} AS autosave ON autosave.ID = duplicate.post_id
-				WHERE autosave.post_type = 'revision' AND autosave.post_name LIKE %s AND duplicate.meta_key NOT LIKE %s",
-				'%' . $wpdb->esc_like( '-autosave-v1' ),
-				$wpdb->esc_like( '_' ) . '%'
-			)
-		);
-		if ( count( $autosave_ids ) > 0 ) {
-			$wpdb->query(
-				$wpdb->prepare(
-					"DELETE duplicate FROM {$wpdb->postmeta} AS duplicate
-					INNER JOIN {$wpdb->postmeta} AS original ON original.post_id = duplicate.post_id AND original.meta_key = duplicate.meta_key AND original.meta_value = duplicate.meta_value AND original.meta_id < duplicate.meta_id
-					INNER JOIN {$wpdb->posts} AS autosave ON autosave.ID = duplicate.post_id
-					WHERE autosave.post_type = 'revision' AND autosave.post_name LIKE %s AND duplicate.meta_key NOT LIKE %s",
-					'%' . $wpdb->esc_like( '-autosave-v1' ),
-					$wpdb->esc_like( '_' ) . '%'
-				)
-			);
-			foreach ( $autosave_ids as $autosave_id ) {
-				clean_post_cache( intval( $autosave_id ) );
-			}
-		}
-		// phpcs:enable
-
-		update_option( 'skautis_integration_autosave_meta_cleaned', true );
 	}
 }
