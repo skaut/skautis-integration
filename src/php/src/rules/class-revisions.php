@@ -29,12 +29,41 @@ class Revisions {
 	 * @return void
 	 */
 	protected static function init_hooks() {
-		add_action( 'save_post', array( self::class, 'save_post' ), 10 );
+		add_action( 'admin_init', array( self::class, 'cleanup_duplicated_autosave_meta' ) );
+
 		add_action( 'wp_restore_post_revision', array( self::class, 'restore_revision' ), 10, 2 );
 		add_filter( 'wp_save_post_revision_post_has_changed', array( self::class, 'post_has_changed' ), 10, 3 );
 
-		add_filter( '_wp_post_revision_fields', array( self::class, 'fields' ), 10, 1 );
+		add_filter( '_wp_post_revision_fields', array( self::class, 'fields' ), 10, 2 );
 		add_filter( '_wp_post_revision_field_custom_fields', array( self::class, 'field' ), 10, 3 );
+	}
+
+	/**
+	 * Checks whether a post (or a revision of a post) is a rule.
+	 *
+	 * @param \WP_Post|array<string, mixed>|int|null $post The post, its ID, or its data in an array.
+	 *
+	 * @return bool Whether the post is a rule.
+	 */
+	private static function is_rule( $post ): bool {
+		if ( is_array( $post ) ) {
+			$post = isset( $post['ID'] ) && is_numeric( $post['ID'] ) ? intval( $post['ID'] ) : null;
+		}
+		if ( null === $post ) {
+			return false;
+		}
+		$post = get_post( $post );
+		if ( ! ( $post instanceof \WP_Post ) ) {
+			return false;
+		}
+		if ( 'revision' === $post->post_type ) {
+			$post = get_post( $post->post_parent );
+			if ( ! ( $post instanceof \WP_Post ) ) {
+				return false;
+			}
+		}
+
+		return Rules_Init::RULES_TYPE_SLUG === $post->post_type;
 	}
 
 	/**
@@ -131,13 +160,17 @@ class Revisions {
 	}
 
 	/**
-	 * Adds the field "custom_fields" to post revisions.
+	 * Adds the field "custom_fields" to rule revisions.
 	 *
-	 * @param array<string> $fields A list of post revision fields.
+	 * @param array<string>                      $fields A list of post revision fields.
+	 * @param \WP_Post|array<string, mixed>|null $post The post the fields are for.
 	 *
 	 * @return array<string> The updated list.
 	 */
-	public static function fields( array $fields = array() ): array {
+	public static function fields( array $fields = array(), $post = null ): array {
+		if ( ! self::is_rule( $post ) ) {
+			return $fields;
+		}
 		$fields['custom_fields'] = __( 'Další pole', 'skautis-integration' );
 
 		return $fields;
@@ -152,6 +185,9 @@ class Revisions {
 	 * @return void
 	 */
 	public static function restore_revision( int $post_id, int $revision_id ) {
+		if ( ! self::is_rule( $post_id ) ) {
+			return;
+		}
 		$meta = self::get_meta( $revision_id );
 		self::delete_meta( $post_id );
 		self::insert_meta( $post_id, $meta );
@@ -170,22 +206,6 @@ class Revisions {
 	}
 
 	/**
-	 * Resets metadata whan saving a posr revision.
-	 *
-	 * TODO: Why is this done?
-	 *
-	 * @param int $post_id The ID of the post in question.
-	 *
-	 * @return void
-	 */
-	public static function save_post( int $post_id ) {
-		if ( false !== wp_is_post_revision( $post_id ) ) {
-			$meta = self::get_meta( $post_id );
-			self::insert_meta( $post_id, $meta );
-		}
-	}
-
-	/**
 	 * Checks whether the post metadata has changed from the last revision.
 	 *
 	 * This function gets called when deciding whether to save a new revision - a new revision is saved only when the post has changed since the last revision.
@@ -195,7 +215,7 @@ class Revisions {
 	 * @param \WP_Post $post The current version of the post.
 	 */
 	public static function post_has_changed( bool $post_has_changed, \WP_Post $last_revision, \WP_Post $post ): bool {
-		if ( ! $post_has_changed ) {
+		if ( ! $post_has_changed && self::is_rule( $post ) ) {
 			$meta     = self::get_meta( $last_revision->ID );
 			$meta_new = self::get_meta( $post->ID );
 
@@ -208,5 +228,52 @@ class Revisions {
 		}
 
 		return $post_has_changed;
+	}
+
+	/**
+	 * Removes metadata duplicated on autosaves by older versions of the plugin.
+	 *
+	 * Older versions of the plugin re-added all the metadata of an autosave every time it was overwritten, doubling the number of rows each time. This removes rows that duplicate another row with the same key and value on the same autosave. It runs once.
+	 *
+	 * @see https://github.com/skaut/skautis-integration/issues/1568
+	 *
+	 * @return void
+	 */
+	public static function cleanup_duplicated_autosave_meta() {
+		if ( false !== get_option( 'skautis_integration_autosave_meta_cleaned' ) ) {
+			return;
+		}
+
+		global $wpdb;
+
+		// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		$autosave_ids = $wpdb->get_col(
+			$wpdb->prepare(
+				"SELECT DISTINCT duplicate.post_id FROM {$wpdb->postmeta} AS duplicate
+				INNER JOIN {$wpdb->postmeta} AS original ON original.post_id = duplicate.post_id AND original.meta_key = duplicate.meta_key AND original.meta_value = duplicate.meta_value AND original.meta_id < duplicate.meta_id
+				INNER JOIN {$wpdb->posts} AS autosave ON autosave.ID = duplicate.post_id
+				WHERE autosave.post_type = 'revision' AND autosave.post_name LIKE %s AND duplicate.meta_key NOT LIKE %s",
+				'%' . $wpdb->esc_like( '-autosave-v1' ),
+				$wpdb->esc_like( '_' ) . '%'
+			)
+		);
+		if ( count( $autosave_ids ) > 0 ) {
+			$wpdb->query(
+				$wpdb->prepare(
+					"DELETE duplicate FROM {$wpdb->postmeta} AS duplicate
+					INNER JOIN {$wpdb->postmeta} AS original ON original.post_id = duplicate.post_id AND original.meta_key = duplicate.meta_key AND original.meta_value = duplicate.meta_value AND original.meta_id < duplicate.meta_id
+					INNER JOIN {$wpdb->posts} AS autosave ON autosave.ID = duplicate.post_id
+					WHERE autosave.post_type = 'revision' AND autosave.post_name LIKE %s AND duplicate.meta_key NOT LIKE %s",
+					'%' . $wpdb->esc_like( '-autosave-v1' ),
+					$wpdb->esc_like( '_' ) . '%'
+				)
+			);
+			foreach ( $autosave_ids as $autosave_id ) {
+				clean_post_cache( intval( $autosave_id ) );
+			}
+		}
+		// phpcs:enable
+
+		update_option( 'skautis_integration_autosave_meta_cleaned', true );
 	}
 }
