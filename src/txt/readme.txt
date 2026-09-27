@@ -4,7 +4,7 @@ Tags: SkautIS, login, registration, skaut
 Requires at least: 5.0
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.1.31
+Stable tag: 1.1.32
 License: GPLv3 or later
 License URI: https://github.com/skaut/skautis-integration/blob/master/LICENSE
 
@@ -42,6 +42,14 @@ See our [documentation](https://napoveda.skaut.cz/skautis/skautis-integration) (
 
 
 == Changelog ==
+
+= 1.1.32 =
+* Support for WordPress 6.9, 7.0 and 7.1
+* Updated DataTables to version 3
+* Fixed autosaves duplicating post meta
+* Fixed the TinyMCE shortcode button failing to load
+* Security hardening against direct file access
+* Dropped support for browsers without ES2017 support
 
 = 1.1.31 =
 * Disabled SkautIS ID check due to issues in SkautIS
