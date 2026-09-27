@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "908b2204a46a9bcb7a3ae2ae6f02453b",
+    "content-hash": "74a44048b8f6cb6a3b0d9658001f82a3",
     "packages": [
         {
             "name": "skautis/skautis",
@@ -2033,16 +2033,16 @@
         },
         {
             "name": "skaut/wordpress-stubs",
-            "version": "2.13.0",
+            "version": "2.15.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/skaut/wordpress-stubs.git",
-                "reference": "365c51ea264d9cbf1f198345aea30708dc773db9"
+                "reference": "81199d188e9ca212ba9d14d6fd5071b679bbb789"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/skaut/wordpress-stubs/zipball/365c51ea264d9cbf1f198345aea30708dc773db9",
-                "reference": "365c51ea264d9cbf1f198345aea30708dc773db9",
+                "url": "https://api.github.com/repos/skaut/wordpress-stubs/zipball/81199d188e9ca212ba9d14d6fd5071b679bbb789",
+                "reference": "81199d188e9ca212ba9d14d6fd5071b679bbb789",
                 "shasum": ""
             },
             "require": {
@@ -2050,7 +2050,7 @@
             },
             "require-dev": {
                 "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
-                "phan/phan": "^5.0",
+                "phan/phan": "^6.0",
                 "phpstan/phpstan": "^2.1",
                 "slevomat/coding-standard": "^8.14",
                 "squizlabs/php_codesniffer": "^3.0",
@@ -2088,7 +2088,7 @@
                 "source": "https://github.com/skaut/wordpress-stubs",
                 "wiki": "https://github.com/skaut/wordpress-stubs/wiki"
             },
-            "time": "2025-03-24T09:12:01+00:00"
+            "time": "2026-09-27T10:11:10+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
@@ -3803,5 +3803,5 @@
         "php": "^7.4 || ^8.0"
     },
     "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }
