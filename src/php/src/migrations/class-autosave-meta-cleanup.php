@@ -48,6 +48,7 @@ class Autosave_Meta_Cleanup {
 
 		global $wpdb;
 
+		// Finds all autosaves with at least one duplicated non-hidden meta row.
 		// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$autosave_ids = $wpdb->get_col(
 			$wpdb->prepare(
@@ -59,23 +60,41 @@ class Autosave_Meta_Cleanup {
 				$wpdb->esc_like( '_' ) . '%'
 			)
 		);
-		if ( count( $autosave_ids ) > 0 ) {
-			$wpdb->query(
-				$wpdb->prepare(
-					"DELETE duplicate FROM {$wpdb->postmeta} AS duplicate
-					INNER JOIN {$wpdb->postmeta} AS original ON original.post_id = duplicate.post_id AND original.meta_key = duplicate.meta_key AND original.meta_value = duplicate.meta_value AND original.meta_id < duplicate.meta_id
-					INNER JOIN {$wpdb->posts} AS autosave ON autosave.ID = duplicate.post_id
-					WHERE autosave.post_type = 'revision' AND autosave.post_name LIKE %s AND duplicate.meta_key NOT LIKE %s",
-					'%' . $wpdb->esc_like( '-autosave-v1' ),
-					$wpdb->esc_like( '_' ) . '%'
-				)
-			);
-			foreach ( $autosave_ids as $autosave_id ) {
-				clean_post_cache( intval( $autosave_id ) );
-			}
-		}
 		// phpcs:enable
 
+		foreach ( $autosave_ids as $autosave_id ) {
+			self::remove_duplicated_meta( intval( $autosave_id ) );
+		}
+
 		update_option( 'skautis_integration_autosave_meta_cleaned', true );
+	}
+
+	/**
+	 * Removes duplicated non-hidden metadata values from an autosave.
+	 *
+	 * The `*_metadata()` functions are used instead of the `*_post_meta()` ones, as those operate on the parent post when given a revision.
+	 *
+	 * @param int $autosave_id The ID of the autosave.
+	 *
+	 * @return void
+	 */
+	private static function remove_duplicated_meta( int $autosave_id ) {
+		$meta = get_metadata( 'post', $autosave_id );
+		if ( ! is_array( $meta ) ) {
+			return;
+		}
+
+		// Without a key, get_metadata() returns the values still serialized, so they can be compared as strings.
+		foreach ( $meta as $meta_key => $meta_values ) {
+			$unique_values = array_unique( $meta_values );
+			if ( '_' === $meta_key[0] || count( $unique_values ) === count( $meta_values ) ) {
+				continue;
+			}
+
+			delete_metadata( 'post', $autosave_id, $meta_key );
+			foreach ( $unique_values as $meta_value ) {
+				add_metadata( 'post', $autosave_id, $meta_key, wp_slash( maybe_unserialize( $meta_value ) ) );
+			}
+		}
 	}
 }
