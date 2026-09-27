@@ -207,7 +207,7 @@ class Users {
 						if ( isset( $reg_result[1], $reg_result[2] ) ) {
 							$user->firstName = $reg_result[2];
 							$user->lastName  = $reg_result[1];
-							if ( isset( $reg_result[4] ) && '' !== $reg_result[4] ) {
+							if ( '' !== $reg_result[4] ) {
 								$user->nickName = $reg_result[4];
 							}
 						}
