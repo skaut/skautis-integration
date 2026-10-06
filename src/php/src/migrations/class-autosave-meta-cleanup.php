@@ -17,6 +17,16 @@ namespace Skautis_Integration\Migrations;
 class Autosave_Meta_Cleanup {
 
 	/**
+	 * The maximum number of rows removed by one query.
+	 */
+	const BATCH_SIZE = 10000;
+
+	/**
+	 * The time in seconds after which the cleanup stops and continues on the next request.
+	 */
+	const TIME_LIMIT = 5;
+
+	/**
 	 * Constructs the service and saves all dependencies.
 	 */
 	public function __construct() {
@@ -35,7 +45,9 @@ class Autosave_Meta_Cleanup {
 	/**
 	 * Removes metadata duplicated on autosaves by older versions of the plugin.
 	 *
-	 * Older versions of the plugin re-added all the metadata of an autosave every time it was overwritten, doubling the number of rows each time. This removes rows that duplicate another row with the same key and value on the same autosave. It runs once.
+	 * Older versions of the plugin re-added all the metadata of an autosave every time it was overwritten, doubling the number of rows each time. This removes rows that duplicate another row with the same key and value on the same autosave.
+	 *
+	 * An autosave can have millions of such rows, so they are never loaded into PHP and every query only touches a limited number of them. If the cleanup doesn't finish within the time limit, it continues on the next admin request. Once it finishes, it doesn't run again.
 	 *
 	 * @see https://github.com/skaut/skautis-integration/issues/1568
 	 *
@@ -48,53 +60,84 @@ class Autosave_Meta_Cleanup {
 
 		global $wpdb;
 
-		// Finds all autosaves with at least one duplicated non-hidden meta row.
 		// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$autosave_ids = $wpdb->get_col(
 			$wpdb->prepare(
-				"SELECT DISTINCT duplicate.post_id FROM {$wpdb->postmeta} AS duplicate
-				INNER JOIN {$wpdb->postmeta} AS original ON original.post_id = duplicate.post_id AND original.meta_key = duplicate.meta_key AND original.meta_value = duplicate.meta_value AND original.meta_id < duplicate.meta_id
-				INNER JOIN {$wpdb->posts} AS autosave ON autosave.ID = duplicate.post_id
-				WHERE autosave.post_type = 'revision' AND autosave.post_name LIKE %s AND duplicate.meta_key NOT LIKE %s",
-				'%' . $wpdb->esc_like( '-autosave-v1' ),
-				$wpdb->esc_like( '_' ) . '%'
+				"SELECT ID FROM {$wpdb->posts} WHERE post_type = 'revision' AND post_name LIKE %s",
+				'%' . $wpdb->esc_like( '-autosave-v1' )
 			)
 		);
 		// phpcs:enable
 
+		$deadline = microtime( true ) + self::TIME_LIMIT;
 		foreach ( $autosave_ids as $autosave_id ) {
-			self::remove_duplicated_meta( intval( $autosave_id ) );
+			if ( ! self::remove_duplicated_meta( intval( $autosave_id ), $deadline ) ) {
+				return;
+			}
 		}
 
 		update_option( 'skautis_integration_autosave_meta_cleaned', true );
 	}
 
 	/**
-	 * Removes duplicated non-hidden metadata values from an autosave.
+	 * Removes duplicated non-hidden metadata from an autosave.
 	 *
-	 * The `*_metadata()` functions are used instead of the `*_post_meta()` ones, as those operate on the parent post when given a revision.
+	 * Goes through the metadata rows in the order they were added. For each row, all later rows with the same key and value are removed, so only the first occurrence of each value is kept. The key and value are compared as binary strings, as the database collation would treat e.g. values differing only in case as equal.
 	 *
-	 * @param int $autosave_id The ID of the autosave.
+	 * @param int   $autosave_id The ID of the autosave.
+	 * @param float $deadline The time (as returned by `microtime( true )`) after which no new query is started.
 	 *
-	 * @return void
+	 * @return bool Whether the autosave was fully cleaned up before the deadline.
 	 */
-	private static function remove_duplicated_meta( int $autosave_id ) {
-		$meta = get_metadata( 'post', $autosave_id );
-		if ( ! is_array( $meta ) ) {
-			return;
-		}
+	private static function remove_duplicated_meta( int $autosave_id, float $deadline ) {
+		global $wpdb;
 
-		// Without a key, get_metadata() returns the values still serialized, so they can be compared as strings.
-		foreach ( $meta as $meta_key => $meta_values ) {
-			$unique_values = array_unique( $meta_values );
-			if ( '_' === $meta_key[0] || count( $unique_values ) === count( $meta_values ) ) {
-				continue;
+		$last_meta_id = 0;
+		$finished     = false;
+		// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		while ( microtime( true ) <= $deadline ) {
+			$meta = $wpdb->get_row(
+				$wpdb->prepare(
+					"SELECT meta_id, meta_key, meta_value FROM {$wpdb->postmeta} WHERE post_id = %d AND meta_id > %d AND meta_key NOT LIKE %s ORDER BY meta_id LIMIT 1",
+					$autosave_id,
+					$last_meta_id,
+					$wpdb->esc_like( '_' ) . '%'
+				),
+				ARRAY_A
+			);
+			if ( ! is_array( $meta ) ) {
+				$finished = true;
+				break;
 			}
 
-			delete_metadata( 'post', $autosave_id, $meta_key );
-			foreach ( $unique_values as $meta_value ) {
-				add_metadata( 'post', $autosave_id, $meta_key, wp_slash( maybe_unserialize( $meta_value ) ) );
-			}
+			/**
+			 * The query selects exactly these columns.
+			 *
+			 * @var array{meta_id: string, meta_key: string, meta_value: string} $meta
+			 */
+			$last_meta_id = intval( $meta['meta_id'] );
+			do {
+				if ( microtime( true ) > $deadline ) {
+					break 2;
+				}
+				$removed = $wpdb->query(
+					$wpdb->prepare(
+						"DELETE FROM {$wpdb->postmeta} WHERE post_id = %d AND meta_id > %d AND meta_key = BINARY %s AND meta_value = BINARY %s LIMIT %d",
+						$autosave_id,
+						$last_meta_id,
+						$meta['meta_key'],
+						$meta['meta_value'],
+						self::BATCH_SIZE
+					)
+				);
+				if ( false === $removed ) {
+					break 2;
+				}
+			} while ( self::BATCH_SIZE === $removed );
 		}
+		// phpcs:enable
+
+		wp_cache_delete( $autosave_id, 'post_meta' );
+		return $finished;
 	}
 }
