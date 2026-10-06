@@ -4,7 +4,7 @@ Tags: SkautIS, login, registration, skaut
 Requires at least: 5.0
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.1.32
+Stable tag: 1.1.33
 License: GPLv3 or later
 License URI: https://github.com/skaut/skautis-integration/blob/master/LICENSE
 
@@ -42,6 +42,9 @@ See our [documentation](https://napoveda.skaut.cz/skautis/skautis-integration) (
 
 
 == Changelog ==
+
+= 1.1.33 =
+* Fixed the cleanup of duplicated autosave post meta running out of memory on large sites
 
 = 1.1.32 =
 * Support for WordPress 6.9, 7.0 and 7.1
