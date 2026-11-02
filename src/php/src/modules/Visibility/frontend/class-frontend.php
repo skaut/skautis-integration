@@ -141,7 +141,7 @@ final class Frontend {
 	 *
 	 * @return array<array{id: int, rules: array<array{skautis-integration_rules: string}>, includeChildren: string, visibilityMode: string}> The post ancestors.
 	 */
-	private static function get_rules_from_parent_posts_with_impact_by_child_post_id( int $child_post_id, $post_type ): array {
+	private static function get_parent_rules_affecting_child( int $child_post_id, $post_type ): array {
 		$ancestors = self::get_posts_hierarchy_tree_with_rules( $child_post_id, $post_type );
 
 		$ancestors = array_filter(
@@ -271,7 +271,7 @@ final class Frontend {
 	/**
 	 * Returns a list of post ancestors that have rules that should apply to the current post with said rules.
 	 *
-	 * TODO: How is this different from get_rules_from_parent_posts_with_impact_by_child_post_id?
+	 * TODO: How is this different from get_parent_rules_affecting_child?
 	 *
 	 * @param int    $child_post_id The ID of the root post.
 	 * @param string $child_post_type The type of the root post.
@@ -283,7 +283,7 @@ final class Frontend {
 	public function get_parent_posts_with_rules( int $child_post_id, string $child_post_type ): array {
 		$result = array();
 
-		$parent_posts_with_rules = self::get_rules_from_parent_posts_with_impact_by_child_post_id( $child_post_id, $child_post_type );
+		$parent_posts_with_rules = self::get_parent_rules_affecting_child( $child_post_id, $child_post_type );
 
 		foreach ( $parent_posts_with_rules as $parent_post_with_rules ) {
 			$result[ $parent_post_with_rules['id'] ] = array(
@@ -333,7 +333,7 @@ final class Frontend {
 					$rules_groups = array();
 
 					if ( $wp_post->post_parent > 0 ) {
-						$rules_groups = self::get_rules_from_parent_posts_with_impact_by_child_post_id( $wp_post->ID, $wp_post->post_type );
+						$rules_groups = self::get_parent_rules_affecting_child( $wp_post->ID, $wp_post->post_type );
 					}
 
 					$current_post_rules = (array) get_post_meta( $wp_post->ID, SKAUTIS_INTEGRATION_NAME . '_rules', true );

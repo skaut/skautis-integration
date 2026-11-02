@@ -9,6 +9,8 @@ declare( strict_types=1 );
 
 namespace Skautis_Integration\Auth;
 
+use PHPMD\Attribute\SuppressWarnings;
+use PHPMD\Rule\Design\ExitExpression;
 use Skautis_Integration\General\Actions;
 use Skautis_Integration\Utils\Helpers;
 use Skautis_Integration\Utils\Request_Parameter_Helpers;
@@ -50,9 +52,8 @@ final class Connect_And_Disconnect_WP_Account {
 	 * @param int $skautis_user_id The SkautIS user ID.
 	 *
 	 * @return void
-	 *
-	 * @SuppressWarnings("PHPMD.ExitExpression")
 	 */
+	#[SuppressWarnings( ExitExpression::class )]
 	private function set_skautis_user_id_to_wp_account( int $wp_user_id, int $skautis_user_id ) {
 		$return_url = Helpers::get_return_url();
 		if ( ! is_null( $return_url ) ) {
@@ -109,9 +110,8 @@ final class Connect_And_Disconnect_WP_Account {
 	 * @see Actions::auth_actions_router() for more details about how this function gets called.
 	 *
 	 * @return void
-	 *
-	 * @SuppressWarnings("PHPMD.ExitExpression")
 	 */
+	#[SuppressWarnings( ExitExpression::class )]
 	public function connect() {
 		if ( ! $this->skautis_login->is_user_logged_in_skautis() ) {
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing
@@ -185,9 +185,8 @@ final class Connect_And_Disconnect_WP_Account {
 	 * @see Actions::auth_actions_router() for more details about how this function gets called.
 	 *
 	 * @return void
-	 *
-	 * @SuppressWarnings("PHPMD.ExitExpression")
 	 */
+	#[SuppressWarnings( ExitExpression::class )]
 	public function disconnect() {
 		if ( is_user_logged_in() ) {
 			$return_url = Helpers::get_return_url();

@@ -9,6 +9,8 @@ declare( strict_types=1 );
 
 namespace Skautis_Integration\Auth;
 
+use PHPMD\Attribute\SuppressWarnings;
+use PHPMD\Rule\Design\ExitExpression;
 use Skautis_Integration\Utils\Helpers;
 
 /**
@@ -85,9 +87,8 @@ final class Skautis_Login {
 	 * @see Actions::auth_actions_router() for more details about how this function gets called.
 	 *
 	 * @return void
-	 *
-	 * @SuppressWarnings("PHPMD.ExitExpression")
 	 */
+	#[SuppressWarnings( ExitExpression::class )]
 	public function login() {
 		$return_url = Helpers::get_login_logout_redirect();
 
@@ -114,9 +115,8 @@ final class Skautis_Login {
 	 * Fires upon redirect back from SkautIS login and processes the login.
 	 *
 	 * @return void
-	 *
-	 * @SuppressWarnings("PHPMD.ExitExpression")
 	 */
+	#[SuppressWarnings( ExitExpression::class )]
 	public function login_confirm() {
 		$return_url = Helpers::get_return_url();
 		if ( null === $return_url ) {

@@ -9,6 +9,8 @@ declare( strict_types=1 );
 
 namespace Skautis_Integration\Auth;
 
+use PHPMD\Attribute\SuppressWarnings;
+use PHPMD\Rule\Design\ExitExpression;
 use Skautis_Integration\General\Actions;
 use Skautis_Integration\Utils\Helpers;
 use Skautis_Integration\Services\Services;
@@ -42,9 +44,8 @@ final class WP_Login_Logout {
 	 * @param bool $dont_die_on_error If true, this function will not exit with an error if the login fails.
 	 *
 	 * @return false
-	 *
-	 * @SuppressWarnings("PHPMD.ExitExpression")
 	 */
+	#[SuppressWarnings( ExitExpression::class )]
 	private function login_wp_user_by_skautis_user_id( int $skautis_user_id, $dont_die_on_error = false ) {
 		$return_url = Helpers::get_return_url();
 		if ( ! is_null( $return_url ) ) {
@@ -74,7 +75,7 @@ final class WP_Login_Logout {
 					if ( Services::get_modules_manager()->is_module_activated( Register::get_id() ) &&
 						! user_can( $wp_user->ID, Helpers::get_skautis_manager_capability() ) &&
 						false !== get_option( SKAUTIS_INTEGRATION_NAME . '_checkUserPrivilegesIfLoginBySkautis' ) ) {
-						if ( '' === Services::get_modules_manager()->get_register_module()->getRulesManager()->check_if_user_passed_rules_and_get_his_role() ) {
+						if ( '' === Services::get_modules_manager()->get_register_module()->getRulesManager()->get_role_if_user_passed_rules() ) {
 							/* translators: 1: Start of a link to SkautIS login 2: End of the link to SkautIS login */
 							wp_die( sprintf( esc_html__( 'Je nám líto, ale již nemáte oprávnění k přístupu. %1$sZkuste se znovu zaregistrovat%2$s', 'skautis-integration' ), '<a href = "' . esc_url( Services::get_modules_manager()->get_register_module()->getWpRegister()->get_register_url() ) . '">', '</a>' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
 						}
@@ -195,9 +196,8 @@ final class WP_Login_Logout {
 	 * @see Actions::auth_actions_router() for more details about how this function gets called.
 	 *
 	 * @return void
-	 *
-	 * @SuppressWarnings("PHPMD.ExitExpression")
 	 */
+	#[SuppressWarnings( ExitExpression::class )]
 	public function logout() {
 		$this->skautis_gateway->logout();
 
