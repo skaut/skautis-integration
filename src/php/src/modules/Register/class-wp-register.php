@@ -55,7 +55,7 @@ final class WP_Register {
 	 *
 	 * @SuppressWarnings("PHPMD.ExitExpression")
 	 */
-	private static function resolve_notifications_and_register_user_to_wp( string $user_login, string $user_email ) {
+	private static function resolve_notifications_and_register( string $user_login, string $user_email ) {
 		remove_action( 'register_new_user', 'wp_send_new_user_notifications' );
 		add_action(
 			'register_new_user',
@@ -129,7 +129,7 @@ final class WP_Register {
 	 *
 	 * This function performs checks around the user already being registed, user ID collisions and populates basic user info based on the user data.
 	 *
-	 * @see resolve_notifications_and_register_user_to_wp This function actually performs the registration.
+	 * @see resolve_notifications_and_register This function actually performs the registration.
 	 *
 	 * @param array{id: int, UserName: string, email: string, firstName: string, lastName: string, nickName: string} $user Information about the user.
 	 * @param string                                                                                                 $wp_role The WordPress role to assign to the new user.
@@ -168,7 +168,7 @@ final class WP_Register {
 
 		$username = mb_strcut( $user['UserName'], 0, 60 );
 
-		$user_id = self::resolve_notifications_and_register_user_to_wp( $username, $user['email'] );
+		$user_id = self::resolve_notifications_and_register( $username, $user['email'] );
 
 		if ( 0 === $user_id ) {
 			return false;
@@ -209,7 +209,7 @@ final class WP_Register {
 	/**
 	 * Returns the WordPress user ID of the current SkautIS user, or 0 if there is no such WordPress user.
 	 */
-	public function check_if_user_is_already_registered_and_get_his_user_id(): int {
+	public function get_registered_user_id(): int {
 		$user_detail = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserDetail();
 
 		if ( is_null( $user_detail ) || ! isset( $user_detail->ID ) || ! $user_detail->ID > 0 ) {

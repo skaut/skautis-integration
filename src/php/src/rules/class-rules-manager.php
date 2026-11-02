@@ -137,7 +137,7 @@ final class Rules_Manager {
 	 *
 	 * TODO: Deduplicate with the other method in this class.
 	 */
-	public function check_if_user_passed_rules_and_get_his_role(): string {
+	public function get_role_if_user_passed_rules(): string {
 		$result = '';
 
 		$rules = get_option( SKAUTIS_INTEGRATION_NAME . '_modules_register_rules' );

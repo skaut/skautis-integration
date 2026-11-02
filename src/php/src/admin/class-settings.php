@@ -383,7 +383,7 @@ final class Settings {
 		add_settings_field(
 			SKAUTIS_INTEGRATION_NAME . '_allowUsersDisconnectFromSkautis',
 			__( 'Zrušení spojení se skautISem', 'skautis-integration' ),
-			array( self::class, 'field_allow_users_disconnect_from_skautis' ),
+			array( self::class, 'field_allow_users_disconnect' ),
 			SKAUTIS_INTEGRATION_NAME . '_login',
 			SKAUTIS_INTEGRATION_NAME . '_login'
 		);
@@ -392,7 +392,7 @@ final class Settings {
 			add_settings_field(
 				SKAUTIS_INTEGRATION_NAME . '_checkUserPrivilegesIfLoginBySkautis',
 				__( 'Ověřování podmínek registrace', 'skautis-integration' ),
-				array( self::class, 'field_check_user_privileges_if_login_by_skautis' ),
+				array( self::class, 'field_check_user_privileges' ),
 				SKAUTIS_INTEGRATION_NAME . '_login',
 				SKAUTIS_INTEGRATION_NAME . '_login'
 			);
@@ -560,7 +560,7 @@ if ( ! isUserLoggedInSkautis() ) {
 	 *
 	 * @return void
 	 */
-	public static function field_allow_users_disconnect_from_skautis() {
+	public static function field_allow_users_disconnect() {
 		?>
 		<input name="<?php echo esc_attr( SKAUTIS_INTEGRATION_NAME ); ?>_allowUsersDisconnectFromSkautis"
 			id="skautis_integration_allowUsersDisconnectFromSkautis" type="checkbox"
@@ -576,7 +576,7 @@ if ( ! isUserLoggedInSkautis() ) {
 	 *
 	 * @return void
 	 */
-	public static function field_check_user_privileges_if_login_by_skautis() {
+	public static function field_check_user_privileges() {
 		?>
 		<input name="<?php echo esc_attr( SKAUTIS_INTEGRATION_NAME ); ?>_checkUserPrivilegesIfLoginBySkautis"
 			id="skautis_integration_checkUserPrivilegesIfLoginBySkautis" type="checkbox"

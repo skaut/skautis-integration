@@ -90,7 +90,7 @@ class Skautis_Integration {
 	 * @return void
 	 */
 	protected static function init_hooks() {
-		add_action( 'admin_init', array( self::class, 'check_version_and_possibly_deactivate_plugin' ) );
+		add_action( 'admin_init', array( self::class, 'check_version_and_maybe_deactivate' ) );
 
 		register_activation_hook( __FILE__, array( self::class, 'activation' ) );
 		register_deactivation_hook( __FILE__, array( self::class, 'deactivation' ) );
@@ -187,7 +187,7 @@ class Skautis_Integration {
 	 *
 	 * @return void
 	 */
-	public static function check_version_and_possibly_deactivate_plugin() {
+	public static function check_version_and_maybe_deactivate() {
 		if ( ! self::is_compatible_version_of_wp() ) {
 			if ( is_plugin_active( SKAUTIS_INTEGRATION_PLUGIN_BASENAME ) ) {
 				deactivate_plugins( SKAUTIS_INTEGRATION_PLUGIN_BASENAME );

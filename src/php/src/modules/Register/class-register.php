@@ -234,13 +234,13 @@ final class Register implements Module {
 	 * @return void
 	 */
 	public function registerUser() {
-		$wp_role = $this->rules_manager->check_if_user_passed_rules_and_get_his_role();
+		$wp_role = $this->rules_manager->get_role_if_user_passed_rules();
 		if ( '' !== $wp_role ) {
 			if ( $this->wp_register->register_to_wp( $wp_role ) ) {
 				$this->loginUserAfterRegistration();
 			}
 		} else {
-			$wp_user_id = $this->wp_register->check_if_user_is_already_registered_and_get_his_user_id();
+			$wp_user_id = $this->wp_register->get_registered_user_id();
 			if ( $wp_user_id > 0 ) {
 				if ( false !== get_option( SKAUTIS_INTEGRATION_NAME . '_checkUserPrivilegesIfLoginBySkautis' ) ) {
 					if ( user_can( $wp_user_id, Helpers::get_skautis_manager_capability() ) ) {
