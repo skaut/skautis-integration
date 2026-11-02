@@ -9,6 +9,9 @@ declare( strict_types=1 );
 
 namespace Skautis_Integration\Rules;
 
+use PHPMD\Attribute\SuppressWarnings;
+use PHPMD\Rule\UnusedFormalParameter;
+
 /**
  * Enables support for revisions for the rule custom post type.
  *
@@ -141,9 +144,8 @@ class Revisions {
 	 * @param \WP_Post $revision The revision to transform the field for.
 	 *
 	 * @return string The field value.
-	 *
-	 * @SuppressWarnings("PHPMD.UnusedFormalParameter")
 	 */
+	#[SuppressWarnings( UnusedFormalParameter::class )]
 	public static function field( $value, $field, $revision ) {
 		$revision_id = $revision->ID;
 		$meta        = self::get_meta( $revision_id );

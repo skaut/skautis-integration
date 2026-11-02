@@ -9,6 +9,8 @@ declare( strict_types=1 );
 
 namespace Skautis_Integration\Rules\Rule;
 
+use PHPMD\Attribute\SuppressWarnings;
+use PHPMD\Rule\Naming\BooleanGetMethodName;
 use Skautis_Integration\Rules\Rule;
 use Skautis_Integration\Auth\Skautis_Gateway;
 
@@ -103,6 +105,7 @@ class Membership implements Rule {
 	/**
 	 * Returns whether the rule accepts multiple values at once.
 	 */
+	#[SuppressWarnings( BooleanGetMethodName::class )]
 	public function get_multiple(): bool {
 		return self::$multiple;
 	}

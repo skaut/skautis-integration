@@ -9,6 +9,8 @@ declare( strict_types=1 );
 
 namespace Skautis_Integration\Auth;
 
+use PHPMD\Attribute\SuppressWarnings;
+use PHPMD\Rule\Design\ExitExpression;
 use Skautis_Integration\General\Actions;
 use Skautis_Integration\Utils\Helpers;
 use Skautis_Integration\Services\Services;
@@ -42,9 +44,8 @@ final class WP_Login_Logout {
 	 * @param bool $dont_die_on_error If true, this function will not exit with an error if the login fails.
 	 *
 	 * @return false
-	 *
-	 * @SuppressWarnings("PHPMD.ExitExpression")
 	 */
+	#[SuppressWarnings( ExitExpression::class )]
 	private function login_wp_user_by_skautis_user_id( int $skautis_user_id, $dont_die_on_error = false ) {
 		$return_url = Helpers::get_return_url();
 		if ( ! is_null( $return_url ) ) {
@@ -195,9 +196,8 @@ final class WP_Login_Logout {
 	 * @see Actions::auth_actions_router() for more details about how this function gets called.
 	 *
 	 * @return void
-	 *
-	 * @SuppressWarnings("PHPMD.ExitExpression")
 	 */
+	#[SuppressWarnings( ExitExpression::class )]
 	public function logout() {
 		$this->skautis_gateway->logout();
 

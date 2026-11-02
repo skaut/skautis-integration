@@ -9,6 +9,9 @@ declare( strict_types=1 );
 
 namespace Skautis_Integration\Rules;
 
+use PHPMD\Attribute\SuppressWarnings;
+use PHPMD\Rule\Naming\BooleanGetMethodName;
+
 interface Rule {
 	/**
 	 * Returns the rule ID.
@@ -37,6 +40,7 @@ interface Rule {
 	/**
 	 * Returns whether the rule accepts multiple values at once.
 	 */
+	#[SuppressWarnings( BooleanGetMethodName::class )]
 	public function get_multiple(): bool;
 
 	/**

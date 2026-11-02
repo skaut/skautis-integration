@@ -9,6 +9,8 @@ declare( strict_types=1 );
 
 namespace Skautis_Integration\Modules\Register;
 
+use PHPMD\Attribute\SuppressWarnings;
+use PHPMD\Rule\Design\ExitExpression;
 use Skautis_Integration\Auth\Skautis_Gateway;
 use Skautis_Integration\Auth\Skautis_Login;
 use Skautis_Integration\Auth\WP_Login_Logout;
@@ -122,9 +124,8 @@ final class Register implements Module {
 	 * Redirects the user to login with SkautIS.
 	 *
 	 * @return void
-	 *
-	 * @SuppressWarnings("PHPMD.ExitExpression")
 	 */
+	#[SuppressWarnings( ExitExpression::class )]
 	private function loginUserAfterRegistration() {
 		$return_url = Helpers::get_login_logout_redirect();
 		$return_url = remove_query_arg( SKAUTIS_INTEGRATION_NAME . '_registerToWpBySkautis', urldecode( $return_url ) );
@@ -215,9 +216,8 @@ final class Register implements Module {
 	 * @see Register::addActionsToRouter() for more details about how this function gets called.
 	 *
 	 * @return void
-	 *
-	 * @SuppressWarnings("PHPMD.ExitExpression")
 	 */
+	#[SuppressWarnings( ExitExpression::class )]
 	public function register() {
 		if ( ! $this->skautis_login->is_user_logged_in_skautis() ) {
 			$return_url = Helpers::get_return_url() ?? Helpers::get_current_url();
@@ -268,9 +268,8 @@ final class Register implements Module {
 	 * This function is used to register other users than the current user.
 	 *
 	 * @return void
-	 *
-	 * @SuppressWarnings("PHPMD.ExitExpression")
 	 */
+	#[SuppressWarnings( ExitExpression::class )]
 	public function registerUserManually() {
 		$return_url      = Helpers::get_return_url();
 		$nonce           = Request_Parameter_Helpers::get_string_variable( SKAUTIS_INTEGRATION_NAME . '_register_user_nonce' );

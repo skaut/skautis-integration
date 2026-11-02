@@ -9,6 +9,8 @@ declare( strict_types=1 );
 
 namespace Skautis_Integration\General;
 
+use PHPMD\Attribute\SuppressWarnings;
+use PHPMD\Rule\Design\ExitExpression;
 use Skautis_Integration\Auth\Connect_And_Disconnect_WP_Account;
 use Skautis_Integration\Auth\Skautis_Gateway;
 use Skautis_Integration\Auth\Skautis_Login;
@@ -169,10 +171,9 @@ final class Actions {
 	 *
 	 * @param \WP_Query $wp_query The request query.
 	 *
-	 * @SuppressWarnings("PHPMD.ExitExpression")
-	 *
 	 * @return \WP_Query|void
 	 */
+	#[SuppressWarnings( ExitExpression::class )]
 	public function auth_actions_router( \WP_Query $wp_query ) {
 		if ( '' === $wp_query->get( 'skautis_auth' ) ) {
 			return $wp_query;

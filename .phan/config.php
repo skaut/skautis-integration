@@ -24,6 +24,7 @@ return array(
 		'.phan',
 		'dist/vendor',
 		'vendor/skaut/wordpress-stubs/stubs',
+		'vendor/phpmd/phpmd/src',
 	),
 	'file_list'                                 => array(
 		'scoper.inc.php',
@@ -32,6 +33,7 @@ return array(
 	'exclude_analysis_directory_list'           => array(
 		'dist/vendor/',
 		'vendor/skaut/wordpress-stubs/stubs',
+		'vendor/phpmd/phpmd/src',
 	),
 	'suppress_issue_types'                      => array(
 		'PhanPluginDuplicateConditionalNullCoalescing',
