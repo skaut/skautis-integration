@@ -1,0 +1,21 @@
+# PHPMD configuration, see https://phpmd.org/documentation/creating-a-ruleset.html
+paths:
+  - src
+  - .phan/config.php
+  - scoper.inc.php
+  - phpstan-bootstrap.php
+rules:
+  - ref: rulesets/codesize.xml
+    exclude:
+      - CyclomaticComplexity
+      - ExcessiveMethodLength
+      - NPathComplexity
+      - TooManyFields
+      - TooManyPublicMethods
+  - ref: rulesets/design.xml
+    exclude:
+      - CouplingBetweenObjects
+  - ref: rulesets/naming.xml
+    exclude:
+      - LongVariable
+  - ref: rulesets/unusedcode.xml
