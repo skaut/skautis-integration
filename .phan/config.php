@@ -7,8 +7,7 @@
 
 return array(
 	'target_php_version'                        => '8.1',
-	'minimum_target_php_version'                => '7.4',
-	'backward_compatibility_checks'             => false, // Covered by PHPCS.
+	'minimum_target_php_version'                => '8.1', // Phan 6 doesn't support older versions. PHP 7.4 compatibility is covered by PHPCS.
 	'warn_about_undocumented_throw_statements'  => true,
 	'strict_method_checking'                    => true,
 	'strict_object_checking'                    => false, // TODO: Enable.
@@ -38,6 +37,7 @@ return array(
 	'suppress_issue_types'                      => array(
 		'PhanPluginDuplicateConditionalNullCoalescing',
 		'PhanPluginMixedKeyNoKey',
+		'PhanUnusedVariableDeclarationCaughtException', // Omitting the variable requires PHP 8.0.
 	),
 	'plugins'                                   => array(
 		'AlwaysReturnPlugin',
