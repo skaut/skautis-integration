@@ -42,13 +42,12 @@ function dependency_finder() { // phpcs:ignore WordPress.NamingConventions.Prefi
 }
 
 return array(
-	'prefix'                       => 'Skautis_Integration\\Vendor',
-	'output-dir'                   => 'dist/vendor',
-	'tag-declarations-as-internal' => false,
-	'expose-global-constants'      => true,
-	'expose-global-classes'        => false,
-	'expose-global-functions'      => false,
-	'finders'                      => array(
+	'prefix'                  => 'Skautis_Integration\\Vendor',
+	'output-dir'              => 'dist/vendor',
+	'expose-global-constants' => true,
+	'expose-global-classes'   => false,
+	'expose-global-functions' => false,
+	'finders'                 => array(
 		dependency_finder(),
 		Finder::create()->files()
 			->name( array( '*.php', '/LICENSE(.txt)?/' ) )
@@ -59,13 +58,13 @@ return array(
 			->depth( 0 )
 			->in( 'vendor' ),
 	),
-	'patchers'                     => array(
+	'patchers'                => array(
 		static function ( $file_path, $prefix, $contents ) {
 			$replace_prefix = mb_ereg_replace( '\\\\', '\\\\', $prefix );
 			$underscore_prefix = mb_ereg_replace( '\\\\', '_', $prefix );
 
 			if ( __DIR__ . '/vendor/composer/autoload_real.php' === $file_path ) {
-				$contents = safe_replace( "if \\('Composer\\\\\\\\Autoload\\\\\\\\ClassLoader' === \\\$class\\)", "if ('{$replace_prefix}\\\\Composer\\\\Autoload\\\\ClassLoader' === \$class)", $contents );
+				$contents = safe_replace( "if \\('Composer\\\\{1,2}Autoload\\\\{1,2}ClassLoader' === \\\$class\\)", "if ('{$replace_prefix}\\\\Composer\\\\Autoload\\\\ClassLoader' === \$class)", $contents );
 				$contents = safe_replace( "\\\\spl_autoload_unregister\\(array\\('ComposerAutoloaderInit", "\\spl_autoload_unregister(array('{$replace_prefix}\\\\ComposerAutoloaderInit", $contents );
 				$contents = safe_replace(
 					"\\\$GLOBALS\['__composer_autoload_files'\]",
