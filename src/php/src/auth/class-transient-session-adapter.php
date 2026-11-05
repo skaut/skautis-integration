@@ -15,24 +15,29 @@ use Skautis_Integration\Vendor\Skautis\SessionAdapter\AdapterInterface;
  * Enables the SkautIS library to use WordPress transiens for user session management.
  */
 class Transient_Session_Adapter implements AdapterInterface {
-	const COOKIE_CHARACTERS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-
 	/**
 	 * A helper function generating random string and saving it in a cookie.
 	 */
 	private static function get_cookie_id(): string {
-		if ( isset( $_COOKIE[ SKAUTIS_INTEGRATION_NAME . '-skautis-session' ] ) ) {
-			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-			return sanitize_text_field( wp_unslash( strval( $_COOKIE[ SKAUTIS_INTEGRATION_NAME . '-skautis-session' ] ) ) );
-		} else {
-			$cookie_id = '';
-			for ( $i = 0; $i < 32; $i++ ) {
-				// phpcs:ignore WordPress.WP.AlternativeFunctions.rand_rand
-				$cookie_id .= substr( self::COOKIE_CHARACTERS, rand( 0, strlen( self::COOKIE_CHARACTERS ) - 1 ), 1 );
-			}
-			setcookie( SKAUTIS_INTEGRATION_NAME . '-skautis-session', $cookie_id, time() + 40 * \MINUTE_IN_SECONDS, '/', '', true, true );
+		static $cookie_id = null;
+		if ( is_string( $cookie_id ) ) {
 			return $cookie_id;
 		}
+
+		if ( isset( $_COOKIE[ SKAUTIS_INTEGRATION_NAME . '-skautis-session' ] ) ) {
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			$candidate = sanitize_text_field( wp_unslash( strval( $_COOKIE[ SKAUTIS_INTEGRATION_NAME . '-skautis-session' ] ) ) );
+			// Only accept IDs in the format generated below.
+			if ( 1 === preg_match( '/^[a-zA-Z0-9]{32}$/', $candidate ) ) {
+				$cookie_id = $candidate;
+				return $cookie_id;
+			}
+		}
+
+		// random_bytes() is a CSPRNG, so the session ID cannot be predicted (unlike with rand()).
+		$cookie_id = bin2hex( random_bytes( 16 ) );
+		setcookie( SKAUTIS_INTEGRATION_NAME . '-skautis-session', $cookie_id, time() + 40 * \MINUTE_IN_SECONDS, '/', '', true, true );
+		return $cookie_id;
 	}
 
 	/**
