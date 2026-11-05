@@ -114,6 +114,30 @@ final class WP_Login_Logout {
 	}
 
 	/**
+	 * Prepares the URL to return back to after the login or logout.
+	 *
+	 * @param string $return_url The requested return URL, or an empty string to use the redirect from the request or the current URL.
+	 *
+	 * @return string The return URL.
+	 */
+	private static function prepare_return_url( string $return_url ): string {
+		$is_current_url = false;
+		if ( '' === $return_url ) {
+			$return_url     = Helpers::get_login_logout_redirect();
+			$is_current_url = Helpers::get_current_url() === $return_url;
+		}
+
+		$return_url = remove_query_arg( 'loggedout', urldecode( $return_url ) );
+
+		// Never return back to the login screen. is_login() also recognizes login screens moved to a custom URL.
+		if ( ( $is_current_url && is_login() ) || false !== strpos( $return_url, 'wp-login.php' ) ) {
+			$return_url = admin_url();
+		}
+
+		return $return_url;
+	}
+
+	/**
 	 * Returns the SkautIS login URL with all arguments initialized.
 	 *
 	 * @param string $return_url The URL to return back to after the login.
@@ -121,15 +145,7 @@ final class WP_Login_Logout {
 	 * @suppress PhanPluginPossiblyStaticPublicMethod
 	 */
 	public function get_login_url( string $return_url = '' ): string {
-		if ( '' === $return_url ) {
-			$return_url = Helpers::get_login_logout_redirect();
-		}
-
-		$return_url = remove_query_arg( 'loggedout', urldecode( $return_url ) );
-
-		if ( strpos( $return_url, 'wp-login.php' ) !== false ) {
-			$return_url = admin_url();
-		}
+		$return_url = self::prepare_return_url( $return_url );
 
 		$url = add_query_arg( 'ReturnUrl', rawurlencode( $return_url ), get_home_url( null, 'skautis/auth/' . Actions::LOGIN_ACTION ) );
 
@@ -144,15 +160,7 @@ final class WP_Login_Logout {
 	 * @suppress PhanPluginPossiblyStaticPublicMethod
 	 */
 	public function get_logout_url( string $return_url = '' ): string {
-		if ( '' === $return_url ) {
-			$return_url = Helpers::get_login_logout_redirect();
-		}
-
-		$return_url = remove_query_arg( 'loggedout', urldecode( $return_url ) );
-
-		if ( strpos( $return_url, 'wp-login.php' ) !== false ) {
-			$return_url = admin_url();
-		}
+		$return_url = self::prepare_return_url( $return_url );
 
 		$return_url = add_query_arg( SKAUTIS_INTEGRATION_NAME . '_logoutFromWpAndSkautis', wp_create_nonce( SKAUTIS_INTEGRATION_NAME . '_logoutFromWpAndSkautis' ), $return_url );
 		$url        = add_query_arg( 'ReturnUrl', rawurlencode( $return_url ), get_home_url( null, 'skautis/auth/' . Actions::LOGOUT_CONFIRM_ACTION ) );
