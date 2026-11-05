@@ -17,6 +17,8 @@ Author URI:        https://github.com/skaut
 License:           GPLv3
 License URI:       https://github.com/skaut/skautis-integration/blob/master/LICENSE
 Text Domain:       skautis-integration
+Requires at least: 7.0
+Requires PHP:      8.3
  */
 
 namespace Skautis_Integration;
