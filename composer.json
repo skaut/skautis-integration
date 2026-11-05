@@ -40,7 +40,7 @@
   },
   "require": {
     "php": "^7.4 || ^8.0",
-    "skautis/skautis": "2.x-dev#60cf2c6f06c9d10bdc92a05e6e669518c2b8a571"
+    "skautis/skautis": "^2.3"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.6",
