@@ -93,6 +93,7 @@ class Skautis_Integration {
 		// The hooks must be registered for the main plugin file, otherwise WordPress never runs them.
 		register_activation_hook( __DIR__ . '/skautis-integration.php', array( self::class, 'activation' ) );
 		register_deactivation_hook( __DIR__ . '/skautis-integration.php', array( self::class, 'deactivation' ) );
+		add_action( 'wp_initialize_site', array( self::class, 'initialize_new_site' ), 200 );
 	}
 
 	/**
@@ -143,9 +144,11 @@ class Skautis_Integration {
 	 *
 	 * This function runs on plugin activation. It deactivates the plugin if the current version of WordPress or PHP are not supported.
 	 *
+	 * @param bool $network_wide Whether the plugin is being activated for the whole network.
+	 *
 	 * @return void
 	 */
-	public static function activation() {
+	public static function activation( $network_wide = false ) {
 		if ( ! self::is_compatible_version_of_wp() ) {
 			deactivate_plugins( SKAUTIS_INTEGRATION_PLUGIN_BASENAME );
 			wp_die( esc_html__( 'Plugin skautIS integrace vyžaduje verzi WordPress 7.0 nebo vyšší!', 'skautis-integration' ) );
@@ -156,17 +159,54 @@ class Skautis_Integration {
 			wp_die( esc_html__( 'Plugin skautIS integrace vyžaduje verzi PHP 8.3 nebo vyšší!', 'skautis-integration' ) );
 		}
 
+		if ( is_multisite() && true === $network_wide ) {
+			foreach ( get_sites( array( 'fields' => 'ids' ) ) as $site_id ) {
+				switch_to_blog( intval( $site_id ) );
+				self::set_default_options();
+				restore_current_blog();
+			}
+		} else {
+			self::set_default_options();
+		}
+	}
+
+	/**
+	 * Sets the default options of the current site.
+	 *
+	 * @return void
+	 */
+	private static function set_default_options() {
 		if ( true !== get_option( 'skautis_rewrite_rules_need_to_flush' ) ) {
 			add_option( 'skautis_rewrite_rules_need_to_flush', true );
 		}
 
-		if ( false === get_option( 'skautis_integration_login_page_url' ) ) {
-			update_option( 'skautis_integration_login_page_url', 'skautis/prihlaseni' );
+		if ( false === get_option( SKAUTIS_INTEGRATION_NAME . '_login_page_url' ) ) {
+			update_option( SKAUTIS_INTEGRATION_NAME . '_login_page_url', 'skautis/prihlaseni' );
 		}
 
 		if ( false === get_option( 'skautis_integration_appid_type' ) ) {
 			update_option( 'skautis_integration_appid_type', 'prod' );
 		}
+	}
+
+	/**
+	 * Sets the default options of a new site in a network where the plugin is activated for the whole network.
+	 *
+	 * @param \WP_Site $site The new site.
+	 *
+	 * @return void
+	 */
+	public static function initialize_new_site( $site ) {
+		if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/plugin.php';
+		}
+		if ( ! ( $site instanceof \WP_Site ) || ! is_plugin_active_for_network( SKAUTIS_INTEGRATION_PLUGIN_BASENAME ) ) {
+			return;
+		}
+
+		switch_to_blog( intval( $site->blog_id ) );
+		self::set_default_options();
+		restore_current_blog();
 	}
 
 	/**
