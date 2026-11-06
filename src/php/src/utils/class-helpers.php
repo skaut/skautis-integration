@@ -97,6 +97,16 @@ class Helpers {
 	}
 
 	/**
+	 * Returns the path of the skautIS login page relative to the site URL.
+	 *
+	 * @return string The path without leading and trailing slashes, or an empty string if the login page is disabled.
+	 */
+	public static function get_login_page_url(): string {
+		$url = get_option( SKAUTIS_INTEGRATION_NAME . '_login_page_url', 'skautis/prihlaseni' );
+		return is_string( $url ) ? trim( $url, '/' ) : 'skautis/prihlaseni';
+	}
+
+	/**
 	 * Parses and sanitizes the `ReturnUrl` GET variable.
 	 *
 	 * @return string|null The variable value or `null` if it isn't set.
