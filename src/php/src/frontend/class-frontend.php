@@ -58,7 +58,7 @@ final class Frontend {
 	 * @return void
 	 */
 	private function init_hooks() {
-		if ( false !== get_option( SKAUTIS_INTEGRATION_NAME . '_login_page_url' ) ) {
+		if ( '' !== Helpers::get_login_page_url() ) {
 			add_filter( 'query_vars', array( self::class, 'register_query_vars' ) );
 			add_filter( 'template_include', array( $this, 'register_templates' ) );
 		}
