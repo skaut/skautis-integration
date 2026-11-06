@@ -119,7 +119,7 @@ final class Settings {
 	 */
 	public static function add_settings_link_to_plugins_table( array $links = array() ): array {
 		$mylinks = array(
-			'settings' => '<a href="' . admin_url( 'admin.php?page=' . SKAUTIS_INTEGRATION_NAME, 'skautis-integration' ) . '">' . __( 'Settings', 'skautis-integration' ) . '</a>',
+			'settings' => '<a href="' . esc_url( admin_url( 'admin.php?page=' . SKAUTIS_INTEGRATION_NAME ) ) . '">' . esc_html__( 'Settings', 'skautis-integration' ) . '</a>',
 		);
 
 		return array_merge( $links, $mylinks );
@@ -134,7 +134,7 @@ final class Settings {
 	 */
 	public static function add_help_link_to_plugins_table( array $links = array() ): array {
 		$mylinks = array(
-			'help' => '<a href="' . self::HELP_PAGE_URL . '" target="_blank">' . __( 'Help', 'skautis-integration' ) . '</a>',
+			'help' => '<a href="' . esc_url( self::HELP_PAGE_URL ) . '" target="_blank">' . esc_html__( 'Help', 'skautis-integration' ) . '</a>',
 		);
 
 		return array_merge( $links, $mylinks );
@@ -148,7 +148,7 @@ final class Settings {
 	public function setup_setting_page() {
 		add_menu_page(
 			__( 'Obecné', 'skautis-integration' ),
-			__( 'SkautIS', 'skautis-integration' ),
+			__( 'skautIS', 'skautis-integration' ),
 			Helpers::get_skautis_manager_capability(),
 			SKAUTIS_INTEGRATION_NAME,
 			array( self::class, 'print_setting_page' ),
@@ -209,7 +209,7 @@ final class Settings {
 	}
 
 	/**
-	 * Checks that the App ID works with SkautIS.
+	 * Checks that the App ID works with skautIS.
 	 *
 	 * @param string $value The App ID.
 	 *
@@ -219,7 +219,7 @@ final class Settings {
 	 */
 	public function test_app_id( $value ) {
 		/* phpcs:ignore Squiz.PHP.CommentedOutCode.Found
-		 * Disabled on 2025-09 due to errors in SkautIS.
+		 * Disabled on 2025-09 due to errors in skautIS.
 		if ( ! $this->skautis_gateway->test_active_app_id() ) {
 			add_settings_error( 'general', 'api_invalid', esc_html__( 'Zadané APP ID není pro tento web platné.', 'skautis-integration' ), 'notice-error' );
 		}
@@ -521,7 +521,7 @@ final class Settings {
 	}
 
 	/**
-	 * Prints the settings field for dis/allowing users to disconnect their SkautIS account from their WordPress account.
+	 * Prints the settings field for dis/allowing users to disconnect their skautIS account from their WordPress account.
 	 *
 	 * @return void
 	 */

@@ -16,7 +16,7 @@ use Skautis_Integration\Utils\Helpers;
 use Skautis_Integration\Utils\Request_Parameter_Helpers;
 
 /**
- * Contains helper functions for management of SkautIS users.
+ * Contains helper functions for management of skautIS users.
  */
 #[SuppressWarnings( ExcessiveClassComplexity::class )]
 class Users {
@@ -56,9 +56,9 @@ class Users {
 	}
 
 	/**
-	 * Lists all users with a connected SkautIS account under the current environment (testing or production).
+	 * Lists all users with a connected skautIS account under the current environment (testing or production).
 	 *
-	 * @return array<int, array{id: int, name: string}> The users as an associative array, where the array key is the SkautIS user ID and the value contains the WordPress user ID.
+	 * @return array<int, array{id: int, name: string}> The users as an associative array, where the array key is the skautIS user ID and the value contains the WordPress user ID.
 	 */
 	public function get_connected_wp_users(): array {
 		$users_data = array();
@@ -92,7 +92,7 @@ class Users {
 	}
 
 	/**
-	 * Lists all users without a connected SkautIS account under the current environment (testing or production).
+	 * Lists all users without a connected skautIS account under the current environment (testing or production).
 	 *
 	 * @return array<\WP_User> The list of users
 	 */
@@ -344,11 +344,11 @@ class Users {
 	}
 
 	/**
-	 * Returns info about a SkautIS user.
+	 * Returns info about a skautIS user.
 	 *
-	 * @throws \Exception Couldn't get the user info from SkautIS.
+	 * @throws \Exception Couldn't get the user info from skautIS.
 	 *
-	 * @param int $skautis_user_id The SkautIS user ID.
+	 * @param int $skautis_user_id The skautIS user ID.
 	 *
 	 * @return array{id: int, UserName: string, personId: int, email: string, firstName: string, lastName: string, nickName: string} The information about a user.
 	 */

@@ -15,7 +15,7 @@ use Skautis_Integration\Rules\Rule;
 use Skautis_Integration\Auth\Skautis_Gateway;
 
 /**
- * Rule operator for filtering users based on their SkautIS unit membership.
+ * Rule operator for filtering users based on their skautIS unit membership.
  */
 class Membership implements Rule {
 
@@ -150,7 +150,7 @@ class Membership implements Rule {
 	}
 
 	/**
-	 * Removes special characters ("." and "-") from SkautIS unit IDs.
+	 * Removes special characters ("." and "-") from skautIS unit IDs.
 	 *
 	 * TODO: Duplicated in Role and Func.
 	 *
@@ -172,7 +172,7 @@ class Membership implements Rule {
 	/**
 	 * Returns an array of arrays where for each user unit membership ID, there are listed units asssociated with that membership.
 	 *
-	 * @throws \Exception The SkautIS API returned an unexpected value.
+	 * @throws \Exception The skautIS API returned an unexpected value.
 	 *
 	 * @return array<string, array<string>> The membership IDs.
 	 */

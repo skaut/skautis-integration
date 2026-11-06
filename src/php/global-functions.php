@@ -19,7 +19,7 @@ use Skautis_Integration\Modules\Register\Register;
 
 if ( ! function_exists( 'getSkautisLoginUrl' ) ) {
 	/**
-	 * Returns a URL for logging in to SkautIS.
+	 * Returns a URL for logging in to skautIS.
 	 */
 	function getSkautisLoginUrl(): string {
 		return Services::get_wp_login_logout()->get_login_url();
@@ -28,7 +28,7 @@ if ( ! function_exists( 'getSkautisLoginUrl' ) ) {
 
 if ( ! function_exists( 'getSkautisLogoutUrl' ) ) {
 	/**
-	 * Returns a URL for logging out of SkautIS.
+	 * Returns a URL for logging out of skautIS.
 	 */
 	function getSkautisLogoutUrl(): string {
 		return Services::get_wp_login_logout()->get_logout_url();
@@ -37,7 +37,7 @@ if ( ! function_exists( 'getSkautisLogoutUrl' ) ) {
 
 if ( ! function_exists( 'getSkautisRegisterUrl' ) ) {
 	/**
-	 * Returns the Register module version of the SkautIS login URL with all arguments initialized.
+	 * Returns the Register module version of the skautIS login URL with all arguments initialized.
 	 *
 	 * This version runs the module's register action after the login.
 	 *
@@ -54,7 +54,7 @@ if ( ! function_exists( 'getSkautisRegisterUrl' ) ) {
 
 if ( ! function_exists( 'isUserLoggedInSkautis' ) ) {
 	/**
-	 * Checks whether the current user is logged into SkautIS.
+	 * Checks whether the current user is logged into skautIS.
 	 */
 	function isUserLoggedInSkautis(): bool {
 		return Services::get_skautis_login()->is_user_logged_in_skautis();

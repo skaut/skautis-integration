@@ -89,9 +89,9 @@ final class Frontend {
 	}
 
 	/**
-	 * Returns HTML code for the frontend SkautIS login button.
+	 * Returns HTML code for the frontend skautIS login button.
 	 *
-	 * @param bool $force_logout_from_skautis Whether to log the user out of SkautIS before attempting to log them in.
+	 * @param bool $force_logout_from_skautis Whether to log the user out of skautIS before attempting to log them in.
 	 */
 	public function get_login_form( bool $force_logout_from_skautis = false ): string {
 		$login_url_args = add_query_arg( 'noWpLogin', true, Helpers::get_current_url() );
@@ -103,7 +103,7 @@ final class Frontend {
 		<div class="wp-core-ui">
 			<p style="margin-bottom: 0.3em;">
 				<a class="button button-primary button-hero button-skautis"
-				   href="' . $this->wp_login_logout->get_login_url( $login_url_args ) . '">' . __( 'Log in with skautIS', 'skautis-integration' ) . '</a>
+				   href="' . esc_url( $this->wp_login_logout->get_login_url( $login_url_args ) ) . '">' . esc_html__( 'Log in with skautIS', 'skautis-integration' ) . '</a>
 			</p>
 		</div>
 		<br/>
@@ -111,17 +111,17 @@ final class Frontend {
 	}
 
 	/**
-	 * Returns HTML code for the frontend message telling the user they need to log in to SkautIS to view the content.
+	 * Returns HTML code for the frontend message telling the user they need to log in to skautIS to view the content.
 	 */
 	public static function get_login_required_message(): string {
-		return '<p>' . __( 'To view this content you must be logged in skautIS', 'skautis-integration' ) . '</p>';
+		return '<p>' . esc_html__( 'To view this content you must be logged in skautIS', 'skautis-integration' ) . '</p>';
 	}
 
 	/**
 	 * Returns HTML code for the frontend message telling the user they didn't pass the visibility rules.
 	 */
 	public static function get_unauthorized_message(): string {
-		return '<p>' . __( 'You do not have permission to access this content', 'skautis-integration' ) . '</p>';
+		return '<p>' . esc_html__( 'You do not have permission to access this content', 'skautis-integration' ) . '</p>';
 	}
 
 	/**
@@ -213,11 +213,11 @@ final class Frontend {
 	}
 
 	/**
-	 * Hides posts if the current user isn't logged in to SkautIS or doesn't pass the visibility rules
+	 * Hides posts if the current user isn't logged in to skautIS or doesn't pass the visibility rules
 	 *
 	 * TODO: This function modifies its parameters.
 	 *
-	 * @param bool                                            $user_is_logged_in_skautis Whether the current user is logged in to SkautIS.
+	 * @param bool                                            $user_is_logged_in_skautis Whether the current user is logged in to skautIS.
 	 * @param array<array{skautis-integration_rules: string}> $rules A list of visibility rules to check.
 	 * @param array<\WP_Post>                                 $posts A list of posts to filter. This parameter is modified by the function.
 	 * @param int                                             $post_key The ID of the post to hide.
@@ -241,11 +241,11 @@ final class Frontend {
 	}
 
 	/**
-	 * Hides posts' content if the current user isn't logged in to SkautIS or doesn't pass the visibility rules
+	 * Hides posts' content if the current user isn't logged in to skautIS or doesn't pass the visibility rules
 	 *
 	 * TODO: Deduplicate with the previous function.
 	 *
-	 * @param bool                                            $user_is_logged_in_skautis Whether the current user is logged in to SkautIS.
+	 * @param bool                                            $user_is_logged_in_skautis Whether the current user is logged in to skautIS.
 	 * @param array<array{skautis-integration_rules: string}> $rules A list of visibility rules to check.
 	 * @param int                                             $post_id The ID of the post to show or hide.
 	 *

@@ -13,7 +13,7 @@ use Skautis_Integration\Auth\Skautis_Gateway;
 use Skautis_Integration\Auth\Skautis_Login;
 
 /**
- * Adds a SkautIS role changer to the SkautIS user management admin page.
+ * Adds a skautIS role changer to the skautIS user management admin page.
  */
 class Role_Changer {
 
@@ -48,7 +48,7 @@ class Role_Changer {
 	}
 
 	/**
-	 * On page load, changes the user's SkautIS role if requested by a POST variable.
+	 * On page load, changes the user's skautIS role if requested by a POST variable.
 	 *
 	 * TODO: Find a more robust way to do this?
 	 * TODO: Duplicated in Users_Management.
@@ -72,7 +72,7 @@ class Role_Changer {
 	}
 
 	/**
-	 * Prints the SkautIS role changer.
+	 * Prints the skautIS role changer.
 	 *
 	 * @return void
 	 */
