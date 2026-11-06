@@ -271,11 +271,13 @@ final class Register implements Module {
 	 */
 	#[SuppressWarnings( ExitExpression::class )]
 	public function registerUserManually() {
+		// The action changes data, so it is only accepted as a form submission.
 		$return_url      = Helpers::get_return_url();
-		$nonce           = Request_Parameter_Helpers::get_string_variable( SKAUTIS_INTEGRATION_NAME . '_register_user_nonce' );
-		$wp_role         = Request_Parameter_Helpers::get_string_variable( 'wpRole' );
-		$skautis_user_id = Request_Parameter_Helpers::get_int_variable( 'skautisUserId' );
-		if ( false === wp_verify_nonce( $nonce, SKAUTIS_INTEGRATION_NAME . '_register_user' ) ||
+		$nonce           = Request_Parameter_Helpers::post_string_variable( SKAUTIS_INTEGRATION_NAME . '_register_user_nonce' );
+		$wp_role         = Request_Parameter_Helpers::post_string_variable( 'wpRole' );
+		$skautis_user_id = Request_Parameter_Helpers::post_int_variable( 'skautisUserId' );
+		if ( ! Request_Parameter_Helpers::is_post_request() ||
+			false === wp_verify_nonce( $nonce, SKAUTIS_INTEGRATION_NAME . '_register_user' ) ||
 			! $this->skautis_login->is_user_logged_in_skautis() ||
 			! Helpers::user_is_skautis_manager() ||
 			! current_user_can( 'create_users' ) ||

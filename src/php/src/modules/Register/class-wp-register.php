@@ -341,9 +341,9 @@ final class WP_Register {
 	}
 
 	/**
-	 * Returns the URL used to register an existing SkautIS user as a new WordPress user.
+	 * Returns the URL of the form used to register an existing SkautIS user as a new WordPress user.
 	 *
-	 * This function is used to register other users than the current user.
+	 * This function is used to register other users than the current user. The form must be submitted with POST and contain the `skautis-integration_register_user_nonce` nonce.
 	 *
 	 * @suppress PhanPluginPossiblyStaticPublicMethod
 	 */
@@ -352,7 +352,7 @@ final class WP_Register {
 		$return_url = add_query_arg( SKAUTIS_INTEGRATION_NAME . '_registerToWpBySkautis', wp_create_nonce( SKAUTIS_INTEGRATION_NAME . '_registerToWpBySkautis' ), $return_url );
 		$url        = add_query_arg( 'ReturnUrl', rawurlencode( $return_url ), get_home_url( null, 'skautis/auth/' . Register::MANUALLY_REGISTER_WP_USER_ACTION ) );
 
-		return esc_url( wp_nonce_url( $url, SKAUTIS_INTEGRATION_NAME . '_register_user', SKAUTIS_INTEGRATION_NAME . '_register_user_nonce' ) );
+		return esc_url( $url );
 	}
 
 	/**
