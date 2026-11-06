@@ -51,6 +51,13 @@ interface WPSelectors {
 }
 
 declare const wp: {
+	a11y: {
+		speak(
+			this: void,
+			message: string,
+			ariaLive?: 'assertive' | 'polite'
+		): void;
+	};
 	blockEditor: {
 		InspectorControls: WPComponent;
 	};
@@ -105,6 +112,13 @@ declare const wp: {
 	};
 	i18n: {
 		__(this: void, text: string, domain: string): string;
+		_n(
+			this: void,
+			single: string,
+			plural: string,
+			number: number,
+			domain: string
+		): string;
 		sprintf(
 			this: void,
 			format: string,

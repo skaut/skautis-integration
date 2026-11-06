@@ -168,24 +168,6 @@ gulp.task(
 	gulp.series('build:deps:composer:scoper', 'build:deps:composer:autoloader')
 );
 
-gulp.task('build:deps:npm:datatables.net:files', () =>
-	gulp
-		.src(['node_modules/datatables.net-plugins/i18n/cs.json'])
-		.pipe(gulp.dest('dist/bundled/datatables-files'))
-);
-
-gulp.task(
-	'build:deps:npm:datatables.net',
-	gulp.parallel('build:deps:npm:datatables.net:files', () =>
-		gulp
-			.src([
-				'node_modules/datatables.net-dt/css/dataTables.dataTables.min.css',
-				'node_modules/datatables.net/js/dataTables.min.js',
-			])
-			.pipe(gulp.dest('dist/bundled/'))
-	)
-);
-
 gulp.task('build:deps:npm:font-awesome:css', () =>
 	gulp
 		.src('node_modules/font-awesome/css/font-awesome.min.css')
@@ -248,7 +230,6 @@ gulp.task('build:deps:npm:select2', () =>
 gulp.task(
 	'build:deps:npm',
 	gulp.parallel(
-		'build:deps:npm:datatables.net',
 		'build:deps:npm:font-awesome',
 		'build:deps:npm:interactjs',
 		'build:deps:npm:jquery.repeater',
@@ -261,12 +242,16 @@ gulp.task('build:deps', gulp.parallel('build:deps:composer', 'build:deps:npm'));
 
 gulp.task('build:js:admin', () => {
 	const tsProject = ts.createProject('tsconfig.json');
-	return gulp
-		.src(['src/ts/admin/*.ts', 'src/d.ts/*.d.ts'])
-		.pipe(tsProject())
-		.js.pipe(terser())
-		.pipe(rename({ suffix: '.min' }))
-		.pipe(gulp.dest('dist/admin/js/'));
+	return (
+		gulp
+			.src(['src/ts/admin/*.ts', 'src/d.ts/*.d.ts'])
+			.pipe(tsProject())
+			// Shipped unminified as well for the translations, see build:js:modules:Visibility:admin.
+			.js.pipe(gulp.dest('dist/admin/js/'))
+			.pipe(terser())
+			.pipe(rename({ suffix: '.min' }))
+			.pipe(gulp.dest('dist/admin/js/'))
+	);
 });
 
 gulp.task('build:js:modules:Register:admin', () => {
