@@ -86,13 +86,12 @@ interface Window {
 			...settings,
 			attributes: {
 				...settings.attributes,
+				// No defaults, so that blocks without rules don't get the attributes at all.
 				skautisRules: {
-					default: [],
 					items: { type: 'integer' },
 					type: 'array',
 				},
 				skautisVisibilityMode: {
-					default: 'hide',
 					enum: ['hide', 'showLogin'],
 					type: 'string',
 				},
@@ -101,96 +100,112 @@ interface Window {
 	);
 
 	// Block sidebar panel.
+	const noBlockRules: Array<number> = [];
+
+	/**
+	 * The panel is memoized, so that it isn't rendered again on every change of the block, e.g. when typing.
+	 */
+	const BlockVisibilityPanel = wp.element.memo(
+		({
+			mode,
+			rules,
+			setAttributes,
+		}: {
+			mode: string;
+			rules: Array<number>;
+			setAttributes: WPBlockEditProps['setAttributes'];
+		}): WPElement =>
+			el(
+				wp.blockEditor.InspectorControls,
+				null,
+				el(
+					wp.components.PanelBody,
+					{
+						initialOpen: rules.length > 0,
+						title:
+							rules.length > 0
+								? __(
+										'skautIS viditelnost (omezeno)',
+										'skautis-integration'
+									)
+								: __(
+										'skautIS viditelnost',
+										'skautis-integration'
+									),
+					},
+					data.rules.length === 0
+						? noRulesNotice()
+						: [
+								el(
+									'p',
+									{ key: 'description' },
+									__(
+										'Blok uvidí jen uživatelé, kteří splní alespoň jedno z vybraných pravidel. Bez vybraných pravidel je blok viditelný pro všechny.',
+										'skautis-integration'
+									)
+								),
+								...ruleCheckboxes(rules, (newRules) => {
+									setAttributes({ skautisRules: newRules });
+								}),
+								rules.length > 0
+									? el(wp.components.RadioControl, {
+											key: 'mode',
+											label: __(
+												'Uživatelům, kteří pravidla nesplní',
+												'skautis-integration'
+											),
+											onChange: (value: string) => {
+												setAttributes({
+													skautisVisibilityMode:
+														value,
+												});
+											},
+											options: [
+												{
+													label: __(
+														'blok úplně skrýt',
+														'skautis-integration'
+													),
+													value: 'hide',
+												},
+												{
+													label: __(
+														'zobrazit výzvu k přihlášení',
+														'skautis-integration'
+													),
+													value: 'showLogin',
+												},
+											],
+											selected: mode,
+										})
+									: null,
+							]
+				)
+			)
+	);
+
 	wp.hooks.addFilter<WPComponent<WPBlockEditProps>>(
 		'editor.BlockEdit',
 		'skautis-integration/visibility-controls',
 		wp.compose.createHigherOrderComponent<WPBlockEditProps>(
 			(BlockEdit) =>
-				(props): WPElement => {
-					const rules = props.attributes.skautisRules ?? [];
-					const mode =
-						props.attributes.skautisVisibilityMode ?? 'hide';
-
-					return el(
+				(props): WPElement =>
+					// The tree keeps the same shape for selected and unselected blocks, otherwise the block would be re-mounted when it gets selected. The sidebar only shows the selected block, so the panel is not rendered for the other blocks.
+					el(
 						wp.element.Fragment,
 						null,
 						el(BlockEdit, props),
-						el(
-							wp.blockEditor.InspectorControls,
-							null,
-							el(
-								wp.components.PanelBody,
-								{
-									initialOpen: rules.length > 0,
-									title: __(
-										'skautIS viditelnost',
-										'skautis-integration'
-									),
-								},
-								data.rules.length === 0
-									? noRulesNotice()
-									: [
-											el(
-												'p',
-												{ key: 'description' },
-												__(
-													'Blok uvidí jen uživatelé, kteří splní alespoň jedno z vybraných pravidel. Bez vybraných pravidel je blok viditelný pro všechny.',
-													'skautis-integration'
-												)
-											),
-											...ruleCheckboxes(
-												rules,
-												(newRules) => {
-													props.setAttributes({
-														skautisRules: newRules,
-													});
-												}
-											),
-											rules.length > 0
-												? el(
-														wp.components
-															.RadioControl,
-														{
-															key: 'mode',
-															label: __(
-																'Uživatelům, kteří pravidla nesplní',
-																'skautis-integration'
-															),
-															onChange: (
-																value: string
-															) => {
-																props.setAttributes(
-																	{
-																		skautisVisibilityMode:
-																			value,
-																	}
-																);
-															},
-															options: [
-																{
-																	label: __(
-																		'blok úplně skrýt',
-																		'skautis-integration'
-																	),
-																	value: 'hide',
-																},
-																{
-																	label: __(
-																		'zobrazit výzvu k přihlášení',
-																		'skautis-integration'
-																	),
-																	value: 'showLogin',
-																},
-															],
-															selected: mode,
-														}
-													)
-												: null,
-										]
-							)
-						)
-					);
-				},
+						props.isSelected &&
+							el(BlockVisibilityPanel, {
+								mode:
+									props.attributes.skautisVisibilityMode ??
+									'hide',
+								rules:
+									props.attributes.skautisRules ??
+									noBlockRules,
+								setAttributes: props.setAttributes,
+							})
+					),
 			'withSkautisVisibilityControls'
 		)
 	);

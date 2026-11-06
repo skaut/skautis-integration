@@ -92,14 +92,12 @@ final class Block_Visibility {
 		}
 
 		$args['attributes'][ self::RULES_ATTRIBUTE ] = array(
-			'type'    => 'array',
-			'items'   => array( 'type' => 'integer' ),
-			'default' => array(),
+			'type'  => 'array',
+			'items' => array( 'type' => 'integer' ),
 		);
 		$args['attributes'][ self::MODE_ATTRIBUTE ]  = array(
-			'type'    => 'string',
-			'enum'    => array( 'hide', 'showLogin' ),
-			'default' => 'hide',
+			'type' => 'string',
+			'enum' => array( 'hide', 'showLogin' ),
 		);
 
 		return $args;
