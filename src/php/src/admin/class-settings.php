@@ -148,7 +148,7 @@ final class Settings {
 	public function setup_setting_page() {
 		add_menu_page(
 			__( 'Obecné', 'skautis-integration' ),
-			__( 'skautIS', 'skautis-integration' ),
+			__( 'SkautIS', 'skautis-integration' ),
 			Helpers::get_skautis_manager_capability(),
 			SKAUTIS_INTEGRATION_NAME,
 			array( self::class, 'print_setting_page' ),
