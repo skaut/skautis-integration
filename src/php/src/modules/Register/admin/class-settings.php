@@ -112,7 +112,8 @@ final class Settings {
 			__( 'Default role after registration with skautIS', 'skautis-integration' ),
 			array( self::class, 'field_wp_role' ),
 			SKAUTIS_INTEGRATION_NAME . '_modules_register',
-			SKAUTIS_INTEGRATION_NAME . '_modules_register'
+			SKAUTIS_INTEGRATION_NAME . '_modules_register',
+			array( 'label_for' => 'skautis_integration_modules_register_rules_wpRole' )
 		);
 
 		add_settings_field(

@@ -49,7 +49,7 @@ msgstr "Odhlásit se (i ze skautISu)"
 
 #. translators: 1: Start of a link to the settings 2: End of the link to the
 #. settings
-#: src/admin/class-settings.php:100
+#: src/admin/class-settings.php:98
 #, php-format
 msgid ""
 "Enter the App ID of the production version of skautIS in the plugin "
@@ -58,7 +58,7 @@ msgstr "Zadejte v %1$snastavení%2$s pluginu APP ID produkční verze skautISu"
 
 #. translators: 1: Start of a link to the settings 2: End of the link to the
 #. settings
-#: src/admin/class-settings.php:105
+#: src/admin/class-settings.php:103
 #, php-format
 msgid ""
 "Enter the App ID of the test version of skautIS in the plugin "
@@ -69,57 +69,57 @@ msgstr "Zadejte v %1$snastavení%2$s pluginu APP ID testovací verze skautISu"
 #. settings
 #. translators: 1: Start of link to the settings 2: End of link to the
 #. settings
-#: src/admin/class-settings.php:109 src/admin/class-users-management.php:245
+#: src/admin/class-settings.php:107 src/admin/class-users-management.php:245
 #: src/rules/admin/class-admin.php:196
 #, php-format
 msgid "Select the skautIS environment in the plugin %1$ssettings%2$s"
 msgstr "Vyberte v %1$snastavení%2$s pluginu typ prostředí skautISu"
 
-#: src/admin/class-settings.php:122
+#: src/admin/class-settings.php:120
 msgid "Settings"
 msgstr "Nastavení"
 
-#: src/admin/class-settings.php:137
+#: src/admin/class-settings.php:135
 msgid "Help"
 msgstr "Nápověda"
 
-#: src/admin/class-settings.php:150 src/admin/class-settings.php:160
-#: src/admin/class-settings.php:161
+#: src/admin/class-settings.php:162 src/admin/class-settings.php:172
+#: src/admin/class-settings.php:173
 msgid "General"
 msgstr "Obecné"
 
-#: src/admin/class-settings.php:151
+#: src/admin/class-settings.php:163
 msgid "SkautIS"
 msgstr "SkautIS"
 
-#: src/admin/class-settings.php:169 src/admin/class-settings.php:170
-#: src/admin/class-settings.php:309
+#: src/admin/class-settings.php:181 src/admin/class-settings.php:182
+#: src/admin/class-settings.php:323
 msgid "Login"
 msgstr "Přihlašování"
 
-#: src/admin/class-settings.php:178 src/admin/class-settings.php:179
-#: src/admin/class-settings.php:565
+#: src/admin/class-settings.php:190 src/admin/class-settings.php:191
+#: src/admin/class-settings.php:590
 msgid "Modules"
 msgstr "Moduly"
 
-#: src/admin/class-settings.php:193 src/admin/class-settings.php:351
-#: src/admin/class-settings.php:560 src/admin/class-users-management.php:228
+#: src/admin/class-settings.php:205 src/admin/class-settings.php:373
+#: src/admin/class-settings.php:585 src/admin/class-users-management.php:228
 #: src/modules/Register/admin/class-settings.php:77
 #: src/modules/Visibility/admin/class-settings.php:65
 msgid "You do not have sufficient permissions to access this page."
 msgstr "Nemáte dostatečná oprávnění pro přístup k této stránce."
 
-#: src/admin/class-settings.php:199
+#: src/admin/class-settings.php:211
 msgid "skautIS connection settings"
 msgstr "Nastavení propojení se skautISem"
 
-#: src/admin/class-settings.php:238
+#: src/admin/class-settings.php:250
 msgid "APP ID"
 msgstr "APP ID"
 
 #. translators: 1: Start of a link to the documentation 2: End of the link to
 #. the documentation
-#: src/admin/class-settings.php:241
+#: src/admin/class-settings.php:253
 #, php-format
 msgid ""
 "You can find instructions for setting up the plugin and getting an App ID in"
@@ -127,47 +127,66 @@ msgid ""
 msgstr ""
 "Návod pro nastavení pluginu a získání APP ID najdete v %1$snápovědě%2$s."
 
-#: src/admin/class-settings.php:248
+#: src/admin/class-settings.php:260
 msgid "Production App ID"
 msgstr "APP ID produkční verze"
 
-#: src/admin/class-settings.php:256
+#: src/admin/class-settings.php:269
 msgid "Test App ID"
 msgstr "APP ID testovací verze"
 
-#: src/admin/class-settings.php:264
+#: src/admin/class-settings.php:278
 msgid "Active App ID"
 msgstr "Vyberte aktivní APP ID"
 
-#: src/admin/class-settings.php:300
+#: src/admin/class-settings.php:314
 msgid "Available modules"
 msgstr "Dostupné moduly"
 
-#: src/admin/class-settings.php:357
+#: src/admin/class-settings.php:326
+msgid "Logging in to WordPress with skautIS. It is always enabled."
+msgstr "Přihlašování do WordPressu přes skautIS. Je vždy zapnuté."
+
+#: src/admin/class-settings.php:335
+msgid ""
+"New users can register on the site with their skautIS account. The "
+"registration can be limited by rules."
+msgstr ""
+"Noví uživatelé se mohou na web registrovat svým skautIS účtem. Registraci "
+"lze omezit pravidly."
+
+#: src/admin/class-settings.php:336
+msgid ""
+"Hides posts, pages and blocks from users who do not pass the selected rules."
+msgstr ""
+"Skryje příspěvky, stránky a bloky před uživateli, kteří nesplní vybraná "
+"pravidla."
+
+#: src/admin/class-settings.php:379
 msgid "Login settings"
 msgstr "Nastavení přihlašování"
 
-#: src/admin/class-settings.php:386
+#: src/admin/class-settings.php:408
 msgid "Disconnecting from skautIS"
 msgstr "Zrušení spojení se skautISem"
 
-#: src/admin/class-settings.php:395
+#: src/admin/class-settings.php:418
 msgid "Checking registration conditions"
 msgstr "Ověřování podmínek registrace"
 
-#: src/admin/class-settings.php:404
+#: src/admin/class-settings.php:428
 msgid "Login page address"
 msgstr "Adresa stránky s přihlašováním"
 
-#: src/admin/class-settings.php:481
+#: src/admin/class-settings.php:506
 msgid "Production"
 msgstr "Produkční"
 
-#: src/admin/class-settings.php:487
+#: src/admin/class-settings.php:512
 msgid "Test"
 msgstr "Testovací"
 
-#: src/admin/class-settings.php:503
+#: src/admin/class-settings.php:528
 msgid ""
 "For a custom login page, add a \"skautis\" folder with a \"login.php\" file "
 "to the active theme."
@@ -175,7 +194,7 @@ msgstr ""
 "Pro vlastní vzhled přihlašovací stránky přidejte do složky aktivní šablony "
 "složku \"skautis\" a do ní soubor \"login.php\"."
 
-#: src/admin/class-settings.php:512
+#: src/admin/class-settings.php:537
 msgid ""
 "In the login.php file, you can call the global functions "
 "getSkautisLoginUrl(), getSkautisLogoutUrl(), getSkautisRegisterUrl() and "
@@ -184,15 +203,15 @@ msgstr ""
 "V souboru login.php pak můžete volat globální funkce: getSkautisLoginUrl(), "
 "getSkautisLogoutUrl(), getSkautisRegisterUrl(), isUserLoggedInSkautis()"
 
-#: src/admin/class-settings.php:532
+#: src/admin/class-settings.php:557
 msgid "Allows users to disconnect their account from skautIS."
 msgstr "Umožní uživatelům zrušit propojení svého účtu se skautISem."
 
-#: src/admin/class-settings.php:533 src/admin/class-settings.php:549
+#: src/admin/class-settings.php:558 src/admin/class-settings.php:574
 msgid "This setting does not affect users with the administrator role."
 msgstr "Nastavení nebude mít dopad na uživatele s úrovní administrátora."
 
-#: src/admin/class-settings.php:548
+#: src/admin/class-settings.php:573
 msgid ""
 "When a user logs in with skautIS, check whether they still meet the "
 "registration conditions."
@@ -413,37 +432,37 @@ msgstr "Nastavení registrace"
 msgid "Default role after registration with skautIS"
 msgstr "Výchozí úroveň po registraci uživatele přes skautIS"
 
-#: src/modules/Register/admin/class-settings.php:120
+#: src/modules/Register/admin/class-settings.php:121
 msgid "After a successful registration, send e-mails to:"
 msgstr "Po úspěšné registraci uživatele poslat emaily:"
 
-#: src/modules/Register/admin/class-settings.php:128
+#: src/modules/Register/admin/class-settings.php:129
 msgid "Registration rules"
 msgstr "Pravidla registrace"
 
-#: src/modules/Register/admin/class-settings.php:186
+#: src/modules/Register/admin/class-settings.php:187
 msgid "Nobody"
 msgstr "Nikomu"
 
-#: src/modules/Register/admin/class-settings.php:193
+#: src/modules/Register/admin/class-settings.php:194
 msgid "The administrator (information about the new user)"
 msgstr "Administrátorovi (info o registraci nového uživatele)"
 
-#: src/modules/Register/admin/class-settings.php:200
+#: src/modules/Register/admin/class-settings.php:201
 msgid "The user (login details)"
 msgstr "Uživateli (přístupové údaje)"
 
-#: src/modules/Register/admin/class-settings.php:207
+#: src/modules/Register/admin/class-settings.php:208
 msgid "Both the administrator and the user"
 msgstr "Administrátorovi i uživateli"
 
-#: src/modules/Register/admin/class-settings.php:220
+#: src/modules/Register/admin/class-settings.php:221
 msgid "Only users who pass the following rules will be able to register."
 msgstr ""
 "Nastavením omezíte registraci uživatelů pouze při splnění následujících "
 "pravidel."
 
-#: src/modules/Register/admin/class-settings.php:223
+#: src/modules/Register/admin/class-settings.php:224
 msgid ""
 "If left empty, all users will be able to register with skautIS. Their "
 "default role will be: "
@@ -451,21 +470,21 @@ msgstr ""
 "Ponecháte-li prázdné - budou se moci přes skautIS registrovat všichni "
 "uživatelé. Jejich výchozí úroveň pak bude: "
 
-#: src/modules/Register/admin/class-settings.php:226
+#: src/modules/Register/admin/class-settings.php:227
 msgid "You can add rules in the section"
 msgstr "Pravidla můžete přidávat v sekci"
 
-#: src/modules/Register/admin/class-settings.php:227
+#: src/modules/Register/admin/class-settings.php:228
 #: src/rules/class-rules-init.php:54 src/rules/class-rules-init.php:55
 #: src/rules/class-rules-init.php:59
 msgid "Manage rules"
 msgstr "Správa pravidel"
 
-#: src/modules/Register/admin/class-settings.php:230
+#: src/modules/Register/admin/class-settings.php:231
 msgid "The rules are evaluated from top to bottom."
 msgstr "Pravidla se vyhodnocují shora dolů."
 
-#: src/modules/Register/admin/class-settings.php:232
+#: src/modules/Register/admin/class-settings.php:233
 msgid ""
 "Once a rule is passed, the following rules are not evaluated. Therefore, "
 "keep the more specific rules, which apply to a narrower group of users, at "
@@ -475,20 +494,20 @@ msgstr ""
 "nevyhodnocují. Proto udržujte pořadí pravidel takové, aby nahoře byly vždy "
 "specifičtější pravidla, která platí pro užší skupinu uživatelů."
 
-#: src/modules/Register/admin/class-settings.php:245
+#: src/modules/Register/admin/class-settings.php:246
 msgid "If the rule is passed:"
 msgstr "Při splnění pravidla:"
 
-#: src/modules/Register/admin/class-settings.php:256
+#: src/modules/Register/admin/class-settings.php:257
 msgid "Assign the user the role:"
 msgstr "Přiřadit uživateli úroveň:"
 
-#: src/modules/Register/admin/class-settings.php:263
+#: src/modules/Register/admin/class-settings.php:264
 #: src/modules/Visibility/admin/class-metabox.php:191
 msgid "Remove"
 msgstr "Odstranit"
 
-#: src/modules/Register/admin/class-settings.php:266
+#: src/modules/Register/admin/class-settings.php:267
 #: src/modules/Visibility/admin/class-metabox.php:194
 msgid "Add"
 msgstr "Přidat"
@@ -606,7 +625,7 @@ msgid "Hide completely"
 msgstr "Úplně skrýt"
 
 #: src/modules/Visibility/admin/class-metabox.php:217
-#: src/modules/Visibility/admin/class-settings.php:192
+#: src/modules/Visibility/admin/class-settings.php:194
 #: modules/Visibility/admin/js/skautis-modules-visibility-block-editor.js:202
 msgid "Hide only the content"
 msgstr "Skrýt pouze obsah"
@@ -622,6 +641,7 @@ msgid "Content visibility settings"
 msgstr "Nastavení viditelnosti obsahu"
 
 #: src/modules/Visibility/admin/class-settings.php:100
+#: src/modules/Visibility/admin/class-settings.php:166
 msgid "Content types"
 msgstr "Typy obsahu"
 
@@ -633,12 +653,12 @@ msgstr "Způsob skrytí"
 msgid "Child content"
 msgstr "Podřízený obsah"
 
-#: src/modules/Visibility/admin/class-settings.php:173
+#: src/modules/Visibility/admin/class-settings.php:175
 msgid "Visibility rules can be set for the selected content types."
 msgstr ""
 "U vybraných typů obsahu bude možné zadávat pravidla pro viditelnost obsahu."
 
-#: src/modules/Visibility/admin/class-settings.php:174
+#: src/modules/Visibility/admin/class-settings.php:176
 msgid ""
 "If a user is not logged in to skautIS or does not pass the rules, the "
 "content will be hidden from them."
@@ -646,7 +666,7 @@ msgstr ""
 "Pokud není uživatel přihlášen ve skautISu nebo nesplní daná pravidla - bude "
 "pro něj obsah skrytý."
 
-#: src/modules/Visibility/admin/class-settings.php:175
+#: src/modules/Visibility/admin/class-settings.php:177
 msgid ""
 "Users logged in to WordPress who can edit the content will always see it, "
 "regardless of their skautIS login or the rules."
@@ -655,16 +675,16 @@ msgstr ""
 "uvidí vždy, bez ohledu na jejich přihlášení do skautISu či splnění daných "
 "pravidel."
 
-#: src/modules/Visibility/admin/class-settings.php:189
+#: src/modules/Visibility/admin/class-settings.php:191
 msgid "Hide the whole post / page / …"
 msgstr "Skrýt celý příspěvek / stránku / …"
 
-#: src/modules/Visibility/admin/class-settings.php:194
-#: src/modules/Visibility/admin/class-settings.php:211
+#: src/modules/Visibility/admin/class-settings.php:196
+#: src/modules/Visibility/admin/class-settings.php:213
 msgid "You can change this setting for individual content as needed."
 msgstr "Nastavení můžete změnit u jednotlivých typů obsahu dle potřeby."
 
-#: src/modules/Visibility/admin/class-settings.php:208
+#: src/modules/Visibility/admin/class-settings.php:210
 msgid "Apply the selected rules to child content as well"
 msgstr "Použít vybraná pravidla i na podřízený obsah"
 

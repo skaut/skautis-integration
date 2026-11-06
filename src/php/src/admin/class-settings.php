@@ -14,6 +14,7 @@ use Skautis_Integration\Modules\Modules_Manager;
 use Skautis_Integration\Utils\Helpers;
 use Skautis_Integration\Services\Services;
 use Skautis_Integration\Modules\Register\Register;
+use Skautis_Integration\Modules\Visibility\Visibility;
 
 /**
  * Registers, handles and shows plugin settings.
@@ -39,13 +40,6 @@ final class Settings {
 	private $modules_manager;
 
 	/**
-	 * The location of the administration files for the module
-	 *
-	 * @var string
-	 */
-	private $admin_dir_url = '';
-
-	/**
 	 * Constructs the service and saves all dependencies.
 	 *
 	 * @param Skautis_Gateway $skautis_gateway An injected Skautis_Gateway service instance.
@@ -54,7 +48,6 @@ final class Settings {
 	public function __construct( Skautis_Gateway $skautis_gateway, Modules_Manager $modules_manager ) {
 		$this->skautis_gateway = $skautis_gateway;
 		$this->modules_manager = $modules_manager;
-		$this->admin_dir_url   = plugin_dir_url( __FILE__ ) . 'public/';
 		$this->init_hooks();
 	}
 
@@ -93,14 +86,19 @@ final class Settings {
 	 * @return void
 	 */
 	public static function check_if_app_id_is_set_and_show_notices() {
+		// Only the users who can change the settings can act on the notices.
+		if ( ! Helpers::user_is_skautis_manager() ) {
+			return;
+		}
+
 		$env_type = get_option( 'skautis_integration_appid_type' );
 		if ( Skautis_Gateway::PROD_ENV === $env_type ) {
-			if ( false === get_option( 'skautis_integration_appid_prod' ) ) {
+			if ( '' === strval( get_option( 'skautis_integration_appid_prod', '' ) ) ) {
 				/* translators: 1: Start of a link to the settings 2: End of the link to the settings */
 				Helpers::show_admin_notice( sprintf( __( 'Enter the App ID of the production version of skautIS in the plugin %1$ssettings%2$s', 'skautis-integration' ), '<a href="' . esc_url( admin_url( 'admin.php?page=' . SKAUTIS_INTEGRATION_NAME ) ) . '">', '</a>' ), 'warning', 'toplevel-page-' . SKAUTIS_INTEGRATION_NAME );
 			}
 		} elseif ( Skautis_Gateway::TEST_ENV === $env_type ) {
-			if ( false === get_option( 'skautis_integration_appid_test' ) ) {
+			if ( '' === strval( get_option( 'skautis_integration_appid_test', '' ) ) ) {
 				/* translators: 1: Start of a link to the settings 2: End of the link to the settings */
 				Helpers::show_admin_notice( sprintf( __( 'Enter the App ID of the test version of skautIS in the plugin %1$ssettings%2$s', 'skautis-integration' ), '<a href="' . esc_url( admin_url( 'admin.php?page=' . SKAUTIS_INTEGRATION_NAME ) ) . '">', '</a>' ), 'warning', 'toplevel-page-' . SKAUTIS_INTEGRATION_NAME );
 			}
@@ -141,6 +139,20 @@ final class Settings {
 	}
 
 	/**
+	 * Returns the menu icon as an SVG data URI.
+	 *
+	 * WordPress recolors SVG menu icons to match the admin color scheme of the user.
+	 */
+	private static function get_menu_icon(): string {
+		$svg = file_get_contents( __DIR__ . '/public/img/lilie.svg' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- A local file.
+		if ( false === $svg ) {
+			return 'dashicons-admin-generic';
+		}
+
+		return 'data:image/svg+xml;base64,' . base64_encode( $svg ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode -- The format required by WordPress for menu icons.
+	}
+
+	/**
 	 * Adds the settings pages to the administration.
 	 *
 	 * @return void
@@ -152,7 +164,7 @@ final class Settings {
 			Helpers::get_skautis_manager_capability(),
 			SKAUTIS_INTEGRATION_NAME,
 			array( self::class, 'print_setting_page' ),
-			$this->admin_dir_url . 'img/lilie.png'
+			self::get_menu_icon()
 		);
 
 		add_submenu_page(
@@ -248,7 +260,8 @@ final class Settings {
 			__( 'Production App ID', 'skautis-integration' ),
 			array( self::class, 'field_app_id_prod' ),
 			SKAUTIS_INTEGRATION_NAME,
-			'skautis_integration_setting'
+			'skautis_integration_setting',
+			array( 'label_for' => 'skautis_integration_appid_prod' )
 		);
 
 		add_settings_field(
@@ -256,7 +269,8 @@ final class Settings {
 			__( 'Test App ID', 'skautis-integration' ),
 			array( self::class, 'field_app_id_test' ),
 			SKAUTIS_INTEGRATION_NAME,
-			'skautis_integration_setting'
+			'skautis_integration_setting',
+			array( 'label_for' => 'skautis_integration_appid_test' )
 		);
 
 		add_settings_field(
@@ -308,26 +322,34 @@ final class Settings {
 			'skautis_integration_login',
 			__( 'Login', 'skautis-integration' ),
 			static function () {
-				echo '<label for="skautis_integration_login"><input type="checkbox" id="skautis_integration_login" checked="checked" disabled="disabled"/></label>';
+				echo '<input type="checkbox" id="skautis_integration_login" checked="checked" disabled="disabled"/>';
+				echo '<p class="description">' . esc_html__( 'Logging in to WordPress with skautIS. It is always enabled.', 'skautis-integration' ) . '</p>';
 			},
 			SKAUTIS_INTEGRATION_NAME . '_modules',
-			SKAUTIS_INTEGRATION_NAME . '_modules'
+			SKAUTIS_INTEGRATION_NAME . '_modules',
+			array( 'label_for' => 'skautis_integration_login' )
 		);
 
-		$activated_modules = (array) get_option( 'skautis_integration_activated_modules' );
+		$activated_modules   = (array) get_option( 'skautis_integration_activated_modules' );
+		$module_descriptions = array(
+			Register::get_id()   => __( 'New users can register on the site with their skautIS account. The registration can be limited by rules.', 'skautis-integration' ),
+			Visibility::get_id() => __( 'Hides posts, pages and blocks from users who do not pass the selected rules.', 'skautis-integration' ),
+		);
 
 		foreach ( $this->modules_manager->get_all_modules() as $module_id => $module_label ) {
 			add_settings_field(
 				SKAUTIS_INTEGRATION_NAME . '_modules_' . $module_id,
 				$module_label,
-				static function () use ( $module_id, $activated_modules ) {
+				static function () use ( $module_id, $activated_modules, $module_descriptions ) {
 					$checked = in_array( $module_id, $activated_modules, true );
-					echo '
-					<label for="' . esc_attr( $module_id ) . '"><input name="skautis_integration_activated_modules[]" type="checkbox" id="' . esc_attr( $module_id ) . '" value="' . esc_attr( $module_id ) . '" ' . ( $checked ? 'checked="checked"' : '' ) . '></label>
-					';
+					echo '<input name="skautis_integration_activated_modules[]" type="checkbox" id="' . esc_attr( $module_id ) . '" value="' . esc_attr( $module_id ) . '" ' . ( $checked ? 'checked="checked"' : '' ) . '>';
+					if ( isset( $module_descriptions[ $module_id ] ) ) {
+						echo '<p class="description">' . esc_html( $module_descriptions[ $module_id ] ) . '</p>';
+					}
 				},
 				SKAUTIS_INTEGRATION_NAME . '_modules',
-				SKAUTIS_INTEGRATION_NAME . '_modules'
+				SKAUTIS_INTEGRATION_NAME . '_modules',
+				array( 'label_for' => $module_id )
 			);
 		}
 
@@ -386,7 +408,8 @@ final class Settings {
 			__( 'Disconnecting from skautIS', 'skautis-integration' ),
 			array( self::class, 'field_allow_users_disconnect' ),
 			SKAUTIS_INTEGRATION_NAME . '_login',
-			SKAUTIS_INTEGRATION_NAME . '_login'
+			SKAUTIS_INTEGRATION_NAME . '_login',
+			array( 'label_for' => 'skautis_integration_allowUsersDisconnectFromSkautis' )
 		);
 
 		if ( Services::get_modules_manager()->is_module_activated( Register::get_id() ) ) {
@@ -395,7 +418,8 @@ final class Settings {
 				__( 'Checking registration conditions', 'skautis-integration' ),
 				array( self::class, 'field_check_user_privileges' ),
 				SKAUTIS_INTEGRATION_NAME . '_login',
-				SKAUTIS_INTEGRATION_NAME . '_login'
+				SKAUTIS_INTEGRATION_NAME . '_login',
+				array( 'label_for' => 'skautis_integration_checkUserPrivilegesIfLoginBySkautis' )
 			);
 		}
 
@@ -404,7 +428,8 @@ final class Settings {
 			__( 'Login page address', 'skautis-integration' ),
 			array( self::class, 'field_login_page_url' ),
 			SKAUTIS_INTEGRATION_NAME . '_login',
-			SKAUTIS_INTEGRATION_NAME . '_login'
+			SKAUTIS_INTEGRATION_NAME . '_login',
+			array( 'label_for' => SKAUTIS_INTEGRATION_NAME . '_login_page_url' )
 		);
 
 		register_setting(
