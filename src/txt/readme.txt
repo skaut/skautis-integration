@@ -1,9 +1,9 @@
 === SkautIS integration ===
 Contributors: skaut, davidulus, marekdedic, kalich5
 Tags: SkautIS, login, registration, skaut
-Requires at least: 5.0
+Requires at least: 7.0
 Tested up to: 7.1
-Requires PHP: 7.4
+Requires PHP: 8.3
 Stable tag: 1.1.33
 License: GPLv3 or later
 License URI: https://github.com/skaut/skautis-integration/blob/master/LICENSE
@@ -20,8 +20,8 @@ Login, registration, user management and other features connecting SkautIS to Wo
 * Enable registration of users to your site based on their SkautIS functions, memberships or other criteria
 
 === Minimal requirements ===
-- WordPress 4.9.6 or higher
-- PHP 7.4 or higher
+- WordPress 7.0 or higher
+- PHP 8.3 or higher
 
 === GitHub ===
 All the sources for the plugin and the build process are detailed in our [GitHub repo](https://github.com/skaut/skautis-integration/).

@@ -199,6 +199,9 @@ final class WP_Login_Logout {
 	 */
 	#[SuppressWarnings( ExitExpression::class )]
 	public function logout() {
+		// The nonce is added to the return URL by get_logout_url(); verifying it prevents logout CSRF.
+		Helpers::validate_nonce_from_url( Helpers::get_return_url() ?? '', SKAUTIS_INTEGRATION_NAME . '_logoutFromWpAndSkautis' );
+
 		$this->skautis_gateway->logout();
 
 		wp_logout();

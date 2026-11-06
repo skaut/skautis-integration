@@ -9,6 +9,8 @@ declare( strict_types=1 );
 
 namespace Skautis_Integration\Modules\Visibility\Frontend;
 
+use PHPMD\Attribute\SuppressWarnings;
+use PHPMD\Rule\Design\ExcessiveClassComplexity;
 use Skautis_Integration\Rules\Rules_Manager;
 use Skautis_Integration\Auth\Skautis_Login;
 use Skautis_Integration\Auth\WP_Login_Logout;
@@ -17,6 +19,7 @@ use Skautis_Integration\Utils\Helpers;
 /**
  * Handles the frontend part of the visibility rules - hides posts or their contents, shows notices and a login form.
  */
+#[SuppressWarnings( ExcessiveClassComplexity::class )]
 final class Frontend {
 
 	/**
@@ -48,6 +51,13 @@ final class Frontend {
 	private $wp_login_logout;
 
 	/**
+	 * A per-request cache of the restriction applied to each post, see get_post_restriction().
+	 *
+	 * @var array<int, string>
+	 */
+	private $post_restrictions = array();
+
+	/**
 	 * Constructs the service and saves all dependencies.
 	 *
 	 * @param array<string>   $post_types A list of post types to activate the Visibility module for.
@@ -70,6 +80,12 @@ final class Frontend {
 	public function init_hooks() {
 		add_action( 'wp_enqueue_scripts', array( self::class, 'enqueue_styles' ) );
 		add_action( 'posts_results', array( $this, 'filter_posts' ), 10, 2 );
+		add_filter( 'the_comments', array( $this, 'filter_comments' ) );
+		add_action( 'wp', array( $this, 'filter_comment_feed' ) );
+		add_filter( 'rest_prepare_comment', array( $this, 'filter_rest_comment_response' ), 10, 2 );
+		foreach ( $this->post_types as $post_type ) {
+			add_filter( 'rest_prepare_' . $post_type, array( $this, 'filter_rest_response' ), 10, 2 );
+		}
 	}
 
 	/**
@@ -162,7 +178,9 @@ final class Frontend {
 	}
 
 	/**
-	 * Hides post comments and replaces its excerpt and content.
+	 * Replaces post excerpt and content.
+	 *
+	 * The post comments are hidden by filter_comments() and filter_comment_feed().
 	 *
 	 * @param int    $post_id The ID of the post to modify.
 	 * @param string $new_content The replacement post content.
@@ -190,21 +208,6 @@ final class Frontend {
 				}
 
 				return $excerpt;
-			}
-		);
-
-		// TODO: Replace with a PHP filter in the `the_comments` hook for better performance?
-		add_action(
-			'pre_get_comments',
-			static function ( \WP_Comment_Query $wp_comment_query ) use ( $post_id ) {
-				$query_vars = $wp_comment_query->query_vars;
-				// @phan-suppress-next-line PhanTypePossiblyInvalidDimOffset
-				if ( isset( $query_vars['post_id'] ) && $post_id === $query_vars['post_id'] ) {
-					if ( ! isset( $query_vars['post__not_in'] ) || empty( $query_vars['post__not_in'] ) ) {
-						$query_vars['post__not_in'] = array();
-					}
-					$query_vars['post__not_in'][] = $post_id;
-				}
 			}
 		);
 	}
@@ -330,22 +333,7 @@ final class Frontend {
 
 			if ( in_array( $wp_post->post_type, $this->post_types, true ) ) {
 				if ( ! current_user_can( 'edit_' . $wp_post->post_type . 's' ) ) {
-					$rules_groups = array();
-
-					if ( $wp_post->post_parent > 0 ) {
-						$rules_groups = self::get_parent_rules_affecting_child( $wp_post->ID, $wp_post->post_type );
-					}
-
-					$current_post_rules = (array) get_post_meta( $wp_post->ID, SKAUTIS_INTEGRATION_NAME . '_rules', true );
-					if ( ! empty( $current_post_rules ) ) {
-						$current_post_rule = array(
-							'id'              => $wp_post->ID,
-							'rules'           => $current_post_rules,
-							'includeChildren' => get_post_meta( $wp_post->ID, SKAUTIS_INTEGRATION_NAME . '_rules_includeChildren', true ),
-							'visibilityMode'  => get_post_meta( $wp_post->ID, SKAUTIS_INTEGRATION_NAME . '_rules_visibilityMode', true ),
-						);
-						$rules_groups[]    = $current_post_rule;
-					}
+					$rules_groups = self::get_rules_groups( $wp_post );
 
 					foreach ( $rules_groups as $rules_group ) {
 						if ( 'content' === $rules_group['visibilityMode'] ) {
@@ -364,5 +352,201 @@ final class Frontend {
 		}
 
 		return $posts;
+	}
+
+	/**
+	 * Returns all groups of rules that apply to a post, both its own and the ones inherited from its ancestors.
+	 *
+	 * @param \WP_Post $wp_post The post.
+	 *
+	 * @return array<array{id: int, rules: array<array{skautis-integration_rules?: string}>, includeChildren: string, visibilityMode: string}> The rule groups.
+	 */
+	private static function get_rules_groups( \WP_Post $wp_post ): array {
+		$rules_groups = array();
+
+		if ( $wp_post->post_parent > 0 ) {
+			$rules_groups = self::get_parent_rules_affecting_child( $wp_post->ID, $wp_post->post_type );
+		}
+
+		$current_post_rules = (array) get_post_meta( $wp_post->ID, SKAUTIS_INTEGRATION_NAME . '_rules', true );
+		if ( ! empty( $current_post_rules ) ) {
+			$rules_groups[] = array(
+				'id'              => $wp_post->ID,
+				'rules'           => $current_post_rules,
+				'includeChildren' => get_post_meta( $wp_post->ID, SKAUTIS_INTEGRATION_NAME . '_rules_includeChildren', true ),
+				'visibilityMode'  => get_post_meta( $wp_post->ID, SKAUTIS_INTEGRATION_NAME . '_rules_visibilityMode', true ),
+			);
+		}
+
+		// @phpstan-ignore-next-line Error about the shape of the post meta values
+		return $rules_groups;
+	}
+
+	/**
+	 * Returns how a post is restricted for the current user.
+	 *
+	 * @param \WP_Post $wp_post The post.
+	 *
+	 * @return string "post" if the whole post should be hidden, "content" if only its content should be hidden, or an empty string if the post is visible.
+	 */
+	private function get_post_restriction( \WP_Post $wp_post ): string {
+		if ( isset( $this->post_restrictions[ $wp_post->ID ] ) ) {
+			return $this->post_restrictions[ $wp_post->ID ];
+		}
+
+		$restriction = '';
+		if ( in_array( $wp_post->post_type, $this->post_types, true ) && ! current_user_can( 'edit_' . $wp_post->post_type . 's' ) ) {
+			$user_is_logged_in_skautis = null;
+			foreach ( self::get_rules_groups( $wp_post ) as $rules_group ) {
+				$rules = $rules_group['rules'];
+				if ( empty( $rules ) || ! isset( $rules[0]['skautis-integration_rules'] ) ) {
+					continue;
+				}
+				if ( is_null( $user_is_logged_in_skautis ) ) {
+					$user_is_logged_in_skautis = $this->skautis_login->is_user_logged_in_skautis();
+				}
+				if ( $user_is_logged_in_skautis && $this->rules_manager->check_if_user_passed_rules( $rules ) ) {
+					continue;
+				}
+				if ( 'content' !== $rules_group['visibilityMode'] ) {
+					$restriction = 'post';
+					break;
+				}
+				$restriction = 'content';
+			}
+		}
+
+		$this->post_restrictions[ $wp_post->ID ] = $restriction;
+		return $restriction;
+	}
+
+	/**
+	 * Checks whether the comments of a post should be hidden from the current user.
+	 *
+	 * @param int $post_id The ID of the post.
+	 */
+	private function are_post_comments_hidden( int $post_id ): bool {
+		$wp_post = get_post( $post_id );
+		if ( ! ( $wp_post instanceof \WP_Post ) ) {
+			return false;
+		}
+		return '' !== $this->get_post_restriction( $wp_post );
+	}
+
+	/**
+	 * Removes comments of restricted posts from the results of a comment query.
+	 *
+	 * This covers the comments under a post, the comments REST API endpoint and comment widgets.
+	 *
+	 * @param array<\WP_Comment|int|string> $comments The comments returned by the query.
+	 *
+	 * @return array<\WP_Comment|int|string> The filtered comments.
+	 */
+	public function filter_comments( $comments ) {
+		if ( ! is_array( $comments ) ) {
+			return $comments;
+		}
+
+		return array_values(
+			array_filter(
+				$comments,
+				function ( $comment ) {
+					if ( ! ( $comment instanceof \WP_Comment ) ) {
+						return true;
+					}
+					return ! $this->are_post_comments_hidden( intval( $comment->comment_post_ID ) );
+				}
+			)
+		);
+	}
+
+	/**
+	 * Removes comments of restricted posts from comment feeds.
+	 *
+	 * Comment feeds are loaded by WP_Query directly, without passing through the `the_comments` filter.
+	 *
+	 * @return void
+	 */
+	public function filter_comment_feed() {
+		global $wp_query;
+
+		if ( ! ( $wp_query instanceof \WP_Query ) || ! $wp_query->is_comment_feed() || empty( $wp_query->comments ) ) {
+			return;
+		}
+
+		$wp_query->comments      = $this->filter_comments( $wp_query->comments );
+		$wp_query->comment_count = count( $wp_query->comments );
+	}
+
+	/**
+	 * Hides restricted posts and their content in the REST API.
+	 *
+	 * Single posts are loaded by the REST API with get_post(), which bypasses the `posts_results` filter used by filter_posts().
+	 *
+	 * @param \WP_REST_Response $response The response object.
+	 * @param \WP_Post          $wp_post The post.
+	 *
+	 * @return \WP_REST_Response The filtered response.
+	 */
+	public function filter_rest_response( $response, $wp_post ) {
+		if ( ! ( $response instanceof \WP_REST_Response ) || ! ( $wp_post instanceof \WP_Post ) ) {
+			return $response;
+		}
+
+		$restriction = $this->get_post_restriction( $wp_post );
+		if ( 'post' === $restriction ) {
+			// The same response as for a non-existent post. A WP_Error cannot be returned here, because the REST controller calls methods of WP_REST_Response on the result.
+			return new \WP_REST_Response(
+				array(
+					'code'    => 'rest_post_invalid_id',
+					'message' => __( 'Invalid post ID.' ), // phpcs:ignore WordPress.WP.I18n.MissingArgDomain -- Reuses the WordPress core message.
+					'data'    => array( 'status' => 404 ),
+				),
+				404
+			);
+		}
+
+		if ( 'content' === $restriction ) {
+			$data    = $response->get_data();
+			$message = $this->skautis_login->is_user_logged_in_skautis() ? self::get_unauthorized_message() : self::get_login_required_message();
+			if ( is_array( $data ) ) {
+				foreach ( array( 'content', 'excerpt' ) as $field ) {
+					if ( isset( $data[ $field ] ) && is_array( $data[ $field ] ) ) {
+						$data[ $field ]['rendered'] = $message;
+						unset( $data[ $field ]['raw'] );
+						$data[ $field ]['protected'] = true;
+					}
+				}
+				$response->set_data( $data );
+			}
+		}
+
+		return $response;
+	}
+
+	/**
+	 * Hides comments of restricted posts in the REST API.
+	 *
+	 * Single comments are loaded by the REST API with get_comment(), which bypasses the `the_comments` filter used by filter_comments().
+	 *
+	 * @param \WP_REST_Response $response The response object.
+	 * @param \WP_Comment       $comment The comment.
+	 *
+	 * @return \WP_REST_Response The filtered response.
+	 */
+	public function filter_rest_comment_response( $response, $comment ) {
+		if ( ! ( $response instanceof \WP_REST_Response ) || ! ( $comment instanceof \WP_Comment ) || ! $this->are_post_comments_hidden( intval( $comment->comment_post_ID ) ) ) {
+			return $response;
+		}
+
+		// The same response as for a non-existent comment.
+		return new \WP_REST_Response(
+			array(
+				'code'    => 'rest_comment_invalid_id',
+				'message' => __( 'Invalid comment ID.' ), // phpcs:ignore WordPress.WP.I18n.MissingArgDomain -- Reuses the WordPress core message.
+				'data'    => array( 'status' => 404 ),
+			),
+			404
+		);
 	}
 }

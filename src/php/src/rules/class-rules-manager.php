@@ -32,6 +32,13 @@ final class Rules_Manager {
 	private $rules = array();
 
 	/**
+	 * A per-request cache of the results of check_if_user_passed_rules(), keyed by the rule ID.
+	 *
+	 * @var array<int, bool>
+	 */
+	private $rules_results = array();
+
+	/**
 	 * Constructs the service and saves all dependencies.
 	 *
 	 * @param Skautis_Gateway $skautis_gateway An injected Skautis_Gateway service instance.
@@ -196,23 +203,22 @@ final class Rules_Manager {
 	 * @param array<int|array{skautis-integration_rules: string}> $rules_ids A list of IDs of rules or rule groups to check.
 	 */
 	public function check_if_user_passed_rules( array $rules_ids ): bool {
-		static $rules_groups = null;
-		$result              = false;
-
 		foreach ( $rules_ids as $rule_id ) {
 			if ( is_array( $rule_id ) ) {
-				$rule_id = intval( reset( $rule_id ) );
+				$rule_id = reset( $rule_id );
 			}
+			$rule_id = intval( $rule_id );
 
-			if ( is_null( $rules_groups ) ) {
+			if ( ! array_key_exists( $rule_id, $this->rules_results ) ) {
+				$result       = false;
 				$rules_groups = json_decode( (string) get_post_meta( $rule_id, SKAUTIS_INTEGRATION_NAME . '_rules_data', true ) );
+				if ( isset( $rules_groups->condition ) && isset( $rules_groups->rules ) && ! empty( $rules_groups->rules ) ) {
+					$result = $this->parse_rules_groups( $rules_groups->condition, $rules_groups->rules );
+				}
+				$this->rules_results[ $rule_id ] = true === $result;
 			}
 
-			if ( isset( $rules_groups->condition ) && isset( $rules_groups->rules ) && ! empty( $rules_groups->rules ) ) {
-				$result = $this->parse_rules_groups( $rules_groups->condition, $rules_groups->rules );
-			}
-
-			if ( true === $result ) {
+			if ( $this->rules_results[ $rule_id ] ) {
 				return true;
 			}
 		}
