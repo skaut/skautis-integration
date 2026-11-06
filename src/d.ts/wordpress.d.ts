@@ -13,6 +13,7 @@ interface WPBlockAttributes {
 interface WPBlockEditProps {
 	[key: string]: unknown;
 	attributes: WPBlockAttributes;
+	isSelected: boolean;
 	setAttributes(this: void, attributes: Partial<WPBlockAttributes>): void;
 }
 
@@ -92,6 +93,7 @@ declare const wp: {
 			...children: Array<unknown>
 		): WPElement;
 		Fragment: WPComponent;
+		memo<P>(this: void, component: WPComponent<P>): WPComponent<P>;
 	};
 	hooks: {
 		addFilter<T>(
