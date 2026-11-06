@@ -45,7 +45,7 @@ function skautis_integration_uninstall_site() {
 	delete_option( 'skautis-integration_modules_visibility_visibilityMode' );
 	delete_option( 'skautis-integration_modules_visibility_includeChildren' );
 
-	// defined in src/migrations/class-autosave-meta-cleanup.php.
+	// defined by the removed one-time autosave meta cleanup migration, sites that ran it still have the option.
 	delete_option( 'skautis_integration_autosave_meta_cleaned' );
 
 	// The rules (src/rules/class-rules-init.php), including their meta and revisions. The post type is not registered during uninstall, so the IDs are loaded directly.
