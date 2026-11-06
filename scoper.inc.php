@@ -31,7 +31,7 @@ function safe_replace( $pattern, $replacement, $value ) { // phpcs:ignore WordPr
  */
 function dependency_finder() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.system_calls_exec
-	exec( 'composer show --no-dev --name-only', $dependencies );
+	exec( 'composer show --no-dev --name-only --no-ansi', $dependencies );
 	$finder = Finder::create()->files()->name( array( '*.php', '/LICENSE(.txt)?/' ) )->in( 'vendor' );
 
 	foreach ( $dependencies as $dependency ) {
