@@ -260,38 +260,31 @@ class Func implements Rule {
 				return false;
 		}
 
-		$user_funcs = $this->getUserFuncsWithUnitIds();
-		$user_pass  = 0;
-		foreach ( $funcs as $func ) {
-			// in / not_in range check.
-			if ( array_key_exists( intval( $func ), $user_funcs ) === $assume_in ) {
-				foreach ( $user_funcs[ intval( $func ) ] as $user_func_unit_id ) {
-					$user_func_unit_id = self::clearUnitId( $user_func_unit_id );
+		if ( ! in_array( $unit_operator, array( 'equal', 'begins_with', 'any' ), true ) ) {
+			if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+				throw new \Exception( esc_html( 'Unit operator: "' . $unit_operator . '" is not declared.' ) );
+			}
+			return false;
+		}
 
-					switch ( $unit_operator ) {
-						case 'equal':
-							$user_pass += ( $user_func_unit_id === $unit_id );
-							break;
-						case 'begins_with':
-							$user_pass += ( substr( $user_func_unit_id, 0, strlen( $unit_id ) ) === $unit_id );
-							break;
-						case 'any':
-							++$user_pass;
-							break;
-						default:
-							if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-								throw new \Exception( esc_html( 'Unit operator: "' . $unit_operator . '" is not declared.' ) );
-							}
-							return false;
-					}
+		// Whether the user has at least one of the funcs in a unit matching the unit operator.
+		$user_funcs = $this->getUserFuncsWithUnitIds();
+		$has_match  = false;
+		foreach ( $funcs as $func ) {
+			foreach ( $user_funcs[ intval( $func ) ] ?? array() as $user_func_unit_id ) {
+				$user_func_unit_id = self::clearUnitId( $user_func_unit_id );
+				if (
+					'any' === $unit_operator ||
+					( 'equal' === $unit_operator && $user_func_unit_id === $unit_id ) ||
+					( 'begins_with' === $unit_operator && substr( $user_func_unit_id, 0, strlen( $unit_id ) ) === $unit_id )
+				) {
+					$has_match = true;
+					break 2;
 				}
 			}
 		}
 
-		if ( $user_pass > 0 ) {
-			return true;
-		}
-
-		return false;
+		// "in" passes when the user has one of the funcs, "not_in" when they have none of them.
+		return $assume_in ? $has_match : ! $has_match;
 	}
 }

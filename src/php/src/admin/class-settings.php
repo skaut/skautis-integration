@@ -423,9 +423,8 @@ final class Settings {
 					$url = str_replace( '&amp;', '&#038;', $url );
 					$url = str_replace( "'", '&#039;', $url );
 
-					flush_rewrite_rules();
-
-					return $url;
+					// The rewrite rules can't be flushed here, before the new URL is saved. Actions::flush_rewrite_rules_if_necessary() refreshes them on the next request.
+					return trim( $url, '/' );
 				},
 			)
 		);

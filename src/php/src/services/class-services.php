@@ -15,7 +15,6 @@ use Skautis_Integration\Auth\Skautis_Login;
 use Skautis_Integration\Auth\WP_Login_Logout;
 use Skautis_Integration\Auth\Connect_And_Disconnect_WP_Account;
 use Skautis_Integration\General\Actions;
-use Skautis_Integration\Migrations\Autosave_Meta_Cleanup;
 use Skautis_Integration\Frontend\Frontend;
 use Skautis_Integration\Frontend\Login_Form;
 use Skautis_Integration\Admin\Admin;
@@ -77,13 +76,6 @@ class Services {
 	 * @var Actions|null
 	 */
 	private static $actions = null;
-
-	/**
-	 * An Autosave_Meta_Cleanup service instance.
-	 *
-	 * @var Autosave_Meta_Cleanup|null
-	 */
-	private static $autosave_meta_cleanup = null;
 
 	/**
 	 * A Revisions service instance.
@@ -250,18 +242,6 @@ class Services {
 	}
 
 	/**
-	 * Gets the Autosave_Meta_Cleanup service.
-	 *
-	 * @return Autosave_Meta_Cleanup The initialized service object.
-	 */
-	private static function get_autosave_meta_cleanup() {
-		if ( is_null( self::$autosave_meta_cleanup ) ) {
-			self::$autosave_meta_cleanup = new Autosave_Meta_Cleanup();
-		}
-		return self::$autosave_meta_cleanup;
-	}
-
-	/**
 	 * Gets the Revisions service.
 	 *
 	 * @return Revisions The initialized service object.
@@ -296,7 +276,6 @@ class Services {
 	public static function get_general() {
 		self::get_actions();
 		self::get_rules_init();
-		self::get_autosave_meta_cleanup();
 	}
 
 	/**
