@@ -148,7 +148,7 @@ class Helpers {
 	}
 
 	/**
-	 * Returns the capability level needed to manage SkautIS options.
+	 * Returns the capability level needed to manage skautIS options.
 	 *
 	 * TODO: This function just returns "manage_options".
 	 */
@@ -164,7 +164,7 @@ class Helpers {
 	}
 
 	/**
-	 * Returns whether the current user has the capability level needed to manage SkautIS options.
+	 * Returns whether the current user has the capability level needed to manage skautIS options.
 	 */
 	public static function user_is_skautis_manager(): bool {
 		return current_user_can( self::get_skautis_manager_capability() );

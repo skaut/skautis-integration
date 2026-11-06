@@ -18,7 +18,7 @@ use Skautis_Integration\Auth\WP_Login_Logout;
 use Skautis_Integration\Utils\Helpers;
 
 /**
- * Handles redirects to and from SkautIS.
+ * Handles redirects to and from skautIS.
  */
 final class Actions {
 
@@ -90,7 +90,7 @@ final class Actions {
 	}
 
 	/**
-	 * Adds both test and live SkautIS to host that WordPress is allowed to redirect to.
+	 * Adds both test and live skautIS to host that WordPress is allowed to redirect to.
 	 *
 	 * @param array<string> $hosts A list of already allowed redirect hosts.
 	 *
@@ -103,7 +103,7 @@ final class Actions {
 	}
 
 	/**
-	 * Registers redirect/rewrite for SkautIS authentication.
+	 * Registers redirect/rewrite for skautIS authentication.
 	 *
 	 * @see Actions::auth_actions_router() for more details about how the redirect is used.
 	 *
@@ -143,7 +143,7 @@ final class Actions {
 	}
 
 	/**
-	 * Fires upon redirect back from SkautIS and based on the current page finishes either the login or account linking.
+	 * Fires upon redirect back from skautIS and based on the current page finishes either the login or account linking.
 	 *
 	 * @return void
 	 */
@@ -165,7 +165,7 @@ final class Actions {
 	}
 
 	/**
-	 * Fires upon redirect to SkautIS authentication and fires the correct action.
+	 * Fires upon redirect to skautIS authentication and fires the correct action.
 	 *
 	 * @throws \Exception The requested action doesn't exist.
 	 *

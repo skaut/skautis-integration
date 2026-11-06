@@ -148,7 +148,7 @@ final class Settings {
 	public function setup_setting_page() {
 		add_menu_page(
 			__( 'Obecné', 'skautis-integration' ),
-			__( 'SkautIS', 'skautis-integration' ),
+			__( 'skautIS', 'skautis-integration' ),
 			Helpers::get_skautis_manager_capability(),
 			SKAUTIS_INTEGRATION_NAME,
 			array( self::class, 'print_setting_page' ),
@@ -209,7 +209,7 @@ final class Settings {
 	}
 
 	/**
-	 * Checks that the App ID works with SkautIS.
+	 * Checks that the App ID works with skautIS.
 	 *
 	 * @param string $value The App ID.
 	 *
@@ -219,7 +219,7 @@ final class Settings {
 	 */
 	public function test_app_id( $value ) {
 		/* phpcs:ignore Squiz.PHP.CommentedOutCode.Found
-		 * Disabled on 2025-09 due to errors in SkautIS.
+		 * Disabled on 2025-09 due to errors in skautIS.
 		if ( ! $this->skautis_gateway->test_active_app_id() ) {
 			add_settings_error( 'general', 'api_invalid', esc_html__( 'Zadané APP ID není pro tento web platné.', 'skautis-integration' ), 'notice-error' );
 		}
@@ -522,7 +522,7 @@ final class Settings {
 	}
 
 	/**
-	 * Prints the settings field for dis/allowing users to disconnect their SkautIS account from their WordPress account.
+	 * Prints the settings field for dis/allowing users to disconnect their skautIS account from their WordPress account.
 	 *
 	 * @return void
 	 */

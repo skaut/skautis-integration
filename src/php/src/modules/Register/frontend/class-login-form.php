@@ -12,7 +12,7 @@ namespace Skautis_Integration\Modules\Register\Frontend;
 use Skautis_Integration\Modules\Register\WP_Register;
 
 /**
- * Adds the "Log in with SkautIS" button to the login form.
+ * Adds the "Log in with skautIS" button to the login form.
  *
  * This class handles the version of the form that also supports registering new users on first login.
  *
@@ -58,7 +58,7 @@ final class Login_Form {
 	}
 
 	/**
-	 * Prints the Register module version of the "Log in with SkautIS" button as part of the login page.
+	 * Prints the Register module version of the "Log in with skautIS" button as part of the login page.
 	 *
 	 * @return void
 	 */
@@ -74,7 +74,7 @@ final class Login_Form {
 	}
 
 	/**
-	 * Returns the Register module version of the "Log in with SkautIS" button as part of the login page.
+	 * Returns the Register module version of the "Log in with skautIS" button as part of the login page.
 	 *
 	 * TODO: Remove this function. Why is the button printed from 2 different hooks?
 	 */

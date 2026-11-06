@@ -14,7 +14,7 @@ use PHPMD\Rule\Design\ExitExpression;
 use Skautis_Integration\Utils\Helpers;
 
 /**
- * Enables the "Log in with SkautIS" functionality of the plugin.
+ * Enables the "Log in with skautIS" functionality of the plugin.
  */
 final class Skautis_Login {
 
@@ -44,7 +44,7 @@ final class Skautis_Login {
 	}
 
 	/**
-	 * Checks whether the current user is logged into SkautIS.
+	 * Checks whether the current user is logged into skautIS.
 	 */
 	public function is_user_logged_in_skautis(): bool {
 		if ( $this->skautis_gateway->is_initialized() ) {
@@ -55,9 +55,9 @@ final class Skautis_Login {
 	}
 
 	/**
-	 * Takes the data returned from SkautIS login and passes it to the SkautIS library.
+	 * Takes the data returned from skautIS login and passes it to the skautIS library.
 	 *
-	 * @param array{skautIS_Token?: string, skautIS_IDRole?: string, skautIS_IDUnit?: string, skautIS_DateLogout?: string} $data The SkautIS login data.
+	 * @param array{skautIS_Token?: string, skautIS_IDRole?: string, skautIS_IDUnit?: string, skautIS_DateLogout?: string} $data The skautIS login data.
 	 */
 	public function set_login_data_to_local_skautis_instance( array $data = array() ): bool {
 		$data = apply_filters( SKAUTIS_INTEGRATION_NAME . '_login_data_for_skautis_instance', $data );
@@ -78,9 +78,9 @@ final class Skautis_Login {
 	}
 
 	/**
-	 * Handles a call to log the user into SkautIS.
+	 * Handles a call to log the user into skautIS.
 	 *
-	 * This function also handles calls to login just to SkautIS, usually the user is already logged into WordPress and is trying to access functionality that needs SkautIS info. This functionality can be triggered by the "noWpLogin" GET parameter.
+	 * This function also handles calls to login just to skautIS, usually the user is already logged into WordPress and is trying to access functionality that needs skautIS info. This functionality can be triggered by the "noWpLogin" GET parameter.
 	 *
 	 * Also, the login procedure can be forced to log the user out before the login by the "logoutFromSkautis" GET parameter.
 	 *
@@ -112,7 +112,7 @@ final class Skautis_Login {
 	}
 
 	/**
-	 * Fires upon redirect back from SkautIS login and processes the login.
+	 * Fires upon redirect back from skautIS login and processes the login.
 	 *
 	 * @return void
 	 */
@@ -141,7 +141,7 @@ final class Skautis_Login {
 	}
 
 	/**
-	 * Changes the user's role in SkautIS.
+	 * Changes the user's role in skautIS.
 	 *
 	 * @param int $role_id The ID of the new role.
 	 *

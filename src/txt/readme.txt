@@ -8,16 +8,16 @@ Stable tag: 1.1.33
 License: GPLv3 or later
 License URI: https://github.com/skaut/skautis-integration/blob/master/LICENSE
 
-Login, registration, user management and other features connecting SkautIS to WordPress.
+Login, registration, user management and other features connecting skautIS to WordPress.
 
 == Description ==
 
-Login, registration, user management and other features connecting SkautIS to WordPress.
+Login, registration, user management and other features connecting skautIS to WordPress.
 
 === Features ===
-* Login to WordPress with a SkautIS account
-* Manage SkautIS account connections and import users to your site
-* Enable registration of users to your site based on their SkautIS functions, memberships or other criteria
+* Login to WordPress with a skautIS account
+* Manage skautIS account connections and import users to your site
+* Enable registration of users to your site based on their skautIS functions, memberships or other criteria
 
 === Minimal requirements ===
 - WordPress 7.0 or higher
@@ -29,7 +29,7 @@ All the sources for the plugin and the build process are detailed in our [GitHub
 == Installation ==
 1. Download and install the plugin from the WordPress plugin directory or from [GitHub](https://github.com/skaut/skaut-google-drive-gallery/releases)
 2. Activate the plugin
-3. Request an APP ID for SkautIS by following the [docs](https://napoveda.skaut.cz/skautis/skautis-integration) (only in Czech)
+3. Request an APP ID for skautIS by following the [docs](https://napoveda.skaut.cz/skautis/skautis-integration) (only in Czech)
 4. In the admin interface, open the plugin settings, enter the provided APP ID and register the plugin
 5. The plugin is now fully functional
 

@@ -15,7 +15,7 @@ use Skautis_Integration\Rules\Rule;
 use Skautis_Integration\Auth\Skautis_Gateway;
 
 /**
- * Rule operator for filtering users based on their SkautIS role.
+ * Rule operator for filtering users based on their skautIS role.
  */
 class Role implements Rule {
 
@@ -150,7 +150,7 @@ class Role implements Rule {
 	}
 
 	/**
-	 * Removes special characters ("." and "-") from SkautIS unit IDs.
+	 * Removes special characters ("." and "-") from skautIS unit IDs.
 	 *
 	 * TODO: Duplicated in Membership and Func.
 	 *

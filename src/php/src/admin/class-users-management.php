@@ -22,7 +22,7 @@ use Skautis_Integration\Utils\Request_Parameter_Helpers;
 use Skautis_Integration\Utils\Role_Changer;
 
 /**
- * Adds an administration page for management of SkautIS users.
+ * Adds an administration page for management of skautIS users.
  */
 class Users_Management {
 
@@ -128,7 +128,7 @@ class Users_Management {
 	}
 
 	/**
-	 * On page load, changes the user's SkautIS role if requested by a POST variable.
+	 * On page load, changes the user's skautIS role if requested by a POST variable.
 	 *
 	 * TODO: Find a more robust way to do this?
 	 * TODO: Duplicated in Role_Changer.
