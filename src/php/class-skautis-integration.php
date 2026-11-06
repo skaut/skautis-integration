@@ -42,8 +42,6 @@ class Skautis_Integration {
 
 		require __DIR__ . '/src/general/class-actions.php';
 
-		require __DIR__ . '/src/modules/interface-module.php';
-		require __DIR__ . '/src/modules/class-modules-manager.php';
 		require __DIR__ . '/src/modules/Register/admin/class-admin.php';
 		require __DIR__ . '/src/modules/Register/admin/class-settings.php';
 		require __DIR__ . '/src/modules/Register/frontend/class-login-form.php';
@@ -100,13 +98,45 @@ class Skautis_Integration {
 	 * @return void
 	 */
 	protected static function init() {
+		self::maybe_migrate_modules();
 		Services::get_general();
 		if ( is_admin() ) {
 			( Services::get_admin() );
 		} else {
 			( Services::get_frontend() );
 		}
-		Services::get_modules_manager();
+		Services::get_features();
+	}
+
+	/**
+	 * Converts the settings of the removed modules.
+	 *
+	 * The plugin used to have the Registration and Content visibility modules, which had to be activated. The content visibility is now always on and the registration has its own setting, which keeps the state of the old module.
+	 *
+	 * @return void
+	 */
+	private static function maybe_migrate_modules() {
+		$activated_modules = get_option( 'skautis_integration_activated_modules' );
+		if ( false === $activated_modules ) {
+			return;
+		}
+
+		if ( false === get_option( SKAUTIS_INTEGRATION_NAME . '_registration_enabled' ) ) {
+			update_option( SKAUTIS_INTEGRATION_NAME . '_registration_enabled', in_array( 'module_Register', (array) $activated_modules, true ) ? '1' : '0' );
+		}
+		self::set_default_post_types();
+		delete_option( 'skautis_integration_activated_modules' );
+	}
+
+	/**
+	 * Sets the post types with content visibility settings, unless they have already been set.
+	 *
+	 * @return void
+	 */
+	private static function set_default_post_types() {
+		if ( false === get_option( SKAUTIS_INTEGRATION_NAME . '_modules_visibility_postTypes' ) ) {
+			update_option( SKAUTIS_INTEGRATION_NAME . '_modules_visibility_postTypes', array( 'post', 'page' ) );
+		}
 	}
 
 	/**
@@ -185,6 +215,12 @@ class Skautis_Integration {
 		if ( false === get_option( 'skautis_integration_appid_type' ) ) {
 			update_option( 'skautis_integration_appid_type', 'prod' );
 		}
+
+		if ( false === get_option( SKAUTIS_INTEGRATION_NAME . '_registration_enabled' ) ) {
+			update_option( SKAUTIS_INTEGRATION_NAME . '_registration_enabled', '0' );
+		}
+
+		self::set_default_post_types();
 	}
 
 	/**

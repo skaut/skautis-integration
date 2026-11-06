@@ -11,7 +11,6 @@ namespace Skautis_Integration\Frontend;
 
 use Skautis_Integration\Auth\WP_Login_Logout;
 use Skautis_Integration\Services\Services;
-use Skautis_Integration\Modules\Register\Register;
 use Skautis_Integration\Utils\Helpers;
 
 /**
@@ -42,7 +41,7 @@ final class Login_Form {
 	 * @return void
 	 */
 	private function init_hooks() {
-		if ( ! Services::get_modules_manager()->is_module_activated( Register::get_id() ) ) {
+		if ( ! Services::is_registration_enabled() ) {
 			add_action( 'login_form', array( $this, 'login_link_in_login_form' ) );
 			add_filter( 'login_form_bottom', array( $this, 'login_link_in_login_form_return' ) );
 		}

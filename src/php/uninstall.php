@@ -36,6 +36,7 @@ function skautis_integration_uninstall_site() {
 	delete_option( 'skautis-integration_modules_register_defaultwpRole' );
 	delete_option( 'skautis-integration_modules_register_notifications' );
 	delete_option( 'skautis-integration_modules_register_rules' );
+	delete_option( 'skautis-integration_registration_enabled' );
 
 	// defined by the removed Shortcodes module.
 	delete_option( 'skautis-integration_modules_shortcodes_visibilityMode' );

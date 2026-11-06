@@ -35,11 +35,11 @@ msgstr "Junák - český skaut"
 msgid "https://github.com/skaut"
 msgstr "https://github.com/skaut"
 
-#: class-skautis-integration.php:152 class-skautis-integration.php:231
+#: class-skautis-integration.php:182 class-skautis-integration.php:267
 msgid "The skautIS integration plugin requires WordPress 7.0 or newer!"
 msgstr "Plugin skautIS integrace vyžaduje verzi WordPress 7.0 nebo vyšší!"
 
-#: class-skautis-integration.php:157 class-skautis-integration.php:238
+#: class-skautis-integration.php:187 class-skautis-integration.php:274
 msgid "The skautIS integration plugin requires PHP 8.3 or newer!"
 msgstr "Plugin skautIS integrace vyžaduje verzi PHP 8.3 nebo vyšší!"
 
@@ -49,7 +49,7 @@ msgstr "Odhlásit se (i ze skautISu)"
 
 #. translators: 1: Start of a link to the settings 2: End of the link to the
 #. settings
-#: src/admin/class-settings.php:98
+#: src/admin/class-settings.php:90
 #, php-format
 msgid ""
 "Enter the App ID of the production version of skautIS in the plugin "
@@ -58,7 +58,7 @@ msgstr "Zadejte v %1$snastavení%2$s pluginu APP ID produkční verze skautISu"
 
 #. translators: 1: Start of a link to the settings 2: End of the link to the
 #. settings
-#: src/admin/class-settings.php:103
+#: src/admin/class-settings.php:95
 #, php-format
 msgid ""
 "Enter the App ID of the test version of skautIS in the plugin "
@@ -69,57 +69,51 @@ msgstr "Zadejte v %1$snastavení%2$s pluginu APP ID testovací verze skautISu"
 #. settings
 #. translators: 1: Start of link to the settings 2: End of link to the
 #. settings
-#: src/admin/class-settings.php:107 src/admin/class-users-management.php:245
+#: src/admin/class-settings.php:99 src/admin/class-users-management.php:244
 #: src/rules/admin/class-admin.php:196
 #, php-format
 msgid "Select the skautIS environment in the plugin %1$ssettings%2$s"
 msgstr "Vyberte v %1$snastavení%2$s pluginu typ prostředí skautISu"
 
-#: src/admin/class-settings.php:120
+#: src/admin/class-settings.php:112
 msgid "Settings"
 msgstr "Nastavení"
 
-#: src/admin/class-settings.php:135
+#: src/admin/class-settings.php:127
 msgid "Help"
 msgstr "Nápověda"
 
-#: src/admin/class-settings.php:162 src/admin/class-settings.php:172
-#: src/admin/class-settings.php:173
+#: src/admin/class-settings.php:154 src/admin/class-settings.php:164
+#: src/admin/class-settings.php:165
 msgid "General"
 msgstr "Obecné"
 
-#: src/admin/class-settings.php:163
+#: src/admin/class-settings.php:155
 msgid "SkautIS"
 msgstr "SkautIS"
 
-#: src/admin/class-settings.php:181 src/admin/class-settings.php:182
-#: src/admin/class-settings.php:323
+#: src/admin/class-settings.php:173 src/admin/class-settings.php:174
 msgid "Login"
 msgstr "Přihlašování"
 
-#: src/admin/class-settings.php:190 src/admin/class-settings.php:191
-#: src/admin/class-settings.php:590
-msgid "Modules"
-msgstr "Moduly"
-
-#: src/admin/class-settings.php:205 src/admin/class-settings.php:373
-#: src/admin/class-settings.php:585 src/admin/class-users-management.php:228
-#: src/modules/Register/admin/class-settings.php:77
+#: src/admin/class-settings.php:203 src/admin/class-settings.php:318
+#: src/admin/class-users-management.php:227
+#: src/modules/Register/admin/class-settings.php:78
 #: src/modules/Visibility/admin/class-settings.php:65
 msgid "You do not have sufficient permissions to access this page."
 msgstr "Nemáte dostatečná oprávnění pro přístup k této stránce."
 
-#: src/admin/class-settings.php:211
+#: src/admin/class-settings.php:209
 msgid "skautIS connection settings"
 msgstr "Nastavení propojení se skautISem"
 
-#: src/admin/class-settings.php:250
+#: src/admin/class-settings.php:248
 msgid "APP ID"
 msgstr "APP ID"
 
 #. translators: 1: Start of a link to the documentation 2: End of the link to
 #. the documentation
-#: src/admin/class-settings.php:253
+#: src/admin/class-settings.php:251
 #, php-format
 msgid ""
 "You can find instructions for setting up the plugin and getting an App ID in"
@@ -127,66 +121,43 @@ msgid ""
 msgstr ""
 "Návod pro nastavení pluginu a získání APP ID najdete v %1$snápovědě%2$s."
 
-#: src/admin/class-settings.php:260
+#: src/admin/class-settings.php:258
 msgid "Production App ID"
 msgstr "APP ID produkční verze"
 
-#: src/admin/class-settings.php:269
+#: src/admin/class-settings.php:267
 msgid "Test App ID"
 msgstr "APP ID testovací verze"
 
-#: src/admin/class-settings.php:278
+#: src/admin/class-settings.php:276
 msgid "Active App ID"
 msgstr "Vyberte aktivní APP ID"
 
-#: src/admin/class-settings.php:314
-msgid "Available modules"
-msgstr "Dostupné moduly"
-
-#: src/admin/class-settings.php:326
-msgid "Logging in to WordPress with skautIS. It is always enabled."
-msgstr "Přihlašování do WordPressu přes skautIS. Je vždy zapnuté."
-
-#: src/admin/class-settings.php:335
-msgid ""
-"New users can register on the site with their skautIS account. The "
-"registration can be limited by rules."
-msgstr ""
-"Noví uživatelé se mohou na web registrovat svým skautIS účtem. Registraci "
-"lze omezit pravidly."
-
-#: src/admin/class-settings.php:336
-msgid ""
-"Hides posts, pages and blocks from users who do not pass the selected rules."
-msgstr ""
-"Skryje příspěvky, stránky a bloky před uživateli, kteří nesplní vybraná "
-"pravidla."
-
-#: src/admin/class-settings.php:379
+#: src/admin/class-settings.php:324
 msgid "Login settings"
 msgstr "Nastavení přihlašování"
 
-#: src/admin/class-settings.php:408
+#: src/admin/class-settings.php:353
 msgid "Disconnecting from skautIS"
 msgstr "Zrušení spojení se skautISem"
 
-#: src/admin/class-settings.php:418
+#: src/admin/class-settings.php:363
 msgid "Checking registration conditions"
 msgstr "Ověřování podmínek registrace"
 
-#: src/admin/class-settings.php:428
+#: src/admin/class-settings.php:373
 msgid "Login page address"
 msgstr "Adresa stránky s přihlašováním"
 
-#: src/admin/class-settings.php:506
+#: src/admin/class-settings.php:451
 msgid "Production"
 msgstr "Produkční"
 
-#: src/admin/class-settings.php:512
+#: src/admin/class-settings.php:457
 msgid "Test"
 msgstr "Testovací"
 
-#: src/admin/class-settings.php:528
+#: src/admin/class-settings.php:473
 msgid ""
 "For a custom login page, add a \"skautis\" folder with a \"login.php\" file "
 "to the active theme."
@@ -194,7 +165,7 @@ msgstr ""
 "Pro vlastní vzhled přihlašovací stránky přidejte do složky aktivní šablony "
 "složku \"skautis\" a do ní soubor \"login.php\"."
 
-#: src/admin/class-settings.php:537
+#: src/admin/class-settings.php:482
 msgid ""
 "In the login.php file, you can call the global functions "
 "getSkautisLoginUrl(), getSkautisLogoutUrl(), getSkautisRegisterUrl() and "
@@ -203,15 +174,15 @@ msgstr ""
 "V souboru login.php pak můžete volat globální funkce: getSkautisLoginUrl(), "
 "getSkautisLogoutUrl(), getSkautisRegisterUrl(), isUserLoggedInSkautis()"
 
-#: src/admin/class-settings.php:557
+#: src/admin/class-settings.php:502
 msgid "Allows users to disconnect their account from skautIS."
 msgstr "Umožní uživatelům zrušit propojení svého účtu se skautISem."
 
-#: src/admin/class-settings.php:558 src/admin/class-settings.php:574
+#: src/admin/class-settings.php:503 src/admin/class-settings.php:519
 msgid "This setting does not affect users with the administrator role."
 msgstr "Nastavení nebude mít dopad na uživatele s úrovní administrátora."
 
-#: src/admin/class-settings.php:573
+#: src/admin/class-settings.php:518
 msgid ""
 "When a user logs in with skautIS, check whether they still meet the "
 "registration conditions."
@@ -219,17 +190,17 @@ msgstr ""
 "Při přihlašování uživatele přes skautIS ověřit, zda stále splňuje podmínky "
 "pro registraci."
 
-#: src/admin/class-users-management.php:196
+#: src/admin/class-users-management.php:195
 msgid "Cancel"
 msgstr "Zrušit"
 
+#: src/admin/class-users-management.php:212
 #: src/admin/class-users-management.php:213
-#: src/admin/class-users-management.php:214
-#: src/admin/class-users-management.php:233
+#: src/admin/class-users-management.php:232
 msgid "User management"
 msgstr "Správa uživatelů"
 
-#: src/admin/class-users-management.php:234
+#: src/admin/class-users-management.php:233
 msgid ""
 "Here you can connect skautIS members with WordPress users or register them "
 "right away (requires the Registration module)."
@@ -237,71 +208,71 @@ msgstr ""
 "Zde si můžete propojit členy ze skautISu s uživateli ve WordPressu nebo je "
 "rovnou zaregistrovat (vyžaduje aktivovaný modul Registrace)."
 
-#: src/admin/class-users-management.php:239
+#: src/admin/class-users-management.php:238
 msgid "You must log in to skautIS to view the content"
 msgstr "Pro zobrazení obsahu je nutné se přihlásit do skautISu"
 
-#: src/admin/class-users-management.php:257
+#: src/admin/class-users-management.php:256
 msgid "Full name"
 msgstr "Jméno a příjmení"
 
-#: src/admin/class-users-management.php:257
+#: src/admin/class-users-management.php:256
 msgid "Nickname"
 msgstr "Přezdívka"
 
-#: src/admin/class-users-management.php:257
+#: src/admin/class-users-management.php:256
 msgid "User ID"
 msgstr "ID uživatele"
 
-#: src/admin/class-users-management.php:257
+#: src/admin/class-users-management.php:256
 msgid "Connected user"
 msgstr "Propojený uživatel"
 
-#: src/admin/class-users-management.php:257
+#: src/admin/class-users-management.php:256
 msgid "Connection"
 msgstr "Propojení"
 
-#: src/admin/class-users-management.php:277
+#: src/admin/class-users-management.php:276
 msgid "Disconnect"
 msgstr "Odpojit"
 
-#: src/admin/class-users-management.php:283
+#: src/admin/class-users-management.php:282
 msgid "Connect"
 msgstr "Propojit"
 
-#: src/admin/class-users-management.php:292
+#: src/admin/class-users-management.php:291
 msgid "Connecting user"
 msgstr "Propojení uživatele"
 
-#: src/admin/class-users-management.php:293
+#: src/admin/class-users-management.php:292
 msgid "to skautIS"
 msgstr "se skautISem"
 
-#: src/admin/class-users-management.php:298
+#: src/admin/class-users-management.php:297
 msgid "Select a user already registered in WordPress"
 msgstr "Vyberte uživatele již registrovaného ve WordPressu"
 
-#: src/admin/class-users-management.php:300
+#: src/admin/class-users-management.php:299
 msgid "Select a user…"
 msgstr "Vyberte uživatele…"
 
-#: src/admin/class-users-management.php:313
+#: src/admin/class-users-management.php:312
 msgid "Confirm"
 msgstr "Potvrdit"
 
-#: src/admin/class-users-management.php:316
+#: src/admin/class-users-management.php:315
 msgid ""
 "Only users whose account is not connected to skautIS yet can be selected."
 msgstr ""
 "Je možné vybrat pouze ty uživatele, kteří ještě nemají propojený účet se "
 "skautISem."
 
-#: src/admin/class-users-management.php:322
-#: src/admin/class-users-management.php:336
+#: src/admin/class-users-management.php:321
+#: src/admin/class-users-management.php:335
 msgid "Create a new account"
 msgstr "Vytvořit nový účet"
 
-#: src/admin/class-users-management.php:324
+#: src/admin/class-users-management.php:323
 msgid ""
 "Creates a new WordPress user with the name, nickname and e-mail from "
 "skautIS. The account will be connected to skautIS automatically."
@@ -309,7 +280,7 @@ msgstr ""
 "Vytvoří nového uživatele ve WordPressu se jménem, příjmením, přezdívkou a "
 "emailem ze skautISu. Účet bude automaticky propojen se skautISem."
 
-#: src/admin/class-users-management.php:330
+#: src/admin/class-users-management.php:329
 msgid "Select the role of the new user"
 msgstr "Vyberte úroveň nového uživatele"
 
@@ -341,12 +312,12 @@ msgstr "Nemáte oprávnění k propojování uživatelů."
 #. skautIS login
 #. translators: 1: Start of the link back 2: End of the link back
 #: src/auth/class-connect-and-disconnect-wp-account.php:150
-#: src/auth/class-wp-login-logout.php:80
-#: src/auth/class-wp-login-logout.php:106
-#: src/auth/class-wp-login-logout.php:109
-#: src/modules/Register/class-register.php:260
-#: src/modules/Register/class-register.php:262
-#: src/modules/Register/class-register.php:287
+#: src/auth/class-wp-login-logout.php:79
+#: src/auth/class-wp-login-logout.php:105
+#: src/auth/class-wp-login-logout.php:108
+#: src/modules/Register/class-register.php:221
+#: src/modules/Register/class-register.php:223
+#: src/modules/Register/class-register.php:248
 msgid "Unauthorized access"
 msgstr "Neautorizovaný přístup"
 
@@ -363,7 +334,7 @@ msgstr "Nepodařilo se najít návratovou adresu."
 
 #. translators: 1: Start of a link to skautIS login 2: End of the link to
 #. skautIS login
-#: src/auth/class-wp-login-logout.php:80
+#: src/auth/class-wp-login-logout.php:79
 #, php-format
 msgid "Sorry, you no longer have access. %1$sTry to register again%2$s"
 msgstr ""
@@ -372,16 +343,16 @@ msgstr ""
 
 #. translators: 1: Start of a link to skautIS login 2: End of the link to
 #. skautIS login
-#: src/auth/class-wp-login-logout.php:106
+#: src/auth/class-wp-login-logout.php:105
 #, php-format
 msgid "You do not have access. %1$sTry to register first%2$s"
 msgstr "Nemáte oprávnění k přístupu. %1$sZkuste se nejdříve zaregistrovat%2$s"
 
-#: src/auth/class-wp-login-logout.php:109
+#: src/auth/class-wp-login-logout.php:108
 msgid "You do not have access"
 msgstr "Nemáte oprávnění k přístupu"
 
-#: src/frontend/class-login-form.php:81 src/frontendublic/views/login.php:19
+#: src/frontend/class-login-form.php:80 src/frontendublic/views/login.php:19
 #: src/modules/Register/frontend/class-login-form.php:69
 #: src/modules/Register/frontend/class-login-form.php:85
 #: src/modules/Visibility/frontend/class-frontend.php:106
@@ -418,51 +389,62 @@ msgstr "Chyba v konfiguraci pluginu"
 msgid "Select a rule…"
 msgstr "Vyberte pravidlo…"
 
-#: src/modules/Register/admin/class-settings.php:62
 #: src/modules/Register/admin/class-settings.php:63
-#: src/modules/Register/class-register.php:181
+#: src/modules/Register/admin/class-settings.php:64
 msgid "Registration"
 msgstr "Registrace"
 
-#: src/modules/Register/admin/class-settings.php:83
+#: src/modules/Register/admin/class-settings.php:84
 msgid "Registration settings"
 msgstr "Nastavení registrace"
 
-#: src/modules/Register/admin/class-settings.php:112
+#: src/modules/Register/admin/class-settings.php:113
+msgid "Allow registration with skautIS"
+msgstr "Povolit registraci přes skautIS"
+
+#: src/modules/Register/admin/class-settings.php:122
 msgid "Default role after registration with skautIS"
 msgstr "Výchozí úroveň po registraci uživatele přes skautIS"
 
-#: src/modules/Register/admin/class-settings.php:121
+#: src/modules/Register/admin/class-settings.php:131
 msgid "After a successful registration, send e-mails to:"
 msgstr "Po úspěšné registraci uživatele poslat emaily:"
 
-#: src/modules/Register/admin/class-settings.php:129
+#: src/modules/Register/admin/class-settings.php:139
 msgid "Registration rules"
 msgstr "Pravidla registrace"
 
-#: src/modules/Register/admin/class-settings.php:187
+#: src/modules/Register/admin/class-settings.php:197
+msgid ""
+"Allows users with a skautIS account to create an account on this site. The "
+"registration can be limited by the rules below."
+msgstr ""
+"Umožní uživatelům se skautIS účtem vytvořit si účet na tomto webu. "
+"Registraci lze omezit pravidly níže."
+
+#: src/modules/Register/admin/class-settings.php:226
 msgid "Nobody"
 msgstr "Nikomu"
 
-#: src/modules/Register/admin/class-settings.php:194
+#: src/modules/Register/admin/class-settings.php:233
 msgid "The administrator (information about the new user)"
 msgstr "Administrátorovi (info o registraci nového uživatele)"
 
-#: src/modules/Register/admin/class-settings.php:201
+#: src/modules/Register/admin/class-settings.php:240
 msgid "The user (login details)"
 msgstr "Uživateli (přístupové údaje)"
 
-#: src/modules/Register/admin/class-settings.php:208
+#: src/modules/Register/admin/class-settings.php:247
 msgid "Both the administrator and the user"
 msgstr "Administrátorovi i uživateli"
 
-#: src/modules/Register/admin/class-settings.php:221
+#: src/modules/Register/admin/class-settings.php:260
 msgid "Only users who pass the following rules will be able to register."
 msgstr ""
 "Nastavením omezíte registraci uživatelů pouze při splnění následujících "
 "pravidel."
 
-#: src/modules/Register/admin/class-settings.php:224
+#: src/modules/Register/admin/class-settings.php:263
 msgid ""
 "If left empty, all users will be able to register with skautIS. Their "
 "default role will be: "
@@ -470,21 +452,21 @@ msgstr ""
 "Ponecháte-li prázdné - budou se moci přes skautIS registrovat všichni "
 "uživatelé. Jejich výchozí úroveň pak bude: "
 
-#: src/modules/Register/admin/class-settings.php:227
+#: src/modules/Register/admin/class-settings.php:266
 msgid "You can add rules in the section"
 msgstr "Pravidla můžete přidávat v sekci"
 
-#: src/modules/Register/admin/class-settings.php:228
+#: src/modules/Register/admin/class-settings.php:267
 #: src/rules/class-rules-init.php:54 src/rules/class-rules-init.php:55
 #: src/rules/class-rules-init.php:59
 msgid "Manage rules"
 msgstr "Správa pravidel"
 
-#: src/modules/Register/admin/class-settings.php:231
+#: src/modules/Register/admin/class-settings.php:270
 msgid "The rules are evaluated from top to bottom."
 msgstr "Pravidla se vyhodnocují shora dolů."
 
-#: src/modules/Register/admin/class-settings.php:233
+#: src/modules/Register/admin/class-settings.php:272
 msgid ""
 "Once a rule is passed, the following rules are not evaluated. Therefore, "
 "keep the more specific rules, which apply to a narrower group of users, at "
@@ -494,48 +476,48 @@ msgstr ""
 "nevyhodnocují. Proto udržujte pořadí pravidel takové, aby nahoře byly vždy "
 "specifičtější pravidla, která platí pro užší skupinu uživatelů."
 
-#: src/modules/Register/admin/class-settings.php:246
+#: src/modules/Register/admin/class-settings.php:285
 msgid "If the rule is passed:"
 msgstr "Při splnění pravidla:"
 
-#: src/modules/Register/admin/class-settings.php:257
+#: src/modules/Register/admin/class-settings.php:296
 msgid "Assign the user the role:"
 msgstr "Přiřadit uživateli úroveň:"
 
-#: src/modules/Register/admin/class-settings.php:264
+#: src/modules/Register/admin/class-settings.php:303
 #: src/modules/Visibility/admin/class-metabox.php:191
 msgid "Remove"
 msgstr "Odstranit"
 
-#: src/modules/Register/admin/class-settings.php:267
+#: src/modules/Register/admin/class-settings.php:306
 #: src/modules/Visibility/admin/class-metabox.php:194
 msgid "Add"
 msgstr "Přidat"
 
 #. translators: 1: Start of the link back 2: End of the link back
-#: src/modules/Register/class-register.php:260
+#: src/modules/Register/class-register.php:221
 #, php-format
 msgid "You are not allowed to register. %1$sTry again%2$s"
 msgstr "Nemáte oprávnění k registraci. %1$sZkuste to znovu%2$s"
 
-#: src/modules/Register/class-register.php:262
+#: src/modules/Register/class-register.php:223
 msgid "You are not allowed to register."
 msgstr "Nemáte oprávnění k registraci."
 
-#: src/modules/Register/class-register.php:287
+#: src/modules/Register/class-register.php:248
 msgid "You are not allowed to register new users."
 msgstr "Nemáte oprávnění k registraci nových uživatelů."
 
-#: src/modules/Register/class-register.php:291
+#: src/modules/Register/class-register.php:252
 msgid "The user could not be registered - the role does not exist."
 msgstr "Uživatele se nepodařilo zaregistrovat - role neexistuje."
 
-#: src/modules/Register/class-register.php:291
-#: src/modules/Register/class-register.php:298
+#: src/modules/Register/class-register.php:252
+#: src/modules/Register/class-register.php:259
 msgid "User registration error"
 msgstr "Chyba při registraci uživatele"
 
-#: src/modules/Register/class-register.php:298
+#: src/modules/Register/class-register.php:259
 msgid "The user could not be registered"
 msgstr "Uživatele se nepodařilo zaregistrovat"
 
@@ -632,7 +614,6 @@ msgstr "Skrýt pouze obsah"
 
 #: src/modules/Visibility/admin/class-settings.php:50
 #: src/modules/Visibility/admin/class-settings.php:51
-#: src/modules/Visibility/class-visibility.php:103
 msgid "Content visibility"
 msgstr "Viditelnost obsahu"
 
