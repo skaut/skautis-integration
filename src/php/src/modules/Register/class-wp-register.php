@@ -73,7 +73,7 @@ final class WP_Register {
 		);
 
 		add_filter( 'sanitize_user', array( self::class, 'sanitize_username' ), 10, 3 );
-		$user_id = register_new_user( $user_login, $user_email );
+		$user_id = self::create_user( $user_login, $user_email );
 		remove_filter( 'sanitize_user', array( self::class, 'sanitize_username' ), 10 );
 
 		add_action( 'register_new_user', 'wp_send_new_user_notifications' );
@@ -88,6 +88,74 @@ final class WP_Register {
 		}
 
 		return $user_id;
+	}
+
+	/**
+	 * Creates a new WordPress user.
+	 *
+	 * This is a replacement for register_new_user(), which is meant for the public registration form: it requires an e-mail address, and it runs the `register_post` and `registration_errors` hooks, which anti-spam and security plugins use to block registrations without their form token.
+	 *
+	 * @param string $user_login The WordPress username to use for the new user.
+	 * @param string $user_email The new user's e-mail address, may be empty.
+	 *
+	 * @return int|\WP_Error The ID of the new user or an error.
+	 */
+	private static function create_user( string $user_login, string $user_email ) {
+		$sanitized_user_login = sanitize_user( $user_login );
+		if ( '' === $sanitized_user_login || ! validate_username( $user_login ) ) {
+			return new \WP_Error( 'invalid_username', __( 'Uživatelské jméno ze skautISu není platné uživatelské jméno ve WordPressu.', 'skautis-integration' ) );
+		}
+		if ( false !== username_exists( $sanitized_user_login ) ) {
+			return new \WP_Error( 'username_exists', __( 'Uživatelské jméno je již na webu registrováno.', 'skautis-integration' ) );
+		}
+		if ( '' !== $user_email ) {
+			if ( false === is_email( $user_email ) ) {
+				return new \WP_Error( 'invalid_email', __( 'E-mailová adresa ze skautISu není platná.', 'skautis-integration' ) );
+			}
+			if ( false !== email_exists( $user_email ) ) {
+				return new \WP_Error( 'email_exists', __( 'E-mailová adresa je již na webu registrována.', 'skautis-integration' ) );
+			}
+		}
+
+		$user_id = wp_create_user( $sanitized_user_login, wp_generate_password( 24 ), $user_email );
+		if ( $user_id instanceof \WP_Error ) {
+			return $user_id;
+		}
+
+		update_user_meta( $user_id, 'default_password_nag', true );
+
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Same as register_new_user(), sends the new user notifications.
+		do_action( 'register_new_user', $user_id );
+
+		return $user_id;
+	}
+
+	/**
+	 * Returns the WordPress username for a new user.
+	 *
+	 * Users imported from an event may not have a skautIS username, in that case a unique username is made from their e-mail address or name.
+	 *
+	 * @param array{id: int, UserName: string, email: string, firstName: string, lastName: string, nickName: string} $user Information about the user.
+	 */
+	private static function get_new_username( array $user ): string {
+		if ( '' !== $user['UserName'] ) {
+			return mb_strcut( $user['UserName'], 0, 60 );
+		}
+
+		$base = '' !== $user['email'] ? $user['email'] : $user['firstName'] . ' ' . $user['lastName'];
+		$base = mb_strcut( sanitize_user( remove_accents( trim( $base ) ), true ), 0, 50 );
+		if ( '' === $base ) {
+			$base = 'skautis-' . $user['id'];
+		}
+
+		$username = $base;
+		$suffix   = 2;
+		while ( false !== username_exists( $username ) ) {
+			$username = $base . '-' . $suffix;
+			++$suffix;
+		}
+
+		return $username;
 	}
 
 	/**
@@ -160,11 +228,7 @@ final class WP_Register {
 			return true;
 		}
 
-		if ( mb_strlen( $user['UserName'] ) === 0 ) {
-			return false;
-		}
-
-		$username = mb_strcut( $user['UserName'], 0, 60 );
+		$username = self::get_new_username( $user );
 
 		$user_id = self::resolve_notifications_and_register( $username, $user['email'] );
 

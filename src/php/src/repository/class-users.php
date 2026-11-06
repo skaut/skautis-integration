@@ -9,6 +9,8 @@ declare( strict_types=1 );
 
 namespace Skautis_Integration\Repository;
 
+use PHPMD\Attribute\SuppressWarnings;
+use PHPMD\Rule\Design\ExcessiveClassComplexity;
 use Skautis_Integration\Auth\Skautis_Gateway;
 use Skautis_Integration\Utils\Helpers;
 use Skautis_Integration\Utils\Request_Parameter_Helpers;
@@ -16,6 +18,7 @@ use Skautis_Integration\Utils\Request_Parameter_Helpers;
 /**
  * Contains helper functions for management of SkautIS users.
  */
+#[SuppressWarnings( ExcessiveClassComplexity::class )]
 class Users {
 
 	/**
@@ -115,6 +118,67 @@ class Users {
 
 		// @phpstan-ignore-next-line
 		return $connectable_wp_users->get_results();
+	}
+
+	/**
+	 * Replaces the IDs of event participants with the IDs of their skautIS user accounts.
+	 *
+	 * Event participants are listed with their participant ID, which is unrelated to the skautIS user ID used to log in to WordPress. Participants without a skautIS user account are left out, because they cannot log in with skautIS anyway.
+	 *
+	 * @param array<\stdClass> $participants The event participants.
+	 *
+	 * @return array<\stdClass> The participants with a skautIS user account.
+	 */
+	private function replace_participant_ids_with_user_ids( array $participants ): array {
+		$users = array();
+
+		foreach ( $participants as $participant ) {
+			$skautis_user = $this->find_user_by_person( intval( $participant->personId ), strval( $participant->lastName ) );
+			if ( is_null( $skautis_user ) ) {
+				continue;
+			}
+
+			$participant->id = intval( $skautis_user->ID );
+			if ( isset( $skautis_user->UserName ) && '' !== $skautis_user->UserName ) {
+				$participant->UserName = $skautis_user->UserName;
+			}
+			$users[] = $participant;
+		}
+
+		return $users;
+	}
+
+	/**
+	 * Finds the skautIS user account of a person.
+	 *
+	 * @param int    $person_id The skautIS person ID.
+	 * @param string $last_name The last name of the person, used to narrow down the search.
+	 *
+	 * @return \stdClass|null The skautIS user or null if the person has no user account.
+	 */
+	private function find_user_by_person( int $person_id, string $last_name ) {
+		$skautis_users = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserAll(
+			array(
+				'ID_Person'   => $person_id,
+				'DisplayName' => $last_name,
+			)
+		);
+
+		if ( is_object( $skautis_users ) && isset( $skautis_users->ID ) ) {
+			$skautis_users = array( $skautis_users );
+		}
+		if ( ! is_array( $skautis_users ) ) {
+			return null;
+		}
+
+		// The results are filtered by the person ID once more, in case the API only applied the name filter.
+		foreach ( $skautis_users as $skautis_user ) {
+			if ( isset( $skautis_user->ID, $skautis_user->ID_Person ) && intval( $skautis_user->ID_Person ) === $person_id ) {
+				return $skautis_user;
+			}
+		}
+
+		return null;
 	}
 
 	/**
@@ -227,6 +291,7 @@ class Users {
 					},
 					$participants
 				);
+				$users = $this->replace_participant_ids_with_user_ids( $users );
 			}
 		}
 
@@ -294,7 +359,7 @@ class Users {
 
 		if ( '' !== $users['eventType'] ) {
 			foreach ( (array) $users['users'] as $user ) {
-				if ( $user->id === $skautis_user_id ) {
+				if ( intval( $user->id ) === $skautis_user_id ) {
 					$user_detail = array(
 						'id'        => $skautis_user_id,
 						'UserName'  => $user->UserName,
