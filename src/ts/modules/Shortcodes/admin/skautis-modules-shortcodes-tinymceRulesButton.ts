@@ -33,7 +33,9 @@ function viewport(): { height: number; width: number } {
 		showLogin: 'zobrazit přihlášení',
 		visibilityMode: 'Při nesplění pravidel:',
 	});
-	tinymce.PluginManager.add('skautis_rules', (editor, url) => {
+	// TinyMCE 4 creates plugins with `new`, so this must not be an arrow function.
+	// eslint-disable-next-line prefer-arrow-functions/prefer-arrow-functions -- See above.
+	tinymce.PluginManager.add('skautis_rules', function (editor, url) {
 		editor.addButton('skautis_rules', {
 			image: `${
 				url
