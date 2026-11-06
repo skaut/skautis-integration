@@ -9,10 +9,10 @@ declare( strict_types=1 );
 
 namespace Skautis_Integration\Modules\Register\Admin;
 
+use Skautis_Integration\Admin\Settings as Main_Settings;
 use Skautis_Integration\Rules\Rules_Init;
 use Skautis_Integration\Rules\Rules_Manager;
 use Skautis_Integration\Services\Services;
-use Skautis_Integration\Utils\Helpers;
 
 /**
  * Registers, handles and shows all settings for the Register module.
@@ -48,49 +48,7 @@ final class Settings {
 			return;
 		}
 
-		add_action( 'admin_menu', array( self::class, 'setup_setting_page' ), 25 );
 		add_action( 'admin_init', array( $this, 'setup_setting_fields' ) );
-	}
-
-	/**
-	 * Adds an admin settings page for the Register module.
-	 *
-	 * @return void
-	 */
-	public static function setup_setting_page() {
-		add_submenu_page(
-			SKAUTIS_INTEGRATION_NAME,
-			__( 'Registration', 'skautis-integration' ),
-			__( 'Registration', 'skautis-integration' ),
-			Helpers::get_skautis_manager_capability(),
-			SKAUTIS_INTEGRATION_NAME . '_modules_register',
-			array( self::class, 'print_setting_page' )
-		);
-	}
-
-	/**
-	 * Prints the admin settings page for the Register module.
-	 *
-	 * @return void
-	 */
-	public static function print_setting_page() {
-		if ( ! Helpers::user_is_skautis_manager() ) {
-			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'skautis-integration' ) );
-		}
-
-		settings_errors();
-		?>
-		<div class="wrap">
-			<h1><?php esc_html_e( 'Registration settings', 'skautis-integration' ); ?></h1>
-			<form method="POST" action="<?php echo esc_url( admin_url( 'options.php' ) ); ?>">
-				<?php
-				settings_fields( SKAUTIS_INTEGRATION_NAME . '_modules_register' );
-				do_settings_sections( SKAUTIS_INTEGRATION_NAME . '_modules_register' );
-				submit_button();
-				?>
-			</form>
-		</div>
-		<?php
 	}
 
 	/**
@@ -101,11 +59,12 @@ final class Settings {
 	public function setup_setting_fields() {
 		add_settings_section(
 			SKAUTIS_INTEGRATION_NAME . '_modules_register',
-			'',
+			__( 'Registration', 'skautis-integration' ),
 			static function () {
 				echo '';
 			},
-			SKAUTIS_INTEGRATION_NAME . '_modules_register'
+			SKAUTIS_INTEGRATION_NAME . '_modules_register',
+			Main_Settings::get_card_section_args()
 		);
 
 		add_settings_field(
@@ -113,8 +72,7 @@ final class Settings {
 			__( 'Allow registration with skautIS', 'skautis-integration' ),
 			array( self::class, 'field_registration_enabled' ),
 			SKAUTIS_INTEGRATION_NAME . '_modules_register',
-			SKAUTIS_INTEGRATION_NAME . '_modules_register',
-			array( 'label_for' => SKAUTIS_INTEGRATION_NAME . '_registration_enabled' )
+			SKAUTIS_INTEGRATION_NAME . '_modules_register'
 		);
 
 		add_settings_field(
@@ -134,12 +92,20 @@ final class Settings {
 			SKAUTIS_INTEGRATION_NAME . '_modules_register'
 		);
 
-		add_settings_field(
+		add_settings_section(
 			SKAUTIS_INTEGRATION_NAME . '_modules_register_rules',
 			__( 'Registration rules', 'skautis-integration' ),
+			array( self::class, 'print_rules_section_description' ),
+			SKAUTIS_INTEGRATION_NAME . '_modules_register',
+			Main_Settings::get_card_section_args()
+		);
+
+		add_settings_field(
+			SKAUTIS_INTEGRATION_NAME . '_modules_register_rules',
+			__( 'Rules', 'skautis-integration' ),
 			array( $this, 'field_rules' ),
 			SKAUTIS_INTEGRATION_NAME . '_modules_register',
-			SKAUTIS_INTEGRATION_NAME . '_modules_register'
+			SKAUTIS_INTEGRATION_NAME . '_modules_register_rules'
 		);
 
 		register_setting(
@@ -189,13 +155,15 @@ final class Settings {
 	 */
 	public static function field_registration_enabled() {
 		?>
-		<input name="<?php echo esc_attr( SKAUTIS_INTEGRATION_NAME ); ?>_registration_enabled"
-			id="<?php echo esc_attr( SKAUTIS_INTEGRATION_NAME ); ?>_registration_enabled" type="checkbox" value="1"
-			aria-describedby="<?php echo esc_attr( SKAUTIS_INTEGRATION_NAME ); ?>_registration_enabled_description"
-			<?php checked( Services::is_registration_enabled() ); ?>/>
-		<p class="description" id="<?php echo esc_attr( SKAUTIS_INTEGRATION_NAME ); ?>_registration_enabled_description">
-			<?php esc_html_e( 'Allows users with a skautIS account to create an account on this site. The registration can be limited by the rules below.', 'skautis-integration' ); ?>
-		</p>
+		<fieldset>
+			<legend class="screen-reader-text"><?php esc_html_e( 'Allow registration with skautIS', 'skautis-integration' ); ?></legend>
+			<label>
+				<input name="<?php echo esc_attr( SKAUTIS_INTEGRATION_NAME ); ?>_registration_enabled"
+					id="<?php echo esc_attr( SKAUTIS_INTEGRATION_NAME ); ?>_registration_enabled" type="checkbox" value="1"
+					<?php checked( Services::is_registration_enabled() ); ?>/>
+				<?php esc_html_e( 'Allows users with a skautIS account to create an account on this site. The registration can be limited by the rules below.', 'skautis-integration' ); ?>
+			</label>
+		</fieldset>
 		<?php
 	}
 
@@ -219,6 +187,8 @@ final class Settings {
 	public static function field_new_user_notifications() {
 		$notification_option = get_option( SKAUTIS_INTEGRATION_NAME . '_modules_register_notifications', 'none' );
 		?>
+		<fieldset>
+		<legend class="screen-reader-text"><?php esc_html_e( 'After a successful registration, send e-mails to:', 'skautis-integration' ); ?></legend>
 		<label>
 			<input type="radio"
 				name="<?php echo esc_attr( SKAUTIS_INTEGRATION_NAME ); ?>_modules_register_notifications"
@@ -246,6 +216,27 @@ final class Settings {
 				value="both"<?php checked( 'both' === $notification_option ); ?> />
 			<span><?php esc_html_e( 'Both the administrator and the user', 'skautis-integration' ); ?></span>
 		</label>
+		</fieldset>
+		<?php
+	}
+
+	/**
+	 * Prints the description of the registration rules section.
+	 *
+	 * @return void
+	 */
+	public static function print_rules_section_description() {
+		?>
+		<p><?php esc_html_e( 'Only users who pass the following rules will be able to register.', 'skautis-integration' ); ?>
+			<?php esc_html_e( 'You can add rules in the section', 'skautis-integration' ); ?>
+			<a href="<?php echo esc_url( admin_url( 'edit.php?post_type=' . Rules_Init::RULES_TYPE_SLUG ) ); ?>"><?php esc_html_e( 'Manage rules', 'skautis-integration' ); ?></a>.</p>
+		<p id="skautis_integration_modules_register_rulesNotSetHelp">
+			<?php esc_html_e( 'If left empty, all users will be able to register with skautIS. Their default role will be: ', 'skautis-integration' ); ?>
+			<strong><?php echo esc_html( translate_user_role( ucfirst( get_option( SKAUTIS_INTEGRATION_NAME . '_modules_register_defaultwpRole', '' ) ) ) ); ?></strong></p>
+		<p id="skautis_integration_modules_register_rulesSetHelp">
+			<strong><?php esc_html_e( 'The rules are evaluated from top to bottom.', 'skautis-integration' ); ?></strong>
+			<?php esc_html_e( 'Once a rule is passed, the following rules are not evaluated. Therefore, keep the more specific rules, which apply to a narrower group of users, at the top.', 'skautis-integration' ); ?>
+		</p>
 		<?php
 	}
 
@@ -256,25 +247,6 @@ final class Settings {
 	 */
 	public function field_rules() {
 		?>
-		<div>
-			<em><?php esc_html_e( 'Only users who pass the following rules will be able to register.', 'skautis-integration' ); ?></em>
-		</div>
-		<div id="skautis_integration_modules_register_rulesNotSetHelp">
-			<em><?php esc_html_e( 'If left empty, all users will be able to register with skautIS. Their default role will be: ', 'skautis-integration' ); ?>
-				<strong><?php echo esc_html( translate_user_role( ucfirst( get_option( SKAUTIS_INTEGRATION_NAME . '_modules_register_defaultwpRole', '' ) ) ) ); ?></strong></em>
-		</div>
-		<div><em><?php esc_html_e( 'You can add rules in the section', 'skautis-integration' ); ?>
-				<a href="<?php echo esc_url( admin_url( 'edit.php?post_type=' . Rules_Init::RULES_TYPE_SLUG ) ); ?>"><?php esc_html_e( 'Manage rules', 'skautis-integration' ); ?></a>.</em>
-		</div>
-		<div id="skautis_integration_modules_register_rulesSetHelp">
-			<em><strong><?php esc_html_e( 'The rules are evaluated from top to bottom.', 'skautis-integration' ); ?></strong> 
-								<?php
-									esc_html_e(
-										'Once a rule is passed, the following rules are not evaluated. Therefore, keep the more specific rules, which apply to a narrower group of users, at the top.',
-										'skautis-integration'
-									);
-								?>
-			</em></div>
 		<div id="repeater">
 			<div data-repeater-list="<?php echo esc_attr( SKAUTIS_INTEGRATION_NAME ); ?>_modules_register_rules">
 				<div data-repeater-item>
@@ -299,11 +271,11 @@ final class Settings {
 						<?php wp_dropdown_roles( get_option( SKAUTIS_INTEGRATION_NAME . '_modules_register_defaultwpRole' ) ); ?>
 					</select>
 
-					<input data-repeater-delete type="button"
+					<input data-repeater-delete type="button" class="button"
 						value="<?php esc_attr_e( 'Remove', 'skautis-integration' ); ?>"/>
 				</div>
 			</div>
-			<input data-repeater-create type="button" value="<?php esc_attr_e( 'Add', 'skautis-integration' ); ?>"/>
+			<input data-repeater-create type="button" class="button" value="<?php esc_attr_e( 'Add', 'skautis-integration' ); ?>"/>
 		</div>
 		<?php
 	}

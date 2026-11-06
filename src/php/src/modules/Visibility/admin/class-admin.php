@@ -9,6 +9,7 @@ declare( strict_types=1 );
 
 namespace Skautis_Integration\Modules\Visibility\Admin;
 
+use Skautis_Integration\Admin\Settings as Main_Settings;
 use Skautis_Integration\Rules\Rules_Manager;
 use Skautis_Integration\Modules\Visibility\Frontend\Frontend;
 use Skautis_Integration\Utils\Helpers;
@@ -70,7 +71,7 @@ final class Admin {
 			null === $screen ||
 			(
 				! in_array( $screen->id, $this->post_types, true ) &&
-				'skautis_page_' . SKAUTIS_INTEGRATION_NAME . '_modules_visibility' !== $screen->id
+				! Main_Settings::is_settings_tab( 'visibility' )
 			)
 		) {
 				return;
