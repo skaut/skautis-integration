@@ -168,35 +168,6 @@ gulp.task(
 	gulp.series('build:deps:composer:scoper', 'build:deps:composer:autoloader')
 );
 
-gulp.task('build:deps:npm:font-awesome:css', () =>
-	gulp
-		.src('node_modules/font-awesome/css/font-awesome.min.css')
-		.pipe(gulp.dest('dist/bundled/font-awesome/css'))
-);
-
-gulp.task('build:deps:npm:font-awesome:fonts', () =>
-	gulp
-		.src(
-			[
-				'node_modules/font-awesome/fonts/fontawesome-webfont.eot',
-				'node_modules/font-awesome/fonts/fontawesome-webfont.woff2',
-				'node_modules/font-awesome/fonts/fontawesome-webfont.woff',
-				'node_modules/font-awesome/fonts/fontawesome-webfont.ttf',
-				'node_modules/font-awesome/fonts/fontawesome-webfont.svg',
-			],
-			{ encoding: false }
-		)
-		.pipe(gulp.dest('dist/bundled/font-awesome/fonts'))
-);
-
-gulp.task(
-	'build:deps:npm:font-awesome',
-	gulp.parallel(
-		'build:deps:npm:font-awesome:css',
-		'build:deps:npm:font-awesome:fonts'
-	)
-);
-
 gulp.task('build:deps:npm:interactjs', () =>
 	gulp
 		.src('node_modules/interactjs/dist/interact.min.js')
@@ -230,7 +201,6 @@ gulp.task('build:deps:npm:select2', () =>
 gulp.task(
 	'build:deps:npm',
 	gulp.parallel(
-		'build:deps:npm:font-awesome',
 		'build:deps:npm:interactjs',
 		'build:deps:npm:jquery.repeater',
 		'build:deps:npm:jQuery-QueryBuilder',

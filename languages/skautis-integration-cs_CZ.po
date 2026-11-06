@@ -70,7 +70,7 @@ msgstr "Zadejte v %1$snastavení%2$s pluginu APP ID testovací verze SkautISu"
 #. translators: 1: Start of link to the settings 2: End of link to the
 #. settings
 #: src/admin/class-settings.php:124 src/admin/class-users-management.php:183
-#: src/rules/admin/class-admin.php:196
+#: src/rules/admin/class-admin.php:200
 #, php-format
 msgid "Select the SkautIS environment in the plugin %1$ssettings%2$s"
 msgstr "Vyberte v %1$snastavení%2$s pluginu typ prostředí SkautISu"
@@ -230,6 +230,7 @@ msgstr "SkautIS není nastavený"
 
 #: src/admin/class-users-management.php:187
 #: src/admin/class-users-management.php:189
+#: src/rules/admin/class-admin.php:203
 msgid "Log in to SkautIS"
 msgstr "Přihlaste se do SkautISu"
 
@@ -486,6 +487,7 @@ msgid "After a successful registration, send e-mails to:"
 msgstr "Po úspěšné registraci uživatele poslat emaily:"
 
 #: src/modules/Register/admin/class-settings.php:97
+#: src/rules/admin/class-columns.php:280
 msgid "Registration rules"
 msgstr "Pravidla registrace"
 
@@ -642,7 +644,7 @@ msgid "The e-mail address is already registered on this site."
 msgstr "E-mailová adresa je již na webu registrována."
 
 #: src/modules/Visibility/admin/class-metabox.php:77
-#: src/rules/admin/class-admin.php:90 src/rules/admin/class-admin.php:144
+#: src/rules/admin/class-admin.php:91 src/rules/admin/class-admin.php:154
 #: modules/Visibility/admin/js/skautis-modules-visibility-block-editor.js:156
 msgid "SkautIS rules"
 msgstr "SkautIS pravidla"
@@ -762,40 +764,104 @@ msgstr "Nemáte oprávnění k přístupu k tomuto obsahu"
 msgid "Could not get the user information from SkautIS"
 msgstr "Nepodařilo se získat informace o uživateli ze SkautISu"
 
-#: src/rules/admin/class-admin.php:185
-msgid "Toggle panel: Rules"
-msgstr "Zobrazit / skrýt panel: Pravidla"
+#: src/rules/admin/class-admin.php:97 src/rules/admin/class-columns.php:74
+msgid "Used in"
+msgstr "Použito v"
 
-#: src/rules/admin/class-admin.php:188 src/rules/admin/class-admin.php:192
-msgid "Enter the conditions of the rule"
-msgstr "Zadejte podmínky pro splnění pravidla"
+#: src/rules/admin/class-admin.php:194
+msgid "Conditions of the rule"
+msgstr "Podmínky pravidla"
 
-#: src/rules/admin/class-admin.php:198
-msgid "You must log in to SkautIS to manage the conditions"
-msgstr "Pro správu podmínek je nutné se přihlásit do SkautISu"
+#: src/rules/admin/class-admin.php:202
+msgid ""
+"The roles, units and qualifications are loaded from SkautIS, so you must be "
+"logged in to SkautIS to edit the conditions."
+msgstr ""
+"Role, jednotky a kvalifikace se načítají ze SkautISu, proto musíte být pro "
+"úpravu podmínek přihlášeni do SkautISu."
 
-#: src/rules/admin/class-admin.php:251
+#: src/rules/admin/class-admin.php:205
+msgid ""
+"A user passes the rule if they meet the conditions. Use AND when all the "
+"conditions must be met, OR when one of them is enough. Groups let you "
+"combine both."
+msgstr ""
+"Uživatel pravidlem projde, pokud splní podmínky. Použijte „A zároveň“, když "
+"musí platit všechny podmínky, a „Nebo“, když stačí jedna z nich. Skupiny "
+"umožňují obojí kombinovat."
+
+#: src/rules/admin/class-admin.php:249
 msgid "Select…"
 msgstr "Vyberte…"
 
-#: src/rules/admin/class-admin.php:252
+#: src/rules/admin/class-admin.php:250
 msgid "unit number (e.g. 411.12)"
 msgstr "číslo jednotky (např. 411.12)"
 
-#: src/rules/admin/class-admin.php:253
+#: src/rules/admin/class-admin.php:251
 msgid "in the unit whose registration number"
 msgstr "v jednotce, jejíž evidenční číslo"
 
-#: src/rules/admin/class-columns.php:59
+#: src/rules/admin/class-admin.php:252
+msgid "is equal to"
+msgstr "je rovno"
+
+#: src/rules/admin/class-admin.php:253
+msgid "begins with"
+msgstr "začíná na"
+
+#: src/rules/admin/class-admin.php:254
+msgid "is any"
+msgstr "je jakékoliv"
+
+#: src/rules/admin/class-admin.php:255
+msgid "Condition"
+msgstr "Podmínka"
+
+#: src/rules/admin/class-admin.php:256
+msgid "Comparison"
+msgstr "Porovnání"
+
+#: src/rules/admin/class-admin.php:257
+msgid "Values"
+msgstr "Hodnoty"
+
+#: src/rules/admin/class-columns.php:75
 msgid "Last modified"
 msgstr "Naposledy upraveno"
 
 #. translators: human-readable time difference
-#: src/rules/admin/class-columns.php:103
+#: src/rules/admin/class-columns.php:123
 #, php-format
 msgctxt "%s = human-readable time difference"
 msgid "%s ago"
 msgstr "Před %s"
+
+#: src/rules/admin/class-columns.php:258
+msgid "Not used"
+msgstr "Nepoužito"
+
+#: src/rules/admin/class-columns.php:267
+msgid "(no title)"
+msgstr "(bez názvu)"
+
+#. translators: %d: The number of other posts
+#: src/rules/admin/class-columns.php:273
+#, php-format
+msgid "and %d more"
+msgid_plural "and %d more"
+msgstr[0] "a %d další"
+msgstr[1] "a %d další"
+msgstr[2] "a %d dalších"
+
+#. translators: %d: The number of blocks
+#: src/rules/admin/class-columns.php:277
+#, php-format
+msgid "%d block with this rule"
+msgid_plural "%d blocks with this rule"
+msgstr[0] "%d blok s tímto pravidlem"
+msgstr[1] "%d bloky s tímto pravidlem"
+msgstr[2] "%d bloků s tímto pravidlem"
 
 #: src/rules/class-revisions.php:174
 msgid "Other fields"

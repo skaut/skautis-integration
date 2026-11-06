@@ -9,6 +9,7 @@ declare( strict_types=1 );
 
 namespace Skautis_Integration\Rules;
 
+use Skautis_Integration\Admin\Settings;
 use Skautis_Integration\Auth\Skautis_Gateway;
 use Skautis_Integration\Auth\WP_Login_Logout;
 use Skautis_Integration\Utils\Helpers;
@@ -90,6 +91,15 @@ final class Admin {
 				__( 'SkautIS rules', 'skautis-integration' ),
 				array( self::class, 'rules_field_content' ),
 				Rules_Init::RULES_TYPE_SLUG
+			);
+			add_meta_box(
+				SKAUTIS_INTEGRATION_NAME . '_rules_usage',
+				__( 'Used in', 'skautis-integration' ),
+				static function ( \WP_Post $post ) {
+					Columns::print_usage( $post->ID );
+				},
+				Rules_Init::RULES_TYPE_SLUG,
+				'side'
 			);
 		}
 	}
@@ -179,28 +189,23 @@ final class Admin {
 			return;
 		}
 		?>
-		<div class="meta-box-sortables">
-			<div class="postbox" style="margin-top: 2.5em;">
-				<button type="button" class="handlediv" aria-expanded="true"><span
-						class="screen-reader-text"><?php esc_html_e( 'Toggle panel: Rules', 'skautis-integration' ); ?></span><span
-						class="toggle-indicator" aria-hidden="true"></span></button>
-				<h2 class="hndle ui-sortable-handle">
-					<span><?php esc_html_e( 'Enter the conditions of the rule', 'skautis-integration' ); ?></span>
-				</h2>
-				<div class="inside" style="padding: 0.75em 1.5em 1.25em 1.5em;">
-					<label class="screen-reader-text"
-						for="post_author_override"><?php esc_html_e( 'Enter the conditions of the rule', 'skautis-integration' ); ?></label>
-					<?php
-					if ( ! $this->skautis_gateway->is_initialized() ) {
-						/* translators: 1: Start of link to the settings 2: End of link to the settings */
-						printf( esc_html__( 'Select the SkautIS environment in the plugin %1$ssettings%2$s', 'skautis-integration' ), '<a href="' . esc_url( admin_url( 'admin.php?page=' . SKAUTIS_INTEGRATION_NAME ) ) . '">', '</a>' );
-					} elseif ( ! $this->skautis_gateway->get_skautis_instance()->getUser()->isLoggedIn( true ) ) {
-						echo '<h4><a href="' . esc_url( $this->wp_login_logout->get_login_url( add_query_arg( 'noWpLogin', true, Helpers::get_current_url() ) ) ) . '">' . esc_html__( 'You must log in to SkautIS to manage the conditions', 'skautis-integration' ) . '</a></h4>';
-					} else {
-						echo '<div id="query_builder"></div>';
-					}
-					?>
-				</div>
+		<div class="postbox skautis-rule-conditions">
+			<div class="postbox-header">
+				<h2><?php esc_html_e( 'Conditions of the rule', 'skautis-integration' ); ?></h2>
+			</div>
+			<div class="inside">
+				<?php
+				if ( ! $this->skautis_gateway->is_initialized() ) {
+					/* translators: 1: Start of link to the settings 2: End of link to the settings */
+					echo '<p>' . sprintf( esc_html__( 'Select the SkautIS environment in the plugin %1$ssettings%2$s', 'skautis-integration' ), '<a href="' . esc_url( Settings::get_tab_url( 'general' ) ) . '">', '</a>' ) . '</p>';
+				} elseif ( ! $this->skautis_gateway->get_skautis_instance()->getUser()->isLoggedIn( true ) ) {
+					echo '<p>' . esc_html__( 'The roles, units and qualifications are loaded from SkautIS, so you must be logged in to SkautIS to edit the conditions.', 'skautis-integration' ) . '</p>';
+					echo '<p><a class="button button-primary" href="' . esc_url( $this->wp_login_logout->get_login_url( add_query_arg( 'noWpLogin', true, Helpers::get_current_url() ) ) ) . '">' . esc_html__( 'Log in to SkautIS', 'skautis-integration' ) . '</a></p>';
+				} else {
+					echo '<p class="description">' . esc_html__( 'A user passes the rule if they meet the conditions. Use AND when all the conditions must be met, OR when one of them is enough. Groups let you combine both.', 'skautis-integration' ) . '</p>';
+					echo '<div id="query_builder"></div>';
+				}
+				?>
 			</div>
 		</div>
 		<?php
@@ -218,22 +223,15 @@ final class Admin {
 		}
 
 		wp_enqueue_style(
-			SKAUTIS_INTEGRATION_NAME . '_font-awesome',
-			SKAUTIS_INTEGRATION_URL . 'bundled/font-awesome/css/font-awesome.min.css',
-			array(),
-			SKAUTIS_INTEGRATION_VERSION,
-			'all'
-		);
-
-		Helpers::enqueue_style( 'query-builder', 'rules/admin/css/skautis-rules-admin.min.css' );
-
-		wp_enqueue_style(
 			SKAUTIS_INTEGRATION_NAME . '_query-builder-main',
 			SKAUTIS_INTEGRATION_URL . 'bundled/query-builder.default.css',
 			array(),
 			SKAUTIS_INTEGRATION_VERSION,
 			'all'
 		);
+
+		// Loaded after the QueryBuilder styles, so that it can restyle them.
+		Helpers::enqueue_style( 'query-builder', 'rules/admin/css/skautis-rules-admin.min.css', array( SKAUTIS_INTEGRATION_NAME . '_query-builder-main' ) );
 	}
 
 	/**
@@ -251,6 +249,12 @@ final class Admin {
 			'select_placeholder' => esc_html__( 'Select…', 'skautis-integration' ),
 			'unitNumber'         => esc_html__( 'unit number (e.g. 411.12)', 'skautis-integration' ),
 			'inUnitWithNumber'   => esc_html__( 'in the unit whose registration number', 'skautis-integration' ),
+			'unitEqual'          => esc_html__( 'is equal to', 'skautis-integration' ),
+			'unitBeginsWith'     => esc_html__( 'begins with', 'skautis-integration' ),
+			'unitAny'            => esc_html__( 'is any', 'skautis-integration' ),
+			'labelCondition'     => esc_html__( 'Condition', 'skautis-integration' ),
+			'labelOperator'      => esc_html__( 'Comparison', 'skautis-integration' ),
+			'labelValues'        => esc_html__( 'Values', 'skautis-integration' ),
 		);
 
 		Helpers::enqueue_script(
