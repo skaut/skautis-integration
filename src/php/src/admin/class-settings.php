@@ -83,7 +83,8 @@ final class Settings {
 		add_action( 'admin_init', array( $this, 'setup_setting_fields' ) );
 		add_action( 'admin_init', array( $this, 'setup_login_fields' ) );
 
-		self::check_if_app_id_is_set_and_show_notices();
+		// The notices are translated, so they must not be prepared before the `init` action.
+		add_action( 'admin_init', array( self::class, 'check_if_app_id_is_set_and_show_notices' ) );
 	}
 
 	/**
@@ -91,7 +92,7 @@ final class Settings {
 	 *
 	 * @return void
 	 */
-	private static function check_if_app_id_is_set_and_show_notices() {
+	public static function check_if_app_id_is_set_and_show_notices() {
 		$env_type = get_option( 'skautis_integration_appid_type' );
 		if ( Skautis_Gateway::PROD_ENV === $env_type ) {
 			if ( false === get_option( 'skautis_integration_appid_prod' ) ) {
