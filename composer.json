@@ -39,7 +39,7 @@
     "classmap-authoritative": true
   },
   "require": {
-    "php": "^7.4 || ^8.0",
+    "php": "^8.3",
     "skautis/skautis": "^2.3"
   },
   "require-dev": {

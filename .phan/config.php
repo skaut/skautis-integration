@@ -6,8 +6,8 @@
  */
 
 return array(
-	'target_php_version'                        => '8.1',
-	'minimum_target_php_version'                => '8.1', // Phan 6 doesn't support older versions. PHP 7.4 compatibility is covered by PHPCS.
+	'target_php_version'                        => '8.3',
+	'minimum_target_php_version'                => '8.3',
 	'warn_about_undocumented_throw_statements'  => true,
 	'strict_method_checking'                    => true,
 	'strict_object_checking'                    => false, // TODO: Enable.

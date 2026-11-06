@@ -63,12 +63,12 @@ class Skautis_Gateway {
 	 * TODO: Replace elseif with else and remove useless checks
 	 */
 	public function __construct() {
-		$this->env = get_option( 'skautis_integration_appid_type' );
+		$this->env = strval( get_option( 'skautis_integration_appid_type', '' ) );
 		if ( self::PROD_ENV === $this->env ) {
-			$this->app_id    = get_option( 'skautis_integration_appid_prod' );
+			$this->app_id    = strval( get_option( 'skautis_integration_appid_prod', '' ) );
 			$this->test_mode = false;
 		} elseif ( self::TEST_ENV === $this->env ) {
-			$this->app_id    = get_option( 'skautis_integration_appid_test' );
+			$this->app_id    = strval( get_option( 'skautis_integration_appid_test', '' ) );
 			$this->test_mode = true;
 		}
 

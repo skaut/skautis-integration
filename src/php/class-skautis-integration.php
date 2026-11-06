@@ -117,7 +117,7 @@ class Skautis_Integration {
 	 * @return bool Whether the current version of WordPress is supported.
 	 */
 	protected static function is_compatible_version_of_wp() {
-		if ( isset( $GLOBALS['wp_version'] ) && version_compare( $GLOBALS['wp_version'], '4.9.6', '>=' ) ) {
+		if ( isset( $GLOBALS['wp_version'] ) && version_compare( $GLOBALS['wp_version'], '7.0', '>=' ) ) {
 			return true;
 		}
 
@@ -131,7 +131,7 @@ class Skautis_Integration {
 	 */
 	protected static function is_compatible_version_of_php() {
 		// @phpstan-ignore if.alwaysTrue
-		if ( version_compare( PHP_VERSION, '7.4', '>=' ) ) {
+		if ( version_compare( PHP_VERSION, '8.3', '>=' ) ) {
 			return true;
 		}
 
@@ -149,12 +149,12 @@ class Skautis_Integration {
 	public static function activation() {
 		if ( ! self::is_compatible_version_of_wp() ) {
 			deactivate_plugins( SKAUTIS_INTEGRATION_PLUGIN_BASENAME );
-			wp_die( esc_html__( 'Plugin skautIS integrace vyžaduje verzi WordPress 4.9.6 nebo vyšší!', 'skautis-integration' ) );
+			wp_die( esc_html__( 'Plugin skautIS integrace vyžaduje verzi WordPress 7.0 nebo vyšší!', 'skautis-integration' ) );
 		}
 
 		if ( ! self::is_compatible_version_of_php() ) {
 			deactivate_plugins( SKAUTIS_INTEGRATION_PLUGIN_BASENAME );
-			wp_die( esc_html__( 'Plugin skautIS integrace vyžaduje verzi PHP 7.4 nebo vyšší!', 'skautis-integration' ) );
+			wp_die( esc_html__( 'Plugin skautIS integrace vyžaduje verzi PHP 8.3 nebo vyšší!', 'skautis-integration' ) );
 		}
 
 		if ( true !== get_option( 'skautis_rewrite_rules_need_to_flush' ) ) {
@@ -191,14 +191,14 @@ class Skautis_Integration {
 		if ( ! self::is_compatible_version_of_wp() ) {
 			if ( is_plugin_active( SKAUTIS_INTEGRATION_PLUGIN_BASENAME ) ) {
 				deactivate_plugins( SKAUTIS_INTEGRATION_PLUGIN_BASENAME );
-				Helpers::show_admin_notice( __( 'Plugin skautIS integrace vyžaduje verzi WordPress 4.8 nebo vyšší!', 'skautis-integration' ), 'warning' );
+				Helpers::show_admin_notice( __( 'Plugin skautIS integrace vyžaduje verzi WordPress 7.0 nebo vyšší!', 'skautis-integration' ), 'warning' );
 			}
 		}
 
 		if ( ! self::is_compatible_version_of_php() ) {
 			if ( is_plugin_active( SKAUTIS_INTEGRATION_PLUGIN_BASENAME ) ) {
 				deactivate_plugins( SKAUTIS_INTEGRATION_PLUGIN_BASENAME );
-				Helpers::show_admin_notice( __( 'Plugin skautIS integrace vyžaduje verzi PHP 7.4 nebo vyšší!', 'skautis-integration' ), 'warning' );
+				Helpers::show_admin_notice( __( 'Plugin skautIS integrace vyžaduje verzi PHP 8.3 nebo vyšší!', 'skautis-integration' ), 'warning' );
 			}
 		}
 	}

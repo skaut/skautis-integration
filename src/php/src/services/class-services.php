@@ -333,9 +333,9 @@ class Services {
 		if ( is_null( self::$modules_manager ) ) {
 			self::$modules_manager = new Modules_Manager(
 				array( // For hard modules activation/deactivation look to modules/Modules_Manager WP filters.
-					Register::get_id()   => Register::get_label(),
-					Visibility::get_id() => Visibility::get_label(),
-					Shortcodes::get_id() => Shortcodes::get_label(),
+					Register::get_id()   => array( Register::class, 'get_label' ),
+					Visibility::get_id() => array( Visibility::class, 'get_label' ),
+					Shortcodes::get_id() => array( Shortcodes::class, 'get_label' ),
 				)
 			);
 		}

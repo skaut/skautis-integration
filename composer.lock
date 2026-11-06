@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2788e874f2500cc3f6108106d9884040",
+    "content-hash": "834b6ca2a1150a02f79d8d6fed71ea28",
     "packages": [
         {
             "name": "skautis/skautis",
@@ -4437,7 +4437,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.4 || ^8.0"
+        "php": "^8.3"
     },
     "platform-dev": {},
     "plugin-api-version": "2.9.0"

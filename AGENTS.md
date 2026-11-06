@@ -4,7 +4,7 @@ This file provides guidance to coding agents when working with code in this repo
 
 ## Overview
 
-WordPress plugin that lets users log in to and register on a WordPress site through skautIS, the information system of Junák – český skaut. It also restricts content visibility based on skautIS roles, memberships, functions, and qualifications. User-facing strings and the README are in Czech. The text domain is `skautis-integration`. Supported floors: PHP 7.4, WordPress 4.9.6, and JS/CSS at ES2017 / `baseline 2019`.
+WordPress plugin that lets users log in to and register on a WordPress site through skautIS, the information system of Junák – český skaut. It also restricts content visibility based on skautIS roles, memberships, functions, and qualifications. User-facing strings and the README are in Czech. The text domain is `skautis-integration`. Supported floors: PHP 8.3, WordPress 7.0, and JS/CSS at ES2017 / `baseline 2019`.
 
 ## Commands
 

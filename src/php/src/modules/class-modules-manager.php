@@ -20,11 +20,20 @@ use Skautis_Integration\Services\Services;
 final class Modules_Manager {
 
 	/**
-	 * A list of all available modules in the form `id => label`, where label is already localized.
+	 * A list of all available modules in the form `id => label callback`.
 	 *
-	 * @var array<string, string>
+	 * The labels are resolved lazily in get_all_modules(), because translations must not be loaded before the `init` action.
+	 *
+	 * @var array<string, callable(): string>
 	 */
-	private $modules = array();
+	private $module_label_callbacks = array();
+
+	/**
+	 * A cached list of all available modules in the form `id => label`, where label is already localized.
+	 *
+	 * @var array<string, string>|null
+	 */
+	private $modules = null;
 
 	/**
 	 * A list of all active modules.
@@ -43,11 +52,11 @@ final class Modules_Manager {
 	/**
 	 * Constructs the service and saves all dependencies.
 	 *
-	 * @param array<string, string> $modules A list of all available modules in the form `id => label`, where label is already localized.
+	 * @param array<string, callable(): string> $module_label_callbacks A list of all available modules in the form `id => callback returning the localized label`.
 	 */
-	public function __construct( array $modules = array() ) {
-		$this->modules           = apply_filters( SKAUTIS_INTEGRATION_NAME . '_modules', $modules );
-		$this->activated_modules = (array) get_option( 'skautis_integration_activated_modules' );
+	public function __construct( array $module_label_callbacks = array() ) {
+		$this->module_label_callbacks = $module_label_callbacks;
+		$this->activated_modules      = (array) get_option( 'skautis_integration_activated_modules' );
 		apply_filters_ref_array( SKAUTIS_INTEGRATION_NAME . '_activated_modules', $this->activated_modules );
 		$this->register_activated_modules( $this->activated_modules );
 	}
@@ -77,6 +86,14 @@ final class Modules_Manager {
 	 * @return array<string, string> The modules
 	 */
 	public function get_all_modules(): array {
+		if ( is_null( $this->modules ) ) {
+			$modules = array();
+			foreach ( $this->module_label_callbacks as $module_id => $label_callback ) {
+				$modules[ $module_id ] = call_user_func( $label_callback );
+			}
+			$this->modules = apply_filters( SKAUTIS_INTEGRATION_NAME . '_modules', $modules );
+		}
+
 		return $this->modules;
 	}
 
