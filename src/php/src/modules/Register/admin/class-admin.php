@@ -87,6 +87,11 @@ final class Admin {
 			'modules/Register/admin/js/skautis-modules-register-admin.min.js',
 			array( SKAUTIS_INTEGRATION_NAME . '_jquery.repeater' ),
 		);
+		wp_localize_script(
+			SKAUTIS_INTEGRATION_NAME . '_modules_register',
+			'skautisIntegrationRulesSelectLocalize',
+			array( 'placeholder' => __( 'Select a rule…', 'skautis-integration' ) )
+		);
 	}
 
 	/**

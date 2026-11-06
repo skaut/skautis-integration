@@ -40,7 +40,7 @@
 	function reinitSelect2(): void {
 		jQuery('select.select2')
 			.select2({
-				placeholder: 'Vyberte pravidlo...',
+				placeholder: skautisIntegrationRulesSelectLocalize.placeholder,
 			})
 			.on(
 				'change.skautis_modules_visibility_admin',

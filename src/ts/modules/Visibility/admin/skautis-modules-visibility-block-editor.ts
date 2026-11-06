@@ -39,14 +39,14 @@ interface Window {
 			wp.components.Notice,
 			{ isDismissible: false, status: 'warning' },
 			__(
-				'Zatím nemáte vytvořená žádná skautIS pravidla.',
+				'You have not created any skautIS rules yet.',
 				'skautis-integration'
 			),
 			' ',
 			el(
 				wp.components.ExternalLink,
 				{ href: data.rulesUrl },
-				__('Vytvořit pravidlo', 'skautis-integration')
+				__('Create a rule', 'skautis-integration')
 			)
 		);
 
@@ -125,11 +125,11 @@ interface Window {
 						title:
 							rules.length > 0
 								? __(
-										'skautIS viditelnost (omezeno)',
+										'skautIS visibility (restricted)',
 										'skautis-integration'
 									)
 								: __(
-										'skautIS viditelnost',
+										'skautIS visibility',
 										'skautis-integration'
 									),
 					},
@@ -140,7 +140,7 @@ interface Window {
 									'p',
 									{ key: 'description' },
 									__(
-										'Blok uvidí jen uživatelé, kteří splní alespoň jedno z vybraných pravidel. Bez vybraných pravidel je blok viditelný pro všechny.',
+										'Only users who pass at least one of the selected rules will see the block. Without selected rules, the block is visible to everyone.',
 										'skautis-integration'
 									)
 								),
@@ -151,7 +151,7 @@ interface Window {
 									? el(wp.components.RadioControl, {
 											key: 'mode',
 											label: __(
-												'Uživatelům, kteří pravidla nesplní',
+												'For users who do not pass the rules',
 												'skautis-integration'
 											),
 											onChange: (value: string) => {
@@ -163,14 +163,14 @@ interface Window {
 											options: [
 												{
 													label: __(
-														'blok úplně skrýt',
+														'hide the block completely',
 														'skautis-integration'
 													),
 													value: 'hide',
 												},
 												{
 													label: __(
-														'zobrazit výzvu k přihlášení',
+														'show a login prompt',
 														'skautis-integration'
 													),
 													value: 'showLogin',
@@ -303,7 +303,7 @@ interface Window {
 								'strong',
 								null,
 								__(
-									'Pravidla převzatá z nadřazených stránek',
+									'Rules inherited from parent pages',
 									'skautis-integration'
 								)
 							)
@@ -327,7 +327,7 @@ interface Window {
 			{
 				className: 'skautis-integration-post-rules',
 				name: 'skautis-integration-post-rules',
-				title: __('skautIS pravidla', 'skautis-integration'),
+				title: __('skautIS rules', 'skautis-integration'),
 			},
 			...parentRules,
 			data.rules.length === 0
@@ -337,7 +337,7 @@ interface Window {
 							'p',
 							{ key: 'description' },
 							__(
-								'Obsah bude pro uživatele viditelný pouze při splnění alespoň jednoho z vybraných pravidel. Bez vybraných pravidel je obsah viditelný pro všechny.',
+								'The content will only be visible to users who pass at least one of the selected rules. Without selected rules, the content is visible to everyone.',
 								'skautis-integration'
 							)
 						),
@@ -362,13 +362,13 @@ interface Window {
 											? sprintf(
 													/* Translators: %s: The plural name of the post type */
 													__(
-														'Použít vybraná pravidla i na podřízené %s',
+														'Apply the selected rules to child %s as well',
 														'skautis-integration'
 													),
 													postTypeName.toLowerCase()
 												)
 											: __(
-													'Použít vybraná pravidla i na podřízený obsah (média - obrázky, videa, přílohy,…)',
+													'Apply the selected rules to child content (media - images, videos, attachments, …) as well',
 													'skautis-integration'
 												),
 										onChange: (checked: boolean) => {
@@ -384,7 +384,7 @@ interface Window {
 							? el(wp.components.RadioControl, {
 									key: 'mode',
 									label: __(
-										'Uživatelům, kteří pravidla nesplní',
+										'For users who do not pass the rules',
 										'skautis-integration'
 									),
 									onChange: (value: string) => {
@@ -395,14 +395,14 @@ interface Window {
 									options: [
 										{
 											label: __(
-												'Úplně skrýt',
+												'Hide completely',
 												'skautis-integration'
 											),
 											value: 'full',
 										},
 										{
 											label: __(
-												'Skrýt pouze obsah',
+												'Hide only the content',
 												'skautis-integration'
 											),
 											value: 'content',

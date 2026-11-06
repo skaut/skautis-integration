@@ -47,8 +47,8 @@ final class Settings {
 	public static function setup_setting_page() {
 		add_submenu_page(
 			SKAUTIS_INTEGRATION_NAME,
-			__( 'Viditelnost obsahu', 'skautis-integration' ),
-			__( 'Viditelnost obsahu', 'skautis-integration' ),
+			__( 'Content visibility', 'skautis-integration' ),
+			__( 'Content visibility', 'skautis-integration' ),
 			Helpers::get_skautis_manager_capability(),
 			SKAUTIS_INTEGRATION_NAME . '_modules_visibility',
 			array( self::class, 'print_setting_page' )
@@ -68,7 +68,7 @@ final class Settings {
 		settings_errors();
 		?>
 		<div class="wrap">
-			<h1><?php esc_html_e( 'Nastavení viditelnosti obsahu', 'skautis-integration' ); ?></h1>
+			<h1><?php esc_html_e( 'Content visibility settings', 'skautis-integration' ); ?></h1>
 			<form method="POST" action="<?php echo esc_url( admin_url( 'options.php' ) ); ?>">
 				<?php
 				settings_fields( SKAUTIS_INTEGRATION_NAME . '_modules_visibility' );
@@ -97,7 +97,7 @@ final class Settings {
 
 		add_settings_field(
 			SKAUTIS_INTEGRATION_NAME . '_modules_visibility_postTypes',
-			__( 'Typy obsahu', 'skautis-integration' ),
+			__( 'Content types', 'skautis-integration' ),
 			array( self::class, 'field_post_types' ),
 			SKAUTIS_INTEGRATION_NAME . '_modules_visibility',
 			SKAUTIS_INTEGRATION_NAME . '_modules_visibility'
@@ -105,7 +105,7 @@ final class Settings {
 
 		add_settings_field(
 			SKAUTIS_INTEGRATION_NAME . '_modules_visibility_visibilityMode',
-			__( 'Způsob skrytí', 'skautis-integration' ),
+			__( 'Hiding method', 'skautis-integration' ),
 			array( self::class, 'field_visibility_mode' ),
 			SKAUTIS_INTEGRATION_NAME . '_modules_visibility',
 			SKAUTIS_INTEGRATION_NAME . '_modules_visibility'
@@ -113,7 +113,7 @@ final class Settings {
 
 		add_settings_field(
 			SKAUTIS_INTEGRATION_NAME . '_modules_visibility_includeChildren',
-			__( 'Podřízený obsah', 'skautis-integration' ),
+			__( 'Child content', 'skautis-integration' ),
 			array( self::class, 'field_include_children' ),
 			SKAUTIS_INTEGRATION_NAME . '_modules_visibility',
 			SKAUTIS_INTEGRATION_NAME . '_modules_visibility'
@@ -170,9 +170,9 @@ final class Settings {
 		}
 		?>
 		<div>
-			<em><?php esc_html_e( 'U vybraných typů obsahu bude možné zadávat pravidla pro viditelnost obsahu.', 'skautis-integration' ); ?></em><br/>
-			<em><?php esc_html_e( 'Pokud není uživatel přihlášen ve skautISu nebo nesplní daná pravidla - bude pro něj obsah skrytý.', 'skautis-integration' ); ?></em><br/>
-			<em><?php esc_html_e( 'Uživatelé přihlášení do WordPressu s právy pro úpravu daného obsahu jej uvidí vždy, bez ohledu na jejich přihlášení do skautISu či splnění daných pravidel.', 'skautis-integration' ); ?></em>
+			<em><?php esc_html_e( 'Visibility rules can be set for the selected content types.', 'skautis-integration' ); ?></em><br/>
+			<em><?php esc_html_e( 'If a user is not logged in to skautIS or does not pass the rules, the content will be hidden from them.', 'skautis-integration' ); ?></em><br/>
+			<em><?php esc_html_e( 'Users logged in to WordPress who can edit the content will always see it, regardless of their skautIS login or the rules.', 'skautis-integration' ); ?></em>
 		</div>
 		<?php
 	}
@@ -186,12 +186,12 @@ final class Settings {
 		$visibility_mode = get_option( SKAUTIS_INTEGRATION_NAME . '_modules_visibility_visibilityMode', 'full' );
 		?>
 		<label><input type="radio" name="<?php echo esc_attr( SKAUTIS_INTEGRATION_NAME ); ?>_modules_visibility_visibilityMode"
-					value="full" <?php checked( 'full', $visibility_mode ); ?> /><span><?php esc_html_e( 'Skrýt celý příspěvek / stránku / ...', 'skautis-integration' ); ?></span></label>
+					value="full" <?php checked( 'full', $visibility_mode ); ?> /><span><?php esc_html_e( 'Hide the whole post / page / …', 'skautis-integration' ); ?></span></label>
 		<br/>
 		<label><input type="radio" name="<?php echo esc_attr( SKAUTIS_INTEGRATION_NAME ); ?>_modules_visibility_visibilityMode"
-					value="content" <?php checked( 'content', $visibility_mode ); ?> /><span><?php esc_html_e( 'Skrýt pouze obsah', 'skautis-integration' ); ?></span></label>
+					value="content" <?php checked( 'content', $visibility_mode ); ?> /><span><?php esc_html_e( 'Hide only the content', 'skautis-integration' ); ?></span></label>
 		<p>
-			<em><?php esc_html_e( 'Nastavení můžete změnit u jednotlivých typů obsahu dle potřeby.', 'skautis-integration' ); ?></em>
+			<em><?php esc_html_e( 'You can change this setting for individual content as needed.', 'skautis-integration' ); ?></em>
 		</p>
 		<?php
 	}
@@ -205,10 +205,10 @@ final class Settings {
 		$include_children = get_option( SKAUTIS_INTEGRATION_NAME . '_modules_visibility_includeChildren', 0 );
 		?>
 		<label><input type="checkbox" name="<?php echo esc_attr( SKAUTIS_INTEGRATION_NAME ); ?>_modules_visibility_includeChildren"
-					value="1" <?php checked( 1, $include_children ); ?> /><span><?php esc_html_e( 'Použít vybraná pravidla i na podřízený obsah', 'skautis-integration' ); ?></span></label>
+					value="1" <?php checked( 1, $include_children ); ?> /><span><?php esc_html_e( 'Apply the selected rules to child content as well', 'skautis-integration' ); ?></span></label>
 		<br/>
 		<p>
-			<em><?php esc_html_e( 'Nastavení můžete změnit u jednotlivých typů obsahu dle potřeby.', 'skautis-integration' ); ?></em>
+			<em><?php esc_html_e( 'You can change this setting for individual content as needed.', 'skautis-integration' ); ?></em>
 		</p>
 		<?php
 	}

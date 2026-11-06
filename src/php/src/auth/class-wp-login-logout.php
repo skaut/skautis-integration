@@ -77,7 +77,7 @@ final class WP_Login_Logout {
 						false !== get_option( SKAUTIS_INTEGRATION_NAME . '_checkUserPrivilegesIfLoginBySkautis' ) ) {
 						if ( '' === Services::get_modules_manager()->get_register_module()->getRulesManager()->get_role_if_user_passed_rules() ) {
 							/* translators: 1: Start of a link to skautIS login 2: End of the link to skautIS login */
-							wp_die( sprintf( esc_html__( 'Je nám líto, ale již nemáte oprávnění k přístupu. %1$sZkuste se znovu zaregistrovat%2$s', 'skautis-integration' ), '<a href = "' . esc_url( Services::get_modules_manager()->get_register_module()->getWpRegister()->get_register_url() ) . '">', '</a>' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
+							wp_die( sprintf( esc_html__( 'Sorry, you no longer have access. %1$sTry to register again%2$s', 'skautis-integration' ), '<a href = "' . esc_url( Services::get_modules_manager()->get_register_module()->getWpRegister()->get_register_url() ) . '">', '</a>' ), esc_html__( 'Unauthorized access', 'skautis-integration' ) );
 						}
 					}
 				}
@@ -103,10 +103,10 @@ final class WP_Login_Logout {
 		if ( ! $dont_die_on_error ) {
 			if ( Services::get_modules_manager()->is_module_activated( Register::get_id() ) ) {
 				/* translators: 1: Start of a link to skautIS login 2: End of the link to skautIS login */
-				wp_die( sprintf( esc_html__( 'Nemáte oprávnění k přístupu. %1$sZkuste se nejdříve zaregistrovat%2$s', 'skautis-integration' ), '<a href ="' . esc_url( Services::get_modules_manager()->get_register_module()->getWpRegister()->get_register_url() ) . '">', '</a>' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
+				wp_die( sprintf( esc_html__( 'You do not have access. %1$sTry to register first%2$s', 'skautis-integration' ), '<a href ="' . esc_url( Services::get_modules_manager()->get_register_module()->getWpRegister()->get_register_url() ) . '">', '</a>' ), esc_html__( 'Unauthorized access', 'skautis-integration' ) );
 			} else {
 				$this->skautis_gateway->logout();
-				wp_die( esc_html__( 'Nemáte oprávnění k přístupu', 'skautis-integration' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
+				wp_die( esc_html__( 'You do not have access', 'skautis-integration' ), esc_html__( 'Unauthorized access', 'skautis-integration' ) );
 			}
 		}
 

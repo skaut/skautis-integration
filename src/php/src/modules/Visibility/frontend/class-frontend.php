@@ -114,7 +114,7 @@ final class Frontend {
 	 * Returns HTML code for the frontend message telling the user they need to log in to skautIS to view the content.
 	 */
 	public static function get_login_required_message(): string {
-		return '<p>' . esc_html__( 'To view this content you must be logged in skautIS', 'skautis-integration' ) . '</p>';
+		return '<p>' . esc_html__( 'To view this content, you must be logged in to skautIS', 'skautis-integration' ) . '</p>';
 	}
 
 	/**

@@ -87,7 +87,7 @@ final class Admin {
 		if ( Rules_Init::RULES_TYPE_SLUG === $post_type ) {
 			add_meta_box(
 				SKAUTIS_INTEGRATION_NAME . '_rules_metabox',
-				__( 'skautIS pravidla', 'skautis-integration' ),
+				__( 'skautIS rules', 'skautis-integration' ),
 				array( self::class, 'rules_field_content' ),
 				Rules_Init::RULES_TYPE_SLUG
 			);
@@ -141,7 +141,7 @@ final class Admin {
 	 * @return array<string, string> The updated list.
 	 */
 	public static function add_rules_field_to_revisions( array $fields ): array {
-		$fields[ SKAUTIS_INTEGRATION_NAME . '_rules_data' ] = __( 'skautIS Pravidla', 'skautis-integration' );
+		$fields[ SKAUTIS_INTEGRATION_NAME . '_rules_data' ] = __( 'skautIS rules', 'skautis-integration' );
 
 		return $fields;
 	}
@@ -182,20 +182,20 @@ final class Admin {
 		<div class="meta-box-sortables">
 			<div class="postbox" style="margin-top: 2.5em;">
 				<button type="button" class="handlediv" aria-expanded="true"><span
-						class="screen-reader-text"><?php esc_html_e( 'Zobrazit / skrýt panel: Pravidla', 'skautis-integration' ); ?></span><span
+						class="screen-reader-text"><?php esc_html_e( 'Toggle panel: Rules', 'skautis-integration' ); ?></span><span
 						class="toggle-indicator" aria-hidden="true"></span></button>
 				<h2 class="hndle ui-sortable-handle">
-					<span><?php esc_html_e( 'Zadejte podmínky pro splnění pravidla', 'skautis-integration' ); ?></span>
+					<span><?php esc_html_e( 'Enter the conditions of the rule', 'skautis-integration' ); ?></span>
 				</h2>
 				<div class="inside" style="padding: 0.75em 1.5em 1.25em 1.5em;">
 					<label class="screen-reader-text"
-						for="post_author_override"><?php esc_html_e( 'Zadejte podmínky pro splnění pravidla', 'skautis-integration' ); ?></label>
+						for="post_author_override"><?php esc_html_e( 'Enter the conditions of the rule', 'skautis-integration' ); ?></label>
 					<?php
 					if ( ! $this->skautis_gateway->is_initialized() ) {
 						/* translators: 1: Start of link to the settings 2: End of link to the settings */
-						printf( esc_html__( 'Vyberte v %1$snastavení%2$s pluginu typ prostředí skautISu', 'skautis-integration' ), '<a href="' . esc_url( admin_url( 'admin.php?page=' . SKAUTIS_INTEGRATION_NAME ) ) . '">', '</a>' );
+						printf( esc_html__( 'Select the skautIS environment in the plugin %1$ssettings%2$s', 'skautis-integration' ), '<a href="' . esc_url( admin_url( 'admin.php?page=' . SKAUTIS_INTEGRATION_NAME ) ) . '">', '</a>' );
 					} elseif ( ! $this->skautis_gateway->get_skautis_instance()->getUser()->isLoggedIn( true ) ) {
-						echo '<h4><a href="' . esc_url( $this->wp_login_logout->get_login_url( add_query_arg( 'noWpLogin', true, Helpers::get_current_url() ) ) ) . '">' . esc_html__( 'Pro správu podmínek je nutné se přihlásit do skautISu', 'skautis-integration' ) . '</a></h4>';
+						echo '<h4><a href="' . esc_url( $this->wp_login_logout->get_login_url( add_query_arg( 'noWpLogin', true, Helpers::get_current_url() ) ) ) . '">' . esc_html__( 'You must log in to skautIS to manage the conditions', 'skautis-integration' ) . '</a></h4>';
 					} else {
 						echo '<div id="query_builder"></div>';
 					}
@@ -248,9 +248,9 @@ final class Admin {
 		}
 
 		$localization = array(
-			'select_placeholder' => esc_html__( 'Vyberte...', 'skautis-integration' ),
-			'unitNumber'         => esc_html__( 'číslo jednotky (např. 411.12)', 'skautis-integration' ),
-			'inUnitWithNumber'   => esc_html__( 'v jednotce, jejíž evidenční číslo', 'skautis-integration' ),
+			'select_placeholder' => esc_html__( 'Select…', 'skautis-integration' ),
+			'unitNumber'         => esc_html__( 'unit number (e.g. 411.12)', 'skautis-integration' ),
+			'inUnitWithNumber'   => esc_html__( 'in the unit whose registration number', 'skautis-integration' ),
 		);
 
 		Helpers::enqueue_script(
@@ -312,11 +312,13 @@ final class Admin {
 			true
 		);
 
-		Helpers::enqueue_script(
-			'query-builder_lang',
-			'rules/admin/js/query-builder.cs.min.js',
-			array( SKAUTIS_INTEGRATION_NAME . '_query-builder' )
-		);
+		if ( Helpers::is_czech_locale() ) {
+			Helpers::enqueue_script(
+				'query-builder_lang',
+				'rules/admin/js/query-builder.cs.min.js',
+				array( SKAUTIS_INTEGRATION_NAME . '_query-builder' )
+			);
+		}
 		Helpers::enqueue_script(
 			'rules',
 			'rules/admin/js/skautis-rules-admin.min.js',

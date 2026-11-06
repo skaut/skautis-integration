@@ -97,6 +97,15 @@ class Helpers {
 	}
 
 	/**
+	 * Checks whether the current user sees WordPress in Czech.
+	 *
+	 * Used for the bundled translations of third-party libraries (DataTables, jQuery QueryBuilder), which are only available in Czech.
+	 */
+	public static function is_czech_locale(): bool {
+		return 0 === strpos( determine_locale(), 'cs' );
+	}
+
+	/**
 	 * Returns the path of the skautIS login page relative to the site URL.
 	 *
 	 * @return string The path without leading and trailing slashes, or an empty string if the login page is disabled.
@@ -137,7 +146,7 @@ class Helpers {
 					$class = 'notice notice-' . $type . ' is-dismissible';
 					printf(
 						'<div class="%1$s"><p>%2$s</p><button type="button" class="notice-dismiss">
-		<span class="screen-reader-text">' . esc_html__( 'Zavřít', 'skautis-integration' ) . '</span>
+		<span class="screen-reader-text">' . esc_html__( 'Close', 'skautis-integration' ) . '</span>
 	</button></div>',
 						esc_attr( $class ),
 						// The message may contain links, e.g. to the plugin settings.

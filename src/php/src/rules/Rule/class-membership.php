@@ -81,7 +81,7 @@ class Membership implements Rule {
 	 * Returns the localized rule name.
 	 */
 	public function get_label(): string {
-		return __( 'Typ členství', 'skautis-integration' );
+		return __( 'Membership type', 'skautis-integration' );
 	}
 
 	/**
@@ -235,7 +235,7 @@ class Membership implements Rule {
 				sprintf(
 					/* translators: 1: Start of a link to the documentation 2: End of the link to the documentation */
 					esc_html__(
-						'Pravděpodobně nemáte propojený skautIS účet se svojí osobou. %1$sPostupujte podle tohoto návodu%2$s',
+						'Your skautIS account is probably not connected to your person. %1$sFollow this guide%2$s',
 						'skautis-integration'
 					),
 					'<a href="https://napoveda.skaut.cz/skautis/informacni-system/uzivatel/propojeni-uctu">',

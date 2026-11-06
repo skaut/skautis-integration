@@ -93,12 +93,13 @@ function updateQueryStringInUrl(
 				$('.dt-search input').val(searchString);
 			}
 		},
-		language: {
-			ajax: `${
-				skautisIntegrationAdminUsersManagementLocalize.datatablesFilesUrl
-			}/cs.json`,
-			search: 'Hledat',
-		},
+		language:
+			skautisIntegrationAdminUsersManagementLocalize.datatablesLanguageUrl ===
+			''
+				? {}
+				: {
+						ajax: skautisIntegrationAdminUsersManagementLocalize.datatablesLanguageUrl,
+					},
 		pageLength: 25,
 		stateSave: true,
 	});

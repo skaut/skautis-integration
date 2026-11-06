@@ -49,33 +49,33 @@ final class Rules_Init {
 	 */
 	public static function register_post_type() {
 		$labels       = array(
-			'name'                  => _x( 'Správa pravidel', 'Post Type General Name', 'skautis-integration' ),
-			'singular_name'         => _x( 'Pravidlo', 'Post Type Singular Name', 'skautis-integration' ),
-			'menu_name'             => __( 'Správa pravidel', 'skautis-integration' ),
-			'name_admin_bar'        => __( 'Správa pravidel', 'skautis-integration' ),
-			'archives'              => __( 'Archiv pravidel', 'skautis-integration' ),
-			'attributes'            => __( 'Atributy', 'skautis-integration' ),
-			'parent_item_colon'     => __( 'Nadřazené pravidlo', 'skautis-integration' ),
-			'all_items'             => __( 'Správa pravidel', 'skautis-integration' ),
-			'add_new_item'          => __( 'Přidat nové pravidlo', 'skautis-integration' ),
-			'add_new'               => __( 'Přidat pravidlo', 'skautis-integration' ),
-			'new_item'              => __( 'Nové pravidlo', 'skautis-integration' ),
-			'edit_item'             => __( 'Upravit pravidlo', 'skautis-integration' ),
-			'update_item'           => __( 'Aktualizovat pravidlo', 'skautis-integration' ),
-			'view_item'             => __( 'Zobrazit pravidlo', 'skautis-integration' ),
-			'view_items'            => __( 'Zobrazit pravidla', 'skautis-integration' ),
-			'search_items'          => __( 'Hledat v pravidlech', 'skautis-integration' ),
-			'not_found'             => __( 'Žádná pravidla', 'skautis-integration' ),
-			'not_found_in_trash'    => __( 'Koš je prázdný', 'skautis-integration' ),
-			'featured_image'        => __( 'Náhledový obrázek', 'skautis-integration' ),
-			'set_featured_image'    => __( 'Zadat náhledový obrázek', 'skautis-integration' ),
-			'remove_featured_image' => __( 'Odstranit náhledový obrázek', 'skautis-integration' ),
-			'use_featured_image'    => __( 'Použít jako náhledový obrázek', 'skautis-integration' ),
-			'insert_into_item'      => __( 'Vložit do pravidla', 'skautis-integration' ),
-			'uploaded_to_this_item' => __( 'Přiřazeno k tomuto pravidlu', 'skautis-integration' ),
-			'items_list'            => __( 'Seznam pravidel', 'skautis-integration' ),
-			'items_list_navigation' => __( 'Navigace v seznamu pravidel', 'skautis-integration' ),
-			'filter_items_list'     => __( 'Filtrovat pravidla', 'skautis-integration' ),
+			'name'                  => _x( 'Manage rules', 'Post Type General Name', 'skautis-integration' ),
+			'singular_name'         => _x( 'Rule', 'Post Type Singular Name', 'skautis-integration' ),
+			'menu_name'             => __( 'Manage rules', 'skautis-integration' ),
+			'name_admin_bar'        => __( 'Manage rules', 'skautis-integration' ),
+			'archives'              => __( 'Rule archives', 'skautis-integration' ),
+			'attributes'            => __( 'Rule attributes', 'skautis-integration' ),
+			'parent_item_colon'     => __( 'Parent rule', 'skautis-integration' ),
+			'all_items'             => __( 'Manage rules', 'skautis-integration' ),
+			'add_new_item'          => __( 'Add new rule', 'skautis-integration' ),
+			'add_new'               => __( 'Add rule', 'skautis-integration' ),
+			'new_item'              => __( 'New rule', 'skautis-integration' ),
+			'edit_item'             => __( 'Edit rule', 'skautis-integration' ),
+			'update_item'           => __( 'Update rule', 'skautis-integration' ),
+			'view_item'             => __( 'View rule', 'skautis-integration' ),
+			'view_items'            => __( 'View rules', 'skautis-integration' ),
+			'search_items'          => __( 'Search rules', 'skautis-integration' ),
+			'not_found'             => __( 'No rules found', 'skautis-integration' ),
+			'not_found_in_trash'    => __( 'No rules found in trash', 'skautis-integration' ),
+			'featured_image'        => __( 'Featured image', 'skautis-integration' ),
+			'set_featured_image'    => __( 'Set featured image', 'skautis-integration' ),
+			'remove_featured_image' => __( 'Remove featured image', 'skautis-integration' ),
+			'use_featured_image'    => __( 'Use as featured image', 'skautis-integration' ),
+			'insert_into_item'      => __( 'Insert into rule', 'skautis-integration' ),
+			'uploaded_to_this_item' => __( 'Uploaded to this rule', 'skautis-integration' ),
+			'items_list'            => __( 'Rules list', 'skautis-integration' ),
+			'items_list_navigation' => __( 'Rules list navigation', 'skautis-integration' ),
+			'filter_items_list'     => __( 'Filter rules list', 'skautis-integration' ),
 		);
 		$capabilities = array(
 			'edit_post'              => Helpers::get_skautis_manager_capability(),
@@ -94,7 +94,7 @@ final class Rules_Init {
 			'create_posts'           => Helpers::get_skautis_manager_capability(),
 		);
 		$args         = array(
-			'label'               => __( 'Pravidla', 'skautis-integration' ),
+			'label'               => __( 'Rules', 'skautis-integration' ),
 			'labels'              => $labels,
 			'supports'            => array( 'title', 'editor', 'author', 'revisions' ),
 			'hierarchical'        => false,
@@ -141,7 +141,7 @@ final class Rules_Init {
 	public static function title_placeholder( string $title ): string {
 		global $post_type;
 		if ( self::RULES_TYPE_SLUG === $post_type ) {
-			$title = __( 'Zadejte název pravidla', 'skautis-integration' );
+			$title = __( 'Enter the rule name', 'skautis-integration' );
 		}
 
 		return $title;
@@ -159,22 +159,22 @@ final class Rules_Init {
 		$revision                          = Request_Parameter_Helpers::get_int_variable( 'revision' );
 		$messages[ self::RULES_TYPE_SLUG ] = array(
 			0  => '', // Unused. Messages start at index 1.
-			1  => __( 'Hotovo', 'skautis-integration' ), // My Post Type updated.
-			2  => __( 'Hotovo', 'skautis-integration' ), // Custom field updated.
-			3  => __( 'Hotovo', 'skautis-integration' ), // Custom field deleted.
-			4  => __( 'Hotovo', 'skautis-integration' ), // My Post Type updated.
+			1  => __( 'Rule updated', 'skautis-integration' ), // My Post Type updated.
+			2  => __( 'Rule updated', 'skautis-integration' ), // Custom field updated.
+			3  => __( 'Rule updated', 'skautis-integration' ), // Custom field deleted.
+			4  => __( 'Rule updated', 'skautis-integration' ), // My Post Type updated.
 			/* translators: The time of the previous version */
-			5  => ( -1 !== $revision ) ? sprintf( __( 'Pravidlo bylo obnoveno na starší verzi z %s', 'skautis-integration' ), wp_post_revision_title( $revision, false ) ) : '',
-			6  => __( 'Hotovo', 'skautis-integration' ), // My Post Type published.
-			7  => __( 'Pravidlo bylo uloženo', 'skautis-integration' ), // My Post Type saved.
-			8  => __( 'Hotovo', 'skautis-integration' ), // My Post Type submitted.
+			5  => ( -1 !== $revision ) ? sprintf( __( 'Rule restored to the revision from %s', 'skautis-integration' ), wp_post_revision_title( $revision, false ) ) : '',
+			6  => __( 'Rule updated', 'skautis-integration' ), // My Post Type published.
+			7  => __( 'Rule saved', 'skautis-integration' ), // My Post Type saved.
+			8  => __( 'Rule updated', 'skautis-integration' ), // My Post Type submitted.
 			9  => sprintf(
 				/* translators: 1: The time of the rule run */
-				__( 'Pravidlo naplánováno na: <strong>%1$s</strong>.', 'skautis-integration' ),
+				__( 'Rule scheduled for: <strong>%1$s</strong>.', 'skautis-integration' ),
 				/* translators: Publish box date format, see http://php.net/date */
 				date_i18n( __( 'M j, Y @ G:i', 'skautis-integration' ), $post instanceof \WP_Post ? strtotime( $post->post_date ) : false )
 			),
-			10 => __( 'Koncept pravidla aktualizován', 'skautis-integration' ), // My Post Type draft updated.
+			10 => __( 'Rule draft updated', 'skautis-integration' ), // My Post Type draft updated.
 		);
 
 		return $messages;

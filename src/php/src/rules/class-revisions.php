@@ -171,7 +171,7 @@ class Revisions {
 		if ( ! self::is_rule( $post ) ) {
 			return $fields;
 		}
-		$fields['custom_fields'] = __( 'Další pole', 'skautis-integration' );
+		$fields['custom_fields'] = __( 'Other fields', 'skautis-integration' );
 
 		return $fields;
 	}

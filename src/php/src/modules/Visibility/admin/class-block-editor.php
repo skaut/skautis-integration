@@ -213,6 +213,7 @@ final class Block_Editor {
 			// wp-editor is not a dependency, because it must not be loaded in the widgets editor. The post settings panel is only registered when it is available.
 			array( 'wp-block-editor', 'wp-blocks', 'wp-components', 'wp-compose', 'wp-data', 'wp-dom-ready', 'wp-element', 'wp-hooks', 'wp-i18n', 'wp-plugins' )
 		);
+		wp_set_script_translations( SKAUTIS_INTEGRATION_NAME . '_modules_visibility_block_editor', 'skautis-integration' );
 		wp_add_inline_script(
 			SKAUTIS_INTEGRATION_NAME . '_modules_visibility_block_editor',
 			'window.skautisIntegrationBlockEditor = ' . wp_json_encode(

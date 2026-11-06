@@ -59,8 +59,8 @@ final class Settings {
 	public static function setup_setting_page() {
 		add_submenu_page(
 			SKAUTIS_INTEGRATION_NAME,
-			__( 'Registrace', 'skautis-integration' ),
-			__( 'Registrace', 'skautis-integration' ),
+			__( 'Registration', 'skautis-integration' ),
+			__( 'Registration', 'skautis-integration' ),
 			Helpers::get_skautis_manager_capability(),
 			SKAUTIS_INTEGRATION_NAME . '_modules_register',
 			array( self::class, 'print_setting_page' )
@@ -80,7 +80,7 @@ final class Settings {
 		settings_errors();
 		?>
 		<div class="wrap">
-			<h1><?php esc_html_e( 'Nastavení registrace', 'skautis-integration' ); ?></h1>
+			<h1><?php esc_html_e( 'Registration settings', 'skautis-integration' ); ?></h1>
 			<form method="POST" action="<?php echo esc_url( admin_url( 'options.php' ) ); ?>">
 				<?php
 				settings_fields( SKAUTIS_INTEGRATION_NAME . '_modules_register' );
@@ -109,7 +109,7 @@ final class Settings {
 
 		add_settings_field(
 			SKAUTIS_INTEGRATION_NAME . '_modules_register_defaultwpRole',
-			__( 'Výchozí úroveň po registraci uživatele přes skautIS', 'skautis-integration' ),
+			__( 'Default role after registration with skautIS', 'skautis-integration' ),
 			array( self::class, 'field_wp_role' ),
 			SKAUTIS_INTEGRATION_NAME . '_modules_register',
 			SKAUTIS_INTEGRATION_NAME . '_modules_register'
@@ -117,7 +117,7 @@ final class Settings {
 
 		add_settings_field(
 			SKAUTIS_INTEGRATION_NAME . '_modules_register_notifications',
-			__( 'Po úspěšné registraci uživatele poslat emaily:', 'skautis-integration' ),
+			__( 'After a successful registration, send e-mails to:', 'skautis-integration' ),
 			array( self::class, 'field_new_user_notifications' ),
 			SKAUTIS_INTEGRATION_NAME . '_modules_register',
 			SKAUTIS_INTEGRATION_NAME . '_modules_register'
@@ -125,7 +125,7 @@ final class Settings {
 
 		add_settings_field(
 			SKAUTIS_INTEGRATION_NAME . '_modules_register_rules',
-			__( 'Pravidla registrace', 'skautis-integration' ),
+			__( 'Registration rules', 'skautis-integration' ),
 			array( $this, 'field_rules' ),
 			SKAUTIS_INTEGRATION_NAME . '_modules_register',
 			SKAUTIS_INTEGRATION_NAME . '_modules_register'
@@ -183,28 +183,28 @@ final class Settings {
 			<input type="radio"
 				name="<?php echo esc_attr( SKAUTIS_INTEGRATION_NAME ); ?>_modules_register_notifications"
 				value="none"<?php checked( 'none' === $notification_option ); ?> />
-			<span><?php esc_html_e( 'Nikomu', 'skautis-integration' ); ?></span>
+			<span><?php esc_html_e( 'Nobody', 'skautis-integration' ); ?></span>
 		</label>
 		<br/>
 		<label>
 			<input type="radio"
 				name="<?php echo esc_attr( SKAUTIS_INTEGRATION_NAME ); ?>_modules_register_notifications"
 				value="admin"<?php checked( 'admin' === $notification_option ); ?> />
-			<span><?php esc_html_e( 'Administrátorovi (info o registraci nového uživatele)', 'skautis-integration' ); ?></span>
+			<span><?php esc_html_e( 'The administrator (information about the new user)', 'skautis-integration' ); ?></span>
 		</label>
 		<br/>
 		<label>
 			<input type="radio"
 				name="<?php echo esc_attr( SKAUTIS_INTEGRATION_NAME ); ?>_modules_register_notifications"
 				value="user"<?php checked( 'user' === $notification_option ); ?> />
-			<span><?php esc_html_e( 'Uživateli (přístupové údaje)', 'skautis-integration' ); ?></span>
+			<span><?php esc_html_e( 'The user (login details)', 'skautis-integration' ); ?></span>
 		</label>
 		<br/>
 		<label>
 			<input type="radio"
 				name="<?php echo esc_attr( SKAUTIS_INTEGRATION_NAME ); ?>_modules_register_notifications"
 				value="both"<?php checked( 'both' === $notification_option ); ?> />
-			<span><?php esc_html_e( 'Administrátorovi i uživateli', 'skautis-integration' ); ?></span>
+			<span><?php esc_html_e( 'Both the administrator and the user', 'skautis-integration' ); ?></span>
 		</label>
 		<?php
 	}
@@ -217,22 +217,20 @@ final class Settings {
 	public function field_rules() {
 		?>
 		<div>
-			<em><?php esc_html_e( 'Nastavením omezíte registraci uživatelů pouze při splnění následujících pravidel.', 'skautis-integration' ); ?></em>
+			<em><?php esc_html_e( 'Only users who pass the following rules will be able to register.', 'skautis-integration' ); ?></em>
 		</div>
 		<div id="skautis_integration_modules_register_rulesNotSetHelp">
-			<em><?php esc_html_e( 'Ponecháte-li prázdné - budou se moci přes skautIS registrovat všichni uživatelé. Jejich výchozí úroveň pak bude: ', 'skautis-integration' ); ?>
+			<em><?php esc_html_e( 'If left empty, all users will be able to register with skautIS. Their default role will be: ', 'skautis-integration' ); ?>
 				<strong><?php echo esc_html( translate_user_role( ucfirst( get_option( SKAUTIS_INTEGRATION_NAME . '_modules_register_defaultwpRole', '' ) ) ) ); ?></strong></em>
 		</div>
-		<div><em><?php esc_html_e( 'Pravidla můžete přidávat v sekci', 'skautis-integration' ); ?>
-				<a href="<?php echo esc_url( admin_url( 'edit.php?post_type=' . Rules_Init::RULES_TYPE_SLUG ) ); ?>"><?php esc_html_e( 'Správa pravidel', 'skautis-integration' ); ?></a>.</em>
+		<div><em><?php esc_html_e( 'You can add rules in the section', 'skautis-integration' ); ?>
+				<a href="<?php echo esc_url( admin_url( 'edit.php?post_type=' . Rules_Init::RULES_TYPE_SLUG ) ); ?>"><?php esc_html_e( 'Manage rules', 'skautis-integration' ); ?></a>.</em>
 		</div>
 		<div id="skautis_integration_modules_register_rulesSetHelp">
-			<em><strong><?php esc_html_e( 'Pravidla se vyhodnocují shora dolů.', 'skautis-integration' ); ?></strong> 
+			<em><strong><?php esc_html_e( 'The rules are evaluated from top to bottom.', 'skautis-integration' ); ?></strong> 
 								<?php
 									esc_html_e(
-										'Jakmile je
-			některé pravidlo splněno, další, po něm následující, se již nevyhodnocují. Proto udržujte pořadí pravidel
-			takové, aby nahoře byly vždy specifičtější pravidla, která platí pro užší skupinu uživatelů.',
+										'Once a rule is passed, the following rules are not evaluated. Therefore, keep the more specific rules, which apply to a narrower group of users, at the top.',
 										'skautis-integration'
 									);
 								?>
@@ -244,7 +242,7 @@ final class Settings {
 					<span class="dashicons dashicons-move handle" style="vertical-align: middle;"></span>
 
 					<label for="<?php echo esc_attr( SKAUTIS_INTEGRATION_NAME ); ?>_modules_register_rule">
-						<?php esc_html_e( 'Při splnění pravidla:', 'skautis-integration' ); ?>
+						<?php esc_html_e( 'If the rule is passed:', 'skautis-integration' ); ?>
 					</label>
 					<select name="rule" class="rule select2">
 						<?php
@@ -255,17 +253,17 @@ final class Settings {
 					</select>
 
 					<label for="<?php echo esc_attr( SKAUTIS_INTEGRATION_NAME ); ?>_modules_register_role">
-						<?php esc_html_e( 'Přiřadit uživateli úroveň:', 'skautis-integration' ); ?>
+						<?php esc_html_e( 'Assign the user the role:', 'skautis-integration' ); ?>
 					</label>
 					<select name="role" id="<?php echo esc_attr( SKAUTIS_INTEGRATION_NAME ); ?>_modules_register_role">
 						<?php wp_dropdown_roles( get_option( SKAUTIS_INTEGRATION_NAME . '_modules_register_defaultwpRole' ) ); ?>
 					</select>
 
 					<input data-repeater-delete type="button"
-						value="<?php esc_attr_e( 'Odstranit', 'skautis-integration' ); ?>"/>
+						value="<?php esc_attr_e( 'Remove', 'skautis-integration' ); ?>"/>
 				</div>
 			</div>
-			<input data-repeater-create type="button" value="<?php esc_attr_e( 'Přidat', 'skautis-integration' ); ?>"/>
+			<input data-repeater-create type="button" value="<?php esc_attr_e( 'Add', 'skautis-integration' ); ?>"/>
 		</div>
 		<?php
 	}

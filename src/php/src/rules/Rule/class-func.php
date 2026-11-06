@@ -81,7 +81,7 @@ class Func implements Rule {
 	 * Returns the localized rule name.
 	 */
 	public function get_label(): string {
-		return __( 'Funkce', 'skautis-integration' );
+		return __( 'Function', 'skautis-integration' );
 	}
 
 	/**

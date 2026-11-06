@@ -126,7 +126,7 @@ final class Users {
 			</tr>
 			<tr>
 				<th><label
-						for="skautisUserId_test"><?php esc_html_e( 'skautIS user ID (testovací)', 'skautis-integration' ); ?></label>
+						for="skautisUserId_test"><?php esc_html_e( 'skautIS user ID (test)', 'skautis-integration' ); ?></label>
 				</th>
 				<td>
 					<input type="text" name="skautisUserId_test" id="skautisUserId_test" class="regular-text" 
