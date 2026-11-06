@@ -15,7 +15,7 @@ use Skautis_Integration\Rules\Rule;
 use Skautis_Integration\Auth\Skautis_Gateway;
 
 /**
- * Rule operator for filtering users based on their skautIS function.
+ * Rule operator for filtering users based on their SkautIS function.
  */
 class Func implements Rule {
 
@@ -150,7 +150,7 @@ class Func implements Rule {
 	}
 
 	/**
-	 * Removes special characters ("." and "-") from skautIS unit IDs.
+	 * Removes special characters ("." and "-") from SkautIS unit IDs.
 	 *
 	 * TODO: Duplicated in Membership and Role.
 	 *
@@ -193,7 +193,7 @@ class Func implements Rule {
 		}
 
 		$functions = $user_funcs->FunctionAllOutput;
-		// skautIS returns a single object instead of an array when the person has only one function.
+		// SkautIS returns a single object instead of an array when the person has only one function.
 		if ( is_object( $functions ) ) {
 			$functions = array( $functions );
 		}

@@ -12,7 +12,7 @@ namespace Skautis_Integration\Auth;
 use Skautis_Integration\Vendor\Skautis;
 
 /**
- * An adapter for the skautIS library.
+ * An adapter for the SkautIS library.
  */
 class Skautis_Gateway {
 
@@ -20,7 +20,7 @@ class Skautis_Gateway {
 	const TEST_ENV = 'test';
 
 	/**
-	 * The skautIS app ID.
+	 * The SkautIS app ID.
 	 *
 	 * TODO: Private?
 	 * TODO: Unused?
@@ -30,28 +30,28 @@ class Skautis_Gateway {
 	protected $app_id = '';
 
 	/**
-	 * An instance of the skautIS library.
+	 * An instance of the SkautIS library.
 	 *
 	 * @var Skautis\Skautis|null
 	 */
 	protected $skautis;
 
 	/**
-	 * Whether the skautIS library instance is initialized.
+	 * Whether the SkautIS library instance is initialized.
 	 *
 	 * @var bool
 	 */
 	protected $skautis_initialized = false;
 
 	/**
-	 * Whether the current skautIS environment is testing.
+	 * Whether the current SkautIS environment is testing.
 	 *
 	 * @var bool
 	 */
 	protected $test_mode;
 
 	/**
-	 * The current skautIS environment (testing or production).
+	 * The current SkautIS environment (testing or production).
 	 *
 	 * @var string
 	 */
@@ -86,7 +86,7 @@ class Skautis_Gateway {
 	}
 
 	/**
-	 * Returns the current skautIS environment (testing or production).
+	 * Returns the current SkautIS environment (testing or production).
 	 */
 	public function get_env(): string {
 		return $this->env;
@@ -97,20 +97,20 @@ class Skautis_Gateway {
 	 */
 	public function get_skautis_instance(): Skautis\Skautis {
 		if ( ! ( $this->skautis instanceof Skautis\Skautis ) ) {
-			wp_die( esc_html__( 'The skautIS integration plugin cannot be used without setting a valid App ID.', 'skautis-integration' ) );
+			wp_die( esc_html__( 'The SkautIS integration plugin cannot be used without setting a valid App ID.', 'skautis-integration' ) );
 		}
 		return $this->skautis;
 	}
 
 	/**
-	 * Checks whether the skautIS library instance is initialized.
+	 * Checks whether the SkautIS library instance is initialized.
 	 */
 	public function is_initialized(): bool {
 		return $this->skautis_initialized;
 	}
 
 	/**
-	 * Logs the user out of skautIS.
+	 * Logs the user out of SkautIS.
 	 *
 	 * @return void
 	 */
@@ -122,7 +122,7 @@ class Skautis_Gateway {
 	}
 
 	/**
-	 * Performs a dummy request to skautIS to check whether the library is initialized correctly.
+	 * Performs a dummy request to SkautIS to check whether the library is initialized correctly.
 	 *
 	 * @return bool
 	 */

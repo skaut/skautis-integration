@@ -16,7 +16,7 @@ use Skautis_Integration\Utils\Helpers;
 use Skautis_Integration\Services\Services;
 
 /**
- * Handles the WordPress part of logging in with skautIS.
+ * Handles the WordPress part of logging in with SkautIS.
  */
 final class WP_Login_Logout {
 
@@ -37,9 +37,9 @@ final class WP_Login_Logout {
 	}
 
 	/**
-	 * Logs a user into WordPress based on their skautIS user ID.
+	 * Logs a user into WordPress based on their SkautIS user ID.
 	 *
-	 * @param int  $skautis_user_id The skautIS user ID.
+	 * @param int  $skautis_user_id The SkautIS user ID.
 	 * @param bool $dont_die_on_error If true, this function will not exit with an error if the login fails.
 	 *
 	 * @return false
@@ -75,7 +75,7 @@ final class WP_Login_Logout {
 						! user_can( $wp_user->ID, Helpers::get_skautis_manager_capability() ) &&
 						'1' === strval( get_option( SKAUTIS_INTEGRATION_NAME . '_checkUserPrivilegesIfLoginBySkautis', '0' ) ) ) {
 						if ( '' === Services::get_register()->get_rules_manager()->get_role_if_user_passed_rules() ) {
-							/* translators: 1: Start of a link to skautIS login 2: End of the link to skautIS login */
+							/* translators: 1: Start of a link to SkautIS login 2: End of the link to SkautIS login */
 							wp_die( sprintf( esc_html__( 'Sorry, you no longer have access. %1$sTry to register again%2$s', 'skautis-integration' ), '<a href = "' . esc_url( Services::get_register()->get_wp_register()->get_register_url() ) . '">', '</a>' ), esc_html__( 'Unauthorized access', 'skautis-integration' ) );
 						}
 					}
@@ -101,7 +101,7 @@ final class WP_Login_Logout {
 
 		if ( ! $dont_die_on_error ) {
 			if ( Services::is_registration_enabled() ) {
-				/* translators: 1: Start of a link to skautIS login 2: End of the link to skautIS login */
+				/* translators: 1: Start of a link to SkautIS login 2: End of the link to SkautIS login */
 				wp_die( sprintf( esc_html__( 'You do not have access. %1$sTry to register first%2$s', 'skautis-integration' ), '<a href ="' . esc_url( Services::get_register()->get_wp_register()->get_register_url() ) . '">', '</a>' ), esc_html__( 'Unauthorized access', 'skautis-integration' ) );
 			} else {
 				$this->skautis_gateway->logout();
@@ -137,7 +137,7 @@ final class WP_Login_Logout {
 	}
 
 	/**
-	 * Returns the skautIS login URL with all arguments initialized.
+	 * Returns the SkautIS login URL with all arguments initialized.
 	 *
 	 * @param string $return_url The URL to return back to after the login.
 	 *
@@ -152,7 +152,7 @@ final class WP_Login_Logout {
 	}
 
 	/**
-	 * Returns the skautIS logout URL with all arguments and nonces initialized.
+	 * Returns the SkautIS logout URL with all arguments and nonces initialized.
 	 *
 	 * @param string $return_url The URL to return back to after the logout.
 	 *
@@ -168,7 +168,7 @@ final class WP_Login_Logout {
 	}
 
 	/**
-	 * Logs the current skautIS user into WordPress.
+	 * Logs the current SkautIS user into WordPress.
 	 *
 	 * @return void
 	 */
@@ -181,7 +181,7 @@ final class WP_Login_Logout {
 	}
 
 	/**
-	 * Logs the current skautIS user into WordPress.
+	 * Logs the current SkautIS user into WordPress.
 	 *
 	 * This version of the function doesn't produce an error if the login procedure fails.
 	 *
@@ -198,7 +198,7 @@ final class WP_Login_Logout {
 	}
 
 	/**
-	 * Handles a call to log the user out of skautIS.
+	 * Handles a call to log the user out of SkautIS.
 	 *
 	 * @see Actions::auth_actions_router() for more details about how this function gets called.
 	 *

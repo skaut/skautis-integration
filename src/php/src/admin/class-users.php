@@ -15,7 +15,7 @@ use Skautis_Integration\Utils\Helpers;
 use Skautis_Integration\Utils\Request_Parameter_Helpers;
 
 /**
- * Adds skautIS info to the WordPress user table as well as user profile screen.
+ * Adds SkautIS info to the WordPress user table as well as user profile screen.
  */
 final class Users {
 
@@ -52,20 +52,20 @@ final class Users {
 	}
 
 	/**
-	 * Adds the header for the skautIS column in the user table view.
+	 * Adds the header for the SkautIS column in the user table view.
 	 *
 	 * @param array<string> $columns A list of column headers.
 	 *
 	 * @return array<string> The updated list.
 	 */
 	public static function add_column_header_to_users_table( array $columns = array() ): array {
-		$columns[ SKAUTIS_INTEGRATION_NAME ] = __( 'skautIS', 'skautis-integration' );
+		$columns[ SKAUTIS_INTEGRATION_NAME ] = __( 'SkautIS', 'skautis-integration' );
 
 		return $columns;
 	}
 
 	/**
-	 * Adds the skautIS column to the user table view.
+	 * Adds the SkautIS column to the user table view.
 	 *
 	 * This function is called for all columns, so it needs to check when to overwrite the value.
 	 *
@@ -95,16 +95,16 @@ final class Users {
 	}
 
 	/**
-	 * Shows the skautIS section in the user profile both for the current user as well as when managing other users.
+	 * Shows the SkautIS section in the user profile both for the current user as well as when managing other users.
 	 *
 	 * @param \WP_User $user The user in question.
 	 *
 	 * @return void
 	 */
 	public function skautis_user_id_field( \WP_User $user ) {
-		// TODO: skautIS, not skautIS.
+		// TODO: SkautIS, not SkautIS.
 		?>
-		<h3><?php esc_html_e( 'skautIS', 'skautis-integration' ); ?></h3>
+		<h3><?php esc_html_e( 'SkautIS', 'skautis-integration' ); ?></h3>
 		<?php
 		$this->connect_wp_account->print_connect_and_disconnect_button( $user->ID );
 		// TODO: Unused action?
@@ -112,7 +112,7 @@ final class Users {
 		?>
 		<table class="form-table">
 			<tr>
-				<th><label for="skautisUserId_prod"><?php esc_html_e( 'skautIS user ID', 'skautis-integration' ); ?></label>
+				<th><label for="skautisUserId_prod"><?php esc_html_e( 'SkautIS user ID', 'skautis-integration' ); ?></label>
 				</th>
 				<td>
 					<input type="text" name="skautisUserId_prod" id="skautisUserId_prod" class="regular-text" 
@@ -126,7 +126,7 @@ final class Users {
 			</tr>
 			<tr>
 				<th><label
-						for="skautisUserId_test"><?php esc_html_e( 'skautIS user ID (test)', 'skautis-integration' ); ?></label>
+						for="skautisUserId_test"><?php esc_html_e( 'SkautIS user ID (test)', 'skautis-integration' ); ?></label>
 				</th>
 				<td>
 					<input type="text" name="skautisUserId_test" id="skautisUserId_test" class="regular-text" 
@@ -145,7 +145,7 @@ final class Users {
 	}
 
 	/**
-	 * Saves settings from the skautIS section of the user profile.
+	 * Saves settings from the SkautIS section of the user profile.
 	 *
 	 * TODO: Custom nonce name.
 	 *

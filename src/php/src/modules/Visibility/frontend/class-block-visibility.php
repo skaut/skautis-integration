@@ -13,7 +13,7 @@ use Skautis_Integration\Auth\Skautis_Login;
 use Skautis_Integration\Rules\Rules_Manager;
 
 /**
- * Hides individual blocks based on the skautIS rules selected in the block settings.
+ * Hides individual blocks based on the SkautIS rules selected in the block settings.
  */
 final class Block_Visibility {
 

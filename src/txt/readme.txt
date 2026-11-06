@@ -8,16 +8,16 @@ Stable tag: 1.1.33
 License: GPLv3 or later
 License URI: https://github.com/skaut/skautis-integration/blob/master/LICENSE
 
-Login, registration, user management and other features connecting skautIS to WordPress.
+Login, registration, user management and other features connecting SkautIS to WordPress.
 
 == Description ==
 
-Login, registration, user management and other features connecting skautIS to WordPress.
+Login, registration, user management and other features connecting SkautIS to WordPress.
 
 === Features ===
-* Login to WordPress with a skautIS account
-* Manage skautIS account connections and import users to your site
-* Enable registration of users to your site based on their skautIS functions, memberships or other criteria
+* Login to WordPress with a SkautIS account
+* Manage SkautIS account connections and import users to your site
+* Enable registration of users to your site based on their SkautIS functions, memberships or other criteria
 
 === Minimal requirements ===
 - WordPress 7.0 or higher
@@ -29,7 +29,7 @@ All the sources for the plugin and the build process are detailed in our [GitHub
 == Installation ==
 1. Download and install the plugin from the WordPress plugin directory or from [GitHub](https://github.com/skaut/skaut-google-drive-gallery/releases)
 2. Activate the plugin
-3. Request an APP ID for skautIS by following the [docs](https://napoveda.skaut.cz/skautis/skautis-integration) (only in Czech)
+3. Request an APP ID for SkautIS by following the [docs](https://napoveda.skaut.cz/skautis/skautis-integration) (only in Czech)
 4. In the admin interface, open the plugin settings, enter the provided APP ID and register the plugin
 5. The plugin is now fully functional
 
@@ -117,7 +117,7 @@ See our [documentation](https://napoveda.skaut.cz/skautis/skautis-integration) (
 * Nejnižší požadovaná verze změněna na 4.9.6
 
 = 1.1.14 =
-* Ve výběru rolí na stránce "Správa uživatelů" se nyní zobrazují jen aktivní role podle skautISu
+* Ve výběru rolí na stránce "Správa uživatelů" se nyní zobrazují jen aktivní role podle SkautISu
 
 = 1.1.13 =
 * Oprava zpracování funkcí při přihlášení/registraci
@@ -138,7 +138,7 @@ See our [documentation](https://napoveda.skaut.cz/skautis/skautis-integration) (
 * Drobné opravy
 
 = 1.1.9 =
-* Při použití pravidla "Všichni bez omezení" se mohou nově přihlašovat jen ti, kteří mají propojený účet ve skautISu. Aby se zabránilo tomu, že si někdo vytvoří jen tak účet a pak se přihlásí třeba do uzavřené sekce nějakého skautského webu.
+* Při použití pravidla "Všichni bez omezení" se mohou nově přihlašovat jen ti, kteří mají propojený účet ve SkautISu. Aby se zabránilo tomu, že si někdo vytvoří jen tak účet a pak se přihlásí třeba do uzavřené sekce nějakého skautského webu.
 
 = 1.1.8 =
 * Oprava logování přihlášení/odhlášení pro pluginy, které hlídají co se na webu děje. (př.: Simple History)
@@ -153,14 +153,14 @@ See our [documentation](https://napoveda.skaut.cz/skautis/skautis-integration) (
 * Opraveno zobrazování stránky se správou uživatelů při zvolení špatné role
 
 = 1.1.4 =
-* změna vytváření uživatelského jména při registraci - místo emailu uživatele se nyní nastaví jeho login do skautISu
+* změna vytváření uživatelského jména při registraci - místo emailu uživatele se nyní nastaví jeho login do SkautISu
 * oprava propojování účtů
 * oprava načítání query editoru
 * oprava ukládání nastavení na PHP 7.0.x
 
 = 1.1.3 =
 * možnost vytvářet manuálně nové uživatele
-* lepší vyhledávání na stránce "Správa uživatelů" (řeší omezení limitu 500 uživatelů naráz ze skautISu)
+* lepší vyhledávání na stránce "Správa uživatelů" (řeší omezení limitu 500 uživatelů naráz ze SkautISu)
 
 = 1.1.2 =
 * opravy textů v pluginu
@@ -176,8 +176,8 @@ See our [documentation](https://napoveda.skaut.cz/skautis/skautis-integration) (
 * lepší rozhraní na stránce "Správa uživatelů"
 
 = 1.0 =
-* podpora přihlášení přes skautIS
-* podpora registrace přes skautIS
+* podpora přihlášení přes SkautIS
+* podpora registrace přes SkautIS
 * nastavování pravidel
 * propojování již registrovaných uživatelů
 * nastavování propojování pravidel a rolí ve WordPressu

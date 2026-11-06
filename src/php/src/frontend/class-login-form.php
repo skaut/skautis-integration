@@ -14,7 +14,7 @@ use Skautis_Integration\Services\Services;
 use Skautis_Integration\Utils\Helpers;
 
 /**
- * Adds the "Log in with skautIS" button to the login form.
+ * Adds the "Log in with SkautIS" button to the login form.
  */
 final class Login_Form {
 
@@ -59,7 +59,7 @@ final class Login_Form {
 	}
 
 	/**
-	 * Prints the "Log in with skautIS" button as part of the login page.
+	 * Prints the "Log in with SkautIS" button as part of the login page.
 	 *
 	 * @return void
 	 */
@@ -69,7 +69,7 @@ final class Login_Form {
 	}
 
 	/**
-	 * Returns the "Log in with skautIS" button HTML code.
+	 * Returns the "Log in with SkautIS" button HTML code.
 	 *
 	 * TODO: Remove this function. Why is the button printed from 2 different hooks?
 	 */
@@ -77,7 +77,7 @@ final class Login_Form {
 		return '
 		<p style="margin-bottom: 0.3em;">
 			<a class="button button-primary button-hero button-skautis" style="float: none; width: 100%; text-align: center;"
-			   href="' . esc_url( $this->wp_login_logout->get_login_url() ) . '">' . esc_html__( 'Log in with skautIS', 'skautis-integration' ) . '</a>
+			   href="' . esc_url( $this->wp_login_logout->get_login_url() ) . '">' . esc_html__( 'Log in with SkautIS', 'skautis-integration' ) . '</a>
 			   <br/>
 		</p>
 		<br/>

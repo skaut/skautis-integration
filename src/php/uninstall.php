@@ -62,7 +62,7 @@ function skautis_integration_uninstall_site() {
 	delete_post_meta_by_key( 'skautis-integration_rules_visibilityMode' );
 	delete_post_meta_by_key( 'skautis-integration_rules_data' );
 
-	// The skautIS sessions (src/auth/class-transient-session-adapter.php).
+	// The SkautIS sessions (src/auth/class-transient-session-adapter.php).
 	// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 	$wpdb->query(
 		$wpdb->prepare(
@@ -85,6 +85,6 @@ if ( is_multisite() ) {
 	skautis_integration_uninstall_site();
 }
 
-// The connections of WordPress users to skautIS users (src/auth/class-connect-and-disconnect-wp-account.php). Users are shared by all sites of a network.
+// The connections of WordPress users to SkautIS users (src/auth/class-connect-and-disconnect-wp-account.php). Users are shared by all sites of a network.
 delete_metadata( 'user', 0, 'skautisUserId_prod', '', true );
 delete_metadata( 'user', 0, 'skautisUserId_test', '', true );

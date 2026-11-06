@@ -13,7 +13,7 @@ use Skautis_Integration\Auth\Skautis_Gateway;
 use Skautis_Integration\Auth\Skautis_Login;
 
 /**
- * Adds a skautIS role changer to the skautIS user management admin page.
+ * Adds a SkautIS role changer to the SkautIS user management admin page.
  */
 class Role_Changer {
 
@@ -48,7 +48,7 @@ class Role_Changer {
 	}
 
 	/**
-	 * On page load, changes the user's skautIS role if requested by a POST variable.
+	 * On page load, changes the user's SkautIS role if requested by a POST variable.
 	 *
 	 * TODO: Find a more robust way to do this?
 	 * TODO: Duplicated in Users_Management.
@@ -72,7 +72,7 @@ class Role_Changer {
 	}
 
 	/**
-	 * Prints the skautIS role changer.
+	 * Prints the SkautIS role changer.
 	 *
 	 * @return void
 	 */
@@ -88,7 +88,7 @@ class Role_Changer {
 
 		?>
 		<div class="skautis-settings-card">
-			<h2><?php esc_html_e( 'My skautIS role', 'skautis-integration' ); ?></h2>
+			<h2><?php esc_html_e( 'My SkautIS role', 'skautis-integration' ); ?></h2>
 			<form method="post" action="<?php echo esc_url( Helpers::get_current_url() ); ?>" class="skautis-role-changer">
 				<?php wp_nonce_field( SKAUTIS_INTEGRATION_NAME . '_changeSkautisUserRole', '_wpnonce' ); ?>
 				<label for="skautisRoleChanger" class="screen-reader-text"><?php esc_html_e( 'My role', 'skautis-integration' ); ?></label>

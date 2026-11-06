@@ -14,7 +14,7 @@ use Skautis_Integration\Auth\WP_Login_Logout;
 use Skautis_Integration\Utils\Helpers;
 
 /**
- * Enqueues administration scripts and styles and adds a button to log the user out of both WordPress and skautIS simultaneously to the admin bar.
+ * Enqueues administration scripts and styles and adds a button to log the user out of both WordPress and SkautIS simultaneously to the admin bar.
  */
 final class Admin {
 
@@ -103,7 +103,7 @@ final class Admin {
 	}
 
 	/**
-	 * Adds a link to admin bar right-hand-side menu to log out from both WordPress and skautIS at once.
+	 * Adds a link to admin bar right-hand-side menu to log out from both WordPress and SkautIS at once.
 	 *
 	 * TODO: Duplicated code?
 	 *
@@ -126,7 +126,7 @@ final class Admin {
 			array(
 				'parent' => 'user-actions',
 				'id'     => SKAUTIS_INTEGRATION_NAME . '_adminBar_logout',
-				'title'  => esc_html__( 'Log out (also from skautIS)', 'skautis-integration' ),
+				'title'  => esc_html__( 'Log out (also from SkautIS)', 'skautis-integration' ),
 				'href'   => $this->wp_login_logout->get_logout_url(),
 			)
 		);

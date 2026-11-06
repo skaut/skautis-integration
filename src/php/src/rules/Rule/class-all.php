@@ -130,7 +130,7 @@ class All implements Rule {
 	 * Returns an optional additional description of the rule.
 	 */
 	public function get_description(): string {
-		return __( 'With this condition, all users with a skautIS account connected to their person will be able to register. It therefore makes no sense to combine it with other conditions (role, membership type, …). We recommend using it as the only condition of the rule.', 'skautis-integration' );
+		return __( 'With this condition, all users with a SkautIS account connected to their person will be able to register. It therefore makes no sense to combine it with other conditions (role, membership type, …). We recommend using it as the only condition of the rule.', 'skautis-integration' );
 	}
 
 	/**

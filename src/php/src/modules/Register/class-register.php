@@ -21,7 +21,7 @@ use Skautis_Integration\Utils\Helpers;
 use Skautis_Integration\Utils\Request_Parameter_Helpers;
 
 /**
- * Adds the functionality to register new WordPress users based on skautIS.
+ * Adds the functionality to register new WordPress users based on SkautIS.
  */
 final class Register {
 
@@ -110,7 +110,7 @@ final class Register {
 	}
 
 	/**
-	 * Redirects the user to login with skautIS.
+	 * Redirects the user to login with SkautIS.
 	 *
 	 * @return void
 	 */
@@ -125,7 +125,7 @@ final class Register {
 	/**
 	 * Adds new actions to Actions.
 	 *
-	 * This function modifies the behaviour of Actions to add new possible redirects using skautIS.
+	 * This function modifies the behaviour of Actions to add new possible redirects using SkautIS.
 	 *
 	 * @see Actions::auth_actions_router() for more details about how the actions are used.
 	 *
@@ -141,9 +141,9 @@ final class Register {
 	}
 
 	/**
-	 * Fires upon redirect back from skautIS after login and handles the user login and potential registration.
+	 * Fires upon redirect back from SkautIS after login and handles the user login and potential registration.
 	 *
-	 * @param array{skautIS_Token?: string, skautIS_IDRole?: string, skautIS_IDUnit?: string, skautIS_DateLogout?: string} $data skautIS login data.
+	 * @param array{skautIS_Token?: string, skautIS_IDRole?: string, skautIS_IDUnit?: string, skautIS_DateLogout?: string} $data SkautIS login data.
 	 *
 	 * @return void
 	 */
@@ -171,7 +171,7 @@ final class Register {
 	}
 
 	/**
-	 * Handles a call to log the user into skautIS and possibly register them in WordPress in the process.
+	 * Handles a call to log the user into SkautIS and possibly register them in WordPress in the process.
 	 *
 	 * @see Actions::auth_actions_router() for more details about how this function gets called.
 	 * @see Register::add_actions_to_router() for more details about how this function gets called.
@@ -224,7 +224,7 @@ final class Register {
 	}
 
 	/**
-	 * Registers an existing skautIS user as a new WordPress user.
+	 * Registers an existing SkautIS user as a new WordPress user.
 	 *
 	 * This function is used to register other users than the current user.
 	 *

@@ -10,7 +10,7 @@
 /*
 Plugin Name:       SkautIS integration
 Plugin URI:        https://github.com/skaut/skautis-integration
-Description:       WordPress integration with skautIS
+Description:       WordPress integration with SkautIS
 Version:           1.1.33
 Author:            Junák - český skaut
 Author URI:        https://github.com/skaut

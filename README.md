@@ -9,11 +9,11 @@
 ![WordPress Plugin Required PHP Version](https://img.shields.io/wordpress/plugin/required-php/skautis-integration?logo=php)
 ![WordPress Plugin: Tested WP Version](https://img.shields.io/wordpress/plugin/tested/skautis-integration?logo=wordpress)
 
-WordPress plugin pro možnost přihlašování a registrace do WordPressu přes skautIS
+WordPress plugin pro možnost přihlašování a registrace do WordPressu přes SkautIS
 
 Kdo si chcete plugin stáhnout je na https://cs.wordpress.org/plugins/skautis-integration/
 
-Pokud má někdo zájem si ten plugin vyzkoušet - je dostupný na webu https://skautis-testlogin.skauting.cz/ Nyní je celý testovací web napojený na ostrý skautIS. Můžete používat vlastní účty, co ve skautISu máte.
+Pokud má někdo zájem si ten plugin vyzkoušet - je dostupný na webu https://skautis-testlogin.skauting.cz/ Nyní je celý testovací web napojený na ostrý SkautIS. Můžete používat vlastní účty, co ve SkautISu máte.
 
 Nápověda k pluginu je na https://napoveda.skaut.cz/skautis/skautis-integration
 
