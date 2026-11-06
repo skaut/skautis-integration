@@ -73,6 +73,14 @@ return array(
 				);
 			}
 
+			// skautis/skautis 2.x uses implicitly nullable parameter types (`Type $param = null`), which are deprecated since PHP 8.4.
+			if ( 0 === strpos( $file_path, __DIR__ . '/vendor/skautis/skautis/src/' ) ) {
+				$explicitly_nullable = preg_replace( '/([(,]\s*)(\\\\?[A-Za-z_][A-Za-z0-9_\\\\]*)(\s+\$[A-Za-z_][A-Za-z0-9_]*\s*=\s*null\b)/', '$1?$2$3', $contents );
+				if ( is_string( $explicitly_nullable ) ) {
+					$contents = $explicitly_nullable;
+				}
+			}
+
 			return $contents;
 		},
 	),
