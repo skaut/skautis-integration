@@ -36,7 +36,7 @@ delete_option( 'skautis-integration_modules_visibility_postTypes' );
 delete_option( 'skautis-integration_modules_visibility_visibilityMode' );
 delete_option( 'skautis-integration_modules_visibility_includeChildren' );
 
-// defined by the removed one-time autosave meta cleanup migration, sites that ran it still have the option.
+// defined in src/migrations/class-autosave-meta-cleanup.php.
 delete_option( 'skautis_integration_autosave_meta_cleaned' );
 
 flush_rewrite_rules();
