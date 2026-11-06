@@ -187,14 +187,27 @@ class Func implements Rule {
 			)
 		);
 
-		if ( is_null( $user_funcs ) || ! property_exists( $user_funcs, 'FunctionAllOutput' ) || empty( $user_funcs->FunctionAllOutput ) || ! is_array( $user_funcs->FunctionAllOutput ) || empty( $user_funcs->FunctionAllOutput[0] ) ) {
+		if ( ! is_object( $user_funcs ) || ! isset( $user_funcs->FunctionAllOutput ) ) {
+			$user_funcs = array();
+			return array();
+		}
+
+		$functions = $user_funcs->FunctionAllOutput;
+		// SkautIS returns a single object instead of an array when the person has only one function.
+		if ( is_object( $functions ) ) {
+			$functions = array( $functions );
+		}
+		if ( ! is_array( $functions ) ) {
 			$user_funcs = array();
 			return array();
 		}
 
 		$result = array();
 
-		foreach ( $user_funcs->FunctionAllOutput as $user_func ) {
+		foreach ( $functions as $user_func ) {
+			if ( ! is_object( $user_func ) || ! isset( $user_func->ID_Unit, $user_func->ID_FunctionType ) ) {
+				continue;
+			}
 			$unit_detail = $this->skautis_gateway->get_skautis_instance()->OrganizationUnit->UnitDetail(
 				array(
 					'ID' => $user_func->ID_Unit,
