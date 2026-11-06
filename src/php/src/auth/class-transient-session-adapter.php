@@ -36,7 +36,22 @@ class Transient_Session_Adapter implements AdapterInterface {
 
 		// random_bytes() is a CSPRNG, so the session ID cannot be predicted (unlike with rand()).
 		$cookie_id = bin2hex( random_bytes( 16 ) );
-		setcookie( SKAUTIS_INTEGRATION_NAME . '-skautis-session', $cookie_id, time() + 40 * \MINUTE_IN_SECONDS, '/', '', true, true );
+		// Setting a cookie after the output has started only emits a warning, see https://github.com/skaut/skautis-integration/issues/316.
+		if ( ! headers_sent() ) {
+			setcookie(
+				SKAUTIS_INTEGRATION_NAME . '-skautis-session',
+				$cookie_id,
+				array(
+					'expires'  => time() + 40 * \MINUTE_IN_SECONDS,
+					// Respect WordPress installed in a subdirectory or on a custom cookie domain, see https://github.com/skaut/skautis-integration/issues/120.
+					'path'     => defined( 'COOKIEPATH' ) && '' !== COOKIEPATH ? COOKIEPATH : '/',
+					'domain'   => defined( 'COOKIE_DOMAIN' ) && is_string( COOKIE_DOMAIN ) ? COOKIE_DOMAIN : '',
+					// A secure cookie is never sent back over HTTP, which would make login impossible on sites without HTTPS.
+					'secure'   => is_ssl(),
+					'httponly' => true,
+				)
+			);
+		}
 		return $cookie_id;
 	}
 
