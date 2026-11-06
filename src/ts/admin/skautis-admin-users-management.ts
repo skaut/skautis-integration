@@ -115,61 +115,9 @@ function updateQueryStringInUrl(
 
 		$('#connectUserToSkautisModal_username').html(userName);
 
-		const $connectUserToSkautisModalConnectLink = $(
-			'#connectUserToSkautisModal_connectLink'
-		);
-		$connectUserToSkautisModalConnectLink.attr(
-			'href',
-			updateQueryStringInUrl(
-				'skautisUserId',
-				$this.parents('tr').find('.skautisUserId').html(),
-				$connectUserToSkautisModalConnectLink.attr('href') ?? ''
-			)
-		);
-
-		const $connectUserToSkautisModalRegisterLink = $(
-			'#connectUserToSkautisModal_registerLink'
-		);
-		const newHref = updateQueryStringInUrl(
-			'skautisUserId',
-			$this.parents('tr').find('.skautisUserId').html(),
-			$connectUserToSkautisModalRegisterLink.attr('href') ?? ''
-		);
-		$connectUserToSkautisModalRegisterLink.attr('href', newHref);
-	});
-
-	$('#connectUserToSkautisModal_select').on('change', function () {
-		const $this = $(this);
-		const $connectUserToSkautisModalConnectLink = $(
-			'#connectUserToSkautisModal_connectLink'
-		);
-		const wpUserId = isNaN(Number($this.val()))
-			? ''
-			: ($this.val() as string);
-		$connectUserToSkautisModalConnectLink.attr(
-			'href',
-			updateQueryStringInUrl(
-				'wpUserId',
-				wpUserId,
-				$connectUserToSkautisModalConnectLink.attr('href') ?? ''
-			)
+		// Both forms in the modal (connecting and registering) submit the skautIS user ID of the row.
+		$('.connectUserToSkautisModal_skautisUserId').val(
+			$this.parents('tr').find('.skautisUserId').html()
 		);
 	});
-
-	$('#connectUserToSkautisModal_defaultRole')
-		.on('change', function () {
-			const $this = $(this);
-			const $connectUserToSkautisModalRegisterLink = $(
-				'#connectUserToSkautisModal_registerLink'
-			);
-			$connectUserToSkautisModalRegisterLink.attr(
-				'href',
-				updateQueryStringInUrl(
-					'wpRole',
-					$this.val() as string,
-					$connectUserToSkautisModalRegisterLink.attr('href') ?? ''
-				)
-			);
-		})
-		.trigger('change');
 })(jQuery);
