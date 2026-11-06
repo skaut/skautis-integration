@@ -93,7 +93,7 @@ final class Frontend {
 	 *
 	 * @param bool $force_logout_from_skautis Whether to log the user out of SkautIS before attempting to log them in.
 	 */
-	private function get_login_form( bool $force_logout_from_skautis = false ): string {
+	public function get_login_form( bool $force_logout_from_skautis = false ): string {
 		$login_url_args = add_query_arg( 'noWpLogin', true, Helpers::get_current_url() );
 		if ( $force_logout_from_skautis ) {
 			$login_url_args = add_query_arg( 'logoutFromSkautis', true, $login_url_args );
@@ -113,14 +113,14 @@ final class Frontend {
 	/**
 	 * Returns HTML code for the frontend message telling the user they need to log in to SkautIS to view the content.
 	 */
-	private static function get_login_required_message(): string {
+	public static function get_login_required_message(): string {
 		return '<p>' . __( 'To view this content you must be logged in skautIS', 'skautis-integration' ) . '</p>';
 	}
 
 	/**
 	 * Returns HTML code for the frontend message telling the user they didn't pass the visibility rules.
 	 */
-	private static function get_unauthorized_message(): string {
+	public static function get_unauthorized_message(): string {
 		return '<p>' . __( 'You do not have permission to access this content', 'skautis-integration' ) . '</p>';
 	}
 
@@ -268,7 +268,7 @@ final class Frontend {
 	 */
 	public static function enqueue_styles() {
 		wp_enqueue_style( 'buttons' );
-		wp_enqueue_style( SKAUTIS_INTEGRATION_NAME, SKAUTIS_INTEGRATION_URL . 'src/frontend/public/css/skautis-frontend.css', array(), SKAUTIS_INTEGRATION_VERSION, 'all' );
+		Helpers::enqueue_style( 'frontend', 'frontend/css/skautis-frontend.min.css' );
 	}
 
 	/**

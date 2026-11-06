@@ -14,6 +14,8 @@ use Skautis_Integration\Modules\Module;
 use Skautis_Integration\Rules\Rules_Manager;
 use Skautis_Integration\Auth\Skautis_Login;
 use Skautis_Integration\Modules\Visibility\Admin\Admin;
+use Skautis_Integration\Modules\Visibility\Admin\Block_Editor;
+use Skautis_Integration\Modules\Visibility\Frontend\Block_Visibility;
 use Skautis_Integration\Modules\Visibility\Frontend\Frontend;
 
 /**
@@ -77,6 +79,9 @@ final class Visibility implements Module {
 		$this->wp_login_logout = $wp_login_logout;
 		$post_types            = (array) get_option( SKAUTIS_INTEGRATION_NAME . '_modules_visibility_postTypes', array() );
 		$this->frontend        = new Frontend( $post_types, $this->rules_manager, $this->skautis_login, $this->wp_login_logout );
+		// Both are needed in all requests, the block editor uses the REST API.
+		new Block_Visibility( $this->rules_manager, $this->skautis_login, $this->frontend );
+		new Block_Editor( $post_types, $this->rules_manager, $this->frontend );
 		if ( is_admin() ) {
 			new Admin( $post_types, $this->rules_manager, $this->frontend );
 		} else {

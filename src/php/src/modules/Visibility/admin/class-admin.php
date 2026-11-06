@@ -56,7 +56,6 @@ final class Admin {
 	 */
 	private function init_hooks() {
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts_and_styles' ) );
-		add_action( 'admin_footer', array( $this, 'init_rules_options' ) );
 		add_action( 'admin_footer', array( $this, 'init_rules_data' ) );
 	}
 
@@ -93,28 +92,6 @@ final class Admin {
 			'modules/Visibility/admin/js/skautis-modules-visibility-admin.min.js',
 			array( 'jquery', SKAUTIS_INTEGRATION_NAME . '_jquery.repeater', SKAUTIS_INTEGRATION_NAME . '_select2' )
 		);
-	}
-
-	/**
-	 * Initializes dynamic options for the visibility JS code.
-	 *
-	 * @return void
-	 */
-	public function init_rules_options() {
-		$screen = get_current_screen();
-		if ( null === $screen || ! in_array( $screen->id, $this->post_types, true ) ) {
-			return;
-		}
-		$rules = array();
-
-		foreach ( $this->rules_manager->get_all_rules() as $rule ) {
-			$rules[ $rule->ID ] = $rule->post_title;
-		}
-		?>
-		<script>
-			window.rulesOptions = <?php wp_json_encode( $rules ); ?>;
-		</script>
-		<?php
 	}
 
 	/**

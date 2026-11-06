@@ -55,19 +55,6 @@ gulp.task(
 	gulp.parallel('build:css:modules:Register:admin')
 );
 
-gulp.task('build:css:modules:Shortcodes:admin', () =>
-	gulp
-		.src(['src/css/modules/Shortcodes/admin/*.css'])
-		.pipe(lightningCSS())
-		.pipe(rename({ suffix: '.min' }))
-		.pipe(gulp.dest('dist/modules/Shortcodes/admin/css/'))
-);
-
-gulp.task(
-	'build:css:modules:Shortcodes',
-	gulp.parallel('build:css:modules:Shortcodes:admin')
-);
-
 gulp.task('build:css:modules:Visibility:admin', () =>
 	gulp
 		.src(['src/css/modules/Visibility/admin/*.css'])
@@ -83,11 +70,7 @@ gulp.task(
 
 gulp.task(
 	'build:css:modules',
-	gulp.parallel(
-		'build:css:modules:Register',
-		'build:css:modules:Shortcodes',
-		'build:css:modules:Visibility'
-	)
+	gulp.parallel('build:css:modules:Register', 'build:css:modules:Visibility')
 );
 
 gulp.task('build:css:rules:admin', () =>
@@ -301,21 +284,6 @@ gulp.task(
 	gulp.parallel('build:js:modules:Register:admin')
 );
 
-gulp.task('build:js:modules:Shortcodes:admin', () => {
-	const tsProject = ts.createProject('tsconfig.json');
-	return gulp
-		.src(['src/ts/modules/Shortcodes/admin/*.ts', 'src/d.ts/*.d.ts'])
-		.pipe(tsProject())
-		.js.pipe(terser())
-		.pipe(rename({ suffix: '.min' }))
-		.pipe(gulp.dest('dist/modules/Shortcodes/admin/js/'));
-});
-
-gulp.task(
-	'build:js:modules:Shortcodes',
-	gulp.parallel('build:js:modules:Shortcodes:admin')
-);
-
 gulp.task('build:js:modules:Visibility:admin', () => {
 	const tsProject = ts.createProject('tsconfig.json');
 	return gulp
@@ -333,11 +301,7 @@ gulp.task(
 
 gulp.task(
 	'build:js:modules',
-	gulp.parallel(
-		'build:js:modules:Register',
-		'build:js:modules:Shortcodes',
-		'build:js:modules:Visibility'
-	)
+	gulp.parallel('build:js:modules:Register', 'build:js:modules:Visibility')
 );
 
 gulp.task('build:js:rules:admin', () => {
