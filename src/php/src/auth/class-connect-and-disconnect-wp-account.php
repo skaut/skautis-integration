@@ -139,8 +139,10 @@ final class Connect_And_Disconnect_WP_Account {
 	 * @return void
 	 */
 	public function connect_wp_user_to_skautis() {
-		$nonce = Request_Parameter_Helpers::get_string_variable( SKAUTIS_INTEGRATION_NAME . '_connect_user_nonce' );
-		if ( false === wp_verify_nonce( $nonce, SKAUTIS_INTEGRATION_NAME . '_connect_user' ) ||
+		// The action changes data, so it is only accepted as a form submission.
+		$nonce = Request_Parameter_Helpers::post_string_variable( SKAUTIS_INTEGRATION_NAME . '_connect_user_nonce' );
+		if ( ! Request_Parameter_Helpers::is_post_request() ||
+			false === wp_verify_nonce( $nonce, SKAUTIS_INTEGRATION_NAME . '_connect_user' ) ||
 			! $this->skautis_login->is_user_logged_in_skautis() ||
 			! Helpers::user_is_skautis_manager() ||
 			is_null( Helpers::get_return_url() )
@@ -148,8 +150,8 @@ final class Connect_And_Disconnect_WP_Account {
 			wp_die( esc_html__( 'Nemáte oprávnění k propojování uživatelů.', 'skautis-integration' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
 		}
 
-		$wp_user_id      = Request_Parameter_Helpers::get_int_variable( 'wpUserId' );
-		$skautis_user_id = Request_Parameter_Helpers::get_int_variable( 'skautisUserId' );
+		$wp_user_id      = Request_Parameter_Helpers::post_int_variable( 'wpUserId' );
+		$skautis_user_id = Request_Parameter_Helpers::post_int_variable( 'skautisUserId' );
 
 		if ( -1 === $wp_user_id || -1 === $skautis_user_id ) {
 			return;
@@ -161,9 +163,9 @@ final class Connect_And_Disconnect_WP_Account {
 	}
 
 	/**
-	 * Returns a link to connect an existing SkautIS user with an existing WordPress user.
+	 * Returns the URL of the form to connect an existing SkautIS user with an existing WordPress user.
 	 *
-	 * This link is used to connect a WordPress user that is not the current user.
+	 * This form is used to connect a WordPress user that is not the current user. The form must be submitted with POST and contain the `skautis-integration_connect_user_nonce` nonce.
 	 *
 	 * @suppress PhanPluginPossiblyStaticPublicMethod
 	 */
@@ -172,7 +174,7 @@ final class Connect_And_Disconnect_WP_Account {
 		$return_url = add_query_arg( SKAUTIS_INTEGRATION_NAME . '_connectWpAccountWithSkautis', wp_create_nonce( SKAUTIS_INTEGRATION_NAME . '_connectWpAccountWithSkautis' ), $return_url );
 		$url        = add_query_arg( 'ReturnUrl', rawurlencode( $return_url ), get_home_url( null, 'skautis/auth/' . Actions::CONNECT_WP_USER_TO_SKAUTIS_ACTION ) );
 
-		return esc_url( wp_nonce_url( $url, SKAUTIS_INTEGRATION_NAME . '_connect_user', SKAUTIS_INTEGRATION_NAME . '_connect_user_nonce' ) );
+		return esc_url( $url );
 	}
 
 	/**

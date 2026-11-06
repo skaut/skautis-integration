@@ -291,23 +291,26 @@ class Users_Management {
 				<h3><?php esc_html_e( 'Propojení uživatele', 'skautis-integration' ); ?> <span
 						id="connectUserToSkautisModal_username"></span> <?php esc_html_e( 'se skautISem', 'skautis-integration' ); ?>
 				</h3>
-				<h4><?php esc_html_e( 'Vyberte uživatele již registrovaného ve WordPressu', 'skautis-integration' ); ?>:</h4>
-				<select id="connectUserToSkautisModal_select">
-					<option><?php esc_html_e( 'Vyberte uživatele...', 'skautis-integration' ); ?></option>
-					<?php
-					foreach ( $this->users_repository->get_connectable_wp_users() as $user ) {
-						$user_name = $user->data->display_name;
-						if ( ! $user_name ) {
-							$user_name = $user->data->user_login;
+				<form method="post" action="<?php echo esc_url( $this->connect_and_disconnect_wp_account->get_connect_wp_user_to_skautis_url() ); ?>">
+					<?php wp_nonce_field( SKAUTIS_INTEGRATION_NAME . '_connect_user', SKAUTIS_INTEGRATION_NAME . '_connect_user_nonce', false ); ?>
+					<input type="hidden" name="skautisUserId" class="connectUserToSkautisModal_skautisUserId" value=""/>
+					<h4><label for="connectUserToSkautisModal_select"><?php esc_html_e( 'Vyberte uživatele již registrovaného ve WordPressu', 'skautis-integration' ); ?>:</label></h4>
+					<select id="connectUserToSkautisModal_select" name="wpUserId" required>
+						<option value=""><?php esc_html_e( 'Vyberte uživatele...', 'skautis-integration' ); ?></option>
+						<?php
+						foreach ( $this->users_repository->get_connectable_wp_users() as $user ) {
+							$user_name = $user->data->display_name;
+							if ( ! $user_name ) {
+								$user_name = $user->data->user_login;
+							}
+							echo '
+							<option value="' . absint( $user->ID ) . '">' . esc_html( $user_name ) . '</option>
+							';
 						}
-						echo '
-						<option value="' . absint( $user->ID ) . '">' . esc_html( $user_name ) . '</option>
-						';
-					}
-					?>
-				</select>
-				<a id="connectUserToSkautisModal_connectLink" class="button button-primary"
-					href="<?php echo esc_url( $this->connect_and_disconnect_wp_account->get_connect_wp_user_to_skautis_url() ); ?>"><?php esc_html_e( 'Potvrdit', 'skautis-integration' ); ?></a>
+						?>
+					</select>
+					<button type="submit" class="button button-primary"><?php esc_html_e( 'Potvrdit', 'skautis-integration' ); ?></button>
+				</form>
 				<div>
 					<em><?php esc_html_e( 'Je možné vybrat pouze ty uživatele, kteří ještě nemají propojený účet se skautISem.', 'skautis-integration' ); ?></em>
 				</div>
@@ -319,16 +322,19 @@ class Users_Management {
 					<p>
 						<?php esc_html_e( 'Vytvoří nového uživatele ve WordPressu se jménem, příjmením, přezdívkou a emailem ze skautISu. Účet bude automaticky propojen se skautISem.', 'skautis-integration' ); ?>
 					</p>
-					<label>
-						<span><?php esc_html_e( 'Vyberte úroveň nového uživatele', 'skautis-integration' ); ?></span>
-						<select name="role" id="connectUserToSkautisModal_defaultRole">
-							<?php wp_dropdown_roles( get_option( SKAUTIS_INTEGRATION_NAME . '_modules_register_defaultwpRole' ) ); ?>
-						</select>
-					</label>
-					<p>
-						<a id="connectUserToSkautisModal_registerLink" class="button button-primary"
-							href="<?php echo esc_url( Services::get_modules_manager()->get_register_module()->getWpRegister()->get_manually_register_wp_user_url() ); ?>"><?php esc_html_e( 'Vytvořit nový účet', 'skautis-integration' ); ?></a>
-					</p>
+					<form method="post" action="<?php echo esc_url( Services::get_modules_manager()->get_register_module()->getWpRegister()->get_manually_register_wp_user_url() ); ?>">
+						<?php wp_nonce_field( SKAUTIS_INTEGRATION_NAME . '_register_user', SKAUTIS_INTEGRATION_NAME . '_register_user_nonce', false ); ?>
+						<input type="hidden" name="skautisUserId" class="connectUserToSkautisModal_skautisUserId" value=""/>
+						<label>
+							<span><?php esc_html_e( 'Vyberte úroveň nového uživatele', 'skautis-integration' ); ?></span>
+							<select name="wpRole" id="connectUserToSkautisModal_defaultRole">
+								<?php wp_dropdown_roles( get_option( SKAUTIS_INTEGRATION_NAME . '_modules_register_defaultwpRole' ) ); ?>
+							</select>
+						</label>
+						<p>
+							<button type="submit" class="button button-primary"><?php esc_html_e( 'Vytvořit nový účet', 'skautis-integration' ); ?></button>
+						</p>
+					</form>
 					<?php
 				}
 				?>
