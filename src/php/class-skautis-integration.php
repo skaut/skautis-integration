@@ -92,8 +92,9 @@ class Skautis_Integration {
 	protected static function init_hooks() {
 		add_action( 'admin_init', array( self::class, 'check_version_and_maybe_deactivate' ) );
 
-		register_activation_hook( __FILE__, array( self::class, 'activation' ) );
-		register_deactivation_hook( __FILE__, array( self::class, 'deactivation' ) );
+		// The hooks must be registered for the main plugin file, otherwise WordPress never runs them.
+		register_activation_hook( __DIR__ . '/skautis-integration.php', array( self::class, 'activation' ) );
+		register_deactivation_hook( __DIR__ . '/skautis-integration.php', array( self::class, 'deactivation' ) );
 	}
 
 	/**
