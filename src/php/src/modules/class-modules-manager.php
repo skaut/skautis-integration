@@ -10,7 +10,6 @@ declare( strict_types=1 );
 namespace Skautis_Integration\Modules;
 
 use Skautis_Integration\Modules\Register\Register;
-use Skautis_Integration\Modules\Shortcodes\Shortcodes;
 use Skautis_Integration\Modules\Visibility\Visibility;
 use Skautis_Integration\Services\Services;
 
@@ -72,9 +71,6 @@ final class Modules_Manager {
 		if ( in_array( Register::get_id(), $activated_modules, true ) ) {
 			$this->get_register_module();
 		}
-		if ( in_array( Shortcodes::get_id(), $activated_modules, true ) ) {
-			$this->get_shortcodes_module();
-		}
 		if ( in_array( Visibility::get_id(), $activated_modules, true ) ) {
 			$this->get_visibility_module();
 		}
@@ -115,20 +111,6 @@ final class Modules_Manager {
 		$module_id = Register::get_id();
 		if ( ! array_key_exists( $module_id, $this->instantiated_modules ) ) {
 				$this->instantiated_modules[ $module_id ] = new Register( Services::get_skautis_gateway(), Services::get_skautis_login(), Services::get_wp_login_logout(), Services::get_rules_manager(), Services::get_repository_users() );
-		}
-		// @phpstan-ignore-next-line
-		return $this->instantiated_modules[ $module_id ];
-	}
-
-	/**
-	 * Returns an instance of the Shortcodes module.
-	 *
-	 * @return Shortcodes The initialized module.
-	 */
-	public function get_shortcodes_module() {
-		$module_id = Shortcodes::get_id();
-		if ( ! array_key_exists( $module_id, $this->instantiated_modules ) ) {
-				$this->instantiated_modules[ $module_id ] = new Shortcodes( Services::get_rules_manager(), Services::get_skautis_login(), Services::get_wp_login_logout() );
 		}
 		// @phpstan-ignore-next-line
 		return $this->instantiated_modules[ $module_id ];

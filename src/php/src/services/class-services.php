@@ -23,7 +23,6 @@ use Skautis_Integration\Admin\Settings;
 use Skautis_Integration\Admin\Users;
 use Skautis_Integration\Modules\Modules_Manager;
 use Skautis_Integration\Modules\Register\Register;
-use Skautis_Integration\Modules\Shortcodes\Shortcodes;
 use Skautis_Integration\Modules\Visibility\Visibility;
 use Skautis_Integration\Repository\Users as Repository_Users;
 use Skautis_Integration\Rules\Revisions;
@@ -335,7 +334,6 @@ class Services {
 				array( // For hard modules activation/deactivation look to modules/Modules_Manager WP filters.
 					Register::get_id()   => array( Register::class, 'get_label' ),
 					Visibility::get_id() => array( Visibility::class, 'get_label' ),
-					Shortcodes::get_id() => array( Shortcodes::class, 'get_label' ),
 				)
 			);
 		}

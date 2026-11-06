@@ -28,7 +28,7 @@ delete_option( 'skautis-integration_modules_register_defaultwpRole' );
 delete_option( 'skautis-integration_modules_register_notifications' );
 delete_option( 'skautis-integration_modules_register_rules' );
 
-// defined in src/modules/Shortcodes/admin/class-settings.php.
+// defined by the removed Shortcodes module.
 delete_option( 'skautis-integration_modules_shortcodes_visibilityMode' );
 
 // defined in src/modules/Visibility/admin/class-settings.php.

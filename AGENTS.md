@@ -27,6 +27,7 @@ Setup: `composer install && npm ci`
 - `src/css/<area>/*.css` → `dist/<area>/css/*.min.css` (lightningcss)
 - `src/png/**` → `dist/src/**`, and `src/txt/*` → `dist/` (`readme.txt` is the wordpress.org readme and changelog)
 - npm frontend libraries (DataTables, jQuery QueryBuilder, select2, interact.js, jquery.repeater, Font Awesome) are copied into `dist/bundled/`.
+- The block editor script (`src/ts/modules/Visibility/admin/skautis-modules-visibility-block-editor.ts`) uses the global `wp` object without JSX (`wp.element.createElement`). The used parts of the WordPress packages are typed in `src/d.ts/wordpress.d.ts`.
 - Composer dependencies (mainly `skautis/skautis`) are prefixed with **PHP-Scoper** to the `Skautis_Integration\Vendor\` namespace, in `dist/vendor/`. `gulpfile.js` also patches the composer autoloader. In plugin code, reference the SkautIS library as `Skautis_Integration\Vendor\Skautis\…`.
 
 When you add a PHP, TS, or CSS file under a new area, you may need a new gulp task. New PHP class files also need an explicit `require` in `src/php/class-skautis-integration.php`, because there is no autoloader for plugin code.
@@ -38,7 +39,8 @@ When you add a PHP, TS, or CSS file under a new area, you may need a new gulp ta
 - `auth/`: `Skautis_Gateway` wraps the scoped SkautIS client. The app ID and test/prod environment come from options. `Skautis_Login`, `WP_Login_Logout`, and `Connect_And_Disconnect_WP_Account` handle the login flows.
 - `general/class-actions.php` registers the rewrite rules `skautis/auth/<action>` and the configurable login page (default `skautis/prihlaseni`). It dispatches those requests through query vars. The plugin flushes rewrite rules when the `skautis_rewrite_rules_need_to_flush` option is set.
 - **Rules** (`rules/`): a custom post type edited in the admin with jQuery QueryBuilder (`src/ts/rules/admin/`). Each rule block implements `rules/interface-rule.php` (Role, Membership, Func, Qualification, All). `Rules_Manager` checks whether the current skautIS user passes a rule. Rule blocks can be extended through the `skautis-integration_rules` filter.
-- **Modules** (`modules/`): Register, Visibility, and Shortcodes. Each one implements `interface-module.php` and has its own `admin/` and `frontend/` subfolders. Modules are toggled through the `skautis_integration_activated_modules` option, and `Modules_Manager` instantiates only the active ones. They can be filtered through `skautis-integration_modules`.
+- **Modules** (`modules/`): Register and Visibility. Each one implements `interface-module.php` and has its own `admin/` and `frontend/` subfolders. Modules are toggled through the `skautis_integration_activated_modules` option, and `Modules_Manager` instantiates only the active ones. They can be filtered through `skautis-integration_modules`.
+- **Visibility**: rules for a whole post are stored in post meta (`skautis-integration_rules`, `_rules_includeChildren`, `_rules_visibilityMode`), edited in a block editor sidebar panel (`Block_Editor`) or in the classic editor metabox. Any block can have rules in its `skautisRules` and `skautisVisibilityMode` attributes; `Block_Visibility` hides such blocks in `render_block` and in generated excerpts.
 - Namespaces follow the directories under `Skautis_Integration\` (for example `Skautis_Integration\Modules\Register`). File names follow the WordPress convention (`class-foo-bar.php` holds `Foo_Bar`), which phpcs enforces with WPCS.
 
 ## Conventions

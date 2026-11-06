@@ -76,7 +76,11 @@ final class Metabox {
 				SKAUTIS_INTEGRATION_NAME . '_modules_visibility_rules_metabox',
 				__( 'SkautIS pravidla', 'skautis-integration' ),
 				array( $this, 'rules_repeater' ),
-				$post_type
+				$post_type,
+				'advanced',
+				'default',
+				// The block editor has its own panel, see Block_Editor.
+				array( '__back_compat_meta_box' => true )
 			);
 		}
 	}
