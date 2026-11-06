@@ -112,7 +112,7 @@ class Helpers {
 	/**
 	 * Shows a notice in the administration.
 	 *
-	 * @param string $message The notice text.
+	 * @param string $message The notice text. It may contain links (`<a>` tags), any other HTML is removed.
 	 * @param string $type The type of the notice. Accepted values are "error", "warning", "success", "info". Default "warning".
 	 * @param string $hide_notice_on_page An ID of a screen where the notice shouldn't get shown. Optional.
 	 *
@@ -130,7 +130,17 @@ class Helpers {
 		<span class="screen-reader-text">' . esc_html__( 'Zavřít', 'skautis-integration' ) . '</span>
 	</button></div>',
 						esc_attr( $class ),
-						esc_html( $message )
+						// The message may contain links, e.g. to the plugin settings.
+						wp_kses(
+							$message,
+							array(
+								'a' => array(
+									'href'   => array(),
+									'target' => array(),
+									'rel'    => array(),
+								),
+							)
+						)
 					);
 				}
 			}
