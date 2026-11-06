@@ -117,7 +117,7 @@ gulp.task(
 				.src(['vendor/composer/autoload_static.php'])
 				.pipe(
 					replace(
-						/class ComposerStaticInit(.*)\n{/,
+						/class ComposerStaticInit(.*)\n\{/u,
 						'class ComposerStaticInit$1\n{\n    public static $files = array ();'
 					)
 				)
@@ -129,17 +129,17 @@ gulp.task(
 							let mode = 'none';
 							contents = contents.map((line) => {
 								let transformedLine = line;
-								if (/^\s*\);$/g.exec(transformedLine)) {
+								if (/^\s*\);$/gu.exec(transformedLine)) {
 									mode = 'none';
 								} else if (
-									/^\s*public static \$classMap = array \($/.exec(
+									/^\s*public static \$classMap = array \($/u.exec(
 										transformedLine
 									)
 								) {
 									mode = 'classMap';
 								} else if (mode === 'classMap') {
 									transformedLine = transformedLine.replace(
-										/^(\s*)'([^']*)' =>/,
+										/^(\s*)'([^']*)' =>/u,
 										"$1'Skautis_Integration\\\\Vendor\\\\$2' =>"
 									);
 								} else {

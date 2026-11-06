@@ -28,7 +28,7 @@ class Qualification {
 
 	public validation(): QueryBuilderValidation {
 		return {
-			format: /^(?!null)[^~]+$/,
+			format: /^(?!null)[^~]+$/u,
 		};
 	}
 
