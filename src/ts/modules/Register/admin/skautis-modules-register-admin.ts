@@ -29,7 +29,7 @@
 		jQuery('.form-table')
 			.find('select.select2')
 			.select2({
-				placeholder: 'Vyberte pravidlo...',
+				placeholder: skautisIntegrationRulesSelectLocalize.placeholder,
 			})
 			.on(
 				'change.skautis_modules_register_admin',

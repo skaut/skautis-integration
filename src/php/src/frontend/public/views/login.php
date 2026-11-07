@@ -23,7 +23,7 @@ if ( ! isUserLoggedInSkautis() ) {
 } else {
 	?>
 	<div style="text-align: center;">
-		<strong>Jste přihlášeni ve skautISu</strong>
+		<strong><?php esc_html_e( 'You are logged in to skautIS', 'skautis-integration' ); ?></strong>
 		<br/>
 		<a class="button" href="<?php echo esc_url( getSkautisLogoutUrl() ); ?>">
 			<?php esc_html_e( 'Log out of skautIS', 'skautis-integration' ); ?>

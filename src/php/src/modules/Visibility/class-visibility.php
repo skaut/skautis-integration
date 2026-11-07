@@ -100,7 +100,7 @@ final class Visibility implements Module {
 	 * Returns the localized module name.
 	 */
 	public static function get_label(): string {
-		return __( 'Viditelnost obsahu', 'skautis-integration' );
+		return __( 'Content visibility', 'skautis-integration' );
 	}
 
 	/**

@@ -1,6 +1,6 @@
 declare const skautisIntegrationAdminUsersManagementLocalize: {
 	cancel: string;
-	datatablesFilesUrl: string;
+	datatablesLanguageUrl: string;
 	searchNonceName: string;
 	searchNonceValue: string;
 };

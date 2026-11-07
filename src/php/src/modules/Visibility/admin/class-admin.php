@@ -92,6 +92,11 @@ final class Admin {
 			'modules/Visibility/admin/js/skautis-modules-visibility-admin.min.js',
 			array( 'jquery', SKAUTIS_INTEGRATION_NAME . '_jquery.repeater', SKAUTIS_INTEGRATION_NAME . '_select2' )
 		);
+		wp_localize_script(
+			SKAUTIS_INTEGRATION_NAME . '_modules_visibility',
+			'skautisIntegrationRulesSelectLocalize',
+			array( 'placeholder' => __( 'Select a rule…', 'skautis-integration' ) )
+		);
 	}
 
 	/**

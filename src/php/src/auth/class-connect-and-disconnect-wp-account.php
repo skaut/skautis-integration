@@ -89,7 +89,7 @@ final class Connect_And_Disconnect_WP_Account {
 
 			echo '
 			<a href="' . esc_url( $url ) . '"
-			   class="button">' . esc_html__( 'Zrušit propojení účtu se skautISem', 'skautis-integration' ) . '</a>
+			   class="button">' . esc_html__( 'Disconnect the account from skautIS', 'skautis-integration' ) . '</a>
 			';
 		} elseif ( null !== $screen && 'profile' === $screen->id ) {
 			$return_url = add_query_arg( SKAUTIS_INTEGRATION_NAME . '_connectWpAccountWithSkautis', wp_create_nonce( SKAUTIS_INTEGRATION_NAME . '_connectWpAccountWithSkautis' ), Helpers::get_current_url() );
@@ -97,7 +97,7 @@ final class Connect_And_Disconnect_WP_Account {
 
 			echo '
 			<a href="' . esc_url( $url ) . '"
-			   class="button">' . esc_html__( 'Propojit tento účet se skautISem', 'skautis-integration' ) . '</a>
+			   class="button">' . esc_html__( 'Connect this account to skautIS', 'skautis-integration' ) . '</a>
 			';
 		}
 	}
@@ -147,7 +147,7 @@ final class Connect_And_Disconnect_WP_Account {
 			! Helpers::user_is_skautis_manager() ||
 			is_null( Helpers::get_return_url() )
 		) {
-			wp_die( esc_html__( 'Nemáte oprávnění k propojování uživatelů.', 'skautis-integration' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
+			wp_die( esc_html__( 'You are not allowed to connect users.', 'skautis-integration' ), esc_html__( 'Unauthorized access', 'skautis-integration' ) );
 		}
 
 		$wp_user_id      = Request_Parameter_Helpers::post_int_variable( 'wpUserId' );

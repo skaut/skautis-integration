@@ -74,7 +74,7 @@ final class Metabox {
 		foreach ( $this->post_types as $post_type ) {
 			add_meta_box(
 				SKAUTIS_INTEGRATION_NAME . '_modules_visibility_rules_metabox',
-				__( 'skautIS pravidla', 'skautis-integration' ),
+				__( 'skautIS rules', 'skautis-integration' ),
 				array( $this, 'rules_repeater' ),
 				$post_type,
 				'advanced',
@@ -146,7 +146,7 @@ final class Metabox {
 			$parent_rules = $this->frontend->get_parent_posts_with_rules( absint( $post->ID ), $post->post_type );
 			if ( ! empty( $parent_rules ) ) {
 				?>
-				<h4><?php esc_html_e( 'Pravidla převzatá z nadřazených stránek', 'skautis-integration' ); ?>:</h4>
+				<h4><?php esc_html_e( 'Rules inherited from parent pages', 'skautis-integration' ); ?>:</h4>
 				<ul id="skautis_modules_visibility_parentRules" class="skautis-admin-list">
 					<?php
 					foreach ( $parent_rules as $parent_rule ) {
@@ -173,8 +173,8 @@ final class Metabox {
 		}
 		?>
 
-		<p><?php esc_html_e( 'Obsah bude pro uživatele viditelný pouze při splnění alespoň jednoho z následujících pravidel.', 'skautis-integration' ); ?></p>
-		<p><?php esc_html_e( 'Ponecháte-li prázdné - obsah bude viditelný pro všechny uživatele.', 'skautis-integration' ); ?></p>
+		<p><?php esc_html_e( 'The content will only be visible to users who pass at least one of the following rules.', 'skautis-integration' ); ?></p>
+		<p><?php esc_html_e( 'If left empty, the content will be visible to all users.', 'skautis-integration' ); ?></p>
 		<div id="repeater_post">
 			<div data-repeater-list="<?php echo esc_attr( SKAUTIS_INTEGRATION_NAME ); ?>_rules">
 				<div data-repeater-item>
@@ -188,10 +188,10 @@ final class Metabox {
 					</select>
 
 					<input data-repeater-delete type="button"
-						value="<?php esc_attr_e( 'Odstranit', 'skautis-integration' ); ?>"/>
+						value="<?php esc_attr_e( 'Remove', 'skautis-integration' ); ?>"/>
 				</div>
 			</div>
-			<input data-repeater-create type="button" value="<?php esc_attr_e( 'Přidat', 'skautis-integration' ); ?>"/>
+			<input data-repeater-create type="button" value="<?php esc_attr_e( 'Add', 'skautis-integration' ); ?>"/>
 		</div>
 		<p>
 			<label>
@@ -202,19 +202,19 @@ final class Metabox {
 												<?php
 												if ( null !== $post_type_object && $post_type_object->hierarchical ) {
 													/* translators: the type of the skautIS unit */
-													printf( esc_html__( 'Použít vybraná pravidla i na podřízené %s', 'skautis-integration' ), esc_html( lcfirst( $post_type_object->labels->name ) ) );
+													printf( esc_html__( 'Apply the selected rules to child %s as well', 'skautis-integration' ), esc_html( lcfirst( $post_type_object->labels->name ) ) );
 												} else {
-													esc_html_e( 'Použít vybraná pravidla i na podřízený obsah (média - obrázky, videa, přílohy,...)', 'skautis-integration' );
+													esc_html_e( 'Apply the selected rules to child content (media - images, videos, attachments, …) as well', 'skautis-integration' );
 												}
 												?>
 					.</span></label>
 		</p>
 		<p>
 			<label><input type="radio" name="<?php echo esc_attr( SKAUTIS_INTEGRATION_NAME ); ?>_rules_visibilityMode"
-						value="full" <?php checked( 'full', $visibility_mode ); ?> /><span><?php esc_html_e( 'Úplně skrýt', 'skautis-integration' ); ?></span></label>
+						value="full" <?php checked( 'full', $visibility_mode ); ?> /><span><?php esc_html_e( 'Hide completely', 'skautis-integration' ); ?></span></label>
 			<br/>
 			<label><input type="radio" name="<?php echo esc_attr( SKAUTIS_INTEGRATION_NAME ); ?>_rules_visibilityMode"
-						value="content" <?php checked( 'content', $visibility_mode ); ?> /><span><?php esc_html_e( 'Skrýt pouze obsah', 'skautis-integration' ); ?></span></label>
+						value="content" <?php checked( 'content', $visibility_mode ); ?> /><span><?php esc_html_e( 'Hide only the content', 'skautis-integration' ); ?></span></label>
 		</p>
 		<?php
 	}

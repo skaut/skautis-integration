@@ -193,10 +193,11 @@ class Users_Management {
 			SKAUTIS_INTEGRATION_NAME . '_admin-users-management',
 			'skautisIntegrationAdminUsersManagementLocalize',
 			array(
-				'cancel'             => esc_html__( 'Zrušit', 'skautis-integration' ),
-				'datatablesFilesUrl' => SKAUTIS_INTEGRATION_URL . 'bundled/datatables-files',
-				'searchNonceName'    => SKAUTIS_INTEGRATION_NAME . '_skautis_search_user_nonce',
-				'searchNonceValue'   => wp_create_nonce( SKAUTIS_INTEGRATION_NAME . '_skautis_search_user' ),
+				'cancel'                => esc_html__( 'Cancel', 'skautis-integration' ),
+				// DataTables is in English by default, only the Czech translation is bundled.
+				'datatablesLanguageUrl' => Helpers::is_czech_locale() ? SKAUTIS_INTEGRATION_URL . 'bundled/datatables-files/cs.json' : '',
+				'searchNonceName'       => SKAUTIS_INTEGRATION_NAME . '_skautis_search_user_nonce',
+				'searchNonceValue'      => wp_create_nonce( SKAUTIS_INTEGRATION_NAME . '_skautis_search_user' ),
 			)
 		);
 	}
@@ -209,8 +210,8 @@ class Users_Management {
 	public function setup_users_management_page() {
 		add_submenu_page(
 			SKAUTIS_INTEGRATION_NAME,
-			__( 'Správa uživatelů', 'skautis-integration' ),
-			__( 'Správa uživatelů', 'skautis-integration' ),
+			__( 'User management', 'skautis-integration' ),
+			__( 'User management', 'skautis-integration' ),
 			Helpers::get_skautis_manager_capability(),
 			SKAUTIS_INTEGRATION_NAME . '_usersManagement',
 			array( $this, 'print_child_users' )
@@ -229,19 +230,19 @@ class Users_Management {
 
 		echo '
 		<div class="wrap">
-			<h1>' . esc_html__( 'Správa uživatelů', 'skautis-integration' ) . '</h1>
-			<p>' . esc_html__( 'Zde si můžete propojit členy ze skautISu s uživateli ve WordPressu nebo je rovnou zaregistrovat (vyžaduje aktivovaný modul Registrace).', 'skautis-integration' ) . '</p>
+			<h1>' . esc_html__( 'User management', 'skautis-integration' ) . '</h1>
+			<p>' . esc_html__( 'Here you can connect skautIS members with WordPress users or register them right away (requires the Registration module).', 'skautis-integration' ) . '</p>
 		';
 
 		if ( ! $this->skautis_login->is_user_logged_in_skautis() ) {
 			if ( $this->skautis_gateway->is_initialized() ) {
-				echo '<a href="' . esc_url( $this->wp_login_logout->get_login_url( add_query_arg( 'noWpLogin', true, Helpers::get_current_url() ) ) ) . '">' . esc_html__( 'Pro zobrazení obsahu je nutné se přihlásit do skautISu', 'skautis-integration' ) . '</a>';
+				echo '<a href="' . esc_url( $this->wp_login_logout->get_login_url( add_query_arg( 'noWpLogin', true, Helpers::get_current_url() ) ) ) . '">' . esc_html__( 'You must log in to skautIS to view the content', 'skautis-integration' ) . '</a>';
 				echo '
 		</div>
 			';
 			} else {
 				/* translators: 1: Start of link to the settings 2: End of link to the settings */
-				printf( esc_html__( 'Vyberte v %1$snastavení%2$s pluginu typ prostředí skautISu', 'skautis-integration' ), '<a href="' . esc_url( admin_url( 'admin.php?page=' . SKAUTIS_INTEGRATION_NAME ) ) . '">', '</a>' );
+				printf( esc_html__( 'Select the skautIS environment in the plugin %1$ssettings%2$s', 'skautis-integration' ), '<a href="' . esc_url( admin_url( 'admin.php?page=' . SKAUTIS_INTEGRATION_NAME ) ) . '">', '</a>' );
 				echo '
 		</div>
 			';
@@ -253,7 +254,7 @@ class Users_Management {
 		$this->role_changer->print_change_roles_form();
 
 		echo '<table class="skautis-user-management-table"><thead style="font-weight: bold;"><tr>';
-		echo '<th>' . esc_html__( 'Jméno a příjmení', 'skautis-integration' ) . '</th><th>' . esc_html__( 'Přezdívka', 'skautis-integration' ) . '</th><th>' . esc_html__( 'ID uživatele', 'skautis-integration' ) . '</th><th>' . esc_html__( 'Propojený uživatel', 'skautis-integration' ) . '</th><th>' . esc_html__( 'Propojení', 'skautis-integration' ) . '</th>';
+		echo '<th>' . esc_html__( 'Full name', 'skautis-integration' ) . '</th><th>' . esc_html__( 'Nickname', 'skautis-integration' ) . '</th><th>' . esc_html__( 'User ID', 'skautis-integration' ) . '</th><th>' . esc_html__( 'Connected user', 'skautis-integration' ) . '</th><th>' . esc_html__( 'Connection', 'skautis-integration' ) . '</th>';
 		echo '</tr></thead ><tbody>';
 
 		$users_data = $this->users_repository->get_connected_wp_users();
@@ -273,13 +274,13 @@ class Users_Management {
 	<td class="username">
 		<span class="firstName">' . esc_html( $user->firstName ) . '</span> <span class="lastName">' . esc_html( $user->lastName ) . '</span>
 	</td>
-	<td>&nbsp;&nbsp;<span class="nickName">' . esc_html( $user->nickName ) . '</span></td><td>&nbsp;&nbsp;<span class="skautisUserId">' . esc_html( $user->id ) . '</span></td><td><a href="' . esc_url( $user_edit_link ) . '">' . esc_html( $users_data[ $user->id ]['name'] ) . '</a></td><td><a href="' . esc_url( $connect_disconnect_link ) . '" class="button">' . esc_html__( 'Odpojit', 'skautis-integration' ) . '</a></td></tr>';
+	<td>&nbsp;&nbsp;<span class="nickName">' . esc_html( $user->nickName ) . '</span></td><td>&nbsp;&nbsp;<span class="skautisUserId">' . esc_html( $user->id ) . '</span></td><td><a href="' . esc_url( $user_edit_link ) . '">' . esc_html( $users_data[ $user->id ]['name'] ) . '</a></td><td><a href="' . esc_url( $connect_disconnect_link ) . '" class="button">' . esc_html__( 'Disconnect', 'skautis-integration' ) . '</a></td></tr>';
 			} else {
 				echo '<tr>
 	<td class="username">
 		<span class="firstName">' . esc_html( $user->firstName ) . '</span> <span class="lastName">' . esc_html( $user->lastName ) . '</span>
 	</td>
-	<td>&nbsp;&nbsp;<span class="nickName">' . esc_html( $user->nickName ) . '</span></td><td>&nbsp;&nbsp;<span class="skautisUserId">' . esc_html( $user->id ) . '</span></td><td></td><td><a href="#TB_inline?width=450&height=380&inlineId=connectUserToSkautisModal" class="button thickbox">' . esc_html__( 'Propojit', 'skautis-integration' ) . '</a></td></tr>';
+	<td>&nbsp;&nbsp;<span class="nickName">' . esc_html( $user->nickName ) . '</span></td><td>&nbsp;&nbsp;<span class="skautisUserId">' . esc_html( $user->id ) . '</span></td><td></td><td><a href="#TB_inline?width=450&height=380&inlineId=connectUserToSkautisModal" class="button thickbox">' . esc_html__( 'Connect', 'skautis-integration' ) . '</a></td></tr>';
 			}
 		}
 		echo '</tbody></table>';
@@ -288,15 +289,15 @@ class Users_Management {
 		</div>
 		<div id="connectUserToSkautisModal" class="hidden">
 			<div class="content">
-				<h3><?php esc_html_e( 'Propojení uživatele', 'skautis-integration' ); ?> <span
-						id="connectUserToSkautisModal_username"></span> <?php esc_html_e( 'se skautISem', 'skautis-integration' ); ?>
+				<h3><?php esc_html_e( 'Connecting user', 'skautis-integration' ); ?> <span
+						id="connectUserToSkautisModal_username"></span> <?php esc_html_e( 'to skautIS', 'skautis-integration' ); ?>
 				</h3>
 				<form method="post" action="<?php echo esc_url( $this->connect_and_disconnect_wp_account->get_connect_wp_user_to_skautis_url() ); ?>">
 					<?php wp_nonce_field( SKAUTIS_INTEGRATION_NAME . '_connect_user', SKAUTIS_INTEGRATION_NAME . '_connect_user_nonce', false ); ?>
 					<input type="hidden" name="skautisUserId" class="connectUserToSkautisModal_skautisUserId" value=""/>
-					<h4><label for="connectUserToSkautisModal_select"><?php esc_html_e( 'Vyberte uživatele již registrovaného ve WordPressu', 'skautis-integration' ); ?>:</label></h4>
+					<h4><label for="connectUserToSkautisModal_select"><?php esc_html_e( 'Select a user already registered in WordPress', 'skautis-integration' ); ?>:</label></h4>
 					<select id="connectUserToSkautisModal_select" name="wpUserId" required>
-						<option value=""><?php esc_html_e( 'Vyberte uživatele...', 'skautis-integration' ); ?></option>
+						<option value=""><?php esc_html_e( 'Select a user…', 'skautis-integration' ); ?></option>
 						<?php
 						foreach ( $this->users_repository->get_connectable_wp_users() as $user ) {
 							$user_name = $user->data->display_name;
@@ -309,30 +310,30 @@ class Users_Management {
 						}
 						?>
 					</select>
-					<button type="submit" class="button button-primary"><?php esc_html_e( 'Potvrdit', 'skautis-integration' ); ?></button>
+					<button type="submit" class="button button-primary"><?php esc_html_e( 'Confirm', 'skautis-integration' ); ?></button>
 				</form>
 				<div>
-					<em><?php esc_html_e( 'Je možné vybrat pouze ty uživatele, kteří ještě nemají propojený účet se skautISem.', 'skautis-integration' ); ?></em>
+					<em><?php esc_html_e( 'Only users whose account is not connected to skautIS yet can be selected.', 'skautis-integration' ); ?></em>
 				</div>
 				<?php
 				if ( Services::get_modules_manager()->is_module_activated( Register::get_id() ) ) {
 					?>
 					<hr/>
-					<h3><?php esc_html_e( 'Vytvořit nový účet', 'skautis-integration' ); ?></h3>
+					<h3><?php esc_html_e( 'Create a new account', 'skautis-integration' ); ?></h3>
 					<p>
-						<?php esc_html_e( 'Vytvoří nového uživatele ve WordPressu se jménem, příjmením, přezdívkou a emailem ze skautISu. Účet bude automaticky propojen se skautISem.', 'skautis-integration' ); ?>
+						<?php esc_html_e( 'Creates a new WordPress user with the name, nickname and e-mail from skautIS. The account will be connected to skautIS automatically.', 'skautis-integration' ); ?>
 					</p>
 					<form method="post" action="<?php echo esc_url( Services::get_modules_manager()->get_register_module()->getWpRegister()->get_manually_register_wp_user_url() ); ?>">
 						<?php wp_nonce_field( SKAUTIS_INTEGRATION_NAME . '_register_user', SKAUTIS_INTEGRATION_NAME . '_register_user_nonce', false ); ?>
 						<input type="hidden" name="skautisUserId" class="connectUserToSkautisModal_skautisUserId" value=""/>
 						<label>
-							<span><?php esc_html_e( 'Vyberte úroveň nového uživatele', 'skautis-integration' ); ?></span>
+							<span><?php esc_html_e( 'Select the role of the new user', 'skautis-integration' ); ?></span>
 							<select name="wpRole" id="connectUserToSkautisModal_defaultRole">
 								<?php wp_dropdown_roles( get_option( SKAUTIS_INTEGRATION_NAME . '_modules_register_defaultwpRole' ) ); ?>
 							</select>
 						</label>
 						<p>
-							<button type="submit" class="button button-primary"><?php esc_html_e( 'Vytvořit nový účet', 'skautis-integration' ); ?></button>
+							<button type="submit" class="button button-primary"><?php esc_html_e( 'Create a new account', 'skautis-integration' ); ?></button>
 						</p>
 					</form>
 					<?php

@@ -81,10 +81,10 @@ final class WP_Register {
 		if ( $user_id instanceof \WP_Error ) {
 			if ( isset( $user_id->errors['username_exists'] ) || isset( $user_id->errors['email_exists'] ) ) {
 				/* translators: The user's e-mail address */
-				wp_die( sprintf( esc_html__( 'Vás email %s je již na webu registrován, ale není propojen se skautIS účtem.', 'skautis-integration' ), esc_html( $user_email ) ), esc_html__( 'Chyba při registraci', 'skautis-integration' ) );
+				wp_die( sprintf( esc_html__( 'Your e-mail %s is already registered on this site, but it is not connected to a skautIS account.', 'skautis-integration' ), esc_html( $user_email ) ), esc_html__( 'Registration error', 'skautis-integration' ) );
 			}
 				/* translators: The error message */
-			wp_die( sprintf( esc_html__( 'Při registraci nastala neočekávaná chyba: %s', 'skautis-integration' ), esc_html( $user_id->get_error_message() ) ), esc_html__( 'Chyba při registraci', 'skautis-integration' ) );
+			wp_die( sprintf( esc_html__( 'An unexpected error occurred during the registration: %s', 'skautis-integration' ), esc_html( $user_id->get_error_message() ) ), esc_html__( 'Registration error', 'skautis-integration' ) );
 		}
 
 		return $user_id;
@@ -103,17 +103,17 @@ final class WP_Register {
 	private static function create_user( string $user_login, string $user_email ) {
 		$sanitized_user_login = sanitize_user( $user_login );
 		if ( '' === $sanitized_user_login || ! validate_username( $user_login ) ) {
-			return new \WP_Error( 'invalid_username', __( 'Uživatelské jméno ze skautISu není platné uživatelské jméno ve WordPressu.', 'skautis-integration' ) );
+			return new \WP_Error( 'invalid_username', __( 'The skautIS username is not a valid WordPress username.', 'skautis-integration' ) );
 		}
 		if ( false !== username_exists( $sanitized_user_login ) ) {
-			return new \WP_Error( 'username_exists', __( 'Uživatelské jméno je již na webu registrováno.', 'skautis-integration' ) );
+			return new \WP_Error( 'username_exists', __( 'The username is already registered on this site.', 'skautis-integration' ) );
 		}
 		if ( '' !== $user_email ) {
 			if ( false === is_email( $user_email ) ) {
-				return new \WP_Error( 'invalid_email', __( 'E-mailová adresa ze skautISu není platná.', 'skautis-integration' ) );
+				return new \WP_Error( 'invalid_email', __( 'The e-mail address from skautIS is not valid.', 'skautis-integration' ) );
 			}
 			if ( false !== email_exists( $user_email ) ) {
-				return new \WP_Error( 'email_exists', __( 'E-mailová adresa je již na webu registrována.', 'skautis-integration' ) );
+				return new \WP_Error( 'email_exists', __( 'The e-mail address is already registered on this site.', 'skautis-integration' ) );
 			}
 		}
 

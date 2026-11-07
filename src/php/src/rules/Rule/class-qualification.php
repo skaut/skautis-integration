@@ -81,7 +81,7 @@ class Qualification implements Rule {
 	 * Returns the localized rule name.
 	 */
 	public function get_label(): string {
-		return __( 'Kvalifikace', 'skautis-integration' );
+		return __( 'Qualification', 'skautis-integration' );
 	}
 
 	/**

@@ -178,7 +178,7 @@ final class Register implements Module {
 	 * Returns the localized module name.
 	 */
 	public static function get_label(): string {
-		return __( 'Registrace', 'skautis-integration' );
+		return __( 'Registration', 'skautis-integration' );
 	}
 
 	/**
@@ -257,9 +257,9 @@ final class Register implements Module {
 		$return_url = Helpers::get_return_url();
 		if ( ! is_null( $return_url ) ) {
 			/* translators: 1: Start of the link back 2: End of the link back */
-			wp_die( sprintf( esc_html__( 'Nemáte oprávnění k registraci. %1$sZkuste to znovu%2$s', 'skautis-integration' ), '<a href="' . esc_url( $return_url ) . '">', '</a>' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
+			wp_die( sprintf( esc_html__( 'You are not allowed to register. %1$sTry again%2$s', 'skautis-integration' ), '<a href="' . esc_url( $return_url ) . '">', '</a>' ), esc_html__( 'Unauthorized access', 'skautis-integration' ) );
 		}
-		wp_die( esc_html__( 'Nemáte oprávnění k registraci.', 'skautis-integration' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
+		wp_die( esc_html__( 'You are not allowed to register.', 'skautis-integration' ), esc_html__( 'Unauthorized access', 'skautis-integration' ) );
 	}
 
 	/**
@@ -284,18 +284,18 @@ final class Register implements Module {
 			is_null( $return_url ) ||
 			'' === $wp_role ||
 			-1 === $skautis_user_id ) {
-			wp_die( esc_html__( 'Nemáte oprávnění k registraci nových uživatelů.', 'skautis-integration' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
+			wp_die( esc_html__( 'You are not allowed to register new users.', 'skautis-integration' ), esc_html__( 'Unauthorized access', 'skautis-integration' ) );
 		}
 
 		if ( ! wp_roles()->is_role( $wp_role ) ) {
-			wp_die( esc_html__( 'Uživatele se nepodařilo zaregistrovat - role neexistuje.', 'skautis-integration' ), esc_html__( 'Chyba při registraci uživatele', 'skautis-integration' ) );
+			wp_die( esc_html__( 'The user could not be registered - the role does not exist.', 'skautis-integration' ), esc_html__( 'User registration error', 'skautis-integration' ) );
 		}
 
 		if ( $this->wp_register->register_to_wp_manually( $wp_role, $skautis_user_id ) ) {
 			wp_safe_redirect( $return_url, 302 );
 			exit();
 		} else {
-			wp_die( esc_html__( 'Uživatele se nepodařilo zaregistrovat', 'skautis-integration' ), esc_html__( 'Chyba při registraci uživatele', 'skautis-integration' ) );
+			wp_die( esc_html__( 'The user could not be registered', 'skautis-integration' ), esc_html__( 'User registration error', 'skautis-integration' ) );
 		}
 	}
 }

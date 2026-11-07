@@ -286,12 +286,16 @@ gulp.task(
 
 gulp.task('build:js:modules:Visibility:admin', () => {
 	const tsProject = ts.createProject('tsconfig.json');
-	return gulp
-		.src(['src/ts/modules/Visibility/admin/*.ts', 'src/d.ts/*.d.ts'])
-		.pipe(tsProject())
-		.js.pipe(terser())
-		.pipe(rename({ suffix: '.min' }))
-		.pipe(gulp.dest('dist/modules/Visibility/admin/js/'));
+	return (
+		gulp
+			.src(['src/ts/modules/Visibility/admin/*.ts', 'src/d.ts/*.d.ts'])
+			.pipe(tsProject())
+			// The unminified scripts are shipped as well, because wordpress.org extracts the translatable strings only from them. WordPress loads the translations of a minified script by its unminified name.
+			.js.pipe(gulp.dest('dist/modules/Visibility/admin/js/'))
+			.pipe(terser())
+			.pipe(rename({ suffix: '.min' }))
+			.pipe(gulp.dest('dist/modules/Visibility/admin/js/'))
+	);
 });
 
 gulp.task(

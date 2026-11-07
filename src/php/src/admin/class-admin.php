@@ -126,7 +126,7 @@ final class Admin {
 			array(
 				'parent' => 'user-actions',
 				'id'     => SKAUTIS_INTEGRATION_NAME . '_adminBar_logout',
-				'title'  => esc_html__( 'Log Out (too from skautIS)', 'skautis-integration' ),
+				'title'  => esc_html__( 'Log out (also from skautIS)', 'skautis-integration' ),
 				'href'   => $this->wp_login_logout->get_logout_url(),
 			)
 		);

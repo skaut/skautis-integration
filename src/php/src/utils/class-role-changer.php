@@ -94,7 +94,7 @@ class Role_Changer {
 <tbody>
 <tr>
 <th scope="row" style="width: 13ex;">
-<label for="skautisRoleChanger">' . esc_html__( 'Moje role', 'skautis-integration' ) . '</label>
+<label for="skautisRoleChanger">' . esc_html__( 'My role', 'skautis-integration' ) . '</label>
 </th>
 <td>
 <select id="skautisRoleChanger" name="changeSkautisUserRole">';
@@ -104,7 +104,7 @@ class Role_Changer {
 		echo '
 </select>
 <br/>
-<em>' . esc_html__( 'Vybraná role ovlivní, kteří uživatelé se zobrazí v tabulce níže.', 'skautis-integration' ) . '</em>
+<em>' . esc_html__( 'The selected role determines which users are shown in the table below.', 'skautis-integration' ) . '</em>
 </td>
 </tr>
 </tbody>
