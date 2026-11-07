@@ -9,7 +9,7 @@ declare( strict_types=1 );
 
 namespace Skautis_Integration\Modules\Visibility\Admin;
 
-use Skautis_Integration\Utils\Helpers;
+use Skautis_Integration\Admin\Settings as Main_Settings;
 
 /**
  * Registers, handles and shows all settings for the Visibility module.
@@ -35,49 +35,7 @@ final class Settings {
 			return;
 		}
 
-		add_action( 'admin_menu', array( self::class, 'setup_setting_page' ), 25 );
 		add_action( 'admin_init', array( self::class, 'setup_setting_fields' ) );
-	}
-
-	/**
-	 * Adds an admin settings page for the Visibility module.
-	 *
-	 * @return void
-	 */
-	public static function setup_setting_page() {
-		add_submenu_page(
-			SKAUTIS_INTEGRATION_NAME,
-			__( 'Content visibility', 'skautis-integration' ),
-			__( 'Content visibility', 'skautis-integration' ),
-			Helpers::get_skautis_manager_capability(),
-			SKAUTIS_INTEGRATION_NAME . '_modules_visibility',
-			array( self::class, 'print_setting_page' )
-		);
-	}
-
-	/**
-	 * Prints the admin settings page for the Visibility module.
-	 *
-	 * @return void
-	 */
-	public static function print_setting_page() {
-		if ( ! Helpers::user_is_skautis_manager() ) {
-			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'skautis-integration' ) );
-		}
-
-		settings_errors();
-		?>
-		<div class="wrap">
-			<h1><?php esc_html_e( 'Content visibility settings', 'skautis-integration' ); ?></h1>
-			<form method="POST" action="<?php echo esc_url( admin_url( 'options.php' ) ); ?>">
-				<?php
-				settings_fields( SKAUTIS_INTEGRATION_NAME . '_modules_visibility' );
-				do_settings_sections( SKAUTIS_INTEGRATION_NAME . '_modules_visibility' );
-				submit_button();
-				?>
-			</form>
-		</div>
-		<?php
 	}
 
 	/**
@@ -88,11 +46,13 @@ final class Settings {
 	public static function setup_setting_fields() {
 		add_settings_section(
 			SKAUTIS_INTEGRATION_NAME . '_modules_visibility',
-			'',
+			__( 'Content visibility', 'skautis-integration' ),
 			static function () {
-				echo '';
+				echo '<p>' . esc_html__( 'If a user is not logged in to skautIS or does not pass the rules, the content will be hidden from them.', 'skautis-integration' ) . ' ' . esc_html__( 'Users logged in to WordPress who can edit the content will always see it, regardless of their skautIS login or the rules.', 'skautis-integration' ) . '</p>';
+				echo '<p>' . esc_html__( 'The rules of a whole post or page are set in the post settings of the block editor, the rules of a single block in its block settings.', 'skautis-integration' ) . '</p>';
 			},
-			SKAUTIS_INTEGRATION_NAME . '_modules_visibility'
+			SKAUTIS_INTEGRATION_NAME . '_modules_visibility',
+			Main_Settings::get_card_section_args()
 		);
 
 		add_settings_field(
@@ -171,11 +131,7 @@ final class Settings {
 		}
 		echo '</fieldset>';
 		?>
-		<div>
-			<em><?php esc_html_e( 'Visibility rules can be set for the selected content types.', 'skautis-integration' ); ?></em><br/>
-			<em><?php esc_html_e( 'If a user is not logged in to skautIS or does not pass the rules, the content will be hidden from them.', 'skautis-integration' ); ?></em><br/>
-			<em><?php esc_html_e( 'Users logged in to WordPress who can edit the content will always see it, regardless of their skautIS login or the rules.', 'skautis-integration' ); ?></em>
-		</div>
+		<p class="description"><?php esc_html_e( 'Visibility rules can be set for the selected content types.', 'skautis-integration' ); ?></p>
 		<?php
 	}
 
@@ -187,14 +143,15 @@ final class Settings {
 	public static function field_visibility_mode() {
 		$visibility_mode = get_option( SKAUTIS_INTEGRATION_NAME . '_modules_visibility_visibilityMode', 'full' );
 		?>
+		<fieldset>
+		<legend class="screen-reader-text"><?php esc_html_e( 'Hiding method', 'skautis-integration' ); ?></legend>
 		<label><input type="radio" name="<?php echo esc_attr( SKAUTIS_INTEGRATION_NAME ); ?>_modules_visibility_visibilityMode"
 					value="full" <?php checked( 'full', $visibility_mode ); ?> /><span><?php esc_html_e( 'Hide the whole post / page / …', 'skautis-integration' ); ?></span></label>
 		<br/>
 		<label><input type="radio" name="<?php echo esc_attr( SKAUTIS_INTEGRATION_NAME ); ?>_modules_visibility_visibilityMode"
 					value="content" <?php checked( 'content', $visibility_mode ); ?> /><span><?php esc_html_e( 'Hide only the content', 'skautis-integration' ); ?></span></label>
-		<p>
-			<em><?php esc_html_e( 'You can change this setting for individual content as needed.', 'skautis-integration' ); ?></em>
-		</p>
+		<p class="description"><?php esc_html_e( 'You can change this setting for individual content as needed.', 'skautis-integration' ); ?></p>
+		</fieldset>
 		<?php
 	}
 
@@ -206,12 +163,12 @@ final class Settings {
 	public static function field_include_children() {
 		$include_children = get_option( SKAUTIS_INTEGRATION_NAME . '_modules_visibility_includeChildren', 0 );
 		?>
+		<fieldset>
+		<legend class="screen-reader-text"><?php esc_html_e( 'Child content', 'skautis-integration' ); ?></legend>
 		<label><input type="checkbox" name="<?php echo esc_attr( SKAUTIS_INTEGRATION_NAME ); ?>_modules_visibility_includeChildren"
 					value="1" <?php checked( 1, $include_children ); ?> /><span><?php esc_html_e( 'Apply the selected rules to child content as well', 'skautis-integration' ); ?></span></label>
-		<br/>
-		<p>
-			<em><?php esc_html_e( 'You can change this setting for individual content as needed.', 'skautis-integration' ); ?></em>
-		</p>
+		<p class="description"><?php esc_html_e( 'You can change this setting for individual content as needed.', 'skautis-integration' ); ?></p>
+		</fieldset>
 		<?php
 	}
 }

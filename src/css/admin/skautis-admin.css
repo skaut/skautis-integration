@@ -1,10 +1,3 @@
-/* stylelint-disable-next-line selector-class-pattern */
-.skautis_page_skautis-integration_modules .form-table th,
-.skautis_page_skautis-integration_modules .form-table td { /* stylelint-disable-line selector-class-pattern */
-	padding-top: 0.6em;
-	padding-bottom: 0.6em;
-}
-
 .skautis-admin-list {
 	list-style-type: disc;
 	list-style-position: inside;
@@ -16,8 +9,12 @@
 	margin-left: 15px;
 }
 
-/* Checkbox lists with enough space between targets (WCAG 2.2 target size). */
-.skautis-admin-checkbox-list label {
+/*
+ * Checkbox lists with enough space between targets (WCAG 2.2 target size).
+ * Core shows labels in a form table fieldset inline.
+ */
+.skautis-admin-checkbox-list label,
+.form-table td fieldset.skautis-admin-checkbox-list label {
 	display: block;
 	margin: 0.5em 0;
 }
