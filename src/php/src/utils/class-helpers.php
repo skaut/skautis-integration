@@ -99,7 +99,7 @@ class Helpers {
 	/**
 	 * Checks whether the current user sees WordPress in Czech.
 	 *
-	 * Used for the bundled translations of third-party libraries (DataTables, jQuery QueryBuilder), which are only available in Czech.
+	 * Used for the bundled translations of jQuery QueryBuilder, which are only available in Czech.
 	 */
 	public static function is_czech_locale(): bool {
 		return 0 === strpos( determine_locale(), 'cs' );

@@ -277,10 +277,46 @@ final class Settings {
 	 * @return void
 	 */
 	public static function enqueue_styles( $hook_suffix ) {
-		if ( 'toplevel_page_' . SKAUTIS_INTEGRATION_NAME !== $hook_suffix ) {
+		if ( 'toplevel_page_' . SKAUTIS_INTEGRATION_NAME !== $hook_suffix && ! Users_Management::is_users_management_page( $hook_suffix ) ) {
 			return;
 		}
 		Helpers::enqueue_style( 'admin_settings', 'admin/css/skautis-admin-settings.min.css' );
+	}
+
+	/**
+	 * Prints the header of a plugin admin page, with the settings tabs if a tab is given.
+	 *
+	 * The page must also enqueue the styles from enqueue_styles().
+	 *
+	 * @param string      $title The page title.
+	 * @param string|null $current_tab The current settings tab or null for a page without tabs.
+	 *
+	 * @return void
+	 */
+	public static function print_page_header( string $title, ?string $current_tab = null ) {
+		?>
+		<div class="skautis-settings-header">
+			<div class="skautis-settings-title-section">
+				<h1><?php echo esc_html( $title ); ?></h1>
+				<a class="skautis-settings-help" href="<?php echo esc_url( self::HELP_PAGE_URL ); ?>" target="_blank">
+					<?php esc_html_e( 'Help', 'skautis-integration' ); ?>
+					<span class="screen-reader-text"><?php esc_html_e( '(opens in a new tab)', 'skautis-integration' ); ?></span>
+					<span aria-hidden="true" class="dashicons dashicons-external"></span>
+				</a>
+			</div>
+			<?php
+			if ( ! is_null( $current_tab ) ) {
+				echo '<nav class="skautis-settings-tabs" aria-label="' . esc_attr__( 'Settings sections', 'skautis-integration' ) . '">';
+				foreach ( self::get_tab_labels() as $tab => $label ) {
+					$is_current = $tab === $current_tab;
+					echo '<a href="' . esc_url( self::get_tab_url( $tab ) ) . '" class="skautis-settings-tab' . ( $is_current ? ' is-active" aria-current="page' : '' ) . '">' . esc_html( $label ) . '</a>';
+				}
+				echo '</nav>';
+			}
+			?>
+		</div>
+		<hr class="wp-header-end">
+		<?php
 	}
 
 	/**
@@ -294,26 +330,8 @@ final class Settings {
 		}
 
 		$current_tab = self::get_current_tab();
+		self::print_page_header( __( 'skautIS settings', 'skautis-integration' ), $current_tab );
 		?>
-		<div class="skautis-settings-header">
-			<div class="skautis-settings-title-section">
-				<h1><?php esc_html_e( 'skautIS settings', 'skautis-integration' ); ?></h1>
-				<a class="skautis-settings-help" href="<?php echo esc_url( self::HELP_PAGE_URL ); ?>" target="_blank">
-					<?php esc_html_e( 'Help', 'skautis-integration' ); ?>
-					<span class="screen-reader-text"><?php esc_html_e( '(opens in a new tab)', 'skautis-integration' ); ?></span>
-					<span aria-hidden="true" class="dashicons dashicons-external"></span>
-				</a>
-			</div>
-			<nav class="skautis-settings-tabs" aria-label="<?php esc_attr_e( 'Settings sections', 'skautis-integration' ); ?>">
-				<?php
-				foreach ( self::get_tab_labels() as $tab => $label ) {
-					$is_current = $tab === $current_tab;
-					echo '<a href="' . esc_url( self::get_tab_url( $tab ) ) . '" class="skautis-settings-tab' . ( $is_current ? ' is-active" aria-current="page' : '' ) . '">' . esc_html( $label ) . '</a>';
-				}
-				?>
-			</nav>
-		</div>
-		<hr class="wp-header-end">
 		<div class="skautis-settings-body">
 			<?php settings_errors(); ?>
 			<form method="POST" action="<?php echo esc_url( admin_url( 'options.php' ) ); ?>">

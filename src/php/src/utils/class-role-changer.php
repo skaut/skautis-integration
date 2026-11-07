@@ -86,44 +86,23 @@ class Role_Changer {
 		);
 		$current_user_role  = $this->skautis_gateway->get_skautis_instance()->getUser()->getRoleId();
 
-		echo '
-<form method="post" action="' . esc_attr( Helpers::get_current_url() ) . '" novalidate="novalidate">' .
-		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		wp_nonce_field( SKAUTIS_INTEGRATION_NAME . '_changeSkautisUserRole', '_wpnonce', true, false ) .
-		'<table class="form-table">
-<tbody>
-<tr>
-<th scope="row" style="width: 13ex;">
-<label for="skautisRoleChanger">' . esc_html__( 'My role', 'skautis-integration' ) . '</label>
-</th>
-<td>
-<select id="skautisRoleChanger" name="changeSkautisUserRole">';
-		foreach ( (array) $current_user_roles as $role ) {
-			echo '<option value="' . esc_attr( $role->ID ) . '" ' . selected( $role->ID, $current_user_role, false ) . '>' . esc_html( $role->DisplayName ) . '</option>';
-		}
-		echo '
-</select>
-<br/>
-<em>' . esc_html__( 'The selected role determines which users are shown in the table below.', 'skautis-integration' ) . '</em>
-</td>
-</tr>
-</tbody>
-</table>
-</form>
-<script>
-var timeout = 0;
-if (!jQuery.fn.select2) {
-	timeout = 500;
-}
-setTimeout(function() {
-	(function ($) {
-		"use strict";
-		$("#skautisRoleChanger").select2().on("change.roleChanger", function () {
-			$(this).closest("form").submit();
-		});
-	})(jQuery);
-}, timeout);
-</script>
-';
+		?>
+		<div class="skautis-settings-card">
+			<h2><?php esc_html_e( 'My skautIS role', 'skautis-integration' ); ?></h2>
+			<form method="post" action="<?php echo esc_url( Helpers::get_current_url() ); ?>" class="skautis-role-changer">
+				<?php wp_nonce_field( SKAUTIS_INTEGRATION_NAME . '_changeSkautisUserRole', '_wpnonce' ); ?>
+				<label for="skautisRoleChanger" class="screen-reader-text"><?php esc_html_e( 'My role', 'skautis-integration' ); ?></label>
+				<select id="skautisRoleChanger" name="changeSkautisUserRole" aria-describedby="skautisRoleChanger-description">
+					<?php
+					foreach ( (array) $current_user_roles as $role ) {
+						echo '<option value="' . esc_attr( $role->ID ) . '" ' . selected( $role->ID, $current_user_role, false ) . '>' . esc_html( $role->DisplayName ) . '</option>';
+					}
+					?>
+				</select>
+				<button type="submit" class="button"><?php esc_html_e( 'Change role', 'skautis-integration' ); ?></button>
+				<p class="description" id="skautisRoleChanger-description"><?php esc_html_e( 'The selected role determines which users are shown in the table below.', 'skautis-integration' ); ?></p>
+			</form>
+		</div>
+		<?php
 	}
 }
