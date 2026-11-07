@@ -101,7 +101,7 @@ See our [documentation](https://napoveda.skaut.cz/skautis/skautis-integration) (
 * Re-released version 1.1.18
 
 = 1.1.19 =
-* Switched from session to WP transients for Skautis user management
+* Switched from session to WP transients for SkautIS user management
 
 = 1.1.18 =
 * Fixed security issues
