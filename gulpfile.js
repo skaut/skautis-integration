@@ -341,6 +341,10 @@ gulp.task('build:png', () =>
 		.pipe(gulp.dest('dist/src/'))
 );
 
+gulp.task('build:svg', () =>
+	gulp.src(['src/svg/**/*.svg']).pipe(gulp.dest('dist/src/'))
+);
+
 gulp.task('build:txt', () =>
 	gulp.src(['src/txt/**/*.txt']).pipe(gulp.dest('dist/'))
 );
@@ -353,6 +357,7 @@ gulp.task(
 		'build:js',
 		'build:php',
 		'build:png',
+		'build:svg',
 		'build:txt'
 	)
 );
