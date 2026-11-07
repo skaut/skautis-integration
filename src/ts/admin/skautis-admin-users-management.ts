@@ -2,12 +2,13 @@
 
 function getQueryStringFromUrl(key: string, url: string): string {
 	const regex = new RegExp(
-			`[\\?&]${key.replace(/[[]/, '\\[').replace(/[\]]/, '\\]')}=([^&#]*)`
+			`[\\?&]${key.replace(/[[]/u, '\\[').replace(/[\]]/u, '\\]')}=([^&#]*)`,
+			'u'
 		),
 		results = regex.exec(url);
 	return results === null
 		? ''
-		: decodeURIComponent(results[1].replace(/\+/g, ' '));
+		: decodeURIComponent(results[1].replace(/\+/gu, ' '));
 }
 
 function updateQueryStringInUrl(
@@ -15,7 +16,7 @@ function updateQueryStringInUrl(
 	value: string,
 	url: string
 ): string {
-	const re = new RegExp(`([?&])${key}=.*?(&|#|$)(.*)`, 'gi');
+	const re = new RegExp(`([?&])${key}=.*?(&|#|$)(.*)`, 'giu');
 	let updatedUrl = url;
 
 	if (re.test(updatedUrl)) {
@@ -23,7 +24,7 @@ function updateQueryStringInUrl(
 			return updatedUrl.replace(re, `$1${key}=${value}$2$3`);
 		}
 		const hash = updatedUrl.split('#');
-		updatedUrl = hash[0].replace(re, '$1$3').replace(/(&|\?)$/, '');
+		updatedUrl = hash[0].replace(re, '$1$3').replace(/(&|\?)$/u, '');
 		if (typeof hash[1] !== 'undefined') {
 			updatedUrl += `#${hash[1]}`;
 		}

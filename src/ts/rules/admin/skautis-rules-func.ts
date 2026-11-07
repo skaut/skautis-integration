@@ -57,7 +57,7 @@ class Func {
 
 	public validation(): QueryBuilderValidation {
 		return {
-			format: /^(?!null)[^~]+~(?!null)[^~]+~(?!null)[^~]+$/,
+			format: /^(?!null)[^~]+~(?!null)[^~]+~(?!null)[^~]+$/u,
 		};
 	}
 
