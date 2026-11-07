@@ -14,7 +14,7 @@ use Skautis_Integration\Repository\Users as UsersRepository;
 use Skautis_Integration\Utils\Helpers;
 
 /**
- * Adds the functionality to register new WordPress users based on SkautIS.
+ * Adds the functionality to register new WordPress users based on skautIS.
  *
  * This class handles the WordPress part of the process.
  */
@@ -159,13 +159,13 @@ final class WP_Register {
 	}
 
 	/**
-	 * Retrieves information about a user from SkautIS.
+	 * Retrieves information about a user from skautIS.
 	 *
-	 * This function queries SkautIS for the information needed when registering a new WordPress user.
+	 * This function queries skautIS for the information needed when registering a new WordPress user.
 	 *
 	 * TODO: Deduplicate with Repository\Users::get_user_detail()
 	 *
-	 * @param \stdClass $skautis_user The SkautIS user.
+	 * @param \stdClass $skautis_user The skautIS user.
 	 *
 	 * @return array{id: int, UserName: string, personId: int, email: string, firstName: string, lastName: string, nickName: string} The information about a user.
 	 */
@@ -269,7 +269,7 @@ final class WP_Register {
 	}
 
 	/**
-	 * Returns the WordPress user ID of the current SkautIS user, or 0 if there is no such WordPress user.
+	 * Returns the WordPress user ID of the current skautIS user, or 0 if there is no such WordPress user.
 	 */
 	public function get_registered_user_id(): int {
 		$user_detail = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserDetail();
@@ -305,7 +305,7 @@ final class WP_Register {
 	}
 
 	/**
-	 * Returns the Register module version of the SkautIS login URL with all arguments initialized.
+	 * Returns the Register module version of the skautIS login URL with all arguments initialized.
 	 *
 	 * This version runs this module's register action after the login.
 	 *
@@ -324,7 +324,7 @@ final class WP_Register {
 	}
 
 	/**
-	 * Registers the current SkautIS user into WordPress.
+	 * Registers the current skautIS user into WordPress.
 	 *
 	 * @param string $wp_role The WordPress role to assign to the new user.
 	 */
@@ -341,7 +341,7 @@ final class WP_Register {
 	}
 
 	/**
-	 * Returns the URL of the form used to register an existing SkautIS user as a new WordPress user.
+	 * Returns the URL of the form used to register an existing skautIS user as a new WordPress user.
 	 *
 	 * This function is used to register other users than the current user. The form must be submitted with POST and contain the `skautis-integration_register_user_nonce` nonce.
 	 *
@@ -356,12 +356,12 @@ final class WP_Register {
 	}
 
 	/**
-	 * Registers a SkautIS user into WordPress.
+	 * Registers a skautIS user into WordPress.
 	 *
-	 * This function is used to register a user that is not the current SkautIS user.
+	 * This function is used to register a user that is not the current skautIS user.
 	 *
 	 * @param string $wp_role The WordPress role to assign to the new user.
-	 * @param int    $skautis_user_id The ID of the SkautIS user.
+	 * @param int    $skautis_user_id The ID of the skautIS user.
 	 */
 	public function register_to_wp_manually( string $wp_role, int $skautis_user_id ): bool {
 		$user_detail = $this->users_repository->get_user_detail( $skautis_user_id );
@@ -370,7 +370,7 @@ final class WP_Register {
 	}
 
 	/**
-	 * Sanitizes SkautIS username to be a valid WordPress username.
+	 * Sanitizes skautIS username to be a valid WordPress username.
 	 *
 	 * @param string $username The sanitized username @unused-param.
 	 * @param string $raw_username The raw username before sanitizing.

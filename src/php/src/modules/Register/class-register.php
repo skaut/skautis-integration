@@ -23,7 +23,7 @@ use Skautis_Integration\Utils\Helpers;
 use Skautis_Integration\Utils\Request_Parameter_Helpers;
 
 /**
- * Adds the functionality to register new WordPress users based on SkautIS.
+ * Adds the functionality to register new WordPress users based on skautIS.
  */
 final class Register implements Module {
 
@@ -121,7 +121,7 @@ final class Register implements Module {
 	}
 
 	/**
-	 * Redirects the user to login with SkautIS.
+	 * Redirects the user to login with skautIS.
 	 *
 	 * @return void
 	 */
@@ -136,7 +136,7 @@ final class Register implements Module {
 	/**
 	 * Adds new actions to Actions.
 	 *
-	 * This function modifies the behaviour of Actions to add new possible redirects using SkautIS.
+	 * This function modifies the behaviour of Actions to add new possible redirects using skautIS.
 	 *
 	 * @see Actions::auth_actions_router() for more details about how the actions are used.
 	 *
@@ -152,9 +152,9 @@ final class Register implements Module {
 	}
 
 	/**
-	 * Fires upon redirect back from SkautIS after login and handles the user login and potential registration.
+	 * Fires upon redirect back from skautIS after login and handles the user login and potential registration.
 	 *
-	 * @param array{skautIS_Token?: string, skautIS_IDRole?: string, skautIS_IDUnit?: string, skautIS_DateLogout?: string} $data SkautIS login data.
+	 * @param array{skautIS_Token?: string, skautIS_IDRole?: string, skautIS_IDUnit?: string, skautIS_DateLogout?: string} $data skautIS login data.
 	 *
 	 * @return void
 	 */
@@ -210,7 +210,7 @@ final class Register implements Module {
 	}
 
 	/**
-	 * Handles a call to log the user into SkautIS and possibly register them in WordPress in the process.
+	 * Handles a call to log the user into skautIS and possibly register them in WordPress in the process.
 	 *
 	 * @see Actions::auth_actions_router() for more details about how this function gets called.
 	 * @see Register::addActionsToRouter() for more details about how this function gets called.
@@ -263,7 +263,7 @@ final class Register implements Module {
 	}
 
 	/**
-	 * Registers an existing SkautIS user as a new WordPress user.
+	 * Registers an existing skautIS user as a new WordPress user.
 	 *
 	 * This function is used to register other users than the current user.
 	 *

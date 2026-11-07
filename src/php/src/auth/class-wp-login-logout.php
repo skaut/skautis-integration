@@ -17,7 +17,7 @@ use Skautis_Integration\Services\Services;
 use Skautis_Integration\Modules\Register\Register;
 
 /**
- * Handles the WordPress part of logging in with SkautIS.
+ * Handles the WordPress part of logging in with skautIS.
  */
 final class WP_Login_Logout {
 
@@ -38,9 +38,9 @@ final class WP_Login_Logout {
 	}
 
 	/**
-	 * Logs a user into WordPress based on their SkautIS user ID.
+	 * Logs a user into WordPress based on their skautIS user ID.
 	 *
-	 * @param int  $skautis_user_id The SkautIS user ID.
+	 * @param int  $skautis_user_id The skautIS user ID.
 	 * @param bool $dont_die_on_error If true, this function will not exit with an error if the login fails.
 	 *
 	 * @return false
@@ -76,7 +76,7 @@ final class WP_Login_Logout {
 						! user_can( $wp_user->ID, Helpers::get_skautis_manager_capability() ) &&
 						false !== get_option( SKAUTIS_INTEGRATION_NAME . '_checkUserPrivilegesIfLoginBySkautis' ) ) {
 						if ( '' === Services::get_modules_manager()->get_register_module()->getRulesManager()->get_role_if_user_passed_rules() ) {
-							/* translators: 1: Start of a link to SkautIS login 2: End of the link to SkautIS login */
+							/* translators: 1: Start of a link to skautIS login 2: End of the link to skautIS login */
 							wp_die( sprintf( esc_html__( 'Je nám líto, ale již nemáte oprávnění k přístupu. %1$sZkuste se znovu zaregistrovat%2$s', 'skautis-integration' ), '<a href = "' . esc_url( Services::get_modules_manager()->get_register_module()->getWpRegister()->get_register_url() ) . '">', '</a>' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
 						}
 					}
@@ -102,7 +102,7 @@ final class WP_Login_Logout {
 
 		if ( ! $dont_die_on_error ) {
 			if ( Services::get_modules_manager()->is_module_activated( Register::get_id() ) ) {
-				/* translators: 1: Start of a link to SkautIS login 2: End of the link to SkautIS login */
+				/* translators: 1: Start of a link to skautIS login 2: End of the link to skautIS login */
 				wp_die( sprintf( esc_html__( 'Nemáte oprávnění k přístupu. %1$sZkuste se nejdříve zaregistrovat%2$s', 'skautis-integration' ), '<a href ="' . esc_url( Services::get_modules_manager()->get_register_module()->getWpRegister()->get_register_url() ) . '">', '</a>' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
 			} else {
 				$this->skautis_gateway->logout();
@@ -138,7 +138,7 @@ final class WP_Login_Logout {
 	}
 
 	/**
-	 * Returns the SkautIS login URL with all arguments initialized.
+	 * Returns the skautIS login URL with all arguments initialized.
 	 *
 	 * @param string $return_url The URL to return back to after the login.
 	 *
@@ -153,7 +153,7 @@ final class WP_Login_Logout {
 	}
 
 	/**
-	 * Returns the SkautIS logout URL with all arguments and nonces initialized.
+	 * Returns the skautIS logout URL with all arguments and nonces initialized.
 	 *
 	 * @param string $return_url The URL to return back to after the logout.
 	 *
@@ -169,7 +169,7 @@ final class WP_Login_Logout {
 	}
 
 	/**
-	 * Logs the current SkautIS user into WordPress.
+	 * Logs the current skautIS user into WordPress.
 	 *
 	 * @return void
 	 */
@@ -182,7 +182,7 @@ final class WP_Login_Logout {
 	}
 
 	/**
-	 * Logs the current SkautIS user into WordPress.
+	 * Logs the current skautIS user into WordPress.
 	 *
 	 * This version of the function doesn't produce an error if the login procedure fails.
 	 *
@@ -199,7 +199,7 @@ final class WP_Login_Logout {
 	}
 
 	/**
-	 * Handles a call to log the user out of SkautIS.
+	 * Handles a call to log the user out of skautIS.
 	 *
 	 * @see Actions::auth_actions_router() for more details about how this function gets called.
 	 *

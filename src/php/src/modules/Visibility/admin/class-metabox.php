@@ -74,7 +74,7 @@ final class Metabox {
 		foreach ( $this->post_types as $post_type ) {
 			add_meta_box(
 				SKAUTIS_INTEGRATION_NAME . '_modules_visibility_rules_metabox',
-				__( 'SkautIS pravidla', 'skautis-integration' ),
+				__( 'skautIS pravidla', 'skautis-integration' ),
 				array( $this, 'rules_repeater' ),
 				$post_type,
 				'advanced',
@@ -201,7 +201,7 @@ final class Metabox {
 					value="1" <?php checked( 1, $include_children ); ?> /><span>
 												<?php
 												if ( null !== $post_type_object && $post_type_object->hierarchical ) {
-													/* translators: the type of the SkautIS unit */
+													/* translators: the type of the skautIS unit */
 													printf( esc_html__( 'Použít vybraná pravidla i na podřízené %s', 'skautis-integration' ), esc_html( lcfirst( $post_type_object->labels->name ) ) );
 												} else {
 													esc_html_e( 'Použít vybraná pravidla i na podřízený obsah (média - obrázky, videa, přílohy,...)', 'skautis-integration' );

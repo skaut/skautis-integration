@@ -16,7 +16,7 @@ use Skautis_Integration\Utils\Helpers;
 use Skautis_Integration\Utils\Request_Parameter_Helpers;
 
 /**
- * Handles connecting or disconnecting WordPress and SkautIS users.
+ * Handles connecting or disconnecting WordPress and skautIS users.
  */
 final class Connect_And_Disconnect_WP_Account {
 
@@ -46,10 +46,10 @@ final class Connect_And_Disconnect_WP_Account {
 	}
 
 	/**
-	 * Adds a SkautIS user id to a specified WordPress user. Respects the SkautIS environment (testing or production).
+	 * Adds a skautIS user id to a specified WordPress user. Respects the skautIS environment (testing or production).
 	 *
 	 * @param int $wp_user_id The ID of the WordPress user.
-	 * @param int $skautis_user_id The SkautIS user ID.
+	 * @param int $skautis_user_id The skautIS user ID.
 	 *
 	 * @return void
 	 */
@@ -103,9 +103,9 @@ final class Connect_And_Disconnect_WP_Account {
 	}
 
 	/**
-	 * Handles a call to connect the current WordPress user with SkautIS.
+	 * Handles a call to connect the current WordPress user with skautIS.
 	 *
-	 * This function checks if the user is logged into SkautIS and connects them with the current WordPress user. If the user isn't connected, they get redirected to SkautIS login first.
+	 * This function checks if the user is logged into skautIS and connects them with the current WordPress user. If the user isn't connected, they get redirected to skautIS login first.
 	 *
 	 * @see Actions::auth_actions_router() for more details about how this function gets called.
 	 *
@@ -130,7 +130,7 @@ final class Connect_And_Disconnect_WP_Account {
 	}
 
 	/**
-	 * Connects an existing SkautIS user with an existing WordPress user.
+	 * Connects an existing skautIS user with an existing WordPress user.
 	 *
 	 * This is used to connect a WordPress user that is not the current user.
 	 *
@@ -163,7 +163,7 @@ final class Connect_And_Disconnect_WP_Account {
 	}
 
 	/**
-	 * Returns the URL of the form to connect an existing SkautIS user with an existing WordPress user.
+	 * Returns the URL of the form to connect an existing skautIS user with an existing WordPress user.
 	 *
 	 * This form is used to connect a WordPress user that is not the current user. The form must be submitted with POST and contain the `skautis-integration_connect_user_nonce` nonce.
 	 *
@@ -178,7 +178,7 @@ final class Connect_And_Disconnect_WP_Account {
 	}
 
 	/**
-	 * Disconnects a SkautIS user from a WordPress user.
+	 * Disconnects a skautIS user from a WordPress user.
 	 *
 	 * This function is used both to disconnect the current user as well as other users.
 	 *

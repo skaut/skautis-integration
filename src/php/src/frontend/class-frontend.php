@@ -86,9 +86,9 @@ final class Frontend {
 	}
 
 	/**
-	 * Shows the SkautIS login template when the "skautis_login" query variable is present.
+	 * Shows the skautIS login template when the "skautis_login" query variable is present.
 	 *
-	 * @param string $path The path of the template to include. Unmodified when not showing the SkautIS login.
+	 * @param string $path The path of the template to include. Unmodified when not showing the skautIS login.
 	 */
 	public function register_templates( string $path = '' ): string {
 		$query_value = get_query_var( 'skautis_login' );
@@ -130,7 +130,7 @@ final class Frontend {
 	}
 
 	/**
-	 * Adds a link to admin bar right-hand-side menu to log out from both WordPress and SkautIS at once.
+	 * Adds a link to admin bar right-hand-side menu to log out from both WordPress and skautIS at once.
 	 *
 	 * TODO: Duplicated code?
 	 *
