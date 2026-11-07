@@ -59,7 +59,6 @@
     "not edge 18"
   ],
   "dependencies": {
-    "font-awesome": "^4.7.0",
     "interactjs": "^1.10.28",
     "jQuery-QueryBuilder": "^3.0.0",
     "jquery.repeater": "^1.2.1",

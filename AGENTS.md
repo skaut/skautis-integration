@@ -27,7 +27,7 @@ Setup: `composer install && npm ci`
 - `src/css/<area>/*.css` → `dist/<area>/css/*.min.css` (lightningcss)
 - `src/png/**` → `dist/src/**`, and `src/txt/*` → `dist/` (`readme.txt` is the wordpress.org readme and changelog)
 - Scripts that use `wp.i18n` are also shipped unminified (see the Visibility admin gulp task), because wordpress.org extracts strings only from non-`.min.js` files; WordPress loads the translations of `foo.min.js` by the name `foo.js`. Register them with `wp_set_script_translations()`. The bundled jQuery QueryBuilder translations are only loaded for Czech (`Helpers::is_czech_locale()`).
-- npm frontend libraries (jQuery QueryBuilder, select2, interact.js, jquery.repeater, Font Awesome) are copied into `dist/bundled/`.
+- npm frontend libraries (jQuery QueryBuilder, select2, interact.js, jquery.repeater) are copied into `dist/bundled/`.
 - The block editor script (`src/ts/modules/Visibility/admin/skautis-modules-visibility-block-editor.ts`) uses the global `wp` object without JSX (`wp.element.createElement`). The used parts of the WordPress packages are typed in `src/d.ts/wordpress.d.ts`.
 - Composer dependencies (mainly `skautis/skautis`) are prefixed with **PHP-Scoper** to the `Skautis_Integration\Vendor\` namespace, in `dist/vendor/`. `gulpfile.js` also patches the composer autoloader. In plugin code, reference the SkautIS library as `Skautis_Integration\Vendor\Skautis\…`.
 
