@@ -9,12 +9,11 @@ declare( strict_types=1 );
 
 namespace Skautis_Integration\Admin;
 
+use PHPMD\Attribute\SuppressWarnings;
+use PHPMD\Rule\Design\ExitExpression;
 use Skautis_Integration\Auth\Skautis_Gateway;
-use Skautis_Integration\Modules\Modules_Manager;
 use Skautis_Integration\Utils\Helpers;
 use Skautis_Integration\Services\Services;
-use Skautis_Integration\Modules\Register\Register;
-use Skautis_Integration\Modules\Visibility\Visibility;
 
 /**
  * Registers, handles and shows plugin settings.
@@ -33,21 +32,12 @@ final class Settings {
 	private $skautis_gateway;
 
 	/**
-	 * A link to the Modules_Manager service instance.
-	 *
-	 * @var Modules_Manager
-	 */
-	private $modules_manager;
-
-	/**
 	 * Constructs the service and saves all dependencies.
 	 *
 	 * @param Skautis_Gateway $skautis_gateway An injected Skautis_Gateway service instance.
-	 * @param Modules_Manager $modules_manager An injected Modules_Manager service instance.
 	 */
-	public function __construct( Skautis_Gateway $skautis_gateway, Modules_Manager $modules_manager ) {
+	public function __construct( Skautis_Gateway $skautis_gateway ) {
 		$this->skautis_gateway = $skautis_gateway;
-		$this->modules_manager = $modules_manager;
 		$this->init_hooks();
 	}
 
@@ -73,6 +63,8 @@ final class Settings {
 		);
 
 		add_action( 'admin_menu', array( $this, 'setup_setting_page' ), 5 );
+		// The page no longer exists, so WordPress denies the access before admin_init.
+		add_action( 'admin_page_access_denied', array( self::class, 'redirect_old_modules_page' ) );
 		add_action( 'admin_init', array( $this, 'setup_setting_fields' ) );
 		add_action( 'admin_init', array( $this, 'setup_login_fields' ) );
 
@@ -184,15 +176,21 @@ final class Settings {
 			SKAUTIS_INTEGRATION_NAME . '_login',
 			array( self::class, 'print_login_page' )
 		);
+	}
 
-		add_submenu_page(
-			SKAUTIS_INTEGRATION_NAME,
-			__( 'Modules', 'skautis-integration' ),
-			__( 'Modules', 'skautis-integration' ),
-			Helpers::get_skautis_manager_capability(),
-			SKAUTIS_INTEGRATION_NAME . '_modules',
-			array( self::class, 'print_modules_page' )
-		);
+	/**
+	 * Redirects the removed Modules page to the registration settings.
+	 *
+	 * @return void
+	 */
+	#[SuppressWarnings( ExitExpression::class )]
+	public static function redirect_old_modules_page() {
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( ! isset( $_GET['page'] ) || SKAUTIS_INTEGRATION_NAME . '_modules' !== $_GET['page'] ) {
+			return;
+		}
+		wp_safe_redirect( admin_url( 'admin.php?page=' . SKAUTIS_INTEGRATION_NAME . '_modules_register' ), 301 );
+		exit();
 	}
 
 	/**
@@ -308,59 +306,6 @@ final class Settings {
 				'sanitize_callback' => 'sanitize_text_field',
 			)
 		);
-
-		add_settings_section(
-			SKAUTIS_INTEGRATION_NAME . '_modules',
-			__( 'Available modules', 'skautis-integration' ),
-			static function () {
-				echo '';
-			},
-			SKAUTIS_INTEGRATION_NAME . '_modules'
-		);
-
-		add_settings_field(
-			'skautis_integration_login',
-			__( 'Login', 'skautis-integration' ),
-			static function () {
-				echo '<input type="checkbox" id="skautis_integration_login" checked="checked" disabled="disabled"/>';
-				echo '<p class="description">' . esc_html__( 'Logging in to WordPress with skautIS. It is always enabled.', 'skautis-integration' ) . '</p>';
-			},
-			SKAUTIS_INTEGRATION_NAME . '_modules',
-			SKAUTIS_INTEGRATION_NAME . '_modules',
-			array( 'label_for' => 'skautis_integration_login' )
-		);
-
-		$activated_modules   = (array) get_option( 'skautis_integration_activated_modules' );
-		$module_descriptions = array(
-			Register::get_id()   => __( 'New users can register on the site with their skautIS account. The registration can be limited by rules.', 'skautis-integration' ),
-			Visibility::get_id() => __( 'Hides posts, pages and blocks from users who do not pass the selected rules.', 'skautis-integration' ),
-		);
-
-		foreach ( $this->modules_manager->get_all_modules() as $module_id => $module_label ) {
-			add_settings_field(
-				SKAUTIS_INTEGRATION_NAME . '_modules_' . $module_id,
-				$module_label,
-				static function () use ( $module_id, $activated_modules, $module_descriptions ) {
-					$checked = in_array( $module_id, $activated_modules, true );
-					echo '<input name="skautis_integration_activated_modules[]" type="checkbox" id="' . esc_attr( $module_id ) . '" value="' . esc_attr( $module_id ) . '" ' . ( $checked ? 'checked="checked"' : '' ) . '>';
-					if ( isset( $module_descriptions[ $module_id ] ) ) {
-						echo '<p class="description">' . esc_html( $module_descriptions[ $module_id ] ) . '</p>';
-					}
-				},
-				SKAUTIS_INTEGRATION_NAME . '_modules',
-				SKAUTIS_INTEGRATION_NAME . '_modules',
-				array( 'label_for' => $module_id )
-			);
-		}
-
-		register_setting(
-			SKAUTIS_INTEGRATION_NAME . '_modules',
-			'skautis_integration_activated_modules',
-			array(
-				'type'         => 'string',
-				'show_in_rest' => false,
-			)
-		);
 	}
 
 	/**
@@ -412,7 +357,7 @@ final class Settings {
 			array( 'label_for' => 'skautis_integration_allowUsersDisconnectFromSkautis' )
 		);
 
-		if ( Services::get_modules_manager()->is_module_activated( Register::get_id() ) ) {
+		if ( Services::is_registration_enabled() ) {
 			add_settings_field(
 				SKAUTIS_INTEGRATION_NAME . '_checkUserPrivilegesIfLoginBySkautis',
 				__( 'Checking registration conditions', 'skautis-integration' ),
@@ -462,7 +407,7 @@ final class Settings {
 			)
 		);
 
-		if ( Services::get_modules_manager()->is_module_activated( Register::get_id() ) ) {
+		if ( Services::is_registration_enabled() ) {
 			register_setting(
 				SKAUTIS_INTEGRATION_NAME . '_login',
 				SKAUTIS_INTEGRATION_NAME . '_checkUserPrivilegesIfLoginBySkautis',
@@ -572,30 +517,6 @@ final class Settings {
 		<div
 			style="margin: 0.4em 0;"><?php esc_html_e( 'When a user logs in with skautIS, check whether they still meet the registration conditions.', 'skautis-integration' ); ?></div>
 		<em><?php esc_html_e( 'This setting does not affect users with the administrator role.', 'skautis-integration' ); ?></em>
-		<?php
-	}
-
-	/**
-	 * Prints the module settings page.
-	 *
-	 * @return void
-	 */
-	public static function print_modules_page() {
-		if ( ! Helpers::user_is_skautis_manager() ) {
-			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'skautis-integration' ) );
-		}
-		settings_errors();
-		?>
-		<div class="wrap">
-			<h1><?php esc_html_e( 'Modules', 'skautis-integration' ); ?></h1>
-			<form method="POST" action="<?php echo esc_url( admin_url( 'options.php' ) ); ?>">
-				<?php
-				settings_fields( SKAUTIS_INTEGRATION_NAME . '_modules' );
-				do_settings_sections( SKAUTIS_INTEGRATION_NAME . '_modules' );
-				submit_button();
-				?>
-			</form>
-		</div>
 		<?php
 	}
 }

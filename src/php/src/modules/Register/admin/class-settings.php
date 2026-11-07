@@ -11,6 +11,7 @@ namespace Skautis_Integration\Modules\Register\Admin;
 
 use Skautis_Integration\Rules\Rules_Init;
 use Skautis_Integration\Rules\Rules_Manager;
+use Skautis_Integration\Services\Services;
 use Skautis_Integration\Utils\Helpers;
 
 /**
@@ -108,6 +109,15 @@ final class Settings {
 		);
 
 		add_settings_field(
+			SKAUTIS_INTEGRATION_NAME . '_registration_enabled',
+			__( 'Allow registration with skautIS', 'skautis-integration' ),
+			array( self::class, 'field_registration_enabled' ),
+			SKAUTIS_INTEGRATION_NAME . '_modules_register',
+			SKAUTIS_INTEGRATION_NAME . '_modules_register',
+			array( 'label_for' => SKAUTIS_INTEGRATION_NAME . '_registration_enabled' )
+		);
+
+		add_settings_field(
 			SKAUTIS_INTEGRATION_NAME . '_modules_register_defaultwpRole',
 			__( 'Default role after registration with skautIS', 'skautis-integration' ),
 			array( self::class, 'field_wp_role' ),
@@ -134,6 +144,18 @@ final class Settings {
 
 		register_setting(
 			SKAUTIS_INTEGRATION_NAME . '_modules_register',
+			SKAUTIS_INTEGRATION_NAME . '_registration_enabled',
+			array(
+				'type'              => 'string',
+				'show_in_rest'      => false,
+				'default'           => '0',
+				'sanitize_callback' => static function ( $value ) {
+					return '1' === $value ? '1' : '0';
+				},
+			)
+		);
+		register_setting(
+			SKAUTIS_INTEGRATION_NAME . '_modules_register',
 			SKAUTIS_INTEGRATION_NAME . '_modules_register_defaultwpRole',
 			array(
 				'type'              => 'string',
@@ -158,6 +180,23 @@ final class Settings {
 				'show_in_rest' => false,
 			)
 		);
+	}
+
+	/**
+	 * Prints the settings field for enabling the registration.
+	 *
+	 * @return void
+	 */
+	public static function field_registration_enabled() {
+		?>
+		<input name="<?php echo esc_attr( SKAUTIS_INTEGRATION_NAME ); ?>_registration_enabled"
+			id="<?php echo esc_attr( SKAUTIS_INTEGRATION_NAME ); ?>_registration_enabled" type="checkbox" value="1"
+			aria-describedby="<?php echo esc_attr( SKAUTIS_INTEGRATION_NAME ); ?>_registration_enabled_description"
+			<?php checked( Services::is_registration_enabled() ); ?>/>
+		<p class="description" id="<?php echo esc_attr( SKAUTIS_INTEGRATION_NAME ); ?>_registration_enabled_description">
+			<?php esc_html_e( 'Allows users with a skautIS account to create an account on this site. The registration can be limited by the rules below.', 'skautis-integration' ); ?>
+		</p>
+		<?php
 	}
 
 	/**

@@ -16,7 +16,6 @@ use Skautis_Integration\Auth\Connect_And_Disconnect_WP_Account;
 use Skautis_Integration\Repository\Users as UsersRepository;
 use Skautis_Integration\General\Actions;
 use Skautis_Integration\Services\Services;
-use Skautis_Integration\Modules\Register\Register;
 use Skautis_Integration\Utils\Helpers;
 use Skautis_Integration\Utils\Request_Parameter_Helpers;
 use Skautis_Integration\Utils\Role_Changer;
@@ -316,14 +315,14 @@ class Users_Management {
 					<em><?php esc_html_e( 'Only users whose account is not connected to skautIS yet can be selected.', 'skautis-integration' ); ?></em>
 				</div>
 				<?php
-				if ( Services::get_modules_manager()->is_module_activated( Register::get_id() ) ) {
+				if ( Services::is_registration_enabled() ) {
 					?>
 					<hr/>
 					<h3><?php esc_html_e( 'Create a new account', 'skautis-integration' ); ?></h3>
 					<p>
 						<?php esc_html_e( 'Creates a new WordPress user with the name, nickname and e-mail from skautIS. The account will be connected to skautIS automatically.', 'skautis-integration' ); ?>
 					</p>
-					<form method="post" action="<?php echo esc_url( Services::get_modules_manager()->get_register_module()->getWpRegister()->get_manually_register_wp_user_url() ); ?>">
+					<form method="post" action="<?php echo esc_url( Services::get_register()->get_wp_register()->get_manually_register_wp_user_url() ); ?>">
 						<?php wp_nonce_field( SKAUTIS_INTEGRATION_NAME . '_register_user', SKAUTIS_INTEGRATION_NAME . '_register_user_nonce', false ); ?>
 						<input type="hidden" name="skautisUserId" class="connectUserToSkautisModal_skautisUserId" value=""/>
 						<label>

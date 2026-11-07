@@ -10,7 +10,6 @@ declare( strict_types=1 );
 namespace Skautis_Integration\Modules\Visibility;
 
 use Skautis_Integration\Auth\WP_Login_Logout;
-use Skautis_Integration\Modules\Module;
 use Skautis_Integration\Rules\Rules_Manager;
 use Skautis_Integration\Auth\Skautis_Login;
 use Skautis_Integration\Modules\Visibility\Admin\Admin;
@@ -19,9 +18,9 @@ use Skautis_Integration\Modules\Visibility\Frontend\Block_Visibility;
 use Skautis_Integration\Modules\Visibility\Frontend\Frontend;
 
 /**
- * The main class of the Visibility module.
+ * Hides posts, pages and blocks from users who do not pass the selected rules.
  */
-final class Visibility implements Module {
+final class Visibility {
 
 	const REGISTER_ACTION = 'visibility';
 
@@ -60,14 +59,7 @@ final class Visibility implements Module {
 	private $frontend;
 
 	/**
-	 * The module ID.
-	 *
-	 * @var string
-	 */
-	public static $module_id = 'module_Visibility';
-
-	/**
-	 * Constructs the module and saves all dependencies.
+	 * Constructs the service and saves all dependencies.
 	 *
 	 * @param Rules_Manager   $rules_manager An injected Rules_Manager service instance.
 	 * @param Skautis_Login   $skautis_login An injected Skautis_Login service instance.
@@ -87,33 +79,5 @@ final class Visibility implements Module {
 		} else {
 			$this->frontend->init_hooks();
 		}
-	}
-
-	/**
-	 * Returns the module ID.
-	 */
-	public static function get_id(): string {
-		return self::$module_id;
-	}
-
-	/**
-	 * Returns the localized module name.
-	 */
-	public static function get_label(): string {
-		return __( 'Content visibility', 'skautis-integration' );
-	}
-
-	/**
-	 * Returns the path to the module.
-	 */
-	public static function get_path(): string {
-		return plugin_dir_path( __FILE__ );
-	}
-
-	/**
-	 * Returns the URL of the module.
-	 */
-	public static function get_url(): string {
-		return plugin_dir_url( __FILE__ );
 	}
 }
