@@ -16,7 +16,7 @@ use Skautis_Integration\Utils\Helpers;
 use Skautis_Integration\Utils\Request_Parameter_Helpers;
 
 /**
- * Contains helper functions for management of skautIS users.
+ * Contains helper functions for management of SkautIS users.
  */
 #[SuppressWarnings( ExcessiveClassComplexity::class )]
 class Users {
@@ -56,9 +56,9 @@ class Users {
 	}
 
 	/**
-	 * Lists all users with a connected skautIS account under the current environment (testing or production).
+	 * Lists all users with a connected SkautIS account under the current environment (testing or production).
 	 *
-	 * @return array<int, array{id: int, name: string}> The users as an associative array, where the array key is the skautIS user ID and the value contains the WordPress user ID.
+	 * @return array<int, array{id: int, name: string}> The users as an associative array, where the array key is the SkautIS user ID and the value contains the WordPress user ID.
 	 */
 	public function get_connected_wp_users(): array {
 		$users_data = array();
@@ -92,7 +92,7 @@ class Users {
 	}
 
 	/**
-	 * Lists all users without a connected skautIS account under the current environment (testing or production).
+	 * Lists all users without a connected SkautIS account under the current environment (testing or production).
 	 *
 	 * @return array<\WP_User> The list of users
 	 */
@@ -121,13 +121,13 @@ class Users {
 	}
 
 	/**
-	 * Replaces the IDs of event participants with the IDs of their skautIS user accounts.
+	 * Replaces the IDs of event participants with the IDs of their SkautIS user accounts.
 	 *
-	 * Event participants are listed with their participant ID, which is unrelated to the skautIS user ID used to log in to WordPress. Participants without a skautIS user account are left out, because they cannot log in with skautIS anyway.
+	 * Event participants are listed with their participant ID, which is unrelated to the SkautIS user ID used to log in to WordPress. Participants without a SkautIS user account are left out, because they cannot log in with SkautIS anyway.
 	 *
 	 * @param array<\stdClass> $participants The event participants.
 	 *
-	 * @return array<\stdClass> The participants with a skautIS user account.
+	 * @return array<\stdClass> The participants with a SkautIS user account.
 	 */
 	private function replace_participant_ids_with_user_ids( array $participants ): array {
 		$users = array();
@@ -149,12 +149,12 @@ class Users {
 	}
 
 	/**
-	 * Finds the skautIS user account of a person.
+	 * Finds the SkautIS user account of a person.
 	 *
-	 * @param int    $person_id The skautIS person ID.
+	 * @param int    $person_id The SkautIS person ID.
 	 * @param string $last_name The last name of the person, used to narrow down the search.
 	 *
-	 * @return \stdClass|null The skautIS user or null if the person has no user account.
+	 * @return \stdClass|null The SkautIS user or null if the person has no user account.
 	 */
 	private function find_user_by_person( int $person_id, string $last_name ) {
 		$skautis_users = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserAll(
@@ -344,11 +344,11 @@ class Users {
 	}
 
 	/**
-	 * Returns info about a skautIS user.
+	 * Returns info about a SkautIS user.
 	 *
-	 * @throws \Exception Couldn't get the user info from skautIS.
+	 * @throws \Exception Couldn't get the user info from SkautIS.
 	 *
-	 * @param int $skautis_user_id The skautIS user ID.
+	 * @param int $skautis_user_id The SkautIS user ID.
 	 *
 	 * @return array{id: int, UserName: string, personId: int, email: string, firstName: string, lastName: string, nickName: string} The information about a user.
 	 */
@@ -394,7 +394,7 @@ class Users {
 		}
 
 		if ( empty( $user_detail ) ) {
-			throw new \Exception( esc_html__( 'Could not get the user information from skautIS', 'skautis-integration' ) );
+			throw new \Exception( esc_html__( 'Could not get the user information from SkautIS', 'skautis-integration' ) );
 		}
 
 		return $user_detail;

@@ -18,7 +18,7 @@ use Skautis_Integration\Auth\WP_Login_Logout;
 use Skautis_Integration\Utils\Helpers;
 
 /**
- * Handles redirects to and from skautIS.
+ * Handles redirects to and from SkautIS.
  */
 final class Actions {
 
@@ -95,7 +95,7 @@ final class Actions {
 	}
 
 	/**
-	 * Adds both test and live skautIS to host that WordPress is allowed to redirect to.
+	 * Adds both test and live SkautIS to host that WordPress is allowed to redirect to.
 	 *
 	 * @param array<string> $hosts A list of already allowed redirect hosts.
 	 *
@@ -108,7 +108,7 @@ final class Actions {
 	}
 
 	/**
-	 * Registers redirect/rewrite for skautIS authentication.
+	 * Registers redirect/rewrite for SkautIS authentication.
 	 *
 	 * @see Actions::auth_actions_router() for more details about how the redirect is used.
 	 *
@@ -174,7 +174,7 @@ final class Actions {
 	}
 
 	/**
-	 * Fires upon redirect back from skautIS and based on the current page finishes either the login or account linking.
+	 * Fires upon redirect back from SkautIS and based on the current page finishes either the login or account linking.
 	 *
 	 * @return void
 	 */
@@ -196,7 +196,7 @@ final class Actions {
 	}
 
 	/**
-	 * Fires upon redirect to skautIS authentication and fires the correct action.
+	 * Fires upon redirect to SkautIS authentication and fires the correct action.
 	 *
 	 * @throws \Exception The requested action doesn't exist.
 	 *
@@ -215,7 +215,7 @@ final class Actions {
 				( get_option( 'skautis_integration_appid_type' ) === 'test' && false === get_option( 'skautis_integration_appid_test' ) ) ) {
 				if ( Helpers::user_is_skautis_manager() ) {
 					/* translators: 1: Start of link to the settings 2: End of link to the settings */
-					wp_die( sprintf( esc_html__( 'For the skautIS integration plugin to work, you need to %1$sset the App ID%2$s', 'skautis-integration' ), '<a href="' . esc_url( admin_url( 'admin.php?page=' . SKAUTIS_INTEGRATION_NAME ) ) . '">', '</a>' ), esc_html__( 'Plugin configuration error', 'skautis-integration' ) );
+					wp_die( sprintf( esc_html__( 'For the SkautIS integration plugin to work, you need to %1$sset the App ID%2$s', 'skautis-integration' ), '<a href="' . esc_url( admin_url( 'admin.php?page=' . SKAUTIS_INTEGRATION_NAME ) ) . '">', '</a>' ), esc_html__( 'Plugin configuration error', 'skautis-integration' ) );
 				} else {
 					wp_safe_redirect( get_home_url(), 302 );
 					exit();
@@ -238,7 +238,7 @@ final class Actions {
 		if ( isset( $actions[ $action ] ) ) {
 			return call_user_func( $actions[ $action ] );
 		} else {
-			throw new \Exception( 'skautIS Auth action "' . esc_html( $action ) . '" is not defined' );
+			throw new \Exception( 'SkautIS Auth action "' . esc_html( $action ) . '" is not defined' );
 		}
 	}
 }

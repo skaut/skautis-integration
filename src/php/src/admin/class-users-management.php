@@ -21,7 +21,7 @@ use Skautis_Integration\Utils\Request_Parameter_Helpers;
 use Skautis_Integration\Utils\Role_Changer;
 
 /**
- * Adds an administration page for management of skautIS users.
+ * Adds an administration page for management of SkautIS users.
  */
 class Users_Management {
 
@@ -109,7 +109,7 @@ class Users_Management {
 	/**
 	 * Intializes all hooks used by the object.
 	 *
-	 * The skautIS role is changed by Role_Changer.
+	 * The SkautIS role is changed by Role_Changer.
 	 *
 	 * @return void
 	 */
@@ -178,15 +178,15 @@ class Users_Management {
 
 		if ( ! $this->skautis_gateway->is_initialized() ) {
 			self::print_notice_card(
-				__( 'skautIS is not set up', 'skautis-integration' ),
+				__( 'SkautIS is not set up', 'skautis-integration' ),
 				/* translators: 1: Start of link to the settings 2: End of link to the settings */
-				sprintf( esc_html__( 'Select the skautIS environment in the plugin %1$ssettings%2$s', 'skautis-integration' ), '<a href="' . esc_url( Settings::get_tab_url( 'general' ) ) . '">', '</a>' )
+				sprintf( esc_html__( 'Select the SkautIS environment in the plugin %1$ssettings%2$s', 'skautis-integration' ), '<a href="' . esc_url( Settings::get_tab_url( 'general' ) ) . '">', '</a>' )
 			);
 		} elseif ( ! $this->skautis_login->is_user_logged_in_skautis() ) {
 			self::print_notice_card(
-				__( 'Log in to skautIS', 'skautis-integration' ),
-				esc_html__( 'The users are loaded from skautIS according to your skautIS role. Log in to skautIS to see them.', 'skautis-integration' ),
-				'<a class="button button-primary" href="' . esc_url( $this->wp_login_logout->get_login_url( add_query_arg( 'noWpLogin', true, Helpers::get_current_url() ) ) ) . '">' . esc_html__( 'Log in to skautIS', 'skautis-integration' ) . '</a>'
+				__( 'Log in to SkautIS', 'skautis-integration' ),
+				esc_html__( 'The users are loaded from SkautIS according to your SkautIS role. Log in to SkautIS to see them.', 'skautis-integration' ),
+				'<a class="button button-primary" href="' . esc_url( $this->wp_login_logout->get_login_url( add_query_arg( 'noWpLogin', true, Helpers::get_current_url() ) ) ) . '">' . esc_html__( 'Log in to SkautIS', 'skautis-integration' ) . '</a>'
 			);
 		} else {
 			$this->role_changer->print_change_roles_form();
@@ -220,7 +220,7 @@ class Users_Management {
 	}
 
 	/**
-	 * Returns the URL that disconnects a WordPress user from skautIS and returns back to this page.
+	 * Returns the URL that disconnects a WordPress user from SkautIS and returns back to this page.
 	 *
 	 * @param int $wp_user_id The ID of the WordPress user.
 	 */
@@ -233,11 +233,11 @@ class Users_Management {
 	}
 
 	/**
-	 * Prints the table of skautIS users with the panel for connecting them.
+	 * Prints the table of SkautIS users with the panel for connecting them.
 	 *
-	 * @param array<\stdClass>                         $users The skautIS users.
-	 * @param array<int, array{id: int, name: string}> $connected_users The connected WordPress users, by the skautIS user ID.
-	 * @param array<\WP_User>                          $connectable_users The WordPress users without a skautIS account.
+	 * @param array<\stdClass>                         $users The SkautIS users.
+	 * @param array<int, array{id: int, name: string}> $connected_users The connected WordPress users, by the SkautIS user ID.
+	 * @param array<\WP_User>                          $connectable_users The WordPress users without a SkautIS account.
 	 * @param string                                   $connect_url The URL of the connecting form.
 	 * @param string|null                              $register_url The URL of the registration form, or null if the registration is disabled.
 	 *
@@ -247,8 +247,8 @@ class Users_Management {
 		$search = Request_Parameter_Helpers::get_string_variable( 'skautisSearchUsers' );
 		?>
 		<div class="skautis-settings-card skautis-users-card">
-			<h2><?php esc_html_e( 'skautIS users', 'skautis-integration' ); ?></h2>
-			<p><?php esc_html_e( 'Connect skautIS users with WordPress accounts, so that they can log in with skautIS.', 'skautis-integration' ); ?></p>
+			<h2><?php esc_html_e( 'SkautIS users', 'skautis-integration' ); ?></h2>
+			<p><?php esc_html_e( 'Connect SkautIS users with WordPress accounts, so that they can log in with SkautIS.', 'skautis-integration' ); ?></p>
 			<form method="get" class="skautis-users-toolbar" role="search">
 				<input type="hidden" name="page" value="<?php echo esc_attr( SKAUTIS_INTEGRATION_NAME ); ?>_usersManagement"/>
 				<?php wp_nonce_field( SKAUTIS_INTEGRATION_NAME . '_skautis_search_user', SKAUTIS_INTEGRATION_NAME . '_skautis_search_user_nonce', false ); ?>
@@ -260,13 +260,13 @@ class Users_Management {
 					<option value="connected"><?php esc_html_e( 'Connected', 'skautis-integration' ); ?></option>
 					<option value="not-connected"><?php esc_html_e( 'Not connected', 'skautis-integration' ); ?></option>
 				</select>
-				<button type="submit" class="button"><?php esc_html_e( 'Search in skautIS', 'skautis-integration' ); ?></button>
+				<button type="submit" class="button"><?php esc_html_e( 'Search in SkautIS', 'skautis-integration' ); ?></button>
 				<?php
 				if ( '' !== $search ) {
 					echo '<a class="button-link" href="' . esc_url( remove_query_arg( array( 'skautisSearchUsers', SKAUTIS_INTEGRATION_NAME . '_skautis_search_user_nonce' ) ) ) . '">' . esc_html__( 'Show all users', 'skautis-integration' ) . '</a>';
 				}
 				?>
-				<p class="description" id="skautis-users-search-description"><?php esc_html_e( 'Typing filters the users below. To find a user who is not listed, search in skautIS.', 'skautis-integration' ); ?></p>
+				<p class="description" id="skautis-users-search-description"><?php esc_html_e( 'Typing filters the users below. To find a user who is not listed, search in SkautIS.', 'skautis-integration' ); ?></p>
 			</form>
 			<p class="skautis-users-count" aria-live="polite">
 				<?php
@@ -278,7 +278,7 @@ class Users_Management {
 				<thead>
 					<tr>
 						<th scope="col"><?php esc_html_e( 'Name', 'skautis-integration' ); ?></th>
-						<th scope="col"><?php esc_html_e( 'skautIS user ID', 'skautis-integration' ); ?></th>
+						<th scope="col"><?php esc_html_e( 'SkautIS user ID', 'skautis-integration' ); ?></th>
 						<th scope="col"><?php esc_html_e( 'WordPress account', 'skautis-integration' ); ?></th>
 						<th scope="col"><span class="screen-reader-text"><?php esc_html_e( 'Actions', 'skautis-integration' ); ?></span></th>
 					</tr>
@@ -302,7 +302,7 @@ class Users_Management {
 	/**
 	 * Prints one row of the user table.
 	 *
-	 * @param \stdClass                         $user The skautIS user.
+	 * @param \stdClass                         $user The SkautIS user.
 	 * @param array{id: int, name: string}|null $wp_user The connected WordPress user or null.
 	 *
 	 * @return void
@@ -343,9 +343,9 @@ class Users_Management {
 	}
 
 	/**
-	 * Prints the panel for connecting a skautIS user. The script moves it below the row of the selected user.
+	 * Prints the panel for connecting a SkautIS user. The script moves it below the row of the selected user.
 	 *
-	 * @param array<\WP_User> $connectable_users The WordPress users without a skautIS account.
+	 * @param array<\WP_User> $connectable_users The WordPress users without a SkautIS account.
 	 * @param string          $connect_url The URL of the connecting form.
 	 * @param string|null     $register_url The URL of the registration form, or null if the registration is disabled.
 	 *
@@ -376,7 +376,7 @@ class Users_Management {
 											?>
 										</select>
 									</p>
-									<p class="description"><?php esc_html_e( 'Only users whose account is not connected to skautIS yet can be selected.', 'skautis-integration' ); ?></p>
+									<p class="description"><?php esc_html_e( 'Only users whose account is not connected to SkautIS yet can be selected.', 'skautis-integration' ); ?></p>
 									<p><button type="submit" class="button button-primary"><?php esc_html_e( 'Connect', 'skautis-integration' ); ?></button></p>
 								</form>
 								<?php
@@ -392,7 +392,7 @@ class Users_Management {
 												<?php wp_dropdown_roles( get_option( SKAUTIS_INTEGRATION_NAME . '_modules_register_defaultwpRole' ) ); ?>
 											</select>
 										</p>
-										<p class="description"><?php esc_html_e( 'Creates a new WordPress user with the name, nickname and e-mail from skautIS. The account will be connected to skautIS automatically.', 'skautis-integration' ); ?></p>
+										<p class="description"><?php esc_html_e( 'Creates a new WordPress user with the name, nickname and e-mail from SkautIS. The account will be connected to SkautIS automatically.', 'skautis-integration' ); ?></p>
 										<p><button type="submit" class="button button-primary"><?php esc_html_e( 'Create a new account', 'skautis-integration' ); ?></button></p>
 									</form>
 									<?php

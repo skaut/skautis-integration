@@ -69,7 +69,7 @@ final class Settings {
 
 		add_settings_field(
 			SKAUTIS_INTEGRATION_NAME . '_registration_enabled',
-			__( 'Allow registration with skautIS', 'skautis-integration' ),
+			__( 'Allow registration with SkautIS', 'skautis-integration' ),
 			array( self::class, 'field_registration_enabled' ),
 			SKAUTIS_INTEGRATION_NAME . '_modules_register',
 			SKAUTIS_INTEGRATION_NAME . '_modules_register'
@@ -77,7 +77,7 @@ final class Settings {
 
 		add_settings_field(
 			SKAUTIS_INTEGRATION_NAME . '_modules_register_defaultwpRole',
-			__( 'Default role after registration with skautIS', 'skautis-integration' ),
+			__( 'Default role after registration with SkautIS', 'skautis-integration' ),
 			array( self::class, 'field_wp_role' ),
 			SKAUTIS_INTEGRATION_NAME . '_modules_register',
 			SKAUTIS_INTEGRATION_NAME . '_modules_register',
@@ -156,12 +156,12 @@ final class Settings {
 	public static function field_registration_enabled() {
 		?>
 		<fieldset>
-			<legend class="screen-reader-text"><?php esc_html_e( 'Allow registration with skautIS', 'skautis-integration' ); ?></legend>
+			<legend class="screen-reader-text"><?php esc_html_e( 'Allow registration with SkautIS', 'skautis-integration' ); ?></legend>
 			<label>
 				<input name="<?php echo esc_attr( SKAUTIS_INTEGRATION_NAME ); ?>_registration_enabled"
 					id="<?php echo esc_attr( SKAUTIS_INTEGRATION_NAME ); ?>_registration_enabled" type="checkbox" value="1"
 					<?php checked( Services::is_registration_enabled() ); ?>/>
-				<?php esc_html_e( 'Allows users with a skautIS account to create an account on this site. The registration can be limited by the rules below.', 'skautis-integration' ); ?>
+				<?php esc_html_e( 'Allows users with a SkautIS account to create an account on this site. The registration can be limited by the rules below.', 'skautis-integration' ); ?>
 			</label>
 		</fieldset>
 		<?php
@@ -231,7 +231,7 @@ final class Settings {
 			<?php esc_html_e( 'You can add rules in the section', 'skautis-integration' ); ?>
 			<a href="<?php echo esc_url( admin_url( 'edit.php?post_type=' . Rules_Init::RULES_TYPE_SLUG ) ); ?>"><?php esc_html_e( 'Manage rules', 'skautis-integration' ); ?></a>.</p>
 		<p id="skautis_integration_modules_register_rulesNotSetHelp">
-			<?php esc_html_e( 'If left empty, all users will be able to register with skautIS. Their default role will be: ', 'skautis-integration' ); ?>
+			<?php esc_html_e( 'If left empty, all users will be able to register with SkautIS. Their default role will be: ', 'skautis-integration' ); ?>
 			<strong><?php echo esc_html( translate_user_role( ucfirst( get_option( SKAUTIS_INTEGRATION_NAME . '_modules_register_defaultwpRole', '' ) ) ) ); ?></strong></p>
 		<p id="skautis_integration_modules_register_rulesSetHelp">
 			<strong><?php esc_html_e( 'The rules are evaluated from top to bottom.', 'skautis-integration' ); ?></strong>

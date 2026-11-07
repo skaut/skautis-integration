@@ -12,7 +12,7 @@ namespace Skautis_Integration\Auth;
 use Skautis_Integration\Vendor\Skautis\SessionAdapter\AdapterInterface;
 
 /**
- * Enables the skautIS library to use WordPress transiens for user session management.
+ * Enables the SkautIS library to use WordPress transiens for user session management.
  */
 class Transient_Session_Adapter implements AdapterInterface {
 	/**
@@ -56,7 +56,7 @@ class Transient_Session_Adapter implements AdapterInterface {
 	}
 
 	/**
-	 * Saves the skautIS login object in a WordPress transient.
+	 * Saves the SkautIS login object in a WordPress transient.
 	 *
 	 * @param string $name The key.
 	 * @param mixed  $object The value.
@@ -68,7 +68,7 @@ class Transient_Session_Adapter implements AdapterInterface {
 	}
 
 	/**
-	 * Checks whether the skautIS login object is present in a WordPress transient.
+	 * Checks whether the SkautIS login object is present in a WordPress transient.
 	 *
 	 * @param string $name The key.
 	 */
@@ -77,7 +77,7 @@ class Transient_Session_Adapter implements AdapterInterface {
 	}
 
 	/**
-	 * Retrieves the skautIS login object from a WordPress transient.
+	 * Retrieves the SkautIS login object from a WordPress transient.
 	 *
 	 * @param string $name The key.
 	 */

@@ -87,7 +87,7 @@ final class Admin {
 		if ( Rules_Init::RULES_TYPE_SLUG === $post_type ) {
 			add_meta_box(
 				SKAUTIS_INTEGRATION_NAME . '_rules_metabox',
-				__( 'skautIS rules', 'skautis-integration' ),
+				__( 'SkautIS rules', 'skautis-integration' ),
 				array( self::class, 'rules_field_content' ),
 				Rules_Init::RULES_TYPE_SLUG
 			);
@@ -141,7 +141,7 @@ final class Admin {
 	 * @return array<string, string> The updated list.
 	 */
 	public static function add_rules_field_to_revisions( array $fields ): array {
-		$fields[ SKAUTIS_INTEGRATION_NAME . '_rules_data' ] = __( 'skautIS rules', 'skautis-integration' );
+		$fields[ SKAUTIS_INTEGRATION_NAME . '_rules_data' ] = __( 'SkautIS rules', 'skautis-integration' );
 
 		return $fields;
 	}
@@ -193,9 +193,9 @@ final class Admin {
 					<?php
 					if ( ! $this->skautis_gateway->is_initialized() ) {
 						/* translators: 1: Start of link to the settings 2: End of link to the settings */
-						printf( esc_html__( 'Select the skautIS environment in the plugin %1$ssettings%2$s', 'skautis-integration' ), '<a href="' . esc_url( admin_url( 'admin.php?page=' . SKAUTIS_INTEGRATION_NAME ) ) . '">', '</a>' );
+						printf( esc_html__( 'Select the SkautIS environment in the plugin %1$ssettings%2$s', 'skautis-integration' ), '<a href="' . esc_url( admin_url( 'admin.php?page=' . SKAUTIS_INTEGRATION_NAME ) ) . '">', '</a>' );
 					} elseif ( ! $this->skautis_gateway->get_skautis_instance()->getUser()->isLoggedIn( true ) ) {
-						echo '<h4><a href="' . esc_url( $this->wp_login_logout->get_login_url( add_query_arg( 'noWpLogin', true, Helpers::get_current_url() ) ) ) . '">' . esc_html__( 'You must log in to skautIS to manage the conditions', 'skautis-integration' ) . '</a></h4>';
+						echo '<h4><a href="' . esc_url( $this->wp_login_logout->get_login_url( add_query_arg( 'noWpLogin', true, Helpers::get_current_url() ) ) ) . '">' . esc_html__( 'You must log in to SkautIS to manage the conditions', 'skautis-integration' ) . '</a></h4>';
 					} else {
 						echo '<div id="query_builder"></div>';
 					}

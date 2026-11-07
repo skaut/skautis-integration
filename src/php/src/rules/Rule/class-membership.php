@@ -15,7 +15,7 @@ use Skautis_Integration\Rules\Rule;
 use Skautis_Integration\Auth\Skautis_Gateway;
 
 /**
- * Rule operator for filtering users based on their skautIS unit membership.
+ * Rule operator for filtering users based on their SkautIS unit membership.
  */
 class Membership implements Rule {
 
@@ -150,7 +150,7 @@ class Membership implements Rule {
 	}
 
 	/**
-	 * Removes special characters ("." and "-") from skautIS unit IDs.
+	 * Removes special characters ("." and "-") from SkautIS unit IDs.
 	 *
 	 * TODO: Duplicated in Role and Func.
 	 *
@@ -172,7 +172,7 @@ class Membership implements Rule {
 	/**
 	 * Returns an array of arrays where for each user unit membership ID, there are listed units asssociated with that membership.
 	 *
-	 * @throws \Exception The skautIS API returned an unexpected value.
+	 * @throws \Exception The SkautIS API returned an unexpected value.
 	 *
 	 * @return array<string, array<string>> The membership IDs.
 	 */
@@ -235,7 +235,7 @@ class Membership implements Rule {
 				sprintf(
 					/* translators: 1: Start of a link to the documentation 2: End of the link to the documentation */
 					esc_html__(
-						'Your skautIS account is probably not connected to your person. %1$sFollow this guide%2$s',
+						'Your SkautIS account is probably not connected to your person. %1$sFollow this guide%2$s',
 						'skautis-integration'
 					),
 					'<a href="https://napoveda.skaut.cz/skautis/informacni-system/uzivatel/propojeni-uctu">',

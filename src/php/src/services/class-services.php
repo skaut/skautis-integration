@@ -310,7 +310,7 @@ class Services {
 	}
 
 	/**
-	 * Returns whether new users can register with skautIS.
+	 * Returns whether new users can register with SkautIS.
 	 */
 	public static function is_registration_enabled(): bool {
 		return '1' === strval( get_option( SKAUTIS_INTEGRATION_NAME . '_registration_enabled', '0' ) );

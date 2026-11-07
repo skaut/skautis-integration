@@ -1,8 +1,8 @@
 /**
- * The skautIS visibility settings in the block editor.
+ * The SkautIS visibility settings in the block editor.
  *
- * - Every block gets a "skautIS viditelnost" panel in the block sidebar. A block with rules is shown only to users who pass at least one of them.
- * - Posts of the types selected in the module settings get a "skautIS pravidla" panel in the post sidebar, which edits the same post meta as the metabox in the classic editor.
+ * - Every block gets a "SkautIS viditelnost" panel in the block sidebar. A block with rules is shown only to users who pass at least one of them.
+ * - Posts of the types selected in the module settings get a "SkautIS pravidla" panel in the post sidebar, which edits the same post meta as the metabox in the classic editor.
  */
 
 type PostRulesMeta = Array<Record<string, string>>;
@@ -39,7 +39,7 @@ interface Window {
 			wp.components.Notice,
 			{ isDismissible: false, status: 'warning' },
 			__(
-				'You have not created any skautIS rules yet.',
+				'You have not created any SkautIS rules yet.',
 				'skautis-integration'
 			),
 			' ',
@@ -125,11 +125,11 @@ interface Window {
 						title:
 							rules.length > 0
 								? __(
-										'skautIS visibility (restricted)',
+										'SkautIS visibility (restricted)',
 										'skautis-integration'
 									)
 								: __(
-										'skautIS visibility',
+										'SkautIS visibility',
 										'skautis-integration'
 									),
 					},
@@ -327,7 +327,7 @@ interface Window {
 			{
 				className: 'skautis-integration-post-rules',
 				name: 'skautis-integration-post-rules',
-				title: __('skautIS rules', 'skautis-integration'),
+				title: __('SkautIS rules', 'skautis-integration'),
 			},
 			...parentRules,
 			data.rules.length === 0

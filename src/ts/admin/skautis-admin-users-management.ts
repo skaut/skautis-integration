@@ -1,5 +1,5 @@
 /**
- * Filters the table of skautIS users and shows the panel for connecting a user below its row.
+ * Filters the table of SkautIS users and shows the panel for connecting a user below its row.
  */
 wp.domReady(() => {
 	const table = document.querySelector<HTMLTableElement>(
@@ -59,7 +59,7 @@ wp.domReady(() => {
 			row.querySelector('.skautis-users-name')?.textContent ?? '';
 		if (panelTitle !== null) {
 			panelTitle.textContent = wp.i18n.sprintf(
-				/* Translators: %s: The name of the skautIS user */
+				/* Translators: %s: The name of the SkautIS user */
 				wp.i18n.__(
 					'Connect %s to a WordPress account',
 					'skautis-integration'

@@ -106,7 +106,7 @@ class Helpers {
 	}
 
 	/**
-	 * Returns the path of the skautIS login page relative to the site URL.
+	 * Returns the path of the SkautIS login page relative to the site URL.
 	 *
 	 * @return string The path without leading and trailing slashes, or an empty string if the login page is disabled.
 	 */
@@ -167,7 +167,7 @@ class Helpers {
 	}
 
 	/**
-	 * Returns the capability level needed to manage skautIS options.
+	 * Returns the capability level needed to manage SkautIS options.
 	 *
 	 * TODO: This function just returns "manage_options".
 	 */
@@ -183,7 +183,7 @@ class Helpers {
 	}
 
 	/**
-	 * Returns whether the current user has the capability level needed to manage skautIS options.
+	 * Returns whether the current user has the capability level needed to manage SkautIS options.
 	 */
 	public static function user_is_skautis_manager(): bool {
 		return current_user_can( self::get_skautis_manager_capability() );

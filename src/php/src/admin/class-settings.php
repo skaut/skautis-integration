@@ -112,16 +112,16 @@ final class Settings {
 		if ( Skautis_Gateway::PROD_ENV === $env_type ) {
 			if ( '' === strval( get_option( 'skautis_integration_appid_prod', '' ) ) ) {
 				/* translators: 1: Start of a link to the settings 2: End of the link to the settings */
-				Helpers::show_admin_notice( sprintf( __( 'Enter the App ID of the production version of skautIS in the plugin %1$ssettings%2$s', 'skautis-integration' ), '<a href="' . esc_url( self::get_tab_url( 'general' ) ) . '">', '</a>' ), 'warning', 'toplevel-page-' . SKAUTIS_INTEGRATION_NAME );
+				Helpers::show_admin_notice( sprintf( __( 'Enter the App ID of the production version of SkautIS in the plugin %1$ssettings%2$s', 'skautis-integration' ), '<a href="' . esc_url( self::get_tab_url( 'general' ) ) . '">', '</a>' ), 'warning', 'toplevel-page-' . SKAUTIS_INTEGRATION_NAME );
 			}
 		} elseif ( Skautis_Gateway::TEST_ENV === $env_type ) {
 			if ( '' === strval( get_option( 'skautis_integration_appid_test', '' ) ) ) {
 				/* translators: 1: Start of a link to the settings 2: End of the link to the settings */
-				Helpers::show_admin_notice( sprintf( __( 'Enter the App ID of the test version of skautIS in the plugin %1$ssettings%2$s', 'skautis-integration' ), '<a href="' . esc_url( self::get_tab_url( 'general' ) ) . '">', '</a>' ), 'warning', 'toplevel-page-' . SKAUTIS_INTEGRATION_NAME );
+				Helpers::show_admin_notice( sprintf( __( 'Enter the App ID of the test version of SkautIS in the plugin %1$ssettings%2$s', 'skautis-integration' ), '<a href="' . esc_url( self::get_tab_url( 'general' ) ) . '">', '</a>' ), 'warning', 'toplevel-page-' . SKAUTIS_INTEGRATION_NAME );
 			}
 		} else {
 				/* translators: 1: Start of a link to the settings 2: End of the link to the settings */
-			Helpers::show_admin_notice( sprintf( __( 'Select the skautIS environment in the plugin %1$ssettings%2$s', 'skautis-integration' ), '<a href="' . esc_url( self::get_tab_url( 'general' ) ) . '">', '</a>' ), 'warning', 'toplevel-page-' . SKAUTIS_INTEGRATION_NAME );
+			Helpers::show_admin_notice( sprintf( __( 'Select the SkautIS environment in the plugin %1$ssettings%2$s', 'skautis-integration' ), '<a href="' . esc_url( self::get_tab_url( 'general' ) ) . '">', '</a>' ), 'warning', 'toplevel-page-' . SKAUTIS_INTEGRATION_NAME );
 		}
 	}
 
@@ -176,7 +176,7 @@ final class Settings {
 	 */
 	public function setup_setting_page() {
 		add_menu_page(
-			__( 'skautIS settings', 'skautis-integration' ),
+			__( 'SkautIS settings', 'skautis-integration' ),
 			__( 'SkautIS', 'skautis-integration' ),
 			Helpers::get_skautis_manager_capability(),
 			SKAUTIS_INTEGRATION_NAME,
@@ -186,7 +186,7 @@ final class Settings {
 
 		add_submenu_page(
 			SKAUTIS_INTEGRATION_NAME,
-			__( 'skautIS settings', 'skautis-integration' ),
+			__( 'SkautIS settings', 'skautis-integration' ),
 			__( 'Settings', 'skautis-integration' ),
 			Helpers::get_skautis_manager_capability(),
 			SKAUTIS_INTEGRATION_NAME,
@@ -330,7 +330,7 @@ final class Settings {
 		}
 
 		$current_tab = self::get_current_tab();
-		self::print_page_header( __( 'skautIS settings', 'skautis-integration' ), $current_tab );
+		self::print_page_header( __( 'SkautIS settings', 'skautis-integration' ), $current_tab );
 		?>
 		<div class="skautis-settings-body">
 			<?php settings_errors(); ?>
@@ -346,7 +346,7 @@ final class Settings {
 	}
 
 	/**
-	 * Checks that the App ID works with skautIS.
+	 * Checks that the App ID works with SkautIS.
 	 *
 	 * @param string $value The App ID.
 	 *
@@ -356,7 +356,7 @@ final class Settings {
 	 */
 	public function test_app_id( $value ) {
 		/* phpcs:ignore Squiz.PHP.CommentedOutCode.Found
-		 * Disabled on 2025-09 due to errors in skautIS.
+		 * Disabled on 2025-09 due to errors in SkautIS.
 		if ( ! $this->skautis_gateway->test_active_app_id() ) {
 			add_settings_error( 'general', 'api_invalid', esc_html__( 'The App ID is not valid for this site.', 'skautis-integration' ), 'notice-error' );
 		}
@@ -372,7 +372,7 @@ final class Settings {
 	public function setup_setting_fields() {
 		add_settings_section(
 			'skautis_integration_setting',
-			__( 'Connection to skautIS', 'skautis-integration' ),
+			__( 'Connection to SkautIS', 'skautis-integration' ),
 			static function () {
 				/* translators: 1: Start of a link to the documentation 2: End of the link to the documentation */
 				echo '<p>' . sprintf( esc_html__( 'You can find instructions for setting up the plugin and getting an App ID in the %1$shelp%2$s.', 'skautis-integration' ), '<a href="' . esc_url( self::HELP_PAGE_URL ) . '" target="_blank">', '</a>' ) . '</p>';
@@ -446,7 +446,7 @@ final class Settings {
 			SKAUTIS_INTEGRATION_NAME . '_login',
 			__( 'Login page', 'skautis-integration' ),
 			static function () {
-				echo '<p>' . esc_html__( 'The address of the page where users can log in with skautIS.', 'skautis-integration' ) . '</p>';
+				echo '<p>' . esc_html__( 'The address of the page where users can log in with SkautIS.', 'skautis-integration' ) . '</p>';
 			},
 			SKAUTIS_INTEGRATION_NAME . '_login',
 			self::get_card_section_args()
@@ -473,7 +473,7 @@ final class Settings {
 
 		add_settings_field(
 			SKAUTIS_INTEGRATION_NAME . '_allowUsersDisconnectFromSkautis',
-			__( 'Disconnecting from skautIS', 'skautis-integration' ),
+			__( 'Disconnecting from SkautIS', 'skautis-integration' ),
 			array( self::class, 'field_allow_users_disconnect' ),
 			SKAUTIS_INTEGRATION_NAME . '_login',
 			SKAUTIS_INTEGRATION_NAME . '_login_accounts'
@@ -547,7 +547,7 @@ final class Settings {
 	 */
 	public static function field_app_id_test() {
 		echo '<input name="skautis_integration_appid_test" id="skautis_integration_appid_test" type="text" value="' . esc_attr( get_option( 'skautis_integration_appid_test' ) ) . '" class="regular-text" />';
-		echo '<p class="description">' . esc_html__( 'Use the test version of skautIS only for trying out the plugin.', 'skautis-integration' ) . '</p>';
+		echo '<p class="description">' . esc_html__( 'Use the test version of SkautIS only for trying out the plugin.', 'skautis-integration' ) . '</p>';
 	}
 
 	/**
@@ -586,19 +586,19 @@ final class Settings {
 	}
 
 	/**
-	 * Prints the settings field for dis/allowing users to disconnect their skautIS account from their WordPress account.
+	 * Prints the settings field for dis/allowing users to disconnect their SkautIS account from their WordPress account.
 	 *
 	 * @return void
 	 */
 	public static function field_allow_users_disconnect() {
 		?>
 		<fieldset>
-			<legend class="screen-reader-text"><?php esc_html_e( 'Disconnecting from skautIS', 'skautis-integration' ); ?></legend>
+			<legend class="screen-reader-text"><?php esc_html_e( 'Disconnecting from SkautIS', 'skautis-integration' ); ?></legend>
 			<label>
 				<input name="<?php echo esc_attr( SKAUTIS_INTEGRATION_NAME ); ?>_allowUsersDisconnectFromSkautis"
 					id="skautis_integration_allowUsersDisconnectFromSkautis" type="checkbox" value="1"
 					<?php checked( get_option( SKAUTIS_INTEGRATION_NAME . '_allowUsersDisconnectFromSkautis' ) === '1' ); ?>/>
-				<?php esc_html_e( 'Allows users to disconnect their account from skautIS.', 'skautis-integration' ); ?>
+				<?php esc_html_e( 'Allows users to disconnect their account from SkautIS.', 'skautis-integration' ); ?>
 			</label>
 			<p class="description"><?php esc_html_e( 'This setting does not affect users with the administrator role.', 'skautis-integration' ); ?></p>
 		</fieldset>
@@ -618,7 +618,7 @@ final class Settings {
 				<input name="<?php echo esc_attr( SKAUTIS_INTEGRATION_NAME ); ?>_checkUserPrivilegesIfLoginBySkautis"
 					id="skautis_integration_checkUserPrivilegesIfLoginBySkautis" type="checkbox" value="1"
 					<?php checked( get_option( SKAUTIS_INTEGRATION_NAME . '_checkUserPrivilegesIfLoginBySkautis' ) === '1' ); ?>/>
-				<?php esc_html_e( 'When a user logs in with skautIS, check whether they still meet the registration conditions.', 'skautis-integration' ); ?>
+				<?php esc_html_e( 'When a user logs in with SkautIS, check whether they still meet the registration conditions.', 'skautis-integration' ); ?>
 			</label>
 			<p class="description"><?php esc_html_e( 'This setting does not affect users with the administrator role.', 'skautis-integration' ); ?></p>
 		</fieldset>
