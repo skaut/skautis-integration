@@ -103,7 +103,7 @@ final class Frontend {
 		<div class="wp-core-ui">
 			<p style="margin-bottom: 0.3em;">
 				<a class="button button-primary button-hero button-skautis"
-				   href="' . $this->wp_login_logout->get_login_url( $login_url_args ) . '">' . __( 'Log in with skautIS', 'skautis-integration' ) . '</a>
+				   href="' . esc_url( $this->wp_login_logout->get_login_url( $login_url_args ) ) . '">' . esc_html__( 'Log in with skautIS', 'skautis-integration' ) . '</a>
 			</p>
 		</div>
 		<br/>
@@ -114,14 +114,14 @@ final class Frontend {
 	 * Returns HTML code for the frontend message telling the user they need to log in to SkautIS to view the content.
 	 */
 	public static function get_login_required_message(): string {
-		return '<p>' . __( 'To view this content you must be logged in skautIS', 'skautis-integration' ) . '</p>';
+		return '<p>' . esc_html__( 'To view this content you must be logged in skautIS', 'skautis-integration' ) . '</p>';
 	}
 
 	/**
 	 * Returns HTML code for the frontend message telling the user they didn't pass the visibility rules.
 	 */
 	public static function get_unauthorized_message(): string {
-		return '<p>' . __( 'You do not have permission to access this content', 'skautis-integration' ) . '</p>';
+		return '<p>' . esc_html__( 'You do not have permission to access this content', 'skautis-integration' ) . '</p>';
 	}
 
 	/**
