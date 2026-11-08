@@ -1,0 +1,91 @@
+---
+name: "Test ZIP"
+"on":
+  push:
+    branches:
+      - master
+      - test/all-fixes
+  pull_request:
+  workflow_dispatch:
+env:
+  php-version: 8.4
+  cache-version: 1
+jobs:
+  zip:
+    name: "Build the installable ZIP"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v7
+
+      - name: "Setup PHP"
+        uses: shivammathur/setup-php@2.40.0
+        with:
+          php-version: ${{ env.php-version }}
+          coverage: none
+
+      - name: "Cache Composer dependencies"
+        uses: actions/cache@v6
+        with:
+          path: "~/.composer/cache"
+          key: >-
+            composer-dependencies-${{ runner.os }}-${{ env.cache-version }}-${{
+            hashFiles('composer.json') }}
+          restore-keys: |
+            composer-dependencies-${{ runner.os }}-${{ env.cache-version }}-${{ hashFiles('composer.json') }}
+            composer-dependencies-${{ runner.os }}-${{ env.cache-version }}-
+
+      - name: "Install Composer dependencies"
+        run: |
+          composer install -n --prefer-dist
+
+      - name: "Cache NPM dependencies"
+        uses: actions/cache@v6
+        with:
+          path: "~/.npm"
+          key: >-
+            npm-dependencies-${{ runner.os }}-${{ env.cache-version }}-${{
+            hashFiles('package.json') }}
+          restore-keys: |
+            npm-dependencies-${{ runner.os }}-${{ env.cache-version }}-${{ hashFiles('package.json') }}
+            npm-dependencies-${{ runner.os }}-${{ env.cache-version }}-
+
+      - name: "Install NPM dependencies"
+        run: |
+          npm ci
+
+      - name: "Build"
+        env:
+          NODE_ENV: "production"
+        run: |
+          npm run build
+
+      # WordPress installs an uploaded ZIP into the folder that the ZIP contains, so the plugin
+      # files go into a "skautis-integration" folder. This replaces an installed copy of the plugin.
+      - name: "Prepare the plugin folder"
+        id: package
+        run: |
+          mkdir -p package
+          cp -r dist package/skautis-integration
+          echo "name=skautis-integration-$(date -u +%Y%m%d)-${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
+
+      - name: "Upload the ZIP"
+        id: upload
+        uses: actions/upload-artifact@v7
+        with:
+          name: ${{ steps.package.outputs.name }}
+          path: package
+          retention-days: 30
+
+      - name: "Add the download link to the summary"
+        env:
+          ARTIFACT_NAME: ${{ steps.package.outputs.name }}
+          ARTIFACT_URL: ${{ steps.upload.outputs.artifact-url }}
+        run: |
+          {
+            echo "### Test ZIP"
+            echo
+            echo "[Download ${ARTIFACT_NAME}.zip](${ARTIFACT_URL})"
+            echo
+            echo "Install it in WordPress with Plugins → Add New → Upload Plugin and let it replace the current version."
+          } >> "$GITHUB_STEP_SUMMARY"
