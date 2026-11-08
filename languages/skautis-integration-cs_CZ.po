@@ -473,7 +473,7 @@ msgid "Select a rule…"
 msgstr "Vyberte pravidlo…"
 
 #: src/modules/Register/admin/class-settings.php:72
-#: src/modules/Register/admin/class-settings.php:159
+#: src/modules/Register/admin/class-settings.php:158
 msgid "Allow registration with SkautIS"
 msgstr "Povolit registraci přes SkautIS"
 
@@ -481,22 +481,17 @@ msgstr "Povolit registraci přes SkautIS"
 msgid "Default role after registration with SkautIS"
 msgstr "Výchozí úroveň po registraci uživatele přes SkautIS"
 
-#: src/modules/Register/admin/class-settings.php:89
-#: src/modules/Register/admin/class-settings.php:191
+#: src/modules/Register/admin/class-settings.php:92
+#: src/modules/Register/admin/class-settings.php:190
 msgid "After a successful registration, send e-mails to:"
 msgstr "Po úspěšné registraci uživatele poslat emaily:"
 
-#: src/modules/Register/admin/class-settings.php:97
+#: src/modules/Register/admin/class-settings.php:100
 #: src/rules/admin/class-columns.php:280
 msgid "Registration rules"
 msgstr "Pravidla registrace"
 
-#: src/modules/Register/admin/class-settings.php:105
-#: src/rules/class-rules-init.php:97
-msgid "Rules"
-msgstr "Pravidla"
-
-#: src/modules/Register/admin/class-settings.php:164
+#: src/modules/Register/admin/class-settings.php:163
 msgid ""
 "Allows users with a SkautIS account to create an account on this site. The "
 "registration can be limited by the rules below."
@@ -504,39 +499,39 @@ msgstr ""
 "Umožní uživatelům se SkautIS účtem vytvořit si účet na tomto webu. "
 "Registraci lze omezit pravidly níže."
 
-#: src/modules/Register/admin/class-settings.php:196
+#: src/modules/Register/admin/class-settings.php:195
 msgid "Nobody"
 msgstr "Nikomu"
 
-#: src/modules/Register/admin/class-settings.php:203
+#: src/modules/Register/admin/class-settings.php:202
 msgid "The administrator (information about the new user)"
 msgstr "Administrátorovi (info o registraci nového uživatele)"
 
-#: src/modules/Register/admin/class-settings.php:210
+#: src/modules/Register/admin/class-settings.php:209
 msgid "The user (login details)"
 msgstr "Uživateli (přístupové údaje)"
 
-#: src/modules/Register/admin/class-settings.php:217
+#: src/modules/Register/admin/class-settings.php:216
 msgid "Both the administrator and the user"
 msgstr "Administrátorovi i uživateli"
 
-#: src/modules/Register/admin/class-settings.php:230
+#: src/modules/Register/admin/class-settings.php:229
 msgid "Only users who pass the following rules will be able to register."
 msgstr ""
 "Nastavením omezíte registraci uživatelů pouze při splnění následujících "
 "pravidel."
 
-#: src/modules/Register/admin/class-settings.php:231
+#: src/modules/Register/admin/class-settings.php:230
 msgid "You can add rules in the section"
 msgstr "Pravidla můžete přidávat v sekci"
 
-#: src/modules/Register/admin/class-settings.php:232
+#: src/modules/Register/admin/class-settings.php:231
 #: src/rules/class-rules-init.php:54 src/rules/class-rules-init.php:55
 #: src/rules/class-rules-init.php:59
 msgid "Manage rules"
 msgstr "Správa pravidel"
 
-#: src/modules/Register/admin/class-settings.php:234
+#: src/modules/Register/admin/class-settings.php:233
 msgid ""
 "If left empty, all users will be able to register with SkautIS. Their "
 "default role will be: "
@@ -544,11 +539,11 @@ msgstr ""
 "Ponecháte-li prázdné - budou se moci přes SkautIS registrovat všichni "
 "uživatelé. Jejich výchozí úroveň pak bude: "
 
-#: src/modules/Register/admin/class-settings.php:237
+#: src/modules/Register/admin/class-settings.php:236
 msgid "The rules are evaluated from top to bottom."
 msgstr "Pravidla se vyhodnocují shora dolů."
 
-#: src/modules/Register/admin/class-settings.php:238
+#: src/modules/Register/admin/class-settings.php:237
 msgid ""
 "Once a rule is passed, the following rules are not evaluated. Therefore, "
 "keep the more specific rules, which apply to a narrower group of users, at "
@@ -558,23 +553,23 @@ msgstr ""
 "nevyhodnocují. Proto udržujte pořadí pravidel takové, aby nahoře byly vždy "
 "specifičtější pravidla, která platí pro užší skupinu uživatelů."
 
-#: src/modules/Register/admin/class-settings.php:257
+#: src/modules/Register/admin/class-settings.php:254
 msgid "If the rule is passed:"
 msgstr "Při splnění pravidla:"
 
-#: src/modules/Register/admin/class-settings.php:268
+#: src/modules/Register/admin/class-settings.php:264
 msgid "Assign the user the role:"
 msgstr "Přiřadit uživateli úroveň:"
 
-#: src/modules/Register/admin/class-settings.php:275
+#: src/modules/Register/admin/class-settings.php:270
 #: src/modules/Visibility/admin/class-metabox.php:191
 msgid "Remove"
 msgstr "Odstranit"
 
-#: src/modules/Register/admin/class-settings.php:278
-#: src/modules/Visibility/admin/class-metabox.php:194
-msgid "Add"
-msgstr "Přidat"
+#: src/modules/Register/admin/class-settings.php:273
+#: src/rules/class-rules-init.php:61
+msgid "Add rule"
+msgstr "Přidat pravidlo"
 
 #. translators: 1: Start of the link back 2: End of the link back
 #: src/modules/Register/class-register.php:221
@@ -665,6 +660,10 @@ msgstr ""
 #: src/modules/Visibility/admin/class-metabox.php:177
 msgid "If left empty, the content will be visible to all users."
 msgstr "Ponecháte-li prázdné - obsah bude viditelný pro všechny uživatele."
+
+#: src/modules/Visibility/admin/class-metabox.php:194
+msgid "Add"
+msgstr "Přidat"
 
 #. translators: the type of the SkautIS unit
 #. Translators: %s: The plural name of the post type
@@ -893,10 +892,6 @@ msgstr "Nadřazené pravidlo"
 msgid "Add new rule"
 msgstr "Přidat nové pravidlo"
 
-#: src/rules/class-rules-init.php:61
-msgid "Add rule"
-msgstr "Přidat pravidlo"
-
 #: src/rules/class-rules-init.php:62
 msgid "New rule"
 msgstr "Nové pravidlo"
@@ -964,6 +959,10 @@ msgstr "Navigace v seznamu pravidel"
 #: src/rules/class-rules-init.php:78
 msgid "Filter rules list"
 msgstr "Filtrovat pravidla"
+
+#: src/rules/class-rules-init.php:97
+msgid "Rules"
+msgstr "Pravidla"
 
 #: src/rules/class-rules-init.php:144
 msgid "Enter the rule name"

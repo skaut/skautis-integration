@@ -81,7 +81,10 @@ final class Settings {
 			array( self::class, 'field_wp_role' ),
 			SKAUTIS_INTEGRATION_NAME . '_modules_register',
 			SKAUTIS_INTEGRATION_NAME . '_modules_register',
-			array( 'label_for' => 'skautis_integration_modules_register_rules_wpRole' )
+			array(
+				'label_for' => 'skautis_integration_modules_register_rules_wpRole',
+				'class'     => 'skautis-register-default-role',
+			)
 		);
 
 		add_settings_field(
@@ -95,17 +98,13 @@ final class Settings {
 		add_settings_section(
 			SKAUTIS_INTEGRATION_NAME . '_modules_register_rules',
 			__( 'Registration rules', 'skautis-integration' ),
-			array( self::class, 'print_rules_section_description' ),
+			// The rules use the whole width of the card, so they are printed in the section instead of a settings field.
+			function () {
+				self::print_rules_section_description();
+				$this->field_rules();
+			},
 			SKAUTIS_INTEGRATION_NAME . '_modules_register',
 			Main_Settings::get_card_section_args()
-		);
-
-		add_settings_field(
-			SKAUTIS_INTEGRATION_NAME . '_modules_register_rules',
-			__( 'Rules', 'skautis-integration' ),
-			array( $this, 'field_rules' ),
-			SKAUTIS_INTEGRATION_NAME . '_modules_register',
-			SKAUTIS_INTEGRATION_NAME . '_modules_register_rules'
 		);
 
 		register_setting(
@@ -247,35 +246,31 @@ final class Settings {
 	 */
 	public function field_rules() {
 		?>
-		<div id="repeater">
+		<div id="repeater" class="skautis-register-rules">
 			<div data-repeater-list="<?php echo esc_attr( SKAUTIS_INTEGRATION_NAME ); ?>_modules_register_rules">
-				<div data-repeater-item>
-
-					<span class="dashicons dashicons-move handle" style="vertical-align: middle;"></span>
-
-					<label for="<?php echo esc_attr( SKAUTIS_INTEGRATION_NAME ); ?>_modules_register_rule">
-						<?php esc_html_e( 'If the rule is passed:', 'skautis-integration' ); ?>
+				<div data-repeater-item class="skautis-register-rule">
+					<span class="dashicons dashicons-move handle" aria-hidden="true"></span>
+					<label class="skautis-register-rule-field">
+						<span><?php esc_html_e( 'If the rule is passed:', 'skautis-integration' ); ?></span>
+						<select name="rule" class="rule select2">
+							<?php
+							foreach ( $this->rules_manager->get_all_rules() as $rule ) {
+								echo '<option value="' . esc_attr( strval( $rule->ID ) ) . '">' . esc_html( $rule->post_title ) . '</option>';
+							}
+							?>
+						</select>
 					</label>
-					<select name="rule" class="rule select2">
-						<?php
-						foreach ( $this->rules_manager->get_all_rules() as $rule ) {
-							echo '<option value="' . esc_attr( strval( $rule->ID ) ) . '">' . esc_html( $rule->post_title ) . '</option>';
-						}
-						?>
-					</select>
-
-					<label for="<?php echo esc_attr( SKAUTIS_INTEGRATION_NAME ); ?>_modules_register_role">
-						<?php esc_html_e( 'Assign the user the role:', 'skautis-integration' ); ?>
+					<label class="skautis-register-rule-field">
+						<span><?php esc_html_e( 'Assign the user the role:', 'skautis-integration' ); ?></span>
+						<select name="role">
+							<?php wp_dropdown_roles( get_option( SKAUTIS_INTEGRATION_NAME . '_modules_register_defaultwpRole' ) ); ?>
+						</select>
 					</label>
-					<select name="role" id="<?php echo esc_attr( SKAUTIS_INTEGRATION_NAME ); ?>_modules_register_role">
-						<?php wp_dropdown_roles( get_option( SKAUTIS_INTEGRATION_NAME . '_modules_register_defaultwpRole' ) ); ?>
-					</select>
-
 					<input data-repeater-delete type="button" class="button"
 						value="<?php esc_attr_e( 'Remove', 'skautis-integration' ); ?>"/>
 				</div>
 			</div>
-			<input data-repeater-create type="button" class="button" value="<?php esc_attr_e( 'Add', 'skautis-integration' ); ?>"/>
+			<p><input data-repeater-create type="button" class="button" value="<?php esc_attr_e( 'Add rule', 'skautis-integration' ); ?>"/></p>
 		</div>
 		<?php
 	}
