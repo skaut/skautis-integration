@@ -44,12 +44,12 @@
 .skautis-settings-tabs {
 	display: flex;
 	flex-wrap: wrap;
-	margin: 8px -16px 0;
+	margin: 8px 0 0;
 }
 
 .skautis-settings-tab {
 	display: block;
-	margin: 0 16px;
+	margin: 0 32px 0 0;
 	padding: 8px 0 16px;
 	color: inherit;
 	text-decoration: none;
@@ -66,14 +66,14 @@
 }
 
 .skautis-settings-body {
-	max-width: 960px;
+	max-width: 1600px;
 	margin: 0 20px;
 }
 
 /* WordPress moves the notices below the header. */
 .skautis-settings-header ~ .notice {
 	box-sizing: border-box;
-	max-width: 960px;
+	max-width: 1600px;
 	margin: 0 20px 24px;
 }
 
