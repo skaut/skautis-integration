@@ -14,6 +14,8 @@ use Skautis_Integration\Rules\Rules_Manager;
 
 /**
  * Hides individual blocks based on the SkautIS rules selected in the block settings.
+ *
+ * @phan-constructor-used-for-side-effects
  */
 final class Block_Visibility {
 

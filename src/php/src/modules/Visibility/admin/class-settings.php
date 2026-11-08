@@ -9,8 +9,6 @@ declare( strict_types=1 );
 
 namespace Skautis_Integration\Modules\Visibility\Admin;
 
-use Skautis_Integration\Admin\Settings as Main_Settings;
-
 /**
  * Registers, handles and shows all settings for the Visibility module.
  *

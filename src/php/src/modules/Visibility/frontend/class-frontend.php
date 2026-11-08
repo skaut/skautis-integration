@@ -409,7 +409,7 @@ final class Frontend {
 				if ( is_null( $user_is_logged_in_skautis ) ) {
 					$user_is_logged_in_skautis = $this->skautis_login->is_user_logged_in_skautis();
 				}
-				if ( $user_is_logged_in_skautis && $this->rules_manager->check_if_user_passed_rules( $rules ) ) {
+				if ( true === $user_is_logged_in_skautis && $this->rules_manager->check_if_user_passed_rules( $rules ) ) {
 					continue;
 				}
 				if ( 'content' !== $rules_group['visibilityMode'] ) {
@@ -463,7 +463,7 @@ final class Frontend {
 	/**
 	 * Removes comments of restricted posts from comment feeds.
 	 *
-	 * Comment feeds are loaded by WP_Query directly, without passing through the `the_comments` filter.
+	 * Comment feeds are loaded by WP_Query directly, without passing through the `the_comments` filter. The WordPress stubs do not declare the comment properties of WP_Query, so their uses are suppressed.
 	 *
 	 * @return void
 	 */
@@ -474,14 +474,16 @@ final class Frontend {
 			return;
 		}
 
-		// The stubs do not declare the comment properties of WP_Query.
+		// @phan-suppress-next-line PhanUndeclaredProperty
 		$comments = $wp_query->comments; // @phpstan-ignore property.notFound
 		if ( ! is_array( $comments ) || empty( $comments ) ) {
 			return;
 		}
 
-		$comments                = $this->filter_comments( $comments );
-		$wp_query->comments      = $comments; // @phpstan-ignore property.notFound
+		$comments = $this->filter_comments( $comments );
+		// @phan-suppress-next-line PhanUndeclaredProperty
+		$wp_query->comments = $comments; // @phpstan-ignore property.notFound
+		// @phan-suppress-next-line PhanUndeclaredProperty
 		$wp_query->comment_count = count( $comments ); // @phpstan-ignore property.notFound
 	}
 

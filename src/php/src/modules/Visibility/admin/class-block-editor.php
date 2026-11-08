@@ -20,6 +20,8 @@ use Skautis_Integration\Utils\Helpers;
  * Adds the visibility settings to the block editor.
  *
  * The rules for a whole post are edited in a panel in the post sidebar and the rules for individual blocks in the block sidebar.
+ *
+ * @phan-constructor-used-for-side-effects
  */
 final class Block_Editor {
 
@@ -108,8 +110,6 @@ final class Block_Editor {
 	 * @return void
 	 */
 	public function register_meta() {
-		$auth_callback = array( self::class, 'can_edit_rules' );
-
 		foreach ( $this->post_types as $post_type ) {
 			register_post_meta(
 				$post_type,
@@ -118,7 +118,7 @@ final class Block_Editor {
 					'type'          => 'array',
 					'single'        => true,
 					'default'       => array(),
-					'auth_callback' => $auth_callback,
+					'auth_callback' => array( self::class, 'can_edit_rules' ),
 					'show_in_rest'  => array(
 						'schema'           => array(
 							'type'  => 'array',
@@ -141,7 +141,7 @@ final class Block_Editor {
 					'type'          => 'string',
 					'single'        => true,
 					'default'       => '',
-					'auth_callback' => $auth_callback,
+					'auth_callback' => array( self::class, 'can_edit_rules' ),
 					'show_in_rest'  => array(
 						'schema'           => array(
 							'type' => 'string',
@@ -158,7 +158,7 @@ final class Block_Editor {
 					'type'          => 'string',
 					'single'        => true,
 					'default'       => '',
-					'auth_callback' => $auth_callback,
+					'auth_callback' => array( self::class, 'can_edit_rules' ),
 					'show_in_rest'  => array(
 						'schema'           => array(
 							'type' => 'string',

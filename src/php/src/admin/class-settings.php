@@ -86,7 +86,7 @@ final class Settings {
 			)
 		);
 
-		add_action( 'admin_menu', array( $this, 'setup_setting_page' ), 5 );
+		add_action( 'admin_menu', array( self::class, 'setup_setting_page' ), 5 );
 		// The old pages no longer exist, so WordPress denies the access before admin_init.
 		add_action( 'admin_page_access_denied', array( self::class, 'redirect_old_pages' ) );
 		add_action( 'admin_enqueue_scripts', array( self::class, 'enqueue_styles' ) );
@@ -174,7 +174,7 @@ final class Settings {
 	 *
 	 * @return void
 	 */
-	public function setup_setting_page() {
+	public static function setup_setting_page() {
 		add_menu_page(
 			__( 'SkautIS settings', 'skautis-integration' ),
 			__( 'SkautIS', 'skautis-integration' ),
