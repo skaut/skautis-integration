@@ -25,11 +25,25 @@ class Columns {
 	const MAX_LISTED_POSTS = 5;
 
 	/**
-	 * The usage of all rules, computed once per request.
+	 * The posts that use each rule, in the form `rule ID => post ID => true`. Computed once per request.
 	 *
-	 * @var array<int, array{posts: array<int, true>, blocks: int, registration: bool}>|null
+	 * @var array<int, array<int, true>>|null
 	 */
-	private static $usage = null;
+	private static $usage_posts = null;
+
+	/**
+	 * The number of blocks that use each rule, by the rule ID.
+	 *
+	 * @var array<int, int>
+	 */
+	private static $usage_blocks = array();
+
+	/**
+	 * The rules used in the registration rules, in the form `rule ID => true`.
+	 *
+	 * @var array<int, true>
+	 */
+	private static $usage_registration = array();
 
 	/**
 	 * Intializes all hooks used by the object.
@@ -132,65 +146,43 @@ class Columns {
 	}
 
 	/**
-	 * Adds a rule usage to the usage list.
+	 * Records the blocks with rules in a list of blocks, including the inner blocks.
 	 *
-	 * @param array<int, array{posts: array<int, true>, blocks: int, registration: bool}> $usage The usage list.
-	 * @param mixed                                                                       $rule_id The rule ID.
+	 * @param array<mixed> $blocks The parsed blocks.
+	 * @param int          $post_id The post with the blocks.
 	 *
-	 * @return array<int, array{posts: array<int, true>, blocks: int, registration: bool}> The updated list.
+	 * @return void
 	 */
-	private static function ensure_rule( array $usage, $rule_id ): array {
-		$rule_id = intval( $rule_id );
-		if ( ! isset( $usage[ $rule_id ] ) ) {
-			$usage[ $rule_id ] = array(
-				'posts'        => array(),
-				'blocks'       => 0,
-				'registration' => false,
-			);
-		}
-
-		return $usage;
-	}
-
-	/**
-	 * Counts the blocks with rules in a list of blocks, including the inner blocks.
-	 *
-	 * @param array<array<string, mixed>>                                                 $blocks The parsed blocks.
-	 * @param int                                                                         $post_id The post with the blocks.
-	 * @param array<int, array{posts: array<int, true>, blocks: int, registration: bool}> $usage The usage list.
-	 *
-	 * @return array<int, array{posts: array<int, true>, blocks: int, registration: bool}> The updated list.
-	 */
-	private static function add_block_usage( array $blocks, int $post_id, array $usage ): array {
+	private static function add_block_usage( array $blocks, int $post_id ) {
 		foreach ( $blocks as $block ) {
+			if ( ! is_array( $block ) ) {
+				continue;
+			}
 			$attributes = isset( $block['attrs'] ) && is_array( $block['attrs'] ) ? $block['attrs'] : array();
 			if ( isset( $attributes[ Block_Visibility::RULES_ATTRIBUTE ] ) && is_array( $attributes[ Block_Visibility::RULES_ATTRIBUTE ] ) ) {
 				foreach ( array_unique( array_map( 'intval', $attributes[ Block_Visibility::RULES_ATTRIBUTE ] ) ) as $rule_id ) {
-					$usage                                  = self::ensure_rule( $usage, $rule_id );
-					$usage[ $rule_id ]['posts'][ $post_id ] = true;
-					++$usage[ $rule_id ]['blocks'];
+					self::$usage_posts[ $rule_id ][ $post_id ] = true;
+					self::$usage_blocks[ $rule_id ]            = ( self::$usage_blocks[ $rule_id ] ?? 0 ) + 1;
 				}
 			}
 			if ( isset( $block['innerBlocks'] ) && is_array( $block['innerBlocks'] ) ) {
-				$usage = self::add_block_usage( $block['innerBlocks'], $post_id, $usage );
+				self::add_block_usage( $block['innerBlocks'], $post_id );
 			}
 		}
-
-		return $usage;
 	}
 
 	/**
-	 * Returns where all the rules are used: in the rules of posts, in blocks and in the registration rules.
+	 * Finds where all the rules are used: in the rules of posts, in blocks and in the registration rules.
 	 *
-	 * @return array<int, array{posts: array<int, true>, blocks: int, registration: bool}> The usage, keyed by the rule ID.
+	 * @return void
 	 */
-	public static function get_usage(): array {
-		if ( ! is_null( self::$usage ) ) {
-			return self::$usage;
+	private static function find_usage() {
+		if ( ! is_null( self::$usage_posts ) ) {
+			return;
 		}
-		$usage      = array();
-		$post_types = array_values( array_diff( get_post_types(), array( 'revision', Rules_Init::RULES_TYPE_SLUG ) ) );
-		$statuses   = array_values( array_diff( get_post_stati(), array( 'trash', 'auto-draft', 'inherit' ) ) );
+		self::$usage_posts = array();
+		$post_types        = array_values( array_diff( array_filter( get_post_types(), 'is_string' ), array( 'revision', Rules_Init::RULES_TYPE_SLUG ) ) );
+		$statuses          = array_values( array_diff( get_post_stati(), array( 'trash', 'auto-draft', 'inherit' ) ) );
 
 		$posts_with_rules = new \WP_Query(
 			array(
@@ -203,13 +195,11 @@ class Columns {
 				'meta_key'               => SKAUTIS_INTEGRATION_NAME . '_rules', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 			)
 		);
-		foreach ( $posts_with_rules->posts as $post_id ) {
-			$post_id = intval( $post_id );
+		foreach ( $posts_with_rules->posts as $post ) {
+			$post_id = $post instanceof \WP_Post ? $post->ID : intval( $post );
 			foreach ( (array) get_post_meta( $post_id, SKAUTIS_INTEGRATION_NAME . '_rules', true ) as $rule ) {
 				if ( is_array( $rule ) && isset( $rule[ SKAUTIS_INTEGRATION_NAME . '_rules' ] ) ) {
-					$rule_id                                = intval( $rule[ SKAUTIS_INTEGRATION_NAME . '_rules' ] );
-					$usage                                  = self::ensure_rule( $usage, $rule_id );
-					$usage[ $rule_id ]['posts'][ $post_id ] = true;
+					self::$usage_posts[ intval( $rule[ SKAUTIS_INTEGRATION_NAME . '_rules' ] ) ][ $post_id ] = true;
 				}
 			}
 		}
@@ -228,21 +218,15 @@ class Columns {
 		);
 		foreach ( $posts_with_blocks->posts as $post ) {
 			if ( $post instanceof \WP_Post ) {
-				$usage = self::add_block_usage( parse_blocks( $post->post_content ), $post->ID, $usage );
+				self::add_block_usage( parse_blocks( $post->post_content ), $post->ID );
 			}
 		}
 
 		foreach ( (array) get_option( SKAUTIS_INTEGRATION_NAME . '_modules_register_rules', array() ) as $rule ) {
 			if ( is_array( $rule ) && isset( $rule['rule'] ) ) {
-				$rule_id                           = intval( $rule['rule'] );
-				$usage                             = self::ensure_rule( $usage, $rule_id );
-				$usage[ $rule_id ]['registration'] = true;
+				self::$usage_registration[ intval( $rule['rule'] ) ] = true;
 			}
 		}
-
-		self::$usage = $usage;
-
-		return $usage;
 	}
 
 	/**
@@ -253,8 +237,13 @@ class Columns {
 	 * @return void
 	 */
 	public static function print_usage( int $rule_id ) {
-		$usage = self::get_usage()[ $rule_id ] ?? null;
-		if ( is_null( $usage ) || ( 0 === count( $usage['posts'] ) && ! $usage['registration'] ) ) {
+		self::find_usage();
+		$usage = array(
+			'posts'        => self::$usage_posts[ $rule_id ] ?? array(),
+			'blocks'       => self::$usage_blocks[ $rule_id ] ?? 0,
+			'registration' => isset( self::$usage_registration[ $rule_id ] ),
+		);
+		if ( 0 === count( $usage['posts'] ) && ! $usage['registration'] ) {
 			echo '<span class="skautis-rule-unused">' . esc_html__( 'Not used', 'skautis-integration' ) . '</span>';
 			return;
 		}

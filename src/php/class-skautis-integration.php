@@ -28,6 +28,7 @@ class Skautis_Integration {
 
 		require __DIR__ . '/src/admin/class-admin.php';
 		require __DIR__ . '/src/admin/class-settings.php';
+		require __DIR__ . '/src/admin/class-settings-sections.php';
 		require __DIR__ . '/src/admin/class-users.php';
 		require __DIR__ . '/src/admin/class-users-management.php';
 
@@ -230,11 +231,10 @@ class Skautis_Integration {
 	 *
 	 * @return void
 	 */
-	public static function initialize_new_site( $site ) {
-		if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
-			require_once ABSPATH . 'wp-admin/includes/plugin.php';
-		}
-		if ( ! ( $site instanceof \WP_Site ) || ! is_plugin_active_for_network( SKAUTIS_INTEGRATION_PLUGIN_BASENAME ) ) {
+	public static function initialize_new_site( \WP_Site $site ) {
+		// The same check as is_plugin_active_for_network(), which is only available in the administration.
+		$network_plugins = get_site_option( 'active_sitewide_plugins', array() );
+		if ( ! is_array( $network_plugins ) || ! array_key_exists( SKAUTIS_INTEGRATION_PLUGIN_BASENAME, $network_plugins ) ) {
 			return;
 		}
 

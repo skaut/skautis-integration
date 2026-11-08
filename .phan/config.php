@@ -30,6 +30,7 @@ return array(
 		'phpstan-bootstrap.php',
 	),
 	'exclude_analysis_directory_list'           => array(
+		'.phan/stubs/wordpress/',
 		'dist/vendor/',
 		'vendor/skaut/wordpress-stubs/stubs',
 		'vendor/phpmd/phpmd/src',
