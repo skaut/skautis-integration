@@ -63,8 +63,7 @@ final class Settings {
 			static function () {
 				echo '';
 			},
-			SKAUTIS_INTEGRATION_NAME . '_modules_register',
-			Main_Settings::get_card_section_args()
+			SKAUTIS_INTEGRATION_NAME . '_modules_register'
 		);
 
 		add_settings_field(
@@ -103,8 +102,7 @@ final class Settings {
 				self::print_rules_section_description();
 				$this->field_rules();
 			},
-			SKAUTIS_INTEGRATION_NAME . '_modules_register',
-			Main_Settings::get_card_section_args()
+			SKAUTIS_INTEGRATION_NAME . '_modules_register'
 		);
 
 		register_setting(

@@ -241,19 +241,6 @@ final class Settings {
 	}
 
 	/**
-	 * Returns the arguments that show a settings section as a card.
-	 *
-	 * @return array{before_section: string, after_section: string, section_class: string} The arguments for add_settings_section().
-	 */
-	public static function get_card_section_args(): array {
-		return array(
-			'before_section' => '<div class="%s">',
-			'after_section'  => '</div>',
-			'section_class'  => 'skautis-settings-card',
-		);
-	}
-
-	/**
 	 * Redirects the removed settings pages to the tabs of the settings page.
 	 *
 	 * @return void
@@ -337,7 +324,7 @@ final class Settings {
 			<form method="POST" action="<?php echo esc_url( admin_url( 'options.php' ) ); ?>">
 				<?php
 				settings_fields( self::TABS[ $current_tab ] );
-				do_settings_sections( self::TABS[ $current_tab ] );
+				Settings_Sections::print( self::TABS[ $current_tab ] );
 				submit_button();
 				?>
 			</form>
@@ -377,8 +364,7 @@ final class Settings {
 				/* translators: 1: Start of a link to the documentation 2: End of the link to the documentation */
 				echo '<p>' . sprintf( esc_html__( 'You can find instructions for setting up the plugin and getting an App ID in the %1$shelp%2$s.', 'skautis-integration' ), '<a href="' . esc_url( self::HELP_PAGE_URL ) . '" target="_blank">', '</a>' ) . '</p>';
 			},
-			SKAUTIS_INTEGRATION_NAME,
-			self::get_card_section_args()
+			SKAUTIS_INTEGRATION_NAME
 		);
 
 		add_settings_field(
@@ -448,8 +434,7 @@ final class Settings {
 			static function () {
 				echo '<p>' . esc_html__( 'The address of the page where users can log in with SkautIS.', 'skautis-integration' ) . '</p>';
 			},
-			SKAUTIS_INTEGRATION_NAME . '_login',
-			self::get_card_section_args()
+			SKAUTIS_INTEGRATION_NAME . '_login'
 		);
 
 		add_settings_field(
@@ -467,8 +452,7 @@ final class Settings {
 			static function () {
 				echo '';
 			},
-			SKAUTIS_INTEGRATION_NAME . '_login',
-			self::get_card_section_args()
+			SKAUTIS_INTEGRATION_NAME . '_login'
 		);
 
 		add_settings_field(

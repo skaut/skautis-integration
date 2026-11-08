@@ -263,7 +263,7 @@ class Users_Management {
 				<button type="submit" class="button"><?php esc_html_e( 'Search in SkautIS', 'skautis-integration' ); ?></button>
 				<?php
 				if ( '' !== $search ) {
-					echo '<a class="button-link" href="' . esc_url( remove_query_arg( array( 'skautisSearchUsers', SKAUTIS_INTEGRATION_NAME . '_skautis_search_user_nonce' ) ) ) . '">' . esc_html__( 'Show all users', 'skautis-integration' ) . '</a>';
+					echo '<a class="button-link" href="' . esc_url( remove_query_arg( array( 'skautisSearchUsers', SKAUTIS_INTEGRATION_NAME . '_skautis_search_user_nonce' ), Helpers::get_current_url() ) ) . '">' . esc_html__( 'Show all users', 'skautis-integration' ) . '</a>';
 				}
 				?>
 				<p class="description" id="skautis-users-search-description"><?php esc_html_e( 'Typing filters the users below. To find a user who is not listed, search in SkautIS.', 'skautis-integration' ); ?></p>
@@ -370,7 +370,7 @@ class Users_Management {
 											<option value=""><?php esc_html_e( 'Select a user…', 'skautis-integration' ); ?></option>
 											<?php
 											foreach ( $connectable_users as $wp_user ) {
-												$user_name = '' !== $wp_user->display_name ? $wp_user->display_name : $wp_user->user_login;
+												$user_name = '' !== strval( $wp_user->display_name ) ? strval( $wp_user->display_name ) : strval( $wp_user->user_login );
 												echo '<option value="' . absint( $wp_user->ID ) . '">' . esc_html( $user_name ) . '</option>';
 											}
 											?>
