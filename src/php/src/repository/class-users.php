@@ -173,7 +173,7 @@ class Users {
 
 		// The results are filtered by the person ID once more, in case the API only applied the name filter.
 		foreach ( $skautis_users as $skautis_user ) {
-			if ( isset( $skautis_user->ID, $skautis_user->ID_Person ) && intval( $skautis_user->ID_Person ) === $person_id ) {
+			if ( $skautis_user instanceof \stdClass && isset( $skautis_user->ID, $skautis_user->ID_Person ) && intval( $skautis_user->ID_Person ) === $person_id ) {
 				return $skautis_user;
 			}
 		}

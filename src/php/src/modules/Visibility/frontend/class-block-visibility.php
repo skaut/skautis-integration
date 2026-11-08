@@ -14,6 +14,8 @@ use Skautis_Integration\Rules\Rules_Manager;
 
 /**
  * Hides individual blocks based on the SkautIS rules selected in the block settings.
+ *
+ * @phan-constructor-used-for-side-effects
  */
 final class Block_Visibility {
 
@@ -79,9 +81,9 @@ final class Block_Visibility {
 	 *
 	 * The attributes are added to all blocks in the editor by JavaScript, they also need to be registered on the server so that server-side rendered blocks accept them.
 	 *
-	 * @param array<string, mixed> $args The block type arguments.
+	 * @param mixed $args The block type arguments, an array unless another plugin changed them.
 	 *
-	 * @return array<string, mixed> The updated arguments.
+	 * @return mixed The updated arguments.
 	 */
 	public static function add_block_attributes( $args ) {
 		if ( ! is_array( $args ) ) {
@@ -249,8 +251,8 @@ final class Block_Visibility {
 	 *
 	 * This is applied to every rendered block, including inner blocks, so hiding a group hides all of its contents. It also covers the content in the REST API, feeds and excerpts, as all of them render the blocks.
 	 *
-	 * @param string               $block_content The rendered block.
-	 * @param array<string, mixed> $block The parsed block.
+	 * @param string $block_content The rendered block.
+	 * @param mixed  $block The parsed block, an array unless another plugin changed it.
 	 *
 	 * @return string The rendered block, or a replacement if the user doesn't pass the rules.
 	 */

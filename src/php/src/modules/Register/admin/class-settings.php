@@ -9,7 +9,6 @@ declare( strict_types=1 );
 
 namespace Skautis_Integration\Modules\Register\Admin;
 
-use Skautis_Integration\Admin\Settings as Main_Settings;
 use Skautis_Integration\Rules\Rules_Init;
 use Skautis_Integration\Rules\Rules_Manager;
 use Skautis_Integration\Services\Services;
@@ -63,8 +62,7 @@ final class Settings {
 			static function () {
 				echo '';
 			},
-			SKAUTIS_INTEGRATION_NAME . '_modules_register',
-			Main_Settings::get_card_section_args()
+			SKAUTIS_INTEGRATION_NAME . '_modules_register'
 		);
 
 		add_settings_field(
@@ -103,8 +101,7 @@ final class Settings {
 				self::print_rules_section_description();
 				$this->field_rules();
 			},
-			SKAUTIS_INTEGRATION_NAME . '_modules_register',
-			Main_Settings::get_card_section_args()
+			SKAUTIS_INTEGRATION_NAME . '_modules_register'
 		);
 
 		register_setting(

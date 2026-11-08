@@ -359,7 +359,7 @@ final class Frontend {
 	 *
 	 * @param \WP_Post $wp_post The post.
 	 *
-	 * @return array<array{id: int, rules: array<array{skautis-integration_rules?: string}>, includeChildren: string, visibilityMode: string}> The rule groups.
+	 * @return array<array{id: int, rules: array<array{skautis-integration_rules: string}>, includeChildren: string, visibilityMode: string}> The rule groups.
 	 */
 	private static function get_rules_groups( \WP_Post $wp_post ): array {
 		$rules_groups = array();
@@ -368,17 +368,21 @@ final class Frontend {
 			$rules_groups = self::get_parent_rules_affecting_child( $wp_post->ID, $wp_post->post_type );
 		}
 
-		$current_post_rules = (array) get_post_meta( $wp_post->ID, SKAUTIS_INTEGRATION_NAME . '_rules', true );
+		$current_post_rules = array();
+		foreach ( (array) get_post_meta( $wp_post->ID, SKAUTIS_INTEGRATION_NAME . '_rules', true ) as $rule ) {
+			if ( is_array( $rule ) && isset( $rule['skautis-integration_rules'] ) ) {
+				$current_post_rules[] = array( 'skautis-integration_rules' => strval( $rule['skautis-integration_rules'] ) );
+			}
+		}
 		if ( ! empty( $current_post_rules ) ) {
 			$rules_groups[] = array(
 				'id'              => $wp_post->ID,
 				'rules'           => $current_post_rules,
-				'includeChildren' => get_post_meta( $wp_post->ID, SKAUTIS_INTEGRATION_NAME . '_rules_includeChildren', true ),
-				'visibilityMode'  => get_post_meta( $wp_post->ID, SKAUTIS_INTEGRATION_NAME . '_rules_visibilityMode', true ),
+				'includeChildren' => strval( get_post_meta( $wp_post->ID, SKAUTIS_INTEGRATION_NAME . '_rules_includeChildren', true ) ),
+				'visibilityMode'  => strval( get_post_meta( $wp_post->ID, SKAUTIS_INTEGRATION_NAME . '_rules_visibilityMode', true ) ),
 			);
 		}
 
-		// @phpstan-ignore-next-line Error about the shape of the post meta values
 		return $rules_groups;
 	}
 
@@ -405,7 +409,7 @@ final class Frontend {
 				if ( is_null( $user_is_logged_in_skautis ) ) {
 					$user_is_logged_in_skautis = $this->skautis_login->is_user_logged_in_skautis();
 				}
-				if ( $user_is_logged_in_skautis && $this->rules_manager->check_if_user_passed_rules( $rules ) ) {
+				if ( true === $user_is_logged_in_skautis && $this->rules_manager->check_if_user_passed_rules( $rules ) ) {
 					continue;
 				}
 				if ( 'content' !== $rules_group['visibilityMode'] ) {
@@ -442,11 +446,7 @@ final class Frontend {
 	 *
 	 * @return array<\WP_Comment|int|string> The filtered comments.
 	 */
-	public function filter_comments( $comments ) {
-		if ( ! is_array( $comments ) ) {
-			return $comments;
-		}
-
+	public function filter_comments( array $comments ): array {
 		return array_values(
 			array_filter(
 				$comments,
@@ -463,19 +463,28 @@ final class Frontend {
 	/**
 	 * Removes comments of restricted posts from comment feeds.
 	 *
-	 * Comment feeds are loaded by WP_Query directly, without passing through the `the_comments` filter.
+	 * Comment feeds are loaded by WP_Query directly, without passing through the `the_comments` filter. The WordPress stubs do not declare the comment properties of WP_Query, so their uses are suppressed.
 	 *
 	 * @return void
 	 */
 	public function filter_comment_feed() {
 		global $wp_query;
 
-		if ( ! ( $wp_query instanceof \WP_Query ) || ! $wp_query->is_comment_feed() || empty( $wp_query->comments ) ) {
+		if ( ! ( $wp_query instanceof \WP_Query ) || ! is_comment_feed() ) {
 			return;
 		}
 
-		$wp_query->comments      = $this->filter_comments( $wp_query->comments );
-		$wp_query->comment_count = count( $wp_query->comments );
+		// @phan-suppress-next-line PhanUndeclaredProperty
+		$comments = $wp_query->comments; // @phpstan-ignore property.notFound
+		if ( ! is_array( $comments ) || empty( $comments ) ) {
+			return;
+		}
+
+		$comments = $this->filter_comments( $comments );
+		// @phan-suppress-next-line PhanUndeclaredProperty
+		$wp_query->comments = $comments; // @phpstan-ignore property.notFound
+		// @phan-suppress-next-line PhanUndeclaredProperty
+		$wp_query->comment_count = count( $comments ); // @phpstan-ignore property.notFound
 	}
 
 	/**
@@ -483,10 +492,10 @@ final class Frontend {
 	 *
 	 * Single posts are loaded by the REST API with get_post(), which bypasses the `posts_results` filter used by filter_posts().
 	 *
-	 * @param \WP_REST_Response $response The response object.
-	 * @param \WP_Post          $wp_post The post.
+	 * @param mixed $response The response object, a WP_REST_Response unless another plugin changed it.
+	 * @param mixed $wp_post The post.
 	 *
-	 * @return \WP_REST_Response The filtered response.
+	 * @return mixed The filtered response.
 	 */
 	public function filter_rest_response( $response, $wp_post ) {
 		if ( ! ( $response instanceof \WP_REST_Response ) || ! ( $wp_post instanceof \WP_Post ) ) {
@@ -529,10 +538,10 @@ final class Frontend {
 	 *
 	 * Single comments are loaded by the REST API with get_comment(), which bypasses the `the_comments` filter used by filter_comments().
 	 *
-	 * @param \WP_REST_Response $response The response object.
-	 * @param \WP_Comment       $comment The comment.
+	 * @param mixed $response The response object, a WP_REST_Response unless another plugin changed it.
+	 * @param mixed $comment The comment.
 	 *
-	 * @return \WP_REST_Response The filtered response.
+	 * @return mixed The filtered response.
 	 */
 	public function filter_rest_comment_response( $response, $comment ) {
 		if ( ! ( $response instanceof \WP_REST_Response ) || ! ( $comment instanceof \WP_Comment ) || ! $this->are_post_comments_hidden( intval( $comment->comment_post_ID ) ) ) {

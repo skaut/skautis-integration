@@ -9,8 +9,6 @@ declare( strict_types=1 );
 
 namespace Skautis_Integration\Modules\Visibility\Admin;
 
-use Skautis_Integration\Admin\Settings as Main_Settings;
-
 /**
  * Registers, handles and shows all settings for the Visibility module.
  *
@@ -51,8 +49,7 @@ final class Settings {
 				echo '<p>' . esc_html__( 'If a user is not logged in to SkautIS or does not pass the rules, the content will be hidden from them.', 'skautis-integration' ) . ' ' . esc_html__( 'Users logged in to WordPress who can edit the content will always see it, regardless of their SkautIS login or the rules.', 'skautis-integration' ) . '</p>';
 				echo '<p>' . esc_html__( 'The rules of a whole post or page are set in the post settings of the block editor, the rules of a single block in its block settings.', 'skautis-integration' ) . '</p>';
 			},
-			SKAUTIS_INTEGRATION_NAME . '_modules_visibility',
-			Main_Settings::get_card_section_args()
+			SKAUTIS_INTEGRATION_NAME . '_modules_visibility'
 		);
 
 		add_settings_field(

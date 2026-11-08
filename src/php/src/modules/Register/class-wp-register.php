@@ -78,13 +78,13 @@ final class WP_Register {
 
 		add_action( 'register_new_user', 'wp_send_new_user_notifications' );
 
-		if ( $user_id instanceof \WP_Error ) {
-			if ( isset( $user_id->errors['username_exists'] ) || isset( $user_id->errors['email_exists'] ) ) {
+		if ( is_array( $user_id ) ) {
+			if ( in_array( $user_id['code'], array( 'username_exists', 'email_exists', 'existing_user_login', 'existing_user_email' ), true ) ) {
 				/* translators: The user's e-mail address */
 				wp_die( sprintf( esc_html__( 'Your e-mail %s is already registered on this site, but it is not connected to a SkautIS account.', 'skautis-integration' ), esc_html( $user_email ) ), esc_html__( 'Registration error', 'skautis-integration' ) );
 			}
 				/* translators: The error message */
-			wp_die( sprintf( esc_html__( 'An unexpected error occurred during the registration: %s', 'skautis-integration' ), esc_html( $user_id->get_error_message() ) ), esc_html__( 'Registration error', 'skautis-integration' ) );
+			wp_die( sprintf( esc_html__( 'An unexpected error occurred during the registration: %s', 'skautis-integration' ), esc_html( $user_id['message'] ) ), esc_html__( 'Registration error', 'skautis-integration' ) );
 		}
 
 		return $user_id;
@@ -98,28 +98,44 @@ final class WP_Register {
 	 * @param string $user_login The WordPress username to use for the new user.
 	 * @param string $user_email The new user's e-mail address, may be empty.
 	 *
-	 * @return int|\WP_Error The ID of the new user or an error.
+	 * @return int|array{code: string, message: string} The ID of the new user or the error code and message.
 	 */
 	private static function create_user( string $user_login, string $user_email ) {
 		$sanitized_user_login = sanitize_user( $user_login );
 		if ( '' === $sanitized_user_login || ! validate_username( $user_login ) ) {
-			return new \WP_Error( 'invalid_username', __( 'The SkautIS username is not a valid WordPress username.', 'skautis-integration' ) );
+			return array(
+				'code'    => 'invalid_username',
+				'message' => __( 'The SkautIS username is not a valid WordPress username.', 'skautis-integration' ),
+			);
 		}
 		if ( false !== username_exists( $sanitized_user_login ) ) {
-			return new \WP_Error( 'username_exists', __( 'The username is already registered on this site.', 'skautis-integration' ) );
+			return array(
+				'code'    => 'username_exists',
+				'message' => __( 'The username is already registered on this site.', 'skautis-integration' ),
+			);
 		}
 		if ( '' !== $user_email ) {
 			if ( false === is_email( $user_email ) ) {
-				return new \WP_Error( 'invalid_email', __( 'The e-mail address from SkautIS is not valid.', 'skautis-integration' ) );
+				return array(
+					'code'    => 'invalid_email',
+					'message' => __( 'The e-mail address from SkautIS is not valid.', 'skautis-integration' ),
+				);
 			}
 			if ( false !== email_exists( $user_email ) ) {
-				return new \WP_Error( 'email_exists', __( 'The e-mail address is already registered on this site.', 'skautis-integration' ) );
+				return array(
+					'code'    => 'email_exists',
+					'message' => __( 'The e-mail address is already registered on this site.', 'skautis-integration' ),
+				);
 			}
 		}
 
 		$user_id = wp_create_user( $sanitized_user_login, wp_generate_password( 24 ), $user_email );
 		if ( $user_id instanceof \WP_Error ) {
-			return $user_id;
+			$codes = array_keys( $user_id->errors );
+			return array(
+				'code'    => isset( $codes[0] ) ? strval( $codes[0] ) : '',
+				'message' => $user_id->get_error_message(),
+			);
 		}
 
 		update_user_meta( $user_id, 'default_password_nag', true );
