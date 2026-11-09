@@ -149,12 +149,18 @@ final class Skautis_Login {
 	 */
 	public function change_user_role_in_skautis( int $role_id ) {
 		if ( $role_id > 0 ) {
-			$result = $this->skautis_gateway->get_skautis_instance()->UserManagement->LoginUpdate(
-				array(
-					'ID'          => $this->skautis_gateway->get_skautis_instance()->getUser()->getLoginId(),
-					'ID_UserRole' => $role_id,
-				)
-			);
+			try {
+				$result = $this->skautis_gateway->get_skautis_instance()->UserManagement->LoginUpdate(
+					array(
+						'ID'          => $this->skautis_gateway->get_skautis_instance()->getUser()->getLoginId(),
+						'ID_UserRole' => $role_id,
+					)
+				);
+			} catch ( \Exception $e ) {
+				// The user does not have the role (any more), so the role stays as it is.
+				Helpers::log_skautis_response( 'LoginUpdate (error)', $e->getMessage() );
+				return;
+			}
 
 			if ( is_null( $result ) || ! isset( $result->ID_Unit ) ) {
 				return;

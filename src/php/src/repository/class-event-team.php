@@ -103,7 +103,8 @@ final class Event_Team {
 			$method = $call['method'];
 			try {
 				$response = $this->skautis_gateway->get_skautis_instance()->Events->$method( $call['args'] );
-			} catch ( \Exception $_ ) {
+			} catch ( \Exception $e ) {
+				Helpers::log_skautis_response( $call['method'] . ' (error)', $e->getMessage() );
 				$this->failed_methods[] = $call['method'];
 				continue;
 			}

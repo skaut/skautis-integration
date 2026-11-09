@@ -246,7 +246,7 @@ class Users_Management {
 			return;
 		}
 		echo '<div class="notice notice-warning inline"><p>';
-		echo esc_html__( 'Some people of the event could not be loaded from SkautIS. The App ID of this site is probably not allowed to use these SkautIS methods:', 'skautis-integration' ) . ' <code>' . esc_html( implode( ', ', $methods ) ) . '</code>';
+		echo esc_html__( 'Some people of the event could not be loaded from SkautIS. Your current SkautIS role may not have access to them, or the App ID of this site is not allowed to use these SkautIS methods:', 'skautis-integration' ) . ' <code>' . esc_html( implode( ', ', $methods ) ) . '</code>';
 		echo '</p></div>';
 	}
 

@@ -272,11 +272,16 @@ class Users {
 					foreach ( $current_user_events as $event ) {
 						// @phpstan-ignore-next-line
 						if ( $event->ID_Group === $role->ID_Group ) {
-							$event_url = $this->skautis_gateway->get_skautis_instance()->Events->EventDetail(
-								array(
-									'ID' => $event->ID,
-								)
-							);
+							try {
+								$event_url = $this->skautis_gateway->get_skautis_instance()->Events->EventDetail(
+									array(
+										'ID' => $event->ID,
+									)
+								);
+							} catch ( \Exception $e ) {
+								Helpers::log_skautis_response( 'EventDetail (error)', $e->getMessage() );
+								continue;
+							}
 							if ( isset( $event_url->UrlDetail ) ) {
 								$reg_result = array();
 								preg_match( '~ID=(\d+)$~', $event_url->UrlDetail, $reg_result );
@@ -292,15 +297,21 @@ class Users {
 
 		// Different procedure for roles associated with events.
 		if ( '' !== $event_type && 0 !== $event_id ) {
-			if ( 'Congress' === $event_type ) {
-				$participants = null;
-			} else {
-				$method_name  = 'Participant' . $event_type . 'All';
-				$participants = $this->skautis_gateway->get_skautis_instance()->Events->$method_name(
-					array(
-						'ID_Event' . $event_type => $event_id,
-					)
-				);
+			$participants = null;
+			$failed       = array();
+			if ( 'Congress' !== $event_type ) {
+				$method_name = 'Participant' . $event_type . 'All';
+				try {
+					$participants = $this->skautis_gateway->get_skautis_instance()->Events->$method_name(
+						array(
+							'ID_Event' . $event_type => $event_id,
+						)
+					);
+				} catch ( \Exception $e ) {
+					// E.g. the role of the user is not allowed to see the participants of this event.
+					Helpers::log_skautis_response( $method_name . ' (error)', $e->getMessage() );
+					$failed[] = $method_name;
+				}
 			}
 
 			$users = array();
@@ -326,7 +337,7 @@ class Users {
 					$users[ $person_id ] = self::person_to_user( 0, $person_id, $member['name'], '', implode( ', ', $member['roles'] ) );
 				}
 			}
-			$this->event_failed_methods = $event_team->get_failed_methods();
+			$this->event_failed_methods = array_merge( $failed, $event_team->get_failed_methods() );
 
 			if ( ! empty( $users ) ) {
 				$users = $this->replace_participant_ids_with_user_ids( array_values( $users ) );

@@ -244,11 +244,13 @@ msgstr ""
 
 #: src/admin/class-users-management.php:249
 msgid ""
-"Some people of the event could not be loaded from SkautIS. The App ID of "
-"this site is probably not allowed to use these SkautIS methods:"
+"Some people of the event could not be loaded from SkautIS. Your current "
+"SkautIS role may not have access to them, or the App ID of this site is not "
+"allowed to use these SkautIS methods:"
 msgstr ""
-"Některé osoby z akce se nepodařilo načíst ze SkautISu. App ID tohoto webu "
-"nejspíš nemá povolené tyto metody SkautISu:"
+"Některé osoby z akce se nepodařilo načíst ze SkautISu. Vaše aktuální role ve "
+"SkautISu k nim možná nemá přístup, nebo App ID tohoto webu nemá povolené tyto "
+"metody SkautISu:"
 
 #: src/admin/class-users-management.php:275
 msgid "SkautIS users"
