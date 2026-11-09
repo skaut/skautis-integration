@@ -50,4 +50,6 @@ When you add a PHP, TS, or CSS file under a new area, you may need a new gulp ta
 
 - Version bumps must stay in sync across `package.json`, `src/php/skautis-integration.php` (header `Version:` and the `SKAUTIS_INTEGRATION_VERSION` constant), and `src/txt/readme.txt` (`Stable tag` plus a changelog entry).
 - Pushing a tag triggers `.github/workflows/release.yml`, which builds the plugin, deploys it to the wordpress.org SVN, and creates a GitHub release with the changelog taken from `readme.txt`.
+- Pre-release versions (with a hyphen, e.g. `1.2.0-beta.1`) are never deployed to wordpress.org: `release.yml` ignores such tags. After the version bump is merged, run the **Pre-release** workflow (`.github/workflows/prerelease.yml`) by hand; it creates the tag and a GitHub pre-release with the installable ZIP and the changelog entry of that version.
+- Every push to `master` and `test/all-fixes` and every pull request builds an installable test ZIP in the **Test ZIP** workflow (`.github/workflows/test-zip.yml`).
 - `APP ID - povolení služeb.md` lists the SkautIS web-service permissions that each plugin version needs. Update it when code starts calling a new SkautIS API method.

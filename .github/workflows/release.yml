@@ -4,6 +4,8 @@ name: "Release"
   push:
     tags:
       - "**"
+      # Pre-release versions (e.g. 1.2.0-beta.1) are not deployed to wordpress.org, see prerelease.yml.
+      - "!*-*"
 env:
   php-version: 8.4
   cache-version: 1

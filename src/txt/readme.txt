@@ -4,7 +4,7 @@ Tags: SkautIS, login, registration, skaut
 Requires at least: 7.0
 Tested up to: 7.1
 Requires PHP: 8.3
-Stable tag: 1.1.33
+Stable tag: 1.2.0-beta.1
 License: GPLv3 or later
 License URI: https://github.com/skaut/skautis-integration/blob/master/LICENSE
 
@@ -42,6 +42,25 @@ See our [documentation](https://napoveda.skaut.cz/skautis/skautis-integration) (
 
 
 == Changelog ==
+
+= 1.2.0-beta.1 =
+* Requires WordPress 7.0 and PHP 8.3 or newer
+* Content visibility rules for individual blocks in the block editor, rules of a whole page in the document sidebar; the shortcode was removed
+* All settings on one page with tabs; the modules were removed: content visibility is always available and registration has its own setting
+* New user management page with search and a filter, without DataTables and Thickbox
+* The list of rules shows where each rule is used, the rule editor matches the WordPress administration
+* The registration rules use the whole width of the screen
+* English source texts, translatable on translate.wordpress.org
+* SVG menu icon
+* Restricted posts and their comments are also hidden in the REST API and in feeds
+* Security fixes: logout nonce, user actions sent by POST, escaped output, random session cookies
+* Fixed plugin activation, login on multisite and the default login page
+* Fixed the registration of new users and of event participants
+* Fixed the "not in" operator of role and function rules and function rules for people with a single function
+* Fixed the rule editor in languages other than Czech
+* Fixed the check of the registration conditions on login running when it was turned off
+* All plugin data is removed on uninstall
+* No deprecation notices from the SkautIS library on PHP 8.4
 
 = 1.1.33 =
 * Fixed the cleanup of duplicated autosave post meta running out of memory on large sites
