@@ -10,6 +10,7 @@ declare( strict_types=1 );
 namespace Skautis_Integration\Rules\Rule;
 
 use PHPMD\Attribute\SuppressWarnings;
+use PHPMD\Rule\Design\ExcessiveClassComplexity;
 use PHPMD\Rule\Naming\BooleanGetMethodName;
 use Skautis_Integration\Rules\Rule;
 use Skautis_Integration\Auth\Skautis_Gateway;
@@ -20,6 +21,7 @@ use Skautis_Integration\Utils\Helpers;
  *
  * The rule is passed by the people connected with the selected events in SkautIS. It can be limited to the event team, i.e. the people who have a SkautIS role in the event other than a participant role (e.g. "VzA: vedoucí", "VzA: člen týmu"), or to the participants of the event. Participants may have a participant role in the event too (e.g. "VzA: účastník", "Tábor: účastník").
  */
+#[SuppressWarnings( ExcessiveClassComplexity::class )]
 class Event implements Rule {
 
 	/**
