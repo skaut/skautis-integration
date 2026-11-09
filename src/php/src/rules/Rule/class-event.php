@@ -69,7 +69,7 @@ class Event implements Rule {
 	/**
 	 * The events of the current user, computed once per request.
 	 *
-	 * @var array<string, array{name: string, group: int}>|null
+	 * @var array<string, array{name: string, group: int, type: string, start: string}>|null
 	 */
 	private $user_events = null;
 
@@ -158,19 +158,44 @@ class Event implements Rule {
 	 * @return array<string, string> The events in the form `ID => name`.
 	 */
 	public function get_values(): array {
+		$events = $this->get_user_events();
+		// The newest events first.
+		uasort(
+			$events,
+			static function ( array $first, array $second ): int {
+				return strcmp( $second['start'], $first['start'] );
+			}
+		);
+
 		$result = array();
-		foreach ( $this->get_user_events() as $event_id => $event ) {
-			$result[ $event_id ] = $event['name'];
+		foreach ( $events as $event_id => $event ) {
+			$result[ strval( $event_id ) ] = self::get_event_label( $event );
 		}
-		asort( $result );
 
 		return $result;
 	}
 
 	/**
+	 * Returns the label of an event in the form "Type: name (year)", e.g. "Tábor: Letní tábor u Smolova (2019)".
+	 *
+	 * The year is added only when the name does not contain it already.
+	 *
+	 * @param array{name: string, group: int, type: string, start: string} $event The event.
+	 */
+	private static function get_event_label( array $event ): string {
+		$label = '' !== $event['type'] ? $event['type'] . ': ' . $event['name'] : $event['name'];
+		$year  = 1 === preg_match( '/^(\d{4})-/', $event['start'], $matches ) ? $matches[1] : '';
+		if ( '' !== $year && false === strpos( $event['name'], $year ) ) {
+			$label .= ' (' . $year . ')';
+		}
+
+		return $label;
+	}
+
+	/**
 	 * Returns the events that the current user takes part in.
 	 *
-	 * @return array<string, array{name: string, group: int}> The events, keyed by their ID.
+	 * @return array<string, array{name: string, group: int, type: string, start: string}> The events, keyed by their ID.
 	 */
 	private function get_user_events(): array {
 		if ( ! is_null( $this->user_events ) ) {
@@ -188,7 +213,8 @@ class Event implements Rule {
 					'ID_Person' => $user_detail->ID_Person,
 				)
 			);
-		} catch ( \Exception $_ ) {
+		} catch ( \Exception $e ) {
+			Helpers::log_skautis_response( 'EventAllPerson (error)', $e->getMessage() );
 			return $this->user_events;
 		}
 		Helpers::log_skautis_response( 'EventAllPerson', $events );
@@ -207,6 +233,8 @@ class Event implements Rule {
 			$this->user_events[ strval( $event->ID ) ] = array(
 				'name'  => isset( $event->DisplayName ) && is_string( $event->DisplayName ) ? $event->DisplayName : '#' . strval( $event->ID ),
 				'group' => isset( $event->ID_Group ) ? intval( $event->ID_Group ) : 0,
+				'type'  => isset( $event->EventType ) && is_string( $event->EventType ) ? $event->EventType : '',
+				'start' => isset( $event->StartDate ) && is_string( $event->StartDate ) ? $event->StartDate : '',
 			);
 		}
 
@@ -247,7 +275,8 @@ class Event implements Rule {
 					'IsActive' => true,
 				)
 			);
-		} catch ( \Exception $_ ) {
+		} catch ( \Exception $e ) {
+			Helpers::log_skautis_response( 'UserRoleAll (error)', $e->getMessage() );
 			return $this->user_role_groups;
 		}
 		Helpers::log_skautis_response( 'UserRoleAll', $roles );

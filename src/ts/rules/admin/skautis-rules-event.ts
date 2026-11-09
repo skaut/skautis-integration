@@ -7,10 +7,18 @@
  */
 class SkautisEvent {
 	private readonly events: Record<string, string>;
+	private readonly order: Array<string>;
 	private readonly relations: Record<string, string>;
 
-	public constructor(events: Record<string, string>) {
+	/**
+	 * @param events The events in the form `ID => name`.
+	 * @param order  The event IDs in the order to show, because the browser orders numeric keys by the number.
+	 */
+	public constructor(events: Record<string, string>, order: Array<string>) {
 		this.events = events;
+		this.order = order.filter((key) =>
+			Object.prototype.hasOwnProperty.call(events, key)
+		);
 		this.relations = {
 			any: skautisIntegrationRulesLocalize.eventRelationAny,
 			participant: skautisIntegrationRulesLocalize.eventRelationOther,
@@ -23,10 +31,8 @@ class SkautisEvent {
 			inputName
 		}_1" multiple="multiple">`;
 
-		for (const key in this.events) {
-			if (Object.prototype.hasOwnProperty.call(this.events, key)) {
-				html += `<option value="${key}">${this.events[key]}</option>`;
-			}
+		for (const key of this.order) {
+			html += `<option value="${key}">${this.events[key]}</option>`;
 		}
 
 		html += `</select><div style="margin-top: 0.6em;">${

@@ -374,13 +374,16 @@ final class Admin {
 			var data = {};
 			<?php
 			foreach ( $this->rules_manager->get_rules() as $rule ) {
-				$data = array(
+				$values = $rule->get_values();
+				$data   = array(
 					'id'          => $rule->get_id(),
 					'label'       => $rule->get_label(),
 					'type'        => $rule->get_type(),
 					'input'       => $rule->get_input(),
 					'multiple'    => $rule->get_multiple(),
-					'values'      => $rule->get_values(),
+					'values'      => $values,
+					// JavaScript orders numeric object keys by the number, so the order of the values is passed separately.
+					'order'       => array_map( 'strval', array_keys( $values ) ),
 					'operators'   => $rule->get_operators(),
 					'placeholder' => $rule->get_placeholder(),
 					'description' => $rule->get_description(),
@@ -407,7 +410,7 @@ final class Admin {
 				data.valueGetter = func.valueGetter.bind(func);
 				data.valueSetter = func.valueSetter.bind(func);
 			} else if (data.input === "eventInput") {
-				var skautisEvent = new SkautisEvent(data.values);
+				var skautisEvent = new SkautisEvent(data.values, data.order);
 				data.input = skautisEvent.input.bind(skautisEvent);
 				data.validation = skautisEvent.validation.call(skautisEvent);
 				data.valueGetter = skautisEvent.valueGetter.bind(skautisEvent);
