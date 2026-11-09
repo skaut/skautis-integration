@@ -190,8 +190,10 @@ class Users_Management {
 			);
 		} else {
 			$this->role_changer->print_change_roles_form();
+			$users = $this->users_repository->get_users()['users'];
+			self::print_missing_permissions_notice( $this->users_repository->get_event_failed_methods() );
 			self::print_users_table(
-				$this->users_repository->get_users()['users'],
+				$users,
 				$this->users_repository->get_connected_wp_users(),
 				$this->users_repository->get_connectable_wp_users(),
 				$this->connect_and_disconnect_wp_account->get_connect_wp_user_to_skautis_url(),
@@ -233,6 +235,22 @@ class Users_Management {
 	}
 
 	/**
+	 * Prints a notice about the SkautIS methods that the App ID is not allowed to use.
+	 *
+	 * @param array<string> $methods The methods that could not be called.
+	 *
+	 * @return void
+	 */
+	private static function print_missing_permissions_notice( array $methods ) {
+		if ( empty( $methods ) ) {
+			return;
+		}
+		echo '<div class="notice notice-warning inline"><p>';
+		echo esc_html__( 'Some people of the event could not be loaded from SkautIS. The App ID of this site is probably not allowed to use these SkautIS methods:', 'skautis-integration' ) . ' <code>' . esc_html( implode( ', ', $methods ) ) . '</code>';
+		echo '</p></div>';
+	}
+
+	/**
 	 * Prints the table of SkautIS users with the panel for connecting them.
 	 *
 	 * @param array<\stdClass>                         $users The SkautIS users.
@@ -244,7 +262,14 @@ class Users_Management {
 	 * @return void
 	 */
 	public static function print_users_table( array $users, array $connected_users, array $connectable_users, string $connect_url, ?string $register_url ) {
-		$search = Request_Parameter_Helpers::get_string_variable( 'skautisSearchUsers' );
+		$search          = Request_Parameter_Helpers::get_string_variable( 'skautisSearchUsers' );
+		$has_event_roles = false;
+		foreach ( $users as $user ) {
+			if ( isset( $user->eventRoles ) ) {
+				$has_event_roles = true;
+			}
+		}
+		$columns = $has_event_roles ? 5 : 4;
 		?>
 		<div class="skautis-settings-card skautis-users-card">
 			<h2><?php esc_html_e( 'SkautIS users', 'skautis-integration' ); ?></h2>
@@ -278,6 +303,11 @@ class Users_Management {
 				<thead>
 					<tr>
 						<th scope="col"><?php esc_html_e( 'Name', 'skautis-integration' ); ?></th>
+						<?php
+						if ( $has_event_roles ) {
+							echo '<th scope="col">' . esc_html__( 'Role in the event', 'skautis-integration' ) . '</th>';
+						}
+						?>
 						<th scope="col"><?php esc_html_e( 'SkautIS user ID', 'skautis-integration' ); ?></th>
 						<th scope="col"><?php esc_html_e( 'WordPress account', 'skautis-integration' ); ?></th>
 						<th scope="col"><span class="screen-reader-text"><?php esc_html_e( 'Actions', 'skautis-integration' ); ?></span></th>
@@ -286,17 +316,17 @@ class Users_Management {
 				<tbody>
 					<?php
 					foreach ( $users as $user ) {
-						self::print_user_row( $user, $connected_users[ $user->id ] ?? null );
+						self::print_user_row( $user, $connected_users[ $user->id ] ?? null, $has_event_roles );
 					}
 					?>
 					<tr class="skautis-users-empty"<?php echo count( $users ) > 0 ? ' hidden' : ''; ?>>
-						<td colspan="4"><?php esc_html_e( 'No users found.', 'skautis-integration' ); ?></td>
+						<td colspan="<?php echo esc_attr( strval( $columns ) ); ?>"><?php esc_html_e( 'No users found.', 'skautis-integration' ); ?></td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
 		<?php
-		self::print_connect_panel( $connectable_users, $connect_url, $register_url );
+		self::print_connect_panel( $connectable_users, $connect_url, $register_url, $columns );
 	}
 
 	/**
@@ -304,10 +334,11 @@ class Users_Management {
 	 *
 	 * @param \stdClass                         $user The SkautIS user.
 	 * @param array{id: int, name: string}|null $wp_user The connected WordPress user or null.
+	 * @param bool                              $show_event_roles Whether to show the roles of the user in the event.
 	 *
 	 * @return void
 	 */
-	private static function print_user_row( \stdClass $user, ?array $wp_user ) {
+	private static function print_user_row( \stdClass $user, ?array $wp_user, bool $show_event_roles ) {
 		$name = trim( $user->firstName . ' ' . $user->lastName );
 		?>
 		<tr data-skautis-user-id="<?php echo esc_attr( strval( $user->id ) ); ?>" data-connected="<?php echo is_null( $wp_user ) ? '0' : '1'; ?>">
@@ -319,6 +350,11 @@ class Users_Management {
 				}
 				?>
 			</td>
+			<?php
+			if ( $show_event_roles ) {
+				echo '<td>' . esc_html( implode( ', ', isset( $user->eventRoles ) && is_array( $user->eventRoles ) ? $user->eventRoles : array() ) ) . '</td>';
+			}
+			?>
 			<td><?php echo esc_html( strval( $user->id ) ); ?></td>
 			<td>
 				<?php
@@ -348,15 +384,16 @@ class Users_Management {
 	 * @param array<\WP_User> $connectable_users The WordPress users without a SkautIS account.
 	 * @param string          $connect_url The URL of the connecting form.
 	 * @param string|null     $register_url The URL of the registration form, or null if the registration is disabled.
+	 * @param int             $columns The number of columns of the table.
 	 *
 	 * @return void
 	 */
-	private static function print_connect_panel( array $connectable_users, string $connect_url, ?string $register_url ) {
+	private static function print_connect_panel( array $connectable_users, string $connect_url, ?string $register_url, int $columns ) {
 		?>
 		<table hidden>
 			<tbody>
 				<tr id="skautis-users-connect-panel" class="skautis-users-connect-row" hidden>
-					<td colspan="4">
+					<td colspan="<?php echo esc_attr( strval( $columns ) ); ?>">
 						<div class="skautis-users-connect-panel" role="group" aria-labelledby="skautis-users-connect-title">
 							<h3 id="skautis-users-connect-title" tabindex="-1"><?php esc_html_e( 'Connect to a WordPress account', 'skautis-integration' ); ?></h3>
 							<div class="skautis-users-connect-options">

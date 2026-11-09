@@ -51,3 +51,14 @@ Verze 1.1.12
 <b>OrganizationUnit -> QualificationTypeAll</b> - Načíst seznam typů kvalifikace
 <br>
 <b>OrganizationUnit -> QualificationAll</b> - Načíst seznam kvalifikací osoby
+Verze 1.2.0
+<br>
+<b>Events -> InstructorAll</b> - Načíst seznam instruktorů (instruktoři vzdělávací akce ve Správě uživatelů)
+<br>
+<b>Events -> EventFunctionAllEducationLeader</b> - Načíst vedení vzdělávací akce
+<br>
+<b>Events -> EventFunctionAllCamp</b> - Načíst vedení tábora
+<br>
+<b>Events -> EventFunctionAllGeneral</b> - Načíst vedení obecné akce
+<br>
+Pravidlo „Akce“ používá jen služby z předchozích verzí (Events -> EventAllPerson, UserManagement -> UserRoleAll).

@@ -241,4 +241,22 @@ class Helpers {
 	public static function get_nonce_from_url( string $url, string $nonce_name ): string {
 		return self::get_variable_from_url( $url, $nonce_name );
 	}
+
+	/**
+	 * Writes a SkautIS response to the debug log.
+	 *
+	 * Only used for the newer SkautIS methods, whose responses could not be tested on a real SkautIS, so that the responses can be checked on a test site with `WP_DEBUG` and `WP_DEBUG_LOG` enabled. The responses contain personal data, so they are never logged otherwise.
+	 *
+	 * @param string $method The name of the SkautIS method.
+	 * @param mixed  $response The response.
+	 *
+	 * @return void
+	 */
+	public static function log_skautis_response( string $method, $response ) {
+		if ( ! defined( 'WP_DEBUG' ) || true !== WP_DEBUG || ! defined( 'WP_DEBUG_LOG' ) || false === WP_DEBUG_LOG ) {
+			return;
+		}
+		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Only in debug mode, see above.
+		error_log( 'SkautIS integration – ' . $method . ': ' . strval( wp_json_encode( $response ) ) );
+	}
 }

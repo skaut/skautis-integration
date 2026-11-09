@@ -255,6 +255,10 @@ final class Admin {
 			'labelCondition'     => esc_html__( 'Condition', 'skautis-integration' ),
 			'labelOperator'      => esc_html__( 'Comparison', 'skautis-integration' ),
 			'labelValues'        => esc_html__( 'Values', 'skautis-integration' ),
+			'eventRelation'      => esc_html__( 'Who', 'skautis-integration' ),
+			'eventRelationAny'   => esc_html__( 'Anyone from the event', 'skautis-integration' ),
+			'eventRelationTeam'  => esc_html__( 'The event team', 'skautis-integration' ),
+			'eventRelationOther' => esc_html__( 'The participants (not the event team)', 'skautis-integration' ),
 		);
 
 		Helpers::enqueue_script(
@@ -289,6 +293,18 @@ final class Admin {
 		);
 		wp_localize_script(
 			SKAUTIS_INTEGRATION_NAME . '_rules_func',
+			'skautisIntegrationRulesLocalize',
+			$localization,
+		);
+
+		Helpers::enqueue_script(
+			'rules_event',
+			'rules/admin/js/skautis-rules-event.min.js',
+			array(),
+			false
+		);
+		wp_localize_script(
+			SKAUTIS_INTEGRATION_NAME . '_rules_event',
 			'skautisIntegrationRulesLocalize',
 			$localization,
 		);
@@ -390,6 +406,12 @@ final class Admin {
 				data.validation = func.validation.call(func);
 				data.valueGetter = func.valueGetter.bind(func);
 				data.valueSetter = func.valueSetter.bind(func);
+			} else if (data.input === "eventInput") {
+				var skautisEvent = new SkautisEvent(data.values);
+				data.input = skautisEvent.input.bind(skautisEvent);
+				data.validation = skautisEvent.validation.call(skautisEvent);
+				data.valueGetter = skautisEvent.valueGetter.bind(skautisEvent);
+				data.valueSetter = skautisEvent.valueSetter.bind(skautisEvent);
 			} else if (data.input === "qualificationInput") {
 				var qualification = new Qualification(data.values);
 				data.input = qualification.input.bind(qualification);
