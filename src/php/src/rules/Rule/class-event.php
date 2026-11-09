@@ -18,7 +18,7 @@ use Skautis_Integration\Utils\Helpers;
 /**
  * Rule operator for filtering users based on the SkautIS events they take part in.
  *
- * The rule is passed by the people connected with the selected events in SkautIS. It can be limited to the event team, i.e. the people who have a SkautIS role in the event (the leadership and the instructors), or to the other people of the event (the participants).
+ * The rule is passed by the people connected with the selected events in SkautIS. It can be limited to the event team, i.e. the people who have a SkautIS role in the event other than a participant role (e.g. "VzA: vedoucí", "VzA: člen týmu"), or to the participants of the event. Participants may have a participant role in the event too (e.g. "VzA: účastník", "Tábor: účastník").
  */
 class Event implements Rule {
 
@@ -72,9 +72,9 @@ class Event implements Rule {
 	private $user_events = null;
 
 	/**
-	 * The groups of the SkautIS roles of the current user, computed once per request.
+	 * The groups of the SkautIS roles of the current user, split into the roles of the event teams and the participant roles. Computed once per request.
 	 *
-	 * @var array<int>|null
+	 * @var array{team: array<int>, participant: array<int>}|null
 	 */
 	private $user_role_groups = null;
 
@@ -147,7 +147,7 @@ class Event implements Rule {
 	 * Returns an optional additional description of the rule.
 	 */
 	public function get_description(): string {
-		return __( 'The events of SkautIS that you take part in. The event team are the people with a SkautIS role in the event, e.g. the leadership and the instructors.', 'skautis-integration' );
+		return __( 'The events of SkautIS that you take part in. The event team are the people with a role in the event other than a participant role, e.g. "VzA: vedoucí" or "VzA: člen týmu".', 'skautis-integration' );
 	}
 
 	/**
@@ -212,15 +212,30 @@ class Event implements Rule {
 	}
 
 	/**
+	 * Returns whether a SkautIS role is the role of a participant of an event, e.g. "VzA: účastník", "Tábor: účastník" or "Sněm: účastník sněmu".
+	 *
+	 * @param object $role The role from UserRoleAll.
+	 */
+	private static function is_participant_role( object $role ): bool {
+		$key  = isset( $role->Key ) && is_string( $role->Key ) ? $role->Key : '';
+		$name = isset( $role->DisplayName ) && is_string( $role->DisplayName ) ? $role->DisplayName : '';
+
+		return false !== stripos( $key, 'Participant' ) || false !== mb_stripos( $name, 'účastník' );
+	}
+
+	/**
 	 * Returns the groups of the SkautIS roles of the current user. A role in an event has the same group as the event.
 	 *
-	 * @return array<int> The groups.
+	 * @return array{team: array<int>, participant: array<int>} The groups of the event team roles and of the participant roles.
 	 */
 	private function get_user_role_groups(): array {
 		if ( ! is_null( $this->user_role_groups ) ) {
 			return $this->user_role_groups;
 		}
-		$this->user_role_groups = array();
+		$this->user_role_groups = array(
+			'team'        => array(),
+			'participant' => array(),
+		);
 
 		try {
 			$roles = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserRoleAll(
@@ -233,13 +248,14 @@ class Event implements Rule {
 		} catch ( \Exception $_ ) {
 			return $this->user_role_groups;
 		}
+		Helpers::log_skautis_response( 'UserRoleAll', $roles );
 
 		if ( is_object( $roles ) ) {
 			$roles = array( $roles );
 		}
 		foreach ( is_array( $roles ) ? $roles : array() as $role ) {
 			if ( is_object( $role ) && isset( $role->ID_Group ) && intval( $role->ID_Group ) > 0 ) {
-				$this->user_role_groups[] = intval( $role->ID_Group );
+				$this->user_role_groups[ self::is_participant_role( $role ) ? 'participant' : 'team' ][] = intval( $role->ID_Group );
 			}
 		}
 
@@ -250,21 +266,25 @@ class Event implements Rule {
 	 * Checks whether the current user takes part in an event in the given way.
 	 *
 	 * @param string $event_id The ID of the event.
-	 * @param string $relation "any" for anyone connected with the event, "team" for the event team, or "participant" for the people not in the event team.
+	 * @param string $relation "any" for anyone connected with the event, "team" for the event team, or "participant" for the people of the event who are not in its team.
 	 */
 	private function is_in_event( string $event_id, string $relation ): bool {
 		$events = $this->get_user_events();
-		if ( ! isset( $events[ $event_id ] ) ) {
-			return false;
-		}
-		if ( 'any' === $relation ) {
-			return true;
-		}
+		$groups = $this->get_user_role_groups();
 
-		$group   = $events[ $event_id ]['group'];
-		$is_team = $group > 0 && in_array( $group, $this->get_user_role_groups(), true );
+		$group          = $events[ $event_id ]['group'] ?? 0;
+		$is_team        = $group > 0 && in_array( $group, $groups['team'], true );
+		$is_participant = $group > 0 && in_array( $group, $groups['participant'], true );
+		$is_in_event    = isset( $events[ $event_id ] ) || $is_team || $is_participant;
 
-		return 'team' === $relation ? $is_team : ! $is_team;
+		switch ( $relation ) {
+			case 'any':
+				return $is_in_event;
+			case 'team':
+				return $is_team;
+			default:
+				return $is_in_event && ! $is_team;
+		}
 	}
 
 	/**

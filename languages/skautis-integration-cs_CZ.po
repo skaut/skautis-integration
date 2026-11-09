@@ -1069,10 +1069,11 @@ msgstr "Akce"
 #: src/rules/Rule/class-event.php:150
 msgid ""
 "The events of SkautIS that you take part in. The event team are the people "
-"with a SkautIS role in the event, e.g. the leadership and the instructors."
+"with a role in the event other than a participant role, e.g. \"VzA: "
+"vedoucí\" or \"VzA: člen týmu\"."
 msgstr ""
 "Akce ve SkautISu, kterých se účastníte. Tým akce jsou lidé, kteří mají v "
-"akci roli ve SkautISu, např. vedení a instruktoři."
+"akci jinou roli než účastnickou, např. „VzA: vedoucí“ nebo „VzA: člen týmu“."
 
 #: src/rules/Rule/class-func.php:84
 msgid "Function"
