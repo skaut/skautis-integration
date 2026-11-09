@@ -35,11 +35,11 @@ msgstr "Junák - český skaut"
 msgid "https://github.com/skaut"
 msgstr "https://github.com/skaut"
 
-#: class-skautis-integration.php:182 class-skautis-integration.php:267
+#: class-skautis-integration.php:185 class-skautis-integration.php:269
 msgid "The SkautIS integration plugin requires WordPress 7.0 or newer!"
 msgstr "Plugin SkautIS integrace vyžaduje verzi WordPress 7.0 nebo vyšší!"
 
-#: class-skautis-integration.php:187 class-skautis-integration.php:274
+#: class-skautis-integration.php:190 class-skautis-integration.php:276
 msgid "The SkautIS integration plugin requires PHP 8.3 or newer!"
 msgstr "Plugin SkautIS integrace vyžaduje verzi PHP 8.3 nebo vyšší!"
 
@@ -79,12 +79,12 @@ msgstr "Vyberte v %1$snastavení%2$s pluginu typ prostředí SkautISu"
 msgid "Settings"
 msgstr "Nastavení"
 
-#: src/admin/class-settings.php:152 src/admin/class-settings.php:302
+#: src/admin/class-settings.php:152 src/admin/class-settings.php:289
 msgid "Help"
 msgstr "Nápověda"
 
 #: src/admin/class-settings.php:179 src/admin/class-settings.php:189
-#: src/admin/class-settings.php:333
+#: src/admin/class-settings.php:320
 msgid "SkautIS settings"
 msgstr "Nastavení SkautIS"
 
@@ -102,34 +102,34 @@ msgid "Login"
 msgstr "Přihlašování"
 
 #: src/admin/class-settings.php:206
-#: src/modules/Register/admin/class-settings.php:62
+#: src/modules/Register/admin/class-settings.php:61
 msgid "Registration"
 msgstr "Registrace"
 
 #: src/admin/class-settings.php:207
-#: src/modules/Visibility/admin/class-settings.php:49
+#: src/modules/Visibility/admin/class-settings.php:47
 msgid "Content visibility"
 msgstr "Viditelnost obsahu"
 
-#: src/admin/class-settings.php:303
+#: src/admin/class-settings.php:290
 msgid "(opens in a new tab)"
 msgstr "(otevře se v nové záložce)"
 
-#: src/admin/class-settings.php:309
+#: src/admin/class-settings.php:296
 msgid "Settings sections"
 msgstr "Části nastavení"
 
-#: src/admin/class-settings.php:329 src/admin/class-users-management.php:173
+#: src/admin/class-settings.php:316 src/admin/class-users-management.php:173
 msgid "You do not have sufficient permissions to access this page."
 msgstr "Nemáte dostatečná oprávnění pro přístup k této stránce."
 
-#: src/admin/class-settings.php:375
+#: src/admin/class-settings.php:362
 msgid "Connection to SkautIS"
 msgstr "Propojení se SkautISem"
 
 #. translators: 1: Start of a link to the documentation 2: End of the link to
 #. the documentation
-#: src/admin/class-settings.php:378
+#: src/admin/class-settings.php:365
 #, php-format
 msgid ""
 "You can find instructions for setting up the plugin and getting an App ID in"
@@ -137,55 +137,55 @@ msgid ""
 msgstr ""
 "Návod pro nastavení pluginu a získání APP ID najdete v %1$snápovědě%2$s."
 
-#: src/admin/class-settings.php:386 src/admin/class-settings.php:562
+#: src/admin/class-settings.php:372 src/admin/class-settings.php:546
 msgid "Active App ID"
 msgstr "Vyberte aktivní APP ID"
 
-#: src/admin/class-settings.php:394
+#: src/admin/class-settings.php:380
 msgid "Production App ID"
 msgstr "APP ID produkční verze"
 
-#: src/admin/class-settings.php:403
+#: src/admin/class-settings.php:389
 msgid "Test App ID"
 msgstr "APP ID testovací verze"
 
-#: src/admin/class-settings.php:447
+#: src/admin/class-settings.php:433
 msgid "Login page"
 msgstr "Přihlašovací stránka"
 
-#: src/admin/class-settings.php:449
+#: src/admin/class-settings.php:435
 msgid "The address of the page where users can log in with SkautIS."
 msgstr "Adresa stránky, na které se uživatelé mohou přihlásit přes SkautIS."
 
-#: src/admin/class-settings.php:457
+#: src/admin/class-settings.php:442
 msgid "Login page address"
 msgstr "Adresa stránky s přihlašováním"
 
-#: src/admin/class-settings.php:466
+#: src/admin/class-settings.php:451
 msgid "User accounts"
 msgstr "Uživatelské účty"
 
-#: src/admin/class-settings.php:476 src/admin/class-settings.php:596
+#: src/admin/class-settings.php:460 src/admin/class-settings.php:580
 msgid "Disconnecting from SkautIS"
 msgstr "Zrušení spojení se SkautISem"
 
-#: src/admin/class-settings.php:485 src/admin/class-settings.php:616
+#: src/admin/class-settings.php:469 src/admin/class-settings.php:600
 msgid "Checking registration conditions"
 msgstr "Ověřování podmínek registrace"
 
-#: src/admin/class-settings.php:550
+#: src/admin/class-settings.php:534
 msgid "Use the test version of SkautIS only for trying out the plugin."
 msgstr "Testovací verzi SkautISu používejte jen pro vyzkoušení pluginu."
 
-#: src/admin/class-settings.php:566
+#: src/admin/class-settings.php:550
 msgid "Production"
 msgstr "Produkční"
 
-#: src/admin/class-settings.php:572
+#: src/admin/class-settings.php:556
 msgid "Test"
 msgstr "Testovací"
 
-#: src/admin/class-settings.php:585
+#: src/admin/class-settings.php:569
 msgid ""
 "For a custom login page, add a \"skautis\" folder with a \"login.php\" file "
 "to the active theme."
@@ -193,7 +193,7 @@ msgstr ""
 "Pro vlastní vzhled přihlašovací stránky přidejte do složky aktivní šablony "
 "složku \"skautis\" a do ní soubor \"login.php\"."
 
-#: src/admin/class-settings.php:585
+#: src/admin/class-settings.php:569
 msgid ""
 "In the login.php file, you can call the global functions "
 "getSkautisLoginUrl(), getSkautisLogoutUrl(), getSkautisRegisterUrl() and "
@@ -202,15 +202,15 @@ msgstr ""
 "V souboru login.php pak můžete volat globální funkce: getSkautisLoginUrl(), "
 "getSkautisLogoutUrl(), getSkautisRegisterUrl(), isUserLoggedInSkautis()"
 
-#: src/admin/class-settings.php:601
+#: src/admin/class-settings.php:585
 msgid "Allows users to disconnect their account from SkautIS."
 msgstr "Umožní uživatelům zrušit propojení svého účtu se SkautISem."
 
-#: src/admin/class-settings.php:603 src/admin/class-settings.php:623
+#: src/admin/class-settings.php:587 src/admin/class-settings.php:607
 msgid "This setting does not affect users with the administrator role."
 msgstr "Nastavení nebude mít dopad na uživatele s úrovní administrátora."
 
-#: src/admin/class-settings.php:621
+#: src/admin/class-settings.php:605
 msgid ""
 "When a user logs in with SkautIS, check whether they still meet the "
 "registration conditions."
@@ -242,11 +242,19 @@ msgstr ""
 "Uživatelé se načítají ze SkautISu podle vaší role ve SkautISu. Pro jejich "
 "zobrazení se přihlaste do SkautISu."
 
-#: src/admin/class-users-management.php:250
+#: src/admin/class-users-management.php:249
+msgid ""
+"Some people of the event could not be loaded from SkautIS. The App ID of "
+"this site is probably not allowed to use these SkautIS methods:"
+msgstr ""
+"Některé osoby z akce se nepodařilo načíst ze SkautISu. App ID tohoto webu "
+"nejspíš nemá povolené tyto metody SkautISu:"
+
+#: src/admin/class-users-management.php:275
 msgid "SkautIS users"
 msgstr "Uživatelé SkautISu"
 
-#: src/admin/class-users-management.php:251
+#: src/admin/class-users-management.php:276
 msgid ""
 "Connect SkautIS users with WordPress accounts, so that they can log in with "
 "SkautIS."
@@ -254,36 +262,36 @@ msgstr ""
 "Propojte uživatele SkautISu s účty ve WordPressu, aby se mohli přihlašovat "
 "přes SkautIS."
 
-#: src/admin/class-users-management.php:255
+#: src/admin/class-users-management.php:280
 msgid "Search users"
 msgstr "Hledat uživatele"
 
-#: src/admin/class-users-management.php:257
+#: src/admin/class-users-management.php:282
 msgid "Show"
 msgstr "Zobrazit"
 
-#: src/admin/class-users-management.php:259
+#: src/admin/class-users-management.php:284
 msgid "All users"
 msgstr "Všichni uživatelé"
 
-#: src/admin/class-users-management.php:260
+#: src/admin/class-users-management.php:285
 msgid "Connected"
 msgstr "Propojeno"
 
-#: src/admin/class-users-management.php:261
-#: src/admin/class-users-management.php:326
+#: src/admin/class-users-management.php:286
+#: src/admin/class-users-management.php:362
 msgid "Not connected"
 msgstr "Nepropojeno"
 
-#: src/admin/class-users-management.php:263
+#: src/admin/class-users-management.php:288
 msgid "Search in SkautIS"
 msgstr "Hledat ve SkautISu"
 
-#: src/admin/class-users-management.php:266
+#: src/admin/class-users-management.php:291
 msgid "Show all users"
 msgstr "Zobrazit všechny uživatele"
 
-#: src/admin/class-users-management.php:269
+#: src/admin/class-users-management.php:294
 msgid ""
 "Typing filters the users below. To find a user who is not listed, search in "
 "SkautIS."
@@ -293,7 +301,7 @@ msgstr ""
 
 #. translators: %d: The number of users
 #. Translators: %d: The number of users
-#: src/admin/class-users-management.php:274
+#: src/admin/class-users-management.php:299
 #: admin/js/skautis-admin-users-management.js:83
 #, php-format, js-format
 msgid "%d user"
@@ -302,68 +310,72 @@ msgstr[0] "%d uživatel"
 msgstr[1] "%d uživatelé"
 msgstr[2] "%d uživatelů"
 
-#: src/admin/class-users-management.php:280
+#: src/admin/class-users-management.php:305
 msgid "Name"
 msgstr "Jméno"
 
-#: src/admin/class-users-management.php:281 src/admin/class-users.php:115
+#: src/admin/class-users-management.php:308
+msgid "Role in the event"
+msgstr "Role v akci"
+
+#: src/admin/class-users-management.php:311 src/admin/class-users.php:115
 msgid "SkautIS user ID"
 msgstr "SkautIS ID uživatele"
 
-#: src/admin/class-users-management.php:282
+#: src/admin/class-users-management.php:312
 msgid "WordPress account"
 msgstr "Účet ve WordPressu"
 
-#: src/admin/class-users-management.php:283
+#: src/admin/class-users-management.php:313
 msgid "Actions"
 msgstr "Akce"
 
-#: src/admin/class-users-management.php:293
+#: src/admin/class-users-management.php:323
 msgid "No users found."
 msgstr "Žádní uživatelé nenalezeni."
 
-#: src/admin/class-users-management.php:335
-#: src/admin/class-users-management.php:380
+#: src/admin/class-users-management.php:371
+#: src/admin/class-users-management.php:417
 msgid "Connect"
 msgstr "Propojit"
 
-#: src/admin/class-users-management.php:337
+#: src/admin/class-users-management.php:373
 msgid "Disconnect"
 msgstr "Odpojit"
 
-#: src/admin/class-users-management.php:361
+#: src/admin/class-users-management.php:398
 msgid "Connect to a WordPress account"
 msgstr "Propojit s účtem ve WordPressu"
 
-#: src/admin/class-users-management.php:366
+#: src/admin/class-users-management.php:403
 msgid "Existing account"
 msgstr "Existující účet"
 
-#: src/admin/class-users-management.php:368
+#: src/admin/class-users-management.php:405
 msgid "Select a user already registered in WordPress"
 msgstr "Vyberte uživatele již registrovaného ve WordPressu"
 
-#: src/admin/class-users-management.php:370
+#: src/admin/class-users-management.php:407
 msgid "Select a user…"
 msgstr "Vyberte uživatele…"
 
-#: src/admin/class-users-management.php:379
+#: src/admin/class-users-management.php:416
 msgid ""
 "Only users whose account is not connected to SkautIS yet can be selected."
 msgstr ""
 "Je možné vybrat pouze ty uživatele, kteří ještě nemají propojený účet se "
 "SkautISem."
 
-#: src/admin/class-users-management.php:388
-#: src/admin/class-users-management.php:396
+#: src/admin/class-users-management.php:425
+#: src/admin/class-users-management.php:433
 msgid "Create a new account"
 msgstr "Vytvořit nový účet"
 
-#: src/admin/class-users-management.php:390
+#: src/admin/class-users-management.php:427
 msgid "Select the role of the new user"
 msgstr "Vyberte úroveň nového uživatele"
 
-#: src/admin/class-users-management.php:395
+#: src/admin/class-users-management.php:432
 msgid ""
 "Creates a new WordPress user with the name, nickname and e-mail from "
 "SkautIS. The account will be connected to SkautIS automatically."
@@ -371,7 +383,7 @@ msgstr ""
 "Vytvoří nového uživatele ve WordPressu se jménem, příjmením, přezdívkou a "
 "emailem ze SkautISu. Účet bude automaticky propojen se SkautISem."
 
-#: src/admin/class-users-management.php:402
+#: src/admin/class-users-management.php:439
 msgid "Cancel"
 msgstr "Zrušit"
 
@@ -472,26 +484,26 @@ msgstr "Chyba v konfiguraci pluginu"
 msgid "Select a rule…"
 msgstr "Vyberte pravidlo…"
 
-#: src/modules/Register/admin/class-settings.php:72
-#: src/modules/Register/admin/class-settings.php:158
+#: src/modules/Register/admin/class-settings.php:70
+#: src/modules/Register/admin/class-settings.php:155
 msgid "Allow registration with SkautIS"
 msgstr "Povolit registraci přes SkautIS"
 
-#: src/modules/Register/admin/class-settings.php:80
+#: src/modules/Register/admin/class-settings.php:78
 msgid "Default role after registration with SkautIS"
 msgstr "Výchozí úroveň po registraci uživatele přes SkautIS"
 
-#: src/modules/Register/admin/class-settings.php:92
-#: src/modules/Register/admin/class-settings.php:190
+#: src/modules/Register/admin/class-settings.php:90
+#: src/modules/Register/admin/class-settings.php:187
 msgid "After a successful registration, send e-mails to:"
 msgstr "Po úspěšné registraci uživatele poslat emaily:"
 
-#: src/modules/Register/admin/class-settings.php:100
-#: src/rules/admin/class-columns.php:280
+#: src/modules/Register/admin/class-settings.php:98
+#: src/rules/admin/class-columns.php:269
 msgid "Registration rules"
 msgstr "Pravidla registrace"
 
-#: src/modules/Register/admin/class-settings.php:163
+#: src/modules/Register/admin/class-settings.php:160
 msgid ""
 "Allows users with a SkautIS account to create an account on this site. The "
 "registration can be limited by the rules below."
@@ -499,39 +511,39 @@ msgstr ""
 "Umožní uživatelům se SkautIS účtem vytvořit si účet na tomto webu. "
 "Registraci lze omezit pravidly níže."
 
-#: src/modules/Register/admin/class-settings.php:195
+#: src/modules/Register/admin/class-settings.php:192
 msgid "Nobody"
 msgstr "Nikomu"
 
-#: src/modules/Register/admin/class-settings.php:202
+#: src/modules/Register/admin/class-settings.php:199
 msgid "The administrator (information about the new user)"
 msgstr "Administrátorovi (info o registraci nového uživatele)"
 
-#: src/modules/Register/admin/class-settings.php:209
+#: src/modules/Register/admin/class-settings.php:206
 msgid "The user (login details)"
 msgstr "Uživateli (přístupové údaje)"
 
-#: src/modules/Register/admin/class-settings.php:216
+#: src/modules/Register/admin/class-settings.php:213
 msgid "Both the administrator and the user"
 msgstr "Administrátorovi i uživateli"
 
-#: src/modules/Register/admin/class-settings.php:229
+#: src/modules/Register/admin/class-settings.php:226
 msgid "Only users who pass the following rules will be able to register."
 msgstr ""
 "Nastavením omezíte registraci uživatelů pouze při splnění následujících "
 "pravidel."
 
-#: src/modules/Register/admin/class-settings.php:230
+#: src/modules/Register/admin/class-settings.php:227
 msgid "You can add rules in the section"
 msgstr "Pravidla můžete přidávat v sekci"
 
-#: src/modules/Register/admin/class-settings.php:231
+#: src/modules/Register/admin/class-settings.php:228
 #: src/rules/class-rules-init.php:54 src/rules/class-rules-init.php:55
 #: src/rules/class-rules-init.php:59
 msgid "Manage rules"
 msgstr "Správa pravidel"
 
-#: src/modules/Register/admin/class-settings.php:233
+#: src/modules/Register/admin/class-settings.php:230
 msgid ""
 "If left empty, all users will be able to register with SkautIS. Their "
 "default role will be: "
@@ -539,11 +551,11 @@ msgstr ""
 "Ponecháte-li prázdné - budou se moci přes SkautIS registrovat všichni "
 "uživatelé. Jejich výchozí úroveň pak bude: "
 
-#: src/modules/Register/admin/class-settings.php:236
+#: src/modules/Register/admin/class-settings.php:233
 msgid "The rules are evaluated from top to bottom."
 msgstr "Pravidla se vyhodnocují shora dolů."
 
-#: src/modules/Register/admin/class-settings.php:237
+#: src/modules/Register/admin/class-settings.php:234
 msgid ""
 "Once a rule is passed, the following rules are not evaluated. Therefore, "
 "keep the more specific rules, which apply to a narrower group of users, at "
@@ -553,20 +565,20 @@ msgstr ""
 "nevyhodnocují. Proto udržujte pořadí pravidel takové, aby nahoře byly vždy "
 "specifičtější pravidla, která platí pro užší skupinu uživatelů."
 
-#: src/modules/Register/admin/class-settings.php:254
+#: src/modules/Register/admin/class-settings.php:251
 msgid "If the rule is passed:"
 msgstr "Při splnění pravidla:"
 
-#: src/modules/Register/admin/class-settings.php:264
+#: src/modules/Register/admin/class-settings.php:261
 msgid "Assign the user the role:"
 msgstr "Přiřadit uživateli úroveň:"
 
-#: src/modules/Register/admin/class-settings.php:270
+#: src/modules/Register/admin/class-settings.php:267
 #: src/modules/Visibility/admin/class-metabox.php:191
 msgid "Remove"
 msgstr "Odstranit"
 
-#: src/modules/Register/admin/class-settings.php:273
+#: src/modules/Register/admin/class-settings.php:270
 #: src/rules/class-rules-init.php:61
 msgid "Add rule"
 msgstr "Přidat pravidlo"
@@ -621,20 +633,20 @@ msgstr "Chyba při registraci"
 msgid "An unexpected error occurred during the registration: %s"
 msgstr "Při registraci nastala neočekávaná chyba: %s"
 
-#: src/modules/Register/class-wp-register.php:106
+#: src/modules/Register/class-wp-register.php:108
 msgid "The SkautIS username is not a valid WordPress username."
 msgstr ""
 "Uživatelské jméno ze SkautISu není platné uživatelské jméno ve WordPressu."
 
-#: src/modules/Register/class-wp-register.php:109
+#: src/modules/Register/class-wp-register.php:114
 msgid "The username is already registered on this site."
 msgstr "Uživatelské jméno je již na webu registrováno."
 
-#: src/modules/Register/class-wp-register.php:113
+#: src/modules/Register/class-wp-register.php:121
 msgid "The e-mail address from SkautIS is not valid."
 msgstr "E-mailová adresa ze SkautISu není platná."
 
-#: src/modules/Register/class-wp-register.php:116
+#: src/modules/Register/class-wp-register.php:127
 msgid "The e-mail address is already registered on this site."
 msgstr "E-mailová adresa je již na webu registrována."
 
@@ -688,12 +700,12 @@ msgid "Hide completely"
 msgstr "Úplně skrýt"
 
 #: src/modules/Visibility/admin/class-metabox.php:217
-#: src/modules/Visibility/admin/class-settings.php:152
+#: src/modules/Visibility/admin/class-settings.php:149
 #: modules/Visibility/admin/js/skautis-modules-visibility-block-editor.js:202
 msgid "Hide only the content"
 msgstr "Skrýt pouze obsah"
 
-#: src/modules/Visibility/admin/class-settings.php:51
+#: src/modules/Visibility/admin/class-settings.php:49
 msgid ""
 "If a user is not logged in to SkautIS or does not pass the rules, the "
 "content will be hidden from them."
@@ -701,7 +713,7 @@ msgstr ""
 "Pokud není uživatel přihlášen ve SkautISu nebo nesplní daná pravidla - bude "
 "pro něj obsah skrytý."
 
-#: src/modules/Visibility/admin/class-settings.php:51
+#: src/modules/Visibility/admin/class-settings.php:49
 msgid ""
 "Users logged in to WordPress who can edit the content will always see it, "
 "regardless of their SkautIS login or the rules."
@@ -710,7 +722,7 @@ msgstr ""
 "uvidí vždy, bez ohledu na jejich přihlášení do SkautISu či splnění daných "
 "pravidel."
 
-#: src/modules/Visibility/admin/class-settings.php:52
+#: src/modules/Visibility/admin/class-settings.php:50
 msgid ""
 "The rules of a whole post or page are set in the post settings of the block "
 "editor, the rules of a single block in its block settings."
@@ -718,36 +730,36 @@ msgstr ""
 "Pravidla celého příspěvku nebo stránky se nastavují v nastavení příspěvku v "
 "blokovém editoru, pravidla jednoho bloku v jeho nastavení bloku."
 
-#: src/modules/Visibility/admin/class-settings.php:60
-#: src/modules/Visibility/admin/class-settings.php:126
+#: src/modules/Visibility/admin/class-settings.php:57
+#: src/modules/Visibility/admin/class-settings.php:123
 msgid "Content types"
 msgstr "Typy obsahu"
 
-#: src/modules/Visibility/admin/class-settings.php:68
-#: src/modules/Visibility/admin/class-settings.php:147
+#: src/modules/Visibility/admin/class-settings.php:65
+#: src/modules/Visibility/admin/class-settings.php:144
 msgid "Hiding method"
 msgstr "Způsob skrytí"
 
-#: src/modules/Visibility/admin/class-settings.php:76
-#: src/modules/Visibility/admin/class-settings.php:167
+#: src/modules/Visibility/admin/class-settings.php:73
+#: src/modules/Visibility/admin/class-settings.php:164
 msgid "Child content"
 msgstr "Podřízený obsah"
 
-#: src/modules/Visibility/admin/class-settings.php:134
+#: src/modules/Visibility/admin/class-settings.php:131
 msgid "Visibility rules can be set for the selected content types."
 msgstr ""
 "U vybraných typů obsahu bude možné zadávat pravidla pro viditelnost obsahu."
 
-#: src/modules/Visibility/admin/class-settings.php:149
+#: src/modules/Visibility/admin/class-settings.php:146
 msgid "Hide the whole post / page / …"
 msgstr "Skrýt celý příspěvek / stránku / …"
 
-#: src/modules/Visibility/admin/class-settings.php:153
-#: src/modules/Visibility/admin/class-settings.php:170
+#: src/modules/Visibility/admin/class-settings.php:150
+#: src/modules/Visibility/admin/class-settings.php:167
 msgid "You can change this setting for individual content as needed."
 msgstr "Nastavení můžete změnit u jednotlivých typů obsahu dle potřeby."
 
-#: src/modules/Visibility/admin/class-settings.php:169
+#: src/modules/Visibility/admin/class-settings.php:166
 msgid "Apply the selected rules to child content as well"
 msgstr "Použít vybraná pravidla i na podřízený obsah"
 
@@ -759,11 +771,25 @@ msgstr "Pro zobrazení tohoto obsahu musíte být přihlášeni ve SkautISu"
 msgid "You do not have permission to access this content"
 msgstr "Nemáte oprávnění k přístupu k tomuto obsahu"
 
-#: src/repository/class-users.php:397
+#: src/repository/class-event-team.php:60
+msgid "Instructor"
+msgstr "Instruktor"
+
+#: src/repository/class-event-team.php:65
+#: src/repository/class-event-team.php:73
+#: src/repository/class-event-team.php:81
+msgid "Event leadership"
+msgstr "Vedení akce"
+
+#: src/repository/class-users.php:316
+msgid "Participant"
+msgstr "Účastník"
+
+#: src/repository/class-users.php:435
 msgid "Could not get the user information from SkautIS"
 msgstr "Nepodařilo se získat informace o uživateli ze SkautISu"
 
-#: src/rules/admin/class-admin.php:97 src/rules/admin/class-columns.php:74
+#: src/rules/admin/class-admin.php:97 src/rules/admin/class-columns.php:88
 msgid "Used in"
 msgstr "Použito v"
 
@@ -825,27 +851,43 @@ msgstr "Porovnání"
 msgid "Values"
 msgstr "Hodnoty"
 
-#: src/rules/admin/class-columns.php:75
+#: src/rules/admin/class-admin.php:258
+msgid "Who"
+msgstr "Kdo"
+
+#: src/rules/admin/class-admin.php:259
+msgid "Anyone from the event"
+msgstr "Kdokoli z akce"
+
+#: src/rules/admin/class-admin.php:260
+msgid "The event team"
+msgstr "Tým akce"
+
+#: src/rules/admin/class-admin.php:261
+msgid "The participants (not the event team)"
+msgstr "Účastníci (bez týmu akce)"
+
+#: src/rules/admin/class-columns.php:89
 msgid "Last modified"
 msgstr "Naposledy upraveno"
 
 #. translators: human-readable time difference
-#: src/rules/admin/class-columns.php:123
+#: src/rules/admin/class-columns.php:137
 #, php-format
 msgctxt "%s = human-readable time difference"
 msgid "%s ago"
 msgstr "Před %s"
 
-#: src/rules/admin/class-columns.php:258
+#: src/rules/admin/class-columns.php:247
 msgid "Not used"
 msgstr "Nepoužito"
 
-#: src/rules/admin/class-columns.php:267
+#: src/rules/admin/class-columns.php:256
 msgid "(no title)"
 msgstr "(bez názvu)"
 
 #. translators: %d: The number of other posts
-#: src/rules/admin/class-columns.php:273
+#: src/rules/admin/class-columns.php:262
 #, php-format
 msgid "and %d more"
 msgid_plural "and %d more"
@@ -854,7 +896,7 @@ msgstr[1] "a %d další"
 msgstr[2] "a %d dalších"
 
 #. translators: %d: The number of blocks
-#: src/rules/admin/class-columns.php:277
+#: src/rules/admin/class-columns.php:266
 #, php-format
 msgid "%d block with this rule"
 msgid_plural "%d blocks with this rule"
@@ -1019,6 +1061,18 @@ msgstr ""
 #: src/rules/Rule/class-all.php:143
 msgid "Yes"
 msgstr "Ano"
+
+#: src/rules/Rule/class-event.php:101
+msgid "Event"
+msgstr "Akce"
+
+#: src/rules/Rule/class-event.php:150
+msgid ""
+"The events of SkautIS that you take part in. The event team are the people "
+"with a SkautIS role in the event, e.g. the leadership and the instructors."
+msgstr ""
+"Akce ve SkautISu, kterých se účastníte. Tým akce jsou lidé, kteří mají v "
+"akci roli ve SkautISu, např. vedení a instruktoři."
 
 #: src/rules/Rule/class-func.php:84
 msgid "Function"

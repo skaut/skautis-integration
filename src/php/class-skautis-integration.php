@@ -56,6 +56,7 @@ class Skautis_Integration {
 		require __DIR__ . '/src/modules/Visibility/frontend/class-frontend.php';
 		require __DIR__ . '/src/modules/Visibility/class-visibility.php';
 
+		require __DIR__ . '/src/repository/class-event-team.php';
 		require __DIR__ . '/src/repository/class-users.php';
 
 		require __DIR__ . '/src/rules/admin/class-admin.php';
@@ -63,6 +64,7 @@ class Skautis_Integration {
 		require __DIR__ . '/src/rules/interface-rule.php';
 		require __DIR__ . '/src/rules/class-revisions.php';
 		require __DIR__ . '/src/rules/Rule/class-all.php';
+		require __DIR__ . '/src/rules/Rule/class-event.php';
 		require __DIR__ . '/src/rules/Rule/class-func.php';
 		require __DIR__ . '/src/rules/Rule/class-role.php';
 		require __DIR__ . '/src/rules/Rule/class-membership.php';

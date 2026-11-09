@@ -1,4 +1,8 @@
 declare const skautisIntegrationRulesLocalize: {
+	eventRelation: string;
+	eventRelationAny: string;
+	eventRelationOther: string;
+	eventRelationTeam: string;
 	inUnitWithNumber: string;
 	labelCondition: string;
 	labelOperator: string;

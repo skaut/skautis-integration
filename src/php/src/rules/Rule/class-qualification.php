@@ -178,7 +178,8 @@ class Qualification implements Rule {
 		$result = array();
 
 		foreach ( $user_qualifications as $user_qualification ) {
-			$result[] = $user_qualification->ID_QualificationType;
+			// SkautIS returns the IDs as numbers, the rule data contains them as strings.
+			$result[] = strval( $user_qualification->ID_QualificationType );
 		}
 
 		$user_qualifications = $result;

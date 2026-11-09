@@ -65,6 +65,7 @@ final class Rules_Manager {
 				Rule\Membership::get_id()    => new Rule\Membership( $this->skautis_gateway ),
 				Rule\Func::get_id()          => new Rule\Func( $this->skautis_gateway ),
 				Rule\Qualification::get_id() => new Rule\Qualification( $this->skautis_gateway ),
+				Rule\Event::get_id()         => new Rule\Event( $this->skautis_gateway ),
 				Rule\All::get_id()           => new Rule\All( $this->skautis_gateway ),
 			)
 		);
