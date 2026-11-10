@@ -9,6 +9,8 @@ declare( strict_types=1 );
 
 namespace Skautis_Integration\Repository;
 
+use PHPMD\Attribute\SuppressWarnings;
+use PHPMD\Rule\Design\ExcessiveClassComplexity;
 use Skautis_Integration\Auth\Skautis_Gateway;
 use Skautis_Integration\Utils\Helpers;
 use Skautis_Integration\Utils\Request_Parameter_Helpers;
@@ -16,6 +18,7 @@ use Skautis_Integration\Utils\Request_Parameter_Helpers;
 /**
  * Contains helper functions for management of SkautIS users.
  */
+#[SuppressWarnings( ExcessiveClassComplexity::class )]
 class Users {
 
 	/**
@@ -24,6 +27,13 @@ class Users {
 	 * @var Skautis_Gateway
 	 */
 	protected $skautis_gateway;
+
+	/**
+	 * The SkautIS methods for the event team that could not be called while loading the users.
+	 *
+	 * @var array<string>
+	 */
+	private $event_failed_methods = array();
 
 	/**
 	 * Constructs the service and saves all dependencies.
@@ -118,6 +128,109 @@ class Users {
 	}
 
 	/**
+	 * Creates a user from a person in an event.
+	 *
+	 * @param int    $participant_id The ID of the participant, or 0 for people from the event team.
+	 * @param int    $person_id The ID of the person.
+	 * @param string $person The name of the person in the "Surname Name (Nickname)" format.
+	 * @param string $email The e-mail address of the person.
+	 * @param string $event_role The role of the person in the event.
+	 *
+	 * @return \stdClass The user.
+	 */
+	private static function person_to_user( int $participant_id, int $person_id, string $person, string $email, string $event_role ): \stdClass {
+		$user = new \stdClass();
+
+		$user->id         = $participant_id;
+		$user->personId   = $person_id;
+		$user->firstName  = $person;
+		$user->lastName   = '';
+		$user->nickName   = '';
+		$user->email      = $email;
+		$user->UserName   = $email;
+		$user->eventRoles = array( $event_role );
+
+		$reg_result = array();
+		if ( 1 === preg_match( '~^(\S+)\s(\S+)(?:\s\((.*)\))?~u', $person, $reg_result ) ) {
+			$user->firstName = $reg_result[2];
+			$user->lastName  = $reg_result[1];
+			$user->nickName  = $reg_result[3] ?? '';
+		}
+
+		return $user;
+	}
+
+	/**
+	 * Returns the SkautIS methods for the event team that could not be called while loading the users, e.g. because the App ID is not allowed to use them.
+	 *
+	 * @return array<string> The method names.
+	 */
+	public function get_event_failed_methods(): array {
+		return $this->event_failed_methods;
+	}
+
+	/**
+	 * Replaces the IDs of event participants with the IDs of their SkautIS user accounts.
+	 *
+	 * Event participants are listed with their participant ID, which is unrelated to the SkautIS user ID used to log in to WordPress. Participants without a SkautIS user account are left out, because they cannot log in with SkautIS anyway.
+	 *
+	 * @param array<\stdClass> $participants The event participants.
+	 *
+	 * @return array<\stdClass> The participants with a SkautIS user account.
+	 */
+	private function replace_participant_ids_with_user_ids( array $participants ): array {
+		$users = array();
+
+		foreach ( $participants as $participant ) {
+			$skautis_user = $this->find_user_by_person( intval( $participant->personId ), strval( $participant->lastName ) );
+			if ( is_null( $skautis_user ) ) {
+				continue;
+			}
+
+			$participant->id = intval( $skautis_user->ID );
+			if ( isset( $skautis_user->UserName ) && '' !== $skautis_user->UserName ) {
+				$participant->UserName = $skautis_user->UserName;
+			}
+			$users[] = $participant;
+		}
+
+		return $users;
+	}
+
+	/**
+	 * Finds the SkautIS user account of a person.
+	 *
+	 * @param int    $person_id The SkautIS person ID.
+	 * @param string $last_name The last name of the person, used to narrow down the search.
+	 *
+	 * @return \stdClass|null The SkautIS user or null if the person has no user account.
+	 */
+	private function find_user_by_person( int $person_id, string $last_name ) {
+		$skautis_users = $this->skautis_gateway->get_skautis_instance()->UserManagement->UserAll(
+			array(
+				'ID_Person'   => $person_id,
+				'DisplayName' => $last_name,
+			)
+		);
+
+		if ( is_object( $skautis_users ) && isset( $skautis_users->ID ) ) {
+			$skautis_users = array( $skautis_users );
+		}
+		if ( ! is_array( $skautis_users ) ) {
+			return null;
+		}
+
+		// The results are filtered by the person ID once more, in case the API only applied the name filter.
+		foreach ( $skautis_users as $skautis_user ) {
+			if ( $skautis_user instanceof \stdClass && isset( $skautis_user->ID, $skautis_user->ID_Person ) && intval( $skautis_user->ID_Person ) === $person_id ) {
+				return $skautis_user;
+			}
+		}
+
+		return null;
+	}
+
+	/**
 	 * Returns all users for the current unit or event. Returns users whose name matches the "skautisSearchUsers" GET variable if it is present.
 	 *
 	 * @return array{users: array<\stdClass>, eventType: string} The users.
@@ -159,11 +272,16 @@ class Users {
 					foreach ( $current_user_events as $event ) {
 						// @phpstan-ignore-next-line
 						if ( $event->ID_Group === $role->ID_Group ) {
-							$event_url = $this->skautis_gateway->get_skautis_instance()->Events->EventDetail(
-								array(
-									'ID' => $event->ID,
-								)
-							);
+							try {
+								$event_url = $this->skautis_gateway->get_skautis_instance()->Events->EventDetail(
+									array(
+										'ID' => $event->ID,
+									)
+								);
+							} catch ( \Exception $e ) {
+								Helpers::log_skautis_response( 'EventDetail (error)', $e->getMessage() );
+								continue;
+							}
 							if ( isset( $event_url->UrlDetail ) ) {
 								$reg_result = array();
 								preg_match( '~ID=(\d+)$~', $event_url->UrlDetail, $reg_result );
@@ -179,54 +297,50 @@ class Users {
 
 		// Different procedure for roles associated with events.
 		if ( '' !== $event_type && 0 !== $event_id ) {
-			if ( 'Congress' === $event_type ) {
-				$participants = null;
-			} else {
-				$method_name  = 'Participant' . $event_type . 'All';
-				$participants = $this->skautis_gateway->get_skautis_instance()->Events->$method_name(
-					array(
-						'ID_Event' . $event_type => $event_id,
-					)
-				);
+			$participants = null;
+			$failed       = array();
+			if ( 'Congress' !== $event_type ) {
+				$method_name = 'Participant' . $event_type . 'All';
+				try {
+					$participants = $this->skautis_gateway->get_skautis_instance()->Events->$method_name(
+						array(
+							'ID_Event' . $event_type => $event_id,
+						)
+					);
+				} catch ( \Exception $e ) {
+					// E.g. the role of the user is not allowed to see the participants of this event.
+					Helpers::log_skautis_response( $method_name . ' (error)', $e->getMessage() );
+					$failed[] = $method_name;
+				}
 			}
 
+			$users = array();
 			if ( is_array( $participants ) ) {
-				$users = array_map(
-					static function ( $participant ) {
-						$user = new \stdClass();
-
-						$user->id        = $participant->ID;
-						$user->personId  = $participant->ID_Person;
-						$user->firstName = $participant->Person;
-						$user->lastName  = '';
-						$user->nickName  = '';
-
-						$reg_result = array();
-						preg_match( '~([^\s]+)\s([^\s]+)(\s\((.*)\))~', $participant->Person, $reg_result );
-
-						if ( isset( $reg_result[1], $reg_result[2] ) ) {
-							$user->firstName = $reg_result[2];
-							$user->lastName  = $reg_result[1];
-							if ( '' !== $reg_result[4] ) {
-								$user->nickName = $reg_result[4];
-							}
+				foreach ( $participants as $participant ) {
+					$email = '';
+					if ( isset( $participant->PersonEmail ) && ! empty( $participant->PersonEmail ) ) {
+						$emails = preg_split( '~(?=\,)~x', $participant->PersonEmail );
+						if ( is_array( $emails ) && isset( $emails[0] ) ) {
+							$email = $emails[0];
 						}
+					}
+					$users[ intval( $participant->ID_Person ) ] = self::person_to_user( intval( $participant->ID ), intval( $participant->ID_Person ), strval( $participant->Person ), $email, __( 'Participant', 'skautis-integration' ) );
+				}
+			}
 
-						if ( isset( $participant->PersonEmail ) && ! empty( $participant->PersonEmail ) ) {
-							$emails = preg_split( '~(?=\,)~x', $participant->PersonEmail );
-							if ( isset( $emails[0] ) ) {
-								$user->email = $emails[0];
-							}
-						} else {
-							$user->email = '';
-						}
+			// The instructors and the leadership of the event are listed as well, a participant who is also in the team gets both roles.
+			$event_team = new Event_Team( $this->skautis_gateway );
+			foreach ( $event_team->get_team( $event_type, intval( $event_id ) ) as $person_id => $member ) {
+				if ( isset( $users[ $person_id ] ) ) {
+					$users[ $person_id ]->eventRoles = array_merge( $users[ $person_id ]->eventRoles, $member['roles'] );
+				} else {
+					$users[ $person_id ] = self::person_to_user( 0, $person_id, $member['name'], '', implode( ', ', $member['roles'] ) );
+				}
+			}
+			$this->event_failed_methods = array_merge( $failed, $event_team->get_failed_methods() );
 
-						$user->UserName = $user->email;
-
-						return $user;
-					},
-					$participants
-				);
+			if ( ! empty( $users ) ) {
+				$users = $this->replace_participant_ids_with_user_ids( array_values( $users ) );
 			}
 		}
 
@@ -294,7 +408,7 @@ class Users {
 
 		if ( '' !== $users['eventType'] ) {
 			foreach ( (array) $users['users'] as $user ) {
-				if ( $user->id === $skautis_user_id ) {
+				if ( intval( $user->id ) === $skautis_user_id ) {
 					$user_detail = array(
 						'id'        => $skautis_user_id,
 						'UserName'  => $user->UserName,
@@ -329,7 +443,7 @@ class Users {
 		}
 
 		if ( empty( $user_detail ) ) {
-			throw new \Exception( esc_html__( 'Nepodařilo se získat informace o uživateli ze skautISu', 'skautis-integration' ) );
+			throw new \Exception( esc_html__( 'Could not get the user information from SkautIS', 'skautis-integration' ) );
 		}
 
 		return $user_detail;

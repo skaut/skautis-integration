@@ -15,15 +15,13 @@ use Skautis_Integration\Auth\Skautis_Login;
 use Skautis_Integration\Auth\WP_Login_Logout;
 use Skautis_Integration\Auth\Connect_And_Disconnect_WP_Account;
 use Skautis_Integration\General\Actions;
-use Skautis_Integration\Migrations\Autosave_Meta_Cleanup;
 use Skautis_Integration\Frontend\Frontend;
 use Skautis_Integration\Frontend\Login_Form;
 use Skautis_Integration\Admin\Admin;
 use Skautis_Integration\Admin\Settings;
 use Skautis_Integration\Admin\Users;
-use Skautis_Integration\Modules\Modules_Manager;
+use Skautis_Integration\Modules\Register\Admin\Admin as Register_Admin;
 use Skautis_Integration\Modules\Register\Register;
-use Skautis_Integration\Modules\Shortcodes\Shortcodes;
 use Skautis_Integration\Modules\Visibility\Visibility;
 use Skautis_Integration\Repository\Users as Repository_Users;
 use Skautis_Integration\Rules\Revisions;
@@ -80,13 +78,6 @@ class Services {
 	private static $actions = null;
 
 	/**
-	 * An Autosave_Meta_Cleanup service instance.
-	 *
-	 * @var Autosave_Meta_Cleanup|null
-	 */
-	private static $autosave_meta_cleanup = null;
-
-	/**
 	 * A Revisions service instance.
 	 *
 	 * @var Revisions|null
@@ -121,16 +112,23 @@ class Services {
 	private static $rules_manager = null;
 
 	/**
-	 * A Modules_Manager service instance.
+	 * A Register service instance. It only exists when the registration is enabled.
 	 *
-	 * @var Modules_Manager|null
+	 * @var Register|null
 	 */
-	private static $modules_manager = null;
+	private static $register = null;
+
+	/**
+	 * A Visibility service instance.
+	 *
+	 * @var Visibility|null
+	 */
+	private static $visibility = null;
 
 	/**
 	 * An Admin\Settings service instance.
 	 *
-	 * Depends on $skautis_gateway and $modules_manager.
+	 * Depends on $skautis_gateway.
 	 *
 	 * @var Settings|null
 	 */
@@ -251,18 +249,6 @@ class Services {
 	}
 
 	/**
-	 * Gets the Autosave_Meta_Cleanup service.
-	 *
-	 * @return Autosave_Meta_Cleanup The initialized service object.
-	 */
-	private static function get_autosave_meta_cleanup() {
-		if ( is_null( self::$autosave_meta_cleanup ) ) {
-			self::$autosave_meta_cleanup = new Autosave_Meta_Cleanup();
-		}
-		return self::$autosave_meta_cleanup;
-	}
-
-	/**
 	 * Gets the Revisions service.
 	 *
 	 * @return Revisions The initialized service object.
@@ -297,7 +283,6 @@ class Services {
 	public static function get_general() {
 		self::get_actions();
 		self::get_rules_init();
-		self::get_autosave_meta_cleanup();
 	}
 
 	/**
@@ -325,21 +310,53 @@ class Services {
 	}
 
 	/**
-	 * Gets the Modules_Manager service.
-	 *
-	 * @return Modules_Manager The initialized service object.
+	 * Returns whether new users can register with SkautIS.
 	 */
-	public static function get_modules_manager() {
-		if ( is_null( self::$modules_manager ) ) {
-			self::$modules_manager = new Modules_Manager(
-				array( // For hard modules activation/deactivation look to modules/Modules_Manager WP filters.
-					Register::get_id()   => Register::get_label(),
-					Visibility::get_id() => Visibility::get_label(),
-					Shortcodes::get_id() => Shortcodes::get_label(),
-				)
-			);
+	public static function is_registration_enabled(): bool {
+		return '1' === strval( get_option( SKAUTIS_INTEGRATION_NAME . '_registration_enabled', '0' ) );
+	}
+
+	/**
+	 * Gets the Register service.
+	 *
+	 * Must only be called when the registration is enabled, because the service registers the registration hooks.
+	 *
+	 * @return Register The initialized service object.
+	 */
+	public static function get_register() {
+		if ( is_null( self::$register ) ) {
+			self::$register = new Register( self::get_skautis_gateway(), self::get_skautis_login(), self::get_wp_login_logout(), self::get_rules_manager(), self::get_repository_users() );
 		}
-		return self::$modules_manager;
+		return self::$register;
+	}
+
+	/**
+	 * Gets the Visibility service.
+	 *
+	 * @return Visibility The initialized service object.
+	 */
+	public static function get_visibility() {
+		if ( is_null( self::$visibility ) ) {
+			self::$visibility = new Visibility( self::get_rules_manager(), self::get_skautis_login(), self::get_wp_login_logout() );
+		}
+		return self::$visibility;
+	}
+
+	/**
+	 * Sets up the content visibility and the registration.
+	 *
+	 * The registration settings are always available in the administration, so that the registration can be enabled there.
+	 *
+	 * @return void
+	 */
+	public static function get_features() {
+		self::get_visibility();
+		if ( is_admin() ) {
+			new Register_Admin( self::get_rules_manager() );
+		}
+		if ( self::is_registration_enabled() ) {
+			self::get_register();
+		}
 	}
 
 	/**
@@ -349,7 +366,7 @@ class Services {
 	 */
 	private static function get_admin_settings() {
 		if ( is_null( self::$admin_settings ) ) {
-			self::$admin_settings = new Settings( self::get_skautis_gateway(), self::get_modules_manager() );
+			self::$admin_settings = new Settings( self::get_skautis_gateway() );
 		}
 		return self::$admin_settings;
 	}

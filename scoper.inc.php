@@ -31,7 +31,7 @@ function safe_replace( $pattern, $replacement, $value ) { // phpcs:ignore WordPr
  */
 function dependency_finder() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 	// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.system_calls_exec
-	exec( 'composer show --no-dev --name-only', $dependencies );
+	exec( 'composer show --no-dev --name-only --no-ansi', $dependencies );
 	$finder = Finder::create()->files()->name( array( '*.php', '/LICENSE(.txt)?/' ) )->in( 'vendor' );
 
 	foreach ( $dependencies as $dependency ) {
@@ -71,6 +71,14 @@ return array(
 					"\$GLOBALS['__composer_autoload_files_{$underscore_prefix}']",
 					$contents
 				);
+			}
+
+			// skautis/skautis 2.x uses implicitly nullable parameter types (`Type $param = null`), which are deprecated since PHP 8.4.
+			if ( 0 === strpos( $file_path, __DIR__ . '/vendor/skautis/skautis/src/' ) ) {
+				$explicitly_nullable = preg_replace( '/([(,]\s*)(\\\\?[A-Za-z_][A-Za-z0-9_\\\\]*)(\s+\$[A-Za-z_][A-Za-z0-9_]*\s*=\s*null\b)/', '$1?$2$3', $contents );
+				if ( is_string( $explicitly_nullable ) ) {
+					$contents = $explicitly_nullable;
+				}
 			}
 
 			return $contents;

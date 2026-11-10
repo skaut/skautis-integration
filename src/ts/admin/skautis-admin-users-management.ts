@@ -1,175 +1,168 @@
-/// <reference types="datatables.net"/>
-
-function getQueryStringFromUrl(key: string, url: string): string {
-	const regex = new RegExp(
-			`[\\?&]${key.replace(/[[]/, '\\[').replace(/[\]]/, '\\]')}=([^&#]*)`
-		),
-		results = regex.exec(url);
-	return results === null
-		? ''
-		: decodeURIComponent(results[1].replace(/\+/g, ' '));
-}
-
-function updateQueryStringInUrl(
-	key: string,
-	value: string,
-	url: string
-): string {
-	const re = new RegExp(`([?&])${key}=.*?(&|#|$)(.*)`, 'gi');
-	let updatedUrl = url;
-
-	if (re.test(updatedUrl)) {
-		if (typeof value !== 'undefined') {
-			return updatedUrl.replace(re, `$1${key}=${value}$2$3`);
-		}
-		const hash = updatedUrl.split('#');
-		updatedUrl = hash[0].replace(re, '$1$3').replace(/(&|\?)$/, '');
-		if (typeof hash[1] !== 'undefined') {
-			updatedUrl += `#${hash[1]}`;
-		}
-		return updatedUrl;
+/**
+ * Filters the table of SkautIS users and shows the panel for connecting a user below its row.
+ */
+wp.domReady(() => {
+	const table = document.querySelector<HTMLTableElement>(
+		'.skautis-users-table'
+	);
+	const panelOrNull = document.getElementById('skautis-users-connect-panel');
+	if (table === null || panelOrNull === null) {
+		return;
 	}
-	if (typeof value !== 'undefined') {
-		const separator = updatedUrl.includes('?') ? '&' : '?';
-		const hash = updatedUrl.split('#');
-		updatedUrl = `${hash[0] + separator + key}=${value}`;
-		if (typeof hash[1] !== 'undefined') {
-			updatedUrl += `#${hash[1]}`;
-		}
-		return updatedUrl;
+	const panel: HTMLElement = panelOrNull;
+	const tbody = table.tBodies[0];
+	const rows = Array.from(
+		tbody.querySelectorAll<HTMLTableRowElement>('tr[data-skautis-user-id]')
+	);
+	const emptyRow = tbody.querySelector<HTMLTableRowElement>(
+		'.skautis-users-empty'
+	);
+	const count = document.querySelector('.skautis-users-count');
+	const search = document.getElementById(
+		'skautis-users-search'
+	) as HTMLInputElement | null;
+	const filter = document.getElementById(
+		'skautis-users-filter'
+	) as HTMLSelectElement | null;
+	const panelTitle = document.getElementById('skautis-users-connect-title');
+	let openButton: HTMLButtonElement | null = null;
+
+	function normalize(text: string): string {
+		return text.normalize('NFD').replace(/[̀-ͯ]/gu, '').toLowerCase();
 	}
-	return updatedUrl;
-}
 
-(($): void => {
-	const $dataTable = $('.skautis-user-management-table').DataTable({
-		initComplete: () => {
-			const searchString = getQueryStringFromUrl(
-				'skautisSearchUsers',
-				window.location.href
-			);
-
-			if ($dataTable.data().length >= 500) {
-				const $input = $('.dt-search input').off(),
-					$searchButton = $('<button>')
-						.text($dataTable.i18n('search', 'Search'))
-						.addClass('button button-secondary')
-						.on('click', () => {
-							const withNonce = updateQueryStringInUrl(
-								skautisIntegrationAdminUsersManagementLocalize.searchNonceName,
-								skautisIntegrationAdminUsersManagementLocalize.searchNonceValue,
-								window.location.href
-							);
-							window.location.href = updateQueryStringInUrl(
-								'skautisSearchUsers',
-								$input.val() as string,
-								withNonce
-							);
-						});
-				$input.on('keyup', (e) => {
-					e.preventDefault();
-					if (e.key === 'Enter') {
-						$searchButton.trigger('click');
-					}
-				});
-				$('.dt-search').append($searchButton);
-			}
-
-			if (searchString) {
-				const $clearButton = $('<button>')
-					.text(skautisIntegrationAdminUsersManagementLocalize.cancel)
-					.addClass('button button-secondary')
-					.on('click', () => {
-						$('.dt-search input').val('');
-						window.location.href = updateQueryStringInUrl(
-							'skautisSearchUsers',
-							'',
-							window.location.href
-						);
-					});
-				$('.dt-search').append($clearButton);
-
-				$('.dt-search input').val(searchString);
-			}
-		},
-		language: {
-			ajax: `${
-				skautisIntegrationAdminUsersManagementLocalize.datatablesFilesUrl
-			}/cs.json`,
-			search: 'Hledat',
-		},
-		pageLength: 25,
-		stateSave: true,
-	});
-
-	$('.thickbox').on('click', function () {
-		const $this = $(this);
-		let userName = `${$this.parents('tr').find('.firstName').html()} ${$this
-			.parents('tr')
-			.find('.lastName')
-			.html()}`;
-		const nickName = $this.parents('tr').find('.nickName').html();
-		if (nickName) {
-			userName += ` (${nickName})`;
+	function closePanel(returnFocus: boolean): void {
+		if (openButton === null) {
+			return;
 		}
+		openButton.setAttribute('aria-expanded', 'false');
+		panel.hidden = true;
+		if (returnFocus) {
+			openButton.focus();
+		}
+		openButton = null;
+	}
 
-		$('#connectUserToSkautisModal_username').html(userName);
+	function openPanel(button: HTMLButtonElement): void {
+		const row = button.closest('tr');
+		if (row === null) {
+			return;
+		}
+		closePanel(false);
+		row.after(panel);
+		panel
+			.querySelectorAll<HTMLInputElement>('.skautis-users-connect-id')
+			.forEach((input) => {
+				input.value = row.dataset['skautisUserId'] ?? '';
+			});
+		const name =
+			row.querySelector('.skautis-users-name')?.textContent ?? '';
+		if (panelTitle !== null) {
+			panelTitle.textContent = wp.i18n.sprintf(
+				/* Translators: %s: The name of the SkautIS user */
+				wp.i18n.__(
+					'Connect %s to a WordPress account',
+					'skautis-integration'
+				),
+				name
+			);
+		}
+		panel.hidden = false;
+		button.setAttribute('aria-expanded', 'true');
+		openButton = button;
+		panelTitle?.focus();
+	}
 
-		const $connectUserToSkautisModalConnectLink = $(
-			'#connectUserToSkautisModal_connectLink'
-		);
-		$connectUserToSkautisModalConnectLink.attr(
-			'href',
-			updateQueryStringInUrl(
-				'skautisUserId',
-				$this.parents('tr').find('.skautisUserId').html(),
-				$connectUserToSkautisModalConnectLink.attr('href') ?? ''
-			)
-		);
+	function applyFilter(): void {
+		const query = search === null ? '' : normalize(search.value.trim());
+		const state = filter === null ? '' : filter.value;
+		let visible = 0;
+		rows.forEach((row) => {
+			const connected = row.dataset['connected'] === '1';
+			const matchesState =
+				state === '' || (state === 'connected') === connected;
+			const matchesQuery =
+				query === '' || normalize(row.textContent).includes(query);
+			row.hidden = !(matchesState && matchesQuery);
+			if (!row.hidden) {
+				visible++;
+			}
+		});
+		if (openButton !== null && openButton.closest('tr')?.hidden === true) {
+			closePanel(false);
+		}
+		if (emptyRow !== null) {
+			emptyRow.hidden = visible > 0;
+		}
+		const message =
+			visible === rows.length
+				? wp.i18n.sprintf(
+						/* Translators: %d: The number of users */
+						wp.i18n._n(
+							'%d user',
+							'%d users',
+							visible,
+							'skautis-integration'
+						),
+						visible
+					)
+				: wp.i18n.sprintf(
+						/* Translators: 1: The number of shown users 2: The number of all users */
+						wp.i18n.__('%1$d of %2$d users', 'skautis-integration'),
+						visible,
+						rows.length
+					);
+		if (count !== null) {
+			count.textContent = message;
+		}
+	}
 
-		const $connectUserToSkautisModalRegisterLink = $(
-			'#connectUserToSkautisModal_registerLink'
+	let speakTimeout = 0;
+	function onFilterChange(): void {
+		applyFilter();
+		window.clearTimeout(speakTimeout);
+		speakTimeout = window.setTimeout(() => {
+			if (count !== null && count.textContent !== '') {
+				wp.a11y.speak(count.textContent);
+			}
+		}, 500);
+	}
+
+	// The count is announced by wp.a11y, so that it is not read on every key press.
+	count?.removeAttribute('aria-live');
+	if (filter !== null) {
+		filter.hidden = false;
+		filter.addEventListener('change', onFilterChange);
+	}
+	search?.addEventListener('input', onFilterChange);
+
+	table.addEventListener('click', (event) => {
+		const button = (event.target as Element).closest<HTMLButtonElement>(
+			'.skautis-users-connect'
 		);
-		const newHref = updateQueryStringInUrl(
-			'skautisUserId',
-			$this.parents('tr').find('.skautisUserId').html(),
-			$connectUserToSkautisModalRegisterLink.attr('href') ?? ''
-		);
-		$connectUserToSkautisModalRegisterLink.attr('href', newHref);
+		if (button === null) {
+			return;
+		}
+		if (button === openButton) {
+			closePanel(true);
+		} else {
+			openPanel(button);
+		}
+	});
+	panel
+		.querySelector('.skautis-users-connect-close')
+		?.addEventListener('click', () => {
+			closePanel(true);
+		});
+	panel.addEventListener('keydown', (event) => {
+		if (event.key === 'Escape') {
+			closePanel(true);
+		}
 	});
 
-	$('#connectUserToSkautisModal_select').on('change', function () {
-		const $this = $(this);
-		const $connectUserToSkautisModalConnectLink = $(
-			'#connectUserToSkautisModal_connectLink'
-		);
-		const wpUserId = isNaN(Number($this.val()))
-			? ''
-			: ($this.val() as string);
-		$connectUserToSkautisModalConnectLink.attr(
-			'href',
-			updateQueryStringInUrl(
-				'wpUserId',
-				wpUserId,
-				$connectUserToSkautisModalConnectLink.attr('href') ?? ''
-			)
-		);
-	});
-
-	$('#connectUserToSkautisModal_defaultRole')
-		.on('change', function () {
-			const $this = $(this);
-			const $connectUserToSkautisModalRegisterLink = $(
-				'#connectUserToSkautisModal_registerLink'
-			);
-			$connectUserToSkautisModalRegisterLink.attr(
-				'href',
-				updateQueryStringInUrl(
-					'wpRole',
-					$this.val() as string,
-					$connectUserToSkautisModalRegisterLink.attr('href') ?? ''
-				)
-			);
-		})
-		.trigger('change');
-})(jQuery);
+	// The panel was printed outside of the table, so that it does not need a script to be hidden.
+	tbody.append(panel);
+	if (search !== null && search.value !== '') {
+		applyFilter();
+	}
+});

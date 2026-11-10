@@ -3,7 +3,7 @@
 		const usedOptions: Array<string> = [];
 
 		setTimeout(() => {
-			const $selectRules = jQuery('.form-table').find('select.rule');
+			const $selectRules = jQuery('#repeater').find('select.rule');
 
 			$selectRules.each(function () {
 				usedOptions.push(jQuery(this).val() as string);
@@ -26,10 +26,11 @@
 	}
 
 	function reinitSelect2(): void {
-		jQuery('.form-table')
+		jQuery('#repeater')
 			.find('select.select2')
 			.select2({
-				placeholder: 'Vyberte pravidlo...',
+				placeholder: skautisIntegrationRulesSelectLocalize.placeholder,
+				width: '100%',
 			})
 			.on(
 				'change.skautis_modules_register_admin',
@@ -48,11 +49,8 @@
 			$(this).slideUp(150, deleteElement);
 			setTimeout(() => {
 				if (!$('#repeater').find('[data-repeater-item]').length) {
-					$('.form-table')
-						.find('tr')
-						.first()
-						.find('*')
-						.slideDown(200);
+					// The default role is only used when there are no rules.
+					$('.skautis-register-default-role').show();
 					$(
 						'#skautis_integration_modules_register_rulesNotSetHelp'
 					).show(400);
@@ -75,7 +73,7 @@
 		show() {
 			$(this).slideDown(150);
 			if ($('#repeater').find('[data-repeater-item]').length) {
-				$('.form-table').find('tr').first().find('*').slideUp(200);
+				$('.skautis-register-default-role').hide();
 				$('#skautis_integration_modules_register_rulesNotSetHelp').hide(
 					400
 				);

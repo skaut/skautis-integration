@@ -97,6 +97,25 @@ class Helpers {
 	}
 
 	/**
+	 * Checks whether the current user sees WordPress in Czech.
+	 *
+	 * Used for the bundled translations of jQuery QueryBuilder, which are only available in Czech.
+	 */
+	public static function is_czech_locale(): bool {
+		return 0 === strpos( determine_locale(), 'cs' );
+	}
+
+	/**
+	 * Returns the path of the SkautIS login page relative to the site URL.
+	 *
+	 * @return string The path without leading and trailing slashes, or an empty string if the login page is disabled.
+	 */
+	public static function get_login_page_url(): string {
+		$url = get_option( SKAUTIS_INTEGRATION_NAME . '_login_page_url', 'skautis/prihlaseni' );
+		return is_string( $url ) ? trim( $url, '/' ) : 'skautis/prihlaseni';
+	}
+
+	/**
 	 * Parses and sanitizes the `ReturnUrl` GET variable.
 	 *
 	 * @return string|null The variable value or `null` if it isn't set.
@@ -112,7 +131,7 @@ class Helpers {
 	/**
 	 * Shows a notice in the administration.
 	 *
-	 * @param string $message The notice text.
+	 * @param string $message The notice text. It may contain links (`<a>` tags), any other HTML is removed.
 	 * @param string $type The type of the notice. Accepted values are "error", "warning", "success", "info". Default "warning".
 	 * @param string $hide_notice_on_page An ID of a screen where the notice shouldn't get shown. Optional.
 	 *
@@ -127,10 +146,20 @@ class Helpers {
 					$class = 'notice notice-' . $type . ' is-dismissible';
 					printf(
 						'<div class="%1$s"><p>%2$s</p><button type="button" class="notice-dismiss">
-		<span class="screen-reader-text">' . esc_html__( 'Zavřít', 'skautis-integration' ) . '</span>
+		<span class="screen-reader-text">' . esc_html__( 'Close', 'skautis-integration' ) . '</span>
 	</button></div>',
 						esc_attr( $class ),
-						esc_html( $message )
+						// The message may contain links, e.g. to the plugin settings.
+						wp_kses(
+							$message,
+							array(
+								'a' => array(
+									'href'   => array(),
+									'target' => array(),
+									'rel'    => array(),
+								),
+							)
+						)
 					);
 				}
 			}
@@ -211,5 +240,23 @@ class Helpers {
 	 */
 	public static function get_nonce_from_url( string $url, string $nonce_name ): string {
 		return self::get_variable_from_url( $url, $nonce_name );
+	}
+
+	/**
+	 * Writes a SkautIS response to the debug log.
+	 *
+	 * Only used for the newer SkautIS methods, whose responses could not be tested on a real SkautIS, so that the responses can be checked on a test site with `WP_DEBUG` and `WP_DEBUG_LOG` enabled. The responses contain personal data, so they are never logged otherwise.
+	 *
+	 * @param string $method The name of the SkautIS method.
+	 * @param mixed  $response The response.
+	 *
+	 * @return void
+	 */
+	public static function log_skautis_response( string $method, $response ) {
+		if ( ! defined( 'WP_DEBUG' ) || true !== WP_DEBUG || ! defined( 'WP_DEBUG_LOG' ) || false === WP_DEBUG_LOG ) {
+			return;
+		}
+		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Only in debug mode, see above.
+		error_log( 'SkautIS integration – ' . $method . ': ' . strval( wp_json_encode( $response ) ) );
 	}
 }

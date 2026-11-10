@@ -55,19 +55,6 @@ gulp.task(
 	gulp.parallel('build:css:modules:Register:admin')
 );
 
-gulp.task('build:css:modules:Shortcodes:admin', () =>
-	gulp
-		.src(['src/css/modules/Shortcodes/admin/*.css'])
-		.pipe(lightningCSS())
-		.pipe(rename({ suffix: '.min' }))
-		.pipe(gulp.dest('dist/modules/Shortcodes/admin/css/'))
-);
-
-gulp.task(
-	'build:css:modules:Shortcodes',
-	gulp.parallel('build:css:modules:Shortcodes:admin')
-);
-
 gulp.task('build:css:modules:Visibility:admin', () =>
 	gulp
 		.src(['src/css/modules/Visibility/admin/*.css'])
@@ -83,11 +70,7 @@ gulp.task(
 
 gulp.task(
 	'build:css:modules',
-	gulp.parallel(
-		'build:css:modules:Register',
-		'build:css:modules:Shortcodes',
-		'build:css:modules:Visibility'
-	)
+	gulp.parallel('build:css:modules:Register', 'build:css:modules:Visibility')
 );
 
 gulp.task('build:css:rules:admin', () =>
@@ -134,7 +117,7 @@ gulp.task(
 				.src(['vendor/composer/autoload_static.php'])
 				.pipe(
 					replace(
-						/class ComposerStaticInit(.*)\n{/,
+						/class ComposerStaticInit(.*)\n\{/u,
 						'class ComposerStaticInit$1\n{\n    public static $files = array ();'
 					)
 				)
@@ -146,17 +129,17 @@ gulp.task(
 							let mode = 'none';
 							contents = contents.map((line) => {
 								let transformedLine = line;
-								if (/^\s*\);$/g.exec(transformedLine)) {
+								if (/^\s*\);$/gu.exec(transformedLine)) {
 									mode = 'none';
 								} else if (
-									/^\s*public static \$classMap = array \($/.exec(
+									/^\s*public static \$classMap = array \($/u.exec(
 										transformedLine
 									)
 								) {
 									mode = 'classMap';
 								} else if (mode === 'classMap') {
 									transformedLine = transformedLine.replace(
-										/^(\s*)'([^']*)' =>/,
+										/^(\s*)'([^']*)' =>/u,
 										"$1'Skautis_Integration\\\\Vendor\\\\$2' =>"
 									);
 								} else {
@@ -183,53 +166,6 @@ gulp.task(
 gulp.task(
 	'build:deps:composer',
 	gulp.series('build:deps:composer:scoper', 'build:deps:composer:autoloader')
-);
-
-gulp.task('build:deps:npm:datatables.net:files', () =>
-	gulp
-		.src(['node_modules/datatables.net-plugins/i18n/cs.json'])
-		.pipe(gulp.dest('dist/bundled/datatables-files'))
-);
-
-gulp.task(
-	'build:deps:npm:datatables.net',
-	gulp.parallel('build:deps:npm:datatables.net:files', () =>
-		gulp
-			.src([
-				'node_modules/datatables.net-dt/css/dataTables.dataTables.min.css',
-				'node_modules/datatables.net/js/dataTables.min.js',
-			])
-			.pipe(gulp.dest('dist/bundled/'))
-	)
-);
-
-gulp.task('build:deps:npm:font-awesome:css', () =>
-	gulp
-		.src('node_modules/font-awesome/css/font-awesome.min.css')
-		.pipe(gulp.dest('dist/bundled/font-awesome/css'))
-);
-
-gulp.task('build:deps:npm:font-awesome:fonts', () =>
-	gulp
-		.src(
-			[
-				'node_modules/font-awesome/fonts/fontawesome-webfont.eot',
-				'node_modules/font-awesome/fonts/fontawesome-webfont.woff2',
-				'node_modules/font-awesome/fonts/fontawesome-webfont.woff',
-				'node_modules/font-awesome/fonts/fontawesome-webfont.ttf',
-				'node_modules/font-awesome/fonts/fontawesome-webfont.svg',
-			],
-			{ encoding: false }
-		)
-		.pipe(gulp.dest('dist/bundled/font-awesome/fonts'))
-);
-
-gulp.task(
-	'build:deps:npm:font-awesome',
-	gulp.parallel(
-		'build:deps:npm:font-awesome:css',
-		'build:deps:npm:font-awesome:fonts'
-	)
 );
 
 gulp.task('build:deps:npm:interactjs', () =>
@@ -265,8 +201,6 @@ gulp.task('build:deps:npm:select2', () =>
 gulp.task(
 	'build:deps:npm',
 	gulp.parallel(
-		'build:deps:npm:datatables.net',
-		'build:deps:npm:font-awesome',
 		'build:deps:npm:interactjs',
 		'build:deps:npm:jquery.repeater',
 		'build:deps:npm:jQuery-QueryBuilder',
@@ -278,12 +212,16 @@ gulp.task('build:deps', gulp.parallel('build:deps:composer', 'build:deps:npm'));
 
 gulp.task('build:js:admin', () => {
 	const tsProject = ts.createProject('tsconfig.json');
-	return gulp
-		.src(['src/ts/admin/*.ts', 'src/d.ts/*.d.ts'])
-		.pipe(tsProject())
-		.js.pipe(terser())
-		.pipe(rename({ suffix: '.min' }))
-		.pipe(gulp.dest('dist/admin/js/'));
+	return (
+		gulp
+			.src(['src/ts/admin/*.ts', 'src/d.ts/*.d.ts'])
+			.pipe(tsProject())
+			// Shipped unminified as well for the translations, see build:js:modules:Visibility:admin.
+			.js.pipe(gulp.dest('dist/admin/js/'))
+			.pipe(terser())
+			.pipe(rename({ suffix: '.min' }))
+			.pipe(gulp.dest('dist/admin/js/'))
+	);
 });
 
 gulp.task('build:js:modules:Register:admin', () => {
@@ -301,29 +239,18 @@ gulp.task(
 	gulp.parallel('build:js:modules:Register:admin')
 );
 
-gulp.task('build:js:modules:Shortcodes:admin', () => {
-	const tsProject = ts.createProject('tsconfig.json');
-	return gulp
-		.src(['src/ts/modules/Shortcodes/admin/*.ts', 'src/d.ts/*.d.ts'])
-		.pipe(tsProject())
-		.js.pipe(terser())
-		.pipe(rename({ suffix: '.min' }))
-		.pipe(gulp.dest('dist/modules/Shortcodes/admin/js/'));
-});
-
-gulp.task(
-	'build:js:modules:Shortcodes',
-	gulp.parallel('build:js:modules:Shortcodes:admin')
-);
-
 gulp.task('build:js:modules:Visibility:admin', () => {
 	const tsProject = ts.createProject('tsconfig.json');
-	return gulp
-		.src(['src/ts/modules/Visibility/admin/*.ts', 'src/d.ts/*.d.ts'])
-		.pipe(tsProject())
-		.js.pipe(terser())
-		.pipe(rename({ suffix: '.min' }))
-		.pipe(gulp.dest('dist/modules/Visibility/admin/js/'));
+	return (
+		gulp
+			.src(['src/ts/modules/Visibility/admin/*.ts', 'src/d.ts/*.d.ts'])
+			.pipe(tsProject())
+			// The unminified scripts are shipped as well, because wordpress.org extracts the translatable strings only from them. WordPress loads the translations of a minified script by its unminified name.
+			.js.pipe(gulp.dest('dist/modules/Visibility/admin/js/'))
+			.pipe(terser())
+			.pipe(rename({ suffix: '.min' }))
+			.pipe(gulp.dest('dist/modules/Visibility/admin/js/'))
+	);
 });
 
 gulp.task(
@@ -333,11 +260,7 @@ gulp.task(
 
 gulp.task(
 	'build:js:modules',
-	gulp.parallel(
-		'build:js:modules:Register',
-		'build:js:modules:Shortcodes',
-		'build:js:modules:Visibility'
-	)
+	gulp.parallel('build:js:modules:Register', 'build:js:modules:Visibility')
 );
 
 gulp.task('build:js:rules:admin', () => {
@@ -373,6 +296,10 @@ gulp.task('build:png', () =>
 		.pipe(gulp.dest('dist/src/'))
 );
 
+gulp.task('build:svg', () =>
+	gulp.src(['src/svg/**/*.svg']).pipe(gulp.dest('dist/src/'))
+);
+
 gulp.task('build:txt', () =>
 	gulp.src(['src/txt/**/*.txt']).pipe(gulp.dest('dist/'))
 );
@@ -385,6 +312,7 @@ gulp.task(
 		'build:js',
 		'build:php',
 		'build:png',
+		'build:svg',
 		'build:txt'
 	)
 );

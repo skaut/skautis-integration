@@ -73,21 +73,105 @@ final class WP_Register {
 		);
 
 		add_filter( 'sanitize_user', array( self::class, 'sanitize_username' ), 10, 3 );
-		$user_id = register_new_user( $user_login, $user_email );
+		$user_id = self::create_user( $user_login, $user_email );
 		remove_filter( 'sanitize_user', array( self::class, 'sanitize_username' ), 10 );
 
 		add_action( 'register_new_user', 'wp_send_new_user_notifications' );
 
-		if ( $user_id instanceof \WP_Error ) {
-			if ( isset( $user_id->errors['username_exists'] ) || isset( $user_id->errors['email_exists'] ) ) {
+		if ( is_array( $user_id ) ) {
+			if ( in_array( $user_id['code'], array( 'username_exists', 'email_exists', 'existing_user_login', 'existing_user_email' ), true ) ) {
 				/* translators: The user's e-mail address */
-				wp_die( sprintf( esc_html__( 'Vás email %s je již na webu registrován, ale není propojen se skautIS účtem.', 'skautis-integration' ), esc_html( $user_email ) ), esc_html__( 'Chyba při registraci', 'skautis-integration' ) );
+				wp_die( sprintf( esc_html__( 'Your e-mail %s is already registered on this site, but it is not connected to a SkautIS account.', 'skautis-integration' ), esc_html( $user_email ) ), esc_html__( 'Registration error', 'skautis-integration' ) );
 			}
 				/* translators: The error message */
-			wp_die( sprintf( esc_html__( 'Při registraci nastala neočekávaná chyba: %s', 'skautis-integration' ), esc_html( $user_id->get_error_message() ) ), esc_html__( 'Chyba při registraci', 'skautis-integration' ) );
+			wp_die( sprintf( esc_html__( 'An unexpected error occurred during the registration: %s', 'skautis-integration' ), esc_html( $user_id['message'] ) ), esc_html__( 'Registration error', 'skautis-integration' ) );
 		}
 
 		return $user_id;
+	}
+
+	/**
+	 * Creates a new WordPress user.
+	 *
+	 * This is a replacement for register_new_user(), which is meant for the public registration form: it requires an e-mail address, and it runs the `register_post` and `registration_errors` hooks, which anti-spam and security plugins use to block registrations without their form token.
+	 *
+	 * @param string $user_login The WordPress username to use for the new user.
+	 * @param string $user_email The new user's e-mail address, may be empty.
+	 *
+	 * @return int|array{code: string, message: string} The ID of the new user or the error code and message.
+	 */
+	private static function create_user( string $user_login, string $user_email ) {
+		$sanitized_user_login = sanitize_user( $user_login );
+		if ( '' === $sanitized_user_login || ! validate_username( $user_login ) ) {
+			return array(
+				'code'    => 'invalid_username',
+				'message' => __( 'The SkautIS username is not a valid WordPress username.', 'skautis-integration' ),
+			);
+		}
+		if ( false !== username_exists( $sanitized_user_login ) ) {
+			return array(
+				'code'    => 'username_exists',
+				'message' => __( 'The username is already registered on this site.', 'skautis-integration' ),
+			);
+		}
+		if ( '' !== $user_email ) {
+			if ( false === is_email( $user_email ) ) {
+				return array(
+					'code'    => 'invalid_email',
+					'message' => __( 'The e-mail address from SkautIS is not valid.', 'skautis-integration' ),
+				);
+			}
+			if ( false !== email_exists( $user_email ) ) {
+				return array(
+					'code'    => 'email_exists',
+					'message' => __( 'The e-mail address is already registered on this site.', 'skautis-integration' ),
+				);
+			}
+		}
+
+		$user_id = wp_create_user( $sanitized_user_login, wp_generate_password( 24 ), $user_email );
+		if ( $user_id instanceof \WP_Error ) {
+			$codes = array_keys( $user_id->errors );
+			return array(
+				'code'    => isset( $codes[0] ) ? strval( $codes[0] ) : '',
+				'message' => $user_id->get_error_message(),
+			);
+		}
+
+		update_user_meta( $user_id, 'default_password_nag', true );
+
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Same as register_new_user(), sends the new user notifications.
+		do_action( 'register_new_user', $user_id );
+
+		return $user_id;
+	}
+
+	/**
+	 * Returns the WordPress username for a new user.
+	 *
+	 * Users imported from an event may not have a SkautIS username, in that case a unique username is made from their e-mail address or name.
+	 *
+	 * @param array{id: int, UserName: string, email: string, firstName: string, lastName: string, nickName: string} $user Information about the user.
+	 */
+	private static function get_new_username( array $user ): string {
+		if ( '' !== $user['UserName'] ) {
+			return mb_strcut( $user['UserName'], 0, 60 );
+		}
+
+		$base = '' !== $user['email'] ? $user['email'] : $user['firstName'] . ' ' . $user['lastName'];
+		$base = mb_strcut( sanitize_user( remove_accents( trim( $base ) ), true ), 0, 50 );
+		if ( '' === $base ) {
+			$base = 'skautis-' . $user['id'];
+		}
+
+		$username = $base;
+		$suffix   = 2;
+		while ( false !== username_exists( $username ) ) {
+			$username = $base . '-' . $suffix;
+			++$suffix;
+		}
+
+		return $username;
 	}
 
 	/**
@@ -141,7 +225,7 @@ final class WP_Register {
 		Helpers::validate_nonce_from_url( $return_url, SKAUTIS_INTEGRATION_NAME . '_registerToWpBySkautis' );
 
 		// TODO: Replace with a call to get_users()?
-		// Check for skautIS User ID collision with existing users.
+		// Check for SkautIS User ID collision with existing users.
 		$users_wp_query = new \WP_User_Query(
 			array(
 				'number'     => 1,
@@ -160,11 +244,7 @@ final class WP_Register {
 			return true;
 		}
 
-		if ( mb_strlen( $user['UserName'] ) === 0 ) {
-			return false;
-		}
-
-		$username = mb_strcut( $user['UserName'], 0, 60 );
+		$username = self::get_new_username( $user );
 
 		$user_id = self::resolve_notifications_and_register( $username, $user['email'] );
 
@@ -215,7 +295,7 @@ final class WP_Register {
 		}
 
 		// TODO: Replace with a call to get_users()?
-		// Check for skautIS User ID collision with existing users.
+		// Check for SkautIS User ID collision with existing users.
 		$users_wp_query = new \WP_User_Query(
 			array(
 				'number'     => 1,
@@ -277,9 +357,9 @@ final class WP_Register {
 	}
 
 	/**
-	 * Returns the URL used to register an existing SkautIS user as a new WordPress user.
+	 * Returns the URL of the form used to register an existing SkautIS user as a new WordPress user.
 	 *
-	 * This function is used to register other users than the current user.
+	 * This function is used to register other users than the current user. The form must be submitted with POST and contain the `skautis-integration_register_user_nonce` nonce.
 	 *
 	 * @suppress PhanPluginPossiblyStaticPublicMethod
 	 */
@@ -288,7 +368,7 @@ final class WP_Register {
 		$return_url = add_query_arg( SKAUTIS_INTEGRATION_NAME . '_registerToWpBySkautis', wp_create_nonce( SKAUTIS_INTEGRATION_NAME . '_registerToWpBySkautis' ), $return_url );
 		$url        = add_query_arg( 'ReturnUrl', rawurlencode( $return_url ), get_home_url( null, 'skautis/auth/' . Register::MANUALLY_REGISTER_WP_USER_ACTION ) );
 
-		return esc_url( wp_nonce_url( $url, SKAUTIS_INTEGRATION_NAME . '_register_user', SKAUTIS_INTEGRATION_NAME . '_register_user_nonce' ) );
+		return esc_url( $url );
 	}
 
 	/**

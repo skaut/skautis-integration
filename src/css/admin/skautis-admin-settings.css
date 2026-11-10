@@ -1,0 +1,129 @@
+/* The header and tabs follow the core Privacy and Site Health screens. */
+#wpcontent,
+.auto-fold #wpcontent {
+	padding-left: 0;
+}
+
+.skautis-settings-header {
+	margin: 0 0 24px;
+	padding: 0 20px;
+	background: #fff;
+	border-bottom: 1px solid #dcdcde;
+}
+
+.skautis-settings-title-section {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	padding-top: 8px;
+}
+
+.skautis-settings-header h1 {
+	margin: 0 16px 0 0;
+	padding: 9px 0 4px;
+	font-size: 23px;
+	font-weight: 600;
+	line-height: 1.3;
+}
+
+.skautis-settings-help {
+	display: inline-flex;
+	align-items: center;
+	margin: 4px 0;
+	text-decoration: none;
+}
+
+.skautis-settings-help .dashicons {
+	margin-left: 2px;
+	font-size: 16px;
+	width: 16px;
+	height: 16px;
+}
+
+.skautis-settings-tabs {
+	display: flex;
+	flex-wrap: wrap;
+	margin: 8px 0 0;
+}
+
+.skautis-settings-tab {
+	display: block;
+	margin: 0 32px 0 0;
+	padding: 8px 0 16px;
+	color: inherit;
+	text-decoration: none;
+}
+
+.skautis-settings-tab:hover,
+.skautis-settings-tab:focus {
+	color: var(--wp-admin-theme-color, #3858e9);
+}
+
+.skautis-settings-tab.is-active {
+	font-weight: 600;
+	box-shadow: inset 0 -3px var(--wp-admin-theme-color, #3858e9);
+}
+
+.skautis-settings-body {
+	max-width: 1600px;
+	margin: 0 20px;
+}
+
+/* WordPress moves the notices below the header. */
+.skautis-settings-header ~ .notice {
+	box-sizing: border-box;
+	max-width: 1600px;
+	margin: 0 20px 24px;
+}
+
+.skautis-settings-card {
+	margin: 0 0 24px;
+	padding: 4px 24px 8px;
+	background: #fff;
+	border: 1px solid #dcdcde;
+	border-radius: 8px;
+}
+
+.skautis-settings-card h2 {
+	margin: 20px 0 8px;
+	font-size: 1.3em;
+}
+
+.skautis-settings-card > p {
+	max-width: 70ch;
+}
+
+.skautis-settings-card .form-table {
+	margin-top: 0;
+}
+
+.skautis-settings-card .form-table th {
+	width: 220px;
+}
+
+.skautis-settings-body .submit {
+	margin-top: 0;
+	padding-top: 0;
+}
+
+@media screen and (width <= 782px) {
+
+	.skautis-settings-header,
+	.skautis-settings-body {
+		padding-left: 10px;
+		padding-right: 10px;
+	}
+
+	.skautis-settings-body {
+		margin: 0;
+	}
+
+	.skautis-settings-header ~ .notice {
+		margin: 0 10px 16px;
+	}
+
+	.skautis-settings-card {
+		padding: 4px 16px 8px;
+	}
+}

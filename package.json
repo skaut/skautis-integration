@@ -1,6 +1,6 @@
 {
   "name": "skautis-integration",
-  "version": "1.1.33",
+  "version": "1.2.0-beta.1",
   "description": "A WordPress plugin for integration with SkautIS",
   "keywords": [
     "wordpress",
@@ -40,7 +40,7 @@
     "build": "gulp build",
     "check": "FORCE_COLOR=1 run-p -c --aggregate-output check:*",
     "check:css-compat": "node scripts/check-css-compat.js",
-    "check:js-compat": "es-check es2017 --checkFeatures --not 'dist/bundled/dataTables.min.js,dist/bundled/interact.min.js,dist/bundled/query-builder.standalone.js' 'dist/**/*.js' && es-check es2017 'dist/bundled/dataTables.min.js' 'dist/bundled/interact.min.js' 'dist/bundled/query-builder.standalone.js'",
+    "check:js-compat": "es-check es2017 --checkFeatures --not 'dist/bundled/interact.min.js,dist/bundled/query-builder.standalone.js' 'dist/**/*.js' && es-check es2017 'dist/bundled/interact.min.js' 'dist/bundled/query-builder.standalone.js'",
     "clean": "rimraf dist/*",
     "lint": "FORCE_COLOR=1 run-p -c --aggregate-output lint:*",
     "lint:css": "FORCE_COLOR=1 run-p -c --aggregate-output lint:css:*",
@@ -59,10 +59,6 @@
     "not edge 18"
   ],
   "dependencies": {
-    "datatables.net": "^3.1.5",
-    "datatables.net-dt": "^3.1.5",
-    "datatables.net-plugins": "^3.1.5",
-    "font-awesome": "^4.7.0",
     "interactjs": "^1.10.28",
     "jQuery-QueryBuilder": "^3.0.0",
     "jquery.repeater": "^1.2.1",

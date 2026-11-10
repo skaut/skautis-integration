@@ -59,7 +59,7 @@ final class Users {
 	 * @return array<string> The updated list.
 	 */
 	public static function add_column_header_to_users_table( array $columns = array() ): array {
-		$columns[ SKAUTIS_INTEGRATION_NAME ] = __( 'skautIS', 'skautis-integration' );
+		$columns[ SKAUTIS_INTEGRATION_NAME ] = __( 'SkautIS', 'skautis-integration' );
 
 		return $columns;
 	}
@@ -102,9 +102,9 @@ final class Users {
 	 * @return void
 	 */
 	public function skautis_user_id_field( \WP_User $user ) {
-		// TODO: SkautIS, not skautIS.
+		// TODO: SkautIS, not SkautIS.
 		?>
-		<h3><?php esc_html_e( 'skautIS', 'skautis-integration' ); ?></h3>
+		<h3><?php esc_html_e( 'SkautIS', 'skautis-integration' ); ?></h3>
 		<?php
 		$this->connect_wp_account->print_connect_and_disconnect_button( $user->ID );
 		// TODO: Unused action?
@@ -112,7 +112,7 @@ final class Users {
 		?>
 		<table class="form-table">
 			<tr>
-				<th><label for="skautisUserId_prod"><?php esc_html_e( 'skautIS user ID', 'skautis-integration' ); ?></label>
+				<th><label for="skautisUserId_prod"><?php esc_html_e( 'SkautIS user ID', 'skautis-integration' ); ?></label>
 				</th>
 				<td>
 					<input type="text" name="skautisUserId_prod" id="skautisUserId_prod" class="regular-text" 
@@ -126,7 +126,7 @@ final class Users {
 			</tr>
 			<tr>
 				<th><label
-						for="skautisUserId_test"><?php esc_html_e( 'skautIS user ID (testovací)', 'skautis-integration' ); ?></label>
+						for="skautisUserId_test"><?php esc_html_e( 'SkautIS user ID (test)', 'skautis-integration' ); ?></label>
 				</th>
 				<td>
 					<input type="text" name="skautisUserId_test" id="skautisUserId_test" class="regular-text" 

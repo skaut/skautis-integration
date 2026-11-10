@@ -1,0 +1,107 @@
+---
+name: "Pre-release"
+"on":
+  workflow_dispatch:
+env:
+  php-version: 8.4
+  cache-version: 1
+permissions:
+  contents: write
+jobs:
+  prerelease:
+    name: "Pre-release"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v7
+
+      - name: "Get the version"
+        id: version
+        run: |
+          VERSION="$(node -p "require('./package.json').version")"
+          case "$VERSION" in
+            *-*) ;;
+            *)
+              echo "::error::The version $VERSION is not a pre-release (e.g. 1.2.0-beta.1). Stable versions are released by pushing a tag, see release.yml."
+              exit 1
+              ;;
+          esac
+          if git ls-remote --exit-code --tags origin "refs/tags/$VERSION" > /dev/null; then
+            echo "::error::The tag $VERSION already exists. Raise the version first."
+            exit 1
+          fi
+          echo "VERSION=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: "Setup PHP"
+        uses: shivammathur/setup-php@2.40.0
+        with:
+          php-version: ${{ env.php-version }}
+          coverage: none
+
+      - name: "Cache Composer dependencies"
+        uses: actions/cache@v6
+        with:
+          path: "~/.composer/cache"
+          key: >-
+            composer-dependencies-${{ runner.os }}-${{ env.cache-version }}-${{
+            hashFiles('composer.json') }}
+          restore-keys: |
+            composer-dependencies-${{ runner.os }}-${{ env.cache-version }}-${{ hashFiles('composer.json') }}
+            composer-dependencies-${{ runner.os }}-${{ env.cache-version }}-
+
+      - name: "Install Composer dependencies"
+        run: |
+          composer install -n --prefer-dist
+
+      - name: "Cache NPM dependencies"
+        uses: actions/cache@v6
+        with:
+          path: "~/.npm"
+          key: >-
+            npm-dependencies-${{ runner.os }}-${{ env.cache-version }}-${{
+            hashFiles('package.json') }}
+          restore-keys: |
+            npm-dependencies-${{ runner.os }}-${{ env.cache-version }}-${{ hashFiles('package.json') }}
+            npm-dependencies-${{ runner.os }}-${{ env.cache-version }}-
+
+      - name: "Install NPM dependencies"
+        run: |
+          npm ci
+
+      - name: "Build"
+        env:
+          NODE_ENV: "production"
+        run: |
+          npm run build
+
+      # The ZIP contains a "skautis-integration" folder, so that WordPress replaces the installed plugin when it is uploaded.
+      - name: "Create the ZIP"
+        env:
+          VERSION: ${{ steps.version.outputs.VERSION }}
+        run: |
+          mkdir -p package
+          cp -r dist package/skautis-integration
+          (cd package && zip -qr "../skautis-integration.$VERSION.zip" skautis-integration)
+
+      - name: "Extract the changelog"
+        env:
+          VERSION: ${{ steps.version.outputs.VERSION }}
+        run: |
+          sed -n "/=\s\?${VERSION}\s\?=/{:a;n;/=.*/b;p;ba}" dist/readme.txt > body.md
+          if [ ! -s body.md ]; then
+            echo "::error::The changelog in readme.txt has no entry for $VERSION."
+            exit 1
+          fi
+
+      # The tag is created by this workflow with the GitHub token, so it does not start the Release workflow.
+      - name: "Create a GitHub pre-release"
+        uses: softprops/action-gh-release@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag_name: ${{ steps.version.outputs.VERSION }}
+          target_commitish: ${{ github.sha }}
+          name: Version ${{ steps.version.outputs.VERSION }}
+          body_path: ./body.md
+          prerelease: true
+          fail_on_unmatched_files: true
+          files: skautis-integration.${{ steps.version.outputs.VERSION }}.zip

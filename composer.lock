@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fd182b6ffefed68a51de3d0815276e98",
+    "content-hash": "834b6ca2a1150a02f79d8d6fed71ea28",
     "packages": [
         {
             "name": "skautis/skautis",
-            "version": "2.x-dev",
+            "version": "v2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/skaut/Skautis.git",
-                "reference": "60cf2c6f06c9d10bdc92a05e6e669518c2b8a571"
+                "reference": "a676c628c8f6bd074eb0650b47688b9fd1dce905"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/skaut/Skautis/zipball/60cf2c6f06c9d10bdc92a05e6e669518c2b8a571",
-                "reference": "60cf2c6f06c9d10bdc92a05e6e669518c2b8a571",
+                "url": "https://api.github.com/repos/skaut/Skautis/zipball/a676c628c8f6bd074eb0650b47688b9fd1dce905",
+                "reference": "a676c628c8f6bd074eb0650b47688b9fd1dce905",
                 "shasum": ""
             },
             "require": {
@@ -4433,13 +4433,11 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "skautis/skautis": 20
-    },
+    "stability-flags": {},
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.4 || ^8.0"
+        "php": "^8.3"
     },
     "platform-dev": {},
     "plugin-api-version": "2.9.0"

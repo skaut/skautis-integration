@@ -29,6 +29,11 @@ final class Actions {
 	const DISCONNECT_ACTION                 = 'disconnect';
 
 	/**
+	 * The rewrite rule regex of the authentication actions.
+	 */
+	const AUTH_REWRITE_RULE = '^skautis/auth/(.*?)$';
+
+	/**
 	 * A link to the Skautis_Gateway service instance.
 	 *
 	 * @var Skautis_Gateway
@@ -110,11 +115,21 @@ final class Actions {
 	 * @return void
 	 */
 	public static function register_auth_rewrite_rules() {
-		add_rewrite_rule( '^skautis/auth/(.*?)$', 'index.php?skautis_auth=$matches[1]', 'top' );
-		$login_page_url = get_option( SKAUTIS_INTEGRATION_NAME . '_login_page_url' );
-		if ( false !== $login_page_url ) {
-			add_rewrite_rule( '^' . $login_page_url . '$', 'index.php?skautis_login=1', 'top' );
+		add_rewrite_rule( self::AUTH_REWRITE_RULE, 'index.php?skautis_auth=$matches[1]', 'top' );
+		$login_page_url = Helpers::get_login_page_url();
+		// An empty URL would match the home page.
+		if ( '' !== $login_page_url ) {
+			add_rewrite_rule( self::get_login_page_rewrite_rule( $login_page_url ), 'index.php?skautis_login=1', 'top' );
 		}
+	}
+
+	/**
+	 * Returns the rewrite rule regex of the login page.
+	 *
+	 * @param string $login_page_url The path of the login page.
+	 */
+	private static function get_login_page_rewrite_rule( string $login_page_url ): string {
+		return '^' . $login_page_url . '$';
 	}
 
 	/**
@@ -136,10 +151,26 @@ final class Actions {
 	 * @return void
 	 */
 	public static function flush_rewrite_rules_if_necessary() {
-		if ( false !== get_option( 'skautis_rewrite_rules_need_to_flush' ) ) {
+		if ( false !== get_option( 'skautis_rewrite_rules_need_to_flush' ) || ! self::are_rewrite_rules_saved() ) {
 			flush_rewrite_rules();
 			delete_option( 'skautis_rewrite_rules_need_to_flush' );
 		}
+	}
+
+	/**
+	 * Checks whether the rewrite rules of the plugin are in the rewrite rules saved by WordPress.
+	 *
+	 * They are missing e.g. on sites of a network where the plugin was activated for the whole network, or after the login page URL was changed.
+	 */
+	private static function are_rewrite_rules_saved(): bool {
+		$saved_rules = get_option( 'rewrite_rules' );
+		// Without pretty permalinks, WordPress doesn't use rewrite rules at all.
+		if ( ! is_array( $saved_rules ) || empty( $saved_rules ) ) {
+			return true;
+		}
+
+		$login_page_url = Helpers::get_login_page_url();
+		return isset( $saved_rules[ self::AUTH_REWRITE_RULE ] ) && ( '' === $login_page_url || isset( $saved_rules[ self::get_login_page_rewrite_rule( $login_page_url ) ] ) );
 	}
 
 	/**
@@ -184,7 +215,7 @@ final class Actions {
 				( get_option( 'skautis_integration_appid_type' ) === 'test' && false === get_option( 'skautis_integration_appid_test' ) ) ) {
 				if ( Helpers::user_is_skautis_manager() ) {
 					/* translators: 1: Start of link to the settings 2: End of link to the settings */
-					wp_die( sprintf( esc_html__( 'Pro správné fungování pluginu skautIS integrace, je potřeba %1$snastavit APP ID%2$s', 'skautis-integration' ), '<a href="' . esc_url( admin_url( 'admin.php?page=' . SKAUTIS_INTEGRATION_NAME ) ) . '">', '</a>' ), esc_html__( 'Chyba v konfiguraci pluginu', 'skautis-integration' ) );
+					wp_die( sprintf( esc_html__( 'For the SkautIS integration plugin to work, you need to %1$sset the App ID%2$s', 'skautis-integration' ), '<a href="' . esc_url( admin_url( 'admin.php?page=' . SKAUTIS_INTEGRATION_NAME ) ) . '">', '</a>' ), esc_html__( 'Plugin configuration error', 'skautis-integration' ) );
 				} else {
 					wp_safe_redirect( get_home_url(), 302 );
 					exit();
@@ -207,7 +238,7 @@ final class Actions {
 		if ( isset( $actions[ $action ] ) ) {
 			return call_user_func( $actions[ $action ] );
 		} else {
-			throw new \Exception( 'skautIS Auth action "' . esc_html( $action ) . '" is not defined' );
+			throw new \Exception( 'SkautIS Auth action "' . esc_html( $action ) . '" is not defined' );
 		}
 	}
 }

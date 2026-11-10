@@ -59,6 +59,16 @@ class Request_Parameter_Helpers {
 	}
 
 	/**
+	 * Checks whether the current request is a POST request.
+	 */
+	public static function is_post_request(): bool {
+		if ( ! isset( $_SERVER['REQUEST_METHOD'] ) || ! is_string( $_SERVER['REQUEST_METHOD'] ) ) {
+			return false;
+		}
+		return 'POST' === strtoupper( sanitize_text_field( wp_unslash( $_SERVER['REQUEST_METHOD'] ) ) );
+	}
+
+	/**
 	 * Safely loads an integer POST variable
 	 *
 	 * This function loads a POST variable, runs it through all the required WordPress sanitization and returns it.

@@ -12,7 +12,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use Skautis_Integration\Services\Services;
-use Skautis_Integration\Modules\Register\Register;
 
 // phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 // phpcs:disable WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid
@@ -37,15 +36,15 @@ if ( ! function_exists( 'getSkautisLogoutUrl' ) ) {
 
 if ( ! function_exists( 'getSkautisRegisterUrl' ) ) {
 	/**
-	 * Returns the Register module version of the SkautIS login URL with all arguments initialized.
+	 * Returns the registration version of the SkautIS login URL with all arguments initialized.
 	 *
-	 * This version runs the module's register action after the login.
+	 * This version runs the register action after the login. Returns an empty string when the registration is disabled.
 	 *
 	 * @see Register::register() The action that fires after the login.
 	 */
 	function getSkautisRegisterUrl(): string {
-		if ( Services::get_modules_manager()->is_module_activated( Register::get_id() ) ) {
-			return Services::get_modules_manager()->get_register_module()->getWpRegister()->get_register_url();
+		if ( Services::is_registration_enabled() ) {
+			return Services::get_register()->get_wp_register()->get_register_url();
 		} else {
 			return '';
 		}

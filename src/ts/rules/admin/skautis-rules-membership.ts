@@ -13,12 +13,11 @@ class Membership {
 	}
 
 	public input(_: QueryBuilderRule, inputName: string): string {
-		this.unitOperators['equal'] =
-			jQuery.fn.queryBuilder.regional['cs'].operators.equal;
+		// The labels come from WordPress, the QueryBuilder translations are only loaded for Czech.
+		this.unitOperators['equal'] = skautisIntegrationRulesLocalize.unitEqual;
 		this.unitOperators['begins_with'] =
-			jQuery.fn.queryBuilder.regional['cs'].operators.begins_with;
-		this.unitOperators['any'] =
-			jQuery.fn.queryBuilder.regional['cs'].operators.any;
+			skautisIntegrationRulesLocalize.unitBeginsWith;
+		this.unitOperators['any'] = skautisIntegrationRulesLocalize.unitAny;
 
 		let html = `<select class="form-control select2" name="${
 			inputName
@@ -59,7 +58,7 @@ class Membership {
 
 	public validation(): QueryBuilderValidation {
 		return {
-			format: /^(?!null)[^~]+~(?!null)[^~]+~(?!null)[^~]+$/,
+			format: /^(?!null)[^~]+~(?!null)[^~]+~(?!null)[^~]+$/u,
 		};
 	}
 

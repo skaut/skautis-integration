@@ -9,6 +9,7 @@ declare( strict_types=1 );
 
 namespace Skautis_Integration\Modules\Register\Admin;
 
+use Skautis_Integration\Admin\Settings as Main_Settings;
 use Skautis_Integration\Rules\Rules_Manager;
 use Skautis_Integration\Utils\Helpers;
 
@@ -55,8 +56,7 @@ final class Admin {
 	 * @return void
 	 */
 	public static function enqueue_styles() {
-		$screen = get_current_screen();
-		if ( null === $screen || 'skautis_page_skautis-integration_modules_register' !== $screen->id ) {
+		if ( ! Main_Settings::is_settings_tab( 'registration' ) ) {
 			return;
 		}
 		Helpers::enqueue_style( 'modules_register', 'modules/Register/admin/css/skautis-modules-register-admin.min.css' );
@@ -68,8 +68,7 @@ final class Admin {
 	 * @return void
 	 */
 	public static function enqueue_scripts() {
-		$screen = get_current_screen();
-		if ( null === $screen || 'skautis_page_skautis-integration_modules_register' !== $screen->id ) {
+		if ( ! Main_Settings::is_settings_tab( 'registration' ) ) {
 			return;
 		}
 		wp_enqueue_script( 'jquery-ui-sortable' );
@@ -87,6 +86,11 @@ final class Admin {
 			'modules/Register/admin/js/skautis-modules-register-admin.min.js',
 			array( SKAUTIS_INTEGRATION_NAME . '_jquery.repeater' ),
 		);
+		wp_localize_script(
+			SKAUTIS_INTEGRATION_NAME . '_modules_register',
+			'skautisIntegrationRulesSelectLocalize',
+			array( 'placeholder' => __( 'Select a rule…', 'skautis-integration' ) )
+		);
 	}
 
 	/**
@@ -95,8 +99,7 @@ final class Admin {
 	 * @return void
 	 */
 	public function init_rules_options() {
-		$screen = get_current_screen();
-		if ( null === $screen || 'skautis_page_skautis-integration_modules_register' !== $screen->id ) {
+		if ( ! Main_Settings::is_settings_tab( 'registration' ) ) {
 			return;
 		}
 		$rules = array();
@@ -116,8 +119,7 @@ final class Admin {
 	 * @return void
 	 */
 	public static function init_rules_data() {
-		$screen = get_current_screen();
-		if ( null === $screen || 'skautis_page_skautis-integration_modules_register' !== $screen->id ) {
+		if ( ! Main_Settings::is_settings_tab( 'registration' ) ) {
 			return;
 		}
 		$data = get_option( SKAUTIS_INTEGRATION_NAME . '_modules_register_rules' );

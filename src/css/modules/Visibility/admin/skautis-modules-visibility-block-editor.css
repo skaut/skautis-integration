@@ -1,0 +1,5 @@
+/* Blocks with SkautIS visibility rules in the editor canvas. */
+.skautis-has-rules {
+	outline: 1px dashed #c08a00;
+	outline-offset: 4px;
+}

@@ -16,8 +16,6 @@ use Skautis_Integration\Auth\Skautis_Login;
 use Skautis_Integration\Auth\WP_Login_Logout;
 use Skautis_Integration\Rules\Rules_Manager;
 use Skautis_Integration\Repository\Users as UsersRepository;
-use Skautis_Integration\Modules\Module;
-use Skautis_Integration\Modules\Register\Admin\Admin;
 use Skautis_Integration\Modules\Register\Frontend\Login_Form;
 use Skautis_Integration\Utils\Helpers;
 use Skautis_Integration\Utils\Request_Parameter_Helpers;
@@ -25,17 +23,10 @@ use Skautis_Integration\Utils\Request_Parameter_Helpers;
 /**
  * Adds the functionality to register new WordPress users based on SkautIS.
  */
-final class Register implements Module {
+final class Register {
 
 	const REGISTER_ACTION                  = 'register';
 	const MANUALLY_REGISTER_WP_USER_ACTION = 'registerManually';
-
-	/**
-	 * The module ID.
-	 *
-	 * @var string
-	 */
-	public static $module_id = 'module_Register';
 
 	/**
 	 * A link to the Skautis_Gateway service instance.
@@ -82,7 +73,7 @@ final class Register implements Module {
 	private $wp_register;
 
 	/**
-	 * Constructs the module and saves all dependencies.
+	 * Constructs the service and saves all dependencies.
 	 *
 	 * @param Skautis_Gateway $skautis_gateway An injected Skautis_Gateway service instance.
 	 * @param Skautis_Login   $skautis_login An injected Skautis_Login service instance.
@@ -97,9 +88,7 @@ final class Register implements Module {
 		$this->rules_manager    = $rules_manager;
 		$this->users_repository = $users_repository;
 		$this->wp_register      = new WP_Register( $this->skautis_gateway, $this->users_repository );
-		if ( is_admin() ) {
-			new Admin( $this->rules_manager );
-		} else {
+		if ( ! is_admin() ) {
 			new Login_Form( $this->wp_register );
 		}
 		$this->init_hooks();
@@ -111,11 +100,11 @@ final class Register implements Module {
 	 * @return void
 	 */
 	private function init_hooks() {
-		add_filter( SKAUTIS_INTEGRATION_NAME . '_frontend_actions_router', array( $this, 'addActionsToRouter' ) );
+		add_filter( SKAUTIS_INTEGRATION_NAME . '_frontend_actions_router', array( $this, 'add_actions_to_router' ) );
 		$return_url = Helpers::get_return_url();
 		if ( ! is_null( $return_url ) ) {
 			if ( '' !== Helpers::get_nonce_from_url( $return_url, SKAUTIS_INTEGRATION_NAME . '_registerToWpBySkautis' ) ) {
-				add_action( SKAUTIS_INTEGRATION_NAME . '_after_skautis_token_is_set', array( $this, 'registerConfirm' ) );
+				add_action( SKAUTIS_INTEGRATION_NAME . '_after_skautis_token_is_set', array( $this, 'register_confirm' ) );
 			}
 		}
 	}
@@ -126,7 +115,7 @@ final class Register implements Module {
 	 * @return void
 	 */
 	#[SuppressWarnings( ExitExpression::class )]
-	private function loginUserAfterRegistration() {
+	private function login_user_after_registration() {
 		$return_url = Helpers::get_login_logout_redirect();
 		$return_url = remove_query_arg( SKAUTIS_INTEGRATION_NAME . '_registerToWpBySkautis', urldecode( $return_url ) );
 		wp_safe_redirect( esc_url_raw( $this->wp_login_logout->get_login_url( $return_url ) ), 302 );
@@ -144,9 +133,9 @@ final class Register implements Module {
 	 *
 	 * @return array<string, callable> The updated action list.
 	 */
-	public function addActionsToRouter( array $actions = array() ): array {
+	public function add_actions_to_router( array $actions = array() ): array {
 		$actions[ self::REGISTER_ACTION ]                  = array( $this, 'register' );
-		$actions[ self::MANUALLY_REGISTER_WP_USER_ACTION ] = array( $this, 'registerUserManually' );
+		$actions[ self::MANUALLY_REGISTER_WP_USER_ACTION ] = array( $this, 'register_user_manually' );
 
 		return $actions;
 	}
@@ -158,54 +147,26 @@ final class Register implements Module {
 	 *
 	 * @return void
 	 */
-	public function registerConfirm( array $data = array() ) {
+	public function register_confirm( array $data = array() ) {
 		// TODO: Why is this not one conditional?
 		if ( $this->skautis_login->set_login_data_to_local_skautis_instance( $data ) ) {
-			$this->registerUser();
+			$this->register_user();
 		} elseif ( $this->skautis_login->is_user_logged_in_skautis() ) {
-			$this->registerUser();
+			$this->register_user();
 		}
 	}
 
 	/**
-	 * Returns the module ID.
+	 * Returns the WP_Register instance.
 	 */
-	public static function get_id(): string {
-		return self::$module_id;
-	}
-
-	/**
-	 * Returns the localized module name.
-	 */
-	public static function get_label(): string {
-		return __( 'Registrace', 'skautis-integration' );
-	}
-
-	/**
-	 * Returns the path to the module.
-	 */
-	public static function get_path(): string {
-		return plugin_dir_path( __FILE__ );
-	}
-
-	/**
-	 * Returns the URL of the module.
-	 */
-	public static function get_url(): string {
-		return plugin_dir_url( __FILE__ );
-	}
-
-	/**
-	 * Returns the module WP_Register instance.
-	 */
-	public function getWpRegister(): WP_Register {
+	public function get_wp_register(): WP_Register {
 		return $this->wp_register;
 	}
 
 	/**
-	 * Returns the module Rules_Manager instance.
+	 * Returns the Rules_Manager instance.
 	 */
-	public function getRulesManager(): Rules_Manager {
+	public function get_rules_manager(): Rules_Manager {
 		return $this->rules_manager;
 	}
 
@@ -213,7 +174,7 @@ final class Register implements Module {
 	 * Handles a call to log the user into SkautIS and possibly register them in WordPress in the process.
 	 *
 	 * @see Actions::auth_actions_router() for more details about how this function gets called.
-	 * @see Register::addActionsToRouter() for more details about how this function gets called.
+	 * @see Register::add_actions_to_router() for more details about how this function gets called.
 	 *
 	 * @return void
 	 */
@@ -225,7 +186,7 @@ final class Register implements Module {
 			exit();
 		}
 
-		$this->registerUser();
+		$this->register_user();
 	}
 
 	/**
@@ -233,21 +194,21 @@ final class Register implements Module {
 	 *
 	 * @return void
 	 */
-	public function registerUser() {
+	public function register_user() {
 		$wp_role = $this->rules_manager->get_role_if_user_passed_rules();
 		if ( '' !== $wp_role ) {
 			if ( $this->wp_register->register_to_wp( $wp_role ) ) {
-				$this->loginUserAfterRegistration();
+				$this->login_user_after_registration();
 			}
 		} else {
 			$wp_user_id = $this->wp_register->get_registered_user_id();
 			if ( $wp_user_id > 0 ) {
-				if ( false !== get_option( SKAUTIS_INTEGRATION_NAME . '_checkUserPrivilegesIfLoginBySkautis' ) ) {
+				if ( '1' === strval( get_option( SKAUTIS_INTEGRATION_NAME . '_checkUserPrivilegesIfLoginBySkautis', '0' ) ) ) {
 					if ( user_can( $wp_user_id, Helpers::get_skautis_manager_capability() ) ) {
-						$this->loginUserAfterRegistration();
+						$this->login_user_after_registration();
 					}
 				} else {
-					$this->loginUserAfterRegistration();
+					$this->login_user_after_registration();
 				}
 			}
 		}
@@ -257,9 +218,9 @@ final class Register implements Module {
 		$return_url = Helpers::get_return_url();
 		if ( ! is_null( $return_url ) ) {
 			/* translators: 1: Start of the link back 2: End of the link back */
-			wp_die( sprintf( esc_html__( 'Nemáte oprávnění k registraci. %1$sZkuste to znovu%2$s', 'skautis-integration' ), '<a href="' . esc_url( $return_url ) . '">', '</a>' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
+			wp_die( sprintf( esc_html__( 'You are not allowed to register. %1$sTry again%2$s', 'skautis-integration' ), '<a href="' . esc_url( $return_url ) . '">', '</a>' ), esc_html__( 'Unauthorized access', 'skautis-integration' ) );
 		}
-		wp_die( esc_html__( 'Nemáte oprávnění k registraci.', 'skautis-integration' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
+		wp_die( esc_html__( 'You are not allowed to register.', 'skautis-integration' ), esc_html__( 'Unauthorized access', 'skautis-integration' ) );
 	}
 
 	/**
@@ -270,30 +231,32 @@ final class Register implements Module {
 	 * @return void
 	 */
 	#[SuppressWarnings( ExitExpression::class )]
-	public function registerUserManually() {
+	public function register_user_manually() {
+		// The action changes data, so it is only accepted as a form submission.
 		$return_url      = Helpers::get_return_url();
-		$nonce           = Request_Parameter_Helpers::get_string_variable( SKAUTIS_INTEGRATION_NAME . '_register_user_nonce' );
-		$wp_role         = Request_Parameter_Helpers::get_string_variable( 'wpRole' );
-		$skautis_user_id = Request_Parameter_Helpers::get_int_variable( 'skautisUserId' );
-		if ( false === wp_verify_nonce( $nonce, SKAUTIS_INTEGRATION_NAME . '_register_user' ) ||
+		$nonce           = Request_Parameter_Helpers::post_string_variable( SKAUTIS_INTEGRATION_NAME . '_register_user_nonce' );
+		$wp_role         = Request_Parameter_Helpers::post_string_variable( 'wpRole' );
+		$skautis_user_id = Request_Parameter_Helpers::post_int_variable( 'skautisUserId' );
+		if ( ! Request_Parameter_Helpers::is_post_request() ||
+			false === wp_verify_nonce( $nonce, SKAUTIS_INTEGRATION_NAME . '_register_user' ) ||
 			! $this->skautis_login->is_user_logged_in_skautis() ||
 			! Helpers::user_is_skautis_manager() ||
 			! current_user_can( 'create_users' ) ||
 			is_null( $return_url ) ||
 			'' === $wp_role ||
 			-1 === $skautis_user_id ) {
-			wp_die( esc_html__( 'Nemáte oprávnění k registraci nových uživatelů.', 'skautis-integration' ), esc_html__( 'Neautorizovaný přístup', 'skautis-integration' ) );
+			wp_die( esc_html__( 'You are not allowed to register new users.', 'skautis-integration' ), esc_html__( 'Unauthorized access', 'skautis-integration' ) );
 		}
 
 		if ( ! wp_roles()->is_role( $wp_role ) ) {
-			wp_die( esc_html__( 'Uživatele se nepodařilo zaregistrovat - role neexistuje.', 'skautis-integration' ), esc_html__( 'Chyba při registraci uživatele', 'skautis-integration' ) );
+			wp_die( esc_html__( 'The user could not be registered - the role does not exist.', 'skautis-integration' ), esc_html__( 'User registration error', 'skautis-integration' ) );
 		}
 
 		if ( $this->wp_register->register_to_wp_manually( $wp_role, $skautis_user_id ) ) {
 			wp_safe_redirect( $return_url, 302 );
 			exit();
 		} else {
-			wp_die( esc_html__( 'Uživatele se nepodařilo zaregistrovat', 'skautis-integration' ), esc_html__( 'Chyba při registraci uživatele', 'skautis-integration' ) );
+			wp_die( esc_html__( 'The user could not be registered', 'skautis-integration' ), esc_html__( 'User registration error', 'skautis-integration' ) );
 		}
 	}
 }
