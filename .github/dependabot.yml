@@ -17,6 +17,11 @@ updates:
     assignees:
       - marekdedic
       - kalich5
+    groups:
+      stylelint:
+        patterns:
+          - stylelint
+          - stylelint-config-standard
   - package-ecosystem: composer
     directory: "/"
     open-pull-requests-limit: 9999
