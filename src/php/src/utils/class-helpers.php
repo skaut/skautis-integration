@@ -28,8 +28,7 @@ class Helpers {
 	 */
 	public static function register_script( $handle, $src, $deps = array(), $in_footer = true ) {
 		$handle = SKAUTIS_INTEGRATION_NAME . '_' . $handle;
-		$src    = plugin_dir_url( dirname( __DIR__ ) ) . $src;
-		wp_register_script( $handle, $src, $deps, SKAUTIS_INTEGRATION_VERSION, $in_footer );
+		wp_register_script( $handle, plugin_dir_url( dirname( __DIR__ ) ) . $src, $deps, self::get_asset_version( $src ), $in_footer );
 	}
 
 	/**
@@ -62,8 +61,21 @@ class Helpers {
 	 */
 	public static function register_style( $handle, $src, $deps = array() ) {
 		$handle = SKAUTIS_INTEGRATION_NAME . '_' . $handle;
-		$src    = plugin_dir_url( dirname( __DIR__ ) ) . $src;
-		wp_register_style( $handle, $src, $deps, SKAUTIS_INTEGRATION_VERSION );
+		wp_register_style( $handle, plugin_dir_url( dirname( __DIR__ ) ) . $src, $deps, self::get_asset_version( $src ) );
+	}
+
+	/**
+	 * Returns the version of a script or style file for its URL.
+	 *
+	 * The time of the last change of the file is added to the plugin version, so that browsers and caches load a changed file even when the plugin version stays the same, e.g. between test builds.
+	 *
+	 * @param string $src Path to the file, relative to the plugin directory.
+	 */
+	private static function get_asset_version( string $src ): string {
+		$path = plugin_dir_path( dirname( __DIR__ ) ) . $src;
+		$time = file_exists( $path ) ? filemtime( $path ) : false;
+
+		return false === $time ? SKAUTIS_INTEGRATION_VERSION : SKAUTIS_INTEGRATION_VERSION . '.' . $time;
 	}
 
 	/**

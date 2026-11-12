@@ -9,3 +9,71 @@
 .login .button-skautis {
 	padding-left: 40px !important;
 }
+
+/*
+ * The SkautIS login card. On the login page it is a separate card below the
+ * login form, so that it is clear that it is a different login than the
+ * WordPress username and password.
+ */
+.skautis-login-card {
+	margin-top: 1.5em;
+	text-align: center;
+}
+
+.login .skautis-login-card {
+	margin-top: 20px;
+	padding: 24px;
+	background: #fff;
+	border: 1px solid #c3c4c7;
+	box-shadow: 0 1px 3px rgb(0, 0, 0, 4%);
+}
+
+/* Without JavaScript the card stays in the login form. */
+.login #loginform .skautis-login-card {
+	margin: 0 0 16px;
+	padding: 0;
+	border: 0;
+	box-shadow: none;
+}
+
+/* With JavaScript, the card in the form waits for the script to move it. */
+.login.js #loginform .skautis-login-card {
+	display: none;
+}
+
+.skautis-login-card-title {
+	margin: 0 0 12px;
+	font-size: 14px;
+	font-weight: 600;
+}
+
+.skautis-login-card .button-skautis {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	box-sizing: border-box;
+	float: none;
+	width: 100%;
+	min-height: 40px;
+	padding: 0 12px !important;
+	font-size: 14px;
+	background-image: none !important;
+}
+
+.skautis-login-card .button-skautis::before {
+	content: "";
+	flex: none;
+	width: 20px;
+	height: 22px;
+	margin-right: 8px;
+	background-image: url(../../src/frontend/public/img/lilie.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain;
+}
+
+.skautis-login-card-note {
+	margin: 10px 0 0;
+	font-size: 12px;
+	color: #646970;
+}
