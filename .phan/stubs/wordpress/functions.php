@@ -212,3 +212,12 @@ function wp_set_script_translations( $handle, $domain = 'default', $path = '' ):
  */
 function wp_trim_excerpt( $text = '', $post = null ): string {
 }
+
+/**
+ * @param string               $data
+ * @param array<string, mixed> $attributes
+ *
+ * @return void
+ */
+function wp_print_inline_script_tag( $data, $attributes = array() ) {
+}

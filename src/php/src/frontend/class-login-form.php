@@ -14,7 +14,7 @@ use Skautis_Integration\Services\Services;
 use Skautis_Integration\Utils\Helpers;
 
 /**
- * Adds the "Log in with SkautIS" button to the login form.
+ * Adds the "Log in with SkautIS" card below the login form.
  */
 final class Login_Form {
 
@@ -44,6 +44,7 @@ final class Login_Form {
 		if ( ! Services::is_registration_enabled() ) {
 			add_action( 'login_form', array( $this, 'login_link_in_login_form' ) );
 			add_filter( 'login_form_bottom', array( $this, 'login_link_in_login_form_return' ) );
+			add_action( 'login_footer', array( self::class, 'print_move_script' ) );
 		}
 	}
 
@@ -59,28 +60,46 @@ final class Login_Form {
 	}
 
 	/**
-	 * Prints the "Log in with SkautIS" button as part of the login page.
+	 * Prints the SkautIS login card in the login form of the login page.
 	 *
 	 * @return void
 	 */
 	public function login_link_in_login_form() {
 		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		echo $this->login_link_in_login_form_return();
+		echo self::get_login_card( $this->wp_login_logout->get_login_url(), true );
 	}
 
 	/**
-	 * Returns the "Log in with SkautIS" button HTML code.
-	 *
-	 * TODO: Remove this function. Why is the button printed from 2 different hooks?
+	 * Returns the SkautIS login card for forms printed by wp_login_form().
 	 */
 	public function login_link_in_login_form_return(): string {
-		return '
-		<p style="margin-bottom: 0.3em;">
-			<a class="button button-primary button-hero button-skautis" style="float: none; width: 100%; text-align: center;"
-			   href="' . esc_url( $this->wp_login_logout->get_login_url() ) . '">' . esc_html__( 'Log in with SkautIS', 'skautis-integration' ) . '</a>
-			   <br/>
-		</p>
-		<br/>
-		';
+		return self::get_login_card( $this->wp_login_logout->get_login_url(), false );
+	}
+
+	/**
+	 * Returns the HTML code of the SkautIS login card.
+	 *
+	 * On the login page, the card is moved below the login form by a script (see print_move_script()), so that it is clearly separated from the WordPress username and password. Without JavaScript, it stays in the form.
+	 *
+	 * @param string $url The URL of the SkautIS login.
+	 * @param bool   $movable Whether the card is on the login page and should be moved below the login form.
+	 */
+	public static function get_login_card( string $url, bool $movable ): string {
+		return '<div class="skautis-login-card"' . ( $movable ? ' id="skautis-login-card"' : '' ) . '>'
+			. '<p class="skautis-login-card-title">' . esc_html__( 'Do you have a SkautIS account?', 'skautis-integration' ) . '</p>'
+			. '<a class="button button-primary button-large button-skautis" href="' . esc_url( $url ) . '">' . esc_html__( 'Log in with SkautIS', 'skautis-integration' ) . '</a>'
+			. '<p class="skautis-login-card-note">' . esc_html__( 'You will enter your SkautIS username and password on the SkautIS login page.', 'skautis-integration' ) . '</p>'
+			. '</div>';
+	}
+
+	/**
+	 * Prints the script that moves the SkautIS login card below the login form on the login page.
+	 *
+	 * WordPress has no hook below the login form, so the card is printed in the form and moved by this script.
+	 *
+	 * @return void
+	 */
+	public static function print_move_script() {
+		wp_print_inline_script_tag( '(function(){var card=document.getElementById("skautis-login-card"),form=document.getElementById("loginform");if(card&&form){form.insertAdjacentElement("afterend",card);}})();' );
 	}
 }

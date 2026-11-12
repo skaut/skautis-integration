@@ -1180,3 +1180,14 @@ msgid ""
 msgstr ""
 "Obsah bude pro uživatele viditelný pouze při splnění alespoň jednoho z "
 "vybraných pravidel. Bez vybraných pravidel je obsah viditelný pro všechny."
+
+#: src/frontend/class-login-form.php
+msgid "Do you have a SkautIS account?"
+msgstr "Máte účet ve SkautISu?"
+
+#: src/frontend/class-login-form.php
+msgid ""
+"You will enter your SkautIS username and password on the SkautIS login page."
+msgstr ""
+"Přihlašovací jméno a heslo do SkautISu zadáte až na přihlašovací stránce "
+"SkautISu."
