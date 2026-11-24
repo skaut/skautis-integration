@@ -73,7 +73,7 @@
     "@eslint/css": "^2.0.1",
     "@eslint/js": "^10.0.1",
     "@eslint/json": "^2.1.0",
-    "@eslint/markdown": "^8.0.3",
+    "@eslint/markdown": "^9.0.0",
     "@types/jquery": "^4.0.1",
     "@types/jqueryui": "^1.12.25",
     "@types/select2": "^4.0.63",
