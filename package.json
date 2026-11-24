@@ -81,7 +81,7 @@
     "@wordpress/env": "^12.1.0",
     "@wordpress/eslint-plugin": "^28.1.0",
     "@wordpress/stylelint-config": "^27.1.0",
-    "browserslist": "^4.29.5",
+    "browserslist": "^4.29.6",
     "doiuse": "^6.0.6",
     "es-check": "^9.9.0",
     "eslint": "^10.15.0",
